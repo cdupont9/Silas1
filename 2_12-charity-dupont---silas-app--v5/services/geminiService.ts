@@ -8,7 +8,7 @@ const ai = new GoogleGenAI({ apiKey });
 export const generateSmartResponse = async (query: string, context: string): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3.1-flash',
+      model: 'gemini-3.1-flash-image-preview',
       contents: `You are a helpful AI assistant inside a phone simulation app. 
       Context: ${context}.
       User Query: ${query}.
@@ -24,7 +24,7 @@ export const generateSmartResponse = async (query: string, context: string): Pro
 export const parseVoiceCommand = async (transcript: string, context: string, lastQuestion?: string): Promise<{ type: string, payload: any, reply: string, followUpQuestion?: string }> => {
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-3.1-flash',
+            model: 'gemini-3.1-flash-image-preview',
             contents: `
                 You are Silas, a fast intelligent assistant.
                 User Context: ${context}
