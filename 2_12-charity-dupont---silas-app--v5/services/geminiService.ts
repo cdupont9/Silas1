@@ -8,7 +8,7 @@ const ai = new GoogleGenAI({ apiKey });
 export const generateSmartResponse = async (query: string, context: string): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3.1-flash-image-preview',
+      model: 'gemini-3-flash-preview',
       contents: `You are a helpful AI assistant inside a phone simulation app. 
       Context: ${context}.
       User Query: ${query}.
@@ -24,7 +24,7 @@ export const generateSmartResponse = async (query: string, context: string): Pro
 export const parseVoiceCommand = async (transcript: string, context: string, lastQuestion?: string): Promise<{ type: string, payload: any, reply: string, followUpQuestion?: string }> => {
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-3.1-flash-image-preview',
+            model: 'gemini-3-flash-preview',
             contents: `
                 You are Silas, a fast intelligent assistant.
                 User Context: ${context}
@@ -123,7 +123,7 @@ export const analyzeVoicemail = async (transcript: string): Promise<{ summary: s
 export const generateSpeech = async (text: string, voiceName: string = 'Fenrir'): Promise<string | null> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.1-flash-image-preview",
+      model: "gemini-3-flash-preview",
       contents: {
         parts: [{ text: text }],
       },
@@ -150,7 +150,7 @@ export const generateSpeech = async (text: string, voiceName: string = 'Fenrir')
 export const getWeather = async (location: string): Promise<any> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.1-flash-image-preview",
+      model: "gemini-3-flash-preview",
       contents: `Generate realistic current weather data for ${location} based on the current season.
       Return ONLY valid JSON.
       Structure:
@@ -180,7 +180,7 @@ export const getWeather = async (location: string): Promise<any> => {
 export const getFashionAdvice = async (weatherContext: string, wardrobe: string[]): Promise<any[]> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3.1-flash-image-preview",
+      model: "gemini-3-flash-preview",
       contents: `You are a fashion stylist AI. 
       User Persona: Female, named Archie. Style is modern, chic, and functional.
       Weather Context: ${weatherContext}.
