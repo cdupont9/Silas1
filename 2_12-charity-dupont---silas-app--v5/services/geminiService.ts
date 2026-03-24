@@ -8,7 +8,7 @@ const ai = new GoogleGenAI({ apiKey });
 export const generateSmartResponse = async (query: string, context: string): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.1-flash',
       contents: `You are a helpful AI assistant inside a phone simulation app. 
       Context: ${context}.
       User Query: ${query}.
