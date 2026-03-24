@@ -2,7 +2,7 @@
 import { GoogleGenAI } from "@google/genai";
 
 // Safe access to process.env for browser environments
-const apiKey = (typeof process !== 'undefined' && process.env) ? process.env.API_KEY : '';
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 const ai = new GoogleGenAI({ apiKey });
 
 export const generateSmartResponse = async (query: string, context: string): Promise<string> => {
@@ -24,7 +24,7 @@ export const generateSmartResponse = async (query: string, context: string): Pro
 export const parseVoiceCommand = async (transcript: string, context: string, lastQuestion?: string): Promise<{ type: string, payload: any, reply: string, followUpQuestion?: string }> => {
     try {
         const response = await ai.models.generateContent({
-            model: 'gemini-3-flash-preview',
+            model: 'gemini-3.1-flash',
             contents: `
                 You are Silas, a fast intelligent assistant.
                 User Context: ${context}
