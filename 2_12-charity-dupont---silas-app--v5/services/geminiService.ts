@@ -7,22 +7,25 @@ const ai = new GoogleGenAI({ apiKey });
 
 export const generateSmartResponse = async (query: string, context: string): Promise<string> => {
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `You are a helpful AI assistant inside a phone simulation app. 
-      Context: ${context}.
-      User Query: ${query}.
-      Keep the answer short, concise (under 20 words), and consistent with the requested persona.`,
+    const model = ai.getGenerativeModel({
+      model: "gemini-3-flash-preview",
+      tools: [{ googleSearch: {} }],
     });
-    return response.text || "I couldn't think of anything.";
+
+    const result = await model.generateContent({
+      contents: [{ 
+        role: "user", 
+        parts: [{ text: `Context: ${context}. User Query: ${query}. Keep the answer short (under 20 words).` }] 
+      }]
+    });
+
+    const response = await result.response;
+    return response.text() || "I couldn't think of anything.";
   } catch (error) {
     console.error("Gemini API Error:", error);
     return "Connection error.";
   }
 };
-
-export const parseVoiceCommand = async (transcript: string, context: string, lastQuestion?: string): Promise<{ type: string, payload: any, reply: string, followUpQuestion?: string }> => {
-    try {
         const response = await ai.models.generateContent({
             model: 'gemini-3-flash-preview',
             contents: `
