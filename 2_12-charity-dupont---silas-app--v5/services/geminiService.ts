@@ -1,36 +1,30 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// 1. Initialize with your Vercel Environment Variable
+// 1. Setup the Brain
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 const genAI = new GoogleGenerativeAI(apiKey);
 
 /**
- * GENERATE SMART RESPONSE
- * This uses "googleSearch" as a Tool. This is exactly how AI Studio 
- * fills in "the gaps" for weather, news, and real-time facts.
+ * SMART RESPONSE - This fills the "Gaps" using Google Search Grounding.
+ * Exactly like the toggle in AI Studio.
  */
 export const generateSmartResponse = async (query: string, context: string): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
-      // CRITICAL: This enables the "Search" button from AI Studio in your app
-      tools: [{ googleSearch: {} }], 
+      model: "gemini-1.5-flash", 
+      // This is the magic "Search" tool from AI Studio
+      tools: [{ googleSearchRetrieval: {} }], 
     });
 
     const result = await model.generateContent({
       contents: [{ 
         role: "user", 
-        parts: [{ 
-          text: `You are Silas, a real-time assistant. 
-                 Context: ${context}. 
-                 User Query: ${query}. 
-                 Use Google Search to find current, factual data to fill any gaps. 
-                 Keep response under 25 words.` 
-        }] 
+        parts: [{ text: `Context: ${context}. User Query: ${query}. Use Google Search to fill in any gaps with raw, real-time data.` }] 
       }]
     });
 
-    return result.response.text();
+    const response = await result.response;
+    return response.text() || "I couldn't find anything.";
   } catch (error) {
     console.error("Search Grounding Error:", error);
     return "Silas is having trouble reaching the live web.";
@@ -38,28 +32,18 @@ export const generateSmartResponse = async (query: string, context: string): Pro
 };
 
 /**
- * PARSE VOICE COMMAND
- * This uses the Search tool to decide which "Action" to take (Weather vs News).
+ * VOICE COMMAND PARSER - Uses Search to decide actions.
  */
 export const parseVoiceCommand = async (transcript: string, context: string): Promise<any> => {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-3-flash-preview",
-      tools: [{ googleSearch: {} }],
+      model: "gemini-1.5-flash",
+      tools: [{ googleSearchRetrieval: {} }],
       generationConfig: { responseMimeType: "application/json" }
     });
 
-    const prompt = `
-      Analyze: "${transcript}"
-      Context: ${context}
-      If the user asks for info you don't have, SEARCH GOOGLE.
-      Return JSON:
-      {
-        "type": "WEATHER" | "SEARCH" | "SET_LOCATION" | "NONE",
-        "payload": { "query": "search terms", "location": "city" },
-        "reply": "A brief summary of what you found."
-      }
-    `;
+    const prompt = `Analyze: "${transcript}". Context: ${context}. If you need facts or weather, SEARCH GOOGLE. 
+    Return JSON ONLY: { "type": "SEARCH", "payload": {}, "reply": "Found it." }`;
 
     const result = await model.generateContent(prompt);
     return JSON.parse(result.response.text());
