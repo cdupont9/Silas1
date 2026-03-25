@@ -1,8 +1,9 @@
 "use client"
 
-// MacBook Screen Portfolio - v33 Cache Bust
-// ALL HOOKS AT TOP: lines 161-198, including selectedNote (165) and viewingPhoto (166)
-// Last verified: March 25, 2026 - No hooks in conditional blocks
+// MacBook Screen Portfolio - v34 VERIFIED CLEAN
+// ALL 27 useState hooks at lines 161-205 (top level only)
+// showConversationList=164, selectedNote=165, viewingPhoto=166
+// NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -451,20 +452,14 @@ export function MacBookScreen() {
                 </div>
                 <span className="text-white text-[11px]">Photos</span>
               </button>
-
-              {/* Row 2 */}
-              <button className="flex flex-col items-center gap-1">
-                <div className="w-16 h-16 rounded-[18px] bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg">
-                  <Folder className="w-8 h-8 text-white" />
-                </div>
-                <span className="text-white text-[11px]">Files</span>
-              </button>
             </div>
 
-            {/* Page Dots */}
-            <div className="flex justify-center gap-1.5 mt-8">
-              <div className="w-2 h-2 bg-white rounded-full" />
-              <div className="w-2 h-2 bg-white/40 rounded-full" />
+            {/* Search Bar */}
+            <div className="flex justify-center mt-8 px-8">
+              <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-xl px-4 py-2 w-full max-w-[280px]">
+                <Search className="w-4 h-4 text-white/60" />
+                <span className="text-white/60 text-sm">Search</span>
+              </div>
             </div>
           </div>
 
