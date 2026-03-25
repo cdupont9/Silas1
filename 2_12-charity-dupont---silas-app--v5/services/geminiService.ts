@@ -1,80 +1,69 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+// 1. Initialize with your Vercel Environment Variable
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 const genAI = new GoogleGenerativeAI(apiKey);
 
+/**
+ * GENERATE SMART RESPONSE
+ * This uses "googleSearch" as a Tool. This is exactly how AI Studio 
+ * fills in "the gaps" for weather, news, and real-time facts.
+ */
 export const generateSmartResponse = async (query: string, context: string): Promise<string> => {
   try {
     const model = genAI.getGenerativeModel({
       model: "gemini-3-flash-preview",
-      tools: [{ googleSearch: {} }],
+      // CRITICAL: This enables the "Search" button from AI Studio in your app
+      tools: [{ googleSearch: {} }], 
     });
 
     const result = await model.generateContent({
       contents: [{ 
         role: "user", 
-        parts: [{ text: `Context: ${context}. User Query: ${query}. Keep the answer short (under 20 words).` }] 
+        parts: [{ 
+          text: `You are Silas, a real-time assistant. 
+                 Context: ${context}. 
+                 User Query: ${query}. 
+                 Use Google Search to find current, factual data to fill any gaps. 
+                 Keep response under 25 words.` 
+        }] 
       }]
     });
 
-    const response = await result.response;
-    return response.text() || "I couldn't think of anything.";
+    return result.response.text();
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "Connection error.";
+    console.error("Search Grounding Error:", error);
+    return "Silas is having trouble reaching the live web.";
   }
 };
 
-export const parseVoiceCommand = async (transcript: string, context: string, lastQuestion?: string): Promise<any> => {
+/**
+ * PARSE VOICE COMMAND
+ * This uses the Search tool to decide which "Action" to take (Weather vs News).
+ */
+export const parseVoiceCommand = async (transcript: string, context: string): Promise<any> => {
   try {
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-3-flash-preview",
-        generationConfig: { responseMimeType: "application/json" }
+    const model = genAI.getGenerativeModel({
+      model: "gemini-3-flash-preview",
+      tools: [{ googleSearch: {} }],
+      generationConfig: { responseMimeType: "application/json" }
     });
-    
+
     const prompt = `
-        You are Silas, an intelligent assistant.
-        Context: ${context}
-        User said: "${transcript}"
-        Last Question: ${lastQuestion || "None"}
-        
-        Return JSON ONLY:
-        { "type": "ACTION", "payload": {}, "reply": "Short response." }
+      Analyze: "${transcript}"
+      Context: ${context}
+      If the user asks for info you don't have, SEARCH GOOGLE.
+      Return JSON:
+      {
+        "type": "WEATHER" | "SEARCH" | "SET_LOCATION" | "NONE",
+        "payload": { "query": "search terms", "location": "city" },
+        "reply": "A brief summary of what you found."
+      }
     `;
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    return JSON.parse(response.text());
-  } catch (e) {
-    console.error("Silas Voice Error", e);
-    return { type: 'NONE', payload: {}, reply: "I'm having trouble connecting." };
-  }
-};
-
-export const generateImage = async (prompt: string): Promise<string | null> => {
-  try {
-    const model = genAI.getGenerativeModel({ model: "gemini-3-flash-image-preview" });
-    const result = await model.generateContent({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseModalities: ["IMAGE"] }
-    });
-    const part = result.response.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
-    return part ? `data:${part.inlineData.mimeType};base64,${part.inlineData.data}` : null;
-  } catch (error) {
-    console.error("Image Gen Error:", error);
-    return null;
-  }
-};
-
-export const getWeather = async (location: string): Promise<any> => {
-  try {
-    const model = genAI.getGenerativeModel({ 
-        model: "gemini-3-flash-preview",
-        generationConfig: { responseMimeType: "application/json" }
-    });
-    const result = await model.generateContent(`Return JSON weather for ${location}: { "temp": 72, "condition": "Sunny" }`);
     return JSON.parse(result.response.text());
-  } catch (error) {
-    return null;
+  } catch (e) {
+    return { type: 'NONE', payload: {}, reply: "Connection error." };
   }
 };
