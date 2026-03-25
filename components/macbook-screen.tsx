@@ -1,8 +1,8 @@
 "use client"
 
-// MacBook Screen Portfolio - v31 Final Clean Build
-// useState hooks ONLY at lines 160-194 (top level) - March 25, 2026
-// No useState inside if(mobileScreen) blocks - all moved to component top
+// MacBook Screen Portfolio - v33 Cache Bust
+// ALL HOOKS AT TOP: lines 161-198, including selectedNote (165) and viewingPhoto (166)
+// Last verified: March 25, 2026 - No hooks in conditional blocks
 import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2 } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
@@ -1272,6 +1272,16 @@ LinkedIn: www.linkedin.com/in/charitydupont`
         </video>
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center">
+          {/* Status bar - top right like home screen */}
+          <div className="absolute top-3 right-4 flex items-center gap-3 text-white/80">
+            <Wifi className="w-4 h-4" />
+            <div className="flex items-center">
+              <div className="w-6 h-3 border border-white/80 rounded-sm relative">
+                <div className="absolute inset-[2px] bg-green-400 rounded-[1px]" />
+              </div>
+              <div className="w-0.5 h-1.5 bg-white/80 rounded-r-sm" />
+            </div>
+          </div>
           {mounted && (
             <div className="absolute top-12 text-center" suppressHydrationWarning>
               <div className="text-white text-7xl font-light tracking-tight" suppressHydrationWarning>{loginTime}</div>
@@ -1307,10 +1317,6 @@ LinkedIn: www.linkedin.com/in/charitydupont`
                 <span>Touch ID or Enter Password</span>
               </div>
             </div>
-          </div>
-          <div className="absolute bottom-8 flex items-center gap-4 text-white/50">
-            <Wifi className="w-4 h-4" />
-            <Battery className="w-5 h-5" />
           </div>
         </div>
       </div>
@@ -1924,6 +1930,16 @@ onClick={() => setDesktopSelectedNote('about')}
           }
           label="Messages"
           onClick={openMessagesWindow}
+        />
+
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
+            </div>
+          }
+          label="Photos"
+          onClick={() => setPhotoViewerOpen(true)}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
