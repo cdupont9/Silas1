@@ -108,12 +108,12 @@ const caseStudies = {
     title: "Teammate",
     subtitle: "Sports Dating App",
     hero: "Don't Play Alone",
-    overview: "Sports fans face challenges on regular dating apps. Teammate connects them with like-minded individuals, assists in organizing dates based on mutual sports interests, and offers secure public venues such as sports events for fostering genuine relationships.",
+    overview: "Sports fans often struggle to find partners who understand their lifestyle. Traditional dating apps ignore the 'logistics of fandom,' leading to mismatched expectations and arguments over weekend schedules.",
     role: "Co-Product Designer (End-to-End)",
-    timeline: "May 2024",
-    tools: ["Figma", "User Research", "Competitive Analysis", "Prototyping"],
+    timeline: "3 Weeks (2024)",
+    tools: ["Figma", "Adobe Photoshop", "User Research", "Competitive Analysis"],
     challenge: "While competitors focus on static personality traits, no current app solves the dynamic scheduling conflicts sports fans face. Users find current dating apps lacking in depth and safety.",
-    solution: "An app that makes the Game Schedule the catalyst for connection, prioritizing sports background to signal positive character traits, facilitating learning dates between die-hards and newbies, and organizing dates in secure public venues like sports events.",
+    solution: "Teammate leverages sports APIs to filter matches by fandom intensity and streamlines the 'first date' logistics by auto-scheduling dates around live game events.",
     results: ["Character-based matching", "Safe public venues", "Sports-driven connections"],
     color: "from-rose-500 to-pink-600",
     icon: TEAMMATE_ICON,
@@ -124,12 +124,12 @@ const caseStudies = {
     title: "Meetly",
     subtitle: "Social Group Coordination App",
     hero: "Coordinate meetups effortlessly",
-    overview: "Meetly is a mobile application designed to help social groups coordinate meetups and share schedules effortlessly. It bridges the gap between the organizational power of a calendar and the social ease of a messaging app to eliminate coordination fatigue.",
+    overview: "A mobile application to help friends and social groups better coordinate their meetups and share schedules effortlessly. Users face significant hassle and frustration when trying to schedule meetups.",
     role: "UX Researcher and Designer",
     timeline: "May 2024",
     tools: ["Figma", "User Research", "Prototyping", "Usability Testing"],
-    challenge: "Users face hassle and frustration when juggling busy schedules and conflicting availabilities. Research revealed that busy work schedules and intricate planning are the primary causes of failed social events.",
-    solution: "A tool that combines the organizational power of a calendar with the social ease of a messaging app, featuring a centralized dashboard, voting screens for group decision-making, and contextual chat for planning-focused messaging.",
+    challenge: "Juggling busy schedules and conflicting availabilities often leads to headache, missed opportunities, and social disappointment. There is a complete absence of a dedicated app specifically designed for social coordination with friends.",
+    solution: "Meetly simplifies scheduling through user-friendly tools and voting options. The interface eliminates lengthy communication by allowing participants to input availability and preferences easily, while voting features facilitate shared decision-making.",
     results: ["Eliminated coordination fatigue", "Simplified group decisions", "Calendar integration"],
     color: "from-purple-400 to-indigo-500",
     icon: MEETLY_ICON,
@@ -139,14 +139,14 @@ const caseStudies = {
   silas: {
     title: "Silas",
     subtitle: "The Integrated AI Companion",
-    hero: "Your intelligent life assistant",
-    overview: "Silas is a smart companion built directly into your phone's operating system. It securely connects the dots between your calendar, bank, and messages, turning scattered information into helpful, proactive support.",
+    hero: "Less thinking. More living.",
+    overview: "Silas is an Integrated AI Companion that bridges the gap between fragmented digital data and physical-world needs. It integrates across existing apps and turns passive data into executable intelligence.",
     role: "UX Designer End to End",
-    timeline: "One month of exploratory design and prototyping",
-    tools: ["Figma", "Prototyping", "UX Research", "AI/ML"],
-    challenge: "Our digital lives are a chore: we constantly hop between a dozen disconnected apps just to plan a single day. Apps don't communicate, making users do all the mental math.",
-    solution: "An integrated AI companion that connects all your apps securely, using read-only access to gather context and only requesting execution permissions when needed - always with explicit user approval.",
-    results: ["Reduced cognitive load", "Context continuity", "Proactive assistance"],
+    timeline: "Anticipatory Project",
+    tools: ["Figma", "Prototyping", "UX Research", "Anticipatory Design"],
+    challenge: "Users live across 20+ reactive apps where calendar data is passive, banking records don't enable smart reordering, memory is disconnected from context, and messages do not automatically become tasks.",
+    solution: "Silas uses Read-Only permissions to securely bridge the gap between apps. It provides a centralized Command Center, contextual commerce via Juno, financial intelligence through smart reordering, and proactive travel coordination.",
+    results: ["Reduced cognitive load", "Context continuity", "Execution speed", "Data transparency"],
     color: "from-blue-500 to-purple-600",
     icon: SILAS_ICON,
     screenshot: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png",
@@ -780,40 +780,78 @@ export function MacBookScreen() {
               <h3 className="text-xl font-bold text-black mb-3">Overview</h3>
               <p className="text-gray-600 text-sm leading-relaxed mb-6">{study.overview}</p>
 
-              <div className="grid grid-cols-2 gap-4 mb-6">
+              {/* Quick Stats Grid */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
                 <div className="bg-gray-50 rounded-xl p-4">
                   <p className="text-xs text-gray-500 uppercase tracking-wide">Role</p>
-                  <p className="text-sm font-medium text-black mt-1">{study.role}</p>
+                  <p className="text-sm font-semibold text-black mt-1">{study.role}</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-4">
                   <p className="text-xs text-gray-500 uppercase tracking-wide">Timeline</p>
-                  <p className="text-sm font-medium text-black mt-1">{study.timeline}</p>
+                  <p className="text-sm font-semibold text-black mt-1">{study.timeline}</p>
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold text-black mb-3">The Challenge</h3>
+              {/* Tools Used */}
+              <div className="mb-6">
+                <h3 className="text-lg font-bold text-black mb-3">Tools & Methods</h3>
+                <div className="flex flex-wrap gap-2">
+                  {study.tools.map((tool, idx) => (
+                    <span key={idx} className="px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-medium rounded-full border border-gray-200">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <h3 className="text-lg font-bold text-black mb-3">The Challenge</h3>
               <p className="text-gray-600 text-sm leading-relaxed mb-6">{study.challenge}</p>
 
-              <h3 className="text-xl font-bold text-black mb-3">The Solution</h3>
+              <h3 className="text-lg font-bold text-black mb-3">The Solution</h3>
               <p className="text-gray-600 text-sm leading-relaxed mb-6">{study.solution}</p>
 
               {/* Screenshot */}
               {(study as any).screenshot && (
                 <div className="mb-6">
-                  <h3 className="text-xl font-bold text-black mb-3">Preview</h3>
-                  <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+                  <h3 className="text-lg font-bold text-black mb-3">Design Preview</h3>
+                  <div className="rounded-xl overflow-hidden border border-gray-200 shadow-lg">
                     <img src={(study as any).screenshot} alt={`${study.title} Preview`} className="w-full h-auto" />
                   </div>
                 </div>
               )}
 
-              <h3 className="text-xl font-bold text-black mb-3">Results</h3>
-              <div className="flex flex-wrap gap-2 mb-8">
+              {/* Key Outcomes */}
+              <h3 className="text-lg font-bold text-black mb-3">Key Outcomes</h3>
+              <div className="space-y-3 mb-6">
                 {study.results.map((result, idx) => (
-                  <span key={idx} className={`px-3 py-1.5 bg-gradient-to-r ${study.color} text-white text-xs rounded-full`}>
-                    {result}
-                  </span>
+                  <div key={idx} className="flex items-start gap-3 bg-gray-50 rounded-xl p-4">
+                    <div className={`w-8 h-8 rounded-full bg-gradient-to-r ${study.color} flex items-center justify-center flex-shrink-0`}>
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <p className="text-sm font-medium text-gray-800 pt-1">{result}</p>
+                  </div>
                 ))}
+              </div>
+
+              {/* Process Highlights */}
+              <h3 className="text-lg font-bold text-black mb-3">Process Highlights</h3>
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 mb-8">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-10 h-10 rounded-full bg-gradient-to-r ${study.color} flex items-center justify-center`}>
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-black">User-Centered Approach</p>
+                    <p className="text-xs text-gray-500">Research-driven design decisions</p>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed">
+                  This project followed a comprehensive design process including user interviews, competitive analysis, iterative prototyping, and usability testing to ensure the final product meets real user needs.
+                </p>
               </div>
             </div>
           </div>
