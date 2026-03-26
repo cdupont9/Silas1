@@ -42,7 +42,7 @@ const messageContacts = [
     messages: [
       { from: 'charity', text: "Hey! Welcome to my portfolio MacBook!", time: '10:30 AM' },
       { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a product designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
+      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
     ]
   },
   {
@@ -109,7 +109,7 @@ const caseStudies = {
     subtitle: "Sports Dating App",
     hero: "Don't Play Alone",
     overview: "Sports fans face challenges on regular dating apps. Teammate connects them with like-minded individuals, assists in organizing dates based on mutual sports interests, and offers secure public venues such as sports events for fostering genuine relationships.",
-    role: "Product Designer",
+    role: "Co-Product Designer (End-to-End)",
     timeline: "May 2024",
     tools: ["Figma", "User Research", "Competitive Analysis", "Prototyping"],
     challenge: "While competitors focus on static personality traits, no current app solves the dynamic scheduling conflicts sports fans face. Users find current dating apps lacking in depth and safety.",
@@ -125,7 +125,7 @@ const caseStudies = {
     subtitle: "Social Group Coordination App",
     hero: "Coordinate meetups effortlessly",
     overview: "Meetly is a mobile application designed to help social groups coordinate meetups and share schedules effortlessly. It bridges the gap between the organizational power of a calendar and the social ease of a messaging app to eliminate coordination fatigue.",
-    role: "Product Designer",
+    role: "UX Researcher and Designer",
     timeline: "May 2024",
     tools: ["Figma", "User Research", "Prototyping", "Usability Testing"],
     challenge: "Users face hassle and frustration when juggling busy schedules and conflicting availabilities. Research revealed that busy work schedules and intricate planning are the primary causes of failed social events.",
@@ -141,7 +141,7 @@ const caseStudies = {
     subtitle: "The Integrated AI Companion",
     hero: "Your intelligent life assistant",
     overview: "Silas is a smart companion built directly into your phone's operating system. It securely connects the dots between your calendar, bank, and messages, turning scattered information into helpful, proactive support.",
-    role: "Product Designer",
+    role: "UX Designer End to End",
     timeline: "One month of exploratory design and prototyping",
     tools: ["Figma", "Prototyping", "UX Research", "AI/ML"],
     challenge: "Our digital lives are a chore: we constantly hop between a dozen disconnected apps just to plan a single day. Apps don't communicate, making users do all the mental math.",
@@ -453,13 +453,13 @@ export function MacBookScreen() {
                 <span className="text-white text-[11px]">Photos</span>
               </button>
             </div>
+          </div>
 
-            {/* Search Bar */}
-            <div className="flex justify-center mt-8 px-8">
-              <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-xl px-4 py-2 w-full max-w-[280px]">
-                <Search className="w-4 h-4 text-white/60" />
-                <span className="text-white/60 text-sm">Search</span>
-              </div>
+          {/* Search Bar - Above Dock */}
+          <div className="absolute bottom-28 left-8 right-8 z-10">
+            <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-xl px-4 py-2">
+              <Search className="w-4 h-4 text-white/60" />
+              <span className="text-white/60 text-sm">Search</span>
             </div>
           </div>
 
@@ -769,10 +769,10 @@ export function MacBookScreen() {
         {
           id: 1,
           title: "About My Work",
-          preview: "I'm a product designer passionate about creating meaningful digital experiences...",
+          preview: "I'm a UX/UI designer passionate about creating meaningful digital experiences...",
           date: "Today",
           hasImages: false,
-          content: `I'm a product designer passionate about creating meaningful digital experiences that solve real problems.
+          content: `I'm a UX/UI designer passionate about creating meaningful digital experiences that solve real problems.
 
 My approach combines user research, visual design, and prototyping to deliver solutions that users love.
 
@@ -1004,7 +1004,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
                 </div>
                 <div className="px-4 py-3">
                   <p className="text-[15px] text-black leading-relaxed">
-                    Passionate product designer creating meaningful digital experiences. I combine user research, visual design, and prototyping to deliver solutions users love.
+                    Passionate UX/UI designer creating meaningful digital experiences. I combine user research, visual design, and prototyping to deliver solutions users love.
                   </p>
                 </div>
               </div>
