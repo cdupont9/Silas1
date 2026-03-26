@@ -404,80 +404,85 @@ export function MacBookScreen() {
           {/* Status Bar */}
           <div className="absolute top-0 left-0 right-0 h-14 flex items-center justify-between px-7 pt-3 z-10">
             <span className="text-white text-[19px] font-semibold">{loginTime}</span>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               {/* Cellular Bars */}
-              <div className="flex items-end gap-[3px] h-4">
+              <div className="flex items-end gap-[2px] h-[18px]">
                 <div className="w-[4px] h-[6px] bg-white rounded-[1px]" />
-                <div className="w-[4px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[4px] h-[12px] bg-white/40 rounded-[1px]" />
-                <div className="w-[4px] h-[15px] bg-white/40 rounded-[1px]" />
+                <div className="w-[4px] h-[10px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[14px] bg-white/40 rounded-[1px]" />
+                <div className="w-[4px] h-[18px] bg-white/40 rounded-[1px]" />
               </div>
-              <Wifi className="w-5 h-5 text-white" />
-              {/* Battery with percentage */}
-              <div className="flex items-center gap-1">
-                <div className="w-7 h-3.5 border-2 border-white rounded-[4px] relative">
-                  <div className="absolute inset-[2px] bg-yellow-400 rounded-[2px]" style={{width: '35%'}} />
+              <Wifi className="w-[22px] h-[22px] text-white" />
+              {/* Battery with percentage inside */}
+              <div className="flex items-center">
+                <div className="w-[28px] h-[14px] border-[1.5px] border-white rounded-[4px] relative flex items-center justify-center">
+                  <div className="absolute inset-[2px] bg-green-500 rounded-[2px]" />
+                  <span className="relative z-10 text-white text-[10px] font-bold">97</span>
                 </div>
-                <div className="w-[3px] h-2 bg-white rounded-r-sm" />
-                <span className="text-white text-[15px] font-medium ml-0.5">12</span>
+                <div className="w-[2px] h-[6px] bg-white rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
 
           {/* Weather Widget */}
           <div className="absolute top-16 left-4 right-4 z-10">
-            <div className="bg-[#374151]/80 backdrop-blur-xl rounded-3xl p-4 flex">
+            <div className="bg-[#1c1c1e]/90 backdrop-blur-xl rounded-[22px] p-4 flex">
               {/* Left side - Current weather */}
-              <div className="flex-1">
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-white text-[15px] font-medium">New York</span>
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <div className="flex-1 pr-3">
+                <div className="flex items-center gap-1 mb-0.5">
+                  <span className="text-white text-[16px] font-medium">Plainfield</span>
+                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
                   </svg>
                 </div>
-                <div className="text-white text-[52px] font-light leading-none">46°</div>
-                <div className="flex items-center gap-1 mt-2">
-                  <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                <div className="text-white text-[58px] font-extralight leading-none tracking-tight">46°</div>
+                <div className="flex items-center gap-1.5 mt-3">
+                  <svg className="w-4 h-4 text-white/80" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
                   </svg>
                 </div>
-                <p className="text-white/80 text-[13px] mt-1 leading-tight">Warmer tomorrow,<br/>with a high of 72°</p>
+                <p className="text-white/90 text-[13px] mt-1.5 leading-snug">Warmer tomorrow,<br/>with a high of 72°</p>
               </div>
               {/* Right side - Forecast */}
-              <div className="flex flex-col gap-1.5 text-[13px]">
+              <div className="flex flex-col gap-[6px] text-[13px] justify-center">
                 <div className="flex items-center gap-2">
-                  <span className="text-white/90 w-8">Wed</span>
-                  <span className="text-white/60">33</span>
-                  <div className="w-12 h-1.5 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full" />
-                  <span className="text-white">56</span>
+                  <span className="text-white w-[32px]">Wed</span>
+                  <span className="text-[18px]">☁️</span>
+                  <span className="text-white/60 w-[24px] text-right">33</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
+                  <span className="text-white w-[24px]">56</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white/90 w-8">Thu</span>
-                  <span className="text-white/60">45</span>
-                  <div className="w-12 h-1.5 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full" />
-                  <span className="text-white">72</span>
+                  <span className="text-white w-[32px]">Thu</span>
+                  <span className="text-[18px]">🌥️</span>
+                  <span className="text-white/60 w-[24px] text-right">45</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#ffeb3b] to-[#ff9800] rounded-full" />
+                  <span className="text-white w-[24px]">72</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white/90 w-8">Fri</span>
-                  <span className="text-white/60">41</span>
-                  <div className="w-12 h-1.5 bg-gradient-to-r from-blue-400 to-teal-400 rounded-full" />
-                  <span className="text-white">65</span>
+                  <span className="text-white w-[32px]">Fri</span>
+                  <span className="text-[18px]">☁️</span>
+                  <span className="text-white/60 w-[24px] text-right">41</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#4fc3f7] to-[#26c6da] rounded-full" />
+                  <span className="text-white w-[24px]">65</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white/90 w-8">Sat</span>
-                  <span className="text-white/60">31</span>
-                  <div className="w-12 h-1.5 bg-blue-500 rounded-full" />
-                  <span className="text-white">42</span>
+                  <span className="text-white w-[32px]">Sat</span>
+                  <span className="text-[18px]">☀️</span>
+                  <span className="text-white/60 w-[24px] text-right">31</span>
+                  <div className="w-[52px] h-[5px] bg-[#42a5f5] rounded-full" />
+                  <span className="text-white w-[24px]">42</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-white/90 w-8">Sun</span>
-                  <span className="text-white/60">30</span>
-                  <div className="w-12 h-1.5 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full" />
-                  <span className="text-white">53</span>
+                  <span className="text-white w-[32px]">Sun</span>
+                  <span className="text-[18px]">🌤️</span>
+                  <span className="text-white/60 w-[24px] text-right">30</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
+                  <span className="text-white w-[24px]">53</span>
                 </div>
               </div>
             </div>
-            <p className="text-white/60 text-[13px] text-center mt-2">Weather</p>
+            <p className="text-white/50 text-[12px] text-center mt-2 font-medium">Weather</p>
           </div>
 
           {/* App Grid - Below weather widget */}
