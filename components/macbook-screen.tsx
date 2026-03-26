@@ -402,106 +402,161 @@ export function MacBookScreen() {
           </video>
           
           {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-10">
-            <span className="text-white text-[17px] font-semibold">{loginTime}</span>
+          <div className="absolute top-0 left-0 right-0 h-14 flex items-center justify-between px-7 pt-3 z-10">
+            <span className="text-white text-[19px] font-semibold">{loginTime}</span>
             <div className="flex items-center gap-1.5">
               {/* Cellular Bars */}
-              <div className="flex items-end gap-[2px] h-3.5">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[8px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[14px] bg-white rounded-[1px]" />
+              <div className="flex items-end gap-[2px] h-[18px]">
+                <div className="w-[4px] h-[6px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[10px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[14px] bg-white/40 rounded-[1px]" />
+                <div className="w-[4px] h-[18px] bg-white/40 rounded-[1px]" />
               </div>
-              <Wifi className="w-[18px] h-[18px] text-white" />
+              <Wifi className="w-[22px] h-[22px] text-white" />
+              {/* Battery with percentage inside - no outline */}
               <div className="flex items-center">
-                <div className="w-[25px] h-[12px] border border-white rounded-[3px] relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                <div className="w-[28px] h-[14px] bg-green-500 rounded-[4px] relative flex items-center justify-center">
+                  <span className="relative z-10 text-white text-[10px] font-bold">97</span>
                 </div>
-                <div className="w-[2px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
 
-          {/* App Grid - iOS style positioning at top */}
-          <div className="absolute top-16 left-0 right-0 z-10 px-5">
-            <div className="grid grid-cols-4 gap-y-6" style={{ columnGap: 'calc((100% - 280px) / 3)' }}>
+          {/* Weather Widget */}
+          <div className="absolute top-16 left-4 right-4 z-10">
+            <div className="bg-[#1c1c1e]/90 backdrop-blur-xl rounded-[22px] p-4 flex">
+              {/* Left side - Current weather */}
+              <div className="flex-1 pr-3">
+                <div className="flex items-center gap-1 mb-0.5">
+                  <span className="text-white text-[16px] font-medium">Plainfield</span>
+                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
+                  </svg>
+                </div>
+                <div className="text-white text-[58px] font-extralight leading-none tracking-tight">46°</div>
+                <div className="flex items-center gap-1.5 mt-3">
+                  <svg className="w-4 h-4 text-white/80" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+                  </svg>
+                </div>
+                <p className="text-white/90 text-[13px] mt-1.5 leading-snug">Warmer tomorrow,<br/>with a high of 72°</p>
+              </div>
+              {/* Right side - Forecast */}
+              <div className="flex flex-col gap-[6px] text-[13px] justify-center">
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Wed</span>
+                  <span className="text-[18px]">☁️</span>
+                  <span className="text-white/60 w-[24px] text-right">33</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
+                  <span className="text-white w-[24px]">56</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Thu</span>
+                  <span className="text-[18px]">🌥️</span>
+                  <span className="text-white/60 w-[24px] text-right">45</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#ffeb3b] to-[#ff9800] rounded-full" />
+                  <span className="text-white w-[24px]">72</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Fri</span>
+                  <span className="text-[18px]">☁️</span>
+                  <span className="text-white/60 w-[24px] text-right">41</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#4fc3f7] to-[#26c6da] rounded-full" />
+                  <span className="text-white w-[24px]">65</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Sat</span>
+                  <span className="text-[18px]">☀️</span>
+                  <span className="text-white/60 w-[24px] text-right">31</span>
+                  <div className="w-[52px] h-[5px] bg-[#42a5f5] rounded-full" />
+                  <span className="text-white w-[24px]">42</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Sun</span>
+                  <span className="text-[18px]">🌤️</span>
+                  <span className="text-white/60 w-[24px] text-right">30</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
+                  <span className="text-white w-[24px]">53</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-white/50 text-[12px] text-center mt-2 font-medium">Weather</p>
+          </div>
+
+          {/* App Grid - Below weather widget */}
+          <div className="absolute top-[290px] left-0 right-0 z-10 px-5">
+            <div className="grid grid-cols-4 gap-y-5" style={{ columnGap: 'calc((100% - 240px) / 3)' }}>
               {/* Row 1 - Case Study Apps */}
-              <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[6px]">
-                <div className="w-[70px] h-[70px] rounded-[16px] overflow-hidden shadow-lg">
+              <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                   <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[12px] font-medium drop-shadow-md">Teammate</span>
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Teammate</span>
               </button>
 
-              <button onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[6px]">
-                <div className="w-[70px] h-[70px] rounded-[16px] overflow-hidden shadow-lg">
+              <button onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                   <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[12px] font-medium drop-shadow-md">Meetly</span>
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Meetly</span>
               </button>
 
-              <button onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[6px]">
-                <div className="w-[70px] h-[70px] rounded-[16px] overflow-hidden shadow-lg">
+              <button onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                   <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[12px] font-medium drop-shadow-md">Silas</span>
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Silas</span>
               </button>
 
-              <button onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }} className="flex flex-col items-center gap-[6px]">
-                <div className="w-[70px] h-[70px] rounded-[16px] bg-white shadow-lg overflow-hidden">
+              <button onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] bg-white shadow-lg overflow-hidden">
                   <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[12px] font-medium drop-shadow-md">Photos</span>
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Photos</span>
               </button>
             </div>
           </div>
 
-          {/* Page Dots */}
-          <div className="absolute bottom-[168px] left-0 right-0 flex justify-center gap-[6px] z-10">
-            <div className="w-[7px] h-[7px] bg-white rounded-full" />
-            <div className="w-[7px] h-[7px] bg-white/40 rounded-full" />
-            <div className="w-[7px] h-[7px] bg-white/40 rounded-full" />
-          </div>
-
-          {/* Search Bar - Above Dock */}
-          <div className="absolute bottom-[108px] left-5 right-5 z-10">
-            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-xl rounded-xl px-4 py-2.5">
-              <Search className="w-4 h-4 text-white/60" />
-              <span className="text-white/60 text-[15px]">Search</span>
-            </div>
+          {/* Search Button - Pill shaped, centered */}
+          <div className="absolute bottom-[100px] left-0 right-0 flex justify-center z-10">
+            <button className="flex items-center gap-2 bg-white/20 backdrop-blur-xl rounded-full px-5 py-2">
+              <Search className="w-4 h-4 text-white/70" />
+              <span className="text-white/70 text-[15px]">Search</span>
+            </button>
           </div>
 
           {/* Dock - Phone, Messages, Notes, About Me */}
-          <div className="absolute bottom-4 left-3 right-3 bg-white/20 backdrop-blur-2xl rounded-[28px] px-4 py-3 z-10">
+          <div className="absolute bottom-5 left-3 right-3 bg-white/20 backdrop-blur-2xl rounded-[26px] px-3 py-2.5 z-10">
             <div className="flex justify-around">
               {/* Phone */}
-              <button className="w-[60px] h-[60px] rounded-[14px] bg-gradient-to-b from-[#63d94e] to-[#2dc421] flex items-center justify-center shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <button className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#63d94e] to-[#2dc421] flex items-center justify-center shadow-lg">
+                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
               </button>
 
               {/* Messages */}
-              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-[60px] h-[60px] rounded-[14px] bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] flex items-center justify-center shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] flex items-center justify-center shadow-lg">
+                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.04 2 11c0 2.21.9 4.21 2.36 5.73-.14 1.52-.75 2.98-1.68 4.12 1.46-.11 2.93-.52 4.19-1.25 1.46.59 3.11.9 4.83.9 5.52 0 10-4.04 10-9s-4.48-9-10-9z" />
                 </svg>
               </button>
 
               {/* Notes */}
-              <button onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }} className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+              <button onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }} className="w-[56px] h-[56px] rounded-[13px] overflow-hidden shadow-lg">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
               </button>
 
               {/* About Me */}
-              <button onClick={() => setMobileScreen('about')} className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+              <button onClick={() => setMobileScreen('about')} className="w-[56px] h-[56px] rounded-[13px] overflow-hidden shadow-lg">
                 <img src={MEMOJI_URL} alt="About Me" className="w-full h-full object-cover" />
               </button>
             </div>
           </div>
 
           {/* Home Indicator */}
-          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/70 rounded-full" />
+          <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/70 rounded-full" />
         </div>
       )
     }
