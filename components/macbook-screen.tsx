@@ -395,105 +395,105 @@ export function MacBookScreen() {
     // iPhone Home Screen
     if (mobileScreen === "home") {
       return (
-        <div className="h-screen w-full relative overflow-hidden bg-black">
+        <div className="h-[100dvh] w-full relative overflow-hidden bg-black">
           {/* Background */}
           <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-70">
             <source src={VIDEO_URL} type="video/mp4" />
           </video>
           
           {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-10">
-            <span className="text-white text-sm font-medium">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
+          <div className="absolute top-0 left-0 right-0 h-[env(safe-area-inset-top,48px)] min-h-[48px] flex items-center justify-between px-8 pt-3 z-10">
+            <span className="text-white text-base font-semibold">{loginTime}</span>
+            <div className="flex items-center gap-2">
               {/* Cellular Bars */}
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+              <div className="flex items-end gap-[3px] h-4">
+                <div className="w-[4px] h-[6px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[9px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[12px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[15px] bg-white rounded-[1px]" />
               </div>
-              <Wifi className="w-4 h-4 text-white" />
+              <Wifi className="w-5 h-5 text-white" />
               <div className="flex items-center">
-                <div className="w-6 h-3 border border-white rounded-sm relative">
+                <div className="w-7 h-4 border-2 border-white rounded-sm relative">
                   <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
                 </div>
               </div>
             </div>
           </div>
 
-          {/* App Grid */}
-          <div className="relative z-10 pt-16 px-6">
-            <div className="grid grid-cols-4 gap-6">
+          {/* App Grid - Centered vertically */}
+          <div className="absolute inset-0 flex items-center justify-center z-10 pt-[env(safe-area-inset-top,48px)] pb-[180px]">
+            <div className="grid grid-cols-4 gap-x-4 gap-y-6 px-4">
               {/* Row 1 - Case Study Apps */}
-              <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-1">
-                <div className="w-16 h-16 rounded-[18px] overflow-hidden shadow-lg">
+              <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-2">
+                <div className="w-[72px] h-[72px] rounded-[20px] overflow-hidden shadow-xl">
                   <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[11px]">Teammate</span>
+                <span className="text-white text-sm font-medium drop-shadow-lg">Teammate</span>
               </button>
 
-              <button onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-1">
-                <div className="w-16 h-16 rounded-[18px] overflow-hidden shadow-lg">
+              <button onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-2">
+                <div className="w-[72px] h-[72px] rounded-[20px] overflow-hidden shadow-xl">
                   <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[11px]">Meetly</span>
+                <span className="text-white text-sm font-medium drop-shadow-lg">Meetly</span>
               </button>
 
-              <button onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-1">
-                <div className="w-16 h-16 rounded-[18px] overflow-hidden shadow-lg">
+              <button onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-2">
+                <div className="w-[72px] h-[72px] rounded-[20px] overflow-hidden shadow-xl">
                   <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[11px]">Silas</span>
+                <span className="text-white text-sm font-medium drop-shadow-lg">Silas</span>
               </button>
 
-              <button onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }} className="flex flex-col items-center gap-1">
-                <div className="w-16 h-16 rounded-[18px] bg-white shadow-lg overflow-hidden">
+              <button onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }} className="flex flex-col items-center gap-2">
+                <div className="w-[72px] h-[72px] rounded-[20px] bg-white shadow-xl overflow-hidden">
                   <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
                 </div>
-                <span className="text-white text-[11px]">Photos</span>
+                <span className="text-white text-sm font-medium drop-shadow-lg">Photos</span>
               </button>
             </div>
           </div>
 
           {/* Search Bar - Above Dock */}
-          <div className="absolute bottom-28 left-8 right-8 z-10">
-            <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-xl px-4 py-2">
-              <Search className="w-4 h-4 text-white/60" />
-              <span className="text-white/60 text-sm">Search</span>
+          <div className="absolute bottom-[120px] left-6 right-6 z-10">
+            <div className="flex items-center gap-3 bg-white/20 backdrop-blur-xl rounded-2xl px-5 py-3">
+              <Search className="w-5 h-5 text-white/70" />
+              <span className="text-white/70 text-base">Search</span>
             </div>
           </div>
 
           {/* Dock - Phone, Messages, Notes, About Me */}
-          <div className="absolute bottom-6 left-4 right-4 bg-white/20 backdrop-blur-2xl rounded-[28px] px-4 py-3 z-10">
+          <div className="absolute bottom-[env(safe-area-inset-bottom,24px)] left-4 right-4 bg-white/25 backdrop-blur-2xl rounded-[32px] px-5 py-4 z-10 mb-2">
             <div className="flex justify-around">
               {/* Phone */}
-              <button className="w-14 h-14 rounded-[16px] bg-gradient-to-b from-[#63d94e] to-[#2dc421] flex items-center justify-center shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <button className="w-16 h-16 rounded-[18px] bg-gradient-to-b from-[#63d94e] to-[#2dc421] flex items-center justify-center shadow-xl">
+                <svg className="w-9 h-9 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                 </svg>
               </button>
 
               {/* Messages */}
-              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-14 h-14 rounded-[16px] bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] flex items-center justify-center shadow-lg">
-                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-16 h-16 rounded-[18px] bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] flex items-center justify-center shadow-xl">
+                <svg className="w-9 h-9 text-white" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.04 2 11c0 2.21.9 4.21 2.36 5.73-.14 1.52-.75 2.98-1.68 4.12 1.46-.11 2.93-.52 4.19-1.25 1.46.59 3.11.9 4.83.9 5.52 0 10-4.04 10-9s-4.48-9-10-9z" />
                 </svg>
               </button>
 
               {/* Notes */}
-              <button onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }} className="w-14 h-14 rounded-[16px] overflow-hidden shadow-lg">
+              <button onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }} className="w-16 h-16 rounded-[18px] overflow-hidden shadow-xl">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
               </button>
 
               {/* About Me */}
-              <button onClick={() => setMobileScreen('about')} className="w-14 h-14 rounded-[16px] overflow-hidden shadow-lg">
+              <button onClick={() => setMobileScreen('about')} className="w-16 h-16 rounded-[18px] overflow-hidden shadow-xl">
                 <img src={MEMOJI_URL} alt="About Me" className="w-full h-full object-cover" />
               </button>
             </div>
           </div>
 
           {/* Home Indicator */}
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-36 h-1 bg-white/60 rounded-full" />
+          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-36 h-1.5 bg-white/70 rounded-full" />
         </div>
       )
     }
@@ -1194,22 +1194,23 @@ LinkedIn: www.linkedin.com/in/charitydupont`
             </div>
           </div>
 
-          {/* Header with Library title and controls */}
+          {/* Header with Back button and Library title */}
           <div className="px-4 pt-2 pb-1">
-            <div className="flex items-start justify-between">
-              <div>
-                <h1 className="text-white text-3xl font-bold">Library</h1>
-                <p className="text-white/60 text-[15px]">Mar 13, 2026</p>
-              </div>
-              <div className="flex items-center gap-3 mt-1">
-                <button className="w-9 h-9 bg-[#0a84ff] rounded-full flex items-center justify-center">
-                  <Search className="w-5 h-5 text-white" />
-                </button>
+            <div className="flex items-center justify-between mb-2">
+              <button onClick={() => setMobileScreen('home')} className="flex items-center gap-1 text-[#0a84ff]">
+                <ChevronLeft className="w-6 h-6" />
+                <span className="text-[17px]">Back</span>
+              </button>
+              <div className="flex items-center gap-3">
                 <button className="text-white/80 text-[17px]">Select</button>
                 <div className="w-8 h-8 rounded-full overflow-hidden">
                   <img src={MEMOJI_URL} alt="Profile" className="w-full h-full object-cover" />
                 </div>
               </div>
+            </div>
+            <div>
+              <h1 className="text-white text-3xl font-bold">Library</h1>
+              <p className="text-white/60 text-[15px]">Mar 13, 2026</p>
             </div>
           </div>
 
@@ -1232,20 +1233,12 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           </div>
 
           {/* Bottom Filter Bar */}
-          <div className="bg-black/90 px-4 py-3 flex items-center justify-between">
-            <button className="text-white/60">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
-              </svg>
-            </button>
+          <div className="bg-black/90 px-4 py-3 flex items-center justify-center">
             <div className="flex items-center gap-2 bg-white/10 rounded-full px-1 py-1">
               <button className="px-4 py-1.5 text-white/60 text-[15px]">Years</button>
               <button className="px-4 py-1.5 text-white/60 text-[15px]">Months</button>
               <button className="px-4 py-1.5 bg-white/20 rounded-full text-white text-[15px]">All</button>
             </div>
-            <button onClick={() => setMobileScreen('home')} className="w-9 h-9 bg-[#8e8e93] rounded-full flex items-center justify-center">
-              <X className="w-5 h-5 text-white" />
-            </button>
           </div>
 
           {/* Home Indicator */}
