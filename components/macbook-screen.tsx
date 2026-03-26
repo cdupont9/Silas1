@@ -423,7 +423,7 @@ export function MacBookScreen() {
 
           {/* App Grid - Centered vertically */}
           <div className="absolute inset-0 flex items-center justify-center z-10 pt-[env(safe-area-inset-top,48px)] pb-[180px]">
-            <div className="grid grid-cols-4 gap-x-6 gap-y-8 px-6">
+            <div className="grid grid-cols-4 gap-x-4 gap-y-6 px-4">
               {/* Row 1 - Case Study Apps */}
               <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-2">
                 <div className="w-[72px] h-[72px] rounded-[20px] overflow-hidden shadow-xl">
@@ -1194,22 +1194,23 @@ LinkedIn: www.linkedin.com/in/charitydupont`
             </div>
           </div>
 
-          {/* Header with Library title and controls */}
+          {/* Header with Back button and Library title */}
           <div className="px-4 pt-2 pb-1">
-            <div className="flex items-start justify-between">
-              <div>
-                <h1 className="text-white text-3xl font-bold">Library</h1>
-                <p className="text-white/60 text-[15px]">Mar 13, 2026</p>
-              </div>
-              <div className="flex items-center gap-3 mt-1">
-                <button className="w-9 h-9 bg-[#0a84ff] rounded-full flex items-center justify-center">
-                  <Search className="w-5 h-5 text-white" />
-                </button>
+            <div className="flex items-center justify-between mb-2">
+              <button onClick={() => setMobileScreen('home')} className="flex items-center gap-1 text-[#0a84ff]">
+                <ChevronLeft className="w-6 h-6" />
+                <span className="text-[17px]">Back</span>
+              </button>
+              <div className="flex items-center gap-3">
                 <button className="text-white/80 text-[17px]">Select</button>
                 <div className="w-8 h-8 rounded-full overflow-hidden">
                   <img src={MEMOJI_URL} alt="Profile" className="w-full h-full object-cover" />
                 </div>
               </div>
+            </div>
+            <div>
+              <h1 className="text-white text-3xl font-bold">Library</h1>
+              <p className="text-white/60 text-[15px]">Mar 13, 2026</p>
             </div>
           </div>
 
@@ -1232,20 +1233,12 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           </div>
 
           {/* Bottom Filter Bar */}
-          <div className="bg-black/90 px-4 py-3 flex items-center justify-between">
-            <button className="text-white/60">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
-              </svg>
-            </button>
+          <div className="bg-black/90 px-4 py-3 flex items-center justify-center">
             <div className="flex items-center gap-2 bg-white/10 rounded-full px-1 py-1">
               <button className="px-4 py-1.5 text-white/60 text-[15px]">Years</button>
               <button className="px-4 py-1.5 text-white/60 text-[15px]">Months</button>
               <button className="px-4 py-1.5 bg-white/20 rounded-full text-white text-[15px]">All</button>
             </div>
-            <button onClick={() => setMobileScreen('home')} className="w-9 h-9 bg-[#8e8e93] rounded-full flex items-center justify-center">
-              <X className="w-5 h-5 text-white" />
-            </button>
           </div>
 
           {/* Home Indicator */}
