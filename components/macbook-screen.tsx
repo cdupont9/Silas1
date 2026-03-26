@@ -331,12 +331,16 @@ export function MacBookScreen() {
                 <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-white" />
-              {/* Battery - green filled with 97% */}
-              <div className="flex items-center">
-                <div className="w-7 h-3.5 bg-green-500 rounded-[4px] relative flex items-center justify-center">
-                  <span className="relative z-10 text-white text-[9px] font-bold">97</span>
+              {/* Battery - MacBook style with lightning bolt */}
+              <div className="flex items-center gap-1">
+                <div className="w-6 h-3 border border-white rounded-sm relative">
+                  <div className="absolute inset-[2px] bg-green-500 rounded-[1px]" />
+                  {/* Lightning bolt */}
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 24 12" fill="none">
+                    <path d="M13 2L9 6.5H12L11 10L15 5.5H12L13 2Z" fill="white" stroke="white" strokeWidth="0.5"/>
+                  </svg>
                 </div>
-                <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
+                <div className="w-[2px] h-1.5 bg-white rounded-r-sm opacity-80" />
               </div>
             </div>
           </div>
@@ -1501,12 +1505,16 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           <svg className="w-4 h-4 opacity-90" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
           </svg>
-          {/* Battery - green filled with 97% */}
-          <div className="flex items-center">
-            <div className="w-7 h-3.5 bg-green-500 rounded-[4px] relative flex items-center justify-center">
-              <span className="relative z-10 text-white text-[9px] font-bold">97</span>
+          {/* Battery - MacBook style with lightning bolt */}
+          <div className="flex items-center gap-1">
+            <div className="w-6 h-3 border border-current rounded-sm relative">
+              <div className="absolute inset-[2px] bg-green-500 rounded-[1px]" />
+              {/* Lightning bolt */}
+              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 24 12" fill="none">
+                <path d="M13 2L9 6.5H12L11 10L15 5.5H12L13 2Z" fill="white" stroke="white" strokeWidth="0.5"/>
+              </svg>
             </div>
-            <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
+            <div className="w-[2px] h-1.5 bg-current rounded-r-sm opacity-80" />
           </div>
           <Wifi className="w-4 h-4 opacity-90" />
           <Search className="w-4 h-4 opacity-90" />
