@@ -42,7 +42,7 @@ const messageContacts = [
     messages: [
       { from: 'charity', text: "Hey! Welcome to my portfolio MacBook!", time: '10:30 AM' },
       { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a product designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
+      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
     ]
   },
   {
@@ -769,10 +769,10 @@ export function MacBookScreen() {
         {
           id: 1,
           title: "About My Work",
-          preview: "I'm a product designer passionate about creating meaningful digital experiences...",
+          preview: "I'm a UX/UI designer passionate about creating meaningful digital experiences...",
           date: "Today",
           hasImages: false,
-          content: `I'm a product designer passionate about creating meaningful digital experiences that solve real problems.
+          content: `I'm a UX/UI designer passionate about creating meaningful digital experiences that solve real problems.
 
 My approach combines user research, visual design, and prototyping to deliver solutions that users love.
 
@@ -1004,7 +1004,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
                 </div>
                 <div className="px-4 py-3">
                   <p className="text-[15px] text-black leading-relaxed">
-                    Passionate product designer creating meaningful digital experiences. I combine user research, visual design, and prototyping to deliver solutions users love.
+                    Passionate UX/UI designer creating meaningful digital experiences. I combine user research, visual design, and prototyping to deliver solutions users love.
                   </p>
                 </div>
               </div>
