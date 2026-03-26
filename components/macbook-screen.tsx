@@ -142,7 +142,7 @@ const caseStudies = {
     hero: "Less thinking. More living.",
     overview: "Silas is an Integrated AI Companion that bridges the gap between fragmented digital data and physical-world needs. It integrates across existing apps and turns passive data into executable intelligence.",
     role: "UX Designer End to End",
-    timeline: "Exploratory Project",
+    timeline: "Anticipatory Project",
     tools: ["Figma", "Prototyping", "UX Research", "Anticipatory Design"],
     challenge: "Users live across 20+ reactive apps where calendar data is passive, banking records don't enable smart reordering, memory is disconnected from context, and messages do not automatically become tasks.",
     solution: "Silas uses Read-Only permissions to securely bridge the gap between apps. It provides a centralized Command Center, contextual commerce via Juno, financial intelligence through smart reordering, and proactive travel coordination.",
