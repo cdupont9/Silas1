@@ -453,13 +453,13 @@ export function MacBookScreen() {
                 <span className="text-white text-[11px]">Photos</span>
               </button>
             </div>
+          </div>
 
-            {/* Search Bar */}
-            <div className="flex justify-center mt-8 px-8">
-              <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-xl px-4 py-2 w-full max-w-[280px]">
-                <Search className="w-4 h-4 text-white/60" />
-                <span className="text-white/60 text-sm">Search</span>
-              </div>
+          {/* Search Bar - Above Dock */}
+          <div className="absolute bottom-28 left-8 right-8 z-10">
+            <div className="flex items-center gap-2 bg-white/15 backdrop-blur-md rounded-xl px-4 py-2">
+              <Search className="w-4 h-4 text-white/60" />
+              <span className="text-white/60 text-sm">Search</span>
             </div>
           </div>
 
