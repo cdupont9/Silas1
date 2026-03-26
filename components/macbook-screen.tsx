@@ -413,13 +413,12 @@ export function MacBookScreen() {
                 <div className="w-[4px] h-[18px] bg-white/40 rounded-[1px]" />
               </div>
               <Wifi className="w-[22px] h-[22px] text-white" />
-              {/* Battery with percentage inside */}
+              {/* Battery with percentage inside - no outline */}
               <div className="flex items-center">
-                <div className="w-[28px] h-[14px] border-[1.5px] border-white rounded-[4px] relative flex items-center justify-center">
-                  <div className="absolute inset-[2px] bg-green-500 rounded-[2px]" />
+                <div className="w-[28px] h-[14px] bg-green-500 rounded-[4px] relative flex items-center justify-center">
                   <span className="relative z-10 text-white text-[10px] font-bold">97</span>
                 </div>
-                <div className="w-[2px] h-[6px] bg-white rounded-r-sm ml-[1px]" />
+                <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -486,7 +485,7 @@ export function MacBookScreen() {
           </div>
 
           {/* App Grid - Below weather widget */}
-          <div className="absolute top-[260px] left-0 right-0 z-10 px-5">
+          <div className="absolute top-[290px] left-0 right-0 z-10 px-5">
             <div className="grid grid-cols-4 gap-y-5" style={{ columnGap: 'calc((100% - 240px) / 3)' }}>
               {/* Row 1 - Case Study Apps */}
               <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
