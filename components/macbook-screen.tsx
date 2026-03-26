@@ -331,11 +331,12 @@ export function MacBookScreen() {
                 <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-white" />
-              {/* Battery */}
+              {/* Battery - green filled with 97% */}
               <div className="flex items-center">
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                <div className="w-7 h-3.5 bg-green-500 rounded-[4px] relative flex items-center justify-center">
+                  <span className="relative z-10 text-white text-[9px] font-bold">97</span>
                 </div>
+                <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -1400,12 +1401,6 @@ LinkedIn: www.linkedin.com/in/charitydupont`
               </div>
             </form>
             <p className="text-white/40 text-xs mt-3">Click to enter or press Enter</p>
-            <div className="flex items-center gap-2 mt-6">
-              <div className="flex items-center gap-2 text-white/50 text-xs">
-                <Lock className="w-3 h-3" />
-                <span>Touch ID or Enter Password</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -1506,12 +1501,12 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           <svg className="w-4 h-4 opacity-90" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
           </svg>
-          {/* Battery - Filled */}
+          {/* Battery - green filled with 97% */}
           <div className="flex items-center">
-            <div className="w-6 h-3 border border-white/80 rounded-sm relative">
-              <div className="absolute inset-[2px] bg-green-400 rounded-[1px]" />
+            <div className="w-7 h-3.5 bg-green-500 rounded-[4px] relative flex items-center justify-center">
+              <span className="relative z-10 text-white text-[9px] font-bold">97</span>
             </div>
-            <div className="w-0.5 h-1.5 bg-white/80 rounded-r-sm" />
+            <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
           </div>
           <Wifi className="w-4 h-4 opacity-90" />
           <Search className="w-4 h-4 opacity-90" />
