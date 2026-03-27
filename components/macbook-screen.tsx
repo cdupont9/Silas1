@@ -331,11 +331,13 @@ export function MacBookScreen() {
                 <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-white" />
-              {/* Battery */}
-              <div className="flex items-center">
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+              {/* Battery - macOS style with percentage */}
+              <div className="flex items-center gap-1">
+                <span className="text-[12px] text-white">72%</span>
+                <div className="w-[22px] h-[11px] border-[1.5px] border-white rounded-[3px] relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '70%'}} />
                 </div>
+                <div className="w-[2px] h-[5px] bg-white rounded-r-sm opacity-60 -ml-[1px]" />
               </div>
             </div>
           </div>
@@ -537,9 +539,9 @@ export function MacBookScreen() {
               </button>
 
               {/* Messages */}
-              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] flex items-center justify-center shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.04 2 11c0 2.21.9 4.21 2.36 5.73-.14 1.52-.75 2.98-1.68 4.12 1.46-.11 2.93-.52 4.19-1.25 1.46.59 3.11.9 4.83.9 5.52 0 10-4.04 10-9s-4.48-9-10-9z" />
+              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#5ef67a] to-[#45d34a] flex items-center justify-center shadow-lg">
+                <svg className="w-8 h-8 text-white" viewBox="0 0 32 32" fill="currentColor">
+                  <path d="M16 4C9.373 4 4 8.582 4 14.25c0 3.053 1.527 5.79 3.952 7.635-.254 1.924-1.09 3.587-1.893 4.77a.5.5 0 00.596.734c2.396-.718 4.093-1.614 5.21-2.37.993.26 2.065.406 3.185.406 6.627 0 12-4.582 12-10.25S22.627 4 16 4z"/>
                 </svg>
               </button>
 
@@ -1400,12 +1402,6 @@ LinkedIn: www.linkedin.com/in/charitydupont`
               </div>
             </form>
             <p className="text-white/40 text-xs mt-3">Click to enter or press Enter</p>
-            <div className="flex items-center gap-2 mt-6">
-              <div className="flex items-center gap-2 text-white/50 text-xs">
-                <Lock className="w-3 h-3" />
-                <span>Touch ID or Enter Password</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -1506,12 +1502,13 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           <svg className="w-4 h-4 opacity-90" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
           </svg>
-          {/* Battery - Filled */}
-          <div className="flex items-center">
-            <div className="w-6 h-3 border border-white/80 rounded-sm relative">
-              <div className="absolute inset-[2px] bg-green-400 rounded-[1px]" />
+          {/* Battery - macOS style with percentage */}
+          <div className="flex items-center gap-1">
+            <span className="text-[12px] opacity-90">72%</span>
+            <div className="w-[22px] h-[11px] border-[1.5px] border-current rounded-[3px] relative opacity-90">
+              <div className="absolute inset-[2px] bg-current rounded-[1px]" style={{width: '70%'}} />
             </div>
-            <div className="w-0.5 h-1.5 bg-white/80 rounded-r-sm" />
+            <div className="w-[2px] h-[5px] bg-current rounded-r-sm opacity-60 -ml-[1px]" />
           </div>
           <Wifi className="w-4 h-4 opacity-90" />
           <Search className="w-4 h-4 opacity-90" />
