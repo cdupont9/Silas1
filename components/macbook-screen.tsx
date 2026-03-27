@@ -1531,7 +1531,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           />
         </div>
 
-        {/* Twitter/X Post - Right Side */}
+        {/* Twitter/X Post - Center */}
         <div className="flex-1 flex items-start">
           <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md">
             <div className="flex items-start gap-3">
@@ -1557,6 +1557,21 @@ LinkedIn: www.linkedin.com/in/charitydupont`
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Case Studies Folder - Right Side (Always Visible) */}
+        <div className="flex flex-col items-center gap-1 ml-auto">
+          <button
+            onDoubleClick={() => setCaseStudiesFolder({ isOpen: true, isMinimized: false })}
+            className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-white/20 transition-colors cursor-pointer"
+          >
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png"
+              alt="Case Studies"
+              className="w-16 h-16 object-contain drop-shadow-md"
+            />
+            <span className="text-white text-xs font-medium drop-shadow-md">Case Studies</span>
+          </button>
         </div>
 
 {/* Photo Viewer Modal */}
