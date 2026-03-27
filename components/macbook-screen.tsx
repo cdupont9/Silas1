@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2 } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -394,7 +394,7 @@ export function MacBookScreen() {
       )
     }
 
-    // iPhone Home Screen
+    // iPhone Home Screen - Mimics Desktop Style
     if (mobileScreen === "home") {
       return (
         <div className="h-[100dvh] w-full relative overflow-hidden bg-black">
@@ -437,46 +437,36 @@ export function MacBookScreen() {
                   </svg>
                 </div>
                 <div className="text-white text-[58px] font-extralight leading-none tracking-tight">46°</div>
-                <div className="flex items-center gap-1.5 mt-3">
-                  <svg className="w-4 h-4 text-white/80" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 15c1.66 0 2.99-1.34 2.99-3L15 6c0-1.66-1.34-3-3-3S9 4.34 9 6v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 15 6.7 12H5c0 3.42 2.72 6.23 6 6.72V22h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
-                  </svg>
-                </div>
-                <p className="text-white/90 text-[13px] mt-1.5 leading-snug">Warmer tomorrow,<br/>with a high of 72°</p>
+                <p className="text-white/90 text-[13px] mt-2 leading-snug">Warmer tomorrow,<br/>with a high of 72°</p>
               </div>
               {/* Right side - Forecast */}
               <div className="flex flex-col gap-[6px] text-[13px] justify-center">
                 <div className="flex items-center gap-2">
                   <span className="text-white w-[32px]">Wed</span>
-                  <span className="text-[18px]">☁️</span>
                   <span className="text-white/60 w-[24px] text-right">33</span>
                   <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
                   <span className="text-white w-[24px]">56</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-white w-[32px]">Thu</span>
-                  <span className="text-[18px]">🌥️</span>
                   <span className="text-white/60 w-[24px] text-right">45</span>
                   <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#ffeb3b] to-[#ff9800] rounded-full" />
                   <span className="text-white w-[24px]">72</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-white w-[32px]">Fri</span>
-                  <span className="text-[18px]">☁️</span>
                   <span className="text-white/60 w-[24px] text-right">41</span>
                   <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#4fc3f7] to-[#26c6da] rounded-full" />
                   <span className="text-white w-[24px]">65</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-white w-[32px]">Sat</span>
-                  <span className="text-[18px]">☀️</span>
                   <span className="text-white/60 w-[24px] text-right">31</span>
                   <div className="w-[52px] h-[5px] bg-[#42a5f5] rounded-full" />
                   <span className="text-white w-[24px]">42</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-white w-[32px]">Sun</span>
-                  <span className="text-[18px]">🌤️</span>
                   <span className="text-white/60 w-[24px] text-right">30</span>
                   <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
                   <span className="text-white w-[24px]">53</span>
@@ -1531,7 +1521,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           />
         </div>
 
-        {/* Twitter/X Post - Right Side */}
+        {/* Twitter/X Post - Center */}
         <div className="flex-1 flex items-start">
           <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md">
             <div className="flex items-start gap-3">
@@ -1559,7 +1549,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           </div>
         </div>
 
-{/* Photo Viewer Modal */}
+        {/* Photo Viewer Modal */}
       {photoViewerOpen && (
         <div className="absolute inset-0 bg-black/80 z-50 flex items-center justify-center" onClick={() => setPhotoViewerOpen(false)}>
           <div className="relative max-w-[80%] max-h-[80%]" onClick={(e) => e.stopPropagation()}>
@@ -1688,8 +1678,8 @@ LinkedIn: www.linkedin.com/in/charitydupont`
   className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
   >
   <div className="w-20 h-16 group-hover:scale-110 transition-transform">
-  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mac-os-folder-computer-blue-icon-png-701751695035280rjq1eqw05k-CmOaZTOpmI8k51F8Y3zyHCoxMRX5zX.png" alt={project.title} className="w-full h-full object-contain" />
-  </div>
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt={project.title} className="w-full h-full object-contain" />
+                    </div>
   <span className="text-[12px] text-gray-700 text-center leading-tight font-medium">{project.title}</span>
   </button>
   ))}
