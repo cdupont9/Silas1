@@ -394,183 +394,161 @@ export function MacBookScreen() {
       )
     }
 
-    // Retro Design Forecast Home Screen
+    // iPhone Home Screen - Mimics Desktop Style
     if (mobileScreen === "home") {
       return (
-        <div className="h-[100dvh] w-full relative overflow-hidden bg-gradient-to-b from-[#1a1a2e] via-[#16213e] to-[#0f0f23]">
-          {/* Retro scanlines overlay */}
-          <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.03]" style={{
-            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)'
-          }} />
+        <div className="h-[100dvh] w-full relative overflow-hidden bg-black">
+          {/* Background */}
+          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-70">
+            <source src={VIDEO_URL} type="video/mp4" />
+          </video>
           
-          {/* Retro Header Bar */}
-          <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-[#e94560] via-[#ff6b6b] to-[#e94560] px-4 py-3 z-10">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                <span className="text-white text-[11px] font-bold tracking-widest uppercase">Live</span>
+          {/* Status Bar */}
+          <div className="absolute top-0 left-0 right-0 h-14 flex items-center justify-between px-7 pt-3 z-10">
+            <span className="text-white text-[19px] font-semibold">{loginTime}</span>
+            <div className="flex items-center gap-1.5">
+              {/* Cellular Bars */}
+              <div className="flex items-end gap-[2px] h-[18px]">
+                <div className="w-[4px] h-[6px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[10px] bg-white rounded-[1px]" />
+                <div className="w-[4px] h-[14px] bg-white/40 rounded-[1px]" />
+                <div className="w-[4px] h-[18px] bg-white/40 rounded-[1px]" />
               </div>
-              <span className="text-white text-[13px] font-bold tracking-wider">DESIGN FORECAST</span>
-              <span className="text-white/90 text-[11px] font-mono">{loginTime}</span>
+              <Wifi className="w-[22px] h-[22px] text-white" />
+              {/* Battery with percentage inside - no outline */}
+              <div className="flex items-center">
+                <div className="w-[28px] h-[14px] bg-green-500 rounded-[4px] relative flex items-center justify-center">
+                  <span className="relative z-10 text-white text-[10px] font-bold">97</span>
+                </div>
+                <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
+              </div>
             </div>
           </div>
 
-          {/* Main Content */}
-          <div className="relative z-10 pt-14 px-4 h-full flex flex-col">
-            
-            {/* Featured Project - "Today's Forecast" */}
-            <div className="bg-gradient-to-br from-[#533483] to-[#0f3460] rounded-2xl p-4 mb-4 border border-white/10 shadow-xl">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="px-2 py-0.5 bg-[#e94560] rounded text-[10px] text-white font-bold uppercase tracking-wide">Featured</div>
-                <span className="text-white/60 text-[11px]">Today&apos;s Highlight</span>
+          {/* Weather Widget */}
+          <div className="absolute top-16 left-4 right-4 z-10">
+            <div className="bg-[#1c1c1e]/90 backdrop-blur-xl rounded-[22px] p-4 flex">
+              {/* Left side - Current weather */}
+              <div className="flex-1 pr-3">
+                <div className="flex items-center gap-1 mb-0.5">
+                  <span className="text-white text-[16px] font-medium">Plainfield</span>
+                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
+                  </svg>
+                </div>
+                <div className="text-white text-[58px] font-extralight leading-none tracking-tight">46°</div>
+                <p className="text-white/90 text-[13px] mt-2 leading-snug">Warmer tomorrow,<br/>with a high of 72°</p>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="text-6xl">🌟</div>
-                <div className="flex-1">
-                  <h2 className="text-white text-xl font-bold mb-1">Charity Dupont</h2>
-                  <p className="text-[#e94560] text-sm font-medium">UX/UI Designer</p>
-                  <p className="text-white/60 text-xs mt-1">Crafting delightful digital experiences</p>
+              {/* Right side - Forecast */}
+              <div className="flex flex-col gap-[6px] text-[13px] justify-center">
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Wed</span>
+                  <span className="text-white/60 w-[24px] text-right">33</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
+                  <span className="text-white w-[24px]">56</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Thu</span>
+                  <span className="text-white/60 w-[24px] text-right">45</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#ffeb3b] to-[#ff9800] rounded-full" />
+                  <span className="text-white w-[24px]">72</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Fri</span>
+                  <span className="text-white/60 w-[24px] text-right">41</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#4fc3f7] to-[#26c6da] rounded-full" />
+                  <span className="text-white w-[24px]">65</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Sat</span>
+                  <span className="text-white/60 w-[24px] text-right">31</span>
+                  <div className="w-[52px] h-[5px] bg-[#42a5f5] rounded-full" />
+                  <span className="text-white w-[24px]">42</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-white w-[32px]">Sun</span>
+                  <span className="text-white/60 w-[24px] text-right">30</span>
+                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
+                  <span className="text-white w-[24px]">53</span>
                 </div>
               </div>
             </div>
+            <p className="text-white/50 text-[12px] text-center mt-2 font-medium">Weather</p>
+          </div>
 
-            {/* Project Forecast Cards */}
-            <div className="flex-1 space-y-3 overflow-auto pb-32">
-              <p className="text-white/40 text-[10px] font-bold tracking-widest uppercase mb-2">Project Conditions</p>
-              
-              {/* Teammate Card */}
-              <button 
-                onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }}
-                className="w-full bg-gradient-to-r from-[#1e3a5f] to-[#2d5a87] rounded-xl p-4 flex items-center gap-4 border border-white/10 active:scale-[0.98] transition-transform"
-              >
-                <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+          {/* App Grid - Below weather widget */}
+          <div className="absolute top-[290px] left-0 right-0 z-10 px-5">
+            <div className="grid grid-cols-4 gap-y-5" style={{ columnGap: 'calc((100% - 240px) / 3)' }}>
+              {/* Row 1 - Case Study Apps */}
+              <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                   <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1 text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="text-white font-bold">Teammate</span>
-                    <span className="text-2xl">🏀</span>
-                  </div>
-                  <p className="text-white/60 text-xs">Sports Dating App</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-[85%] bg-gradient-to-r from-[#f39c12] to-[#e74c3c] rounded-full" />
-                    </div>
-                    <span className="text-[#f39c12] text-[10px] font-bold">HOT</span>
-                  </div>
-                </div>
-                <ChevronRight className="w-5 h-5 text-white/40" />
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Teammate</span>
               </button>
 
-              {/* Meetly Card */}
-              <button 
-                onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }}
-                className="w-full bg-gradient-to-r from-[#1a4f4f] to-[#2d7a7a] rounded-xl p-4 flex items-center gap-4 border border-white/10 active:scale-[0.98] transition-transform"
-              >
-                <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+              <button onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                   <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1 text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="text-white font-bold">Meetly</span>
-                    <span className="text-2xl">🤝</span>
-                  </div>
-                  <p className="text-white/60 text-xs">Social Coordination</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-[70%] bg-gradient-to-r from-[#2ecc71] to-[#27ae60] rounded-full" />
-                    </div>
-                    <span className="text-[#2ecc71] text-[10px] font-bold">CLEAR</span>
-                  </div>
-                </div>
-                <ChevronRight className="w-5 h-5 text-white/40" />
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Meetly</span>
               </button>
 
-              {/* Silas Card */}
-              <button 
-                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
-                className="w-full bg-gradient-to-r from-[#4a1a6b] to-[#6b3fa0] rounded-xl p-4 flex items-center gap-4 border border-white/10 active:scale-[0.98] transition-transform"
-              >
-                <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+              <button onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                   <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1 text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="text-white font-bold">Silas</span>
-                    <span className="text-2xl">🤖</span>
-                  </div>
-                  <p className="text-white/60 text-xs">AI Companion</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-[95%] bg-gradient-to-r from-[#9b59b6] to-[#8e44ad] rounded-full" />
-                    </div>
-                    <span className="text-[#9b59b6] text-[10px] font-bold">ELECTRIC</span>
-                  </div>
-                </div>
-                <ChevronRight className="w-5 h-5 text-white/40" />
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Silas</span>
               </button>
 
-              {/* Photos Card */}
-              <button 
-                onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }}
-                className="w-full bg-gradient-to-r from-[#2c3e50] to-[#34495e] rounded-xl p-4 flex items-center gap-4 border border-white/10 active:scale-[0.98] transition-transform"
-              >
-                <div className="w-14 h-14 rounded-xl overflow-hidden shadow-lg flex-shrink-0">
+              <button onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }} className="flex flex-col items-center gap-[5px]">
+                <div className="w-[60px] h-[60px] rounded-[14px] bg-white shadow-lg overflow-hidden">
                   <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1 text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="text-white font-bold">Gallery</span>
-                    <span className="text-2xl">📸</span>
-                  </div>
-                  <p className="text-white/60 text-xs">Visual Archive</p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <div className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-[60%] bg-gradient-to-r from-[#3498db] to-[#2980b9] rounded-full" />
-                    </div>
-                    <span className="text-[#3498db] text-[10px] font-bold">CALM</span>
-                  </div>
-                </div>
-                <ChevronRight className="w-5 h-5 text-white/40" />
+                <span className="text-white text-[11px] font-medium drop-shadow-md">Photos</span>
               </button>
             </div>
           </div>
 
-          {/* Bottom Navigation - Retro Style */}
-          <div className="absolute bottom-0 left-0 right-0 bg-[#0f0f23]/95 backdrop-blur-xl border-t border-white/10 px-4 py-3 z-20">
-            <div className="flex justify-around items-center">
-              <button className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 bg-[#e94560] rounded-xl flex items-center justify-center">
-                  <Home className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-[#e94560] text-[9px] font-bold">HOME</span>
+          {/* Search Button - Pill shaped, centered */}
+          <div className="absolute bottom-[100px] left-0 right-0 flex justify-center z-10">
+            <button className="flex items-center gap-2 bg-white/20 backdrop-blur-xl rounded-full px-5 py-2">
+              <Search className="w-4 h-4 text-white/70" />
+              <span className="text-white/70 text-[15px]">Search</span>
+            </button>
+          </div>
+
+          {/* Dock - Phone, Messages, Notes, About Me */}
+          <div className="absolute bottom-5 left-3 right-3 bg-white/20 backdrop-blur-2xl rounded-[26px] px-3 py-2.5 z-10">
+            <div className="flex justify-around">
+              {/* Phone */}
+              <button className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#63d94e] to-[#2dc421] flex items-center justify-center shadow-lg">
+                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                </svg>
               </button>
-              
-              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
-                  <MessageCircle className="w-5 h-5 text-white/60" />
-                </div>
-                <span className="text-white/40 text-[9px] font-bold">CHAT</span>
+
+              {/* Messages */}
+              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#5ef67a] to-[#45d34a] flex items-center justify-center shadow-lg">
+                <svg className="w-8 h-8 text-white" viewBox="0 0 32 32" fill="currentColor">
+                  <path d="M16 4C9.373 4 4 8.582 4 14.25c0 3.053 1.527 5.79 3.952 7.635-.254 1.924-1.09 3.587-1.893 4.77a.5.5 0 00.596.734c2.396-.718 4.093-1.614 5.21-2.37.993.26 2.065.406 3.185.406 6.627 0 12-4.582 12-10.25S22.627 4 16 4z"/>
+                </svg>
               </button>
-              
-              <button onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }} className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-white/60" />
-                </div>
-                <span className="text-white/40 text-[9px] font-bold">NOTES</span>
+
+              {/* Notes */}
+              <button onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }} className="w-[56px] h-[56px] rounded-[13px] overflow-hidden shadow-lg">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
               </button>
-              
-              <button onClick={() => setMobileScreen('about')} className="flex flex-col items-center gap-1">
-                <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center overflow-hidden">
-                  <img src={MEMOJI_URL} alt="About" className="w-full h-full object-cover" />
-                </div>
-                <span className="text-white/40 text-[9px] font-bold">ABOUT</span>
+
+              {/* About Me */}
+              <button onClick={() => setMobileScreen('about')} className="w-[56px] h-[56px] rounded-[13px] overflow-hidden shadow-lg">
+                <img src={MEMOJI_URL} alt="About Me" className="w-full h-full object-cover" />
               </button>
             </div>
-            
-            {/* Home Indicator */}
-            <div className="mt-3 mx-auto w-32 h-1 bg-white/30 rounded-full" />
           </div>
+
+          {/* Home Indicator */}
+          <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/70 rounded-full" />
         </div>
       )
     }
