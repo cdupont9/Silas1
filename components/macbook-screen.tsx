@@ -1559,22 +1559,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           </div>
         </div>
 
-        {/* Case Studies Folder - Right Side (Always Visible) */}
-        <div className="flex flex-col items-center gap-1 ml-auto">
-          <button
-            onDoubleClick={() => setCaseStudiesFolder({ isOpen: true, isMinimized: false })}
-            className="flex flex-col items-center gap-1 p-2 rounded-lg hover:bg-white/20 transition-colors cursor-pointer"
-          >
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png"
-              alt="Case Studies"
-              className="w-16 h-16 object-contain drop-shadow-md"
-            />
-            <span className="text-white text-xs font-medium drop-shadow-md">Case Studies</span>
-          </button>
-        </div>
-
-{/* Photo Viewer Modal */}
+        {/* Photo Viewer Modal */}
       {photoViewerOpen && (
         <div className="absolute inset-0 bg-black/80 z-50 flex items-center justify-center" onClick={() => setPhotoViewerOpen(false)}>
           <div className="relative max-w-[80%] max-h-[80%]" onClick={(e) => e.stopPropagation()}>
@@ -1703,8 +1688,8 @@ LinkedIn: www.linkedin.com/in/charitydupont`
   className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
   >
   <div className="w-20 h-16 group-hover:scale-110 transition-transform">
-  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/mac-os-folder-computer-blue-icon-png-701751695035280rjq1eqw05k-CmOaZTOpmI8k51F8Y3zyHCoxMRX5zX.png" alt={project.title} className="w-full h-full object-contain" />
-  </div>
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt={project.title} className="w-full h-full object-contain" />
+                    </div>
   <span className="text-[12px] text-gray-700 text-center leading-tight font-medium">{project.title}</span>
   </button>
   ))}
