@@ -145,6 +145,24 @@
   }
 }
 
+@keyframes memoji-wave {
+  0% { transform: rotate(0deg) scale(1); }
+  10% { transform: rotate(14deg) scale(1.05); }
+  20% { transform: rotate(-8deg) scale(1.05); }
+  30% { transform: rotate(14deg) scale(1.05); }
+  40% { transform: rotate(-4deg) scale(1.03); }
+  50% { transform: rotate(10deg) scale(1.03); }
+  60% { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes memoji-wink {
+  0%, 100% { transform: scaleY(1); }
+  45% { transform: scaleY(1); }
+  50% { transform: scaleY(0.95); }
+  55% { transform: scaleY(1); }
+}
+
 @keyframes memoji-pulse {
   0%, 100% { 
     transform: scale(1);
@@ -176,4 +194,13 @@
 .animate-memoji-pulse {
   animation: memoji-pulse 3s ease-in-out infinite;
   animation-delay: 0.5s;
+}
+
+.animate-memoji-wave {
+  animation: memoji-wave 1.5s ease-in-out 1, memoji-float 3s ease-in-out infinite 1.5s;
+}
+
+.animate-memoji-wink {
+  animation: memoji-wink 2s ease-in-out infinite;
+  animation-delay: 2s;
 }
