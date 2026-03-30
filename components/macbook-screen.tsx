@@ -3079,6 +3079,44 @@ function MeetlyCaseStudy() {
         <div className="max-w-4xl mx-auto px-8 text-center">
           <h3 className="text-2xl font-bold text-indigo-600 mb-4">Experience the Prototype</h3>
           <p className="text-black/60 mb-6">Click below to interact with the Meetly prototype</p>
+          
+          {/* Demo Instructions */}
+          <div className="bg-white rounded-2xl p-6 mb-8 text-left shadow-md border border-indigo-100 max-w-2xl mx-auto">
+            <h4 className="font-semibold text-indigo-600 mb-4 text-center">Demo Instructions</h4>
+            <ol className="text-sm text-black/70 space-y-2 list-decimal list-inside">
+              <li>Click the <span className="font-medium">+ (plus)</span> button</li>
+              <li>Select <span className="font-medium">Create New Hangout</span></li>
+              <li>Click on <span className="font-medium">Emily</span> (this will highlight multiple friends if needed)</li>
+              <li>Click <span className="font-medium">Add</span></li>
+              <li>Select <span className="font-medium">Group Name</span></li>
+              <li>Select the <span className="font-medium">keyboard</span></li>
+              <li>Click <span className="font-medium">Create</span></li>
+              <li>Choose <span className="font-medium">&quot;Show Availability Only&quot;</span></li>
+              <li>Click <span className="font-medium">Create</span></li>
+              <li>Go to <span className="font-medium">Messages</span></li>
+              <li>Click <span className="font-medium">Text Message Box</span></li>
+              <li>View messages (e.g., suggestion like &quot;How about sometime next month?&quot;)</li>
+              <li>Select the <span className="font-medium">keyboard</span></li>
+              <li>Click <span className="font-medium">Messages</span> again to see more replies</li>
+              <li>Open the <span className="font-medium">Calendar</span></li>
+              <li>Click the <span className="font-medium">Chevron</span> to scroll to January</li>
+              <li>Select <span className="font-medium">January 17th</span></li>
+              <li>Click <span className="font-medium">Vote</span></li>
+              <li>Click <span className="font-medium">Confirm</span></li>
+              <li>Close the calendar</li>
+              <li>If it says &quot;Vote Pending – James has not voted yet&quot;: Click <span className="font-medium">Cancel</span>, then select <span className="font-medium">Yes, Notify</span></li>
+              <li>Reopen the <span className="font-medium">Calendar</span></li>
+              <li>Check that James has voted</li>
+              <li>Close the calendar</li>
+              <li>Click <span className="font-medium">Confirm</span></li>
+              <li>Click <span className="font-medium">Set Time</span></li>
+              <li>Choose <span className="font-medium">Schedule with Suggested Time</span></li>
+              <li>Confirm the date</li>
+              <li>Click <span className="font-medium">Confirm</span> again</li>
+              <li>Final result: the scheduled event appears on your screen</li>
+            </ol>
+          </div>
+
           <button
             onClick={() => setShowDemo(true)}
             className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-xl"
