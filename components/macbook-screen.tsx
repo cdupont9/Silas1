@@ -2351,6 +2351,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
 // Full Silas Case Study Component
 function SilasCaseStudy() {
+  const [showDemo, setShowDemo] = useState(false)
+  
   return (
     <div className="bg-white text-black">
       {/* Hero Section */}
@@ -2762,6 +2764,45 @@ function SilasCaseStudy() {
           </div>
         </div>
       </div>
+
+      {/* Open Demo Section */}
+      <div className="py-12 bg-gradient-to-b from-purple-50 to-white">
+        <div className="max-w-4xl mx-auto px-8 text-center">
+          <h3 className="text-2xl font-bold text-purple-600 mb-4">Experience the Prototype</h3>
+          <p className="text-black/60 mb-6">Click below to interact with the Silas prototype</p>
+          <button
+            onClick={() => setShowDemo(true)}
+            className="inline-flex items-center gap-2 px-8 py-4 bg-purple-600 text-white rounded-full font-semibold hover:bg-purple-700 transition-colors shadow-lg hover:shadow-xl"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Open Demo
+          </button>
+        </div>
+      </div>
+      
+      {/* Demo Modal - Full Screen Figma Prototype */}
+      {showDemo && (
+        <div className="fixed inset-0 z-[100] bg-gray-900 flex items-center justify-center">
+          <div className="relative w-full h-full">
+            <iframe 
+              src="https://embed.figma.com/proto/YOUR_SILAS_FIGMA_LINK?scaling=scale-down&hide-ui=1&embed-host=share&hotspot-hints=0" 
+              className="w-full h-full border-0" 
+              allowFullScreen 
+            />
+            <button 
+              onClick={() => setShowDemo(false)} 
+              className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors"
+            >
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <div className="py-12 border-t border-black/10 bg-white">
