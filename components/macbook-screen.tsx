@@ -1500,19 +1500,19 @@ LinkedIn: www.linkedin.com/in/charitydupont`
 
       {/* Desktop Folder Icons - Right Side */}
       <div className="absolute top-[40px] right-4 flex flex-col gap-3 z-10">
-        {/* Teammates Folder */}
+        {/* Teammate Folder */}
         <button
-          onClick={() => openCaseStudy('teammates')}
+          onClick={() => openCaseStudy('teammate')}
           className="flex flex-col items-center gap-1 group w-20"
         >
           <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
             <img 
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-              alt="Teammates" 
+              alt="Teammate" 
               className="w-full h-full object-contain drop-shadow-lg" 
             />
           </div>
-          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Teammates</span>
+          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Teammate</span>
         </button>
 
         {/* Meetly Folder */}
