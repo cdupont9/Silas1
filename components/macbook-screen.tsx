@@ -2851,13 +2851,13 @@ function MeetlyCaseStudy() {
           <div className="grid md:grid-cols-2 gap-6 mb-10">
             <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-black mb-4 text-center">User Research Synthesis</h3>
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-white flex-1 flex items-center justify-center p-2">
+              <div className="rounded-xl overflow-hidden border border-black/10 flex-1 flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ApLgUHySGxYaPLs-5ZFkUdVzlnsmvsq6Vqp0PWKvAcVfQK.png" alt="I Like, I Wish, What If Research Board" className="w-full h-auto object-contain" />
               </div>
             </div>
             <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-black mb-4 text-center">Feature Prioritization</h3>
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-white flex-1 flex items-center justify-center p-2">
+              <div className="rounded-xl overflow-hidden border border-black/10 flex-1 flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4ZAJu3RfxsHn87J-C40JZ9GtirbtlXMkE0VCQ1jcCnpZ3X.png" alt="Priority Feasibility Matrix" className="w-full h-auto object-contain" />
               </div>
             </div>
@@ -2960,31 +2960,31 @@ function MeetlyCaseStudy() {
           {/* App Screens Grid */}
           <div className="grid grid-cols-5 gap-4 mb-10">
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Home Screen</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-kvBQ0w5m9bcMxJDLYcbuSSVJrEcrPc.png" alt="Hangout Chat" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Hangout Chat</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-Y8hW7TmOJfVaW1Iizh9CJkHWFsIeSd.png" alt="Vote Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Vote Screen</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-ytP9uUYl1tfuGMTjpRlMvbw57l8wBx.png" alt="Vote Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Vote Screen</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-Zx75LyunsQWz207iWPdSipbuqvblvQ.png" alt="Vote Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Vote Screen</p>
@@ -2993,31 +2993,31 @@ function MeetlyCaseStudy() {
 
           <div className="grid grid-cols-5 gap-4">
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2028-cLMG7tLrO3aQdiYlfASDZRvCUyqBwb.png" alt="Hangout Chat" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Hangout Chat</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2029-APo5XHVqWgkh2mMOv6e2p6mj91YUmK.png" alt="Hangout Chat" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Hangout Chat</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2030-7MAPn6ktJNerulMwPugsHcYNOqgrdA.png" alt="Set Time Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Set Time</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2031-0VLOPEN9C6TZam8ou1yfaXriYe3iON.png" alt="Success Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Success</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="mb-2 aspect-[9/19] rounded-[2rem] overflow-hidden flex items-center justify-center">
                 <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2032-X5DdZgQI5aSWfhkZd9trlhxvPG8ZEU.png" alt="Home Screen End" className="w-full h-full object-contain" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Home (End)</p>
@@ -3379,56 +3379,56 @@ function TeammateCaseStudy() {
           {/* All Screens - 3x3 Grid */}
           <div className="grid grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash Screen" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Splash</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home Events" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home Events" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Home</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Potential Matches" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Potential Matches" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Matches</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched Screen" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched Screen" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Matched</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages List" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages List" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Messages</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat Conversation" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat Conversation" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Chat</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule a Date" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule a Date" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Schedule</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Ticket Purchase" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Ticket Purchase" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Purchase</p>
             </div>
             <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full h-auto block" />
+              <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full h-full object-contain" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Confirmation</p>
             </div>
