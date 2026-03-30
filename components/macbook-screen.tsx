@@ -48,7 +48,7 @@ const messageContacts = [
   {
     id: 'teammate',
     name: 'Teammate Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_a_app_202603181525-VXaqH2wtspUUh5MIBe2DesLS961p0E.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_store_icon_202603271728-PqcDh4UD4rwBEYZkD2tBYS2rA2SA6F.jpeg',
     lastMessage: 'Sports dating app - "Don\'t Play Alone"',
     time: '9:45 AM',
     unread: false,
@@ -3025,7 +3025,7 @@ function TeammateCaseStudy() {
           {/* Hero Text */}
           <div className="text-center md:text-left">
             <div className="w-16 h-16 mb-6 rounded-2xl overflow-hidden mx-auto md:mx-0">
-              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_a_app_202603181525-VXaqH2wtspUUh5MIBe2DesLS961p0E.jpeg" alt="Teammate" className="w-full h-full object-cover" />
+              <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-4 text-[#D85A5A]">
               Teammate
