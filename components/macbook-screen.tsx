@@ -1464,7 +1464,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </button>
               </div>
             </form>
-            <p className="text-white/40 text-xs mt-3">Click to enter or press Enter</p>
+            <p className="text-white/40 text-xs mt-3">No password needed to access</p>
           </div>
         </div>
       </div>
