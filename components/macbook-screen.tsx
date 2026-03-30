@@ -167,7 +167,7 @@ const caseStudies = {
     subtitle: "Sports Dating App",
     hero: "Don't Play Alone",
     overview: "Sports fans often struggle to find partners who understand their lifestyle. Traditional dating apps ignore the 'logistics of fandom,' leading to mismatched expectations and arguments over weekend schedules.",
-    role: "Co-Product Designer (End-to-End)",
+    role: "Product Designer",
     timeline: "3 Weeks (2024)",
     tools: ["Figma", "Adobe Photoshop", "User Research", "Competitive Analysis"],
     challenge: "While competitors focus on static personality traits, no current app solves the dynamic scheduling conflicts sports fans face. Users find current dating apps lacking in depth and safety.",
@@ -183,7 +183,7 @@ const caseStudies = {
     subtitle: "Social Group Coordination App",
     hero: "Coordinate meetups effortlessly",
     overview: "A mobile application to help friends and social groups better coordinate their meetups and share schedules effortlessly. Users face significant hassle and frustration when trying to schedule meetups.",
-    role: "UX Researcher and Designer",
+    role: "Co-Product Designer",
     timeline: "May 2024",
     tools: ["Figma", "User Research", "Prototyping", "Usability Testing"],
     challenge: "Juggling busy schedules and conflicting availabilities often leads to headache, missed opportunities, and social disappointment. There is a complete absence of a dedicated app specifically designed for social coordination with friends.",
@@ -199,7 +199,7 @@ const caseStudies = {
     subtitle: "The Integrated AI Companion",
     hero: "Less thinking. More living.",
     overview: "Silas is an Integrated AI Companion that bridges the gap between fragmented digital data and physical-world needs. It integrates across existing apps and turns passive data into executable intelligence.",
-    role: "UX Designer End to End",
+    role: "Product Designer",
     timeline: "Anticipatory Project",
     tools: ["Figma", "Prototyping", "UX Research", "Anticipatory Design"],
     challenge: "Users live across 20+ reactive apps where calendar data is passive, banking records don't enable smart reordering, memory is disconnected from context, and messages do not automatically become tasks.",
@@ -2872,9 +2872,13 @@ function MeetlyCaseStudy() {
         </div>
       </div>
 
-      {/* Timeline & Goal */}
+      {/* Role, Timeline & Goal */}
       <div className="max-w-4xl mx-auto px-8 py-10 border-b border-black/10">
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
+            <p className="text-black font-medium">Co-Product Designer</p>
+          </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Timeline</h3>
             <p className="text-black font-medium">May 2024</p>
@@ -3302,10 +3306,8 @@ function TeammateCaseStudy() {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-yellow-400 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z" />
-                  </svg>
+                <div className="w-10 h-10 rounded-xl overflow-hidden">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/classic-bumble-logo-editable-and-for-tech-branding-and-creative-design-free-png-GQUpsWRD0QoLNqhIzdRe2J51TYAH7o.webp" alt="Bumble" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-xl font-semibold text-yellow-600">Bumble</h3>
               </div>
@@ -3320,10 +3322,8 @@ function TeammateCaseStudy() {
             </div>
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 via-red-500 to-orange-500 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                  </svg>
+                <div className="w-10 h-10 rounded-xl overflow-hidden">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tinder-app-logo-tinder-app-logo-transparent-tinder-app-icon-transparent-free-free-png-PDRTDpNBdjoBo1j4DFXEHy6P36zP0Y.webp" alt="Tinder" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-xl font-semibold text-red-500">Tinder</h3>
               </div>
@@ -3338,12 +3338,10 @@ function TeammateCaseStudy() {
             </div>
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-                  </svg>
+                <div className="w-10 h-10 rounded-xl overflow-hidden bg-white flex items-center justify-center">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hinge-white-logo-icon-clean-with-transparent-background-for-ui-use-free-png-x8G86pfW3DS0MPdgJKfUAix4t3nz4e.webp" alt="Hinge" className="w-8 h-8 object-contain" />
                 </div>
-                <h3 className="text-xl font-semibold text-purple-600">Hinge</h3>
+                <h3 className="text-xl font-semibold text-black">Hinge</h3>
               </div>
               <div className="mb-4">
                 <p className="text-sm text-green-600 mb-1">Pros:</p>
