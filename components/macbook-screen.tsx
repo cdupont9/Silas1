@@ -464,10 +464,27 @@ export function MacBookScreen() {
             <source src={VIDEO_URL} type="video/mp4" />
           </video>
           
-          {/* Header Bar - Like macOS menu bar */}
-          <div className="absolute top-0 left-0 right-0 bg-black/60 backdrop-blur-xl px-4 py-3 z-20 flex items-center justify-between">
-            <span className="text-white text-sm font-medium">Charity Dupont</span>
-            <span className="text-white/70 text-xs">{loginTime}</span>
+          {/* Status Bar - iOS style */}
+          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20 bg-black/40 backdrop-blur-xl">
+            <span className="text-white text-sm font-medium">{loginTime}</span>
+            <div className="flex items-center gap-1.5">
+              {/* Cellular Bars */}
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+              </div>
+              <Wifi className="w-4 h-4 text-white" />
+              {/* Battery - iOS style with percentage */}
+              <div className="flex items-center gap-1">
+                <span className="text-[12px] text-white">72%</span>
+                <div className="w-[22px] h-[11px] border-[1.5px] border-white rounded-[3px] relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '70%'}} />
+                </div>
+                <div className="w-[2px] h-[5px] bg-white rounded-r-sm opacity-60 -ml-[1px]" />
+              </div>
+            </div>
           </div>
 
           {/* Scrollable Content Area */}
