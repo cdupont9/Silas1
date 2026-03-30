@@ -1453,7 +1453,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleLogin(e); } }}
-                  placeholder="Click enter on your keyboard or press the arrow"
+                  placeholder="Click the arrow →"
                   className="w-64 h-10 bg-white/20 backdrop-blur-xl rounded-full px-5 pr-10 text-white placeholder-white/50 text-sm border border-white/30 focus:border-white/50 focus:outline-none focus:ring-0 transition-colors"
                   autoFocus
                 />
