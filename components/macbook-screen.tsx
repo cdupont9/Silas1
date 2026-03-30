@@ -36,19 +36,19 @@ const messageContacts = [
     name: 'Charity',
     avatar: null,
     isMe: true,
-    lastMessage: 'Welcome to my portfolio!',
+    lastMessage: 'Welcome to my portfolio on my iPhone!',
     time: 'now',
     unread: true,
     messages: [
-      { from: 'charity', text: "Hey! Welcome to my portfolio MacBook!", time: '10:30 AM' },
-      { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
+      { from: 'charity', text: "Hey! Welcome to my portfolio on my iPhone!", time: '10:30 AM' },
+      { from: 'charity', text: "Feel free to check out my case studies! Tap on any one of my case studies and explore.", time: '10:30 AM' },
+      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
     ]
   },
   {
     id: 'teammate',
     name: 'Teammate Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_a_app_202603181525-VXaqH2wtspUUh5MIBe2DesLS961p0E.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png',
     lastMessage: 'Sports dating app - "Don\'t Play Alone"',
     time: '9:45 AM',
     unread: false,
@@ -61,7 +61,7 @@ const messageContacts = [
   {
     id: 'meetly',
     name: 'Meetly Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png',
     lastMessage: 'Social coordination made easy',
     time: '9:30 AM',
     unread: false,
@@ -74,7 +74,7 @@ const messageContacts = [
   {
     id: 'silas',
     name: 'Silas Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_app_icon_202603181528-ydIag7XSrkaGqZZ4tCETLAl51bbTxy.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg',
     lastMessage: 'Your intelligent AI companion',
     time: '9:15 AM',
     unread: false,
@@ -96,9 +96,9 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
 // Project Icons
-const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_a_app_202603181525-VXaqH2wtspUUh5MIBe2DesLS961p0E.jpeg"
-const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg"
-const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_app_icon_202603181528-ydIag7XSrkaGqZZ4tCETLAl51bbTxy.jpeg"
+const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
+const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png"
+const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
 type ScreenState = "login" | "loading" | "desktop"
 
@@ -175,12 +175,15 @@ export function MacBookScreen() {
   const [selectedContact, setSelectedContact] = useState('welcome')
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [photoViewerOpen, setPhotoViewerOpen] = useState(false)
+  const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
 
   // Personal photos for the photo stack
   const personalPhotos = [
+    "/images/sunflowers-sunrise.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7592-px1oAdcjTmaa9c7aTzlifKeaOqtueY.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_6030-HDajKbzLzr6NbShaVi96ClYMP8BhmX.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3f8de33d-4c26-4ebb-9f10-d1ed1073fe58.JPG-Z2f5Pmtz0aNiNTX7UVFea7jzrLPwrf.jpeg",
@@ -359,8 +362,8 @@ export function MacBookScreen() {
                   <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-white text-sm font-semibold">Portfolio</p>
-                  <p className="text-white/70 text-xs">Tap Enter to explore my work</p>
+                  <p className="text-white text-sm font-semibold">Messages</p>
+                  <p className="text-white/70 text-xs">Welcome to my portfolio on my iPhone! Feel free to check out my case studies.</p>
                 </div>
               </div>
             </div>
@@ -394,161 +397,151 @@ export function MacBookScreen() {
       )
     }
 
-    // iPhone Home Screen - Mimics Desktop Style
+    // Mobile Home - Desktop-Style Portfolio Layout
     if (mobileScreen === "home") {
       return (
-        <div className="h-[100dvh] w-full relative overflow-hidden bg-black">
+        <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
           {/* Background */}
-          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-70">
+          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
             <source src={VIDEO_URL} type="video/mp4" />
           </video>
           
-          {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-14 flex items-center justify-between px-7 pt-3 z-10">
-            <span className="text-white text-[19px] font-semibold">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              {/* Cellular Bars */}
-              <div className="flex items-end gap-[2px] h-[18px]">
-                <div className="w-[4px] h-[6px] bg-white rounded-[1px]" />
-                <div className="w-[4px] h-[10px] bg-white rounded-[1px]" />
-                <div className="w-[4px] h-[14px] bg-white/40 rounded-[1px]" />
-                <div className="w-[4px] h-[18px] bg-white/40 rounded-[1px]" />
-              </div>
-              <Wifi className="w-[22px] h-[22px] text-white" />
-              {/* Battery with percentage inside - no outline */}
-              <div className="flex items-center">
-                <div className="w-[28px] h-[14px] bg-green-500 rounded-[4px] relative flex items-center justify-center">
-                  <span className="relative z-10 text-white text-[10px] font-bold">97</span>
-                </div>
-                <div className="w-[2px] h-[6px] bg-green-500 rounded-r-sm ml-[1px]" />
-              </div>
-            </div>
+          {/* Header Bar - Like macOS menu bar */}
+          <div className="absolute top-0 left-0 right-0 bg-black/60 backdrop-blur-xl px-4 py-3 z-20 flex items-center justify-between">
+            <span className="text-white text-sm font-medium">Charity Dupont</span>
+            <span className="text-white/70 text-xs">{loginTime}</span>
           </div>
 
-          {/* Weather Widget */}
-          <div className="absolute top-16 left-4 right-4 z-10">
-            <div className="bg-[#1c1c1e]/90 backdrop-blur-xl rounded-[22px] p-4 flex">
-              {/* Left side - Current weather */}
-              <div className="flex-1 pr-3">
-                <div className="flex items-center gap-1 mb-0.5">
-                  <span className="text-white text-[16px] font-medium">Plainfield</span>
-                  <svg className="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
-                  </svg>
-                </div>
-                <div className="text-white text-[58px] font-extralight leading-none tracking-tight">46°</div>
-                <p className="text-white/90 text-[13px] mt-2 leading-snug">Warmer tomorrow,<br/>with a high of 72°</p>
-              </div>
-              {/* Right side - Forecast */}
-              <div className="flex flex-col gap-[6px] text-[13px] justify-center">
-                <div className="flex items-center gap-2">
-                  <span className="text-white w-[32px]">Wed</span>
-                  <span className="text-white/60 w-[24px] text-right">33</span>
-                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
-                  <span className="text-white w-[24px]">56</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white w-[32px]">Thu</span>
-                  <span className="text-white/60 w-[24px] text-right">45</span>
-                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#ffeb3b] to-[#ff9800] rounded-full" />
-                  <span className="text-white w-[24px]">72</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white w-[32px]">Fri</span>
-                  <span className="text-white/60 w-[24px] text-right">41</span>
-                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#4fc3f7] to-[#26c6da] rounded-full" />
-                  <span className="text-white w-[24px]">65</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white w-[32px]">Sat</span>
-                  <span className="text-white/60 w-[24px] text-right">31</span>
-                  <div className="w-[52px] h-[5px] bg-[#42a5f5] rounded-full" />
-                  <span className="text-white w-[24px]">42</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-white w-[32px]">Sun</span>
-                  <span className="text-white/60 w-[24px] text-right">30</span>
-                  <div className="w-[52px] h-[5px] bg-gradient-to-r from-[#64b5f6] to-[#4dd0e1] rounded-full" />
-                  <span className="text-white w-[24px]">53</span>
+          {/* Scrollable Content Area */}
+          <div className="relative z-10 h-full pt-14 pb-4 overflow-y-auto">
+            {/* Profile Card */}
+            <div className="mx-4 mt-4 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-xl">
+              <div className="flex items-center gap-4">
+                <img src={MEMOJI_URL} alt="Charity" className="w-20 h-20 rounded-2xl object-cover shadow-lg" />
+                <div className="flex-1">
+                  <h1 className="text-xl font-bold text-gray-900">Charity Dupont</h1>
+                  <p className="text-gray-500 text-sm">UX/UI Designer</p>
+                  <button 
+                    onClick={() => setMobileScreen('about')}
+                    className="mt-2 px-4 py-1.5 bg-black text-white text-xs font-medium rounded-full"
+                  >
+                    View About Me
+                  </button>
                 </div>
               </div>
             </div>
-            <p className="text-white/50 text-[12px] text-center mt-2 font-medium">Weather</p>
-          </div>
 
-          {/* App Grid - Below weather widget */}
-          <div className="absolute top-[290px] left-0 right-0 z-10 px-5">
-            <div className="grid grid-cols-4 gap-y-5" style={{ columnGap: 'calc((100% - 240px) / 3)' }}>
-              {/* Row 1 - Case Study Apps */}
-              <button onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
-                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                  <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
+            {/* Weather Widget */}
+            <div className="mx-4 mt-4 bg-gradient-to-br from-[#4a90d9] to-[#2c5aa0] rounded-2xl p-4 shadow-xl">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-white/80 text-xs font-medium">Plainfield, NJ</p>
+                  <p className="text-white text-4xl font-light mt-1">46°</p>
+                  <p className="text-white/70 text-xs mt-1">Warmer tomorrow, high of 72°</p>
                 </div>
-                <span className="text-white text-[11px] font-medium drop-shadow-md">Teammate</span>
-              </button>
+                <div className="text-6xl">&#9925;</div>
+              </div>
+            </div>
 
-              <button onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
-                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                  <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
-                </div>
-                <span className="text-white text-[11px] font-medium drop-shadow-md">Meetly</span>
-              </button>
+            {/* Case Studies Section */}
+            <div className="mx-4 mt-6">
+              <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
+                <Folder className="w-5 h-5" />
+                Case Studies
+              </h2>
+              <div className="space-y-3">
+                {/* Teammate */}
+                <button 
+                  onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }}
+                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <img src={TEAMMATE_ICON} alt="Teammate" className="w-16 h-16 rounded-xl object-cover shadow" />
+                  <div className="flex-1 text-left">
+                    <h3 className="font-bold text-gray-900">Teammate</h3>
+                    <p className="text-gray-500 text-sm">Sports Dating App</p>
+                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                </button>
 
-              <button onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center gap-[5px]">
-                <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                  <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
-                </div>
-                <span className="text-white text-[11px] font-medium drop-shadow-md">Silas</span>
-              </button>
+                {/* Meetly */}
+                <button 
+                  onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }}
+                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <img src={MEETLY_ICON} alt="Meetly" className="w-16 h-16 rounded-xl object-cover shadow" />
+                  <div className="flex-1 text-left">
+                    <h3 className="font-bold text-gray-900">Meetly</h3>
+                    <p className="text-gray-500 text-sm">Social Coordination App</p>
+                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                </button>
 
-              <button onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }} className="flex flex-col items-center gap-[5px]">
-                <div className="w-[60px] h-[60px] rounded-[14px] bg-white shadow-lg overflow-hidden">
-                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
-                </div>
-                <span className="text-white text-[11px] font-medium drop-shadow-md">Photos</span>
-              </button>
+                {/* Silas */}
+                <button 
+                  onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
+                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
+                  <div className="flex-1 text-left">
+                    <h3 className="font-bold text-gray-900">Silas</h3>
+                    <p className="text-gray-500 text-sm">AI Companion</p>
+                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
+                  </div>
+                  <ChevronRight className="w-5 h-5 text-gray-400" />
+                </button>
+              </div>
+            </div>
+
+            {/* Quick Access */}
+            <div className="mx-4 mt-6 mb-6">
+              <h2 className="text-white text-lg font-semibold mb-3">Quick Access</h2>
+              <div className="grid grid-cols-2 gap-3">
+                {/* Photos */}
+                <button 
+                  onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-gray-900 text-sm font-medium">Photos</span>
+                </button>
+
+                {/* Messages */}
+                <button 
+                  onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-[#5ef67a] to-[#45d34a] flex items-center justify-center">
+                    <MessageCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="text-gray-900 text-sm font-medium">Messages</span>
+                </button>
+
+                {/* Notes */}
+                <button 
+                  onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-gray-900 text-sm font-medium">Notes</span>
+                </button>
+
+                {/* About */}
+                <button 
+                  onClick={() => setMobileScreen('about')}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
+                  <span className="text-gray-900 text-sm font-medium">About Me</span>
+                </button>
+              </div>
             </div>
           </div>
-
-          {/* Search Button - Pill shaped, centered */}
-          <div className="absolute bottom-[100px] left-0 right-0 flex justify-center z-10">
-            <button className="flex items-center gap-2 bg-white/20 backdrop-blur-xl rounded-full px-5 py-2">
-              <Search className="w-4 h-4 text-white/70" />
-              <span className="text-white/70 text-[15px]">Search</span>
-            </button>
-          </div>
-
-          {/* Dock - Phone, Messages, Notes, About Me */}
-          <div className="absolute bottom-5 left-3 right-3 bg-white/20 backdrop-blur-2xl rounded-[26px] px-3 py-2.5 z-10">
-            <div className="flex justify-around">
-              {/* Phone */}
-              <button className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#63d94e] to-[#2dc421] flex items-center justify-center shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                </svg>
-              </button>
-
-              {/* Messages */}
-              <button onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }} className="w-[56px] h-[56px] rounded-[13px] bg-gradient-to-b from-[#5ef67a] to-[#45d34a] flex items-center justify-center shadow-lg">
-                <svg className="w-8 h-8 text-white" viewBox="0 0 32 32" fill="currentColor">
-                  <path d="M16 4C9.373 4 4 8.582 4 14.25c0 3.053 1.527 5.79 3.952 7.635-.254 1.924-1.09 3.587-1.893 4.77a.5.5 0 00.596.734c2.396-.718 4.093-1.614 5.21-2.37.993.26 2.065.406 3.185.406 6.627 0 12-4.582 12-10.25S22.627 4 16 4z"/>
-                </svg>
-              </button>
-
-              {/* Notes */}
-              <button onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }} className="w-[56px] h-[56px] rounded-[13px] overflow-hidden shadow-lg">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
-              </button>
-
-              {/* About Me */}
-              <button onClick={() => setMobileScreen('about')} className="w-[56px] h-[56px] rounded-[13px] overflow-hidden shadow-lg">
-                <img src={MEMOJI_URL} alt="About Me" className="w-full h-full object-cover" />
-              </button>
-            </div>
-          </div>
-
-          {/* Home Indicator */}
-          <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-32 h-1 bg-white/70 rounded-full" />
         </div>
       )
     }
@@ -902,7 +895,11 @@ Tap on any project below to view the full case study.`
           content: `Let's Connect!
 
 Email: charitydupont@google.com
-LinkedIn: www.linkedin.com/in/charitydupont`
+LinkedIn: www.linkedin.com/in/charitydupont
+Portfolio: charitydupont.com
+Location: New York, New York
+
+Open to freelance projects, collaborations, and full-time opportunities in UX/UI design. Let's create something meaningful together!`
         }
       ]
 
@@ -1506,23 +1503,72 @@ LinkedIn: www.linkedin.com/in/charitydupont`
         </div>
       </div>
 
+      {/* Desktop Folder Icons - Right Side */}
+      <div className="absolute top-[40px] right-4 flex flex-col gap-3 z-10">
+        {/* Teammate Folder */}
+        <button
+          onClick={() => openCaseStudy('teammate')}
+          className="flex flex-col items-center gap-1 group w-20"
+        >
+          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+              alt="Teammate" 
+              className="w-full h-full object-contain drop-shadow-lg" 
+            />
+          </div>
+          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Teammate</span>
+        </button>
+
+        {/* Meetly Folder */}
+        <button
+          onClick={() => openCaseStudy('meetly')}
+          className="flex flex-col items-center gap-1 group w-20"
+        >
+          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+              alt="Meetly" 
+              className="w-full h-full object-contain drop-shadow-lg" 
+            />
+          </div>
+          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Meetly</span>
+        </button>
+
+        {/* Silas Folder */}
+        <button
+          onClick={() => openCaseStudy('silas')}
+          className="flex flex-col items-center gap-1 group w-20"
+        >
+          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+              alt="Silas" 
+              className="w-full h-full object-contain drop-shadow-lg" 
+            />
+          </div>
+          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Silas</span>
+        </button>
+      </div>
+
       {/* Desktop - Clean Simple Layout */}
       <div className="absolute inset-0 top-[25px] bottom-[80px] overflow-hidden p-6 flex gap-5">
 
-        {/* Dalmatian Photo - Left Side */}
+        {/* Sunflowers Photo - Left Side */}
         <div
           className="w-72 h-full bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:scale-[1.01] transition-transform"
-          onDoubleClick={() => { setCurrentPhotoIndex(0); setPhotoViewerOpen(true); }}
+          onDoubleClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
         >
           <img
             src={personalPhotos[0]}
-            alt="Dalmatian"
+            alt="Sunflowers at Sunrise"
             className="w-full h-full object-cover"
           />
         </div>
 
-        {/* Twitter/X Post - Center */}
-        <div className="flex-1 flex items-start">
+        {/* Center Content - Twitter Post and Weather Widget */}
+        <div className="flex-1 flex flex-col gap-4 items-start">
+          {/* Twitter/X Post */}
           <div className="bg-white rounded-2xl p-6 shadow-lg max-w-md">
             <div className="flex items-start gap-3">
               <img
@@ -1547,58 +1593,161 @@ LinkedIn: www.linkedin.com/in/charitydupont`
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Photo Viewer Modal */}
-      {photoViewerOpen && (
-        <div className="absolute inset-0 bg-black/80 z-50 flex items-center justify-center" onClick={() => setPhotoViewerOpen(false)}>
-          <div className="relative max-w-[80%] max-h-[80%]" onClick={(e) => e.stopPropagation()}>
-              <img
-                src={personalPhotos[currentPhotoIndex]}
-                alt=""
-                className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
-              />
-              <button
-                onClick={() => setPhotoViewerOpen(false)}
-                className="absolute -top-4 -right-4 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100"
-              >
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setCurrentPhotoIndex((prev) => (prev - 1 + personalPhotos.length) % personalPhotos.length)}
-                className="absolute left-[-50px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white"
-              >
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-              </button>
-              <button
-                onClick={() => setCurrentPhotoIndex((prev) => (prev + 1) % personalPhotos.length)}
-                className="absolute right-[-50px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white"
-              >
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
-              <div className="absolute bottom-[-30px] left-0 right-0 flex justify-center gap-2">
-                {personalPhotos.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentPhotoIndex(i)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors ${i === currentPhotoIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/60'}`}
-                  />
-                ))}
+          {/* Weather Widget */}
+          <div className="bg-gradient-to-br from-[#4a90d9] to-[#2c5aa0] rounded-2xl p-5 shadow-lg w-72">
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-white/80 text-sm font-medium">Plainfield</p>
+                <p className="text-white text-5xl font-light mt-1">46°</p>
+                <p className="text-white/70 text-xs mt-2">Partly Cloudy</p>
+                <p className="text-white/60 text-xs">H:72° L:33°</p>
+              </div>
+              <div className="text-5xl mt-2">&#9925;</div>
+            </div>
+            <div className="mt-4 pt-3 border-t border-white/20">
+              <div className="flex justify-between text-xs text-white/80">
+                <div className="text-center">
+                  <p>Wed</p>
+                  <p className="text-lg my-1">&#9925;</p>
+                  <p>56°</p>
+                </div>
+                <div className="text-center">
+                  <p>Thu</p>
+                  <p className="text-lg my-1">&#9728;</p>
+                  <p>72°</p>
+                </div>
+                <div className="text-center">
+                  <p>Fri</p>
+                  <p className="text-lg my-1">&#9925;</p>
+                  <p>65°</p>
+                </div>
+                <div className="text-center">
+                  <p>Sat</p>
+                  <p className="text-lg my-1">&#9728;</p>
+                  <p>42°</p>
+                </div>
+                <div className="text-center">
+                  <p>Sun</p>
+                  <p className="text-lg my-1">&#9925;</p>
+                  <p>53°</p>
+                </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
+
+        {/* macOS Photos App Window */}
+      {photosWindow.isOpen && !photosWindow.isMinimized && (
+        <div 
+          className={`absolute left-20 top-16 w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'}`}
+          onClick={() => focusWindow('photos')}
+        >
+          {/* Photos App Title Bar */}
+          <div className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10">
+            <div className="flex gap-2">
+              <button
+                onClick={() => setPhotosWindow({ isOpen: false, isMinimized: false })}
+                className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+              />
+              <button
+                onClick={() => setPhotosWindow(prev => ({ ...prev, isMinimized: true }))}
+                className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+              />
+              <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
+            </div>
+            <span className="flex-1 text-center text-sm font-medium text-white/80">Photos</span>
+          </div>
+          
+          <div className="flex h-[calc(100%-52px)]">
+            {/* Sidebar */}
+            <div className="w-[180px] bg-[#252525] border-r border-white/10 p-3">
+              <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Library</p>
+              <button className="w-full text-left px-3 py-1.5 rounded-md bg-white/10 text-white text-sm mb-1">
+                All Photos
+              </button>
+              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-1">
+                Favorites
+              </button>
+              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-3">
+                Recents
+              </button>
+              <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Albums</p>
+              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm">
+                Portfolio
+              </button>
+            </div>
+            
+            {/* Photo Grid / Detail View */}
+            <div className="flex-1 overflow-hidden">
+              {selectedPhotoIndex === null ? (
+                <>
+                  {/* Grid Header */}
+                  <div className="px-4 py-3 border-b border-white/10">
+                    <h2 className="text-white text-lg font-semibold">All Photos</h2>
+                    <p className="text-white/50 text-xs">{personalPhotos.length} photos</p>
+                  </div>
+                  {/* Photo Grid */}
+                  <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
+                    <div className="grid grid-cols-4 gap-2">
+                      {personalPhotos.map((photo, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedPhotoIndex(idx)}
+                          className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
+                        >
+                          <img src={photo} alt="" className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Detail View Header */}
+                  <div className="px-4 py-3 border-b border-white/10 flex items-center">
+                    <button
+                      onClick={() => setSelectedPhotoIndex(null)}
+                      className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-sm"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                      All Photos
+                    </button>
+                    <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {personalPhotos.length}</span>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + personalPhotos.length) % personalPhotos.length : 0)}
+                        className="p-1 rounded hover:bg-white/10"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-white/60" />
+                      </button>
+                      <button
+                        onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % personalPhotos.length : 0)}
+                        className="p-1 rounded hover:bg-white/10"
+                      >
+                        <ChevronRight className="w-5 h-5 text-white/60" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Photo Detail */}
+                  <div className="flex-1 flex items-center justify-center p-4 h-[calc(100%-52px)]">
+                    <img
+                      src={personalPhotos[selectedPhotoIndex]}
+                      alt=""
+                      className="max-w-full max-h-full object-contain rounded-lg"
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
 {/* Case Studies Finder Window */}
       {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
         <div 
-          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'}`}
+          className={`absolute right-10 top-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'}`}
           onClick={() => focusWindow('caseStudies')}
         >
             <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
@@ -1642,7 +1791,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
                       <span className="text-[13px] font-medium">Case Studies</span>
                     </div>
                     <button
-                      onClick={() => setPhotoViewerOpen(true)}
+                      onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
                       className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-gray-600 hover:bg-black/5"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1678,7 +1827,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
   className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
   >
   <div className="w-20 h-16 group-hover:scale-110 transition-transform">
-                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt={project.title} className="w-full h-full object-contain" />
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt={project.title} className="w-full h-auto" />
                     </div>
   <span className="text-[12px] text-gray-700 text-center leading-tight font-medium">{project.title}</span>
   </button>
@@ -2015,7 +2164,7 @@ onClick={() => setDesktopSelectedNote('about')}
             </div>
           }
           label="Photos"
-          onClick={() => setPhotoViewerOpen(true)}
+          onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
@@ -2213,7 +2362,7 @@ function SilasCaseStudy() {
       <div className="relative py-20 px-8 bg-gradient-to-b from-purple-50 to-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="w-24 h-24 mx-auto mb-8 rounded-2xl overflow-hidden shadow-xl">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_app_icon_202603181528-ydIag7XSrkaGqZZ4tCETLAl51bbTxy.jpeg" alt="Silas" className="w-full h-full object-cover" />
+            <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-black">
             Silas: The Integrated AI Companion
@@ -2309,28 +2458,28 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 It{"'"}s her &ldquo;Control Center&rdquo;. She sees everything - her money, her orders, and her schedule - in one simple list. It doesn{"'"}t feel like &ldquo;tech&rdquo;; it feels like a calm morning briefing that tells her exactly where her life stands at that moment.
               </p>
-              <div className="grid grid-cols-4 gap-6">
+              <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Silas Dashboard" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Silas Dashboard" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Memory Graph</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact Recipe" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact Recipe" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Artifact</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile Settings" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile Settings" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Profile</p>
                 </div>
@@ -2343,22 +2492,22 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise sees it{"'"}s going to be a 62F day. Silas already knows what{"'"}s in her closet because it &ldquo;read&rdquo; her past shopping receipts. It suggests a weather-appropriate outfit, highlighting her wide-leg trousers plus backup options. She doesn{"'"}t have to overthink; she just gets dressed and goes.
               </p>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-4 max-w-4xl mx-auto items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather Insight" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather Insight" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Weather Insight</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Outfit with Receipt" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Outfit with Receipt" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Pulls Outfit with Digital Receipt</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit Suggestion" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit Suggestion" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Outfit Suggestion</p>
                 </div>
@@ -2371,16 +2520,16 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 She has her daughter{"'"}s recital at 10:00 AM. Silas understands the &ldquo;physical requirement&rdquo; of traveling there. It checks live traffic in the background and pops up at the perfect time, offering to book a rideshare so she isn{"'"}t late.
               </p>
-              <div className="grid grid-cols-2 gap-6 max-w-lg mx-auto">
+              <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar View" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar View" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%207-VqiHJNt0ZD8i1Li06rY5OPgtEmZTm2.png" alt="Event Details with Ride" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2057%20%281%29-Cu9zZu25QBG1eFO1YhOVu3lK9vnkSe.png" alt="Event Details with Ride" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggest Rideshare Option</p>
                 </div>
@@ -2393,36 +2542,36 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise opens her bank app. Instead of confusing codes, Silas displays clear digital receipts detailing exactly what she bought. She can re-order items directly from her statement because Silas has turned her transaction history into a shoppable catalog.
               </p>
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-5 gap-3 items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-S1tsPJTjjDHe655eNDmLcuxsbwfK87.png" alt="Bank Overview" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank Overview" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-Op8qY9Skd68yLytwbXz5eN8UXr1ibi.png" alt="Transaction History" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transaction History" className="w-full h-auto" />
                   </div>
-                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Adding from Digital Receipt</p>
+                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Transaction History</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2012-KjxQjzBGp1BoYRYwpGwW3Vmp6XIkao.png" alt="Cart" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Digital Receipt" className="w-full h-auto" />
+                  </div>
+                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Digital Receipt</p>
+                </div>
+                <div className="text-center">
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Cart</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014-accLCaj5K9IbjFCA9WTmiHq5SVwiEx.png" alt="Checkout" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Check Out</p>
-                </div>
-                <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-BsvDzsGywhO6EMCJS6sIEF4YAx7Iwp.png" alt="Orders" className="w-full h-auto block" />
-                  </div>
-                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard with New Orders</p>
                 </div>
               </div>
             </div>
@@ -2433,28 +2582,28 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Instead of searching the global internet, she is searching her personal internet. She has a search engine that cuts through the noise and gives her a clear, confident choice.
               </p>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2021-jyznXlNZBt08zrm0MQ0czROUiZ8tIq.png" alt="Search Empty State" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2065-ocyRHiATuNmFkhHzo61QPbO8UARepe.png" alt="Search Empty State" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Product Search</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2026-sFz8g4u0NBOIBOMcmGpiMMSgSwYdIF.png" alt="Search Results" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Search Results" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Product Result</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Product Detail" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Product Detail" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggestion</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2028-u11lzEfCmzts3KWogDpLlzT1Rw2HkJ.png" alt="Ingredient Analysis" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Ingredient Analysis" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Product Information</p>
                 </div>
@@ -2467,28 +2616,28 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise needs to book a flight. Because Silas understands her habits, it already knows she prefers aisle seats, her frequent flyer number, and her typical budget. Instead of dumping a hundred overwhelming flight options on her, Silas presents the best matches.
               </p>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Active Trips" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Active Trips" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">User Profile</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2035-eWU7OhpjguXv14rdS2Ory9fIkMjVdX.png" alt="Seat Analysis" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2035-eWU7OhpjguXv14rdS2Ory9fIkMjVdX.png" alt="Seat Analysis" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Seat Analysis</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2034-8M9jhf6mWZmXLQF2tpgiEf4ACmo9y6.png" alt="Flight Selection" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2034-8M9jhf6mWZmXLQF2tpgiEf4ACmo9y6.png" alt="Flight Selection" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Flight Insight</p>
                 </div>
@@ -2501,22 +2650,22 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise is inside her favorite shopping app. Silas surfaces a &ldquo;memory&rdquo; from three days ago - a text from Daniel saying, &ldquo;Hunter is out of dog food.&rdquo; Silas isn{"'"}t interrupting her day; it{"'"}s enhancing her current shopping session.
               </p>
-              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="grid grid-cols-3 gap-4 max-w-4xl mx-auto items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2030-Ufk6p1qH3uiJ1KqZJgRhvsrF1zih2i.png" alt="Curated for Eloise" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2030-Ufk6p1qH3uiJ1KqZJgRhvsrF1zih2i.png" alt="Curated for Eloise" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggestion</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2031-4TdOpWYDYdIUQTaW82bb3jdxiXI5GC.png" alt="Product with Context" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2047%20%281%29-KQ3MkvZW8wwcuw3jJYlSAYBYG4bPRy.png" alt="Product with Context" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Context</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2032-yueRj2B5riZiLHfqrPI13oDescaphw.png" alt="Evidence Found" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2032-yueRj2B5riZiLHfqrPI13oDescaphw.png" alt="Evidence Found" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Evidence</p>
                 </div>
@@ -2529,22 +2678,22 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 To end her day, Eloise opens Silas Books. The recommendation is another form of &ldquo;evidence.&rdquo; Silas shows her a book not because it{"'"}s a bestseller, but because of a specific sentence she highlighted weeks ago.
               </p>
-              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="grid grid-cols-3 gap-4 max-w-4xl mx-auto items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2017-vD7J5N5WQLvcYy6tMmCCAoDvPhgtA5.png" alt="Library" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2017-vD7J5N5WQLvcYy6tMmCCAoDvPhgtA5.png" alt="Library" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2018-rtZzFsJ28O39L8eX3CLDF6Eu1UxUum.png" alt="Why This Book" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2018-rtZzFsJ28O39L8eX3CLDF6Eu1UxUum.png" alt="Why This Book" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggestion</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2019-v9hgskr7Du3wKiL9bcYrcYYPoBcd96.png" alt="Excerpt Analysis" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2019-v9hgskr7Du3wKiL9bcYrcYYPoBcd96.png" alt="Excerpt Analysis" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Reasoning</p>
                 </div>
@@ -2557,28 +2706,28 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 A visual retracing tool that utilizes digital breadcrumbs to solve physical-world problems. If you misplace a physical item, Silas creates a chronological &ldquo;map of presence&rdquo; by merging your location history with your digital interactions.
               </p>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-KeljTUoA1uAKwrfQGClFbh2qr2dmlF.png" alt="Locator Empty" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-KeljTUoA1uAKwrfQGClFbh2qr2dmlF.png" alt="Locator Empty" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Search</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-doimziRe3RcEQohrjCdlfiDtUsU4hK.png" alt="Locator Keys Selected" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-doimziRe3RcEQohrjCdlfiDtUsU4hK.png" alt="Locator Keys Selected" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Item Selected</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2039-whUo54tXaqQerB5onNBUTWIds6OVap.png" alt="Floor Map Scanning" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2039-whUo54tXaqQerB5onNBUTWIds6OVap.png" alt="Floor Map Scanning" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Floor Map Scanning</p>
                 </div>
                 <div className="text-center">
-                  <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2040-63dYmc1scg8VFvIDMELM1Nd643oDAo.png" alt="Item Detected" className="w-full h-auto block" />
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2040-63dYmc1scg8VFvIDMELM1Nd643oDAo.png" alt="Item Detected" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Item Detected</p>
                 </div>
@@ -2639,7 +2788,7 @@ function MeetlyCaseStudy() {
       <div className="relative py-16 px-8 bg-gradient-to-b from-indigo-50 to-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="w-20 h-20 mx-auto mb-6 rounded-2xl overflow-hidden shadow-xl">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg" alt="Meetly" className="w-full h-full object-cover" />
+            <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-4xl font-bold mb-4 text-indigo-600">Meetly</h1>
           <p className="text-base text-black/70 leading-relaxed max-w-3xl mx-auto">
@@ -2753,16 +2902,16 @@ function MeetlyCaseStudy() {
 
           {/* User Research Synthesis & Feature Prioritization - Side by Side */}
           <div className="grid md:grid-cols-2 gap-6 mb-10">
-            <div>
+            <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-black mb-4 text-center">User Research Synthesis</h3>
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm h-full">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ApLgUHySGxYaPLs-5ZFkUdVzlnsmvsq6Vqp0PWKvAcVfQK.png" alt="I Like, I Wish, What If Research Board" className="w-full h-full object-cover" />
+              <div className="rounded-xl overflow-hidden border border-black/10 flex-1 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ApLgUHySGxYaPLs-5ZFkUdVzlnsmvsq6Vqp0PWKvAcVfQK.png" alt="I Like, I Wish, What If Research Board" className="w-full h-auto object-contain" />
               </div>
             </div>
-            <div>
+            <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-black mb-4 text-center">Feature Prioritization</h3>
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm h-full">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4ZAJu3RfxsHn87J-C40JZ9GtirbtlXMkE0VCQ1jcCnpZ3X.png" alt="Priority Feasibility Matrix" className="w-full h-full object-cover" />
+              <div className="rounded-xl overflow-hidden border border-black/10 flex-1 flex items-center justify-center">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4ZAJu3RfxsHn87J-C40JZ9GtirbtlXMkE0VCQ1jcCnpZ3X.png" alt="Priority Feasibility Matrix" className="w-full h-auto object-contain" />
               </div>
             </div>
           </div>
@@ -2864,32 +3013,32 @@ function MeetlyCaseStudy() {
           {/* App Screens Grid */}
           <div className="grid grid-cols-5 gap-4 mb-10">
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home Screen" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home Screen" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Home Screen</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-kvBQ0w5m9bcMxJDLYcbuSSVJrEcrPc.png" alt="Hangout Chat" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-kvBQ0w5m9bcMxJDLYcbuSSVJrEcrPc.png" alt="Hangout Chat" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Hangout Chat</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-Y8hW7TmOJfVaW1Iizh9CJkHWFsIeSd.png" alt="Vote Screen" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-Y8hW7TmOJfVaW1Iizh9CJkHWFsIeSd.png" alt="Vote Screen" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Vote Screen</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-ytP9uUYl1tfuGMTjpRlMvbw57l8wBx.png" alt="Vote Screen" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-ytP9uUYl1tfuGMTjpRlMvbw57l8wBx.png" alt="Vote Screen" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Vote Screen</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-Zx75LyunsQWz207iWPdSipbuqvblvQ.png" alt="Vote Screen" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-Zx75LyunsQWz207iWPdSipbuqvblvQ.png" alt="Vote Screen" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Vote Screen</p>
             </div>
@@ -2897,32 +3046,32 @@ function MeetlyCaseStudy() {
 
           <div className="grid grid-cols-5 gap-4">
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2028-cLMG7tLrO3aQdiYlfASDZRvCUyqBwb.png" alt="Hangout Chat" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2028-cLMG7tLrO3aQdiYlfASDZRvCUyqBwb.png" alt="Hangout Chat" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Hangout Chat</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2029-APo5XHVqWgkh2mMOv6e2p6mj91YUmK.png" alt="Hangout Chat" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2029-APo5XHVqWgkh2mMOv6e2p6mj91YUmK.png" alt="Hangout Chat" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Hangout Chat</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2030-7MAPn6ktJNerulMwPugsHcYNOqgrdA.png" alt="Set Time Screen" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2030-7MAPn6ktJNerulMwPugsHcYNOqgrdA.png" alt="Set Time Screen" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Set Time</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2031-0VLOPEN9C6TZam8ou1yfaXriYe3iON.png" alt="Success Screen" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2031-0VLOPEN9C6TZam8ou1yfaXriYe3iON.png" alt="Success Screen" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Success</p>
             </div>
             <div className="text-center">
-              <div className="mb-2 aspect-[9/19] bg-neutral-100 rounded-xl overflow-hidden flex items-center justify-center">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2032-X5DdZgQI5aSWfhkZd9trlhxvPG8ZEU.png" alt="Home Screen End" className="w-full h-full object-contain" />
+              <div className="mb-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2032-X5DdZgQI5aSWfhkZd9trlhxvPG8ZEU.png" alt="Home Screen End" className="w-full h-auto" />
               </div>
               <p className="text-[10px] text-black/50 uppercase tracking-wider font-medium">Home (End)</p>
             </div>
@@ -2948,22 +3097,63 @@ function MeetlyCaseStudy() {
         </div>
       </div>
       
-{/* Demo Modal - Full Screen Figma Prototype */}
+{/* Demo Modal - Full Screen Figma Prototype with Side-by-Side Instructions */}
       {showDemo && (
-        <div className="fixed inset-0 z-[100]">
-          <iframe 
-            src="https://embed.figma.com/proto/PCUGC6wiSuEzlpmept0ybQ/Meetly-Official-Prototye?node-id=2002-143&scaling=scale-down&page-id=0%3A1&hide-ui=1&embed-host=share&hotspot-hints=0" 
-            className="w-full h-full border-0" 
-            allowFullScreen 
-          />
-          <button 
-            onClick={() => setShowDemo(false)} 
-            className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors"
-          >
-            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        <div className="fixed inset-0 z-[100] bg-gray-900 flex">
+          {/* Instructions Panel - Left Side */}
+          <div className="w-80 bg-white h-full overflow-y-auto flex-shrink-0 border-r border-gray-200">
+            <div className="p-6">
+              <h4 className="font-semibold text-indigo-600 mb-4 text-lg">Demo Instructions</h4>
+              <ol className="text-sm text-black/70 space-y-3 list-decimal list-inside">
+                <li>Click the <span className="font-medium">+ (plus)</span> button</li>
+                <li>Select <span className="font-medium">Create Hangout</span></li>
+                <li>Click on <span className="font-medium">Emily</span> under the &quot;All&quot; category (not Favorites)</li>
+                <li>Click <span className="font-medium">Add</span></li>
+                <li>Select <span className="font-medium">Group Name</span></li>
+                <li>Click the <span className="font-medium">keyboard</span></li>
+                <li>Click <span className="font-medium">Show Availability Only</span></li>
+                <li>Click <span className="font-medium">Create</span></li>
+                <li>Click the text box to open messages</li>
+                <li>Review messages (last one says: &quot;How about we do sometime next month&quot;)</li>
+                <li>Click the <span className="font-medium">keyboard</span></li>
+                <li>Open the <span className="font-medium">Calendar</span></li>
+                <li>Click the <span className="font-medium">Chevron (&gt;)</span> to move to January 2025</li>
+                <li>Select <span className="font-medium">January 17</span></li>
+                <li>Click <span className="font-medium">Vote</span></li>
+                <li>Click <span className="font-medium">Confirm</span></li>
+                <li>Close the calendar</li>
+                <li>You&apos;ll see: &quot;Vote Pending – James has not voted yet&quot;</li>
+                <li>Click <span className="font-medium">Cancel</span></li>
+                <li>Click <span className="font-medium">Yes, Notify</span></li>
+                <li>A new message from James appears in Messages</li>
+                <li>Open the <span className="font-medium">Calendar</span></li>
+                <li>Click <span className="font-medium">Close Calendar</span></li>
+                <li>Click <span className="font-medium">Confirm</span></li>
+                <li>Click <span className="font-medium">Set Time</span></li>
+                <li>Select <span className="font-medium">Schedule with Suggested Time</span></li>
+                <li>Click <span className="font-medium">Save the Date</span></li>
+                <li>Click <span className="font-medium">Confirm</span></li>
+                <li>Final result: the scheduled event appears on the calendar</li>
+              </ol>
+            </div>
+          </div>
+          
+          {/* Figma Prototype - Right Side */}
+          <div className="flex-1 relative">
+            <iframe 
+              src="https://embed.figma.com/proto/PCUGC6wiSuEzlpmept0ybQ/Meetly-Official-Prototye?node-id=2002-143&scaling=scale-down&page-id=0%3A1&hide-ui=1&embed-host=share&hotspot-hints=0" 
+              className="w-full h-full border-0" 
+              allowFullScreen 
+            />
+            <button 
+              onClick={() => setShowDemo(false)} 
+              className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors"
+            >
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
       )}
 
@@ -2992,7 +3182,7 @@ function TeammateCaseStudy() {
           {/* Hero Text */}
           <div className="text-center md:text-left">
             <div className="w-16 h-16 mb-6 rounded-2xl overflow-hidden mx-auto md:mx-0">
-              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_a_app_202603181525-VXaqH2wtspUUh5MIBe2DesLS961p0E.jpeg" alt="Teammate" className="w-full h-full object-cover" />
+              <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-5xl md:text-6xl font-bold mb-4 text-[#D85A5A]">
               Teammate
@@ -3284,55 +3474,55 @@ function TeammateCaseStudy() {
           <div className="grid grid-cols-3 gap-6 max-w-4xl mx-auto">
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash Screen" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash Screen" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Splash</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home Events" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home Events" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Home</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Potential Matches" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Potential Matches" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Matches</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched Screen" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched Screen" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Matched</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages List" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages List" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Messages</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat Conversation" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat Conversation" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Chat</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule a Date" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule a Date" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Schedule</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Ticket Purchase" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Ticket Purchase" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Purchase</p>
             </div>
             <div className="text-center">
               <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full h-auto block" />
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full h-auto" />
               </div>
               <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Confirmation</p>
             </div>
