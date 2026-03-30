@@ -2872,9 +2872,13 @@ function MeetlyCaseStudy() {
         </div>
       </div>
 
-      {/* Timeline & Goal */}
+      {/* Role, Timeline & Goal */}
       <div className="max-w-4xl mx-auto px-8 py-10 border-b border-black/10">
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
+            <p className="text-black font-medium">Co-Product Designer</p>
+          </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Timeline</h3>
             <p className="text-black font-medium">May 2024</p>
@@ -3302,9 +3306,10 @@ function TeammateCaseStudy() {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-yellow-400 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h2v-2h-2v2zm0-4h2V7h-2v6z" />
+                <div className="w-10 h-10 rounded-xl bg-[#FFC629] flex items-center justify-center">
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3ZM12 18.5C8.42 18.5 5.5 15.58 5.5 12C5.5 8.42 8.42 5.5 12 5.5C15.58 5.5 18.5 8.42 18.5 12C18.5 15.58 15.58 18.5 12 18.5Z" fill="black"/>
+                    <circle cx="12" cy="12" r="4" fill="black"/>
                   </svg>
                 </div>
                 <h3 className="text-xl font-semibold text-yellow-600">Bumble</h3>
@@ -3338,12 +3343,12 @@ function TeammateCaseStudy() {
             </div>
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center">
+                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 4V20M6 12H18M18 4V20" stroke="white" strokeWidth="3" strokeLinecap="round"/>
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-purple-600">Hinge</h3>
+                <h3 className="text-xl font-semibold text-black">Hinge</h3>
               </div>
               <div className="mb-4">
                 <p className="text-sm text-green-600 mb-1">Pros:</p>
