@@ -3101,35 +3101,35 @@ function MeetlyCaseStudy() {
               <h4 className="font-semibold text-indigo-600 mb-4 text-lg">Demo Instructions</h4>
               <ol className="text-sm text-black/70 space-y-3 list-decimal list-inside">
                 <li>Click the <span className="font-medium">+ (plus)</span> button</li>
-                <li>Select <span className="font-medium">Create New Hangout</span></li>
-                <li>Click on <span className="font-medium">Emily</span> (this will highlight multiple friends if needed)</li>
+                <li>Select <span className="font-medium">Create Hangout</span></li>
+                <li>Click on <span className="font-medium">Emily</span> under the &quot;All&quot; category (not Favorites)</li>
                 <li>Click <span className="font-medium">Add</span></li>
                 <li>Select <span className="font-medium">Group Name</span></li>
-                <li>Select the <span className="font-medium">keyboard</span></li>
+                <li>Use the keyboard to type the name</li>
+                <li>Choose <span className="font-medium">Availability Only</span></li>
                 <li>Click <span className="font-medium">Create</span></li>
-                <li>Choose <span className="font-medium">&quot;Show Availability Only&quot;</span></li>
-                <li>Click <span className="font-medium">Create</span></li>
-                <li>Go to <span className="font-medium">Messages</span></li>
-                <li>Click <span className="font-medium">Text Message Box</span></li>
-                <li>View messages (e.g., suggestion like &quot;How about sometime next month?&quot;)</li>
-                <li>Select the <span className="font-medium">keyboard</span></li>
-                <li>Click <span className="font-medium">Messages</span> again to see more replies</li>
+                <li>Click the text box to open messages</li>
+                <li>Review messages (last one says: &quot;How about we do sometime next month&quot;)</li>
+                <li>Click the <span className="font-medium">keyboard</span></li>
                 <li>Open the <span className="font-medium">Calendar</span></li>
-                <li>Click the <span className="font-medium">Chevron</span> to scroll to January</li>
-                <li>Select <span className="font-medium">January 17th</span></li>
+                <li>Click the <span className="font-medium">Chevron (&gt;)</span> to move to January 2025</li>
+                <li>Select <span className="font-medium">January 17</span></li>
                 <li>Click <span className="font-medium">Vote</span></li>
                 <li>Click <span className="font-medium">Confirm</span></li>
                 <li>Close the calendar</li>
-                <li>If it says &quot;Vote Pending – James has not voted yet&quot;: Click <span className="font-medium">Cancel</span>, then select <span className="font-medium">Yes, Notify</span></li>
-                <li>Reopen the <span className="font-medium">Calendar</span></li>
-                <li>Check that James has voted</li>
+                <li>You&apos;ll see: &quot;Vote Pending – James has not voted yet&quot;</li>
+                <li>Click <span className="font-medium">Cancel</span></li>
+                <li>Click <span className="font-medium">Yes, Notify</span></li>
+                <li>A new message from James appears in Messages</li>
+                <li>Open the <span className="font-medium">Calendar</span> again</li>
+                <li>Confirm the selection</li>
                 <li>Close the calendar</li>
                 <li>Click <span className="font-medium">Confirm</span></li>
                 <li>Click <span className="font-medium">Set Time</span></li>
-                <li>Choose <span className="font-medium">Schedule with Suggested Time</span></li>
-                <li>Confirm the date</li>
-                <li>Click <span className="font-medium">Confirm</span> again</li>
-                <li>Final result: the scheduled event appears on your screen</li>
+                <li>Select <span className="font-medium">Schedule with Suggested Time</span></li>
+                <li>Click <span className="font-medium">Save the Date</span></li>
+                <li>Click <span className="font-medium">Confirm</span></li>
+                <li>Final result: the scheduled event appears on the calendar</li>
               </ol>
             </div>
           </div>
