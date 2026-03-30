@@ -3121,9 +3121,8 @@ function MeetlyCaseStudy() {
                 <li>Click <span className="font-medium">Cancel</span></li>
                 <li>Click <span className="font-medium">Yes, Notify</span></li>
                 <li>A new message from James appears in Messages</li>
-                <li>Open the <span className="font-medium">Calendar</span> again</li>
-                <li>Confirm the selection</li>
-                <li>Close the calendar</li>
+                <li>Open the <span className="font-medium">Calendar</span></li>
+                <li>Click <span className="font-medium">Close Calendar</span></li>
                 <li>Click <span className="font-medium">Confirm</span></li>
                 <li>Click <span className="font-medium">Set Time</span></li>
                 <li>Select <span className="font-medium">Schedule with Suggested Time</span></li>
