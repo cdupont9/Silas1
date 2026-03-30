@@ -3106,7 +3106,7 @@ function MeetlyCaseStudy() {
                 <li>Click <span className="font-medium">Add</span></li>
                 <li>Select <span className="font-medium">Group Name</span></li>
                 <li>Click the <span className="font-medium">keyboard</span></li>
-                <li>Choose <span className="font-medium">Availability Only</span></li>
+                <li>Click <span className="font-medium">Show Availability Only</span></li>
                 <li>Click <span className="font-medium">Create</span></li>
                 <li>Click the text box to open messages</li>
                 <li>Review messages (last one says: &quot;How about we do sometime next month&quot;)</li>
