@@ -30,7 +30,8 @@ interface WidgetPosition {
 }
 
 // Message contacts for the Messages app
-const messageContacts = [
+// Mobile (iPhone) message contacts
+const mobileMessageContacts = [
   {
     id: 'welcome',
     name: 'Charity',
@@ -43,6 +44,63 @@ const messageContacts = [
       { from: 'charity', text: "Hey! Welcome to my portfolio on my iPhone!", time: '10:30 AM' },
       { from: 'charity', text: "Feel free to check out my case studies! Tap on any one of my case studies and explore.", time: '10:30 AM' },
       { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
+    ]
+  },
+  {
+    id: 'teammate',
+    name: 'Teammate Project',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png',
+    lastMessage: 'Sports dating app - "Don\'t Play Alone"',
+    time: '9:45 AM',
+    unread: false,
+    messages: [
+      { from: 'project', text: "Teammate - Sports Dating App", time: '9:40 AM' },
+      { from: 'project', text: "A dating app for sports fans that connects like-minded individuals based on their team preferences and game schedules.", time: '9:42 AM' },
+      { from: 'project', text: "Key features: Character-based matching, safe public venues at sports events, and sports-driven connections.", time: '9:45 AM' },
+    ]
+  },
+  {
+    id: 'meetly',
+    name: 'Meetly Project',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png',
+    lastMessage: 'Social coordination made easy',
+    time: '9:30 AM',
+    unread: false,
+    messages: [
+      { from: 'project', text: "Meetly - Social Group Coordination", time: '9:25 AM' },
+      { from: 'project', text: "Helps social groups coordinate meetups by combining the power of a calendar with the ease of a messaging app.", time: '9:28 AM' },
+      { from: 'project', text: "Eliminated coordination fatigue with voting screens and contextual chat for planning.", time: '9:30 AM' },
+    ]
+  },
+  {
+    id: 'silas',
+    name: 'Silas Project',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Silas%20Logo%20%281%29-wRgrFCvMuVpVMqSHMlhEpoHzSqfqS5.png',
+    lastMessage: 'Your AI lifestyle assistant',
+    time: '9:15 AM',
+    unread: false,
+    messages: [
+      { from: 'project', text: "Silas - AI Lifestyle Assistant", time: '9:10 AM' },
+      { from: 'project', text: "An AI-powered assistant that integrates with your financial tools, calendar, and shopping preferences.", time: '9:12 AM' },
+      { from: 'project', text: "Features personalized suggestions, proactive reminders, and seamless API integrations.", time: '9:15 AM' },
+    ]
+  }
+]
+
+// Desktop (MacBook) message contacts
+const messageContacts = [
+  {
+    id: 'welcome',
+    name: 'Charity',
+    avatar: null,
+    isMe: true,
+    lastMessage: 'Welcome to my portfolio on my MacBook!',
+    time: 'now',
+    unread: true,
+    messages: [
+      { from: 'charity', text: "Hey! Welcome to my portfolio on my MacBook!", time: '10:30 AM' },
+      { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
+      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
     ]
   },
   {
@@ -548,7 +606,7 @@ export function MacBookScreen() {
 
     // iPhone iMessage Screen - Authentic iOS Messages
     if (mobileScreen === "messages") {
-      const contact = messageContacts.find(c => c.id === selectedContact) || messageContacts[0]
+      const contact = mobileMessageContacts.find(c => c.id === selectedContact) || mobileMessageContacts[0]
       
       // Conversation List View
       if (showConversationList) {
@@ -593,7 +651,7 @@ export function MacBookScreen() {
 
             {/* Conversation List */}
             <div className="flex-1 overflow-y-auto">
-              {messageContacts.map((c, idx) => (
+              {mobileMessageContacts.map((c, idx) => (
                 <button
                   key={c.id}
                   onClick={() => { setSelectedContact(c.id); setShowConversationList(false); }}
