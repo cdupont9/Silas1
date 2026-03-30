@@ -2498,15 +2498,15 @@ function SilasCaseStudy() {
                 </div>
                 <div className="text-center">
                   <div className="mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Digital Receipt" className="w-full h-auto" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transaction History" className="w-full h-auto" />
                   </div>
-                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Digital Receipt</p>
+                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Transaction History</p>
                 </div>
                 <div className="text-center">
                   <div className="mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Adding from Digital Receipt" className="w-full h-auto" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Digital Receipt" className="w-full h-auto" />
                   </div>
-                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Adding from Digital Receipt</p>
+                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Digital Receipt</p>
                 </div>
                 <div className="text-center">
                   <div className="mb-3">
@@ -2532,7 +2532,7 @@ function SilasCaseStudy() {
               <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
                   <div className="mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2021-jyznXlNZBt08zrm0MQ0czROUiZ8tIq.png" alt="Search Empty State" className="w-full h-auto" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2065-ocyRHiATuNmFkhHzo61QPbO8UARepe.png" alt="Search Empty State" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Product Search</p>
                 </div>
