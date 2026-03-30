@@ -48,7 +48,7 @@ const messageContacts = [
   {
     id: 'teammate',
     name: 'Teammate Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_store_icon_202603271728-PqcDh4UD4rwBEYZkD2tBYS2rA2SA6F.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png',
     lastMessage: 'Sports dating app - "Don\'t Play Alone"',
     time: '9:45 AM',
     unread: false,
@@ -96,7 +96,7 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
 // Project Icons
-const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_store_icon_202603271728-PqcDh4UD4rwBEYZkD2tBYS2rA2SA6F.jpeg"
+const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
 const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png"
 const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
