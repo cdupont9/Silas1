@@ -480,7 +480,9 @@ export function MacBookScreen() {
                   onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
                   className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
                 >
-                  <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
+                  <div className="w-16 h-16 rounded-xl bg-[#1a1025] overflow-hidden shadow flex-shrink-0">
+                    <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-contain scale-110" />
+                  </div>
                   <div className="flex-1 text-left">
                     <h3 className="font-bold text-gray-900">Silas</h3>
                     <p className="text-gray-500 text-sm">AI Companion</p>
@@ -1985,8 +1987,8 @@ onClick={() => setDesktopSelectedNote('about')}
 
                 {/* Silas */}
                 <button onClick={() => openCaseStudy('silas')} className="flex flex-col items-center gap-2 group">
-                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl group-hover:scale-110 transition-transform duration-200">
-                    <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl group-hover:scale-110 transition-transform duration-200 bg-[#1a1025]">
+                    <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-contain scale-110" />
                   </div>
                   <span className="text-[11px] text-black/70 font-medium">Silas</span>
                 </button>
@@ -2075,8 +2077,8 @@ onClick={() => setDesktopSelectedNote('about')}
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
-              <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-[#1a1025]">
+              <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-contain scale-110" />
             </div>
           }
           label="Silas"
