@@ -175,6 +175,8 @@ export function MacBookScreen() {
   const [selectedContact, setSelectedContact] = useState('welcome')
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [photoViewerOpen, setPhotoViewerOpen] = useState(false)
+  const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -1502,7 +1504,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
         {/* Dalmatian Photo - Left Side */}
         <div
           className="w-72 h-full bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:scale-[1.01] transition-transform"
-          onDoubleClick={() => { setCurrentPhotoIndex(0); setPhotoViewerOpen(true); }}
+          onDoubleClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
         >
           <img
             src={personalPhotos[0]}
@@ -1582,56 +1584,117 @@ LinkedIn: www.linkedin.com/in/charitydupont`
           </div>
         </div>
 
-        {/* Photo Viewer Modal */}
-      {photoViewerOpen && (
-        <div className="absolute inset-0 bg-black/80 z-50 flex items-center justify-center" onClick={() => setPhotoViewerOpen(false)}>
-          <div className="relative max-w-[80%] max-h-[80%]" onClick={(e) => e.stopPropagation()}>
-              <img
-                src={personalPhotos[currentPhotoIndex]}
-                alt=""
-                className="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
+        {/* macOS Photos App Window */}
+      {photosWindow.isOpen && !photosWindow.isMinimized && (
+        <div 
+          className={`absolute left-20 top-16 w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'}`}
+          onClick={() => focusWindow('photos')}
+        >
+          {/* Photos App Title Bar */}
+          <div className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10">
+            <div className="flex gap-2">
+              <button
+                onClick={() => setPhotosWindow({ isOpen: false, isMinimized: false })}
+                className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
               />
               <button
-                onClick={() => setPhotoViewerOpen(false)}
-                className="absolute -top-4 -right-4 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-gray-100"
-              >
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                onClick={() => setPhotosWindow(prev => ({ ...prev, isMinimized: true }))}
+                className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+              />
+              <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
+            </div>
+            <span className="flex-1 text-center text-sm font-medium text-white/80">Photos</span>
+          </div>
+          
+          <div className="flex h-[calc(100%-52px)]">
+            {/* Sidebar */}
+            <div className="w-[180px] bg-[#252525] border-r border-white/10 p-3">
+              <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Library</p>
+              <button className="w-full text-left px-3 py-1.5 rounded-md bg-white/10 text-white text-sm mb-1">
+                All Photos
               </button>
-              <button
-                onClick={() => setCurrentPhotoIndex((prev) => (prev - 1 + personalPhotos.length) % personalPhotos.length)}
-                className="absolute left-[-50px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white"
-              >
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
+              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-1">
+                Favorites
               </button>
-              <button
-                onClick={() => setCurrentPhotoIndex((prev) => (prev + 1) % personalPhotos.length)}
-                className="absolute right-[-50px] top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-white"
-              >
-                <svg className="w-5 h-5 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-3">
+                Recents
               </button>
-              <div className="absolute bottom-[-30px] left-0 right-0 flex justify-center gap-2">
-                {personalPhotos.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentPhotoIndex(i)}
-                    className={`w-2.5 h-2.5 rounded-full transition-colors ${i === currentPhotoIndex ? 'bg-white' : 'bg-white/40 hover:bg-white/60'}`}
-                  />
-                ))}
-              </div>
+              <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Albums</p>
+              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm">
+                Portfolio
+              </button>
+            </div>
+            
+            {/* Photo Grid / Detail View */}
+            <div className="flex-1 overflow-hidden">
+              {selectedPhotoIndex === null ? (
+                <>
+                  {/* Grid Header */}
+                  <div className="px-4 py-3 border-b border-white/10">
+                    <h2 className="text-white text-lg font-semibold">All Photos</h2>
+                    <p className="text-white/50 text-xs">{personalPhotos.length} photos</p>
+                  </div>
+                  {/* Photo Grid */}
+                  <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
+                    <div className="grid grid-cols-4 gap-2">
+                      {personalPhotos.map((photo, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedPhotoIndex(idx)}
+                          className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
+                        >
+                          <img src={photo} alt="" className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Detail View Header */}
+                  <div className="px-4 py-3 border-b border-white/10 flex items-center">
+                    <button
+                      onClick={() => setSelectedPhotoIndex(null)}
+                      className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-sm"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                      All Photos
+                    </button>
+                    <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {personalPhotos.length}</span>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + personalPhotos.length) % personalPhotos.length : 0)}
+                        className="p-1 rounded hover:bg-white/10"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-white/60" />
+                      </button>
+                      <button
+                        onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % personalPhotos.length : 0)}
+                        className="p-1 rounded hover:bg-white/10"
+                      >
+                        <ChevronRight className="w-5 h-5 text-white/60" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Photo Detail */}
+                  <div className="flex-1 flex items-center justify-center p-4 h-[calc(100%-52px)]">
+                    <img
+                      src={personalPhotos[selectedPhotoIndex]}
+                      alt=""
+                      className="max-w-full max-h-full object-contain rounded-lg"
+                    />
+                  </div>
+                </>
+              )}
             </div>
           </div>
-        )}
+        </div>
+      )}
 
 {/* Case Studies Finder Window */}
       {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
         <div 
-          className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'}`}
+          className={`absolute right-10 top-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'}`}
           onClick={() => focusWindow('caseStudies')}
         >
             <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
@@ -1675,7 +1738,7 @@ LinkedIn: www.linkedin.com/in/charitydupont`
                       <span className="text-[13px] font-medium">Case Studies</span>
                     </div>
                     <button
-                      onClick={() => setPhotoViewerOpen(true)}
+                      onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
                       className="w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-gray-600 hover:bg-black/5"
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2048,7 +2111,7 @@ onClick={() => setDesktopSelectedNote('about')}
             </div>
           }
           label="Photos"
-          onClick={() => setPhotoViewerOpen(true)}
+          onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
