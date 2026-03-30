@@ -3306,11 +3306,8 @@ function TeammateCaseStudy() {
           <div className="grid md:grid-cols-3 gap-6">
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#FFC629] flex items-center justify-center">
-                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 3C7.03 3 3 7.03 3 12C3 16.97 7.03 21 12 21C16.97 21 21 16.97 21 12C21 7.03 16.97 3 12 3ZM12 18.5C8.42 18.5 5.5 15.58 5.5 12C5.5 8.42 8.42 5.5 12 5.5C15.58 5.5 18.5 8.42 18.5 12C18.5 15.58 15.58 18.5 12 18.5Z" fill="black"/>
-                    <circle cx="12" cy="12" r="4" fill="black"/>
-                  </svg>
+                <div className="w-10 h-10 rounded-xl overflow-hidden">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/classic-bumble-logo-editable-and-for-tech-branding-and-creative-design-free-png-GQUpsWRD0QoLNqhIzdRe2J51TYAH7o.webp" alt="Bumble" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-xl font-semibold text-yellow-600">Bumble</h3>
               </div>
@@ -3325,10 +3322,8 @@ function TeammateCaseStudy() {
             </div>
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 via-red-500 to-orange-500 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                  </svg>
+                <div className="w-10 h-10 rounded-xl overflow-hidden">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tinder-app-logo-tinder-app-logo-transparent-tinder-app-icon-transparent-free-free-png-PDRTDpNBdjoBo1j4DFXEHy6P36zP0Y.webp" alt="Tinder" className="w-full h-full object-cover" />
                 </div>
                 <h3 className="text-xl font-semibold text-red-500">Tinder</h3>
               </div>
@@ -3343,10 +3338,8 @@ function TeammateCaseStudy() {
             </div>
             <div className="bg-white rounded-2xl p-8 border border-black/5">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center">
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none">
-                    <path d="M6 4V20M6 12H18M18 4V20" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-                  </svg>
+                <div className="w-10 h-10 rounded-xl overflow-hidden bg-white flex items-center justify-center">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hinge-white-logo-icon-clean-with-transparent-background-for-ui-use-free-png-x8G86pfW3DS0MPdgJKfUAix4t3nz4e.webp" alt="Hinge" className="w-8 h-8 object-contain" />
                 </div>
                 <h3 className="text-xl font-semibold text-black">Hinge</h3>
               </div>
