@@ -74,7 +74,7 @@ const messageContacts = [
   {
     id: 'silas',
     name: 'Silas Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_app_icon_202603181528-ydIag7XSrkaGqZZ4tCETLAl51bbTxy.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-PXumcF9H5P8iTnRyJyWtpRSmJTZfs7.jpeg',
     lastMessage: 'Your intelligent AI companion',
     time: '9:15 AM',
     unread: false,
@@ -98,7 +98,7 @@ const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.c
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_store_icon_202603271728-PqcDh4UD4rwBEYZkD2tBYS2rA2SA6F.jpeg"
 const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg"
-const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_app_icon_202603181528-ydIag7XSrkaGqZZ4tCETLAl51bbTxy.jpeg"
+const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-PXumcF9H5P8iTnRyJyWtpRSmJTZfs7.jpeg"
 
 type ScreenState = "login" | "loading" | "desktop"
 
