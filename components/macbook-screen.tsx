@@ -183,7 +183,7 @@ export function MacBookScreen() {
 
   // Personal photos for the photo stack
   const personalPhotos = [
-    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7592-px1oAdcjTmaa9c7aTzlifKeaOqtueY.jpg",
+    "/images/sunflowers-sunrise.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_6030-HDajKbzLzr6NbShaVi96ClYMP8BhmX.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3f8de33d-4c26-4ebb-9f10-d1ed1073fe58.JPG-Z2f5Pmtz0aNiNTX7UVFea7jzrLPwrf.jpeg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0089.JPG-ny4ZUKnkaTaq64nuENlExBo5Mqmi5q.jpeg",
@@ -1501,14 +1501,14 @@ LinkedIn: www.linkedin.com/in/charitydupont`
       {/* Desktop - Clean Simple Layout */}
       <div className="absolute inset-0 top-[25px] bottom-[80px] overflow-hidden p-6 flex gap-5">
 
-        {/* Dalmatian Photo - Left Side */}
+        {/* Sunflowers Photo - Left Side */}
         <div
           className="w-72 h-full bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:scale-[1.01] transition-transform"
           onDoubleClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
         >
           <img
             src={personalPhotos[0]}
-            alt="Dalmatian"
+            alt="Sunflowers at Sunrise"
             className="w-full h-full object-cover"
           />
         </div>
