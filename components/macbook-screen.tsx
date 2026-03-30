@@ -2407,25 +2407,25 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-4 gap-6">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Silas Dashboard" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Memory Graph</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact Recipe" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Artifact</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile Settings" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Profile</p>
@@ -2441,19 +2441,19 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather Insight" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Weather Insight</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Outfit with Receipt" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Pulls Outfit with Digital Receipt</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit Suggestion" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Outfit Suggestion</p>
@@ -2469,14 +2469,14 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-2 gap-6 max-w-lg mx-auto">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar View" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%207-VqiHJNt0ZD8i1Li06rY5OPgtEmZTm2.png" alt="Event Details with Ride" className="w-full h-full object-contain" />
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2057%20%281%29-Cu9zZu25QBG1eFO1YhOVu3lK9vnkSe.png" alt="Event Details with Ride" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggest Rideshare Option</p>
                 </div>
@@ -2491,31 +2491,31 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-5 gap-4">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank Overview" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transaction History" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Adding from Digital Receipt</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Cart</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Check Out</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard with New Orders</p>
@@ -2531,25 +2531,25 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2021-jyznXlNZBt08zrm0MQ0czROUiZ8tIq.png" alt="Search Empty State" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Product Search</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Search Results" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Product Result</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Product Detail" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggestion</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Ingredient Analysis" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Product Information</p>
@@ -2565,25 +2565,25 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Active Trips" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">User Profile</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2035-eWU7OhpjguXv14rdS2Ory9fIkMjVdX.png" alt="Seat Analysis" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Seat Analysis</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2034-8M9jhf6mWZmXLQF2tpgiEf4ACmo9y6.png" alt="Flight Selection" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Flight Insight</p>
@@ -2599,19 +2599,19 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2030-Ufk6p1qH3uiJ1KqZJgRhvsrF1zih2i.png" alt="Curated for Eloise" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggestion</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2031-4TdOpWYDYdIUQTaW82bb3jdxiXI5GC.png" alt="Product with Context" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Context</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2032-yueRj2B5riZiLHfqrPI13oDescaphw.png" alt="Evidence Found" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Evidence</p>
@@ -2627,19 +2627,19 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2017-vD7J5N5WQLvcYy6tMmCCAoDvPhgtA5.png" alt="Library" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2018-rtZzFsJ28O39L8eX3CLDF6Eu1UxUum.png" alt="Why This Book" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Suggestion</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2019-v9hgskr7Du3wKiL9bcYrcYYPoBcd96.png" alt="Excerpt Analysis" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Reasoning</p>
@@ -2655,25 +2655,25 @@ function SilasCaseStudy() {
               </p>
               <div className="grid grid-cols-4 gap-4">
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-KeljTUoA1uAKwrfQGClFbh2qr2dmlF.png" alt="Locator Empty" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Search</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-doimziRe3RcEQohrjCdlfiDtUsU4hK.png" alt="Locator Keys Selected" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Item Selected</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2039-whUo54tXaqQerB5onNBUTWIds6OVap.png" alt="Floor Map Scanning" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Floor Map Scanning</p>
                 </div>
                 <div className="text-center">
-                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 bg-gray-100 flex items-center justify-center">
+                  <div className="aspect-[9/19] rounded-[2rem] overflow-hidden mb-3 flex items-center justify-center">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2040-63dYmc1scg8VFvIDMELM1Nd643oDAo.png" alt="Item Detected" className="w-full h-full object-contain" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Item Detected</p>
