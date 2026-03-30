@@ -36,12 +36,12 @@ const messageContacts = [
     name: 'Charity',
     avatar: null,
     isMe: true,
-    lastMessage: 'Welcome to my portfolio iPhone!',
+    lastMessage: 'Welcome to my portfolio on my iPhone!',
     time: 'now',
     unread: true,
     messages: [
-      { from: 'charity', text: "Hey! Welcome to my portfolio iPhone!", time: '10:30 AM' },
-      { from: 'charity', text: "Feel free to go around and check out my projects! Tap on any of my case studies below to explore.", time: '10:30 AM' },
+      { from: 'charity', text: "Hey! Welcome to my portfolio on my iPhone!", time: '10:30 AM' },
+      { from: 'charity', text: "Feel free to check out my case studies! Tap on any one of my case studies and explore.", time: '10:30 AM' },
       { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
     ]
   },
@@ -362,8 +362,8 @@ export function MacBookScreen() {
                   <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-white text-sm font-semibold">Portfolio</p>
-                  <p className="text-white/70 text-xs">Tap Enter to explore my work</p>
+                  <p className="text-white text-sm font-semibold">Messages</p>
+                  <p className="text-white/70 text-xs">Welcome to my portfolio on my iPhone! Feel free to check out my case studies.</p>
                 </div>
               </div>
             </div>
@@ -896,7 +896,7 @@ Tap on any project below to view the full case study.`
 
 Email: charitydupont@google.com
 LinkedIn: www.linkedin.com/in/charitydupont
-Portfolio: charitydesigned.com
+Portfolio: charitydupont.com
 Location: New York, New York
 
 Open to freelance projects, collaborations, and full-time opportunities in UX/UI design. Let's create something meaningful together!`
