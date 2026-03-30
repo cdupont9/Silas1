@@ -74,7 +74,7 @@ const messageContacts = [
   {
     id: 'silas',
     name: 'Silas Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-PXumcF9H5P8iTnRyJyWtpRSmJTZfs7.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg',
     lastMessage: 'Your intelligent AI companion',
     time: '9:15 AM',
     unread: false,
@@ -98,7 +98,7 @@ const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.c
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_store_icon_202603271728-PqcDh4UD4rwBEYZkD2tBYS2rA2SA6F.jpeg"
 const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg"
-const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-PXumcF9H5P8iTnRyJyWtpRSmJTZfs7.jpeg"
+const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
 type ScreenState = "login" | "loading" | "desktop"
 
@@ -480,9 +480,7 @@ export function MacBookScreen() {
                   onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
                   className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-16 h-16 rounded-xl bg-[#1a1025] overflow-hidden shadow flex-shrink-0">
-                    <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-contain scale-110" />
-                  </div>
+                  <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
                   <div className="flex-1 text-left">
                     <h3 className="font-bold text-gray-900">Silas</h3>
                     <p className="text-gray-500 text-sm">AI Companion</p>
@@ -1987,8 +1985,8 @@ onClick={() => setDesktopSelectedNote('about')}
 
                 {/* Silas */}
                 <button onClick={() => openCaseStudy('silas')} className="flex flex-col items-center gap-2 group">
-                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl group-hover:scale-110 transition-transform duration-200 bg-[#1a1025]">
-                    <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-contain scale-110" />
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden shadow-xl group-hover:scale-110 transition-transform duration-200">
+                    <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-[11px] text-black/70 font-medium">Silas</span>
                 </button>
@@ -2077,8 +2075,8 @@ onClick={() => setDesktopSelectedNote('about')}
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-[#1a1025]">
-              <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-contain scale-110" />
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
             </div>
           }
           label="Silas"
