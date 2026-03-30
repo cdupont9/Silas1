@@ -3079,44 +3079,6 @@ function MeetlyCaseStudy() {
         <div className="max-w-4xl mx-auto px-8 text-center">
           <h3 className="text-2xl font-bold text-indigo-600 mb-4">Experience the Prototype</h3>
           <p className="text-black/60 mb-6">Click below to interact with the Meetly prototype</p>
-          
-          {/* Demo Instructions */}
-          <div className="bg-white rounded-2xl p-6 mb-8 text-left shadow-md border border-indigo-100 max-w-2xl mx-auto">
-            <h4 className="font-semibold text-indigo-600 mb-4 text-center">Demo Instructions</h4>
-            <ol className="text-sm text-black/70 space-y-2 list-decimal list-inside">
-              <li>Click the <span className="font-medium">+ (plus)</span> button</li>
-              <li>Select <span className="font-medium">Create New Hangout</span></li>
-              <li>Click on <span className="font-medium">Emily</span> (this will highlight multiple friends if needed)</li>
-              <li>Click <span className="font-medium">Add</span></li>
-              <li>Select <span className="font-medium">Group Name</span></li>
-              <li>Select the <span className="font-medium">keyboard</span></li>
-              <li>Click <span className="font-medium">Create</span></li>
-              <li>Choose <span className="font-medium">&quot;Show Availability Only&quot;</span></li>
-              <li>Click <span className="font-medium">Create</span></li>
-              <li>Go to <span className="font-medium">Messages</span></li>
-              <li>Click <span className="font-medium">Text Message Box</span></li>
-              <li>View messages (e.g., suggestion like &quot;How about sometime next month?&quot;)</li>
-              <li>Select the <span className="font-medium">keyboard</span></li>
-              <li>Click <span className="font-medium">Messages</span> again to see more replies</li>
-              <li>Open the <span className="font-medium">Calendar</span></li>
-              <li>Click the <span className="font-medium">Chevron</span> to scroll to January</li>
-              <li>Select <span className="font-medium">January 17th</span></li>
-              <li>Click <span className="font-medium">Vote</span></li>
-              <li>Click <span className="font-medium">Confirm</span></li>
-              <li>Close the calendar</li>
-              <li>If it says &quot;Vote Pending – James has not voted yet&quot;: Click <span className="font-medium">Cancel</span>, then select <span className="font-medium">Yes, Notify</span></li>
-              <li>Reopen the <span className="font-medium">Calendar</span></li>
-              <li>Check that James has voted</li>
-              <li>Close the calendar</li>
-              <li>Click <span className="font-medium">Confirm</span></li>
-              <li>Click <span className="font-medium">Set Time</span></li>
-              <li>Choose <span className="font-medium">Schedule with Suggested Time</span></li>
-              <li>Confirm the date</li>
-              <li>Click <span className="font-medium">Confirm</span> again</li>
-              <li>Final result: the scheduled event appears on your screen</li>
-            </ol>
-          </div>
-
           <button
             onClick={() => setShowDemo(true)}
             className="inline-flex items-center gap-2 px-8 py-4 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition-colors shadow-lg hover:shadow-xl"
@@ -3130,22 +3092,64 @@ function MeetlyCaseStudy() {
         </div>
       </div>
       
-{/* Demo Modal - Full Screen Figma Prototype */}
+{/* Demo Modal - Full Screen Figma Prototype with Side-by-Side Instructions */}
       {showDemo && (
-        <div className="fixed inset-0 z-[100]">
-          <iframe 
-            src="https://embed.figma.com/proto/PCUGC6wiSuEzlpmept0ybQ/Meetly-Official-Prototye?node-id=2002-143&scaling=scale-down&page-id=0%3A1&hide-ui=1&embed-host=share&hotspot-hints=0" 
-            className="w-full h-full border-0" 
-            allowFullScreen 
-          />
-          <button 
-            onClick={() => setShowDemo(false)} 
-            className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors"
-          >
-            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
+        <div className="fixed inset-0 z-[100] bg-gray-900 flex">
+          {/* Instructions Panel - Left Side */}
+          <div className="w-80 bg-white h-full overflow-y-auto flex-shrink-0 border-r border-gray-200">
+            <div className="p-6">
+              <h4 className="font-semibold text-indigo-600 mb-4 text-lg">Demo Instructions</h4>
+              <ol className="text-sm text-black/70 space-y-3 list-decimal list-inside">
+                <li>Click the <span className="font-medium">+ (plus)</span> button</li>
+                <li>Select <span className="font-medium">Create New Hangout</span></li>
+                <li>Click on <span className="font-medium">Emily</span> (this will highlight multiple friends if needed)</li>
+                <li>Click <span className="font-medium">Add</span></li>
+                <li>Select <span className="font-medium">Group Name</span></li>
+                <li>Select the <span className="font-medium">keyboard</span></li>
+                <li>Click <span className="font-medium">Create</span></li>
+                <li>Choose <span className="font-medium">&quot;Show Availability Only&quot;</span></li>
+                <li>Click <span className="font-medium">Create</span></li>
+                <li>Go to <span className="font-medium">Messages</span></li>
+                <li>Click <span className="font-medium">Text Message Box</span></li>
+                <li>View messages (e.g., suggestion like &quot;How about sometime next month?&quot;)</li>
+                <li>Select the <span className="font-medium">keyboard</span></li>
+                <li>Click <span className="font-medium">Messages</span> again to see more replies</li>
+                <li>Open the <span className="font-medium">Calendar</span></li>
+                <li>Click the <span className="font-medium">Chevron</span> to scroll to January</li>
+                <li>Select <span className="font-medium">January 17th</span></li>
+                <li>Click <span className="font-medium">Vote</span></li>
+                <li>Click <span className="font-medium">Confirm</span></li>
+                <li>Close the calendar</li>
+                <li>If it says &quot;Vote Pending – James has not voted yet&quot;: Click <span className="font-medium">Cancel</span>, then select <span className="font-medium">Yes, Notify</span></li>
+                <li>Reopen the <span className="font-medium">Calendar</span></li>
+                <li>Check that James has voted</li>
+                <li>Close the calendar</li>
+                <li>Click <span className="font-medium">Confirm</span></li>
+                <li>Click <span className="font-medium">Set Time</span></li>
+                <li>Choose <span className="font-medium">Schedule with Suggested Time</span></li>
+                <li>Confirm the date</li>
+                <li>Click <span className="font-medium">Confirm</span> again</li>
+                <li>Final result: the scheduled event appears on your screen</li>
+              </ol>
+            </div>
+          </div>
+          
+          {/* Figma Prototype - Right Side */}
+          <div className="flex-1 relative">
+            <iframe 
+              src="https://embed.figma.com/proto/PCUGC6wiSuEzlpmept0ybQ/Meetly-Official-Prototye?node-id=2002-143&scaling=scale-down&page-id=0%3A1&hide-ui=1&embed-host=share&hotspot-hints=0" 
+              className="w-full h-full border-0" 
+              allowFullScreen 
+            />
+            <button 
+              onClick={() => setShowDemo(false)} 
+              className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors"
+            >
+              <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
         </div>
       )}
 
