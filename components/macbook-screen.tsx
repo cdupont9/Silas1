@@ -897,7 +897,7 @@ Tap on any project below to view the full case study.`
 Email: charitydupont@google.com
 LinkedIn: www.linkedin.com/in/charitydupont
 Portfolio: charitydesigned.com
-Location: Durham, NC
+Location: New York, New York
 
 Open to freelance projects, collaborations, and full-time opportunities in UX/UI design. Let's create something meaningful together!`
         }
