@@ -3105,7 +3105,7 @@ function MeetlyCaseStudy() {
                 <li>Click on <span className="font-medium">Emily</span> under the &quot;All&quot; category (not Favorites)</li>
                 <li>Click <span className="font-medium">Add</span></li>
                 <li>Select <span className="font-medium">Group Name</span></li>
-                <li>Use the keyboard to type the name</li>
+                <li>Click the <span className="font-medium">keyboard</span></li>
                 <li>Choose <span className="font-medium">Availability Only</span></li>
                 <li>Click <span className="font-medium">Create</span></li>
                 <li>Click the text box to open messages</li>
