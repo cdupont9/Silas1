@@ -2405,7 +2405,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 It{"'"}s her &ldquo;Control Center&rdquo;. She sees everything - her money, her orders, and her schedule - in one simple list. It doesn{"'"}t feel like &ldquo;tech&rdquo;; it feels like a calm morning briefing that tells her exactly where her life stands at that moment.
               </p>
-              <div className="grid grid-cols-4 gap-6">
+              <div className="grid grid-cols-4 gap-6 items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Silas Dashboard" className="w-full h-auto" />
@@ -2439,7 +2439,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise sees it{"'"}s going to be a 62F day. Silas already knows what{"'"}s in her closet because it &ldquo;read&rdquo; her past shopping receipts. It suggests a weather-appropriate outfit, highlighting her wide-leg trousers plus backup options. She doesn{"'"}t have to overthink; she just gets dressed and goes.
               </p>
-              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather Insight" className="w-full h-auto" />
@@ -2467,7 +2467,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 She has her daughter{"'"}s recital at 10:00 AM. Silas understands the &ldquo;physical requirement&rdquo; of traveling there. It checks live traffic in the background and pops up at the perfect time, offering to book a rideshare so she isn{"'"}t late.
               </p>
-              <div className="grid grid-cols-2 gap-6 max-w-md mx-auto">
+              <div className="grid grid-cols-2 gap-6 max-w-md mx-auto items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar View" className="w-full h-auto" />
@@ -2489,7 +2489,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise opens her bank app. Instead of confusing codes, Silas displays clear digital receipts detailing exactly what she bought. She can re-order items directly from her statement because Silas has turned her transaction history into a shoppable catalog.
               </p>
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-5 gap-4 items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank Overview" className="w-full h-auto" />
@@ -2498,7 +2498,13 @@ function SilasCaseStudy() {
                 </div>
                 <div className="text-center">
                   <div className="mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transaction History" className="w-full h-auto" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Digital Receipt" className="w-full h-auto" />
+                  </div>
+                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Digital Receipt</p>
+                </div>
+                <div className="text-center">
+                  <div className="mb-3">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Adding from Digital Receipt" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Adding from Digital Receipt</p>
                 </div>
@@ -2514,12 +2520,6 @@ function SilasCaseStudy() {
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Check Out</p>
                 </div>
-                <div className="text-center">
-                  <div className="mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full h-auto" />
-                  </div>
-                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard with New Orders</p>
-                </div>
               </div>
             </div>
 
@@ -2529,7 +2529,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Instead of searching the global internet, she is searching her personal internet. She has a search engine that cuts through the noise and gives her a clear, confident choice.
               </p>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2021-jyznXlNZBt08zrm0MQ0czROUiZ8tIq.png" alt="Search Empty State" className="w-full h-auto" />
@@ -2563,7 +2563,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise needs to book a flight. Because Silas understands her habits, it already knows she prefers aisle seats, her frequent flyer number, and her typical budget. Instead of dumping a hundred overwhelming flight options on her, Silas presents the best matches.
               </p>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Active Trips" className="w-full h-auto" />
@@ -2597,7 +2597,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise is inside her favorite shopping app. Silas surfaces a &ldquo;memory&rdquo; from three days ago - a text from Daniel saying, &ldquo;Hunter is out of dog food.&rdquo; Silas isn{"'"}t interrupting her day; it{"'"}s enhancing her current shopping session.
               </p>
-              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2030-Ufk6p1qH3uiJ1KqZJgRhvsrF1zih2i.png" alt="Curated for Eloise" className="w-full h-auto" />
@@ -2625,7 +2625,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 To end her day, Eloise opens Silas Books. The recommendation is another form of &ldquo;evidence.&rdquo; Silas shows her a book not because it{"'"}s a bestseller, but because of a specific sentence she highlighted weeks ago.
               </p>
-              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto">
+              <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2017-vD7J5N5WQLvcYy6tMmCCAoDvPhgtA5.png" alt="Library" className="w-full h-auto" />
@@ -2653,7 +2653,7 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 A visual retracing tool that utilizes digital breadcrumbs to solve physical-world problems. If you misplace a physical item, Silas creates a chronological &ldquo;map of presence&rdquo; by merging your location history with your digital interactions.
               </p>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 items-end">
                 <div className="text-center">
                   <div className="mb-3">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-KeljTUoA1uAKwrfQGClFbh2qr2dmlF.png" alt="Locator Empty" className="w-full h-auto" />
