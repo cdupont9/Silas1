@@ -61,7 +61,7 @@ const messageContacts = [
   {
     id: 'meetly',
     name: 'Meetly Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png',
     lastMessage: 'Social coordination made easy',
     time: '9:30 AM',
     unread: false,
@@ -97,7 +97,7 @@ const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.c
 
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_store_icon_202603271728-PqcDh4UD4rwBEYZkD2tBYS2rA2SA6F.jpeg"
-const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg"
+const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png"
 const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
 type ScreenState = "login" | "loading" | "desktop"
