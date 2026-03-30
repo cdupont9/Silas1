@@ -2735,7 +2735,7 @@ function MeetlyCaseStudy() {
       <div className="relative py-16 px-8 bg-gradient-to-b from-indigo-50 to-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="w-20 h-20 mx-auto mb-6 rounded-2xl overflow-hidden shadow-xl">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Untitled%20%281%29%201%20%281%29.png-8iWDaxBT9mW9Z9SSVsv0hKXA9l9afz.jpeg" alt="Meetly" className="w-full h-full object-cover" />
+            <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-4xl font-bold mb-4 text-indigo-600">Meetly</h1>
           <p className="text-base text-black/70 leading-relaxed max-w-3xl mx-auto">
@@ -2849,16 +2849,16 @@ function MeetlyCaseStudy() {
 
           {/* User Research Synthesis & Feature Prioritization - Side by Side */}
           <div className="grid md:grid-cols-2 gap-6 mb-10">
-            <div>
+            <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-black mb-4 text-center">User Research Synthesis</h3>
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm h-full">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ApLgUHySGxYaPLs-5ZFkUdVzlnsmvsq6Vqp0PWKvAcVfQK.png" alt="I Like, I Wish, What If Research Board" className="w-full h-full object-cover" />
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-white flex-1 flex items-center justify-center p-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ApLgUHySGxYaPLs-5ZFkUdVzlnsmvsq6Vqp0PWKvAcVfQK.png" alt="I Like, I Wish, What If Research Board" className="w-full h-auto object-contain" />
               </div>
             </div>
-            <div>
+            <div className="flex flex-col">
               <h3 className="text-lg font-semibold text-black mb-4 text-center">Feature Prioritization</h3>
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm h-full">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4ZAJu3RfxsHn87J-C40JZ9GtirbtlXMkE0VCQ1jcCnpZ3X.png" alt="Priority Feasibility Matrix" className="w-full h-full object-cover" />
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-white flex-1 flex items-center justify-center p-2">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4ZAJu3RfxsHn87J-C40JZ9GtirbtlXMkE0VCQ1jcCnpZ3X.png" alt="Priority Feasibility Matrix" className="w-full h-auto object-contain" />
               </div>
             </div>
           </div>
