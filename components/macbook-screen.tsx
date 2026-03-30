@@ -465,7 +465,7 @@ export function MacBookScreen() {
           </video>
           
           {/* Status Bar - iOS style */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20 bg-black/40 backdrop-blur-xl">
+          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20">
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
               {/* Cellular Bars */}
