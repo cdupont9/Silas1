@@ -2309,7 +2309,7 @@ function SilasCaseStudy() {
       <div className="relative py-20 px-8 bg-gradient-to-b from-purple-50 to-white">
         <div className="max-w-4xl mx-auto text-center">
           <div className="w-24 h-24 mx-auto mb-8 rounded-2xl overflow-hidden shadow-xl">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/create_app_icon_202603181528-ydIag7XSrkaGqZZ4tCETLAl51bbTxy.jpeg" alt="Silas" className="w-full h-full object-cover" />
+            <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-4xl md:text-5xl font-bold mb-6 text-black">
             Silas: The Integrated AI Companion
@@ -2492,31 +2492,31 @@ function SilasCaseStudy() {
               <div className="grid grid-cols-5 gap-4">
                 <div className="text-center">
                   <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-S1tsPJTjjDHe655eNDmLcuxsbwfK87.png" alt="Bank Overview" className="w-full h-auto block" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank Overview" className="w-full h-auto block" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard</p>
                 </div>
                 <div className="text-center">
                   <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-Op8qY9Skd68yLytwbXz5eN8UXr1ibi.png" alt="Transaction History" className="w-full h-auto block" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transaction History" className="w-full h-auto block" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Adding from Digital Receipt</p>
                 </div>
                 <div className="text-center">
                   <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2012-KjxQjzBGp1BoYRYwpGwW3Vmp6XIkao.png" alt="Cart" className="w-full h-auto block" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full h-auto block" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Cart</p>
                 </div>
                 <div className="text-center">
                   <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014-accLCaj5K9IbjFCA9WTmiHq5SVwiEx.png" alt="Checkout" className="w-full h-auto block" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full h-auto block" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Check Out</p>
                 </div>
                 <div className="text-center">
                   <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-BsvDzsGywhO6EMCJS6sIEF4YAx7Iwp.png" alt="Orders" className="w-full h-auto block" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full h-auto block" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Dashboard with New Orders</p>
                 </div>
@@ -2538,7 +2538,7 @@ function SilasCaseStudy() {
                 </div>
                 <div className="text-center">
                   <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2026-sFz8g4u0NBOIBOMcmGpiMMSgSwYdIF.png" alt="Search Results" className="w-full h-auto block" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Search Results" className="w-full h-auto block" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Product Result</p>
                 </div>
@@ -2550,7 +2550,7 @@ function SilasCaseStudy() {
                 </div>
                 <div className="text-center">
                   <div className="rounded-[2.5rem] overflow-hidden mb-3">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2028-u11lzEfCmzts3KWogDpLlzT1Rw2HkJ.png" alt="Ingredient Analysis" className="w-full h-auto block" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Ingredient Analysis" className="w-full h-auto block" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Product Information</p>
                 </div>
