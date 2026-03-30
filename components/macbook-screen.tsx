@@ -36,13 +36,13 @@ const messageContacts = [
     name: 'Charity',
     avatar: null,
     isMe: true,
-    lastMessage: 'Welcome to my portfolio!',
+    lastMessage: 'Welcome to my portfolio iPhone!',
     time: 'now',
     unread: true,
     messages: [
-      { from: 'charity', text: "Hey! Welcome to my portfolio MacBook!", time: '10:30 AM' },
-      { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
+      { from: 'charity', text: "Hey! Welcome to my portfolio iPhone!", time: '10:30 AM' },
+      { from: 'charity', text: "Feel free to go around and check out my projects! Tap on any of my case studies below to explore.", time: '10:30 AM' },
+      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
     ]
   },
   {
@@ -184,6 +184,7 @@ export function MacBookScreen() {
   // Personal photos for the photo stack
   const personalPhotos = [
     "/images/sunflowers-sunrise.jpg",
+    "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7592-px1oAdcjTmaa9c7aTzlifKeaOqtueY.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_6030-HDajKbzLzr6NbShaVi96ClYMP8BhmX.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3f8de33d-4c26-4ebb-9f10-d1ed1073fe58.JPG-Z2f5Pmtz0aNiNTX7UVFea7jzrLPwrf.jpeg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0089.JPG-ny4ZUKnkaTaq64nuENlExBo5Mqmi5q.jpeg",
@@ -894,7 +895,11 @@ Tap on any project below to view the full case study.`
           content: `Let's Connect!
 
 Email: charitydupont@google.com
-LinkedIn: www.linkedin.com/in/charitydupont`
+LinkedIn: www.linkedin.com/in/charitydupont
+Portfolio: charitydesigned.com
+Location: Durham, NC
+
+Open to freelance projects, collaborations, and full-time opportunities in UX/UI design. Let's create something meaningful together!`
         }
       ]
 
