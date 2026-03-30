@@ -1449,10 +1449,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <form onSubmit={handleLogin} className="relative">
               <div className="relative">
                 <input
-                  type="password"
+                  type="text"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter Password"
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleLogin(e); } }}
+                  placeholder="Click the arrow →"
                   className="w-64 h-10 bg-white/20 backdrop-blur-xl rounded-full px-5 pr-10 text-white placeholder-white/50 text-sm border border-white/30 focus:border-white/50 focus:outline-none focus:ring-0 transition-colors"
                   autoFocus
                 />
