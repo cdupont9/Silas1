@@ -1498,6 +1498,54 @@ LinkedIn: www.linkedin.com/in/charitydupont`
         </div>
       </div>
 
+      {/* Desktop Folder Icons - Right Side */}
+      <div className="absolute top-[40px] right-4 flex flex-col gap-3 z-10">
+        {/* Teammates Folder */}
+        <button
+          onClick={() => openCaseStudy('teammates')}
+          className="flex flex-col items-center gap-1 group w-20"
+        >
+          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+              alt="Teammates" 
+              className="w-full h-full object-contain drop-shadow-lg" 
+            />
+          </div>
+          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Teammates</span>
+        </button>
+
+        {/* Meetly Folder */}
+        <button
+          onClick={() => openCaseStudy('meetly')}
+          className="flex flex-col items-center gap-1 group w-20"
+        >
+          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+              alt="Meetly" 
+              className="w-full h-full object-contain drop-shadow-lg" 
+            />
+          </div>
+          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Meetly</span>
+        </button>
+
+        {/* Silas Folder */}
+        <button
+          onClick={() => openCaseStudy('silas')}
+          className="flex flex-col items-center gap-1 group w-20"
+        >
+          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+              alt="Silas" 
+              className="w-full h-full object-contain drop-shadow-lg" 
+            />
+          </div>
+          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Silas</span>
+        </button>
+      </div>
+
       {/* Desktop - Clean Simple Layout */}
       <div className="absolute inset-0 top-[25px] bottom-[80px] overflow-hidden p-6 flex gap-5">
 
