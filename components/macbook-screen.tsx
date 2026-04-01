@@ -2568,12 +2568,18 @@ function SilasCaseStudy() {
               <p className="text-black/70 leading-relaxed mb-8">
                 Eloise sees it{"'"}s going to be a 62F day. Silas already knows what{"'"}s in her closet because it &ldquo;read&rdquo; her past shopping receipts. It suggests a weather-appropriate outfit, highlighting her wide-leg trousers plus backup options. She doesn{"'"}t have to overthink; she just gets dressed and goes.
               </p>
-              <div className="grid grid-cols-3 gap-4 max-w-4xl mx-auto items-end">
+              <div className="grid grid-cols-4 gap-4 max-w-5xl mx-auto items-end">
                 <div className="text-center">
                   <div className="mb-2">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather Insight" className="w-full h-auto" />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Silas Weather Insight</p>
+                </div>
+                <div className="text-center">
+                  <div className="mb-2">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/6c9aa4e4-50fe-4465-a7a7-43846fb9d9e7.webm-R6bR96uKSvbobiHZloQ3J5QpWwPJsA.gif" alt="Atmospheric Insight" className="w-full h-auto rounded-2xl" />
+                  </div>
+                  <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Atmospheric Insight Demo</p>
                 </div>
                 <div className="text-center">
                   <div className="mb-2">
