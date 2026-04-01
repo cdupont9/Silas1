@@ -2577,7 +2577,7 @@ function SilasCaseStudy() {
                 </div>
                 <div className="text-center">
                   <div className="mb-2">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/6c9aa4e4-50fe-4465-a7a7-43846fb9d9e7.webm-R6bR96uKSvbobiHZloQ3J5QpWwPJsA.gif" alt="Atmospheric Insight" className="w-full h-auto rounded-2xl" />
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/6c9aa4e4-50fe-4465-a7a7-43846fb9d9e7.webm-R6bR96uKSvbobiHZloQ3J5QpWwPJsA.gif" alt="Atmospheric Insight" className="w-full h-auto" style={{ background: 'transparent' }} />
                   </div>
                   <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Atmospheric Insight Demo</p>
                 </div>
