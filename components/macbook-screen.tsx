@@ -2459,7 +2459,8 @@ interface SafariCaseStudyProps {
 function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: SafariCaseStudyProps) {
   const study = caseStudies[project as keyof typeof caseStudies]
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
-  const [isResizing, setIsResizing] = useState(false)
+  const [windowPosition, setWindowPosition] = useState({ x: 8, y: 28 })
+  const [isDragging, setIsDragging] = useState(false)
   const [isFullSize, setIsFullSize] = useState(true)
   const windowRef = useRef<HTMLDivElement>(null)
   
@@ -2476,35 +2477,11 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
     }
   }, [windowSize.width])
   
-  const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault()
-    setIsResizing(true)
-    
-    const startX = e.clientX
-    const startY = e.clientY
-    const startWidth = windowSize.width
-    const startHeight = windowSize.height
-    
-    const handleMouseMove = (e: MouseEvent) => {
-      const newWidth = Math.max(500, startWidth + (e.clientX - startX))
-      const newHeight = Math.max(400, startHeight + (e.clientY - startY))
-      setWindowSize({ width: newWidth, height: newHeight })
-    }
-    
-    const handleMouseUp = () => {
-      setIsResizing(false)
-      document.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseup', handleMouseUp)
-    }
-    
-    document.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('mouseup', handleMouseUp)
-  }
-  
   const toggleResize = () => {
     if (isFullSize) {
-      // Shrink to smaller size
+      // Shrink to smaller size and center it
       setWindowSize({ width: 700, height: 500 })
+      setWindowPosition({ x: 100, y: 80 })
       setIsFullSize(false)
     } else {
       // Expand to full size
@@ -2515,10 +2492,37 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
             width: parent.clientWidth - 16, 
             height: parent.clientHeight - 36 
           })
+          setWindowPosition({ x: 8, y: 28 })
         }
       }
       setIsFullSize(true)
     }
+  }
+  
+  const handleDragStart = (e: React.MouseEvent) => {
+    if (isFullSize) return // Don't allow drag when full size
+    e.preventDefault()
+    setIsDragging(true)
+    
+    const startX = e.clientX
+    const startY = e.clientY
+    const startPosX = windowPosition.x
+    const startPosY = windowPosition.y
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      const newX = Math.max(0, startPosX + (e.clientX - startX))
+      const newY = Math.max(28, startPosY + (e.clientY - startY))
+      setWindowPosition({ x: newX, y: newY })
+    }
+    
+    const handleMouseUp = () => {
+      setIsDragging(false)
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+    
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
   }
   
   if (!study) return null
@@ -2531,10 +2535,10 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   return (
     <div
       ref={windowRef}
-      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isResizing ? 'select-none' : ''}`}
+      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isDragging ? 'select-none cursor-grabbing' : ''} transition-all duration-200`}
       style={{ 
-        left: 8, 
-        top: 28, 
+        left: windowPosition.x, 
+        top: windowPosition.y, 
         width: windowSize.width || 'calc(100% - 16px)', 
         height: windowSize.height || 'calc(100% - 36px)',
         minWidth: '500px', 
@@ -2542,9 +2546,10 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
       }}
       onClick={onFocus}
     >
-      {/* Safari Title Bar */}
+      {/* Safari Title Bar - Draggable */}
       <div
-        className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-3 border-b border-black/10 shrink-0"
+        onMouseDown={handleDragStart}
+        className={`h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-3 border-b border-black/10 shrink-0 ${!isFullSize ? 'cursor-grab active:cursor-grabbing' : ''}`}
       >
         <div className="flex gap-2">
           <button onClick={onClose} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
