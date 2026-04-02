@@ -2458,6 +2458,48 @@ interface SafariCaseStudyProps {
 
 function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: SafariCaseStudyProps) {
   const study = caseStudies[project as keyof typeof caseStudies]
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [isResizing, setIsResizing] = useState(false)
+  const windowRef = useRef<HTMLDivElement>(null)
+  
+  // Initialize with full size
+  useEffect(() => {
+    if (windowRef.current && windowSize.width === 0) {
+      const parent = windowRef.current.parentElement
+      if (parent) {
+        setWindowSize({ 
+          width: parent.clientWidth - 16, 
+          height: parent.clientHeight - 36 
+        })
+      }
+    }
+  }, [windowSize.width])
+  
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setIsResizing(true)
+    
+    const startX = e.clientX
+    const startY = e.clientY
+    const startWidth = windowSize.width
+    const startHeight = windowSize.height
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      const newWidth = Math.max(500, startWidth + (e.clientX - startX))
+      const newHeight = Math.max(400, startHeight + (e.clientY - startY))
+      setWindowSize({ width: newWidth, height: newHeight })
+    }
+    
+    const handleMouseUp = () => {
+      setIsResizing(false)
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+    
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+  }
+  
   if (!study) return null
 
   // Check which full case study to render
@@ -2467,8 +2509,16 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
   return (
     <div
-      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col resize ${isFocused ? 'z-40' : 'z-20'}`}
-      style={{ left: 8, top: 28, right: 8, bottom: 8, minWidth: '500px', minHeight: '400px' }}
+      ref={windowRef}
+      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isResizing ? 'select-none' : ''}`}
+      style={{ 
+        left: 8, 
+        top: 28, 
+        width: windowSize.width || 'calc(100% - 16px)', 
+        height: windowSize.height || 'calc(100% - 36px)',
+        minWidth: '500px', 
+        minHeight: '400px' 
+      }}
       onClick={onFocus}
     >
       {/* Safari Title Bar */}
@@ -2575,6 +2625,20 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
             </div>
           </>
         )}
+      </div>
+      
+      {/* Resize Handle - Bottom Right Corner */}
+      <div
+        onMouseDown={handleMouseDown}
+        className="absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-50 group"
+      >
+        <svg 
+          className="absolute bottom-1 right-1 w-3 h-3 text-black/20 group-hover:text-black/40 transition-colors" 
+          viewBox="0 0 24 24" 
+          fill="currentColor"
+        >
+          <path d="M22 22H20V20H22V22ZM22 18H20V16H22V18ZM18 22H16V20H18V22ZM22 14H20V12H22V14ZM18 18H16V16H18V18ZM14 22H12V20H14V22Z" />
+        </svg>
       </div>
     </div>
   )
