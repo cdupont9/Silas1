@@ -1612,13 +1612,20 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {desktopIcons
           .sort((a, b) => a.position - b.position)
           .map((icon) => (
-            <button
+            <div
               key={icon.id}
               draggable
-              onDragStart={() => setDraggedIcon(icon.id)}
+              onDragStart={(e) => {
+                setDraggedIcon(icon.id)
+                e.dataTransfer.effectAllowed = 'move'
+              }}
               onDragEnd={() => setDraggedIcon(null)}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={() => {
+              onDragOver={(e) => {
+                e.preventDefault()
+                e.dataTransfer.dropEffect = 'move'
+              }}
+              onDrop={(e) => {
+                e.preventDefault()
                 if (draggedIcon && draggedIcon !== icon.id) {
                   setDesktopIcons(prev => {
                     const draggedIdx = prev.findIndex(i => i.id === draggedIcon)
@@ -1631,18 +1638,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   })
                 }
               }}
-              onClick={() => openCaseStudy(icon.id)}
-              className={`flex flex-col items-center gap-1 group w-20 cursor-grab active:cursor-grabbing ${draggedIcon === icon.id ? 'opacity-50' : ''}`}
+              onDoubleClick={() => openCaseStudy(icon.id)}
+              className={`flex flex-col items-center gap-1 group w-20 cursor-grab active:cursor-grabbing select-none ${draggedIcon === icon.id ? 'opacity-50 scale-105' : ''} ${draggedIcon && draggedIcon !== icon.id ? 'border-2 border-dashed border-white/50 rounded-lg' : ''}`}
             >
               <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
                 <img 
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
                   alt={icon.label} 
                   className="w-full h-full object-contain drop-shadow-lg pointer-events-none" 
+                  draggable={false}
                 />
               </div>
-              <span className="text-[11px] text-white font-medium drop-shadow-md text-center">{icon.label}</span>
-            </button>
+              <span className="text-[11px] text-white font-medium drop-shadow-md text-center pointer-events-none">{icon.label}</span>
+            </div>
           ))}
       </div>
 
@@ -2319,10 +2327,23 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
                 className="group relative"
               >
-                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-gradient-to-b from-gray-100 to-gray-200 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
-                  </svg>
+                <div className="w-16 h-12 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of case studies folder content */}
+                  <div className="w-full h-full bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] p-0.5">
+                    <div className="flex gap-0.5 mb-0.5">
+                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="bg-white h-full rounded-sm flex gap-0.5 p-0.5">
+                      <div className="w-2 bg-gray-100 rounded-sm" />
+                      <div className="flex-1 flex flex-wrap gap-0.5 content-start">
+                        <div className="w-2 h-2 bg-blue-100 rounded-sm" />
+                        <div className="w-2 h-2 bg-green-100 rounded-sm" />
+                        <div className="w-2 h-2 bg-purple-100 rounded-sm" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
                   Case Studies
@@ -2374,28 +2395,30 @@ onClick={() => setDesktopSelectedNote('about')}
               </button>
             )}
             
-            {safariWindow.isMinimized && (
+            {safariWindow.isMinimized && safariWindow.project && (
               <button
                 onClick={() => { setSafariWindow(prev => ({ ...prev, isMinimized: false })); focusWindow('safari'); }}
                 className="group relative"
               >
-                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110 flex items-center justify-center">
-                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" fill="url(#safariGradient)" />
-                    <path d="M12 2L14 12L12 22" stroke="white" strokeWidth="0.5" />
-                    <path d="M2 12L12 10L22 12" stroke="white" strokeWidth="0.5" />
-                    <polygon points="12,5 13,12 12,13 11,12" fill="#ff3b30" />
-                    <polygon points="12,19 11,12 12,11 13,12" fill="white" />
-                    <defs>
-                      <linearGradient id="safariGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#00d4ff" />
-                        <stop offset="100%" stopColor="#0066ff" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                <div className="w-16 h-12 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of case study window */}
+                  <div className="w-full h-full bg-white">
+                    <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
+                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="p-0.5">
+                      <img 
+                        src={caseStudies[safariWindow.project as keyof typeof caseStudies]?.image} 
+                        alt={caseStudies[safariWindow.project as keyof typeof caseStudies]?.title}
+                        className="w-full h-6 object-cover rounded-sm"
+                      />
+                    </div>
+                  </div>
                 </div>
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
-                  {safariWindow.project ? caseStudies[safariWindow.project as keyof typeof caseStudies]?.title : 'Safari'}
+                  {caseStudies[safariWindow.project as keyof typeof caseStudies]?.title}
                 </div>
               </button>
             )}
@@ -2444,8 +2467,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
   return (
     <div
-      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'}`}
-      style={{ left: 8, top: 28, right: 8, bottom: 8 }}
+      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col resize ${isFocused ? 'z-40' : 'z-20'}`}
+      style={{ left: 8, top: 28, right: 8, bottom: 8, minWidth: '500px', minHeight: '400px' }}
       onClick={onFocus}
     >
       {/* Safari Title Bar */}
