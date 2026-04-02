@@ -272,6 +272,10 @@ export function MacBookScreen() {
 
   // Draggable window positions
   const [aboutPosition, setAboutPosition] = useState<WidgetPosition>({ x: 120, y: 80 })
+  const [photosPosition, setPhotosPosition] = useState<WidgetPosition>({ x: 80, y: 64 })
+  const [caseStudiesPosition, setCaseStudiesPosition] = useState<WidgetPosition>({ x: 200, y: 100 })
+  const [messagesPosition, setMessagesPosition] = useState<WidgetPosition>({ x: 60, y: 50 })
+  const [notesPosition, setNotesPosition] = useState<WidgetPosition>({ x: 80, y: 60 })
   const [projectsPosition, setProjectsPosition] = useState<WidgetPosition>({ x: 200, y: 100 })
 
   const [isDragging, setIsDragging] = useState<string | null>(null)
@@ -328,6 +332,10 @@ export function MacBookScreen() {
       case 'weather': position = weatherPosition; break
       case 'about': position = aboutPosition; break
       case 'projects': position = projectsPosition; break
+      case 'photos': position = photosPosition; break
+      case 'caseStudies': position = caseStudiesPosition; break
+      case 'messages': position = messagesPosition; break
+      case 'notes': position = notesPosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -347,6 +355,10 @@ export function MacBookScreen() {
       case 'weather': setWeatherPosition({ x: newX, y: newY }); break
       case 'about': setAboutPosition({ x: newX, y: newY }); break
       case 'projects': setProjectsPosition({ x: newX, y: newY }); break
+      case 'photos': setPhotosPosition({ x: newX, y: newY }); break
+      case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
+      case 'messages': setMessagesPosition({ x: newX, y: newY }); break
+      case 'notes': setNotesPosition({ x: newX, y: newY }); break
     }
   }
 
@@ -1743,12 +1755,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* macOS Photos App Window */}
       {photosWindow.isOpen && !photosWindow.isMinimized && (
         <div 
-          className={`absolute left-20 top-16 w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'} ${photosWindow.isMinimizing ? 'animate-minimize' : ''}`}
+          className={`absolute w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'} ${photosWindow.isMinimizing ? 'animate-minimize' : ''}`}
           onClick={() => focusWindow('photos')}
-          style={{ transformOrigin: 'bottom center' }}
+          style={{ left: photosPosition.x, top: photosPosition.y, transformOrigin: 'bottom center' }}
         >
-          {/* Photos App Title Bar */}
-          <div className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10">
+          {/* Photos App Title Bar - Draggable */}
+          <div 
+            onMouseDown={(e) => { focusWindow('photos'); handleMouseDown('photos', e); }}
+            className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10 cursor-grab active:cursor-grabbing">
             <div className="flex gap-2">
               <button
                 onClick={() => setPhotosWindow({ isOpen: false, isMinimized: false })}
@@ -1851,13 +1865,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 {/* Case Studies Finder Window */}
       {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
         <div 
-          className={`absolute right-10 top-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
+          className={`absolute w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
           onClick={() => focusWindow('caseStudies')}
-          style={{ transformOrigin: 'bottom center' }}
+          style={{ left: caseStudiesPosition.x, top: caseStudiesPosition.y, transformOrigin: 'bottom center' }}
         >
-            <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10 resize overflow-auto min-w-[400px] min-h-[300px] max-w-[90vw] max-h-[80vh]">
-              {/* Finder Title Bar */}
-              <div className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10">
+            <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
+              {/* Finder Title Bar - Draggable */}
+              <div 
+                onMouseDown={(e) => { focusWindow('caseStudies'); handleMouseDown('caseStudies', e); }}
+                className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10 cursor-grab active:cursor-grabbing">
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCaseStudiesFolder({ isOpen: false, isMinimized: false })}
@@ -1997,13 +2013,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {messagesWindow.isOpen && !messagesWindow.isMinimized && (
           <div
             className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
-            style={{ left: 60, top: 50, transformOrigin: 'bottom center' }}
+            style={{ left: messagesPosition.x, top: messagesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('messages')}
           >
             {/* Sidebar - Contacts */}
             <div className="w-[240px] bg-[#f5f5f7] border-r border-black/10 flex flex-col">
               <div
-                className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5"
+                onMouseDown={(e) => { focusWindow('messages'); handleMouseDown('messages', e); }}
+                className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-grab active:cursor-grabbing"
               >
                 <div className="flex gap-2">
                   <button onClick={() => setMessagesWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
@@ -2088,12 +2105,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {notesWindow.isOpen && !notesWindow.isMinimized && (
           <div
             className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
-            style={{ left: 80, top: 60, transformOrigin: 'bottom center' }}
+            style={{ left: notesPosition.x, top: notesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('notes')}
           >
             {/* Sidebar */}
             <div className="w-[200px] bg-[#f5f5f7] border-r border-black/10 flex flex-col">
-              <div className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5">
+              <div 
+                onMouseDown={(e) => { focusWindow('notes'); handleMouseDown('notes', e); }}
+                className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-grab active:cursor-grabbing">
                 <div className="flex gap-2">
                   <button onClick={() => setNotesWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
                   <button onClick={() => minimizeWindow('notes', setNotesWindow)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
@@ -2500,7 +2519,6 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   }
   
   const handleDragStart = (e: React.MouseEvent) => {
-    if (isFullSize) return // Don't allow drag when full size
     e.preventDefault()
     setIsDragging(true)
     
@@ -2549,7 +2567,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
       {/* Safari Title Bar - Draggable */}
       <div
         onMouseDown={handleDragStart}
-        className={`h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-3 border-b border-black/10 shrink-0 ${!isFullSize ? 'cursor-grab active:cursor-grabbing' : ''}`}
+        className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-3 border-b border-black/10 shrink-0 cursor-grab active:cursor-grabbing"
       >
         <div className="flex gap-2">
           <button onClick={onClose} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
