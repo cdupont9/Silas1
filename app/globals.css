@@ -205,18 +205,45 @@
   animation-delay: 2s;
 }
 
-/* Window minimize animation - zoom down to dock */
+/* Window minimize animation - macOS genie effect style */
 @keyframes minimize-to-dock {
   0% {
-    transform: scale(1) translateY(0);
+    transform: scale(1) translateY(0) perspective(1000px) rotateX(0deg);
+    opacity: 1;
+    filter: blur(0px);
+  }
+  30% {
+    transform: scale(0.8) translateY(50px) perspective(1000px) rotateX(5deg);
     opacity: 1;
   }
+  60% {
+    transform: scale(0.4) translateY(200px) perspective(1000px) rotateX(10deg);
+    opacity: 0.8;
+  }
   100% {
-    transform: scale(0.1) translateY(300px);
+    transform: scale(0.05) translateY(400px) perspective(1000px) rotateX(15deg);
     opacity: 0;
+    filter: blur(2px);
   }
 }
 
 .animate-minimize {
-  animation: minimize-to-dock 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: minimize-to-dock 0.4s cubic-bezier(0.32, 0, 0.67, 0) forwards;
+  pointer-events: none;
+}
+
+/* Resizable window styles */
+.resizable-window {
+  resize: both;
+  overflow: auto;
+  min-width: 400px;
+  min-height: 300px;
+  max-width: 95vw;
+  max-height: 85vh;
+}
+
+.resizable-window::-webkit-resizer {
+  background: transparent;
+  width: 15px;
+  height: 15px;
 }

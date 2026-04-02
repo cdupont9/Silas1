@@ -18,6 +18,8 @@ import {
 interface WindowState {
   isOpen: boolean
   isMinimized: boolean
+  isMinimizing?: boolean
+  size?: { width: number; height: number }
 }
 
 interface SafariWindowState extends WindowState {
@@ -374,6 +376,24 @@ export function MacBookScreen() {
   
   const focusWindow = (windowName: string) => {
     setFocusedWindow(windowName)
+  }
+
+  // Minimize with animation - shows window shrinking to dock
+  const minimizeWindow = (
+    windowName: string,
+    setWindow: React.Dispatch<React.SetStateAction<WindowState>> | React.Dispatch<React.SetStateAction<SafariWindowState>>
+  ) => {
+    // Start minimizing animation
+    (setWindow as React.Dispatch<React.SetStateAction<WindowState>>)(prev => ({ ...prev, isMinimizing: true }))
+    
+    // After animation completes, set to minimized
+    setTimeout(() => {
+      (setWindow as React.Dispatch<React.SetStateAction<WindowState>>)(prev => ({ 
+        ...prev, 
+        isMinimizing: false, 
+        isMinimized: true 
+      }))
+    }, 400)
   }
 
   // ==================== MOBILE IPHONE EXPERIENCE ====================
@@ -1715,8 +1735,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* macOS Photos App Window */}
       {photosWindow.isOpen && !photosWindow.isMinimized && (
         <div 
-          className={`absolute left-20 top-16 w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'}`}
+          className={`absolute left-20 top-16 w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'} ${photosWindow.isMinimizing ? 'animate-minimize' : ''}`}
           onClick={() => focusWindow('photos')}
+          style={{ transformOrigin: 'bottom center' }}
         >
           {/* Photos App Title Bar */}
           <div className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10">
@@ -1726,7 +1747,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
               />
               <button
-                onClick={() => setPhotosWindow(prev => ({ ...prev, isMinimized: true }))}
+                onClick={() => minimizeWindow('photos', setPhotosWindow)}
                 className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
               />
               <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
@@ -1822,10 +1843,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 {/* Case Studies Finder Window */}
       {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
         <div 
-          className={`absolute right-10 top-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'}`}
+          className={`absolute right-10 top-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
           onClick={() => focusWindow('caseStudies')}
+          style={{ transformOrigin: 'bottom center' }}
         >
-            <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
+            <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10 resize overflow-auto min-w-[400px] min-h-[300px] max-w-[90vw] max-h-[80vh]">
               {/* Finder Title Bar */}
               <div className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10">
                 <div className="flex gap-2">
@@ -1834,7 +1856,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
                   />
                   <button
-                    onClick={() => setCaseStudiesFolder(prev => ({ ...prev, isMinimized: true }))}
+                    onClick={() => minimizeWindow('caseStudies', setCaseStudiesFolder)}
                     className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
                   />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
@@ -1920,10 +1942,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* About Window */}
         {aboutWindow.isOpen && !aboutWindow.isMinimized && (
           <div
-            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'}`}
-            style={{ left: aboutPosition.x, top: aboutPosition.y }}
+            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'} ${aboutWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: aboutPosition.x, top: aboutPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('about')}
-            style={{ left: aboutPosition.x, top: aboutPosition.y }}
           >
             <div
               className="h-7 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-move"
@@ -1931,7 +1952,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             >
               <div className="flex gap-2">
                 <button onClick={() => setAboutWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                <button onClick={() => setAboutWindow(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                <button onClick={() => minimizeWindow('about', setAboutWindow)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                 <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
               </div>
               <span className="flex-1 text-center text-[12px] text-black/70 font-medium -ml-[54px]">About Me</span>
@@ -1967,8 +1988,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 {/* Messages Window */}
         {messagesWindow.isOpen && !messagesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'}`}
-            style={{ left: 60, top: 50 }}
+            className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: 60, top: 50, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('messages')}
           >
             {/* Sidebar - Contacts */}
@@ -1978,7 +1999,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               >
                 <div className="flex gap-2">
                   <button onClick={() => setMessagesWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                  <button onClick={() => setMessagesWindow(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                  <button onClick={() => minimizeWindow('messages', setMessagesWindow)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
                 </div>
               </div>
@@ -2058,8 +2079,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 {/* Notes Window */}
         {notesWindow.isOpen && !notesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'}`}
-            style={{ left: 80, top: 60 }}
+            className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: 80, top: 60, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('notes')}
           >
             {/* Sidebar */}
@@ -2067,7 +2088,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <div className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5">
                 <div className="flex gap-2">
                   <button onClick={() => setNotesWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                  <button onClick={() => setNotesWindow(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                  <button onClick={() => minimizeWindow('notes', setNotesWindow)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
                 </div>
                 <span className="flex-1 text-center text-[12px] text-black/70 font-medium">Notes</span>
@@ -2142,8 +2163,8 @@ onClick={() => setDesktopSelectedNote('about')}
         {/* Projects Folder Window */}
         {projectsFolder.isOpen && !projectsFolder.isMinimized && (
           <div
-            className="absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200"
-            style={{ left: projectsPosition.x, top: projectsPosition.y }}
+            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: projectsPosition.x, top: projectsPosition.y, transformOrigin: 'bottom center' }}
           >
             <div
               className="h-7 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-move"
@@ -2151,7 +2172,7 @@ onClick={() => setDesktopSelectedNote('about')}
             >
               <div className="flex gap-2">
                 <button onClick={() => setProjectsFolder({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                <button onClick={() => setProjectsFolder(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                <button onClick={() => minimizeWindow('projects', setProjectsFolder)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                 <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
               </div>
               <span className="flex-1 text-center text-[12px] text-black/70 font-medium -ml-[54px]">Projects</span>
@@ -2191,7 +2212,7 @@ onClick={() => setDesktopSelectedNote('about')}
           <SafariCaseStudy
             project={safariWindow.project}
             onClose={() => setSafariWindow({ isOpen: false, isMinimized: false, project: null })}
-            onMinimize={() => setSafariWindow(prev => ({ ...prev, isMinimized: true }))}
+            onMinimize={() => minimizeWindow('safari', setSafariWindow as React.Dispatch<React.SetStateAction<WindowState>>)}
             isFocused={focusedWindow === 'safari'}
             onFocus={() => focusWindow('safari')}
           />
