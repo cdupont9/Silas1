@@ -2460,6 +2460,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   const study = caseStudies[project as keyof typeof caseStudies]
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
   const [isResizing, setIsResizing] = useState(false)
+  const [isFullSize, setIsFullSize] = useState(true)
   const windowRef = useRef<HTMLDivElement>(null)
   
   // Initialize with full size
@@ -2500,6 +2501,26 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
     document.addEventListener('mouseup', handleMouseUp)
   }
   
+  const toggleResize = () => {
+    if (isFullSize) {
+      // Shrink to smaller size
+      setWindowSize({ width: 700, height: 500 })
+      setIsFullSize(false)
+    } else {
+      // Expand to full size
+      if (windowRef.current) {
+        const parent = windowRef.current.parentElement
+        if (parent) {
+          setWindowSize({ 
+            width: parent.clientWidth - 16, 
+            height: parent.clientHeight - 36 
+          })
+        }
+      }
+      setIsFullSize(true)
+    }
+  }
+  
   if (!study) return null
 
   // Check which full case study to render
@@ -2528,7 +2549,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
         <div className="flex gap-2">
           <button onClick={onClose} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
           <button onClick={onMinimize} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
-          <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
+          <button onClick={toggleResize} className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
         </div>
 
         {/* Navigation */}
@@ -2627,20 +2648,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
         )}
       </div>
       
-      {/* Resize Handle - Bottom Right Corner */}
-      <div
-        onMouseDown={handleMouseDown}
-        className="absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-50 group"
-      >
-        <svg 
-          className="absolute bottom-1 right-1 w-3 h-3 text-black/20 group-hover:text-black/40 transition-colors" 
-          viewBox="0 0 24 24" 
-          fill="currentColor"
-        >
-          <path d="M22 22H20V20H22V22ZM22 18H20V16H22V18ZM18 22H16V20H18V22ZM22 14H20V12H22V14ZM18 18H16V16H18V18ZM14 22H12V20H14V22Z" />
-        </svg>
       </div>
-    </div>
   )
 }
 
