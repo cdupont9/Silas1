@@ -238,6 +238,14 @@ export function MacBookScreen() {
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
+  
+  // Desktop folder positions for drag and drop
+  const [desktopIcons, setDesktopIcons] = useState([
+    { id: 'teammate', label: 'Teammate', position: 0 },
+    { id: 'meetly', label: 'Meetly', position: 1 },
+    { id: 'silas', label: 'Silas', position: 2 },
+  ])
+  const [draggedIcon, setDraggedIcon] = useState<string | null>(null)
 
   // Personal photos for the photo stack
   const personalPhotos = [
@@ -1579,52 +1587,43 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         </div>
       </div>
 
-      {/* Desktop Folder Icons - Right Side */}
+      {/* Desktop Folder Icons - Right Side (Draggable) */}
       <div className="absolute top-[40px] right-4 flex flex-col gap-3 z-10">
-        {/* Teammate Folder */}
-        <button
-          onClick={() => openCaseStudy('teammate')}
-          className="flex flex-col items-center gap-1 group w-20"
-        >
-          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-              alt="Teammate" 
-              className="w-full h-full object-contain drop-shadow-lg" 
-            />
-          </div>
-          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Teammate</span>
-        </button>
-
-        {/* Meetly Folder */}
-        <button
-          onClick={() => openCaseStudy('meetly')}
-          className="flex flex-col items-center gap-1 group w-20"
-        >
-          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-              alt="Meetly" 
-              className="w-full h-full object-contain drop-shadow-lg" 
-            />
-          </div>
-          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Meetly</span>
-        </button>
-
-        {/* Silas Folder */}
-        <button
-          onClick={() => openCaseStudy('silas')}
-          className="flex flex-col items-center gap-1 group w-20"
-        >
-          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-              alt="Silas" 
-              className="w-full h-full object-contain drop-shadow-lg" 
-            />
-          </div>
-          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Silas</span>
-        </button>
+        {desktopIcons
+          .sort((a, b) => a.position - b.position)
+          .map((icon) => (
+            <button
+              key={icon.id}
+              draggable
+              onDragStart={() => setDraggedIcon(icon.id)}
+              onDragEnd={() => setDraggedIcon(null)}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={() => {
+                if (draggedIcon && draggedIcon !== icon.id) {
+                  setDesktopIcons(prev => {
+                    const draggedIdx = prev.findIndex(i => i.id === draggedIcon)
+                    const targetIdx = prev.findIndex(i => i.id === icon.id)
+                    const newIcons = [...prev]
+                    const draggedPos = newIcons[draggedIdx].position
+                    newIcons[draggedIdx].position = newIcons[targetIdx].position
+                    newIcons[targetIdx].position = draggedPos
+                    return newIcons
+                  })
+                }
+              }}
+              onClick={() => openCaseStudy(icon.id)}
+              className={`flex flex-col items-center gap-1 group w-20 cursor-grab active:cursor-grabbing ${draggedIcon === icon.id ? 'opacity-50' : ''}`}
+            >
+              <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+                <img 
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+                  alt={icon.label} 
+                  className="w-full h-full object-contain drop-shadow-lg pointer-events-none" 
+                />
+              </div>
+              <span className="text-[11px] text-white font-medium drop-shadow-md text-center">{icon.label}</span>
+            </button>
+          ))}
       </div>
 
       {/* Desktop - Clean Simple Layout */}
@@ -2274,6 +2273,113 @@ onClick={() => setDesktopSelectedNote('about')}
           label="Silas"
           onClick={() => openCaseStudy('silas')}
         />
+
+        {/* Minimized Windows Section */}
+        {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || safariWindow.isMinimized) && (
+          <>
+            <div className="w-px h-10 bg-white/30 mx-1" />
+            
+            {photosWindow.isMinimized && (
+              <button
+                onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover opacity-80" />
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Photos
+                </div>
+              </button>
+            )}
+            
+            {caseStudiesFolder.isMinimized && (
+              <button
+                onClick={() => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-gradient-to-b from-gray-100 to-gray-200 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
+                  </svg>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Case Studies
+                </div>
+              </button>
+            )}
+            
+            {aboutWindow.isMinimized && (
+              <button
+                onClick={() => { setAboutWindow({ isOpen: true, isMinimized: false }); focusWindow('about'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  <img src={MEMOJI_URL} alt="About Me" className="w-full h-full object-cover opacity-80" />
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  About Me
+                </div>
+              </button>
+            )}
+            
+            {messagesWindow.isMinimized && (
+              <button
+                onClick={() => { setMessagesWindow({ isOpen: true, isMinimized: false }); focusWindow('messages'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110 flex items-center justify-center">
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.04 2 11c0 2.21.9 4.21 2.36 5.73-.14 1.52-.75 2.98-1.68 4.12 1.46-.11 2.93-.52 4.19-1.25 1.46.59 3.11.9 4.83.9 5.52 0 10-4.04 10-9s-4.48-9-10-9z" />
+                  </svg>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Messages
+                </div>
+              </button>
+            )}
+            
+            {notesWindow.isMinimized && (
+              <button
+                onClick={() => { setNotesWindow({ isOpen: true, isMinimized: false }); focusWindow('notes'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover opacity-80" />
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Notes
+                </div>
+              </button>
+            )}
+            
+            {safariWindow.isMinimized && (
+              <button
+                onClick={() => { setSafariWindow(prev => ({ ...prev, isMinimized: false })); focusWindow('safari'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110 flex items-center justify-center">
+                  <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="url(#safariGradient)" />
+                    <path d="M12 2L14 12L12 22" stroke="white" strokeWidth="0.5" />
+                    <path d="M2 12L12 10L22 12" stroke="white" strokeWidth="0.5" />
+                    <polygon points="12,5 13,12 12,13 11,12" fill="#ff3b30" />
+                    <polygon points="12,19 11,12 12,11 13,12" fill="white" />
+                    <defs>
+                      <linearGradient id="safariGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#00d4ff" />
+                        <stop offset="100%" stopColor="#0066ff" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  {safariWindow.project ? caseStudies[safariWindow.project as keyof typeof caseStudies]?.title : 'Safari'}
+                </div>
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   )
