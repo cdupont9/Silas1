@@ -26,17 +26,17 @@ export function CharityChat() {
       {
         id: 'welcome-1',
         role: 'assistant',
-        parts: [{ type: 'text', text: "Hey! Welcome to my portfolio on my MacBook!" }],
+        parts: [{ type: 'text', text: "Hey! 👋 Welcome to my portfolio on my MacBook!" }],
       },
       {
         id: 'welcome-2', 
         role: 'assistant',
-        parts: [{ type: 'text', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below." }],
+        parts: [{ type: 'text', text: "Feel free to explore around - check out my Projects on the desktop or click on any of my case study folders below." }],
       },
       {
         id: 'welcome-3',
         role: 'assistant',
-        parts: [{ type: 'text', text: "I'm a UX/UI designer at Google, passionate about creating meaningful digital experiences. Ask me anything about my work, background, or projects!" }],
+        parts: [{ type: 'text', text: "I'm a UX Designer passionate about creating meaningful digital experiences. Feel free to ask me anything!" }],
       },
     ],
   })
@@ -122,8 +122,8 @@ export function CharityChat() {
         <div className="bg-[#f5f5f7] rounded-full px-4 py-2 flex items-center gap-2">
           <input 
             type="text" 
-            placeholder="Ask me anything..." 
-            className="flex-1 bg-transparent text-[13px] outline-none placeholder-black/40"
+            placeholder="Message" 
+            className="flex-1 bg-transparent text-[13px] outline-none placeholder-black/40 text-black"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
