@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { useChat } from '@ai-sdk/react'
+import type { UIMessage } from 'ai'
 import { DefaultChatTransport } from 'ai'
 
 const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_4110-E2fYwoTlD9Gx8uziQPBMJ46UxlVNiL.PNG"
