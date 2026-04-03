@@ -165,14 +165,14 @@ export function CharityChat() {
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-white h-full">
+    <div className="flex-1 flex flex-col bg-white min-h-0">
       {/* Chat Header */}
       <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4 shrink-0">
         <span className="text-[13px] font-medium text-black/80">Charity</span>
       </div>
       
       {/* Messages Area */}
-      <div className="flex-1 overflow-auto p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto min-h-0 p-4 space-y-3">
         {messages.map((message) => (
           <div key={message.id} className="flex flex-col">
             <div className={`max-w-[70%] ${message.role === 'assistant' ? 'self-start' : 'self-end'}`}>
