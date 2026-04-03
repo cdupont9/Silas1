@@ -2479,31 +2479,25 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setSafariWindow(prev => ({ ...prev, isMinimized: false })); focusWindow('safari'); }}
                 className="group relative"
               >
-                <div className="w-24 h-16 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of Safari case study window - shows actual content */}
-                  <div className="w-full h-full bg-white">
-                    <div className="h-2.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
-                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
-                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
-                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                <div className="w-28 h-20 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Safari case study window - shows actual screenshot */}
+                  <div className="w-full h-full bg-white flex flex-col">
+                    <div className="h-3 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-1 gap-0.5 shrink-0">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#febc2e]" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#28c840]" />
                       <div className="flex-1 mx-1">
-                        <div className="w-full h-1.5 bg-white/80 rounded-sm" />
+                        <div className="w-full h-2 bg-white/80 rounded-sm flex items-center justify-center">
+                          <span className="text-[4px] text-gray-400 truncate">charitydupont.com</span>
+                        </div>
                       </div>
                     </div>
-                    <div className="p-1 flex gap-1">
+                    <div className="flex-1 overflow-hidden">
                       <img 
-                        src={caseStudies[safariWindow.project as keyof typeof caseStudies]?.image} 
+                        src={caseStudies[safariWindow.project as keyof typeof caseStudies]?.screenshot} 
                         alt={caseStudies[safariWindow.project as keyof typeof caseStudies]?.title}
-                        className="w-5 h-8 object-cover rounded-sm"
+                        className="w-full h-full object-cover object-top"
                       />
-                      <div className="flex-1">
-                        <div 
-                          className="w-4 h-1.5 rounded-sm mb-0.5" 
-                          style={{ backgroundColor: caseStudies[safariWindow.project as keyof typeof caseStudies]?.color }}
-                        />
-                        <div className="w-6 h-0.5 bg-black/20 rounded mb-0.5" />
-                        <div className="w-8 h-0.5 bg-black/10 rounded" />
-                      </div>
                     </div>
                   </div>
                 </div>
