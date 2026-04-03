@@ -243,9 +243,9 @@ export function MacBookScreen() {
   
   // Desktop folder positions for free drag - starts in original stacked layout
   const [desktopIcons, setDesktopIcons] = useState([
-    { id: 'teammate', label: 'Teammate', x: 0, y: 0 },
-    { id: 'meetly', label: 'Meetly', x: 0, y: 82 },
-    { id: 'silas', label: 'Silas', x: 0, y: 164 },
+    { id: 'teammate', label: 'Teammate', x: -10, y: 0 },
+    { id: 'meetly', label: 'Meetly', x: -10, y: 82 },
+    { id: 'silas', label: 'Silas', x: -10, y: 164 },
   ])
   const [draggingFolder, setDraggingFolder] = useState<string | null>(null)
 
@@ -1620,7 +1620,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       </div>
 
       {/* Desktop Folder Icons - Freely Draggable */}
-      <div className="absolute top-[40px] right-4 z-10">
+      <div className="absolute top-[40px] right-8 z-10">
         {desktopIcons.map((icon) => (
           <div
             key={icon.id}
