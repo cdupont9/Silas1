@@ -243,9 +243,9 @@ export function MacBookScreen() {
   
   // Desktop folder positions for free drag - starts in original stacked layout
   const [desktopIcons, setDesktopIcons] = useState([
-    { id: 'teammate', label: 'Teammate', x: -10, y: 0 },
-    { id: 'meetly', label: 'Meetly', x: -10, y: 82 },
-    { id: 'silas', label: 'Silas', x: -10, y: 164 },
+    { id: 'teammate', label: 'Teammate', x: -60, y: 0 },
+    { id: 'meetly', label: 'Meetly', x: -60, y: 82 },
+    { id: 'silas', label: 'Silas', x: -60, y: 164 },
   ])
   const [draggingFolder, setDraggingFolder] = useState<string | null>(null)
 
