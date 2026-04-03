@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { CharityChat } from "@/components/charity-chat"
 
 interface WindowState {
   isOpen: boolean
@@ -2110,24 +2111,26 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
 
             {/* Chat Area */}
-            <div className="flex-1 flex flex-col bg-white">
-              <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
-                <span className="text-[13px] font-medium text-black/80">
-                  {messageContacts.find(c => c.id === selectedContact)?.name}
-                </span>
-              </div>
-              <div className="flex-1 overflow-auto p-4 space-y-3">
-                {messageContacts.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
-                  <div key={idx} className="flex flex-col">
-                    <div className={`max-w-[70%] ${msg.from === 'charity' ? 'self-end' : 'self-start'}`}>
-                      <div className={`rounded-2xl px-4 py-2 ${msg.from === 'charity' ? 'bg-blue-500 text-white' : 'bg-[#e9e9eb] text-black'}`}>
-                        <p className="text-[13px] leading-relaxed">{msg.text}</p>
+            {selectedContact === 'welcome' ? (
+              <CharityChat />
+            ) : (
+              <div className="flex-1 flex flex-col bg-white">
+                <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
+                  <span className="text-[13px] font-medium text-black/80">
+                    {messageContacts.find(c => c.id === selectedContact)?.name}
+                  </span>
+                </div>
+                <div className="flex-1 overflow-auto p-4 space-y-3">
+                  {messageContacts.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
+                    <div key={idx} className="flex flex-col">
+                      <div className={`max-w-[70%] ${msg.from === 'charity' ? 'self-end' : 'self-start'}`}>
+                        <div className={`rounded-2xl px-4 py-2 ${msg.from === 'charity' ? 'bg-blue-500 text-white' : 'bg-[#e9e9eb] text-black'}`}>
+                          <p className="text-[13px] leading-relaxed">{msg.text}</p>
+                        </div>
+                        <span className={`text-[10px] text-black/40 mt-1 ${msg.from === 'charity' ? 'text-right' : 'text-left'} block`}>{msg.time}</span>
                       </div>
-                      <span className={`text-[10px] text-black/40 mt-1 ${msg.from === 'charity' ? 'text-right' : 'text-left'} block`}>{msg.time}</span>
                     </div>
-                  </div>
-                ))}
-                {selectedContact !== 'welcome' && (
+                  ))}
                   <div className="flex justify-center pt-4">
                     <button
                       onClick={() => openCaseStudy(selectedContact)}
@@ -2136,14 +2139,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       View Full Case Study
                     </button>
                   </div>
-                )}
-              </div>
-              <div className="p-3 border-t border-black/5">
-                <div className="bg-[#f5f5f7] rounded-full px-4 py-2 flex items-center gap-2">
-                  <input type="text" placeholder="iMessage" className="flex-1 bg-transparent text-[13px] outline-none placeholder-black/40" />
+                </div>
+                <div className="p-3 border-t border-black/5">
+                  <div className="bg-[#f5f5f7] rounded-full px-4 py-2 flex items-center gap-2">
+                    <input type="text" placeholder="iMessage" className="flex-1 bg-transparent text-[13px] outline-none placeholder-black/40" readOnly />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
 
