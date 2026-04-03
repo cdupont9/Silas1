@@ -2,8 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react'
 
-const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_4110-E2fYwoTlD9Gx8uziQPBMJ46UxlVNiL.PNG"
-
 interface Message {
   id: string
   role: 'user' | 'assistant'
@@ -11,92 +9,235 @@ interface Message {
   time: string
 }
 
-// Knowledge base for Charity's responses
+// Knowledge base for Charity's responses - based on actual info
 const getCharityResponse = (userMessage: string): string => {
   const msg = userMessage.toLowerCase()
   
-  // Greetings
-  if (msg.match(/^(hi|hello|hey|sup|what'?s up|howdy)/)) {
-    return "Hey there! Great to meet you! I'm Charity, a UX Designer currently at Google. Feel free to explore my portfolio and ask me anything about my work or background!"
+  // Simple greetings
+  if (msg.match(/^(hi|hello|hey|sup|what'?s up|howdy|yo)$/i) || msg.match(/^(hi|hello|hey)\s*[!.?]*$/i)) {
+    return "Hey! Great to meet you."
   }
   
-  // About/Who are you
-  if (msg.match(/(who are you|about you|tell me about yourself|introduce yourself)/)) {
-    return "I'm Charity Dupont, a UX Designer at Google based in New York City. I'm passionate about creating meaningful digital experiences that actually help people. I have a background in software development which gives me a unique perspective on bridging design and engineering. Outside of work, I love traveling, tennis, and spending time in nature!"
+  // How are you
+  if (msg.match(/(how are you|how's it going|how you doing)/)) {
+    return "I'm doing well, thanks for asking! How can I help you today?"
   }
   
-  // Current role/job
-  if (msg.match(/(where do you work|current job|what do you do|your role|at google)/)) {
-    return "I'm currently a UX Designer at Google, where I work on creating intuitive and impactful user experiences. Before Google, I worked at Meta and IBM. I love being able to design at scale and see my work impact millions of users!"
+  // Name
+  if (msg.match(/^what'?s your name\??$/i) || msg.match(/^who are you\??$/i)) {
+    return "I'm Charity, a UX Designer at Google."
   }
   
-  // Experience/Background
-  if (msg.match(/(experience|background|career|resume|cv|work history)/)) {
-    return "I've had an exciting career journey! I started as a software developer, which gave me strong technical foundations. Then I transitioned into UX design because I wanted to focus more on the human side of technology. I've worked at IBM, Meta, and now Google. I also have a Master's in Human-Computer Interaction from Georgia Tech."
+  // About/Tell me about yourself
+  if (msg.match(/(tell me about yourself|about you|introduce yourself)/)) {
+    return "I'm a UX/UI designer at Google focused on AI-assisted, high-stakes experiences. I design systems that help users navigate complexity with clarity and confidence."
+  }
+  
+  // Current role/job - simple
+  if (msg.match(/^(where do you work|what do you do)\??$/i)) {
+    return "I'm a UX Designer at Google."
+  }
+  
+  // Current role - more detail
+  if (msg.match(/(your role|at google|what.*work on|job)/)) {
+    return "I work within Google DeepMind, focused on AI UX. I design agent-assisted and high-stakes experiences where clarity and trust really matter."
+  }
+  
+  // Why UX
+  if (msg.match(/(why ux|why design|get into ux|got into)/)) {
+    return "I'm drawn to UX because it combines problem-solving with human understanding. I enjoy thinking through systems and figuring out how to make things clearer and more intuitive."
+  }
+  
+  // Origin story / How did you get into UX
+  if (msg.match(/(how did you|your story|your journey|start|began|background)/)) {
+    return "I got into UX unexpectedly. During COVID, my mom volunteered me to build a website for a client - I had no idea what I was doing. That experience sparked my interest. I later pursued it through a bootcamp at Columbia while teaching, which led me to where I am today."
+  }
+  
+  // Previous job / Teaching
+  if (msg.match(/(previous|before|teacher|teaching|used to do)/)) {
+    return "I was previously a 4th grade teacher at Metuchen Christian Academy in New Jersey."
   }
   
   // Education
-  if (msg.match(/(education|school|degree|university|college|georgia tech|study|studied)/)) {
-    return "I have a Master's degree in Human-Computer Interaction from Georgia Tech, and I studied Computer Science for my undergrad at Spelman College. The combination of technical and design education has been invaluable in my career!"
+  if (msg.match(/(education|school|degree|university|college|study|studied|columbia)/)) {
+    return "I studied Psychology at New Jersey City University and completed a UX/UI Bootcamp at Columbia University."
   }
   
-  // Skills
-  if (msg.match(/(skills|tools|software|figma|design tools)/)) {
-    return "I'm proficient in Figma, Sketch, Adobe Creative Suite, and prototyping tools like Principle and ProtoPie. On the technical side, I know HTML, CSS, JavaScript, and React. I also have experience with user research methods, usability testing, and data analysis."
+  // Location - simple
+  if (msg.match(/^where.*(?:live|based|from)\??$/i)) {
+    return "I'm based in New York, currently living in New Jersey."
   }
   
-  // Projects/Portfolio/Case Studies
-  if (msg.match(/(project|portfolio|case stud|work samples|teammate|meetly|silas)/)) {
-    return "I have three main case studies you can explore:\n\n• Teammate - A dating app for sports fans to connect over shared interests\n• Meetly - A scheduling and meeting management platform\n• Silas - A project I'm really proud of\n\nYou can click on the folders on the desktop or in the Case Studies folder to see the full details of each project!"
+  // Location - more detail
+  if (msg.match(/(location|relocat|remote|hybrid)/)) {
+    return "I'm based in New York/New Jersey. I'm open to relocation and remote work. Currently I work a hybrid schedule, going into the office 2-3 days a week."
   }
   
-  // Teammate specific
+  // Born / Chicago
+  if (msg.match(/(born|chicago|grew up|originally)/)) {
+    return "I was born in Chicago and moved to the New York/New Jersey area in 2005 when I was 10."
+  }
+  
+  // Family - simple
+  if (msg.match(/^(family|siblings)\??$/i)) {
+    return "It's just me and my mom. We're very close."
+  }
+  
+  // Mom
+  if (msg.match(/(mom|mother|parent)/)) {
+    return "My mom and I are very close. She's actually the one who encouraged me to get into UX - she volunteered me to build that first website!"
+  }
+  
+  // Dad (sensitive)
+  if (msg.match(/(dad|father)/)) {
+    return "My dad passed away when I was 13. It's just been my mom and me since then."
+  }
+  
+  // Siblings
+  if (msg.match(/(brother|sister|sibling)/)) {
+    return "No, I don't have any siblings."
+  }
+  
+  // Pet / Dog
+  if (msg.match(/(pet|dog|dalmatian|hunter)/)) {
+    return "I have a Dalmatian named Hunter. He's 2 years old and has liver spots - brown instead of black. I spend a lot of time with him."
+  }
+  
+  // Relationship status
+  if (msg.match(/(married|single|dating|relationship|boyfriend|girlfriend)/)) {
+    if (msg.match(/married/)) return "No, I'm not married."
+    if (msg.match(/single/)) return "Yes, I'm single."
+    if (msg.match(/kid|children/)) return "No, I don't have kids."
+    return "I tend to keep that part of my life private."
+  }
+  
+  // Kids
+  if (msg.match(/(kid|children)/)) {
+    return "No, I don't have kids."
+  }
+  
+  // Hobbies - simple
+  if (msg.match(/^(hobbies|interests)\??$/i)) {
+    return "I enjoy spending time with my dog Hunter, quality time with my mom, and watching good TV shows."
+  }
+  
+  // Hobbies - more detail
+  if (msg.match(/(hobby|hobbies|fun|free time|interests|outside work|weekend)/)) {
+    return "I spend a lot of time with my Dalmatian Hunter, enjoy quality time with my mom, and love discovering good TV shows. Saturdays are for rest and recharge, Sundays for church and rest."
+  }
+  
+  // TV / Shows
+  if (msg.match(/(tv|show|watch|netflix|movie)/)) {
+    return "I prefer TV shows over movies. My favorite show is Emily in Paris - I enjoy visually rich and engaging storytelling."
+  }
+  
+  // Music
+  if (msg.match(/(music|listen|song|artist|jazz)/)) {
+    return "I listen to jazz while working - Miles Davis, Kenny G, Joshua Redman. I also enjoy classical and pretty much all genres. I'm nostalgic for early 2000s music."
+  }
+  
+  // Food
+  if (msg.match(/(food|eat|favorite meal|restaurant|cook)/)) {
+    return "My favorite meal is lamb chops with fig jam. For dessert, apple pie with vanilla bean ice cream. My favorite restaurant is Broadway Chicken in Westfield - their honey chicken is amazing."
+  }
+  
+  // Cookies
+  if (msg.match(/(cookie|dessert|sweet)/)) {
+    return "My favorite cookies are white chocolate chip - no macadamia though!"
+  }
+  
+  // Color
+  if (msg.match(/(color|colour)/)) {
+    return "Pink is my favorite color."
+  }
+  
+  // Birthday
+  if (msg.match(/(birthday|born|age)/)) {
+    return "My birthday is May 25th."
+  }
+  
+  // Skills / Tools
+  if (msg.match(/(skills|tools|software|figma)/)) {
+    return "I work with standard design tools like Figma. My real strength is in systems thinking - structuring complex workflows into clear, usable flows."
+  }
+  
+  // Strengths
+  if (msg.match(/(strength|good at|best at)/)) {
+    return "I advocate strongly for users, especially those who feel overlooked. I design for clarity in complex systems and bring structure to ambiguity."
+  }
+  
+  // How do you work
+  if (msg.match(/(how.*work|process|approach|methodology)/)) {
+    return "I'm highly iterative - I refine until things feel clear and intentional. I focus on flows, edge cases, and structure, not just UI. I design systems, not just screens."
+  }
+  
+  // Feedback
+  if (msg.match(/(feedback|criticism|review)/)) {
+    return "I listen first and take notes. I process feedback before reacting and evaluate it in context of the product and user needs. I respond thoughtfully rather than immediately."
+  }
+  
+  // Team / Culture
+  if (msg.match(/(team|culture|environment|collaborate)/)) {
+    return "I thrive in structured environments with clear systems. I value thoughtful decision-making over speed for the sake of speed, and environments where user advocacy is taken seriously."
+  }
+  
+  // Projects/Case Studies - simple
+  if (msg.match(/^(projects|portfolio|case stud)/i)) {
+    return "I have three case studies you can explore: Teammate, Meetly, and Silas. Click the folders on the desktop to view them!"
+  }
+  
+  // Teammate
   if (msg.match(/teammate/)) {
-    return "Teammate is a dating app designed specifically for sports fans! The idea came from recognizing that sports fans face challenges on regular dating apps. Teammate connects them with like-minded individuals, assists in organizing dates based on mutual sports interests, and offers secure public venues like sports events for fostering genuine relationships. Check out the full case study by clicking on the Teammate folder!"
+    return "Teammate is a dating app for sports fans. It connects them with like-minded individuals and helps organize dates around mutual sports interests. Check out the full case study by clicking the Teammate folder!"
   }
   
-  // Design process
-  if (msg.match(/(design process|how do you design|methodology|approach)/)) {
-    return "My design process typically involves: 1) Research & Discovery - understanding users and the problem space, 2) Ideation - sketching and brainstorming solutions, 3) Prototyping - creating interactive mockups, 4) Testing - validating designs with real users, and 5) Iteration - refining based on feedback. I believe in being data-informed but not data-driven!"
+  // Meetly
+  if (msg.match(/meetly/)) {
+    return "Meetly is a scheduling and meeting management platform I designed. Click the Meetly folder on the desktop to see the full case study!"
   }
   
-  // Contact/Hire/Email
-  if (msg.match(/(contact|email|hire|reach|connect|linkedin)/)) {
-    return "I'd love to connect! You can reach me at charitydupont@gmail.com or find me on LinkedIn. I'm always open to discussing new opportunities, collaborations, or just chatting about design!"
+  // Silas
+  if (msg.match(/silas/)) {
+    return "Silas is my most recent case study - it's an AI companion project. Click the Silas folder to explore it!"
   }
   
-  // Location
-  if (msg.match(/(where.*live|location|based|city|new york)/)) {
-    return "I'm based in New York City! I love the energy here and the amazing design community. The city has so many opportunities for creative inspiration."
+  // What makes you a strong candidate
+  if (msg.match(/(strong candidate|hire you|why should)/)) {
+    return "I don't just focus on making things look good - I focus on making them make sense. I'm strong at breaking down complex systems into clear, usable experiences."
   }
   
-  // Hobbies/Interests
-  if (msg.match(/(hobby|hobbies|fun|free time|interests|outside work)/)) {
-    return "Outside of design, I love traveling and exploring new places, playing tennis, hiking and being in nature, and trying out new restaurants. I also enjoy reading about psychology and human behavior - it definitely influences my design work!"
+  // Fun facts / childhood
+  if (msg.match(/(fun fact|cool|interesting|childhood|young)/)) {
+    return "When I was younger, I used to make movies in Windows Movie Maker! I'd put pictures together for my mom. Even in middle school, I made fancy backgrounds for my assignments - I guess I was into design before I knew it had a name."
   }
   
-  // Why UX/Design
-  if (msg.match(/(why ux|why design|passion|love about|what drives)/)) {
-    return "I love UX design because it lets me combine creativity with problem-solving to make a real impact on people's lives. There's something magical about understanding a user's pain point and then designing a solution that makes their experience better. Every project is a new puzzle to solve!"
+  // Career aspirations
+  if (msg.match(/(wanted to be|dream|aspir)/)) {
+    return "Growing up I wanted to be a chef, ballet dancer, writer, and music artist. Life takes you in interesting directions!"
   }
   
-  // Advice
-  if (msg.match(/(advice|tip|recommend|suggestion|getting started|break into)/)) {
-    return "My biggest advice for aspiring designers: 1) Build a strong portfolio with real projects, 2) Learn to articulate your design decisions, 3) Get comfortable with feedback and iteration, 4) Understand the basics of development, and 5) Never stop being curious about how people think and behave!"
+  // Contact
+  if (msg.match(/(contact|email|reach|connect|linkedin|hire)/)) {
+    return "Feel free to reach out! You can find my contact information in the portfolio."
   }
-
-  // MacBook/Portfolio navigation
-  if (msg.match(/(macbook|navigate|explore|what can i|where should|how do i)/)) {
-    return "Great question! On this MacBook you can:\n\n• Click the folders on the desktop (Teammate, Meetly, Silas) to view my case studies\n• Open the Photos app to see some of my photography\n• Check out the Notes app for more info\n• Click on the case study contacts in this Messages app to learn about each project\n\nFeel free to explore around!"
+  
+  // MacBook/Navigation
+  if (msg.match(/(macbook|navigate|explore|what can i|where should|how do i|click|folder)/)) {
+    return "You can click the folders on the desktop to view my case studies - Teammate, Meetly, and Silas. Feel free to explore the other apps in the dock too!"
   }
   
   // Thank you
   if (msg.match(/(thank|thanks|appreciate)/)) {
-    return "You're so welcome! It was great chatting with you. Feel free to reach out anytime, and don't forget to explore the rest of my portfolio!"
+    return "You're welcome! Feel free to ask if you have any other questions."
   }
   
-  // Default response
-  return "That's a great question! I'd be happy to tell you more about my work, background, or any of my case studies. You can also explore my portfolio by clicking around the MacBook - check out the project folders on the desktop or browse through the apps in the dock!"
+  // Bye/Goodbye
+  if (msg.match(/(bye|goodbye|see you|take care)/)) {
+    return "Take care! Thanks for stopping by my portfolio."
+  }
+  
+  // Default - keep it simple
+  return "Feel free to ask me about my work, background, or case studies. You can also explore by clicking around the desktop!"
 }
 
 const getCurrentTime = () => {
@@ -108,7 +249,7 @@ export function CharityChat() {
     {
       id: 'welcome-1',
       role: 'assistant',
-      text: "Hey! Welcome to my portfolio on my MacBook!",
+      text: "Hey! Welcome to my portfolio on my MacBook.",
       time: getCurrentTime(),
     },
     {
@@ -128,7 +269,6 @@ export function CharityChat() {
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
@@ -149,7 +289,7 @@ export function CharityChat() {
     setIsTyping(true)
     
     // Simulate typing delay
-    await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000))
+    await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 600))
     
     const response = getCharityResponse(userMessage.text)
     
@@ -176,13 +316,6 @@ export function CharityChat() {
         {messages.map((message) => (
           <div key={message.id} className="flex flex-col">
             <div className={`max-w-[70%] ${message.role === 'assistant' ? 'self-start' : 'self-end'}`}>
-              {message.role === 'assistant' && (
-                <div className="flex items-end gap-2 mb-1">
-                  <div className="w-6 h-6 rounded-full overflow-hidden bg-gradient-to-br from-gray-300 to-gray-400 flex-shrink-0">
-                    <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
-                  </div>
-                </div>
-              )}
               <div className={`rounded-2xl px-4 py-2 ${message.role === 'assistant' ? 'bg-[#e9e9eb] text-black' : 'bg-blue-500 text-white'}`}>
                 <p className="text-[13px] leading-relaxed whitespace-pre-wrap">{message.text}</p>
               </div>
@@ -197,11 +330,6 @@ export function CharityChat() {
         {isTyping && (
           <div className="flex flex-col">
             <div className="max-w-[70%] self-start">
-              <div className="flex items-end gap-2 mb-1">
-                <div className="w-6 h-6 rounded-full overflow-hidden bg-gradient-to-br from-gray-300 to-gray-400 flex-shrink-0">
-                  <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
-                </div>
-              </div>
               <div className="rounded-2xl px-4 py-3 bg-[#e9e9eb]">
                 <div className="flex gap-1">
                   <div className="w-2 h-2 rounded-full bg-black/30 animate-bounce" style={{ animationDelay: '0ms' }} />
