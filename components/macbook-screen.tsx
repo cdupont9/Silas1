@@ -241,13 +241,13 @@ export function MacBookScreen() {
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
   
-  // Desktop folder positions for drag and drop
+  // Desktop folder positions for free drag
   const [desktopIcons, setDesktopIcons] = useState([
-    { id: 'teammate', label: 'Teammate', position: 0 },
-    { id: 'meetly', label: 'Meetly', position: 1 },
-    { id: 'silas', label: 'Silas', position: 2 },
+    { id: 'teammate', label: 'Teammate', x: 0, y: 0 },
+    { id: 'meetly', label: 'Meetly', x: 0, y: 88 },
+    { id: 'silas', label: 'Silas', x: 0, y: 176 },
   ])
-  const [draggedIcon, setDraggedIcon] = useState<string | null>(null)
+  const [draggingFolder, setDraggingFolder] = useState<string | null>(null)
 
   // Personal photos for the photo stack
   const personalPhotos = [
@@ -1619,51 +1619,53 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         </div>
       </div>
 
-      {/* Desktop Folder Icons - Right Side (Draggable) */}
-      <div className="absolute top-[40px] right-4 flex flex-col gap-3 z-10">
-        {desktopIcons
-          .sort((a, b) => a.position - b.position)
-          .map((icon) => (
-            <div
-              key={icon.id}
-              draggable
-              onDragStart={(e) => {
-                setDraggedIcon(icon.id)
-                e.dataTransfer.effectAllowed = 'move'
-              }}
-              onDragEnd={() => setDraggedIcon(null)}
-              onDragOver={(e) => {
-                e.preventDefault()
-                e.dataTransfer.dropEffect = 'move'
-              }}
-              onDrop={(e) => {
-                e.preventDefault()
-                if (draggedIcon && draggedIcon !== icon.id) {
-                  setDesktopIcons(prev => {
-                    const draggedIdx = prev.findIndex(i => i.id === draggedIcon)
-                    const targetIdx = prev.findIndex(i => i.id === icon.id)
-                    const newIcons = [...prev]
-                    const draggedPos = newIcons[draggedIdx].position
-                    newIcons[draggedIdx].position = newIcons[targetIdx].position
-                    newIcons[targetIdx].position = draggedPos
-                    return newIcons
-                  })
-                }
-              }}
-              onDoubleClick={() => openCaseStudy(icon.id)}
-              className={`flex flex-col items-center gap-1 group w-20 cursor-grab active:cursor-grabbing select-none ${draggedIcon === icon.id ? 'opacity-50 scale-105' : ''} ${draggedIcon && draggedIcon !== icon.id ? 'border-2 border-dashed border-white/50 rounded-lg' : ''}`}
-            >
-              <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
-                <img 
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-                  alt={icon.label} 
-                  className="w-full h-full object-contain drop-shadow-lg pointer-events-none" 
-                  draggable={false}
-                />
-              </div>
-              <span className="text-[11px] text-white font-medium drop-shadow-md text-center pointer-events-none">{icon.label}</span>
+      {/* Desktop Folder Icons - Freely Draggable */}
+      <div className="absolute top-[40px] right-4 z-10">
+        {desktopIcons.map((icon) => (
+          <div
+            key={icon.id}
+            onMouseDown={(e) => {
+              e.preventDefault()
+              setDraggingFolder(icon.id)
+              const startX = e.clientX
+              const startY = e.clientY
+              const startIconX = icon.x
+              const startIconY = icon.y
+              
+              const handleMouseMove = (moveEvent: MouseEvent) => {
+                const deltaX = moveEvent.clientX - startX
+                const deltaY = moveEvent.clientY - startY
+                setDesktopIcons(prev => prev.map(i => 
+                  i.id === icon.id 
+                    ? { ...i, x: startIconX + deltaX, y: startIconY + deltaY }
+                    : i
+                ))
+              }
+              
+              const handleMouseUp = () => {
+                setDraggingFolder(null)
+                document.removeEventListener('mousemove', handleMouseMove)
+                document.removeEventListener('mouseup', handleMouseUp)
+              }
+              
+              document.addEventListener('mousemove', handleMouseMove)
+              document.addEventListener('mouseup', handleMouseUp)
+            }}
+            onDoubleClick={() => openCaseStudy(icon.id)}
+            style={{ transform: `translate(${icon.x}px, ${icon.y}px)` }}
+            className={`absolute flex flex-col items-center gap-1 group w-20 cursor-grab active:cursor-grabbing select-none ${draggingFolder === icon.id ? 'opacity-75 scale-105 z-50' : ''}`}
+          >
+            <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
+              <img 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
+                alt={icon.label} 
+                className="w-full h-full object-contain drop-shadow-lg pointer-events-none" 
+                draggable={false}
+              />
             </div>
-          ))}
+            <span className="text-[11px] text-white font-medium drop-shadow-md text-center pointer-events-none">{icon.label}</span>
+          </div>
+        ))}
       </div>
 
       {/* Desktop - Clean Simple Layout */}
