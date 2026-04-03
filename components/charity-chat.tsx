@@ -385,10 +385,10 @@ export function CharityChat() {
           <div className="flex flex-col">
             <div className="max-w-[75%] self-start">
               <div className="rounded-2xl px-4 py-3 bg-[#e9e9eb]">
-                <div className="flex gap-1">
-                  <div className="w-2 h-2 rounded-full bg-black/30 animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-2 h-2 rounded-full bg-black/30 animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-2 h-2 rounded-full bg-black/30 animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="flex gap-1.5 items-center">
+                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-[bounce_1s_ease-in-out_infinite]" />
+                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-[bounce_1s_ease-in-out_infinite_0.2s]" />
+                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-[bounce_1s_ease-in-out_infinite_0.4s]" />
                 </div>
               </div>
             </div>
