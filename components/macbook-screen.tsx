@@ -241,11 +241,11 @@ export function MacBookScreen() {
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
   
-  // Desktop folder positions for free drag
+  // Desktop folder positions for free drag - starts in original stacked layout
   const [desktopIcons, setDesktopIcons] = useState([
     { id: 'teammate', label: 'Teammate', x: 0, y: 0 },
-    { id: 'meetly', label: 'Meetly', x: 0, y: 88 },
-    { id: 'silas', label: 'Silas', x: 0, y: 176 },
+    { id: 'meetly', label: 'Meetly', x: 0, y: 82 },
+    { id: 'silas', label: 'Silas', x: 0, y: 164 },
   ])
   const [draggingFolder, setDraggingFolder] = useState<string | null>(null)
 
