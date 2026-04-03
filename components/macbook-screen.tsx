@@ -229,6 +229,8 @@ export function MacBookScreen() {
   const [aboutWindow, setAboutWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [projectsFolder, setProjectsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [safariWindow, setSafariWindow] = useState<SafariWindowState>({ isOpen: false, isMinimized: false, project: null })
+  // Track multiple open case study windows
+  const [openCaseStudies, setOpenCaseStudies] = useState<{[key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } }}>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about'>('experience')
@@ -382,8 +384,50 @@ export function MacBookScreen() {
   }
 
   const openCaseStudy = (project: string) => {
-    setSafariWindow({ isOpen: true, isMinimized: false, project })
-    setFocusedWindow('safari')
+    // Check if this case study is already minimized - if so, restore it
+    if (openCaseStudies[project]?.isMinimized) {
+      setOpenCaseStudies(prev => ({
+        ...prev,
+        [project]: { ...prev[project], isMinimized: false }
+      }))
+      setFocusedWindow(`safari-${project}`)
+      return
+    }
+    
+    // Open new case study window with offset based on how many are open
+    const openCount = Object.keys(openCaseStudies).filter(k => openCaseStudies[k].isOpen).length
+    setOpenCaseStudies(prev => ({
+      ...prev,
+      [project]: { 
+        isOpen: true, 
+        isMinimized: false, 
+        position: { x: 8 + (openCount * 30), y: 28 + (openCount * 20) }
+      }
+    }))
+    setFocusedWindow(`safari-${project}`)
+  }
+  
+  const closeCaseStudy = (project: string) => {
+    setOpenCaseStudies(prev => {
+      const newState = { ...prev }
+      delete newState[project]
+      return newState
+    })
+  }
+  
+  const minimizeCaseStudy = (project: string) => {
+    setOpenCaseStudies(prev => ({
+      ...prev,
+      [project]: { ...prev[project], isMinimized: true }
+    }))
+  }
+  
+  const restoreCaseStudy = (project: string) => {
+    setOpenCaseStudies(prev => ({
+      ...prev,
+      [project]: { ...prev[project], isMinimized: false }
+    }))
+    setFocusedWindow(`safari-${project}`)
   }
   
   const focusWindow = (windowName: string) => {
@@ -2236,16 +2280,19 @@ onClick={() => setDesktopSelectedNote('about')}
           </div>
         )}
 
-        {/* Safari Case Study Window */}
-        {safariWindow.isOpen && !safariWindow.isMinimized && safariWindow.project && (
-          <SafariCaseStudy
-            project={safariWindow.project}
-            onClose={() => setSafariWindow({ isOpen: false, isMinimized: false, project: null })}
-            onMinimize={() => minimizeWindow('safari', setSafariWindow as React.Dispatch<React.SetStateAction<WindowState>>)}
-            isFocused={focusedWindow === 'safari'}
-            onFocus={() => focusWindow('safari')}
-          />
-        )}
+        {/* Safari Case Study Windows - Multiple can be open */}
+        {Object.entries(openCaseStudies).map(([projectId, state]) => (
+          state.isOpen && !state.isMinimized && (
+            <SafariCaseStudy
+              key={projectId}
+              project={projectId}
+              onClose={() => closeCaseStudy(projectId)}
+              onMinimize={() => minimizeCaseStudy(projectId)}
+              isFocused={focusedWindow === `safari-${projectId}`}
+              onFocus={() => setFocusedWindow(`safari-${projectId}`)}
+            />
+          )
+        ))}
       </div>
 
       {/* Dock - z-10 so windows appear on top */}
@@ -2325,7 +2372,7 @@ onClick={() => setDesktopSelectedNote('about')}
         />
 
         {/* Minimized Windows Section */}
-        {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || safariWindow.isMinimized) && (
+        {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
           <>
             <div className="w-px h-10 bg-white/30 mx-1" />
             
@@ -2334,20 +2381,19 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
                 className="group relative"
               >
-                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of Photos window */}
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Photos window - icon size */}
                   <div className="w-full h-full bg-[#1e1e1e]">
-                    <div className="h-2 bg-[#2d2d2d] flex items-center px-0.5 gap-0.5">
+                    <div className="h-1.5 bg-[#2d2d2d] flex items-center px-0.5 gap-px">
                       <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
                       <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
                       <div className="w-1 h-1 rounded-full bg-[#28c840]" />
                     </div>
-                    <div className="flex h-[calc(100%-8px)]">
-                      <div className="w-3 bg-[#2d2d2d]" />
-                      <div className="flex-1 p-0.5 grid grid-cols-3 gap-0.5">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.35%E2%80%AFPM-6jEBgSqfF0xbKAt1GNKmkffpFLcivl.png" className="w-full h-2 object-cover rounded-sm" />
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.23%E2%80%AFPM-FRMXPc31NRPqKnrxLQNDINxqJl2Bsi.png" className="w-full h-2 object-cover rounded-sm" />
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.50%E2%80%AFPM-KSWaE8lgQxMRWgMZIJSIIeWvp3zEYC.png" className="w-full h-2 object-cover rounded-sm" />
+                    <div className="flex h-[calc(100%-6px)]">
+                      <div className="w-2 bg-[#2d2d2d]" />
+                      <div className="flex-1 p-0.5 grid grid-cols-2 gap-0.5">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.35%E2%80%AFPM-6jEBgSqfF0xbKAt1GNKmkffpFLcivl.png" className="w-full h-3 object-cover rounded-sm" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.23%E2%80%AFPM-FRMXPc31NRPqKnrxLQNDINxqJl2Bsi.png" className="w-full h-3 object-cover rounded-sm" />
                       </div>
                     </div>
                   </div>
@@ -2363,20 +2409,20 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
                 className="group relative"
               >
-                <div className="w-16 h-12 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of case studies folder content */}
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of case studies folder - icon size */}
                   <div className="w-full h-full bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] p-0.5">
-                    <div className="flex gap-0.5 mb-0.5">
+                    <div className="flex gap-px mb-0.5">
                       <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
                       <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
                       <div className="w-1 h-1 rounded-full bg-[#28c840]" />
                     </div>
-                    <div className="bg-white h-full rounded-sm flex gap-0.5 p-0.5">
+                    <div className="bg-white h-[calc(100%-8px)] rounded-sm flex gap-0.5 p-0.5">
                       <div className="w-2 bg-gray-100 rounded-sm" />
-                      <div className="flex-1 flex flex-wrap gap-0.5 content-start">
-                        <div className="w-2 h-2 bg-blue-100 rounded-sm" />
-                        <div className="w-2 h-2 bg-green-100 rounded-sm" />
-                        <div className="w-2 h-2 bg-purple-100 rounded-sm" />
+                      <div className="flex-1 grid grid-cols-2 gap-0.5 content-start">
+                        <div className="w-full h-2 bg-blue-100 rounded-sm" />
+                        <div className="w-full h-2 bg-green-100 rounded-sm" />
+                        <div className="w-full h-2 bg-purple-100 rounded-sm" />
                       </div>
                     </div>
                   </div>
@@ -2392,20 +2438,16 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setAboutWindow({ isOpen: true, isMinimized: false }); focusWindow('about'); }}
                 className="group relative"
               >
-                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of About window */}
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of About window - icon size */}
                   <div className="w-full h-full bg-white/95">
-                    <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
+                    <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-px">
                       <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
                       <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
                       <div className="w-1 h-1 rounded-full bg-[#28c840]" />
                     </div>
-                    <div className="p-1 flex gap-1">
-                      <img src={MEMOJI_URL} alt="About" className="w-4 h-4 rounded-full object-cover" />
-                      <div className="flex-1">
-                        <div className="w-6 h-1 bg-black/20 rounded mb-0.5" />
-                        <div className="w-8 h-0.5 bg-black/10 rounded" />
-                      </div>
+                    <div className="p-1 flex flex-col items-center justify-center h-[calc(100%-6px)]">
+                      <img src={MEMOJI_URL} alt="About" className="w-6 h-6 rounded-full object-cover" />
                     </div>
                   </div>
                 </div>
@@ -2420,23 +2462,19 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setMessagesWindow({ isOpen: true, isMinimized: false }); focusWindow('messages'); }}
                 className="group relative"
               >
-                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of Messages window */}
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Messages window - icon size */}
                   <div className="w-full h-full bg-white/95 flex">
-                    <div className="w-5 bg-[#f5f5f7] border-r border-black/5">
-                      <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
-                        <div className="w-0.5 h-0.5 rounded-full bg-[#ff5f57]" />
-                        <div className="w-0.5 h-0.5 rounded-full bg-[#febc2e]" />
-                        <div className="w-0.5 h-0.5 rounded-full bg-[#28c840]" />
-                      </div>
+                    <div className="w-3 bg-[#f5f5f7] border-r border-black/5">
+                      <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8]" />
                       <div className="p-0.5 space-y-0.5">
-                        <div className="w-full h-1.5 bg-blue-500/20 rounded-sm" />
-                        <div className="w-full h-1.5 bg-gray-200 rounded-sm" />
+                        <div className="w-full h-1 bg-blue-500/20 rounded-sm" />
+                        <div className="w-full h-1 bg-gray-200 rounded-sm" />
                       </div>
                     </div>
-                    <div className="flex-1 p-0.5">
-                      <div className="w-4 h-1 bg-[#007aff] rounded-full ml-auto mb-0.5" />
-                      <div className="w-3 h-1 bg-gray-200 rounded-full" />
+                    <div className="flex-1 p-1 flex flex-col justify-center">
+                      <div className="w-5 h-1.5 bg-[#007aff] rounded-full ml-auto mb-1" />
+                      <div className="w-4 h-1.5 bg-gray-200 rounded-full" />
                     </div>
                   </div>
                 </div>
@@ -2451,20 +2489,16 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setNotesWindow({ isOpen: true, isMinimized: false }); focusWindow('notes'); }}
                 className="group relative"
               >
-                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of Notes window */}
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Notes window - icon size */}
                   <div className="w-full h-full bg-white/95 flex">
-                    <div className="w-4 bg-[#f5f5f7] border-r border-black/5">
-                      <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
-                        <div className="w-0.5 h-0.5 rounded-full bg-[#ff5f57]" />
-                        <div className="w-0.5 h-0.5 rounded-full bg-[#febc2e]" />
-                        <div className="w-0.5 h-0.5 rounded-full bg-[#28c840]" />
-                      </div>
+                    <div className="w-3 bg-[#f5f5f7] border-r border-black/5">
+                      <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8]" />
                     </div>
-                    <div className="flex-1 bg-[#fffef5] p-0.5">
-                      <div className="w-6 h-0.5 bg-black/30 rounded mb-0.5" />
-                      <div className="w-full h-0.5 bg-black/10 rounded mb-0.5" />
-                      <div className="w-4 h-0.5 bg-black/10 rounded" />
+                    <div className="flex-1 bg-[#fffef5] p-1">
+                      <div className="w-full h-1 bg-black/20 rounded mb-1" />
+                      <div className="w-4 h-0.5 bg-black/10 rounded mb-0.5" />
+                      <div className="w-5 h-0.5 bg-black/10 rounded" />
                     </div>
                   </div>
                 </div>
@@ -2474,38 +2508,37 @@ onClick={() => setDesktopSelectedNote('about')}
               </button>
             )}
             
-            {safariWindow.isMinimized && safariWindow.project && (
-              <button
-                onClick={() => { setSafariWindow(prev => ({ ...prev, isMinimized: false })); focusWindow('safari'); }}
-                className="group relative"
-              >
-                <div className="w-28 h-20 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of Safari case study window - shows actual screenshot */}
-                  <div className="w-full h-full bg-white flex flex-col">
-                    <div className="h-3 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-1 gap-0.5 shrink-0">
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#ff5f57]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#febc2e]" />
-                      <div className="w-1.5 h-1.5 rounded-full bg-[#28c840]" />
-                      <div className="flex-1 mx-1">
-                        <div className="w-full h-2 bg-white/80 rounded-sm flex items-center justify-center">
-                          <span className="text-[4px] text-gray-400 truncate">charitydupont.com</span>
-                        </div>
+            {/* Minimized Case Study Windows */}
+            {Object.entries(openCaseStudies).map(([projectId, state]) => (
+              state.isMinimized && (
+                <button
+                  key={projectId}
+                  onClick={() => restoreCaseStudy(projectId)}
+                  className="group relative"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                    {/* Mini screenshot preview - same size as dock icons */}
+                    <div className="w-full h-full bg-white flex flex-col">
+                      <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-px shrink-0">
+                        <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                        <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                        <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                      </div>
+                      <div className="flex-1 overflow-hidden">
+                        <img 
+                          src={caseStudies[projectId as keyof typeof caseStudies]?.screenshot} 
+                          alt={caseStudies[projectId as keyof typeof caseStudies]?.title}
+                          className="w-full h-full object-cover object-top"
+                        />
                       </div>
                     </div>
-                    <div className="flex-1 overflow-hidden">
-                      <img 
-                        src={caseStudies[safariWindow.project as keyof typeof caseStudies]?.screenshot} 
-                        alt={caseStudies[safariWindow.project as keyof typeof caseStudies]?.title}
-                        className="w-full h-full object-cover object-top"
-                      />
-                    </div>
                   </div>
-                </div>
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
-                  {caseStudies[safariWindow.project as keyof typeof caseStudies]?.title}
-                </div>
-              </button>
-            )}
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                    {caseStudies[projectId as keyof typeof caseStudies]?.title}
+                  </div>
+                </button>
+              )
+            ))}
           </>
         )}
       </div>
