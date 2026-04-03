@@ -14,10 +14,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { CharityChat } from "@/components/charity-chat"
 
 interface WindowState {
   isOpen: boolean
   isMinimized: boolean
+  isMinimizing?: boolean
+  size?: { width: number; height: number }
 }
 
 interface SafariWindowState extends WindowState {
@@ -227,6 +230,8 @@ export function MacBookScreen() {
   const [aboutWindow, setAboutWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [projectsFolder, setProjectsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [safariWindow, setSafariWindow] = useState<SafariWindowState>({ isOpen: false, isMinimized: false, project: null })
+  // Track multiple open case study windows
+  const [openCaseStudies, setOpenCaseStudies] = useState<{[key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } }}>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about'>('experience')
@@ -238,6 +243,8 @@ export function MacBookScreen() {
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
+  
+  
 
   // Personal photos for the photo stack
   const personalPhotos = [
@@ -262,6 +269,10 @@ export function MacBookScreen() {
 
   // Draggable window positions
   const [aboutPosition, setAboutPosition] = useState<WidgetPosition>({ x: 120, y: 80 })
+  const [photosPosition, setPhotosPosition] = useState<WidgetPosition>({ x: 80, y: 64 })
+  const [caseStudiesPosition, setCaseStudiesPosition] = useState<WidgetPosition>({ x: 200, y: 100 })
+  const [messagesPosition, setMessagesPosition] = useState<WidgetPosition>({ x: 60, y: 50 })
+  const [notesPosition, setNotesPosition] = useState<WidgetPosition>({ x: 80, y: 60 })
   const [projectsPosition, setProjectsPosition] = useState<WidgetPosition>({ x: 200, y: 100 })
 
   const [isDragging, setIsDragging] = useState<string | null>(null)
@@ -318,6 +329,10 @@ export function MacBookScreen() {
       case 'weather': position = weatherPosition; break
       case 'about': position = aboutPosition; break
       case 'projects': position = projectsPosition; break
+      case 'photos': position = photosPosition; break
+      case 'caseStudies': position = caseStudiesPosition; break
+      case 'messages': position = messagesPosition; break
+      case 'notes': position = notesPosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -337,6 +352,10 @@ export function MacBookScreen() {
       case 'weather': setWeatherPosition({ x: newX, y: newY }); break
       case 'about': setAboutPosition({ x: newX, y: newY }); break
       case 'projects': setProjectsPosition({ x: newX, y: newY }); break
+      case 'photos': setPhotosPosition({ x: newX, y: newY }); break
+      case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
+      case 'messages': setMessagesPosition({ x: newX, y: newY }); break
+      case 'notes': setNotesPosition({ x: newX, y: newY }); break
     }
   }
 
@@ -360,12 +379,72 @@ export function MacBookScreen() {
   }
 
   const openCaseStudy = (project: string) => {
-    setSafariWindow({ isOpen: true, isMinimized: false, project })
-    setFocusedWindow('safari')
+    // Check if this case study is already minimized - if so, restore it
+    if (openCaseStudies[project]?.isMinimized) {
+      setOpenCaseStudies(prev => ({
+        ...prev,
+        [project]: { ...prev[project], isMinimized: false }
+      }))
+      setFocusedWindow(`safari-${project}`)
+      return
+    }
+    
+    // Open new case study window with offset based on how many are open
+    const openCount = Object.keys(openCaseStudies).filter(k => openCaseStudies[k].isOpen).length
+    setOpenCaseStudies(prev => ({
+      ...prev,
+      [project]: { 
+        isOpen: true, 
+        isMinimized: false, 
+        position: { x: 8 + (openCount * 30), y: 28 + (openCount * 20) }
+      }
+    }))
+    setFocusedWindow(`safari-${project}`)
+  }
+  
+  const closeCaseStudy = (project: string) => {
+    setOpenCaseStudies(prev => {
+      const newState = { ...prev }
+      delete newState[project]
+      return newState
+    })
+  }
+  
+  const minimizeCaseStudy = (project: string) => {
+    setOpenCaseStudies(prev => ({
+      ...prev,
+      [project]: { ...prev[project], isMinimized: true }
+    }))
+  }
+  
+  const restoreCaseStudy = (project: string) => {
+    setOpenCaseStudies(prev => ({
+      ...prev,
+      [project]: { ...prev[project], isMinimized: false }
+    }))
+    setFocusedWindow(`safari-${project}`)
   }
   
   const focusWindow = (windowName: string) => {
     setFocusedWindow(windowName)
+  }
+
+  // Minimize with animation - shows window shrinking to dock
+  const minimizeWindow = (
+    windowName: string,
+    setWindow: React.Dispatch<React.SetStateAction<WindowState>> | React.Dispatch<React.SetStateAction<SafariWindowState>>
+  ) => {
+    // Start minimizing animation
+    (setWindow as React.Dispatch<React.SetStateAction<WindowState>>)(prev => ({ ...prev, isMinimizing: true }))
+    
+    // After animation completes, set to minimized
+    setTimeout(() => {
+      (setWindow as React.Dispatch<React.SetStateAction<WindowState>>)(prev => ({ 
+        ...prev, 
+        isMinimizing: false, 
+        isMinimized: true 
+      }))
+    }, 400)
   }
 
   // ==================== MOBILE IPHONE EXPERIENCE ====================
@@ -1442,8 +1521,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           )}
           <div className="flex flex-col items-center mt-16">
-            <div className="w-32 h-32 rounded-full overflow-hidden bg-white/10 backdrop-blur-xl border-4 border-white/20 shadow-2xl mb-4 animate-memoji-float">
-              <img src={MEMOJI_URL} alt="Charity's Memoji" className="w-full h-full object-cover animate-memoji-pulse" />
+            <div className="w-32 h-32 rounded-full overflow-hidden bg-white/10 backdrop-blur-xl border-4 border-white/20 shadow-2xl mb-4 animate-memoji-wave">
+              <img src={MEMOJI_URL} alt="Charity's Memoji" className="w-full h-full object-cover animate-memoji-wink" />
             </div>
             <h1 className="text-white text-2xl font-medium mt-2 mb-4">Charity{"'"}s Portfolio</h1>
             <form onSubmit={handleLogin} className="relative">
@@ -1579,53 +1658,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         </div>
       </div>
 
-      {/* Desktop Folder Icons - Right Side */}
-      <div className="absolute top-[40px] right-4 flex flex-col gap-3 z-10">
-        {/* Teammate Folder */}
-        <button
-          onClick={() => openCaseStudy('teammate')}
-          className="flex flex-col items-center gap-1 group w-20"
-        >
-          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-              alt="Teammate" 
-              className="w-full h-full object-contain drop-shadow-lg" 
-            />
-          </div>
-          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Teammate</span>
-        </button>
-
-        {/* Meetly Folder */}
-        <button
-          onClick={() => openCaseStudy('meetly')}
-          className="flex flex-col items-center gap-1 group w-20"
-        >
-          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-              alt="Meetly" 
-              className="w-full h-full object-contain drop-shadow-lg" 
-            />
-          </div>
-          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Meetly</span>
-        </button>
-
-        {/* Silas Folder */}
-        <button
-          onClick={() => openCaseStudy('silas')}
-          className="flex flex-col items-center gap-1 group w-20"
-        >
-          <div className="w-16 h-16 group-hover:scale-105 transition-transform duration-200">
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" 
-              alt="Silas" 
-              className="w-full h-full object-contain drop-shadow-lg" 
-            />
-          </div>
-          <span className="text-[11px] text-white font-medium drop-shadow-md text-center">Silas</span>
-        </button>
-      </div>
+      
 
       {/* Desktop - Clean Simple Layout */}
       <div className="absolute inset-0 top-[25px] bottom-[80px] overflow-hidden p-6 flex gap-5">
@@ -1716,18 +1749,21 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* macOS Photos App Window */}
       {photosWindow.isOpen && !photosWindow.isMinimized && (
         <div 
-          className={`absolute left-20 top-16 w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'}`}
+          className={`absolute w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'} ${photosWindow.isMinimizing ? 'animate-minimize' : ''}`}
           onClick={() => focusWindow('photos')}
+          style={{ left: photosPosition.x, top: photosPosition.y, transformOrigin: 'bottom center' }}
         >
-          {/* Photos App Title Bar */}
-          <div className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10">
+          {/* Photos App Title Bar - Draggable */}
+          <div 
+            onMouseDown={(e) => { focusWindow('photos'); handleMouseDown('photos', e); }}
+            className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10 cursor-grab active:cursor-grabbing">
             <div className="flex gap-2">
               <button
                 onClick={() => setPhotosWindow({ isOpen: false, isMinimized: false })}
                 className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
               />
               <button
-                onClick={() => setPhotosWindow(prev => ({ ...prev, isMinimized: true }))}
+                onClick={() => minimizeWindow('photos', setPhotosWindow)}
                 className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
               />
               <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
@@ -1823,19 +1859,22 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 {/* Case Studies Finder Window */}
       {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
         <div 
-          className={`absolute right-10 top-1/2 -translate-y-1/2 w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'}`}
+          className={`absolute w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
           onClick={() => focusWindow('caseStudies')}
+          style={{ left: caseStudiesPosition.x, top: caseStudiesPosition.y, transformOrigin: 'bottom center' }}
         >
             <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
-              {/* Finder Title Bar */}
-              <div className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10">
+              {/* Finder Title Bar - Draggable */}
+              <div 
+                onMouseDown={(e) => { focusWindow('caseStudies'); handleMouseDown('caseStudies', e); }}
+                className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10 cursor-grab active:cursor-grabbing">
                 <div className="flex gap-2">
                   <button
                     onClick={() => setCaseStudiesFolder({ isOpen: false, isMinimized: false })}
                     className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
                   />
                   <button
-                    onClick={() => setCaseStudiesFolder(prev => ({ ...prev, isMinimized: true }))}
+                    onClick={() => minimizeWindow('caseStudies', setCaseStudiesFolder)}
                     className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
                   />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
@@ -1921,10 +1960,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* About Window */}
         {aboutWindow.isOpen && !aboutWindow.isMinimized && (
           <div
-            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'}`}
-            style={{ left: aboutPosition.x, top: aboutPosition.y }}
+            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'} ${aboutWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: aboutPosition.x, top: aboutPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('about')}
-            style={{ left: aboutPosition.x, top: aboutPosition.y }}
           >
             <div
               className="h-7 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-move"
@@ -1932,7 +1970,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             >
               <div className="flex gap-2">
                 <button onClick={() => setAboutWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                <button onClick={() => setAboutWindow(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                <button onClick={() => minimizeWindow('about', setAboutWindow)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                 <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
               </div>
               <span className="flex-1 text-center text-[12px] text-black/70 font-medium -ml-[54px]">About Me</span>
@@ -1968,18 +2006,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 {/* Messages Window */}
         {messagesWindow.isOpen && !messagesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'}`}
-            style={{ left: 60, top: 50 }}
+            className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: messagesPosition.x, top: messagesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('messages')}
           >
             {/* Sidebar - Contacts */}
             <div className="w-[240px] bg-[#f5f5f7] border-r border-black/10 flex flex-col">
               <div
-                className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5"
+                onMouseDown={(e) => { focusWindow('messages'); handleMouseDown('messages', e); }}
+                className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-grab active:cursor-grabbing"
               >
                 <div className="flex gap-2">
                   <button onClick={() => setMessagesWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                  <button onClick={() => setMessagesWindow(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                  <button onClick={() => minimizeWindow('messages', setMessagesWindow)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
                 </div>
               </div>
@@ -2019,24 +2058,26 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
 
             {/* Chat Area */}
-            <div className="flex-1 flex flex-col bg-white">
-              <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
-                <span className="text-[13px] font-medium text-black/80">
-                  {messageContacts.find(c => c.id === selectedContact)?.name}
-                </span>
-              </div>
-              <div className="flex-1 overflow-auto p-4 space-y-3">
-                {messageContacts.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
-                  <div key={idx} className="flex flex-col">
-                    <div className={`max-w-[70%] ${msg.from === 'charity' ? 'self-end' : 'self-start'}`}>
-                      <div className={`rounded-2xl px-4 py-2 ${msg.from === 'charity' ? 'bg-blue-500 text-white' : 'bg-[#e9e9eb] text-black'}`}>
-                        <p className="text-[13px] leading-relaxed">{msg.text}</p>
+            {selectedContact === 'welcome' ? (
+              <CharityChat />
+            ) : (
+              <div className="flex-1 flex flex-col bg-white">
+                <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
+                  <span className="text-[13px] font-medium text-black/80">
+                    {messageContacts.find(c => c.id === selectedContact)?.name}
+                  </span>
+                </div>
+                <div className="flex-1 overflow-auto p-4 space-y-3">
+                  {messageContacts.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
+                    <div key={idx} className="flex flex-col">
+                      <div className={`max-w-[70%] ${msg.from === 'charity' ? 'self-end' : 'self-start'}`}>
+                        <div className={`rounded-2xl px-4 py-2 ${msg.from === 'charity' ? 'bg-blue-500 text-white' : 'bg-[#e9e9eb] text-black'}`}>
+                          <p className="text-[13px] leading-relaxed">{msg.text}</p>
+                        </div>
+                        <span className={`text-[10px] text-black/40 mt-1 ${msg.from === 'charity' ? 'text-right' : 'text-left'} block`}>{msg.time}</span>
                       </div>
-                      <span className={`text-[10px] text-black/40 mt-1 ${msg.from === 'charity' ? 'text-right' : 'text-left'} block`}>{msg.time}</span>
                     </div>
-                  </div>
-                ))}
-                {selectedContact !== 'welcome' && (
+                  ))}
                   <div className="flex justify-center pt-4">
                     <button
                       onClick={() => openCaseStudy(selectedContact)}
@@ -2045,30 +2086,32 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       View Full Case Study
                     </button>
                   </div>
-                )}
-              </div>
-              <div className="p-3 border-t border-black/5">
-                <div className="bg-[#f5f5f7] rounded-full px-4 py-2 flex items-center gap-2">
-                  <input type="text" placeholder="iMessage" className="flex-1 bg-transparent text-[13px] outline-none placeholder-black/40" />
+                </div>
+                <div className="p-3 border-t border-black/5">
+                  <div className="bg-[#f5f5f7] rounded-full px-4 py-2 flex items-center gap-2">
+                    <input type="text" placeholder="iMessage" className="flex-1 bg-transparent text-[13px] outline-none placeholder-black/40" readOnly />
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
 
 {/* Notes Window */}
         {notesWindow.isOpen && !notesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'}`}
-            style={{ left: 80, top: 60 }}
+            className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: notesPosition.x, top: notesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('notes')}
           >
             {/* Sidebar */}
             <div className="w-[200px] bg-[#f5f5f7] border-r border-black/10 flex flex-col">
-              <div className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5">
+              <div 
+                onMouseDown={(e) => { focusWindow('notes'); handleMouseDown('notes', e); }}
+                className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-grab active:cursor-grabbing">
                 <div className="flex gap-2">
                   <button onClick={() => setNotesWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                  <button onClick={() => setNotesWindow(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                  <button onClick={() => minimizeWindow('notes', setNotesWindow)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
                 </div>
                 <span className="flex-1 text-center text-[12px] text-black/70 font-medium">Notes</span>
@@ -2143,8 +2186,8 @@ onClick={() => setDesktopSelectedNote('about')}
         {/* Projects Folder Window */}
         {projectsFolder.isOpen && !projectsFolder.isMinimized && (
           <div
-            className="absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200"
-            style={{ left: projectsPosition.x, top: projectsPosition.y }}
+            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
+            style={{ left: projectsPosition.x, top: projectsPosition.y, transformOrigin: 'bottom center' }}
           >
             <div
               className="h-7 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-move"
@@ -2152,7 +2195,7 @@ onClick={() => setDesktopSelectedNote('about')}
             >
               <div className="flex gap-2">
                 <button onClick={() => setProjectsFolder({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                <button onClick={() => setProjectsFolder(prev => ({ ...prev, isMinimized: true }))} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                <button onClick={() => minimizeWindow('projects', setProjectsFolder)} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
                 <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
               </div>
               <span className="flex-1 text-center text-[12px] text-black/70 font-medium -ml-[54px]">Projects</span>
@@ -2187,16 +2230,19 @@ onClick={() => setDesktopSelectedNote('about')}
           </div>
         )}
 
-        {/* Safari Case Study Window */}
-        {safariWindow.isOpen && !safariWindow.isMinimized && safariWindow.project && (
-          <SafariCaseStudy
-            project={safariWindow.project}
-            onClose={() => setSafariWindow({ isOpen: false, isMinimized: false, project: null })}
-            onMinimize={() => setSafariWindow(prev => ({ ...prev, isMinimized: true }))}
-            isFocused={focusedWindow === 'safari'}
-            onFocus={() => focusWindow('safari')}
-          />
-        )}
+        {/* Safari Case Study Windows - Multiple can be open */}
+        {Object.entries(openCaseStudies).map(([projectId, state]) => (
+          state.isOpen && !state.isMinimized && (
+            <SafariCaseStudy
+              key={projectId}
+              project={projectId}
+              onClose={() => closeCaseStudy(projectId)}
+              onMinimize={() => minimizeCaseStudy(projectId)}
+              isFocused={focusedWindow === `safari-${projectId}`}
+              onFocus={() => setFocusedWindow(`safari-${projectId}`)}
+            />
+          )
+        ))}
       </div>
 
       {/* Dock - z-10 so windows appear on top */}
@@ -2274,6 +2320,177 @@ onClick={() => setDesktopSelectedNote('about')}
           label="Silas"
           onClick={() => openCaseStudy('silas')}
         />
+
+        {/* Minimized Windows Section */}
+        {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
+          <>
+            <div className="w-px h-10 bg-white/30 mx-1" />
+            
+            {photosWindow.isMinimized && (
+              <button
+                onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Photos window - icon size */}
+                  <div className="w-full h-full bg-[#1e1e1e]">
+                    <div className="h-1.5 bg-[#2d2d2d] flex items-center px-0.5 gap-px">
+                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="flex h-[calc(100%-6px)]">
+                      <div className="w-2 bg-[#2d2d2d]" />
+                      <div className="flex-1 p-0.5 grid grid-cols-2 gap-0.5">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.35%E2%80%AFPM-6jEBgSqfF0xbKAt1GNKmkffpFLcivl.png" className="w-full h-3 object-cover rounded-sm" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.23%E2%80%AFPM-FRMXPc31NRPqKnrxLQNDINxqJl2Bsi.png" className="w-full h-3 object-cover rounded-sm" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Photos
+                </div>
+              </button>
+            )}
+            
+            {caseStudiesFolder.isMinimized && (
+              <button
+                onClick={() => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of case studies folder - icon size */}
+                  <div className="w-full h-full bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] p-0.5">
+                    <div className="flex gap-px mb-0.5">
+                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="bg-white h-[calc(100%-8px)] rounded-sm flex gap-0.5 p-0.5">
+                      <div className="w-2 bg-gray-100 rounded-sm" />
+                      <div className="flex-1 grid grid-cols-2 gap-0.5 content-start">
+                        <div className="w-full h-2 bg-blue-100 rounded-sm" />
+                        <div className="w-full h-2 bg-green-100 rounded-sm" />
+                        <div className="w-full h-2 bg-purple-100 rounded-sm" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Case Studies
+                </div>
+              </button>
+            )}
+            
+            {aboutWindow.isMinimized && (
+              <button
+                onClick={() => { setAboutWindow({ isOpen: true, isMinimized: false }); focusWindow('about'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of About window - icon size */}
+                  <div className="w-full h-full bg-white/95">
+                    <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-px">
+                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="p-1 flex flex-col items-center justify-center h-[calc(100%-6px)]">
+                      <img src={MEMOJI_URL} alt="About" className="w-6 h-6 rounded-full object-cover" />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  About Me
+                </div>
+              </button>
+            )}
+            
+            {messagesWindow.isMinimized && (
+              <button
+                onClick={() => { setMessagesWindow({ isOpen: true, isMinimized: false }); focusWindow('messages'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Messages window - icon size */}
+                  <div className="w-full h-full bg-white/95 flex">
+                    <div className="w-3 bg-[#f5f5f7] border-r border-black/5">
+                      <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8]" />
+                      <div className="p-0.5 space-y-0.5">
+                        <div className="w-full h-1 bg-blue-500/20 rounded-sm" />
+                        <div className="w-full h-1 bg-gray-200 rounded-sm" />
+                      </div>
+                    </div>
+                    <div className="flex-1 p-1 flex flex-col justify-center">
+                      <div className="w-5 h-1.5 bg-[#007aff] rounded-full ml-auto mb-1" />
+                      <div className="w-4 h-1.5 bg-gray-200 rounded-full" />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Messages
+                </div>
+              </button>
+            )}
+            
+            {notesWindow.isMinimized && (
+              <button
+                onClick={() => { setNotesWindow({ isOpen: true, isMinimized: false }); focusWindow('notes'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Notes window - icon size */}
+                  <div className="w-full h-full bg-white/95 flex">
+                    <div className="w-3 bg-[#f5f5f7] border-r border-black/5">
+                      <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8]" />
+                    </div>
+                    <div className="flex-1 bg-[#fffef5] p-1">
+                      <div className="w-full h-1 bg-black/20 rounded mb-1" />
+                      <div className="w-4 h-0.5 bg-black/10 rounded mb-0.5" />
+                      <div className="w-5 h-0.5 bg-black/10 rounded" />
+                    </div>
+                  </div>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Notes
+                </div>
+              </button>
+            )}
+            
+            {/* Minimized Case Study Windows */}
+            {Object.entries(openCaseStudies).map(([projectId, state]) => (
+              state.isMinimized && (
+                <button
+                  key={projectId}
+                  onClick={() => restoreCaseStudy(projectId)}
+                  className="group relative"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                    {/* Mini screenshot preview - same size as dock icons */}
+                    <div className="w-full h-full bg-white flex flex-col">
+                      <div className="h-1.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-px shrink-0">
+                        <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                        <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                        <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                      </div>
+                      <div className="flex-1 overflow-hidden">
+                        <img 
+                          src={caseStudies[projectId as keyof typeof caseStudies]?.screenshot} 
+                          alt={caseStudies[projectId as keyof typeof caseStudies]?.title}
+                          className="w-full h-full object-cover object-top"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                    {caseStudies[projectId as keyof typeof caseStudies]?.title}
+                  </div>
+                </button>
+              )
+            ))}
+          </>
+        )}
       </div>
     </div>
   )
@@ -2308,6 +2525,72 @@ interface SafariCaseStudyProps {
 
 function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: SafariCaseStudyProps) {
   const study = caseStudies[project as keyof typeof caseStudies]
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
+  const [windowPosition, setWindowPosition] = useState({ x: 8, y: 28 })
+  const [isDragging, setIsDragging] = useState(false)
+  const [isFullSize, setIsFullSize] = useState(true)
+  const windowRef = useRef<HTMLDivElement>(null)
+  
+  // Initialize with full size
+  useEffect(() => {
+    if (windowRef.current && windowSize.width === 0) {
+      const parent = windowRef.current.parentElement
+      if (parent) {
+        setWindowSize({ 
+          width: parent.clientWidth - 16, 
+          height: parent.clientHeight - 36 
+        })
+      }
+    }
+  }, [windowSize.width])
+  
+  const toggleResize = () => {
+    if (isFullSize) {
+      // Shrink to smaller size and center it
+      setWindowSize({ width: 700, height: 500 })
+      setWindowPosition({ x: 100, y: 80 })
+      setIsFullSize(false)
+    } else {
+      // Expand to full size
+      if (windowRef.current) {
+        const parent = windowRef.current.parentElement
+        if (parent) {
+          setWindowSize({ 
+            width: parent.clientWidth - 16, 
+            height: parent.clientHeight - 36 
+          })
+          setWindowPosition({ x: 8, y: 28 })
+        }
+      }
+      setIsFullSize(true)
+    }
+  }
+  
+  const handleDragStart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+    
+    const startX = e.clientX
+    const startY = e.clientY
+    const startPosX = windowPosition.x
+    const startPosY = windowPosition.y
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      const newX = Math.max(0, startPosX + (e.clientX - startX))
+      const newY = Math.max(28, startPosY + (e.clientY - startY))
+      setWindowPosition({ x: newX, y: newY })
+    }
+    
+    const handleMouseUp = () => {
+      setIsDragging(false)
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+    
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+  }
+  
   if (!study) return null
 
   // Check which full case study to render
@@ -2317,18 +2600,27 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
   return (
     <div
-      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'}`}
-      style={{ left: 8, top: 28, right: 8, bottom: 8 }}
+      ref={windowRef}
+      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isDragging ? 'select-none cursor-grabbing' : ''} transition-all duration-200`}
+      style={{ 
+        left: windowPosition.x, 
+        top: windowPosition.y, 
+        width: windowSize.width || 'calc(100% - 16px)', 
+        height: windowSize.height || 'calc(100% - 36px)',
+        minWidth: '500px', 
+        minHeight: '400px' 
+      }}
       onClick={onFocus}
     >
-      {/* Safari Title Bar */}
+      {/* Safari Title Bar - Draggable */}
       <div
-        className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-3 border-b border-black/10 shrink-0"
+        onMouseDown={handleDragStart}
+        className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-3 border-b border-black/10 shrink-0 cursor-grab active:cursor-grabbing"
       >
         <div className="flex gap-2">
           <button onClick={onClose} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
           <button onClick={onMinimize} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
-          <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
+          <button onClick={toggleResize} className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
         </div>
 
         {/* Navigation */}
@@ -2426,7 +2718,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
           </>
         )}
       </div>
-    </div>
+      
+      </div>
   )
 }
 
