@@ -2334,8 +2334,23 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
                 className="group relative"
               >
-                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover opacity-80" />
+                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Photos window */}
+                  <div className="w-full h-full bg-[#1e1e1e]">
+                    <div className="h-2 bg-[#2d2d2d] flex items-center px-0.5 gap-0.5">
+                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="flex h-[calc(100%-8px)]">
+                      <div className="w-3 bg-[#2d2d2d]" />
+                      <div className="flex-1 p-0.5 grid grid-cols-3 gap-0.5">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.35%E2%80%AFPM-6jEBgSqfF0xbKAt1GNKmkffpFLcivl.png" className="w-full h-2 object-cover rounded-sm" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.23%E2%80%AFPM-FRMXPc31NRPqKnrxLQNDINxqJl2Bsi.png" className="w-full h-2 object-cover rounded-sm" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-05-29%20at%2010.15.50%E2%80%AFPM-KSWaE8lgQxMRWgMZIJSIIeWvp3zEYC.png" className="w-full h-2 object-cover rounded-sm" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
                   Photos
@@ -2377,8 +2392,22 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setAboutWindow({ isOpen: true, isMinimized: false }); focusWindow('about'); }}
                 className="group relative"
               >
-                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  <img src={MEMOJI_URL} alt="About Me" className="w-full h-full object-cover opacity-80" />
+                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of About window */}
+                  <div className="w-full h-full bg-white/95">
+                    <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
+                      <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
+                      <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
+                      <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                    </div>
+                    <div className="p-1 flex gap-1">
+                      <img src={MEMOJI_URL} alt="About" className="w-4 h-4 rounded-full object-cover" />
+                      <div className="flex-1">
+                        <div className="w-6 h-1 bg-black/20 rounded mb-0.5" />
+                        <div className="w-8 h-0.5 bg-black/10 rounded" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
                   About Me
@@ -2391,10 +2420,25 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setMessagesWindow({ isOpen: true, isMinimized: false }); focusWindow('messages'); }}
                 className="group relative"
               >
-                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.04 2 11c0 2.21.9 4.21 2.36 5.73-.14 1.52-.75 2.98-1.68 4.12 1.46-.11 2.93-.52 4.19-1.25 1.46.59 3.11.9 4.83.9 5.52 0 10-4.04 10-9s-4.48-9-10-9z" />
-                  </svg>
+                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Messages window */}
+                  <div className="w-full h-full bg-white/95 flex">
+                    <div className="w-5 bg-[#f5f5f7] border-r border-black/5">
+                      <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
+                        <div className="w-0.5 h-0.5 rounded-full bg-[#ff5f57]" />
+                        <div className="w-0.5 h-0.5 rounded-full bg-[#febc2e]" />
+                        <div className="w-0.5 h-0.5 rounded-full bg-[#28c840]" />
+                      </div>
+                      <div className="p-0.5 space-y-0.5">
+                        <div className="w-full h-1.5 bg-blue-500/20 rounded-sm" />
+                        <div className="w-full h-1.5 bg-gray-200 rounded-sm" />
+                      </div>
+                    </div>
+                    <div className="flex-1 p-0.5">
+                      <div className="w-4 h-1 bg-[#007aff] rounded-full ml-auto mb-0.5" />
+                      <div className="w-3 h-1 bg-gray-200 rounded-full" />
+                    </div>
+                  </div>
                 </div>
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
                   Messages
@@ -2407,8 +2451,22 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setNotesWindow({ isOpen: true, isMinimized: false }); focusWindow('notes'); }}
                 className="group relative"
               >
-                <div className="w-12 h-10 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover opacity-80" />
+                <div className="w-20 h-14 rounded-lg overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Notes window */}
+                  <div className="w-full h-full bg-white/95 flex">
+                    <div className="w-4 bg-[#f5f5f7] border-r border-black/5">
+                      <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
+                        <div className="w-0.5 h-0.5 rounded-full bg-[#ff5f57]" />
+                        <div className="w-0.5 h-0.5 rounded-full bg-[#febc2e]" />
+                        <div className="w-0.5 h-0.5 rounded-full bg-[#28c840]" />
+                      </div>
+                    </div>
+                    <div className="flex-1 bg-[#fffef5] p-0.5">
+                      <div className="w-6 h-0.5 bg-black/30 rounded mb-0.5" />
+                      <div className="w-full h-0.5 bg-black/10 rounded mb-0.5" />
+                      <div className="w-4 h-0.5 bg-black/10 rounded" />
+                    </div>
+                  </div>
                 </div>
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
                   Notes
@@ -2421,20 +2479,31 @@ onClick={() => setDesktopSelectedNote('about')}
                 onClick={() => { setSafariWindow(prev => ({ ...prev, isMinimized: false })); focusWindow('safari'); }}
                 className="group relative"
               >
-                <div className="w-16 h-12 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
-                  {/* Mini preview of case study window */}
+                <div className="w-24 h-16 rounded-lg overflow-hidden shadow-lg border border-white/20 bg-white transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  {/* Mini preview of Safari case study window - shows actual content */}
                   <div className="w-full h-full bg-white">
-                    <div className="h-2 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
+                    <div className="h-2.5 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-0.5 gap-0.5">
                       <div className="w-1 h-1 rounded-full bg-[#ff5f57]" />
                       <div className="w-1 h-1 rounded-full bg-[#febc2e]" />
                       <div className="w-1 h-1 rounded-full bg-[#28c840]" />
+                      <div className="flex-1 mx-1">
+                        <div className="w-full h-1.5 bg-white/80 rounded-sm" />
+                      </div>
                     </div>
-                    <div className="p-0.5">
+                    <div className="p-1 flex gap-1">
                       <img 
                         src={caseStudies[safariWindow.project as keyof typeof caseStudies]?.image} 
                         alt={caseStudies[safariWindow.project as keyof typeof caseStudies]?.title}
-                        className="w-full h-6 object-cover rounded-sm"
+                        className="w-5 h-8 object-cover rounded-sm"
                       />
+                      <div className="flex-1">
+                        <div 
+                          className="w-4 h-1.5 rounded-sm mb-0.5" 
+                          style={{ backgroundColor: caseStudies[safariWindow.project as keyof typeof caseStudies]?.color }}
+                        />
+                        <div className="w-6 h-0.5 bg-black/20 rounded mb-0.5" />
+                        <div className="w-8 h-0.5 bg-black/10 rounded" />
+                      </div>
                     </div>
                   </div>
                 </div>
