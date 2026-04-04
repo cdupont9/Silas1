@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 
-interface Message {
+export interface ChatMessage {
   id: string
   role: 'user' | 'assistant'
   text: string
@@ -12,6 +12,8 @@ interface Message {
 
 interface CharityChatProps {
   openCaseStudy?: (project: string) => void
+  messages: ChatMessage[]
+  setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 }
 
 const REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
@@ -357,27 +359,7 @@ const getCurrentTime = () => {
   return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
 }
 
-export function CharityChat({ openCaseStudy }: CharityChatProps) {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome-1',
-      role: 'assistant',
-      text: "Hey! Welcome to my portfolio on my MacBook",
-      time: getCurrentTime(),
-    },
-    {
-      id: 'welcome-2', 
-      role: 'assistant',
-      text: "Feel free to explore - check out my case studies in the dock below or click around!",
-      time: getCurrentTime(),
-    },
-    {
-      id: 'welcome-3',
-      role: 'assistant',
-      text: "I'm a UX Designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
-      time: getCurrentTime(),
-    },
-  ])
+export function CharityChat({ openCaseStudy, messages, setMessages }: CharityChatProps) {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [showReactions, setShowReactions] = useState<string | null>(null)
@@ -391,7 +373,7 @@ export function CharityChat({ openCaseStudy }: CharityChatProps) {
     e.preventDefault()
     if (!input.trim() || isTyping) return
     
-    const userMessage: Message = {
+    const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
       text: input.trim(),
@@ -406,7 +388,7 @@ export function CharityChat({ openCaseStudy }: CharityChatProps) {
     
     const response = getCharityResponse(userMessage.text)
     
-    const assistantMessage: Message = {
+    const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
       role: 'assistant',
       text: response,

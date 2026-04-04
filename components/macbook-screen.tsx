@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { CharityChat } from "@/components/charity-chat"
+import { CharityChat, ChatMessage } from "@/components/charity-chat"
 
 interface WindowState {
   isOpen: boolean
