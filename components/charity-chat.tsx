@@ -18,7 +18,7 @@ interface CharityChatProps {
 
 const REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
 
-const getCharityResponse = (userMessage: string): string => {
+export const getCharityResponse = (userMessage: string): string => {
   // Normalize: lowercase, trim, remove extra letters (hiiiii -> hi, youuuu -> you)
   const msg = userMessage.toLowerCase().trim()
   const normalized = msg.replace(/(.)\1{2,}/g, '$1$1') // reduce repeated chars to max 2

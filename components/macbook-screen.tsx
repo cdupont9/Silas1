@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { CharityChat, ChatMessage } from "@/components/charity-chat"
+import { CharityChat, ChatMessage, getCharityResponse } from "@/components/charity-chat"
 
 interface WindowState {
   isOpen: boolean
@@ -244,6 +244,10 @@ export function MacBookScreen() {
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
   
+  // Mobile chat state
+  const [mobileInput, setMobileInput] = useState('')
+  const [mobileIsTyping, setMobileIsTyping] = useState(false)
+  
   // Chat messages state - persists when Messages window is closed
   const getCurrentTime = () => {
     const now = new Date()
@@ -387,6 +391,37 @@ export function MacBookScreen() {
 
   const handleMouseUp = () => {
     setIsDragging(null)
+  }
+
+  // Mobile chat submit handler
+  const handleMobileChatSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!mobileInput.trim() || mobileIsTyping) return
+    
+    const userMessage: ChatMessage = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      text: mobileInput.trim(),
+      time: getCurrentTime(),
+    }
+    
+    setChatMessages(prev => [...prev, userMessage])
+    setMobileInput('')
+    setMobileIsTyping(true)
+    
+    await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
+    
+    const response = getCharityResponse(userMessage.text)
+    
+    const assistantMessage: ChatMessage = {
+      id: `assistant-${Date.now()}`,
+      role: 'assistant',
+      text: response,
+      time: getCurrentTime(),
+    }
+    
+    setChatMessages(prev => [...prev, assistantMessage])
+    setMobileIsTyping(false)
   }
 
   const openMessagesWindow = () => {
@@ -807,7 +842,101 @@ export function MacBookScreen() {
         )
       }
 
-      // Conversation View
+      // Conversation View - Use interactive chat for Charity, static for others
+      if (contact.id === 'welcome') {
+        return (
+          <div className="h-screen w-full bg-black flex flex-col">
+            {/* Status Bar */}
+            <div className="h-12 flex items-center justify-between px-6 pt-2 bg-[#000]">
+              <span className="text-white text-sm font-medium">{loginTime}</span>
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-end gap-[2px] h-3">
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+                </div>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="w-6 h-3 border border-white rounded-sm relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                </div>
+              </div>
+            </div>
+
+            {/* Header */}
+            <div className="bg-black/90 backdrop-blur-xl px-4 py-2 border-b border-white/10">
+              <div className="flex items-center justify-between">
+                <button onClick={() => setShowConversationList(true)} className="text-[#0a84ff] flex items-center gap-1">
+                  <ChevronLeft className="w-6 h-6" />
+                  <span className="text-[17px]">Back</span>
+                </button>
+                <div className="flex flex-col items-center">
+                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
+                    <span className="text-white text-sm font-semibold">C</span>
+                  </div>
+                  <span className="text-white text-[11px] font-medium mt-0.5">Charity</span>
+                </div>
+                <button className="text-[#0a84ff]">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Interactive Messages with Charity */}
+            <div className="flex-1 overflow-y-auto px-4 py-4">
+              {chatMessages.map((msg) => (
+                <div key={msg.id} className={`flex mb-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[75%] px-4 py-2.5 ${
+                    msg.role === 'user' 
+                      ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]' 
+                      : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
+                  }`}>
+                    <p className="text-[17px] leading-snug">
+                      {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like)/gi, '$1') : msg.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+              {mobileIsTyping && (
+                <div className="flex mb-2 justify-start">
+                  <div className="max-w-[75%] px-4 py-3 bg-[#3b3b3d] rounded-[20px] rounded-bl-[4px]">
+                    <div className="flex gap-1.5 items-center">
+                      <span className="w-2 h-2 rounded-full bg-white/50 animate-[bounce_1s_ease-in-out_infinite]" />
+                      <span className="w-2 h-2 rounded-full bg-white/50 animate-[bounce_1s_ease-in-out_infinite_0.2s]" />
+                      <span className="w-2 h-2 rounded-full bg-white/50 animate-[bounce_1s_ease-in-out_infinite_0.4s]" />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Input Bar */}
+            <form onSubmit={handleMobileChatSubmit} className="bg-black px-3 py-2 pb-8 flex items-center gap-2">
+              <button type="button" className="w-8 h-8 bg-[#3b3b3d] rounded-full flex items-center justify-center">
+                <Plus className="w-5 h-5 text-white" />
+              </button>
+              <div className="flex-1 bg-[#1c1c1e] rounded-full px-4 py-2 border border-white/20 flex items-center">
+                <input
+                  type="text"
+                  placeholder="iMessage"
+                  value={mobileInput}
+                  onChange={(e) => setMobileInput(e.target.value)}
+                  className="flex-1 bg-transparent text-white text-[17px] placeholder-white/40 outline-none"
+                />
+              </div>
+              <button type="submit" disabled={!mobileInput.trim() || mobileIsTyping} className="w-8 h-8 bg-[#0b84fe] rounded-full flex items-center justify-center disabled:opacity-50">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        )
+      }
+
+      // Other contacts - static messages
       return (
         <div className="h-screen w-full bg-black flex flex-col">
           {/* Status Bar */}
