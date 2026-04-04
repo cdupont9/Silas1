@@ -150,11 +150,12 @@ const messageContacts = [
   }
 ]
 
-// Background options - images
+// Background options - videos and images
 const BACKGROUND_OPTIONS = [
-  { id: 'mountains', type: 'image', url: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1920', name: 'Mountains' },
-  { id: 'sunset', type: 'image', url: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920', name: 'Sunset' },
-  { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', name: 'Aurora' },
+  { id: 'sunflower', type: 'video', url: 'https://videos.pexels.com/video-files/5150392/5150392-hd_1920_1080_30fps.mp4', preview: 'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Sunflower' },
+  { id: 'mountains', type: 'image', url: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Mountains' },
+  { id: 'sunset', type: 'image', url: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=300', name: 'Sunset' },
+  { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Aurora' },
 ]
 
 // Audio URL - Replace this with your own audio URL
@@ -566,7 +567,13 @@ export function MacBookScreen() {
       return (
         <div className="h-screen w-full relative overflow-hidden bg-black">
 {/* Background */}
-<img key={`mobile-home-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-80" />
+      {selectedBackground.type === 'video' ? (
+        <video key={`mobile-home-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80">
+          <source src={selectedBackground.url} type="video/mp4" />
+        </video>
+      ) : (
+        <img key={`mobile-home-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-80" />
+      )}
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
           
 {/* Status Bar */}
@@ -649,7 +656,13 @@ export function MacBookScreen() {
       return (
         <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
 {/* Background */}
-<img key={`mobile-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+      {selectedBackground.type === 'video' ? (
+        <video key={`mobile-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
+          <source src={selectedBackground.url} type="video/mp4" />
+        </video>
+      ) : (
+        <img key={`mobile-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+      )}
           
           {/* Status Bar - iOS style */}
           <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20">
@@ -1701,7 +1714,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   if (screenState === "login") {
     return (
       <div className="h-screen w-full relative overflow-hidden">
-        <img key={`desktop-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl" />
+        {selectedBackground.type === 'video' ? (
+          <video key={`desktop-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
+            <source src={selectedBackground.url} type="video/mp4" />
+          </video>
+        ) : (
+          <img key={`desktop-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl" />
+        )}
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center">
           {/* Status bar - top right like home screen */}
@@ -1754,7 +1773,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   if (screenState === "loading") {
     return (
       <div className="h-screen w-full relative overflow-hidden">
-        <img key={`desktop-loading-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl" />
+        {selectedBackground.type === 'video' ? (
+          <video key={`desktop-loading-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
+            <source src={selectedBackground.url} type="video/mp4" />
+          </video>
+        ) : (
+          <img key={`desktop-loading-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl" />
+        )}
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center">
           <div className="w-32 h-32 rounded-full overflow-hidden bg-white/10 backdrop-blur-xl border-4 border-white/20 shadow-2xl mb-4">
@@ -1778,7 +1803,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      <img key={selectedBackground.id} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover" />
+      {selectedBackground.type === 'video' ? (
+        <video key={selectedBackground.id} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+          <source src={selectedBackground.url} type="video/mp4" />
+        </video>
+      ) : (
+        <img key={selectedBackground.id} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover" />
+      )}
 
       {/* Menu Bar - macOS Style */}
       <div className="absolute top-0 left-0 right-0 h-[25px] bg-black/20 backdrop-blur-xl flex items-center justify-between px-4 text-[13px] text-white z-50">
@@ -1849,11 +1880,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-transparent hover:border-gray-300'
                         }`}
                       >
-                        <img 
-                          src={bg.url} 
-                          alt={bg.name}
-                          className="w-full h-full object-cover"
-                        />
+<img
+                        src={bg.preview}
+                        alt={bg.name}
+                        className="w-full h-full object-cover"
+                      />
                         <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
                         <span className="absolute bottom-1 left-1 text-[9px] text-white font-medium drop-shadow-lg">{bg.name}</span>
                         {selectedBackground.id === bg.id && (
