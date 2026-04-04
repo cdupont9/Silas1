@@ -158,7 +158,9 @@ const BACKGROUND_OPTIONS = [
   { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Aurora' },
 ]
 
-// Audio URL - Replace this with your own audio URL
+// Audio URL - Replace this with your own audio file URL (MP3, WAV, etc.)
+// Note: YouTube URLs cannot be used directly - you need a direct audio file URL
+// Example: "https://example.com/your-neosoul-jazz-music.mp3"
 const AUDIO_URL = "YOUR_AUDIO_URL_HERE"
 
 // Memoji image URL
@@ -257,6 +259,8 @@ export function MacBookScreen() {
   
   // Background state
   const [selectedBackground, setSelectedBackground] = useState(BACKGROUND_OPTIONS[0])
+  const [backgroundsFolder, setBackgroundsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [backgroundsPosition, setBackgroundsPosition] = useState({ x: 180, y: 80 })
   
   // Help search state
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
@@ -408,8 +412,9 @@ export function MacBookScreen() {
       case 'about': position = aboutPosition; break
       case 'projects': position = projectsPosition; break
       case 'photos': position = photosPosition; break
-      case 'caseStudies': position = caseStudiesPosition; break
-      case 'messages': position = messagesPosition; break
+case 'caseStudies': position = caseStudiesPosition; break
+  case 'backgrounds': position = backgroundsPosition; break
+  case 'messages': position = messagesPosition; break
       case 'notes': position = notesPosition; break
       default: position = { x: 0, y: 0 }
     }
@@ -431,8 +436,9 @@ export function MacBookScreen() {
       case 'about': setAboutPosition({ x: newX, y: newY }); break
       case 'projects': setProjectsPosition({ x: newX, y: newY }); break
       case 'photos': setPhotosPosition({ x: newX, y: newY }); break
-      case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
-      case 'messages': setMessagesPosition({ x: newX, y: newY }); break
+case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
+  case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
+  case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
     }
   }
@@ -1860,45 +1866,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DropdownMenu>
+<DropdownMenu>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Edit
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[200px] shadow-2xl text-[13px]">
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger className="cursor-pointer focus:bg-blue-500 focus:text-white">
-                  <ImageIcon className="w-4 h-4 mr-2 opacity-70" />
-                  Background
-                </DropdownMenuSubTrigger>
-                <DropdownMenuSubContent className="bg-white/95 backdrop-blur-xl border-white/20 text-black min-w-[280px] shadow-2xl p-2">
-                  <div className="grid grid-cols-3 gap-2">
-                    {BACKGROUND_OPTIONS.map((bg) => (
-                      <DropdownMenuItem
-                        key={bg.id}
-                        onClick={() => setSelectedBackground(bg)}
-                        className={`relative rounded-lg overflow-hidden aspect-video p-0 cursor-pointer border-2 transition-all ${
-                          selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-transparent hover:border-gray-300'
-                        }`}
-                      >
-<img
-                        src={bg.preview}
-                        alt={bg.name}
-                        className="w-full h-full object-cover"
-                      />
-                        <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
-                        <span className="absolute bottom-1 left-1 text-[9px] text-white font-medium drop-shadow-lg">{bg.name}</span>
-                        {selectedBackground.id === bg.id && (
-                          <div className="absolute top-1 right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                            <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                        )}
-                      </DropdownMenuItem>
-                    ))}
-                  </div>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
+              <DropdownMenuItem 
+                onClick={() => { setBackgroundsFolder({ isOpen: true, isMinimized: false }); focusWindow('backgrounds'); }}
+                className="cursor-pointer focus:bg-blue-500 focus:text-white"
+              >
+                <ImageIcon className="w-4 h-4 mr-2 opacity-70" />
+                Background
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu onOpenChange={(open) => { if (!open) setHelpSearchQuery(''); }}>
@@ -2233,7 +2212,80 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         </div>
       )}
 
-{/* Case Studies Finder Window */}
+{/* Backgrounds Finder Window */}
+      {backgroundsFolder.isOpen && !backgroundsFolder.isMinimized && (
+        <div 
+          className={`absolute w-[500px] ${focusedWindow === 'backgrounds' ? 'z-40' : 'z-20'}`}
+          onClick={() => focusWindow('backgrounds')}
+          style={{ left: backgroundsPosition.x, top: backgroundsPosition.y }}
+        >
+          <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
+            {/* Finder Title Bar - Draggable */}
+            <div 
+              onMouseDown={(e) => { focusWindow('backgrounds'); handleMouseDown('backgrounds', e); }}
+              className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10 cursor-grab active:cursor-grabbing"
+            >
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setBackgroundsFolder({ isOpen: false, isMinimized: false })}
+                  className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                />
+                <button
+                  onClick={() => setBackgroundsFolder({ ...backgroundsFolder, isMinimized: true })}
+                  className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                />
+                <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
+              </div>
+              <div className="flex items-center gap-3 ml-4">
+                <svg className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+                </svg>
+                <svg className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+              <span className="flex-1 text-center text-sm font-medium text-black/80">Backgrounds</span>
+              <div className="flex items-center gap-2">
+                <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Finder Content */}
+            <div className="p-6 bg-white">
+              <div className="grid grid-cols-4 gap-4">
+                {BACKGROUND_OPTIONS.map((bg) => (
+                  <button
+                    key={bg.id}
+                    onClick={() => {
+                      setSelectedBackground(bg)
+                    }}
+                    className={`flex flex-col items-center gap-2 p-3 rounded-lg transition-all ${
+                      selectedBackground.id === bg.id 
+                        ? 'bg-blue-500/15 ring-2 ring-blue-500' 
+                        : 'hover:bg-black/5'
+                    }`}
+                  >
+                    <div className="w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
+                      <img 
+                        src={bg.preview} 
+                        alt={bg.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className={`text-[11px] text-center leading-tight font-medium ${
+                      selectedBackground.id === bg.id ? 'text-blue-600' : 'text-gray-700'
+                    }`}>{bg.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Case Studies Finder Window */}
       {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
         <div 
           className={`absolute w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
