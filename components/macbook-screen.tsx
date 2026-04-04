@@ -529,9 +529,9 @@ export function MacBookScreen() {
     if (mobileScreen === "lock") {
       return (
         <div className="h-screen w-full relative overflow-hidden bg-black">
-          {/* Background */}
-          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80">
-            <source src={selectedBackground.url} type="video/mp4" />
+{/* Background */}
+      <video key={`mobile-home-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80">
+        <source src={selectedBackground.url} type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
           
@@ -614,9 +614,9 @@ export function MacBookScreen() {
     if (mobileScreen === "home") {
       return (
         <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
-          {/* Background */}
-          <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
-            <source src={selectedBackground.url} type="video/mp4" />
+{/* Background */}
+      <video key={`mobile-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
+        <source src={selectedBackground.url} type="video/mp4" />
           </video>
           
           {/* Status Bar - iOS style */}
@@ -1669,7 +1669,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   if (screenState === "login") {
     return (
       <div className="h-screen w-full relative overflow-hidden">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
+        <video key={`desktop-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
           <source src={selectedBackground.url} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/30" />
@@ -1724,7 +1724,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   if (screenState === "loading") {
     return (
       <div className="h-screen w-full relative overflow-hidden">
-        <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
+        <video key={`desktop-loading-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
           <source src={selectedBackground.url} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/30" />
@@ -1807,7 +1807,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Edit
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[280px] shadow-2xl text-[13px] p-2">
+            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[320px] shadow-2xl text-[13px] p-2">
               <p className="text-[11px] text-gray-500 uppercase tracking-wide px-2 mb-2">Background</p>
               <div className="grid grid-cols-3 gap-2 p-1">
                 {BACKGROUND_OPTIONS.map((bg) => (
@@ -1821,8 +1821,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-transparent hover:border-white/50'
                     }`}
                   >
-                    <img src={bg.preview} alt={bg.name} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/20" />
+                    <video 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline
+                      className="w-full h-full object-cover"
+                    >
+                      <source src={bg.url} type="video/mp4" />
+                    </video>
+                    <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
                     <span className="absolute bottom-1 left-1 text-[9px] text-white font-medium drop-shadow-md">{bg.name}</span>
                     {selectedBackground.id === bg.id && (
                       <div className="absolute top-1 right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
