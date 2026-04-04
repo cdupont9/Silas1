@@ -244,6 +244,32 @@ export function MacBookScreen() {
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
   
+  // Chat messages state - persists when Messages window is closed
+  const getCurrentTime = () => {
+    const now = new Date()
+    return now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+  }
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
+    {
+      id: 'welcome-1',
+      role: 'assistant',
+      text: "Hey! Welcome to my portfolio on my MacBook",
+      time: getCurrentTime(),
+    },
+    {
+      id: 'welcome-2', 
+      role: 'assistant',
+      text: "Feel free to explore - check out my case studies in the dock below or click around!",
+      time: getCurrentTime(),
+    },
+    {
+      id: 'welcome-3',
+      role: 'assistant',
+      text: "I'm a UX Designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
+      time: getCurrentTime(),
+    },
+  ])
+  
   
 
   // Personal photos for the photo stack
@@ -2059,7 +2085,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
             {/* Chat Area */}
             {selectedContact === 'welcome' ? (
-              <CharityChat openCaseStudy={openCaseStudy} />
+              <CharityChat openCaseStudy={openCaseStudy} messages={chatMessages} setMessages={setChatMessages} />
             ) : (
               <div className="flex-1 flex flex-col bg-white">
                 <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
