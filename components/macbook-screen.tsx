@@ -13,6 +13,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
 
@@ -147,15 +150,15 @@ const messageContacts = [
   }
 ]
 
-// Background options - videos and images
+// Background options - images
 const BACKGROUND_OPTIONS = [
-  { id: 'sunflower', type: 'video', url: 'https://videos.pexels.com/video-files/5150392/5150392-hd_1920_1080_30fps.mp4', name: 'Sunflower', preview: 'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'ocean', type: 'video', url: 'https://videos.pexels.com/video-files/1918465/1918465-hd_1920_1080_24fps.mp4', name: 'Ocean', preview: 'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'mountains', type: 'video', url: 'https://videos.pexels.com/video-files/2491284/2491284-hd_1920_1080_24fps.mp4', name: 'Mountains', preview: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'forest', type: 'video', url: 'https://videos.pexels.com/video-files/3015510/3015510-hd_1920_1080_24fps.mp4', name: 'Forest', preview: 'https://images.pexels.com/photos/1179229/pexels-photo-1179229.jpeg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'sunset', type: 'video', url: 'https://videos.pexels.com/video-files/1851190/1851190-hd_1920_1080_30fps.mp4', name: 'Sunset', preview: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=300' },
-  { id: 'aurora', type: 'video', url: 'https://videos.pexels.com/video-files/3214448/3214448-hd_1920_1080_24fps.mp4', name: 'Aurora', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300' },
+  { id: 'mountains', type: 'image', url: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1920', name: 'Mountains' },
+  { id: 'sunset', type: 'image', url: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920', name: 'Sunset' },
+  { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', name: 'Aurora' },
 ]
+
+// Audio URL - Replace this with your own audio URL
+const AUDIO_URL = "YOUR_AUDIO_URL_HERE"
 
 // Memoji image URL
 const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-03-17%20at%205.41.24%E2%80%AFPM.jpeg-IqAgTgZhAtj7ZVseWJ9tdnbTkwQk0b.png"
@@ -253,7 +256,6 @@ export function MacBookScreen() {
   
   // Background state
   const [selectedBackground, setSelectedBackground] = useState(BACKGROUND_OPTIONS[0])
-  const [showBackgroundPicker, setShowBackgroundPicker] = useState(false)
   
   // Help search state
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
@@ -264,8 +266,9 @@ export function MacBookScreen() {
   
   // Initialize audio
   useEffect(() => {
-    // YouTube video audio - using a lofi/ambient audio URL
-    audioRef.current = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')
+    // Replace AUDIO_URL constant at top of file with your audio URL
+    if (AUDIO_URL === "YOUR_AUDIO_URL_HERE") return // Skip if no audio URL set
+    audioRef.current = new Audio(AUDIO_URL)
     audioRef.current.loop = true
     audioRef.current.volume = 0.3
     
@@ -563,9 +566,7 @@ export function MacBookScreen() {
       return (
         <div className="h-screen w-full relative overflow-hidden bg-black">
 {/* Background */}
-      <video key={`mobile-home-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80">
-        <source src={selectedBackground.url} type="video/mp4" />
-          </video>
+<img key={`mobile-home-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-80" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
           
 {/* Status Bar */}
@@ -648,9 +649,7 @@ export function MacBookScreen() {
       return (
         <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
 {/* Background */}
-      <video key={`mobile-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
-        <source src={selectedBackground.url} type="video/mp4" />
-          </video>
+<img key={`mobile-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-50" />
           
           {/* Status Bar - iOS style */}
           <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20">
@@ -1702,9 +1701,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   if (screenState === "login") {
     return (
       <div className="h-screen w-full relative overflow-hidden">
-        <video key={`desktop-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
-          <source src={selectedBackground.url} type="video/mp4" />
-        </video>
+        <img key={`desktop-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl" />
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center">
           {/* Status bar - top right like home screen */}
@@ -1757,9 +1754,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   if (screenState === "loading") {
     return (
       <div className="h-screen w-full relative overflow-hidden">
-        <video key={`desktop-loading-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
-          <source src={selectedBackground.url} type="video/mp4" />
-        </video>
+        <img key={`desktop-loading-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl" />
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center">
           <div className="w-32 h-32 rounded-full overflow-hidden bg-white/10 backdrop-blur-xl border-4 border-white/20 shadow-2xl mb-4">
@@ -1783,9 +1778,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      <video key={selectedBackground.id} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
-        <source src={selectedBackground.url} type="video/mp4" />
-      </video>
+      <img key={selectedBackground.id} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover" />
 
       {/* Menu Bar - macOS Style */}
       <div className="absolute top-0 left-0 right-0 h-[25px] bg-black/20 backdrop-blur-xl flex items-center justify-between px-4 text-[13px] text-white z-50">
@@ -1840,64 +1833,43 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Edit
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[160px] shadow-2xl text-[13px]">
-              <DropdownMenuItem 
-                onClick={() => setShowBackgroundPicker(true)} 
-                className="cursor-pointer focus:bg-blue-500 focus:text-white"
-              >
-                <ImageIcon className="w-4 h-4 mr-2 opacity-70" />
-                Background
-              </DropdownMenuItem>
+            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[200px] shadow-2xl text-[13px]">
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger className="cursor-pointer focus:bg-blue-500 focus:text-white">
+                  <ImageIcon className="w-4 h-4 mr-2 opacity-70" />
+                  Background
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent className="bg-white/95 backdrop-blur-xl border-white/20 text-black min-w-[280px] shadow-2xl p-2">
+                  <div className="grid grid-cols-3 gap-2">
+                    {BACKGROUND_OPTIONS.map((bg) => (
+                      <DropdownMenuItem
+                        key={bg.id}
+                        onClick={() => setSelectedBackground(bg)}
+                        className={`relative rounded-lg overflow-hidden aspect-video p-0 cursor-pointer border-2 transition-all ${
+                          selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-transparent hover:border-gray-300'
+                        }`}
+                      >
+                        <img 
+                          src={bg.url} 
+                          alt={bg.name}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
+                        <span className="absolute bottom-1 left-1 text-[9px] text-white font-medium drop-shadow-lg">{bg.name}</span>
+                        {selectedBackground.id === bg.id && (
+                          <div className="absolute top-1 right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                            <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                        )}
+                      </DropdownMenuItem>
+                    ))}
+                  </div>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
             </DropdownMenuContent>
           </DropdownMenu>
-          
-          {/* Background Picker Modal */}
-          {showBackgroundPicker && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center">
-              <div className="absolute inset-0 bg-black/20" onClick={() => setShowBackgroundPicker(false)} />
-              <div className="relative bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 p-4 w-[400px]">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-[13px] font-semibold text-black">Choose Background</h3>
-                  <button onClick={() => setShowBackgroundPicker(false)} className="text-black/50 hover:text-black">
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-                <div className="grid grid-cols-3 gap-3">
-                  {BACKGROUND_OPTIONS.map((bg) => (
-                    <button
-                      key={bg.id}
-                      onClick={() => {
-                        setSelectedBackground(bg)
-                        setShowBackgroundPicker(false)
-                      }}
-                      className={`relative rounded-lg overflow-hidden aspect-video border-2 transition-all ${
-                        selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-gray-200 hover:border-gray-400'
-                      }`}
-                    >
-                      <video 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline
-                        className="w-full h-full object-cover"
-                      >
-                        <source src={bg.url} type="video/mp4" />
-                      </video>
-                      <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
-                      <span className="absolute bottom-1 left-1 text-[10px] text-white font-medium drop-shadow-lg">{bg.name}</span>
-                      {selectedBackground.id === bg.id && (
-                        <div className="absolute top-1 right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
-                          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
           <DropdownMenu onOpenChange={(open) => { if (!open) setHelpSearchQuery(''); }}>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Help
