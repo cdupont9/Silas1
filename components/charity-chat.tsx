@@ -10,6 +10,10 @@ interface Message {
   reaction?: string
 }
 
+interface CharityChatProps {
+  openCaseStudy?: (project: string) => void
+}
+
 const REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
 
 const getCharityResponse = (userMessage: string): string => {
@@ -250,6 +254,11 @@ const getCharityResponse = (userMessage: string): string => {
     return "Definitely an observer and listener - I like to evaluate before responding"
   }
   
+  // Favorite case study
+  if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/)) {
+    return "LINK:silas:My favorite is Silas, the AI companion - you can check it out here if you'd like!"
+  }
+  
   // Projects/Case Studies
   if (normalized.match(/^(projects?|portfolio|case stud)/i)) {
     return "I have three - Teammate, Meetly, and Silas! Check out the case study folders in the dock"
@@ -257,17 +266,17 @@ const getCharityResponse = (userMessage: string): string => {
   
   // Teammate
   if (normalized.match(/teammate/)) {
-    return "It's a dating app for sports fans - click the folder to check it out!"
+    return "LINK:teammate:It's a dating app for sports fans - click here to check it out!"
   }
   
   // Meetly
   if (normalized.match(/meetly/)) {
-    return "A scheduling and meeting management platform I designed"
+    return "LINK:meetly:A scheduling and meeting management platform - click here to see it!"
   }
   
   // Silas
   if (normalized.match(/silas|most recent|latest/)) {
-    return "My most recent project - it's an AI companion! Check out the folder"
+    return "LINK:silas:My most recent project - it's an AI companion! Click here to check it out"
   }
   
   // What makes you unique
@@ -348,7 +357,7 @@ const getCurrentTime = () => {
   return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
 }
 
-export function CharityChat() {
+export function CharityChat({ openCaseStudy }: CharityChatProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome-1',
@@ -437,7 +446,31 @@ export function CharityChat() {
               onDoubleClick={() => handleDoubleClick(message.id)}
             >
               <div className={`rounded-2xl px-4 py-2 cursor-pointer ${message.role === 'assistant' ? 'bg-[#e9e9eb] text-black' : 'bg-blue-500 text-white'}`}>
-                <p className="text-[13px] leading-relaxed whitespace-pre-wrap">{message.text}</p>
+                <p className="text-[13px] leading-relaxed whitespace-pre-wrap">
+                  {message.text.startsWith('LINK:') ? (
+                    (() => {
+                      const parts = message.text.split(':')
+                      const projectId = parts[1]
+                      const displayText = parts.slice(2).join(':')
+                      const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like)(.*)/i)
+                      if (linkMatch && openCaseStudy) {
+                        return (
+                          <>
+                            {linkMatch[1]}
+                            <button 
+                              onClick={() => openCaseStudy(projectId)}
+                              className="text-blue-600 underline hover:text-blue-800"
+                            >
+                              {linkMatch[2]}
+                            </button>
+                            {linkMatch[3]}
+                          </>
+                        )
+                      }
+                      return displayText
+                    })()
+                  ) : message.text}
+                </p>
               </div>
               
               {/* Reaction display */}

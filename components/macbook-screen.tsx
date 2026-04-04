@@ -2059,7 +2059,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
             {/* Chat Area */}
             {selectedContact === 'welcome' ? (
-              <CharityChat />
+              <CharityChat openCaseStudy={openCaseStudy} />
             ) : (
               <div className="flex-1 flex flex-col bg-white">
                 <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
