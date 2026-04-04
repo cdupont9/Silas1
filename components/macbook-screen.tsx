@@ -256,7 +256,6 @@ export function MacBookScreen() {
   const [showBackgroundPicker, setShowBackgroundPicker] = useState(false)
   
   // Help search state
-  const [showHelpSearch, setShowHelpSearch] = useState(false)
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
   
   // Audio state
@@ -1899,7 +1898,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
           )}
-          <DropdownMenu open={showHelpSearch} onOpenChange={setShowHelpSearch}>
+          <DropdownMenu onOpenChange={(open) => { if (!open) setHelpSearchQuery(''); }}>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Help
             </DropdownMenuTrigger>
@@ -1912,7 +1911,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   value={helpSearchQuery}
                   onChange={(e) => setHelpSearchQuery(e.target.value)}
                   className="flex-1 bg-transparent text-[13px] outline-none placeholder-gray-400"
-                  autoFocus
                 />
               </div>
               {helpSearchQuery.trim() && (
@@ -1924,63 +1922,63 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     if ('messages'.includes(query) || 'chat'.includes(query) || 'charity'.includes(query)) {
                       results.push({ 
                         label: 'Messages - Chat with Charity', 
-                        action: () => { setMessagesWindow({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { setMessagesWindow({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <MessageCircle className="w-4 h-4" />
                       })
                     }
                     if ('teammate'.includes(query) || 'sports'.includes(query) || 'dating'.includes(query)) {
                       results.push({ 
                         label: 'Teammate - Sports Dating App', 
-                        action: () => { openCaseStudy('teammate'); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { openCaseStudy('teammate'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('meetly'.includes(query) || 'scheduling'.includes(query) || 'meeting'.includes(query)) {
                       results.push({ 
                         label: 'Meetly - Scheduling Platform', 
-                        action: () => { openCaseStudy('meetly'); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { openCaseStudy('meetly'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('silas'.includes(query) || 'ai'.includes(query) || 'companion'.includes(query)) {
                       results.push({ 
                         label: 'Silas - AI Companion', 
-                        action: () => { openCaseStudy('silas'); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { openCaseStudy('silas'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('case study'.includes(query) || 'case studies'.includes(query) || 'projects'.includes(query) || 'portfolio'.includes(query)) {
                       results.push({ 
                         label: 'Open Case Studies Folder', 
-                        action: () => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('about'.includes(query) || 'charity'.includes(query) || 'info'.includes(query)) {
                       results.push({ 
                         label: 'About Charity', 
-                        action: () => { openAboutWindow(); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { openAboutWindow(); setHelpSearchQuery('') },
                         icon: <User className="w-4 h-4" />
                       })
                     }
                     if ('photos'.includes(query) || 'images'.includes(query) || 'pictures'.includes(query) || 'gallery'.includes(query)) {
                       results.push({ 
                         label: 'Open Photos', 
-                        action: () => { setPhotosWindow({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { setPhotosWindow({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <ImageIcon className="w-4 h-4" />
                       })
                     }
                     if ('notes'.includes(query) || 'note'.includes(query)) {
                       results.push({ 
                         label: 'Open Notes', 
-                        action: () => { setNotesWindow({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        action: () => { setNotesWindow({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <FileText className="w-4 h-4" />
                       })
                     }
                     if ('background'.includes(query) || 'wallpaper'.includes(query)) {
                       results.push({ 
                         label: 'Change Background', 
-                        action: () => { setShowHelpSearch(false); setHelpSearchQuery(''); setShowBackgroundPicker(true) },
+                        action: () => { setHelpSearchQuery(''); setShowBackgroundPicker(true) },
                         icon: <ImageIcon className="w-4 h-4" />
                       })
                     }
