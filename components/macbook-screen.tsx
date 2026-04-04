@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { CharityChat, ChatMessage, getCharityResponse } from "@/components/charity-chat"
+import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
 
 interface WindowState {
   isOpen: boolean
@@ -259,6 +259,36 @@ export function MacBookScreen() {
   const [showHelpSearch, setShowHelpSearch] = useState(false)
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
   
+  // Audio state
+  const [audioEnabled, setAudioEnabled] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  
+  // Initialize audio
+  useEffect(() => {
+    // YouTube video audio - using a lofi/ambient audio URL
+    audioRef.current = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3')
+    audioRef.current.loop = true
+    audioRef.current.volume = 0.3
+    
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current = null
+      }
+    }
+  }, [])
+  
+  // Handle audio toggle
+  useEffect(() => {
+    if (audioRef.current) {
+      if (audioEnabled) {
+        audioRef.current.play().catch(() => {})
+      } else {
+        audioRef.current.pause()
+      }
+    }
+  }, [audioEnabled])
+  
   // Mobile chat state
   const [mobileInput, setMobileInput] = useState('')
   const [mobileIsTyping, setMobileIsTyping] = useState(false)
@@ -413,11 +443,15 @@ export function MacBookScreen() {
     e.preventDefault()
     if (!mobileInput.trim() || mobileIsTyping) return
     
+    const messageText = mobileInput.trim()
+    const autoHeart = shouldAutoHeart(messageText)
+    
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
-      text: mobileInput.trim(),
+      text: messageText,
       time: getCurrentTime(),
+      reaction: autoHeart ? '❤️' : undefined,
     }
     
     setChatMessages(prev => [...prev, userMessage])
@@ -1803,47 +1837,68 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <DropdownMenu open={showBackgroundPicker} onOpenChange={setShowBackgroundPicker}>
+          <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Edit
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[320px] shadow-2xl text-[13px] p-2">
-              <p className="text-[11px] text-gray-500 uppercase tracking-wide px-2 mb-2">Background</p>
-              <div className="grid grid-cols-3 gap-2 p-1">
-                {BACKGROUND_OPTIONS.map((bg) => (
-                  <button
-                    key={bg.id}
-                    onClick={() => {
-                      setSelectedBackground(bg)
-                      setShowBackgroundPicker(false)
-                    }}
-                    className={`relative rounded-lg overflow-hidden aspect-video border-2 transition-all ${
-                      selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-transparent hover:border-white/50'
-                    }`}
-                  >
-                    <video 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline
-                      className="w-full h-full object-cover"
-                    >
-                      <source src={bg.url} type="video/mp4" />
-                    </video>
-                    <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
-                    <span className="absolute bottom-1 left-1 text-[9px] text-white font-medium drop-shadow-md">{bg.name}</span>
-                    {selectedBackground.id === bg.id && (
-                      <div className="absolute top-1 right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
-                        <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
+            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[160px] shadow-2xl text-[13px]">
+              <DropdownMenuItem 
+                onClick={() => setShowBackgroundPicker(true)} 
+                className="cursor-pointer focus:bg-blue-500 focus:text-white"
+              >
+                <ImageIcon className="w-4 h-4 mr-2 opacity-70" />
+                Background
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          
+          {/* Background Picker Modal */}
+          {showBackgroundPicker && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+              <div className="absolute inset-0 bg-black/20" onClick={() => setShowBackgroundPicker(false)} />
+              <div className="relative bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 p-4 w-[400px]">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-[13px] font-semibold text-black">Choose Background</h3>
+                  <button onClick={() => setShowBackgroundPicker(false)} className="text-black/50 hover:text-black">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                  {BACKGROUND_OPTIONS.map((bg) => (
+                    <button
+                      key={bg.id}
+                      onClick={() => {
+                        setSelectedBackground(bg)
+                        setShowBackgroundPicker(false)
+                      }}
+                      className={`relative rounded-lg overflow-hidden aspect-video border-2 transition-all ${
+                        selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-gray-200 hover:border-gray-400'
+                      }`}
+                    >
+                      <video 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline
+                        className="w-full h-full object-cover"
+                      >
+                        <source src={bg.url} type="video/mp4" />
+                      </video>
+                      <div className="absolute inset-0 bg-black/10 hover:bg-black/0 transition-colors" />
+                      <span className="absolute bottom-1 left-1 text-[10px] text-white font-medium drop-shadow-lg">{bg.name}</span>
+                      {selectedBackground.id === bg.id && (
+                        <div className="absolute top-1 right-1 w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
           <DropdownMenu open={showHelpSearch} onOpenChange={setShowHelpSearch}>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Help
@@ -1966,6 +2021,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
             <div className="w-[2px] h-[5px] bg-current rounded-r-sm opacity-60 -ml-[1px]" />
           </div>
+          <button 
+            onClick={() => setAudioEnabled(!audioEnabled)}
+            className="hover:bg-black/10 p-1 rounded transition-colors"
+            title={audioEnabled ? "Mute" : "Play Music"}
+          >
+            {audioEnabled ? <Volume2 className="w-4 h-4 opacity-90" /> : <VolumeX className="w-4 h-4 opacity-90" />}
+          </button>
           <Wifi className="w-4 h-4 opacity-90" />
           <Search className="w-4 h-4 opacity-90" />
           {mounted && <span className="text-[13px] font-medium" suppressHydrationWarning>{currentTime}</span>}
