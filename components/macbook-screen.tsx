@@ -161,7 +161,7 @@ const BACKGROUND_OPTIONS = [
 // Audio URL - Replace this with your own audio file URL (MP3, WAV, etc.)
 // Note: YouTube URLs cannot be used directly - you need a direct audio file URL
 // Example: "https://example.com/your-neosoul-jazz-music.mp3"
-const AUDIO_URL = "YOUR_AUDIO_URL_HERE"
+const AUDIO_URL = "https://youtu.be/Q4Nonn-lvS0?si=So3Sm6aMVuZk-xQM"
 
 // Memoji image URL
 const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-03-17%20at%205.41.24%E2%80%AFPM.jpeg-IqAgTgZhAtj7ZVseWJ9tdnbTkwQk0b.png"
@@ -244,7 +244,7 @@ export function MacBookScreen() {
   const [projectsFolder, setProjectsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [safariWindow, setSafariWindow] = useState<SafariWindowState>({ isOpen: false, isMinimized: false, project: null })
   // Track multiple open case study windows
-  const [openCaseStudies, setOpenCaseStudies] = useState<{[key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } }}>({})
+  const [openCaseStudies, setOpenCaseStudies] = useState<{ [key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } } }>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about'>('experience')
@@ -256,19 +256,19 @@ export function MacBookScreen() {
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
-  
+
   // Background state
   const [selectedBackground, setSelectedBackground] = useState(BACKGROUND_OPTIONS[0])
   const [backgroundsFolder, setBackgroundsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [backgroundsPosition, setBackgroundsPosition] = useState({ x: 180, y: 80 })
-  
+
   // Help search state
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
-  
+
   // Audio state
   const [audioEnabled, setAudioEnabled] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  
+
   // Initialize audio
   useEffect(() => {
     // Replace AUDIO_URL constant at top of file with your audio URL
@@ -276,7 +276,7 @@ export function MacBookScreen() {
     audioRef.current = new Audio(AUDIO_URL)
     audioRef.current.loop = true
     audioRef.current.volume = 0.3
-    
+
     return () => {
       if (audioRef.current) {
         audioRef.current.pause()
@@ -284,22 +284,22 @@ export function MacBookScreen() {
       }
     }
   }, [])
-  
+
   // Handle audio toggle
   useEffect(() => {
     if (audioRef.current) {
       if (audioEnabled) {
-        audioRef.current.play().catch(() => {})
+        audioRef.current.play().catch(() => { })
       } else {
         audioRef.current.pause()
       }
     }
   }, [audioEnabled])
-  
+
   // Mobile chat state
   const [mobileInput, setMobileInput] = useState('')
   const [mobileIsTyping, setMobileIsTyping] = useState(false)
-  
+
   // Chat messages state - persists when Messages window is closed
   const getCurrentTime = () => {
     const now = new Date()
@@ -313,7 +313,7 @@ export function MacBookScreen() {
       time: getCurrentTime(),
     },
     {
-      id: 'welcome-2', 
+      id: 'welcome-2',
       role: 'assistant',
       text: "Feel free to explore - check out my case studies in the dock below or click around!",
       time: getCurrentTime(),
@@ -325,8 +325,8 @@ export function MacBookScreen() {
       time: getCurrentTime(),
     },
   ])
-  
-  
+
+
 
   // Personal photos for the photo stack
   const personalPhotos = [
@@ -412,9 +412,9 @@ export function MacBookScreen() {
       case 'about': position = aboutPosition; break
       case 'projects': position = projectsPosition; break
       case 'photos': position = photosPosition; break
-case 'caseStudies': position = caseStudiesPosition; break
-  case 'backgrounds': position = backgroundsPosition; break
-  case 'messages': position = messagesPosition; break
+      case 'caseStudies': position = caseStudiesPosition; break
+      case 'backgrounds': position = backgroundsPosition; break
+      case 'messages': position = messagesPosition; break
       case 'notes': position = notesPosition; break
       default: position = { x: 0, y: 0 }
     }
@@ -436,9 +436,9 @@ case 'caseStudies': position = caseStudiesPosition; break
       case 'about': setAboutPosition({ x: newX, y: newY }); break
       case 'projects': setProjectsPosition({ x: newX, y: newY }); break
       case 'photos': setPhotosPosition({ x: newX, y: newY }); break
-case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
-  case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
-  case 'messages': setMessagesPosition({ x: newX, y: newY }); break
+      case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
+      case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
+      case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
     }
   }
@@ -451,10 +451,10 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
   const handleMobileChatSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!mobileInput.trim() || mobileIsTyping) return
-    
+
     const messageText = mobileInput.trim()
     const autoHeart = shouldAutoHeart(messageText)
-    
+
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
       role: 'user',
@@ -462,22 +462,22 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
       time: getCurrentTime(),
       reaction: autoHeart ? '❤️' : undefined,
     }
-    
+
     setChatMessages(prev => [...prev, userMessage])
     setMobileInput('')
     setMobileIsTyping(true)
-    
+
     await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
-    
+
     const response = getCharityResponse(userMessage.text)
-    
+
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
       role: 'assistant',
       text: response,
       time: getCurrentTime(),
     }
-    
+
     setChatMessages(prev => [...prev, assistantMessage])
     setMobileIsTyping(false)
   }
@@ -507,20 +507,20 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
       setFocusedWindow(`safari-${project}`)
       return
     }
-    
+
     // Open new case study window with offset based on how many are open
     const openCount = Object.keys(openCaseStudies).filter(k => openCaseStudies[k].isOpen).length
     setOpenCaseStudies(prev => ({
       ...prev,
-      [project]: { 
-        isOpen: true, 
-        isMinimized: false, 
+      [project]: {
+        isOpen: true,
+        isMinimized: false,
         position: { x: 8 + (openCount * 30), y: 28 + (openCount * 20) }
       }
     }))
     setFocusedWindow(`safari-${project}`)
   }
-  
+
   const closeCaseStudy = (project: string) => {
     setOpenCaseStudies(prev => {
       const newState = { ...prev }
@@ -528,14 +528,14 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
       return newState
     })
   }
-  
+
   const minimizeCaseStudy = (project: string) => {
     setOpenCaseStudies(prev => ({
       ...prev,
       [project]: { ...prev[project], isMinimized: true }
     }))
   }
-  
+
   const restoreCaseStudy = (project: string) => {
     setOpenCaseStudies(prev => ({
       ...prev,
@@ -543,7 +543,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
     }))
     setFocusedWindow(`safari-${project}`)
   }
-  
+
   const focusWindow = (windowName: string) => {
     setFocusedWindow(windowName)
   }
@@ -555,13 +555,13 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
   ) => {
     // Start minimizing animation
     (setWindow as React.Dispatch<React.SetStateAction<WindowState>>)(prev => ({ ...prev, isMinimizing: true }))
-    
+
     // After animation completes, set to minimized
     setTimeout(() => {
-      (setWindow as React.Dispatch<React.SetStateAction<WindowState>>)(prev => ({ 
-        ...prev, 
-        isMinimizing: false, 
-        isMinimized: true 
+      (setWindow as React.Dispatch<React.SetStateAction<WindowState>>)(prev => ({
+        ...prev,
+        isMinimizing: false,
+        isMinimized: true
       }))
     }, 400)
   }
@@ -572,17 +572,17 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
     if (mobileScreen === "lock") {
       return (
         <div className="h-screen w-full relative overflow-hidden bg-black">
-{/* Background */}
-      {selectedBackground.type === 'video' ? (
-        <video key={`mobile-home-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80">
-          <source src={selectedBackground.url} type="video/mp4" />
-        </video>
-      ) : (
-        <img key={`mobile-home-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-80" />
-      )}
+          {/* Background */}
+          {selectedBackground.type === 'video' ? (
+            <video key={`mobile-home-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80">
+              <source src={selectedBackground.url} type="video/mp4" />
+            </video>
+          ) : (
+            <img key={`mobile-home-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-80" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
-          
-{/* Status Bar */}
+
+          {/* Status Bar */}
           <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-10">
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
@@ -598,7 +598,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
               <div className="flex items-center gap-1">
                 <span className="text-[12px] text-white">72%</span>
                 <div className="w-[22px] h-[11px] border-[1.5px] border-white rounded-[3px] relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '70%'}} />
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '70%' }} />
                 </div>
                 <div className="w-[2px] h-[5px] bg-white rounded-r-sm opacity-60 -ml-[1px]" />
               </div>
@@ -629,7 +629,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
             </div>
           </div>
 
-{/* Bottom Controls */}
+          {/* Bottom Controls */}
           <div className="absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20">
             {/* Flashlight and Camera */}
             <div className="w-full flex justify-between mb-8">
@@ -642,14 +642,14 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
             </div>
 
             {/* Enter Button - Centered */}
-            <button 
+            <button
               onClick={() => setMobileScreen("home")}
               onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
               className="px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
             >
               Enter
             </button>
-            
+
             {/* Home Indicator */}
             <div className="mt-8 w-36 h-1.5 bg-white rounded-full" />
           </div>
@@ -661,15 +661,15 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
     if (mobileScreen === "home") {
       return (
         <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
-{/* Background */}
-      {selectedBackground.type === 'video' ? (
-        <video key={`mobile-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
-          <source src={selectedBackground.url} type="video/mp4" />
-        </video>
-      ) : (
-        <img key={`mobile-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-50" />
-      )}
-          
+          {/* Background */}
+          {selectedBackground.type === 'video' ? (
+            <video key={`mobile-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
+              <source src={selectedBackground.url} type="video/mp4" />
+            </video>
+          ) : (
+            <img key={`mobile-lock-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+          )}
+
           {/* Status Bar - iOS style */}
           <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20">
             <span className="text-white text-sm font-medium">{loginTime}</span>
@@ -686,7 +686,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
               <div className="flex items-center gap-1">
                 <span className="text-[12px] text-white">72%</span>
                 <div className="w-[22px] h-[11px] border-[1.5px] border-white rounded-[3px] relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '70%'}} />
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '70%' }} />
                 </div>
                 <div className="w-[2px] h-[5px] bg-white rounded-r-sm opacity-60 -ml-[1px]" />
               </div>
@@ -702,7 +702,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 <div className="flex-1">
                   <h1 className="text-xl font-bold text-gray-900">Charity Dupont</h1>
                   <p className="text-gray-500 text-sm">UX/UI Designer</p>
-                  <button 
+                  <button
                     onClick={() => setMobileScreen('about')}
                     className="mt-2 px-4 py-1.5 bg-black text-white text-xs font-medium rounded-full"
                   >
@@ -732,7 +732,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
               </h2>
               <div className="space-y-3">
                 {/* Teammate */}
-                <button 
+                <button
                   onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }}
                   className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
                 >
@@ -746,7 +746,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 </button>
 
                 {/* Meetly */}
-                <button 
+                <button
                   onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }}
                   className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
                 >
@@ -760,7 +760,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 </button>
 
                 {/* Silas */}
-                <button 
+                <button
                   onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
                   className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
                 >
@@ -780,7 +780,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
               <h2 className="text-white text-lg font-semibold mb-3">Quick Access</h2>
               <div className="grid grid-cols-2 gap-3">
                 {/* Photos */}
-                <button 
+                <button
                   onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }}
                   className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
                 >
@@ -791,7 +791,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 </button>
 
                 {/* Messages */}
-                <button 
+                <button
                   onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }}
                   className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
                 >
@@ -802,7 +802,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 </button>
 
                 {/* Notes */}
-                <button 
+                <button
                   onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }}
                   className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
                 >
@@ -813,7 +813,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 </button>
 
                 {/* About */}
-                <button 
+                <button
                   onClick={() => setMobileScreen('about')}
                   className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
                 >
@@ -830,7 +830,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
     // iPhone iMessage Screen - Authentic iOS Messages
     if (mobileScreen === "messages") {
       const contact = mobileMessageContacts.find(c => c.id === selectedContact) || mobileMessageContacts[0]
-      
+
       // Conversation List View
       if (showConversationList) {
         return (
@@ -847,7 +847,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
                 <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
               </div>
             </div>
@@ -924,7 +924,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
                 <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
               </div>
             </div>
@@ -954,11 +954,10 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
             <div className="flex-1 overflow-y-auto px-4 py-4">
               {chatMessages.map((msg) => (
                 <div key={msg.id} className={`flex mb-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[75%] px-4 py-2.5 ${
-                    msg.role === 'user' 
-                      ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]' 
+                  <div className={`max-w-[75%] px-4 py-2.5 ${msg.role === 'user'
+                      ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
                       : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
-                  }`}>
+                    }`}>
                     <p className="text-[17px] leading-snug">
                       {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like)/gi, '$1') : msg.text}
                     </p>
@@ -1017,7 +1016,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
               </div>
               <Wifi className="w-4 h-4 text-white" />
               <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
               </div>
             </div>
           </div>
@@ -1053,11 +1052,10 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
           <div className="flex-1 overflow-y-auto px-4 py-4">
             {contact.messages.map((msg, idx) => (
               <div key={idx} className={`flex mb-2 ${msg.from === 'charity' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[75%] px-4 py-2.5 ${
-                  msg.from === 'charity' 
-                    ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]' 
+                <div className={`max-w-[75%] px-4 py-2.5 ${msg.from === 'charity'
+                    ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
                     : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
-                }`}>
+                  }`}>
                   <p className="text-[17px] leading-snug">{msg.text}</p>
                 </div>
               </div>
@@ -1090,7 +1088,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
     // iPhone Case Study View
     if (mobileScreen === "caseStudy" && mobileCaseStudy) {
       const study = caseStudies[mobileCaseStudy as keyof typeof caseStudies]
-      
+
       return (
         <div className="h-screen w-full bg-white flex flex-col overflow-hidden">
           {/* Status Bar */}
@@ -1100,7 +1098,7 @@ case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
               <Wifi className="w-4 h-4 text-black" />
               <div className="flex items-center">
                 <div className="w-6 h-3 border border-black rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{width: '80%'}} />
+                  <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '80%' }} />
                 </div>
               </div>
             </div>
@@ -1295,7 +1293,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
                 <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
               </div>
             </div>
@@ -1365,7 +1363,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
               <Wifi className="w-4 h-4 text-white" />
               <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
               </div>
             </div>
           </div>
@@ -1437,7 +1435,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
               <Wifi className="w-4 h-4 text-black" />
               <div className="w-6 h-3 border border-black rounded-sm relative">
-                <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{width: '80%'}} />
+                <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '80%' }} />
               </div>
             </div>
           </div>
@@ -1529,7 +1527,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <a href="https://www.linkedin.com/in/charitydupont" target="_blank" rel="noopener noreferrer" className="px-4 py-3 flex items-center gap-3 active:bg-gray-50">
                   <div className="w-8 h-8 bg-[#0077b5] rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
                   </div>
                   <p className="text-[15px] text-[#007aff]">LinkedIn</p>
@@ -1564,7 +1562,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
                 <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
               </div>
             </div>
@@ -1585,9 +1583,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
             {/* Full Photo View */}
             <div className="flex-1 flex items-center justify-center px-0 bg-white overflow-hidden min-h-0">
-              <img 
-                src={personalPhotos[viewingPhoto]} 
-                alt={`Photo ${viewingPhoto + 1}`} 
+              <img
+                src={personalPhotos[viewingPhoto]}
+                alt={`Photo ${viewingPhoto + 1}`}
                 className="max-w-full max-h-full object-contain"
               />
             </div>
@@ -1596,7 +1594,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <div className="bg-white py-2 px-2 flex-shrink-0">
               <div className="flex gap-1 overflow-x-auto justify-center">
                 {personalPhotos.map((photo, idx) => (
-                  <button 
+                  <button
                     key={idx}
                     onClick={() => setViewingPhoto(idx)}
                     className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
@@ -1654,7 +1652,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
               <Wifi className="w-4 h-4 text-white" />
               <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{width: '80%'}} />
+                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
               </div>
             </div>
           </div>
@@ -1683,8 +1681,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="flex-1 overflow-y-auto">
             <div className="grid grid-cols-3 gap-0.5">
               {personalPhotos.map((photo, idx) => (
-                <button 
-                  key={idx} 
+                <button
+                  key={idx}
                   onClick={() => setViewingPhoto(idx)}
                   className="aspect-square overflow-hidden relative"
                 >
@@ -1866,12 +1864,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-<DropdownMenu>
+          <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               Edit
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[200px] shadow-2xl text-[13px]">
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 onClick={() => { setBackgroundsFolder({ isOpen: true, isMinimized: false }); focusWindow('backgrounds'); }}
                 className="cursor-pointer focus:bg-blue-500 focus:text-white"
               >
@@ -1900,75 +1898,75 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {(() => {
                     const query = helpSearchQuery.toLowerCase()
                     const results: { label: string; action: () => void; icon: React.ReactNode }[] = []
-                    
+
                     if ('messages'.includes(query) || 'chat'.includes(query) || 'charity'.includes(query)) {
-                      results.push({ 
-                        label: 'Messages - Chat with Charity', 
+                      results.push({
+                        label: 'Messages - Chat with Charity',
                         action: () => { setMessagesWindow({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <MessageCircle className="w-4 h-4" />
                       })
                     }
                     if ('teammate'.includes(query) || 'sports'.includes(query) || 'dating'.includes(query)) {
-                      results.push({ 
-                        label: 'Teammate - Sports Dating App', 
+                      results.push({
+                        label: 'Teammate - Sports Dating App',
                         action: () => { openCaseStudy('teammate'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('meetly'.includes(query) || 'scheduling'.includes(query) || 'meeting'.includes(query)) {
-                      results.push({ 
-                        label: 'Meetly - Scheduling Platform', 
+                      results.push({
+                        label: 'Meetly - Scheduling Platform',
                         action: () => { openCaseStudy('meetly'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('silas'.includes(query) || 'ai'.includes(query) || 'companion'.includes(query)) {
-                      results.push({ 
-                        label: 'Silas - AI Companion', 
+                      results.push({
+                        label: 'Silas - AI Companion',
                         action: () => { openCaseStudy('silas'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('case study'.includes(query) || 'case studies'.includes(query) || 'projects'.includes(query) || 'portfolio'.includes(query)) {
-                      results.push({ 
-                        label: 'Open Case Studies Folder', 
+                      results.push({
+                        label: 'Open Case Studies Folder',
                         action: () => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
                     if ('about'.includes(query) || 'charity'.includes(query) || 'info'.includes(query)) {
-                      results.push({ 
-                        label: 'About Charity', 
+                      results.push({
+                        label: 'About Charity',
                         action: () => { openAboutWindow(); setHelpSearchQuery('') },
                         icon: <User className="w-4 h-4" />
                       })
                     }
                     if ('photos'.includes(query) || 'images'.includes(query) || 'pictures'.includes(query) || 'gallery'.includes(query)) {
-                      results.push({ 
-                        label: 'Open Photos', 
+                      results.push({
+                        label: 'Open Photos',
                         action: () => { setPhotosWindow({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <ImageIcon className="w-4 h-4" />
                       })
                     }
                     if ('notes'.includes(query) || 'note'.includes(query)) {
-                      results.push({ 
-                        label: 'Open Notes', 
+                      results.push({
+                        label: 'Open Notes',
                         action: () => { setNotesWindow({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
                         icon: <FileText className="w-4 h-4" />
                       })
                     }
                     if ('background'.includes(query) || 'wallpaper'.includes(query)) {
-                      results.push({ 
-                        label: 'Change Background', 
+                      results.push({
+                        label: 'Change Background',
                         action: () => { setHelpSearchQuery(''); setShowBackgroundPicker(true) },
                         icon: <ImageIcon className="w-4 h-4" />
                       })
                     }
-                    
+
                     if (results.length === 0) {
                       return <p className="text-gray-500 text-center py-3 text-[12px]">No results found</p>
                     }
-                    
+
                     return results.map((result, idx) => (
                       <button
                         key={idx}
@@ -1991,17 +1989,17 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         <div className="flex items-center gap-3">
           {/* Bluetooth */}
           <svg className="w-4 h-4 opacity-90" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z"/>
+            <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z" />
           </svg>
           {/* Battery - macOS style with percentage */}
           <div className="flex items-center gap-1">
             <span className="text-[12px] opacity-90">72%</span>
             <div className="w-[22px] h-[11px] border-[1.5px] border-current rounded-[3px] relative opacity-90">
-              <div className="absolute inset-[2px] bg-current rounded-[1px]" style={{width: '70%'}} />
+              <div className="absolute inset-[2px] bg-current rounded-[1px]" style={{ width: '70%' }} />
             </div>
             <div className="w-[2px] h-[5px] bg-current rounded-r-sm opacity-60 -ml-[1px]" />
           </div>
-          <button 
+          <button
             onClick={() => setAudioEnabled(!audioEnabled)}
             className="hover:bg-black/10 p-1 rounded transition-colors"
             title={audioEnabled ? "Mute" : "Play Music"}
@@ -2014,7 +2012,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         </div>
       </div>
 
-      
+
 
       {/* Desktop - Clean Simple Layout */}
       <div className="absolute inset-0 top-[25px] bottom-[80px] overflow-hidden p-6 flex gap-5">
@@ -2103,198 +2101,196 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         </div>
 
         {/* macOS Photos App Window */}
-      {photosWindow.isOpen && !photosWindow.isMinimized && (
-        <div 
-          className={`absolute w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'} ${photosWindow.isMinimizing ? 'animate-minimize' : ''}`}
-          onClick={() => focusWindow('photos')}
-          style={{ left: photosPosition.x, top: photosPosition.y, transformOrigin: 'bottom center' }}
-        >
-          {/* Photos App Title Bar - Draggable */}
-          <div 
-            onMouseDown={(e) => { focusWindow('photos'); handleMouseDown('photos', e); }}
-            className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10 cursor-grab active:cursor-grabbing">
-            <div className="flex gap-2">
-              <button
-                onClick={() => setPhotosWindow({ isOpen: false, isMinimized: false })}
-                className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
-              />
-              <button
-                onClick={() => minimizeWindow('photos', setPhotosWindow)}
-                className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
-              />
-              <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
-            </div>
-            <span className="flex-1 text-center text-sm font-medium text-white/80">Photos</span>
-          </div>
-          
-          <div className="flex h-[calc(100%-52px)]">
-            {/* Sidebar */}
-            <div className="w-[180px] bg-[#252525] border-r border-white/10 p-3">
-              <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Library</p>
-              <button className="w-full text-left px-3 py-1.5 rounded-md bg-white/10 text-white text-sm mb-1">
-                All Photos
-              </button>
-              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-1">
-                Favorites
-              </button>
-              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-3">
-                Recents
-              </button>
-              <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Albums</p>
-              <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm">
-                Portfolio
-              </button>
-            </div>
-            
-            {/* Photo Grid / Detail View */}
-            <div className="flex-1 overflow-hidden">
-              {selectedPhotoIndex === null ? (
-                <>
-                  {/* Grid Header */}
-                  <div className="px-4 py-3 border-b border-white/10">
-                    <h2 className="text-white text-lg font-semibold">All Photos</h2>
-                    <p className="text-white/50 text-xs">{personalPhotos.length} photos</p>
-                  </div>
-                  {/* Photo Grid */}
-                  <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
-                    <div className="grid grid-cols-4 gap-2">
-                      {personalPhotos.map((photo, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setSelectedPhotoIndex(idx)}
-                          className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
-                        >
-                          <img src={photo} alt="" className="w-full h-full object-cover" />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  {/* Detail View Header */}
-                  <div className="px-4 py-3 border-b border-white/10 flex items-center">
-                    <button
-                      onClick={() => setSelectedPhotoIndex(null)}
-                      className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-sm"
-                    >
-                      <ChevronLeft className="w-4 h-4" />
-                      All Photos
-                    </button>
-                    <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {personalPhotos.length}</span>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + personalPhotos.length) % personalPhotos.length : 0)}
-                        className="p-1 rounded hover:bg-white/10"
-                      >
-                        <ChevronLeft className="w-5 h-5 text-white/60" />
-                      </button>
-                      <button
-                        onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % personalPhotos.length : 0)}
-                        className="p-1 rounded hover:bg-white/10"
-                      >
-                        <ChevronRight className="w-5 h-5 text-white/60" />
-                      </button>
-                    </div>
-                  </div>
-                  {/* Photo Detail */}
-                  <div className="flex-1 flex items-center justify-center p-4 h-[calc(100%-52px)]">
-                    <img
-                      src={personalPhotos[selectedPhotoIndex]}
-                      alt=""
-                      className="max-w-full max-h-full object-contain rounded-lg"
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
-
-{/* Backgrounds Finder Window */}
-      {backgroundsFolder.isOpen && !backgroundsFolder.isMinimized && (
-        <div 
-          className={`absolute w-[500px] ${focusedWindow === 'backgrounds' ? 'z-40' : 'z-20'}`}
-          onClick={() => focusWindow('backgrounds')}
-          style={{ left: backgroundsPosition.x, top: backgroundsPosition.y }}
-        >
-          <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
-            {/* Finder Title Bar - Draggable */}
-            <div 
-              onMouseDown={(e) => { focusWindow('backgrounds'); handleMouseDown('backgrounds', e); }}
-              className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10 cursor-grab active:cursor-grabbing"
-            >
+        {photosWindow.isOpen && !photosWindow.isMinimized && (
+          <div
+            className={`absolute w-[750px] h-[520px] bg-[#1e1e1e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'photos' ? 'z-40' : 'z-20'} ${photosWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            onClick={() => focusWindow('photos')}
+            style={{ left: photosPosition.x, top: photosPosition.y, transformOrigin: 'bottom center' }}
+          >
+            {/* Photos App Title Bar - Draggable */}
+            <div
+              onMouseDown={(e) => { focusWindow('photos'); handleMouseDown('photos', e); }}
+              className="h-[52px] bg-[#2d2d2d] flex items-center px-4 border-b border-white/10 cursor-grab active:cursor-grabbing">
               <div className="flex gap-2">
                 <button
-                  onClick={() => setBackgroundsFolder({ isOpen: false, isMinimized: false })}
+                  onClick={() => setPhotosWindow({ isOpen: false, isMinimized: false })}
                   className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
                 />
                 <button
-                  onClick={() => setBackgroundsFolder({ ...backgroundsFolder, isMinimized: true })}
+                  onClick={() => minimizeWindow('photos', setPhotosWindow)}
                   className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
                 />
                 <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
               </div>
-              <div className="flex items-center gap-3 ml-4">
-                <svg className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
-                </svg>
-                <svg className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-              <span className="flex-1 text-center text-sm font-medium text-black/80">Backgrounds</span>
-              <div className="flex items-center gap-2">
-                <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
+              <span className="flex-1 text-center text-sm font-medium text-white/80">Photos</span>
             </div>
 
-            {/* Finder Content */}
-            <div className="p-6 bg-white">
-              <div className="grid grid-cols-4 gap-4">
-                {BACKGROUND_OPTIONS.map((bg) => (
-                  <button
-                    key={bg.id}
-                    onClick={() => {
-                      setSelectedBackground(bg)
-                    }}
-                    className={`flex flex-col items-center gap-2 p-3 rounded-lg transition-all ${
-                      selectedBackground.id === bg.id 
-                        ? 'bg-blue-500/15 ring-2 ring-blue-500' 
-                        : 'hover:bg-black/5'
-                    }`}
-                  >
-                    <div className="w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
-                      <img 
-                        src={bg.preview} 
-                        alt={bg.name} 
-                        className="w-full h-full object-cover"
+            <div className="flex h-[calc(100%-52px)]">
+              {/* Sidebar */}
+              <div className="w-[180px] bg-[#252525] border-r border-white/10 p-3">
+                <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Library</p>
+                <button className="w-full text-left px-3 py-1.5 rounded-md bg-white/10 text-white text-sm mb-1">
+                  All Photos
+                </button>
+                <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-1">
+                  Favorites
+                </button>
+                <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-3">
+                  Recents
+                </button>
+                <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Albums</p>
+                <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm">
+                  Portfolio
+                </button>
+              </div>
+
+              {/* Photo Grid / Detail View */}
+              <div className="flex-1 overflow-hidden">
+                {selectedPhotoIndex === null ? (
+                  <>
+                    {/* Grid Header */}
+                    <div className="px-4 py-3 border-b border-white/10">
+                      <h2 className="text-white text-lg font-semibold">All Photos</h2>
+                      <p className="text-white/50 text-xs">{personalPhotos.length} photos</p>
+                    </div>
+                    {/* Photo Grid */}
+                    <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
+                      <div className="grid grid-cols-4 gap-2">
+                        {personalPhotos.map((photo, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setSelectedPhotoIndex(idx)}
+                            className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
+                          >
+                            <img src={photo} alt="" className="w-full h-full object-cover" />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Detail View Header */}
+                    <div className="px-4 py-3 border-b border-white/10 flex items-center">
+                      <button
+                        onClick={() => setSelectedPhotoIndex(null)}
+                        className="flex items-center gap-1 text-blue-400 hover:text-blue-300 text-sm"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        All Photos
+                      </button>
+                      <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {personalPhotos.length}</span>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + personalPhotos.length) % personalPhotos.length : 0)}
+                          className="p-1 rounded hover:bg-white/10"
+                        >
+                          <ChevronLeft className="w-5 h-5 text-white/60" />
+                        </button>
+                        <button
+                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % personalPhotos.length : 0)}
+                          className="p-1 rounded hover:bg-white/10"
+                        >
+                          <ChevronRight className="w-5 h-5 text-white/60" />
+                        </button>
+                      </div>
+                    </div>
+                    {/* Photo Detail */}
+                    <div className="flex-1 flex items-center justify-center p-4 h-[calc(100%-52px)]">
+                      <img
+                        src={personalPhotos[selectedPhotoIndex]}
+                        alt=""
+                        className="max-w-full max-h-full object-contain rounded-lg"
                       />
                     </div>
-                    <span className={`text-[11px] text-center leading-tight font-medium ${
-                      selectedBackground.id === bg.id ? 'text-blue-600' : 'text-gray-700'
-                    }`}>{bg.name}</span>
-                  </button>
-                ))}
+                  </>
+                )}
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Case Studies Finder Window */}
-      {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
-        <div 
-          className={`absolute w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
-          onClick={() => focusWindow('caseStudies')}
-          style={{ left: caseStudiesPosition.x, top: caseStudiesPosition.y, transformOrigin: 'bottom center' }}
-        >
+        {/* Backgrounds Finder Window */}
+        {backgroundsFolder.isOpen && !backgroundsFolder.isMinimized && (
+          <div
+            className={`absolute w-[500px] ${focusedWindow === 'backgrounds' ? 'z-40' : 'z-20'}`}
+            onClick={() => focusWindow('backgrounds')}
+            style={{ left: backgroundsPosition.x, top: backgroundsPosition.y }}
+          >
             <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
               {/* Finder Title Bar - Draggable */}
-              <div 
+              <div
+                onMouseDown={(e) => { focusWindow('backgrounds'); handleMouseDown('backgrounds', e); }}
+                className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10 cursor-grab active:cursor-grabbing"
+              >
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setBackgroundsFolder({ isOpen: false, isMinimized: false })}
+                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                  />
+                  <button
+                    onClick={() => setBackgroundsFolder({ ...backgroundsFolder, isMinimized: true })}
+                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                  />
+                  <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
+                </div>
+                <div className="flex items-center gap-3 ml-4">
+                  <svg className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  <svg className="w-5 h-5 text-gray-500 hover:text-gray-700 cursor-pointer" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <span className="flex-1 text-center text-sm font-medium text-black/80">Backgrounds</span>
+                <div className="flex items-center gap-2">
+                  <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </div>
+              </div>
+
+              {/* Finder Content */}
+              <div className="p-6 bg-white">
+                <div className="grid grid-cols-4 gap-4">
+                  {BACKGROUND_OPTIONS.map((bg) => (
+                    <button
+                      key={bg.id}
+                      onClick={() => {
+                        setSelectedBackground(bg)
+                      }}
+                      className={`flex flex-col items-center gap-2 p-3 rounded-lg transition-all ${selectedBackground.id === bg.id
+                          ? 'bg-blue-500/15 ring-2 ring-blue-500'
+                          : 'hover:bg-black/5'
+                        }`}
+                    >
+                      <div className="w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
+                        <img
+                          src={bg.preview}
+                          alt={bg.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className={`text-[11px] text-center leading-tight font-medium ${selectedBackground.id === bg.id ? 'text-blue-600' : 'text-gray-700'
+                        }`}>{bg.name}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Case Studies Finder Window */}
+        {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
+          <div
+            className={`absolute w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
+            onClick={() => focusWindow('caseStudies')}
+            style={{ left: caseStudiesPosition.x, top: caseStudiesPosition.y, transformOrigin: 'bottom center' }}
+          >
+            <div className="bg-white/98 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-black/10">
+              {/* Finder Title Bar - Draggable */}
+              <div
                 onMouseDown={(e) => { focusWindow('caseStudies'); handleMouseDown('caseStudies', e); }}
                 className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-4 gap-4 border-b border-black/10 cursor-grab active:cursor-grabbing">
                 <div className="flex gap-2">
@@ -2364,18 +2360,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 {/* Main content - Case Study folders */}
                 <div className="flex-1 p-6 bg-white overflow-y-auto">
                   <div className="grid grid-cols-3 gap-6">
-{Object.entries(caseStudies).map(([key, project]) => (
-  <button
-  key={key}
-  onClick={() => setSafariWindow({ isOpen: true, isMinimized: false, project: key })}
-  className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
-  >
-  <div className="w-20 h-16 group-hover:scale-110 transition-transform">
-                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt={project.title} className="w-full h-auto" />
-                    </div>
-  <span className="text-[12px] text-gray-700 text-center leading-tight font-medium">{project.title}</span>
-  </button>
-  ))}
+                    {Object.entries(caseStudies).map(([key, project]) => (
+                      <button
+                        key={key}
+                        onClick={() => setSafariWindow({ isOpen: true, isMinimized: false, project: key })}
+                        className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
+                      >
+                        <div className="w-20 h-16 group-hover:scale-110 transition-transform">
+                          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt={project.title} className="w-full h-auto" />
+                        </div>
+                        <span className="text-[12px] text-gray-700 text-center leading-tight font-medium">{project.title}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -2432,7 +2428,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-{/* Messages Window */}
+        {/* Messages Window */}
         {messagesWindow.isOpen && !messagesWindow.isMinimized && (
           <div
             className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
@@ -2526,7 +2522,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-{/* Notes Window */}
+        {/* Notes Window */}
         {notesWindow.isOpen && !notesWindow.isMinimized && (
           <div
             className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
@@ -2535,7 +2531,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           >
             {/* Sidebar */}
             <div className="w-[200px] bg-[#f5f5f7] border-r border-black/10 flex flex-col">
-              <div 
+              <div
                 onMouseDown={(e) => { focusWindow('notes'); handleMouseDown('notes', e); }}
                 className="h-12 bg-gradient-to-b from-[#e8e8e8] to-[#d8d8d8] flex items-center px-3 gap-2 border-b border-black/5 cursor-grab active:cursor-grabbing">
                 <div className="flex gap-2">
@@ -2547,15 +2543,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
               <div className="flex-1 overflow-y-auto p-2">
                 <button
-onClick={() => setDesktopSelectedNote('experience')}
-                      className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${desktopSelectedNote === 'experience' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
+                  onClick={() => setDesktopSelectedNote('experience')}
+                  className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${desktopSelectedNote === 'experience' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
                 >
                   <p className="font-semibold text-sm text-black">Experience</p>
                   <p className="text-xs text-black/50">02/01/2025 <span className="text-amber-600">UX Designer</span></p>
                 </button>
                 <button
-onClick={() => setDesktopSelectedNote('about')}
-                      className={`w-full text-left p-3 rounded-lg transition-colors ${desktopSelectedNote === 'about' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
+                  onClick={() => setDesktopSelectedNote('about')}
+                  className={`w-full text-left p-3 rounded-lg transition-colors ${desktopSelectedNote === 'about' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
                 >
                   <p className="font-semibold text-sm text-black">About</p>
                   <p className="text-xs text-black/50">05/25/1995 {"I'm"} Charity...</p>
@@ -2754,7 +2750,7 @@ onClick={() => setDesktopSelectedNote('about')}
         {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
           <>
             <div className="w-px h-10 bg-white/30 mx-1" />
-            
+
             {photosWindow.isMinimized && (
               <button
                 onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
@@ -2782,7 +2778,7 @@ onClick={() => setDesktopSelectedNote('about')}
                 </div>
               </button>
             )}
-            
+
             {caseStudiesFolder.isMinimized && (
               <button
                 onClick={() => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
@@ -2811,7 +2807,7 @@ onClick={() => setDesktopSelectedNote('about')}
                 </div>
               </button>
             )}
-            
+
             {aboutWindow.isMinimized && (
               <button
                 onClick={() => { setAboutWindow({ isOpen: true, isMinimized: false }); focusWindow('about'); }}
@@ -2835,7 +2831,7 @@ onClick={() => setDesktopSelectedNote('about')}
                 </div>
               </button>
             )}
-            
+
             {messagesWindow.isMinimized && (
               <button
                 onClick={() => { setMessagesWindow({ isOpen: true, isMinimized: false }); focusWindow('messages'); }}
@@ -2862,7 +2858,7 @@ onClick={() => setDesktopSelectedNote('about')}
                 </div>
               </button>
             )}
-            
+
             {notesWindow.isMinimized && (
               <button
                 onClick={() => { setNotesWindow({ isOpen: true, isMinimized: false }); focusWindow('notes'); }}
@@ -2886,7 +2882,7 @@ onClick={() => setDesktopSelectedNote('about')}
                 </div>
               </button>
             )}
-            
+
             {/* Minimized Case Study Windows */}
             {Object.entries(openCaseStudies).map(([projectId, state]) => (
               state.isMinimized && (
@@ -2904,8 +2900,8 @@ onClick={() => setDesktopSelectedNote('about')}
                         <div className="w-1 h-1 rounded-full bg-[#28c840]" />
                       </div>
                       <div className="flex-1 overflow-hidden">
-                        <img 
-                          src={caseStudies[projectId as keyof typeof caseStudies]?.screenshot} 
+                        <img
+                          src={caseStudies[projectId as keyof typeof caseStudies]?.screenshot}
                           alt={caseStudies[projectId as keyof typeof caseStudies]?.title}
                           className="w-full h-full object-cover object-top"
                         />
@@ -2959,20 +2955,20 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   const [isDragging, setIsDragging] = useState(false)
   const [isFullSize, setIsFullSize] = useState(true)
   const windowRef = useRef<HTMLDivElement>(null)
-  
+
   // Initialize with full size
   useEffect(() => {
     if (windowRef.current && windowSize.width === 0) {
       const parent = windowRef.current.parentElement
       if (parent) {
-        setWindowSize({ 
-          width: parent.clientWidth - 16, 
-          height: parent.clientHeight - 36 
+        setWindowSize({
+          width: parent.clientWidth - 16,
+          height: parent.clientHeight - 36
         })
       }
     }
   }, [windowSize.width])
-  
+
   const toggleResize = () => {
     if (isFullSize) {
       // Shrink to smaller size and center it
@@ -2984,9 +2980,9 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
       if (windowRef.current) {
         const parent = windowRef.current.parentElement
         if (parent) {
-          setWindowSize({ 
-            width: parent.clientWidth - 16, 
-            height: parent.clientHeight - 36 
+          setWindowSize({
+            width: parent.clientWidth - 16,
+            height: parent.clientHeight - 36
           })
           setWindowPosition({ x: 8, y: 28 })
         }
@@ -2994,32 +2990,32 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
       setIsFullSize(true)
     }
   }
-  
+
   const handleDragStart = (e: React.MouseEvent) => {
     e.preventDefault()
     setIsDragging(true)
-    
+
     const startX = e.clientX
     const startY = e.clientY
     const startPosX = windowPosition.x
     const startPosY = windowPosition.y
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       const newX = Math.max(0, startPosX + (e.clientX - startX))
       const newY = Math.max(28, startPosY + (e.clientY - startY))
       setWindowPosition({ x: newX, y: newY })
     }
-    
+
     const handleMouseUp = () => {
       setIsDragging(false)
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
     }
-    
+
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseup', handleMouseUp)
   }
-  
+
   if (!study) return null
 
   // Check which full case study to render
@@ -3031,13 +3027,13 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
     <div
       ref={windowRef}
       className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isDragging ? 'select-none cursor-grabbing' : ''} transition-all duration-200`}
-      style={{ 
-        left: windowPosition.x, 
-        top: windowPosition.y, 
-        width: windowSize.width || 'calc(100% - 16px)', 
+      style={{
+        left: windowPosition.x,
+        top: windowPosition.y,
+        width: windowSize.width || 'calc(100% - 16px)',
         height: windowSize.height || 'calc(100% - 36px)',
-        minWidth: '500px', 
-        minHeight: '400px' 
+        minWidth: '500px',
+        minHeight: '400px'
       }}
       onClick={onFocus}
     >
@@ -3147,8 +3143,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
           </>
         )}
       </div>
-      
-      </div>
+
+    </div>
   )
 }
 
@@ -3579,7 +3575,7 @@ function SilasCaseStudy() {
 // Full Meetly Case Study Component
 function MeetlyCaseStudy() {
   const [showDemo, setShowDemo] = useState(false)
-  
+
   return (
     <div className="bg-white text-black">
       {/* Hero Section */}
@@ -3898,8 +3894,8 @@ function MeetlyCaseStudy() {
           </button>
         </div>
       </div>
-      
-{/* Demo Modal - Full Screen Figma Prototype with Side-by-Side Instructions */}
+
+      {/* Demo Modal - Full Screen Figma Prototype with Side-by-Side Instructions */}
       {showDemo && (
         <div className="fixed inset-0 z-[100] bg-gray-900 flex">
           {/* Instructions Panel - Left Side */}
@@ -3939,16 +3935,16 @@ function MeetlyCaseStudy() {
               </ol>
             </div>
           </div>
-          
+
           {/* Figma Prototype - Right Side */}
           <div className="flex-1 relative">
-            <iframe 
-              src="https://embed.figma.com/proto/PCUGC6wiSuEzlpmept0ybQ/Meetly-Official-Prototye?node-id=2002-143&scaling=scale-down&page-id=0%3A1&hide-ui=1&embed-host=share&hotspot-hints=0" 
-              className="w-full h-full border-0" 
-              allowFullScreen 
+            <iframe
+              src="https://embed.figma.com/proto/PCUGC6wiSuEzlpmept0ybQ/Meetly-Official-Prototye?node-id=2002-143&scaling=scale-down&page-id=0%3A1&hide-ui=1&embed-host=share&hotspot-hints=0"
+              className="w-full h-full border-0"
+              allowFullScreen
             />
-            <button 
-              onClick={() => setShowDemo(false)} 
+            <button
+              onClick={() => setShowDemo(false)}
               className="absolute top-4 right-4 w-8 h-8 bg-black/50 hover:bg-black/70 rounded-full flex items-center justify-center transition-colors"
             >
               <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
