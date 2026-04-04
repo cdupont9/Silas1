@@ -147,8 +147,15 @@ const messageContacts = [
   }
 ]
 
-// Beautiful sunflower field video background
-const VIDEO_URL: string = "https://videos.pexels.com/video-files/5150392/5150392-hd_1920_1080_30fps.mp4"
+// Background options - videos and images
+const BACKGROUND_OPTIONS = [
+  { id: 'sunflower', type: 'video', url: 'https://videos.pexels.com/video-files/5150392/5150392-hd_1920_1080_30fps.mp4', name: 'Sunflower', preview: 'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&w=300' },
+  { id: 'ocean', type: 'video', url: 'https://videos.pexels.com/video-files/1918465/1918465-hd_1920_1080_24fps.mp4', name: 'Ocean', preview: 'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=300' },
+  { id: 'mountains', type: 'video', url: 'https://videos.pexels.com/video-files/2491284/2491284-hd_1920_1080_24fps.mp4', name: 'Mountains', preview: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=300' },
+  { id: 'forest', type: 'video', url: 'https://videos.pexels.com/video-files/3015510/3015510-hd_1920_1080_24fps.mp4', name: 'Forest', preview: 'https://images.pexels.com/photos/1179229/pexels-photo-1179229.jpeg?auto=compress&cs=tinysrgb&w=300' },
+  { id: 'sunset', type: 'video', url: 'https://videos.pexels.com/video-files/1851190/1851190-hd_1920_1080_30fps.mp4', name: 'Sunset', preview: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=300' },
+  { id: 'aurora', type: 'video', url: 'https://videos.pexels.com/video-files/3214448/3214448-hd_1920_1080_24fps.mp4', name: 'Aurora', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300' },
+]
 
 // Memoji image URL
 const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-03-17%20at%205.41.24%E2%80%AFPM.jpeg-IqAgTgZhAtj7ZVseWJ9tdnbTkwQk0b.png"
@@ -243,6 +250,14 @@ export function MacBookScreen() {
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
+  
+  // Background state
+  const [selectedBackground, setSelectedBackground] = useState(BACKGROUND_OPTIONS[0])
+  const [showBackgroundPicker, setShowBackgroundPicker] = useState(false)
+  
+  // Help search state
+  const [showHelpSearch, setShowHelpSearch] = useState(false)
+  const [helpSearchQuery, setHelpSearchQuery] = useState('')
   
   // Mobile chat state
   const [mobileInput, setMobileInput] = useState('')
@@ -516,7 +531,7 @@ export function MacBookScreen() {
         <div className="h-screen w-full relative overflow-hidden bg-black">
           {/* Background */}
           <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-80">
-            <source src={VIDEO_URL} type="video/mp4" />
+            <source src={selectedBackground.url} type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
           
@@ -601,7 +616,7 @@ export function MacBookScreen() {
         <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
           {/* Background */}
           <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
-            <source src={VIDEO_URL} type="video/mp4" />
+            <source src={selectedBackground.url} type="video/mp4" />
           </video>
           
           {/* Status Bar - iOS style */}
@@ -1655,7 +1670,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
     return (
       <div className="h-screen w-full relative overflow-hidden">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
-          <source src={VIDEO_URL} type="video/mp4" />
+          <source src={selectedBackground.url} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center">
@@ -1710,7 +1725,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
     return (
       <div className="h-screen w-full relative overflow-hidden">
         <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover scale-110 blur-xl">
-          <source src={VIDEO_URL} type="video/mp4" />
+          <source src={selectedBackground.url} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/30" />
         <div className="relative z-10 h-full flex flex-col items-center justify-center">
@@ -1735,8 +1750,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
-      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
-        <source src={VIDEO_URL} type="video/mp4" />
+      <video key={selectedBackground.id} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+        <source src={selectedBackground.url} type="video/mp4" />
       </video>
 
       {/* Menu Bar - macOS Style */}
@@ -1788,11 +1803,147 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <span className="hover:bg-black/10 px-2 py-0.5 rounded cursor-default transition-colors">Edit</span>
-          <span className="hover:bg-black/10 px-2 py-0.5 rounded cursor-default transition-colors">View</span>
-          <span className="hover:bg-black/10 px-2 py-0.5 rounded cursor-default transition-colors">Go</span>
-          <span className="hover:bg-black/10 px-2 py-0.5 rounded cursor-default transition-colors">Window</span>
-          <span className="hover:bg-black/10 px-2 py-0.5 rounded cursor-default transition-colors">Help</span>
+          <DropdownMenu open={showBackgroundPicker} onOpenChange={setShowBackgroundPicker}>
+            <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
+              Edit
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[280px] shadow-2xl text-[13px] p-2">
+              <p className="text-[11px] text-gray-500 uppercase tracking-wide px-2 mb-2">Background</p>
+              <div className="grid grid-cols-3 gap-2 p-1">
+                {BACKGROUND_OPTIONS.map((bg) => (
+                  <button
+                    key={bg.id}
+                    onClick={() => {
+                      setSelectedBackground(bg)
+                      setShowBackgroundPicker(false)
+                    }}
+                    className={`relative rounded-lg overflow-hidden aspect-video border-2 transition-all ${
+                      selectedBackground.id === bg.id ? 'border-blue-500 ring-2 ring-blue-500/30' : 'border-transparent hover:border-white/50'
+                    }`}
+                  >
+                    <img src={bg.preview} alt={bg.name} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/20" />
+                    <span className="absolute bottom-1 left-1 text-[9px] text-white font-medium drop-shadow-md">{bg.name}</span>
+                    {selectedBackground.id === bg.id && (
+                      <div className="absolute top-1 right-1 w-4 h-4 bg-blue-500 rounded-full flex items-center justify-center">
+                        <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <DropdownMenu open={showHelpSearch} onOpenChange={setShowHelpSearch}>
+            <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
+              Help
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[300px] shadow-2xl text-[13px] p-2">
+              <div className="flex items-center gap-2 bg-white/50 rounded-md px-2 py-1.5 mb-2">
+                <Search className="w-4 h-4 text-gray-500" />
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={helpSearchQuery}
+                  onChange={(e) => setHelpSearchQuery(e.target.value)}
+                  className="flex-1 bg-transparent text-[13px] outline-none placeholder-gray-400"
+                  autoFocus
+                />
+              </div>
+              {helpSearchQuery.trim() && (
+                <div className="max-h-[200px] overflow-y-auto">
+                  {(() => {
+                    const query = helpSearchQuery.toLowerCase()
+                    const results: { label: string; action: () => void; icon: React.ReactNode }[] = []
+                    
+                    if ('messages'.includes(query) || 'chat'.includes(query) || 'charity'.includes(query)) {
+                      results.push({ 
+                        label: 'Messages - Chat with Charity', 
+                        action: () => { setMessagesWindow({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <MessageCircle className="w-4 h-4" />
+                      })
+                    }
+                    if ('teammate'.includes(query) || 'sports'.includes(query) || 'dating'.includes(query)) {
+                      results.push({ 
+                        label: 'Teammate - Sports Dating App', 
+                        action: () => { openCaseStudy('teammate'); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <Folder className="w-4 h-4" />
+                      })
+                    }
+                    if ('meetly'.includes(query) || 'scheduling'.includes(query) || 'meeting'.includes(query)) {
+                      results.push({ 
+                        label: 'Meetly - Scheduling Platform', 
+                        action: () => { openCaseStudy('meetly'); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <Folder className="w-4 h-4" />
+                      })
+                    }
+                    if ('silas'.includes(query) || 'ai'.includes(query) || 'companion'.includes(query)) {
+                      results.push({ 
+                        label: 'Silas - AI Companion', 
+                        action: () => { openCaseStudy('silas'); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <Folder className="w-4 h-4" />
+                      })
+                    }
+                    if ('case study'.includes(query) || 'case studies'.includes(query) || 'projects'.includes(query) || 'portfolio'.includes(query)) {
+                      results.push({ 
+                        label: 'Open Case Studies Folder', 
+                        action: () => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <Folder className="w-4 h-4" />
+                      })
+                    }
+                    if ('about'.includes(query) || 'charity'.includes(query) || 'info'.includes(query)) {
+                      results.push({ 
+                        label: 'About Charity', 
+                        action: () => { openAboutWindow(); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <User className="w-4 h-4" />
+                      })
+                    }
+                    if ('photos'.includes(query) || 'images'.includes(query) || 'pictures'.includes(query) || 'gallery'.includes(query)) {
+                      results.push({ 
+                        label: 'Open Photos', 
+                        action: () => { setPhotosWindow({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <ImageIcon className="w-4 h-4" />
+                      })
+                    }
+                    if ('notes'.includes(query) || 'note'.includes(query)) {
+                      results.push({ 
+                        label: 'Open Notes', 
+                        action: () => { setNotesWindow({ isOpen: true, isMinimized: false }); setShowHelpSearch(false); setHelpSearchQuery('') },
+                        icon: <FileText className="w-4 h-4" />
+                      })
+                    }
+                    if ('background'.includes(query) || 'wallpaper'.includes(query)) {
+                      results.push({ 
+                        label: 'Change Background', 
+                        action: () => { setShowHelpSearch(false); setHelpSearchQuery(''); setShowBackgroundPicker(true) },
+                        icon: <ImageIcon className="w-4 h-4" />
+                      })
+                    }
+                    
+                    if (results.length === 0) {
+                      return <p className="text-gray-500 text-center py-3 text-[12px]">No results found</p>
+                    }
+                    
+                    return results.map((result, idx) => (
+                      <button
+                        key={idx}
+                        onClick={result.action}
+                        className="w-full flex items-center gap-2 px-2 py-1.5 hover:bg-blue-500 hover:text-white rounded transition-colors text-left"
+                      >
+                        <span className="opacity-70">{result.icon}</span>
+                        {result.label}
+                      </button>
+                    ))
+                  })()}
+                </div>
+              )}
+              {!helpSearchQuery.trim() && (
+                <p className="text-gray-400 text-center py-3 text-[12px]">Type to search for apps, case studies, and more</p>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
         <div className="flex items-center gap-3">
           {/* Bluetooth */}
