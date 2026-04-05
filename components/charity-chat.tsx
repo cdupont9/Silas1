@@ -37,6 +37,59 @@ export const getCharityResponse = (userMessage: string): string => {
   const normalized = msg.replace(/(.)\1{2,}/g, '$1$1') // reduce repeated chars to max 2
   
   // ============================================
+  // EMOJI REACTIONS
+  // ============================================
+  
+  // Positive emoji reactions
+  if (normalized.match(/^[\s]*[❤️💕💗💖💜🥰😍🤗👏🙌💯🔥✨⭐️💫🌟👍🤩😊😁]+[\s]*$/)) {
+    return pick(["thank you!", "appreciate that!", ":)"])
+  }
+  
+  // Sad/crying emoji reactions
+  if (normalized.match(/^[\s]*[😢😭😿💔🥺😞😔]+[\s]*$/)) {
+    return pick(["aww, hope you're okay!", "is everything alright?", "sending good vibes your way"])
+  }
+  
+  // Laughing emoji reactions
+  if (normalized.match(/^[\s]*[😂🤣😆😹]+[\s]*$/)) {
+    return pick(["haha glad that made you laugh!", "haha", ":)"])
+  }
+  
+  // Thinking/confused emoji
+  if (normalized.match(/^[\s]*[🤔🧐😕❓]+[\s]*$/)) {
+    return "feel free to ask me anything! I'm happy to clarify"
+  }
+  
+  // ============================================
+  // VAGUE SINGLE-WORD INPUTS
+  // ============================================
+  
+  // Work (vague)
+  if (normalized.match(/^work[\s!?.]*$/i)) {
+    return "what would you like to know about my work? I'm a UX Designer at Google"
+  }
+  
+  // School (vague)
+  if (normalized.match(/^school[\s!?.]*$/i)) {
+    return "what do you mean by school? are you asking about my education?"
+  }
+  
+  // Family (vague)
+  if (normalized.match(/^family[\s!?.]*$/i)) {
+    return "are you asking about my family? I have my mom and our dog Hunter"
+  }
+  
+  // Life (vague)
+  if (normalized.match(/^life[\s!?.]*$/i)) {
+    return "what do you mean by life? feel free to ask me something more specific"
+  }
+  
+  // Love (vague)
+  if (normalized.match(/^love[\s!?.]*$/i)) {
+    return "what do you mean by love?"
+  }
+  
+  // ============================================
   // CONVERSATIONAL RESPONSES
   // ============================================
   
@@ -87,8 +140,13 @@ export const getCharityResponse = (userMessage: string): string => {
     return "Charity Dupont"
   }
   
-  // Age
-  if (normalized.match(/(how old|age|your age|what's your age|whats your age)/)) {
+// Age - vague single word
+  if (normalized.match(/^age[\s!?.]*$/i)) {
+    return "are you asking how old I am? I'm 30"
+  }
+  
+  // Age - specific questions
+  if (normalized.match(/(how old|your age|what's your age|whats your age)/)) {
     return pick(["I'm 30!", "30", "I'm 30 years old"])
   }
   
@@ -273,8 +331,13 @@ export const getCharityResponse = (userMessage: string): string => {
     return "no siblings, just me!"
   }
   
-  // Pet / Dog
-  if (normalized.match(/(pet|dog|dalmatian|hunter|puppy|pup)/)) {
+// Pet - vague single word
+  if (normalized.match(/^pets?[\s!?.]*$/i)) {
+    return "are you asking if I have a pet? I have a Dalmatian named Hunter!"
+  }
+  
+  // Pet / Dog - specific
+  if (normalized.match(/(dog|dalmatian|hunter|puppy|pup|do you have a pet)/)) {
     return "I have a Dalmatian named Hunter! he's 2 with liver spots - brown instead of black"
   }
   
@@ -301,6 +364,11 @@ export const getCharityResponse = (userMessage: string): string => {
   // ============================================
   // FOOD & DRINKS
   // ============================================
+  
+  // Food - vague single word
+  if (normalized.match(/^food[\s!?.]*$/i)) {
+    return "what do you mean by food? are you asking about my favorite food?"
+  }
   
   // Do you like food (general)
   if (normalized.match(/^do you like food\??$/i) || normalized.match(/^you like food\??$/i)) {
@@ -396,6 +464,11 @@ export const getCharityResponse = (userMessage: string): string => {
   // ENTERTAINMENT & HOBBIES
   // ============================================
   
+// Hobbies - vague single word
+  if (normalized.match(/^hobby[\s!?.]*$/i)) {
+    return "what do you mean by hobby? are you asking what I like to do in my free time?"
+  }
+  
   // Hobbies
   if (normalized.match(/^hobbies\??$/i) || normalized.match(/^interests\??$/i) || normalized.match(/what are your hobbies/)) {
     return "spending time with Hunter, quality time with my mom, and watching good shows"
@@ -406,14 +479,29 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I love spending time with my dog Hunter, hanging with my mom, and finding good shows to binge"
   }
   
-  // TV/Shows
-  if (normalized.match(/(tv|show|watch|netflix|favorite show|fav show|binge|streaming)/)) {
+// TV - vague single word
+  if (normalized.match(/^tv[\s!?.]*$/i)) {
+    return "what do you mean by TV? are you asking what shows I watch?"
+  }
+  
+  // Show - vague single word  
+  if (normalized.match(/^shows?[\s!?.]*$/i)) {
+    return "are you asking what shows I watch? Emily in Paris is my favorite!"
+  }
+  
+  // TV/Shows - specific questions
+  if (normalized.match(/(watch|netflix|favorite show|fav show|binge|streaming|what do you watch)/)) {
     return "Emily in Paris is my favorite!"
   }
   
   // Emily in Paris follow-up
   if (normalized.match(/emily|paris/)) {
     return "yes I love it! the fashion, the drama, everything"
+  }
+  
+// Movie - vague single word
+  if (normalized.match(/^movies?[\s!?.]*$/i)) {
+    return "what do you mean by movie? are you asking about my favorite movie or genre?"
   }
   
   // Favorite movie
@@ -461,6 +549,11 @@ export const getCharityResponse = (userMessage: string): string => {
     return "yes! that era just hits different - Usher, Beyonce, all of it"
   }
   
+// Book - vague single word
+  if (normalized.match(/^books?[\s!?.]*$/i)) {
+    return "what do you mean by book? are you asking about my favorite book?"
+  }
+  
   // Favorite book
   if (normalized.match(/(favorite book|fav book|best book)/)) {
     return "Pride and Prejudice by Jane Austen"
@@ -471,8 +564,8 @@ export const getCharityResponse = (userMessage: string): string => {
     return "yes it's a classic! I love the wit and the character development"
   }
   
-  // Reading / books (general)
-  if (normalized.match(/(read|book|reading)/)) {
+// Reading / books (general) - not single word "book"
+  if (normalized.match(/(do you read|like to read|reading|any books|good books)/)) {
     return "I enjoy reading when I have time - Pride and Prejudice is my favorite"
   }
   
@@ -491,8 +584,13 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I'm not super into sports but I designed Teammate which is for sports fans!"
   }
   
-  // Travel
-  if (normalized.match(/(travel|vacation|trip|visit|been to|want to go)/)) {
+// Travel - vague single word
+  if (normalized.match(/^travel[\s!?.]*$/i)) {
+    return "are you asking if I like to travel? I do! always looking for my next trip"
+  }
+  
+  // Travel - specific
+  if (normalized.match(/(do you travel|vacation|trip|visit|been to|want to go|like to travel)/)) {
     return "I love traveling! always looking for my next trip"
   }
   
@@ -530,8 +628,13 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I'm more of a morning person - I like getting things done early"
   }
   
-  // Favorite color
-  if (normalized.match(/(favorite )?colou?r|fav colou?r/)) {
+// Color - vague single word
+  if (normalized.match(/^colou?rs?[\s!?.]*$/i)) {
+    return "are you asking about my favorite color? it's pink!"
+  }
+  
+  // Favorite color - specific
+  if (normalized.match(/(favorite colou?r|fav colou?r|what colou?r do you like)/)) {
     return "pink!"
   }
   
