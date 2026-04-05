@@ -969,15 +969,17 @@ const messageText = input.trim()
                 )}
               </div>
               
-              {/* Reaction display - iMessage style with dark bubble */}
+              {/* Reaction display - iMessage style with blue bubble and trailing circles */}
               {message.reaction && (
-                <div className={`absolute -top-3 ${message.role === 'assistant' ? 'left-3' : 'left-3'}`}>
+                <div className={`absolute -top-4 ${message.role === 'assistant' ? '-left-2' : '-left-2'}`}>
                   <div className="relative">
-                    <span className="text-base bg-[#1c1c1e] rounded-full px-1.5 py-1 shadow-lg flex items-center justify-center">
-                      {message.reaction}
-                    </span>
-                    {/* Small tail/pointer */}
-                    <div className="absolute -bottom-1 left-2 w-2 h-2 bg-[#1c1c1e] rotate-45" />
+                    {/* Main reaction bubble - bright blue like iMessage */}
+                    <div className="w-9 h-9 bg-[#0b84fe] rounded-full flex items-center justify-center shadow-lg">
+                      <span className="text-base">{message.reaction}</span>
+                    </div>
+                    {/* Trailing circles like iMessage thought bubble */}
+                    <div className="absolute -bottom-0.5 right-0 w-3 h-3 bg-[#0b84fe] rounded-full" />
+                    <div className="absolute -bottom-2 -right-1.5 w-2 h-2 bg-[#0b84fe] rounded-full" />
                   </div>
                 </div>
               )}
