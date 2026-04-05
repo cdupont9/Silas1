@@ -611,7 +611,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Sports
   if (normalized.match(/(sport|team|football|basketball|baseball|soccer)/)) {
-    return "LINK:teammate:I'm not really into sports myself, but I designed Teammate which is a dating app for sports fans! You can view the case study here."
+    return "I do like Tennis.  I designed Teammate which is a dating app for sports fans! You can view the case study here."
   }
 
   // Travel - vague single word
