@@ -97,11 +97,6 @@ export const getCharityResponse = (userMessage: string): string => {
     return "May 25th!"
   }
   
-  // Zodiac
-  if (normalized.match(/(zodiac|sign|gemini|astrology|horoscope)/)) {
-    return "I'm a Gemini!"
-  }
-  
   // ============================================
   // WORK & CAREER
   // ============================================
@@ -572,6 +567,15 @@ export const getCharityResponse = (userMessage: string): string => {
   // Compliments
   if (normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed)/)) {
     return pick(["aww thank you so much!", "that means a lot, thank you!", "you're so sweet, thanks!"])
+  }
+  
+  // Mean or rude comments - respond gracefully
+  if (normalized.match(/(stupid|dumb|ugly|hate you|suck|worst|terrible|awful|trash|garbage|idiot|loser|boring|lame|shut up|go away|leave me alone|you're bad|you suck|don't like you|annoying)/)) {
+    return pick([
+      "I don't appreciate that comment, but I really hope you have a great day",
+      "that's not very nice, but I hope your day gets better",
+      "I'll choose to take the high road here - wishing you well!"
+    ])
   }
   
   // Inappropriate/personal questions - redirect warmly
