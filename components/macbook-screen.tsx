@@ -954,9 +954,17 @@ export function MacBookScreen() {
                       ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
                       : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
                     }`}>
-                    <p className="text-[17px] leading-snug">
-                      {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like)/gi, '$1') : msg.text}
-                    </p>
+                    {msg.text.startsWith('GIF:') ? (
+                      <img 
+                        src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" 
+                        alt="Shocked reaction"
+                        className="w-24 h-auto rounded-lg"
+                      />
+                    ) : (
+                      <p className="text-[17px] leading-snug">
+                        {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like)/gi, '$1') : msg.text}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}

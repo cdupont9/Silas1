@@ -569,6 +569,11 @@ export const getCharityResponse = (userMessage: string): string => {
     return pick(["aww thank you so much!", "that means a lot, thank you!", "you're so sweet, thanks!"])
   }
   
+  // Highly offensive/vulgar words - respond with shocked gif only, no text
+  if (normalized.match(/(b[i!1]tch|b\*+|wh[o0]re|h[o0]e\b|h[o0]\b|sl[u!]t|c[u!]nt|f[u!]ck|stfu|a[s$][s$]hole|d[i!]ck|p[u!][s$][s$]y)/i)) {
+    return "GIF:shocked"
+  }
+  
   // Mean or rude comments - respond gracefully
   if (normalized.match(/(stupid|dumb|ugly|hate you|suck|worst|terrible|awful|trash|garbage|idiot|loser|boring|lame|shut up|go away|leave me alone|you're bad|you suck|don't like you|annoying)/)) {
     return pick([
@@ -579,8 +584,8 @@ export const getCharityResponse = (userMessage: string): string => {
   }
   
   // Inappropriate/personal questions - redirect warmly
-  if (normalized.match(/(sexy|hot\b|attractive|beautiful|cute|date me|go out|number|phone|address|where do you live exactly|salary|how much|money|income|politics|religion|vote)/)) {
-    return "haha I'd love to share more about my work and case studies instead!"
+  if (normalized.match(/(sexy|hot\b|attractive|date me|go out|number|phone|address|where do you live exactly|salary|how much|money|income|politics|religion|vote)/)) {
+    return "I'd love to share more about my work and case studies instead!"
   }
   
   // Help
@@ -683,31 +688,39 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
               onDoubleClick={() => handleDoubleClick(message.id)}
             >
               <div className={`rounded-2xl px-4 py-2 cursor-pointer ${message.role === 'assistant' ? 'bg-[#e9e9eb] text-black' : 'bg-blue-500 text-white'}`}>
-                <p className="text-[13px] leading-relaxed whitespace-pre-wrap">
-                  {message.text.startsWith('LINK:') ? (
-                    (() => {
-                      const parts = message.text.split(':')
-                      const projectId = parts[1]
-                      const displayText = parts.slice(2).join(':')
-                      const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like)(.*)/i)
-                      if (linkMatch && openCaseStudy) {
-                        return (
-                          <>
-                            {linkMatch[1]}
-                            <button 
-                              onClick={() => openCaseStudy(projectId)}
-                              className="text-blue-600 underline hover:text-blue-800"
-                            >
-                              {linkMatch[2]}
-                            </button>
-                            {linkMatch[3]}
-                          </>
-                        )
-                      }
-                      return displayText
-                    })()
-                  ) : message.text}
-                </p>
+                {message.text.startsWith('GIF:') ? (
+                  <img 
+                    src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" 
+                    alt="Shocked reaction"
+                    className="w-32 h-auto rounded-lg"
+                  />
+                ) : (
+                  <p className="text-[13px] leading-relaxed whitespace-pre-wrap">
+                    {message.text.startsWith('LINK:') ? (
+                      (() => {
+                        const parts = message.text.split(':')
+                        const projectId = parts[1]
+                        const displayText = parts.slice(2).join(':')
+                        const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like)(.*)/i)
+                        if (linkMatch && openCaseStudy) {
+                          return (
+                            <>
+                              {linkMatch[1]}
+                              <button 
+                                onClick={() => openCaseStudy(projectId)}
+                                className="text-blue-600 underline hover:text-blue-800"
+                              >
+                                {linkMatch[2]}
+                              </button>
+                              {linkMatch[3]}
+                            </>
+                          )
+                        }
+                        return displayText
+                      })()
+                    ) : message.text}
+                  </p>
+                )}
               </div>
               
               {/* Reaction display */}
