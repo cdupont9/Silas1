@@ -621,17 +621,17 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Travel - specific
   if (normalized.match(/(do you travel|vacation|trip|visit|been to|want to go|like to travel)/)) {
-    return "I love traveling! always looking for my next trip"
+    return pick(["I love traveling! always looking for my next trip", "I have been to France (Paris and Marseille), Gibraltar, Italy (Livorno and Pisa) Irealnd and South Africa!", "Big fan of traveling! There is so much to see !", "I would love to travel to Greece"]
   }
 
   // Favorite place
   if (normalized.match(/(favorite place|favorite city|best place|where would you)/)) {
-    return "I haven't been everywhere but I'd love to visit Paris one day - maybe because of Emily in Paris"
+    return "I haven't been everywhere but I'd love to go back to visit Paris one day - maybe because of Emily in Paris"
   }
 
   // Gaming
   if (normalized.match(/(game|gaming|video game|play games)/)) {
-    return "I'm not much of a gamer but I respect it"
+    return "I like Sim City"
   }
 
   // Social media
