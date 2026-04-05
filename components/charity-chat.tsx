@@ -665,7 +665,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Favorite color - specific
   if (normalized.match(/(favorite colou?r|fav colou?r|what colou?r do you like)/)) {
-    return "pink!"
+    return "I love pink!"
   }
 
   // Favorite season
