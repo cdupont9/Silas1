@@ -675,12 +675,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Pet peeves
   if (normalized.match(/(pet peeve|annoy|bother|hate when)/)) {
-    return "when things aren't organized or clear - probably why I got into UX"
+    return "when things aren't organized or clear - this is why I got into UX"
   }
 
   // Fears
   if (normalized.match(/(fear|afraid|scared|phobia)/)) {
-    return "heights for sure"
+    return "heights for sure but ironically I love roller coasters"
   }
 
   // Fun fact
@@ -749,7 +749,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Appearance compliments - beautiful, pretty, queen
   if (normalized.match(/(beautiful|pretty|gorgeous|stunning|queen|you look good|looking good)/)) {
-    return pick(["thank you!", "thanks so much!", "thanks!", ":)"])
+    return pick(["thank you!", "you are so kind", "thanks so much!", "thanks!", ":)"])
   }
 
   // General compliments
