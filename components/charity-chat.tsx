@@ -576,7 +576,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // 2000s music
   if (normalized.match(/(2000|early 2000|throwback|nostalgic|old school)/)) {
-    return "yes! I love that era - Usher, Beyonce, all of it"
+    return "yes! I love that era , all of it"
   }
 
   // Book - vague single word
