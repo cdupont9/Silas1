@@ -98,12 +98,12 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // Simple yes/no follow-ups
   if (normalized.match(/^(yes|yep|yeah|yea|ya|yup|yuh|mhm|uh huh)[\s!?.]*$/i)) {
-    return "LINK:teammate:Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together. You can view the case study here."
+    return pick(["great!", "nice!", "okay!"])
   }
   
-  // No response - when they say no to a clarifying question
+  // No response
   if (normalized.match(/^(no|nope|nah|naw|not really|nevermind|never mind)[\s!?.]*$/i)) {
-    return "I'm not sure about that one. Feel free to ask me something else!"
+    return pick(["okay!", "no problem!", "that's fine!"])
   }
   
   if (normalized.match(/^(no|nope|nah|naw)[\s!?.]*$/i)) {
@@ -261,39 +261,34 @@ export const getCharityResponse = (userMessage: string): string => {
   // CASE STUDIES & PROJECTS
   // ============================================
   
-  // Favorite case study
-  if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/)) {
-    return "LINK:silas:my favorite is Silas - it's an AI companion designed to provide emotional support and meaningful conversation. You can view the case study here."
+  // Case study / case studies - list all with links
+  if (normalized.match(/case stud|projects?|portfolio/i)) {
+    return "Yes, please see my case studies here:\n\nLINK:teammate:Teammate - a dating app for sports fans\nLINK:meetly:Meetly - a scheduling platform\nLINK:silas:Silas - an AI companion"
   }
   
-  // Projects/Case Studies
-  if (normalized.match(/^(projects?|portfolio|case stud)/i)) {
-    return "I have three case studies - Teammate, Meetly, and Silas. You can check out the case study folders in the dock, or ask me about any of them!"
-  }
-  
-  // Teammate - ask clarifying question first
-  if (normalized.match(/^teammates?[\s!?.]*$/i)) {
-    return "are you referring to my case study?"
-  }
-  
-  // Teammate case study - when they confirm or ask directly about the case study
-  if (normalized.match(/(teammate.*case study|case study.*teammate|tell me about teammate|what is teammate|teammate project)/i)) {
+  // Teammate
+  if (normalized.match(/teammates?/i)) {
     return "LINK:teammate:Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together. You can view the case study here."
   }
   
   // Meetly
-  if (normalized.match(/meetly/)) {
+  if (normalized.match(/meetly/i)) {
     return "LINK:meetly:Meetly is a scheduling and meeting management platform I designed to help professionals coordinate their time more efficiently. You can view the case study here."
   }
   
   // Silas
-  if (normalized.match(/silas/)) {
-    return "LINK:silas:Silas is my most recent project - an AI companion designed to provide emotional support and meaningful conversation for users who need someone to talk to. You can view the case study here."
+  if (normalized.match(/silas/i)) {
+    return "LINK:silas:Silas is my most recent project - an AI companion designed to provide emotional support and meaningful conversation. You can view the case study here."
   }
   
   // Latest/most recent project
-  if (normalized.match(/most recent|latest project/)) {
-    return "LINK:silas:my most recent project is Silas, an AI companion. You can view the case study here."
+  if (normalized.match(/most recent|latest project/i)) {
+    return "LINK:silas:My most recent project is Silas, an AI companion. You can view the case study here."
+  }
+  
+  // Favorite case study
+  if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/i)) {
+    return "LINK:silas:My favorite is Silas - it's an AI companion designed to provide emotional support. You can view the case study here."
   }
   
   // ============================================
