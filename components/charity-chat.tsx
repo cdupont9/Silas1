@@ -621,7 +621,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Travel - specific
   if (normalized.match(/(do you travel|vacation|trip|visit|been to|want to go|like to travel)/)) {
-    return pick(["I love traveling! always looking for my next trip", "I have been to France (Paris and Marseille), Gibraltar, Italy (Livorno and Pisa) Irealnd and South Africa!", "Big fan of traveling! There is so much to see !", "I would love to travel to Greece"]
+    return pick(["I love traveling! always looking for my next trip", "I have been to France (Paris and Marseille), Gibraltar, Italy (Livorno and Pisa) Irealnd and South Africa!", "Big fan of traveling! There is so much to see !", "I would love to travel to Greece"])
   }
 
   // Favorite place
