@@ -569,9 +569,19 @@ export const getCharityResponse = (userMessage: string): string => {
     return pick(["thanks!", "appreciate that!", "thank you! let me know if you wanna know more about anything"])
   }
   
-  // Compliments
+  // Appearance compliments - beautiful, pretty, queen
+  if (normalized.match(/(beautiful|pretty|gorgeous|stunning|queen|you look good|looking good)/)) {
+    return pick(["thank you!", "aww thank you", "thanks!", ":)"])
+  }
+  
+  // General compliments
   if (normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed)/)) {
     return pick(["aww thank you so much!", "that means a lot, thank you!", "you're so sweet, thanks!"])
+  }
+  
+  // Sorry / apologies - show empathy
+  if (normalized.match(/^(sorry|i'?m sorry|my bad|my apologies|apologies)[\s!.]*$/i) || normalized.match(/(sorry to hear|sorry about that|sorry for)/)) {
+    return pick(["that's okay!", "it's okay", "no worries at all", "it's all good"])
   }
   
   // Highly offensive/vulgar words - respond with shocked gif only, no text
