@@ -202,8 +202,8 @@ export const getCharityResponse = (userMessage: string): string => {
     return pick(["I was a 4th grade teacher before getting into UX!", "yep I used to teach 4th grade"])
   }
   
-  // Education
-  if (normalized.match(/(education|school|degree|university|college|study|studied|columbia|njcu)/)) {
+  // Education - exclude "case study" and "study" alone to avoid matching case studies
+  if (normalized.match(/(education|degree|university|college|studied|columbia|njcu)/) && !normalized.match(/case/)) {
     return "Psychology at NJCU and a UX/UI Bootcamp at Columbia"
   }
   
@@ -261,8 +261,8 @@ export const getCharityResponse = (userMessage: string): string => {
   // CASE STUDIES & PROJECTS
   // ============================================
   
-  // Case study / case studies - list all with links
-  if (normalized.match(/case stud|projects?|portfolio/i)) {
+  // Case study / case studies - list all with links (matches "case study", "casestudy", "case studies", "projects", "portfolio")
+  if (normalized.match(/casestud|case stud|projects?|portfolio/i)) {
     return "Yes, please see my case studies here:\n\nLINK:teammate:Teammate - a dating app for sports fans\nLINK:meetly:Meetly - a scheduling platform\nLINK:silas:Silas - an AI companion"
   }
   
