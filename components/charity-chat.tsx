@@ -21,13 +21,23 @@ const REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍
 // Helper to pick random response
 const pick = (options: string[]) => options[Math.floor(Math.random() * options.length)]
 
-// Check if message deserves auto heart reaction
+// Check if message deserves auto heart reaction from Charity
 export const shouldAutoHeart = (msg: string): boolean => {
   const normalized = msg.toLowerCase().trim()
   return !!(
+    // Compliments about Charity
     normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed|congrats|congratulations|proud of you)/) ||
     normalized.match(/(your work is|your portfolio|your projects).*(amazing|awesome|great|incredible|beautiful)/) ||
-    normalized.match(/^(you're the best|you rock|keep it up|killing it)[\s!.]*$/i)
+    normalized.match(/^(you're the best|keep it up)[\s!.]*$/i) ||
+    // Appearance compliments
+    normalized.match(/(beautiful|pretty|gorgeous|stunning|queen|you look good|looking good|so pretty|so beautiful)/) ||
+    // Apologies
+    normalized.match(/^(sorry|i'?m sorry|my bad|my apologies|apologies)[\s!.]*$/i) ||
+    normalized.match(/(sorry to hear|sorry about|sorry for|that's tough|condolences)/) ||
+    // Gratitude
+    normalized.match(/(thank you|thanks so much|appreciate it|grateful)/) ||
+    // General nice things
+    normalized.match(/(you're so nice|you're sweet|love this|this is great|so helpful|you're helpful)/)
   )
 }
 
@@ -94,8 +104,13 @@ export const getCharityResponse = (userMessage: string): string => {
   // ============================================
   
   // Simple yes/no follow-ups
-  if (normalized.match(/^(yes|yep|yeah|yea|ya|yup|yuh|mhm|uh huh|bet|aight|ight|fasho|fo sho|fosho)[\s!?.]*$/i)) {
-    return pick(["nice!", "awesome", "great", "love that"])
+  if (normalized.match(/^(yes|yep|yeah|yea|ya|yup|yuh|mhm|uh huh)[\s!?.]*$/i)) {
+    return pick(["great!", "nice!", "okay!"])
+  }
+  
+  // No response
+  if (normalized.match(/^(no|nope|nah|naw|not really|nevermind|never mind)[\s!?.]*$/i)) {
+    return pick(["okay!", "no problem!", "that's fine!"])
   }
   
   if (normalized.match(/^(no|nope|nah|naw)[\s!?.]*$/i)) {
@@ -194,8 +209,8 @@ export const getCharityResponse = (userMessage: string): string => {
     return pick(["I was a 4th grade teacher before getting into UX!", "yep I used to teach 4th grade"])
   }
   
-  // Education
-  if (normalized.match(/(education|school|degree|university|college|study|studied|columbia|njcu)/)) {
+  // Education - exclude "case study" and "study" alone to avoid matching case studies
+  if (normalized.match(/(education|degree|university|college|studied|columbia|njcu)/) && !normalized.match(/case/)) {
     return "Psychology at NJCU and a UX/UI Bootcamp at Columbia"
   }
   
@@ -224,9 +239,9 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I listen, take notes, and like to process before responding"
   }
   
-  // Collaboration
-  if (normalized.match(/(collaborat|team|work with others|coworker|teamwork)/)) {
-    return "I work across disciplines to turn complex capabilities into clear experiences"
+  // Collaboration - exclude "teammate" which is a case study
+  if (normalized.match(/(collaborat|work with others|coworker|teamwork)/)) {
+    return "I enjoy collaborating with others and working cross-functionally"
   }
   
   // Culture
@@ -253,29 +268,44 @@ export const getCharityResponse = (userMessage: string): string => {
   // CASE STUDIES & PROJECTS
   // ============================================
   
-  // Favorite case study
-  if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/)) {
-    return "LINK:silas:my favorite is Silas, the AI companion - you can check it out here if you'd like!"
-  }
-  
-  // Projects/Case Studies
-  if (normalized.match(/^(projects?|portfolio|case stud)/i)) {
-    return "I have three - Teammate, Meetly, and Silas! check out the case study folders in the dock"
+  // Case study / case studies - list all with buttons
+  if (normalized.match(/casestud|case stud|projects?|portfolio/i)) {
+    return "Yes, please see my case studies here:\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas"
   }
   
   // Teammate
-  if (normalized.match(/teammate/)) {
-    return "LINK:teammate:it's a dating app for sports fans - click here to check it out!"
+  if (normalized.match(/teammates?/i)) {
+    return "Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together.\nBUTTON:teammate:View Case Study"
   }
   
   // Meetly
-  if (normalized.match(/meetly/)) {
-    return "LINK:meetly:a scheduling and meeting management platform - click here to see it!"
+  if (normalized.match(/meetly/i)) {
+    return "Meetly is a case study I completed during my Columbia University Bootcamp. It's a scheduling and meeting management platform I designed to help professionals coordinate their time more efficiently.\nBUTTON:meetly:View Case Study"
   }
   
   // Silas
-  if (normalized.match(/silas|most recent|latest project/)) {
-    return "LINK:silas:my most recent project - it's an AI companion! click here to check it out"
+  if (normalized.match(/silas/i)) {
+    return "Silas is my favorite project and most recent - it's an AI companion designed to provide emotional support and meaningful conversation. I completed it end-to-end.\nBUTTON:silas:View Case Study"
+  }
+  
+  // How did you build Silas / vibe coded
+  if (normalized.match(/(how.*build|how.*make|how.*create|vibe.*cod).*(silas)/i) || normalized.match(/(silas).*(how.*build|how.*make|how.*create|vibe.*cod)/i)) {
+    return "I vibe coded Silas using Google AI Studio"
+  }
+  
+  // What tools for Silas
+  if (normalized.match(/(what tool|which tool|tools.*used).*(silas)/i) || normalized.match(/(silas).*(what tool|which tool|tools.*used)/i)) {
+    return "I used Google AI Studio to build Silas"
+  }
+  
+  // Latest/most recent project
+  if (normalized.match(/most recent|latest project/i)) {
+    return "My most recent project is Silas, an AI companion.\nBUTTON:silas:View Case Study"
+  }
+  
+  // Favorite case study
+  if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/i)) {
+    return "My favorite is Silas because I completed it end-to-end. It's an AI companion designed to provide emotional support.\nBUTTON:silas:View Case Study"
   }
   
   // ============================================
@@ -581,7 +611,7 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // Sports
   if (normalized.match(/(sport|team|football|basketball|baseball|soccer)/)) {
-    return "I'm not super into sports but I designed Teammate which is for sports fans!"
+    return "LINK:teammate:I'm not really into sports myself, but I designed Teammate which is a dating app for sports fans! You can view the case study here."
   }
   
 // Travel - vague single word
@@ -732,9 +762,14 @@ export const getCharityResponse = (userMessage: string): string => {
     return pick(["that's okay!", "it's okay", "no worries at all", "it's all good"])
   }
   
-  // Highly offensive/vulgar words - respond with professional reaction gif only, no text
+// Highly offensive/vulgar words - respond with professional reaction gif only, no text
   if (normalized.match(/(b[i!1]tch|b\*+|wh[o0]re|h[o0]e\b|h[o0]\b|sl[u!]t|c[u!]nt|f[u!]ck|stfu|a[s$][s$]hole|d[i!]ck|p[u!][s$][s$]y)/i)) {
-    return pick(["GIF:shocked", "GIF:disappointed", "GIF:notimpressed"])
+    return pick(["GIF:shocked", "GIF:disappointed", "GIF:notimpressed", "GIF:sideye", "GIF:confused"])
+  }
+  
+  // "Why" follow-up after insults or criticism
+  if (normalized.match(/^why[\s!?.]*$/i)) {
+    return "I don't think that was a great message. Is there something I can help you with?"
   }
   
   // Mean or rude comments - respond gracefully
@@ -792,22 +827,32 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
     e.preventDefault()
     if (!input.trim() || isTyping) return
     
-    const messageText = input.trim()
-    const autoHeart = shouldAutoHeart(messageText)
-    
-    const userMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
-      role: 'user',
-      text: messageText,
-      time: getCurrentTime(),
-      reaction: autoHeart ? '❤️' : undefined,
-    }
-    
-    setMessages(prev => [...prev, userMessage])
-    setInput('')
-    setIsTyping(true)
-    
-    await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
+const messageText = input.trim()
+  const autoHeart = shouldAutoHeart(messageText)
+  const messageId = `user-${Date.now()}`
+  
+  const userMessage: ChatMessage = {
+    id: messageId,
+    role: 'user',
+    text: messageText,
+    time: getCurrentTime(),
+    reaction: undefined, // Will be added after delay
+  }
+  
+  setMessages(prev => [...prev, userMessage])
+  setInput('')
+  setIsTyping(true)
+  
+  // Add heart reaction after 3 second delay if deserved
+  if (autoHeart) {
+    setTimeout(() => {
+      setMessages(prev => prev.map(msg => 
+        msg.id === messageId ? { ...msg, reaction: '❤️' } : msg
+      ))
+    }, 3000)
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
     
     const response = getCharityResponse(userMessage.text)
     
@@ -822,8 +867,11 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
     setIsTyping(false)
   }
 
-  const handleDoubleClick = (messageId: string) => {
-    setShowReactions(showReactions === messageId ? null : messageId)
+  const handleDoubleClick = (messageId: string, role: string) => {
+    // Only allow reactions on assistant messages (not user's own messages)
+    if (role === 'assistant') {
+      setShowReactions(showReactions === messageId ? null : messageId)
+    }
   }
 
   const addReaction = (messageId: string, reaction: string) => {
@@ -848,7 +896,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
           <div key={message.id} className="flex flex-col relative">
             <div 
               className={`max-w-[75%] ${message.role === 'assistant' ? 'self-start' : 'self-end'} relative`}
-              onDoubleClick={() => handleDoubleClick(message.id)}
+              onDoubleClick={() => handleDoubleClick(message.id, message.role)}
             >
               <div className={`rounded-2xl px-4 py-2 cursor-pointer ${message.role === 'assistant' ? 'bg-[#e9e9eb] text-black' : 'bg-blue-500 text-white'}`}>
                 {message.text.startsWith('GIF:') ? (
@@ -858,19 +906,48 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                         ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
                         : message.text === 'GIF:disappointed'
                         ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                        : message.text === 'GIF:sideye'
+                        ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
+                        : message.text === 'GIF:confused'
+                        ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
                         : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
                     }
                     alt="Reaction"
                     className="w-32 h-auto rounded-lg"
                   />
                 ) : (
-                  <p className="text-[13px] leading-relaxed whitespace-pre-wrap">
-                    {message.text.startsWith('LINK:') ? (
+                  <div className="text-[13px] leading-relaxed">
+                    {message.text.includes('BUTTON:') ? (
+                      (() => {
+                        const lines = message.text.split('\n')
+                        return (
+                          <div>
+                            {lines.map((line, idx) => {
+                              if (line.startsWith('BUTTON:')) {
+                                const parts = line.split(':')
+                                const projectId = parts[1]
+                                const buttonText = parts[2]
+                                return (
+                                  <button
+                                    key={idx}
+                                    onClick={() => openCaseStudy && openCaseStudy(projectId)}
+                                    className="block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                                  >
+                                    {buttonText}
+                                  </button>
+                                )
+                              }
+                              return <p key={idx} className="whitespace-pre-wrap">{line}</p>
+                            })}
+                          </div>
+                        )
+                      })()
+                    ) : message.text.startsWith('LINK:') ? (
                       (() => {
                         const parts = message.text.split(':')
                         const projectId = parts[1]
                         const displayText = parts.slice(2).join(':')
-                        const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like)(.*)/i)
+                        const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)(.*)/i)
                         if (linkMatch && openCaseStudy) {
                           return (
                             <>
@@ -887,17 +964,23 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                         }
                         return displayText
                       })()
-                    ) : message.text}
-                  </p>
+                    ) : <p className="whitespace-pre-wrap">{message.text}</p>}
+                  </div>
                 )}
               </div>
               
-              {/* Reaction display */}
+              {/* Reaction display - iMessage style with blue bubble and trailing circles */}
               {message.reaction && (
-                <div className={`absolute -bottom-2 ${message.role === 'assistant' ? 'right-0' : 'left-0'}`}>
-                  <span className="text-sm bg-white rounded-full px-1 shadow-sm border border-black/10">
-                    {message.reaction}
-                  </span>
+                <div className={`absolute -top-4 ${message.role === 'assistant' ? '-left-2' : '-left-2'}`}>
+                  <div className="relative">
+                    {/* Main reaction bubble - bright blue like iMessage */}
+                    <div className="w-9 h-9 bg-[#0b84fe] rounded-full flex items-center justify-center shadow-lg">
+                      <span className="text-base">{message.reaction}</span>
+                    </div>
+                    {/* Trailing circles like iMessage thought bubble */}
+                    <div className="absolute -bottom-0.5 right-0 w-3 h-3 bg-[#0b84fe] rounded-full" />
+                    <div className="absolute -bottom-2 -right-1.5 w-2 h-2 bg-[#0b84fe] rounded-full" />
+                  </div>
                 </div>
               )}
               

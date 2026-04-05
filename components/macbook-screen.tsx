@@ -448,22 +448,32 @@ export function MacBookScreen() {
     e.preventDefault()
     if (!mobileInput.trim() || mobileIsTyping) return
 
-    const messageText = mobileInput.trim()
-    const autoHeart = shouldAutoHeart(messageText)
-
-    const userMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
-      role: 'user',
-      text: messageText,
-      time: getCurrentTime(),
-      reaction: autoHeart ? '❤️' : undefined,
-    }
-
-    setChatMessages(prev => [...prev, userMessage])
-    setMobileInput('')
-    setMobileIsTyping(true)
-
-    await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
+const messageText = mobileInput.trim()
+  const autoHeart = shouldAutoHeart(messageText)
+  const messageId = `user-${Date.now()}`
+  
+  const userMessage: ChatMessage = {
+    id: messageId,
+    role: 'user',
+    text: messageText,
+    time: getCurrentTime(),
+    reaction: undefined, // Will be added after delay
+  }
+  
+  setChatMessages(prev => [...prev, userMessage])
+  setMobileInput('')
+  setMobileIsTyping(true)
+  
+  // Add heart reaction after 3 second delay if deserved
+  if (autoHeart) {
+    setTimeout(() => {
+      setChatMessages(prev => prev.map(msg => 
+        msg.id === messageId ? { ...msg, reaction: '❤️' } : msg
+      ))
+    }, 3000)
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
 
     const response = getCharityResponse(userMessage.text)
 
@@ -969,28 +979,66 @@ export function MacBookScreen() {
             {/* Interactive Messages with Charity */}
             <div className="flex-1 overflow-y-auto px-4 py-4">
               {chatMessages.map((msg) => (
-                <div key={msg.id} className={`flex mb-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[75%] px-4 py-2.5 ${msg.role === 'user'
-                      ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
-                      : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
-                    }`}>
-                    {msg.text.startsWith('GIF:') ? (
-                      <img 
-                        src={
-                          msg.text === 'GIF:shocked' 
-                            ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
-                            : msg.text === 'GIF:disappointed'
-                            ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
-                            : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
-                        }
-                        alt="Reaction"
-                        className="w-24 h-auto rounded-lg"
-                      />
-                    ) : (
-                      <p className="text-[17px] leading-snug">
-                        {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like)/gi, '$1') : msg.text}
-                      </p>
+                <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className="relative">
+                    {/* Reaction display - iMessage style with blue bubble and trailing circles */}
+                    {msg.reaction && (
+                      <div className={`absolute -top-4 -left-2 z-10`}>
+                        <div className="relative">
+                          {/* Main reaction bubble - bright blue like iMessage */}
+                          <div className="w-8 h-8 bg-[#0b84fe] rounded-full flex items-center justify-center shadow-lg">
+                            <span className="text-sm">{msg.reaction}</span>
+                          </div>
+                          {/* Trailing circles like iMessage thought bubble */}
+                          <div className="absolute -bottom-0.5 right-0 w-2.5 h-2.5 bg-[#0b84fe] rounded-full" />
+                          <div className="absolute -bottom-2 -right-1 w-1.5 h-1.5 bg-[#0b84fe] rounded-full" />
+                        </div>
+                      </div>
                     )}
+                    <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
+                        ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
+                        : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
+                      }`}>
+                      {msg.text.startsWith('GIF:') ? (
+                        <img 
+                          src={
+                            msg.text === 'GIF:shocked' 
+                              ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
+                              : msg.text === 'GIF:disappointed'
+                              ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                              : msg.text === 'GIF:sideye'
+                              ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
+                              : msg.text === 'GIF:confused'
+                              ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
+                              : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
+                          }
+                          alt="Reaction"
+                          className="w-24 h-auto rounded-lg"
+                        />
+                      ) : (
+                        <div className="text-[17px] leading-snug">
+                          {msg.text.includes('BUTTON:') ? (
+                            msg.text.split('\n').map((line, idx) => {
+                              if (line.startsWith('BUTTON:')) {
+                                const parts = line.split(':')
+                                const buttonText = parts[2]
+                                return (
+                                  <button
+                                    key={idx}
+                                    className="block mt-2 px-3 py-1.5 bg-[#0b84fe] text-white rounded-lg text-sm"
+                                  >
+                                    {buttonText}
+                                  </button>
+                                )
+                              }
+                              return <p key={idx}>{line}</p>
+                            })
+                          ) : msg.text.startsWith('LINK:') ? (
+                            msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)/gi, '$1')
+                          ) : msg.text}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
