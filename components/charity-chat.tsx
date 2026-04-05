@@ -21,13 +21,16 @@ const REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍
 // Helper to pick random response
 const pick = (options: string[]) => options[Math.floor(Math.random() * options.length)]
 
-// Check if message deserves auto heart reaction
+// Check if message deserves auto heart reaction from Charity
 export const shouldAutoHeart = (msg: string): boolean => {
   const normalized = msg.toLowerCase().trim()
   return !!(
     normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed|congrats|congratulations|proud of you)/) ||
     normalized.match(/(your work is|your portfolio|your projects).*(amazing|awesome|great|incredible|beautiful)/) ||
-    normalized.match(/^(you're the best|you rock|keep it up|killing it)[\s!.]*$/i)
+    normalized.match(/^(you're the best|you rock|keep it up)[\s!.]*$/i) ||
+    normalized.match(/^(sorry|i'?m sorry|my bad|my apologies|apologies)[\s!.]*$/i) ||
+    normalized.match(/(sorry to hear|sorry about|sorry for|that's tough|condolences)/) ||
+    normalized.match(/(thank you|thanks so much|appreciate it|grateful)/)
   )
 }
 
@@ -255,27 +258,32 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // Favorite case study
   if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/)) {
-    return "LINK:silas:my favorite is Silas, the AI companion - you can check it out here if you'd like!"
+    return "LINK:silas:my favorite is Silas - it's an AI companion designed to provide emotional support and meaningful conversation. You can view the case study here."
   }
   
   // Projects/Case Studies
   if (normalized.match(/^(projects?|portfolio|case stud)/i)) {
-    return "I have three - Teammate, Meetly, and Silas! check out the case study folders in the dock"
+    return "I have three case studies - Teammate, Meetly, and Silas. You can check out the case study folders in the dock, or ask me about any of them!"
   }
   
   // Teammate
-  if (normalized.match(/teammate/)) {
-    return "LINK:teammate:it's a dating app for sports fans - click here to check it out!"
+  if (normalized.match(/teammates?/)) {
+    return "LINK:teammate:Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together. You can view the case study here."
   }
   
   // Meetly
   if (normalized.match(/meetly/)) {
-    return "LINK:meetly:a scheduling and meeting management platform - click here to see it!"
+    return "LINK:meetly:Meetly is a scheduling and meeting management platform I designed to help professionals coordinate their time more efficiently. You can view the case study here."
   }
   
   // Silas
-  if (normalized.match(/silas|most recent|latest project/)) {
-    return "LINK:silas:my most recent project - it's an AI companion! click here to check it out"
+  if (normalized.match(/silas/)) {
+    return "LINK:silas:Silas is my most recent project - an AI companion designed to provide emotional support and meaningful conversation for users who need someone to talk to. You can view the case study here."
+  }
+  
+  // Latest/most recent project
+  if (normalized.match(/most recent|latest project/)) {
+    return "LINK:silas:my most recent project is Silas, an AI companion. You can view the case study here."
   }
   
   // ============================================
@@ -581,7 +589,7 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // Sports
   if (normalized.match(/(sport|team|football|basketball|baseball|soccer)/)) {
-    return "I'm not super into sports but I designed Teammate which is for sports fans!"
+    return "LINK:teammate:I'm not really into sports myself, but I designed Teammate which is a dating app for sports fans! You can view the case study here."
   }
   
 // Travel - vague single word
@@ -732,9 +740,14 @@ export const getCharityResponse = (userMessage: string): string => {
     return pick(["that's okay!", "it's okay", "no worries at all", "it's all good"])
   }
   
-  // Highly offensive/vulgar words - respond with professional reaction gif only, no text
+// Highly offensive/vulgar words - respond with professional reaction gif only, no text
   if (normalized.match(/(b[i!1]tch|b\*+|wh[o0]re|h[o0]e\b|h[o0]\b|sl[u!]t|c[u!]nt|f[u!]ck|stfu|a[s$][s$]hole|d[i!]ck|p[u!][s$][s$]y)/i)) {
-    return pick(["GIF:shocked", "GIF:disappointed", "GIF:notimpressed"])
+    return pick(["GIF:shocked", "GIF:disappointed", "GIF:notimpressed", "GIF:sideye", "GIF:confused"])
+  }
+  
+  // "Why" follow-up after insults or criticism
+  if (normalized.match(/^why[\s!?.]*$/i)) {
+    return "I don't think that was a great response. Is there something I can help you with?"
   }
   
   // Mean or rude comments - respond gracefully
@@ -822,8 +835,11 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
     setIsTyping(false)
   }
 
-  const handleDoubleClick = (messageId: string) => {
-    setShowReactions(showReactions === messageId ? null : messageId)
+  const handleDoubleClick = (messageId: string, role: string) => {
+    // Only allow reactions on assistant messages (not user's own messages)
+    if (role === 'assistant') {
+      setShowReactions(showReactions === messageId ? null : messageId)
+    }
   }
 
   const addReaction = (messageId: string, reaction: string) => {
@@ -848,7 +864,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
           <div key={message.id} className="flex flex-col relative">
             <div 
               className={`max-w-[75%] ${message.role === 'assistant' ? 'self-start' : 'self-end'} relative`}
-              onDoubleClick={() => handleDoubleClick(message.id)}
+              onDoubleClick={() => handleDoubleClick(message.id, message.role)}
             >
               <div className={`rounded-2xl px-4 py-2 cursor-pointer ${message.role === 'assistant' ? 'bg-[#e9e9eb] text-black' : 'bg-blue-500 text-white'}`}>
                 {message.text.startsWith('GIF:') ? (
@@ -858,6 +874,10 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                         ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
                         : message.text === 'GIF:disappointed'
                         ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                        : message.text === 'GIF:sideye'
+                        ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
+                        : message.text === 'GIF:confused'
+                        ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
                         : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
                     }
                     alt="Reaction"
@@ -870,7 +890,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                         const parts = message.text.split(':')
                         const projectId = parts[1]
                         const displayText = parts.slice(2).join(':')
-                        const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like)(.*)/i)
+                        const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)(.*)/i)
                         if (linkMatch && openCaseStudy) {
                           return (
                             <>

@@ -981,6 +981,10 @@ export function MacBookScreen() {
                             ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
                             : msg.text === 'GIF:disappointed'
                             ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                            : msg.text === 'GIF:sideye'
+                            ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
+                            : msg.text === 'GIF:confused'
+                            ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
                             : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
                         }
                         alt="Reaction"
@@ -988,7 +992,7 @@ export function MacBookScreen() {
                       />
                     ) : (
                       <p className="text-[17px] leading-snug">
-                        {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like)/gi, '$1') : msg.text}
+                        {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)/gi, '$1') : msg.text}
                       </p>
                     )}
                   </div>
