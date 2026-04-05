@@ -232,9 +232,9 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I listen, take notes, and like to process before responding"
   }
   
-  // Collaboration
-  if (normalized.match(/(collaborat|team|work with others|coworker|teamwork)/)) {
-    return "I work across disciplines to turn complex capabilities into clear experiences"
+  // Collaboration - exclude "teammate" which is a case study
+  if (normalized.match(/(collaborat|work with others|coworker|teamwork)/)) {
+    return "I enjoy collaborating with others and working cross-functionally"
   }
   
   // Culture
