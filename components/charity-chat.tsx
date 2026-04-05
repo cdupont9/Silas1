@@ -611,7 +611,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Sports
   if (normalized.match(/(sport|team|football|basketball|baseball|soccer)/)) {
-    return "LINK:teammate:I'm not really into sports myself, but I designed Teammate which is a dating app for sports fans! You can view the case study here."
+    return "I do like Tennis.  I designed Teammate which is a dating app for sports fans! You can view the case study here."
   }
 
   // Travel - vague single word
@@ -621,17 +621,17 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Travel - specific
   if (normalized.match(/(do you travel|vacation|trip|visit|been to|want to go|like to travel)/)) {
-    return "I love traveling! always looking for my next trip"
+    return pick(["I love traveling! always looking for my next trip", "I have been to France (Paris and Marseille), Gibraltar, Italy (Livorno and Pisa) Irealnd and South Africa!", "Big fan of traveling! There is so much to see !", "I would love to travel to Greece"])
   }
 
   // Favorite place
   if (normalized.match(/(favorite place|favorite city|best place|where would you)/)) {
-    return "I haven't been everywhere but I'd love to visit Paris one day - maybe because of Emily in Paris"
+    return "I haven't been everywhere but I'd love to go back to visit Paris one day - maybe because of Emily in Paris"
   }
 
   // Gaming
   if (normalized.match(/(game|gaming|video game|play games)/)) {
-    return "I'm not much of a gamer but I respect it"
+    return "I like Sim City"
   }
 
   // Social media
@@ -665,7 +665,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Favorite color - specific
   if (normalized.match(/(favorite colou?r|fav colou?r|what colou?r do you like)/)) {
-    return "pink!"
+    return "I love pink!"
   }
 
   // Favorite season
@@ -675,12 +675,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Pet peeves
   if (normalized.match(/(pet peeve|annoy|bother|hate when)/)) {
-    return "when things aren't organized or clear - probably why I got into UX"
+    return "when things aren't organized or clear - this is why I got into UX"
   }
 
   // Fears
   if (normalized.match(/(fear|afraid|scared|phobia)/)) {
-    return "heights for sure"
+    return "heights for sure but ironically I love roller coasters"
   }
 
   // Fun fact
@@ -749,7 +749,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Appearance compliments - beautiful, pretty, queen
   if (normalized.match(/(beautiful|pretty|gorgeous|stunning|queen|you look good|looking good)/)) {
-    return pick(["thank you!", "thanks so much!", "thanks!", ":)"])
+    return pick(["thank you!", "you are so kind", "thanks so much!", "thanks!", ":)"])
   }
 
   // General compliments
