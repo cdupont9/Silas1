@@ -25,12 +25,19 @@ const pick = (options: string[]) => options[Math.floor(Math.random() * options.l
 export const shouldAutoHeart = (msg: string): boolean => {
   const normalized = msg.toLowerCase().trim()
   return !!(
+    // Compliments about Charity
     normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed|congrats|congratulations|proud of you)/) ||
     normalized.match(/(your work is|your portfolio|your projects).*(amazing|awesome|great|incredible|beautiful)/) ||
-    normalized.match(/^(you're the best|you rock|keep it up)[\s!.]*$/i) ||
+    normalized.match(/^(you're the best|keep it up)[\s!.]*$/i) ||
+    // Appearance compliments
+    normalized.match(/(beautiful|pretty|gorgeous|stunning|queen|you look good|looking good|so pretty|so beautiful)/) ||
+    // Apologies
     normalized.match(/^(sorry|i'?m sorry|my bad|my apologies|apologies)[\s!.]*$/i) ||
     normalized.match(/(sorry to hear|sorry about|sorry for|that's tough|condolences)/) ||
-    normalized.match(/(thank you|thanks so much|appreciate it|grateful)/)
+    // Gratitude
+    normalized.match(/(thank you|thanks so much|appreciate it|grateful)/) ||
+    // General nice things
+    normalized.match(/(you're so nice|you're sweet|love this|this is great|so helpful|you're helpful)/)
   )
 }
 
@@ -962,12 +969,16 @@ const messageText = input.trim()
                 )}
               </div>
               
-              {/* Reaction display - upper left corner like iMessage */}
+              {/* Reaction display - iMessage style with dark bubble */}
               {message.reaction && (
-                <div className={`absolute -top-2 ${message.role === 'assistant' ? 'left-2' : '-left-2'}`}>
-                  <span className="text-sm bg-white rounded-full px-1.5 py-0.5 shadow-sm border border-black/10">
-                    {message.reaction}
-                  </span>
+                <div className={`absolute -top-3 ${message.role === 'assistant' ? 'left-3' : 'left-3'}`}>
+                  <div className="relative">
+                    <span className="text-base bg-[#1c1c1e] rounded-full px-1.5 py-1 shadow-lg flex items-center justify-center">
+                      {message.reaction}
+                    </span>
+                    {/* Small tail/pointer */}
+                    <div className="absolute -bottom-1 left-2 w-2 h-2 bg-[#1c1c1e] rotate-45" />
+                  </div>
                 </div>
               )}
               

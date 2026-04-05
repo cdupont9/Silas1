@@ -981,12 +981,16 @@ const messageText = mobileInput.trim()
               {chatMessages.map((msg) => (
                 <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className="relative">
-                    {/* Reaction display - upper left corner like iMessage */}
+                    {/* Reaction display - iMessage style with dark bubble */}
                     {msg.reaction && (
-                      <div className={`absolute -top-2 ${msg.role === 'assistant' ? 'left-2' : '-left-2'} z-10`}>
-                        <span className="text-sm bg-[#2c2c2e] rounded-full px-1.5 py-0.5 shadow-sm border border-white/10">
-                          {msg.reaction}
-                        </span>
+                      <div className={`absolute -top-3 left-3 z-10`}>
+                        <div className="relative">
+                          <span className="text-base bg-[#1c1c1e] rounded-full px-1.5 py-1 shadow-lg flex items-center justify-center">
+                            {msg.reaction}
+                          </span>
+                          {/* Small tail/pointer */}
+                          <div className="absolute -bottom-1 left-2 w-2 h-2 bg-[#1c1c1e] rotate-45" />
+                        </div>
                       </div>
                     )}
                     <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
