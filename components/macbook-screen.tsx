@@ -158,10 +158,8 @@ const BACKGROUND_OPTIONS = [
   { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Aurora' },
 ]
 
-// Audio URL - Replace this with your own audio file URL (MP3, WAV, etc.)
-// Note: YouTube URLs cannot be used directly - you need a direct audio file URL
-// Example: "https://example.com/your-neosoul-jazz-music.mp3"
-const AUDIO_URL = "https://youtu.be/Q4Nonn-lvS0?si=So3Sm6aMVuZk-xQM"
+// Audio URL - Neo Soul Jazz Lo-fi Mix
+const AUDIO_URL = "https://xvhipnkxts77d4uo.public.blob.vercel-storage.com/YTDown.com_YouTube_Lo-fi-R_B-Morning-Work-Mix-Chill-Neo-Sou_Media_-BtHbT_Ambo_001_1080p.mp3"
 
 // Memoji image URL
 const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-03-17%20at%205.41.24%E2%80%AFPM.jpeg-IqAgTgZhAtj7ZVseWJ9tdnbTkwQk0b.png"
@@ -271,8 +269,6 @@ export function MacBookScreen() {
 
   // Initialize audio
   useEffect(() => {
-    // Replace AUDIO_URL constant at top of file with your audio URL
-    if (AUDIO_URL === "YOUR_AUDIO_URL_HERE") return // Skip if no audio URL set
     audioRef.current = new Audio(AUDIO_URL)
     audioRef.current.loop = true
     audioRef.current.volume = 0.3
