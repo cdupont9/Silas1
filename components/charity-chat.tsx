@@ -261,34 +261,44 @@ export const getCharityResponse = (userMessage: string): string => {
   // CASE STUDIES & PROJECTS
   // ============================================
   
-  // Case study / case studies - list all with links (matches "case study", "casestudy", "case studies", "projects", "portfolio")
+  // Case study / case studies - list all with buttons
   if (normalized.match(/casestud|case stud|projects?|portfolio/i)) {
-    return "Yes, please see my case studies here:\n\nLINK:teammate:Teammate - a dating app for sports fans\nLINK:meetly:Meetly - a scheduling platform\nLINK:silas:Silas - an AI companion"
+    return "Yes, please see my case studies here:\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas"
   }
   
   // Teammate
   if (normalized.match(/teammates?/i)) {
-    return "LINK:teammate:Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together. You can view the case study here."
+    return "Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together.\nBUTTON:teammate:View Case Study"
   }
   
   // Meetly
   if (normalized.match(/meetly/i)) {
-    return "LINK:meetly:Meetly is a scheduling and meeting management platform I designed to help professionals coordinate their time more efficiently. You can view the case study here."
+    return "Meetly is a case study I completed during my Columbia University Bootcamp. It's a scheduling and meeting management platform I designed to help professionals coordinate their time more efficiently.\nBUTTON:meetly:View Case Study"
   }
   
   // Silas
   if (normalized.match(/silas/i)) {
-    return "LINK:silas:Silas is my most recent project - an AI companion designed to provide emotional support and meaningful conversation. You can view the case study here."
+    return "Silas is my favorite project and most recent - it's an AI companion designed to provide emotional support and meaningful conversation. I completed it end-to-end.\nBUTTON:silas:View Case Study"
+  }
+  
+  // How did you build Silas / vibe coded
+  if (normalized.match(/(how.*build|how.*make|how.*create|vibe.*cod).*(silas)/i) || normalized.match(/(silas).*(how.*build|how.*make|how.*create|vibe.*cod)/i)) {
+    return "I vibe coded Silas using Google AI Studio"
+  }
+  
+  // What tools for Silas
+  if (normalized.match(/(what tool|which tool|tools.*used).*(silas)/i) || normalized.match(/(silas).*(what tool|which tool|tools.*used)/i)) {
+    return "I used Google AI Studio to build Silas"
   }
   
   // Latest/most recent project
   if (normalized.match(/most recent|latest project/i)) {
-    return "LINK:silas:My most recent project is Silas, an AI companion. You can view the case study here."
+    return "My most recent project is Silas, an AI companion.\nBUTTON:silas:View Case Study"
   }
   
   // Favorite case study
   if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/i)) {
-    return "LINK:silas:My favorite is Silas - it's an AI companion designed to provide emotional support. You can view the case study here."
+    return "My favorite is Silas because I completed it end-to-end. It's an AI companion designed to provide emotional support.\nBUTTON:silas:View Case Study"
   }
   
   // ============================================
@@ -899,8 +909,33 @@ const messageText = input.trim()
                     className="w-32 h-auto rounded-lg"
                   />
                 ) : (
-                  <p className="text-[13px] leading-relaxed whitespace-pre-wrap">
-                    {message.text.startsWith('LINK:') ? (
+                  <div className="text-[13px] leading-relaxed">
+                    {message.text.includes('BUTTON:') ? (
+                      (() => {
+                        const lines = message.text.split('\n')
+                        return (
+                          <div>
+                            {lines.map((line, idx) => {
+                              if (line.startsWith('BUTTON:')) {
+                                const parts = line.split(':')
+                                const projectId = parts[1]
+                                const buttonText = parts[2]
+                                return (
+                                  <button
+                                    key={idx}
+                                    onClick={() => openCaseStudy && openCaseStudy(projectId)}
+                                    className="block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                                  >
+                                    {buttonText}
+                                  </button>
+                                )
+                              }
+                              return <p key={idx} className="whitespace-pre-wrap">{line}</p>
+                            })}
+                          </div>
+                        )
+                      })()
+                    ) : message.text.startsWith('LINK:') ? (
                       (() => {
                         const parts = message.text.split(':')
                         const projectId = parts[1]
@@ -922,8 +957,8 @@ const messageText = input.trim()
                         }
                         return displayText
                       })()
-                    ) : message.text}
-                  </p>
+                    ) : <p className="whitespace-pre-wrap">{message.text}</p>}
+                  </div>
                 )}
               </div>
               

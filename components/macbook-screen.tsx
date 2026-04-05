@@ -1010,9 +1010,27 @@ const messageText = mobileInput.trim()
                           className="w-24 h-auto rounded-lg"
                         />
                       ) : (
-                        <p className="text-[17px] leading-snug">
-                          {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)/gi, '$1') : msg.text}
-                        </p>
+                        <div className="text-[17px] leading-snug">
+                          {msg.text.includes('BUTTON:') ? (
+                            msg.text.split('\n').map((line, idx) => {
+                              if (line.startsWith('BUTTON:')) {
+                                const parts = line.split(':')
+                                const buttonText = parts[2]
+                                return (
+                                  <button
+                                    key={idx}
+                                    className="block mt-2 px-3 py-1.5 bg-[#0b84fe] text-white rounded-lg text-sm"
+                                  >
+                                    {buttonText}
+                                  </button>
+                                )
+                              }
+                              return <p key={idx}>{line}</p>
+                            })
+                          ) : msg.text.startsWith('LINK:') ? (
+                            msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)/gi, '$1')
+                          ) : msg.text}
+                        </div>
                       )}
                     </div>
                   </div>
