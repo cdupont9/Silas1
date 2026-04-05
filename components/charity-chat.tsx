@@ -416,9 +416,19 @@ export const getCharityResponse = (userMessage: string): string => {
     return "yes I love it! the fashion, the drama, everything"
   }
   
-  // Movies
+  // Favorite movie
+  if (normalized.match(/(favorite movie|fav movie|best movie)/)) {
+    return "I don't have a favorite movie right now, but my favorite genre is sci-fi"
+  }
+  
+  // Movies (general)
   if (normalized.match(/movie/)) {
-    return "I actually prefer shows over movies - I like getting invested in characters over time"
+    return "I actually prefer shows over movies, but when I do watch movies I like sci-fi"
+  }
+  
+  // Sci-fi follow-up
+  if (normalized.match(/(sci-fi|scifi|science fiction)/)) {
+    return "yes I love sci-fi! there's something about exploring the unknown"
   }
   
   // Music
@@ -436,9 +446,24 @@ export const getCharityResponse = (userMessage: string): string => {
     return "yes! that era just hits different - Usher, Beyonce, all of it"
   }
   
-  // Reading
+  // Favorite book
+  if (normalized.match(/(favorite book|fav book|best book)/)) {
+    return "Pride and Prejudice by Jane Austen"
+  }
+  
+  // Jane Austen / Pride and Prejudice follow-up
+  if (normalized.match(/(jane austen|pride and prejudice|austen)/)) {
+    return "yes it's a classic! I love the wit and the character development"
+  }
+  
+  // Reading / books (general)
   if (normalized.match(/(read|book|reading)/)) {
-    return "I read sometimes but I'm more of a TV person honestly"
+    return "I enjoy reading when I have time - Pride and Prejudice is my favorite"
+  }
+  
+  // Horses
+  if (normalized.match(/(horse|horses|horseback|riding)/)) {
+    return "yes I like horses!"
   }
   
   // Exercise / fitness
@@ -529,9 +554,14 @@ export const getCharityResponse = (userMessage: string): string => {
   // CONTACT & CLOSING
   // ============================================
   
+  // Phone call request
+  if (normalized.match(/(call you|phone call|can i call|give me your number|your number|talk on the phone)/)) {
+    return "if you'd like to contact me personally, you can email me at charitydupont@gmail.com"
+  }
+  
   // Contact
   if (normalized.match(/(contact|email|reach|connect|linkedin|work together|hit you up|hmu)/)) {
-    return "feel free to reach out! my contact info is in the portfolio"
+    return "feel free to reach out! you can email me at charitydupont@gmail.com"
   }
   
   // Navigate
@@ -584,9 +614,9 @@ export const getCharityResponse = (userMessage: string): string => {
     return pick(["that's okay!", "it's okay", "no worries at all", "it's all good"])
   }
   
-  // Highly offensive/vulgar words - respond with shocked gif only, no text
+  // Highly offensive/vulgar words - respond with professional reaction gif only, no text
   if (normalized.match(/(b[i!1]tch|b\*+|wh[o0]re|h[o0]e\b|h[o0]\b|sl[u!]t|c[u!]nt|f[u!]ck|stfu|a[s$][s$]hole|d[i!]ck|p[u!][s$][s$]y)/i)) {
-    return "GIF:shocked"
+    return pick(["GIF:shocked", "GIF:disappointed", "GIF:notimpressed"])
   }
   
   // Mean or rude comments - respond gracefully
@@ -705,8 +735,14 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
               <div className={`rounded-2xl px-4 py-2 cursor-pointer ${message.role === 'assistant' ? 'bg-[#e9e9eb] text-black' : 'bg-blue-500 text-white'}`}>
                 {message.text.startsWith('GIF:') ? (
                   <img 
-                    src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" 
-                    alt="Shocked reaction"
+                    src={
+                      message.text === 'GIF:shocked' 
+                        ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
+                        : message.text === 'GIF:disappointed'
+                        ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                        : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
+                    }
+                    alt="Reaction"
                     className="w-32 h-auto rounded-lg"
                   />
                 ) : (

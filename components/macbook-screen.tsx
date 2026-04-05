@@ -956,8 +956,14 @@ export function MacBookScreen() {
                     }`}>
                     {msg.text.startsWith('GIF:') ? (
                       <img 
-                        src="https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif" 
-                        alt="Shocked reaction"
+                        src={
+                          msg.text === 'GIF:shocked' 
+                            ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
+                            : msg.text === 'GIF:disappointed'
+                            ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                            : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
+                        }
+                        alt="Reaction"
                         className="w-24 h-auto rounded-lg"
                       />
                     ) : (
