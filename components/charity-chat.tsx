@@ -36,42 +36,50 @@ export const getCharityResponse = (userMessage: string): string => {
   const msg = userMessage.toLowerCase().trim()
   const normalized = msg.replace(/(.)\1{2,}/g, '$1$1') // reduce repeated chars to max 2
   
+  // ============================================
+  // CONVERSATIONAL RESPONSES
+  // ============================================
+  
   // Simple yes/no follow-ups
   if (normalized.match(/^(yes|yep|yeah|yea|ya|yup|yuh|mhm|uh huh|bet|aight|ight|fasho|fo sho|fosho)[\s!?.]*$/i)) {
-    return pick(["nice!", "awesome 😊", "cool cool", "love that"])
+    return pick(["nice!", "awesome", "cool cool", "love that"])
   }
   
   if (normalized.match(/^(no|nope|nah|naw)[\s!?.]*$/i)) {
-    return pick(["no worries!", "all good 😊", "that's okay!"])
+    return pick(["no worries!", "all good", "that's okay!"])
   }
   
-  // At Google? type follow-ups
+  // Confirmation follow-ups
   if (normalized.match(/^at google\??$/i)) {
-    return pick(["yep!", "yes! 😊", "that's right"])
+    return pick(["yep!", "yes!", "that's right"])
   }
   
   if (normalized.match(/^(really|for real|fr|deadass|no cap|serious|seriously)\??$/i)) {
-    return pick(["yep!", "for real 😄", "100%"])
+    return pick(["yep!", "for real", "100%"])
   }
   
-  // Simple greetings - handle extended letters and slang
+  // Greetings
   if (normalized.match(/^(hi+|hey+|hello+|sup|yo+|howdy|wassup|wasup|whaddup|what's good|whats good|ayy+|ayo+|hiya)[\s!.?]*$/i)) {
-    return pick(["hey! 👋", "hi there!", "hey hey!", "hiii 😊", "heyyy", "what's up!"])
+    return pick(["hey!", "hi there!", "hey hey!", "hiii", "heyyy", "what's up!"])
   }
   
-  // How are you - handle variations and slang
+  // How are you
   if (normalized.match(/^(how are you+|how's it going|how you doing|how u doing|how you doin|what's up|whats up|wassup|wyd|what you doing|whatchu doing|how's everything|hows everything|how are ya|how ya doing|how u)[\s!?.]*$/i)) {
-    return pick(["doing good! how about you?", "I'm great, thanks for asking! 😊", "pretty good! what's up with you", "all good over here, you?"])
+    return pick(["doing good! how about you?", "I'm great, thanks for asking!", "pretty good! what's up with you", "all good over here, you?"])
   }
   
   // What's good / what's poppin
   if (normalized.match(/^(what'?s good|whats good|what'?s poppin|whats poppin|what'?s crackin|whats crackin)[\s!?.]*$/i)) {
-    return pick(["heyyy not much! what's up with you", "chillin! 😊 you?", "just here vibin, what about you"])
+    return pick(["heyyy not much! what's up with you", "chillin! you?", "just here vibin, what about you"])
   }
+  
+  // ============================================
+  // BASIC INFO
+  // ============================================
   
   // Name
   if (normalized.match(/^(what'?s your name|whats your name|your name|who are you|who dis|who this|who is this)\??$/i) || normalized === 'name') {
-    return pick(["I'm Charity!", "Charity 😊", "my name's Charity"])
+    return pick(["I'm Charity!", "Charity", "my name's Charity"])
   }
   
   // Full name
@@ -79,19 +87,38 @@ export const getCharityResponse = (userMessage: string): string => {
     return "Charity Dupont"
   }
   
+  // Age
+  if (normalized.match(/(how old|age|your age|what's your age|whats your age)/)) {
+    return pick(["I'm 30!", "30", "I'm 30 years old"])
+  }
+  
+  // Birthday
+  if (normalized.match(/(birthday|birth|born.*when|when.*born|bday)/)) {
+    return "May 25th!"
+  }
+  
+  // Zodiac
+  if (normalized.match(/(zodiac|sign|gemini|astrology|horoscope)/)) {
+    return "I'm a Gemini!"
+  }
+  
+  // ============================================
+  // WORK & CAREER
+  // ============================================
+  
   // What do you do
   if (normalized.match(/^(what do you do|what you do|whatchu do|wyd for work|what do u do)\??$/i)) {
-    return pick(["I'm a UX Designer!", "UX Designer 😊", "I design stuff! I'm a UX Designer"])
+    return pick(["I'm a UX Designer!", "UX Designer", "I design stuff! I'm a UX Designer"])
   }
   
   // Where do you work
   if (normalized.match(/^(where do you work|where you work|where u work|where do u work)\??$/i) || normalized.match(/^where.*you.*work/i)) {
-    return pick(["I work at Google!", "Google 😊", "at Google!"])
+    return pick(["I work at Google!", "Google", "at Google!"])
   }
   
   // About/Tell me about yourself
   if (normalized.match(/(tell me about yourself|about you|introduce yourself|who is charity|who you|tell me bout you)/)) {
-    return "I'm a UX Designer focused on AI-assisted experiences where clarity and trust really matter - I design systems that help people navigate complex workflows with confidence 😊"
+    return "I'm a UX Designer focused on AI-assisted experiences where clarity and trust really matter - I design systems that help people navigate complex workflows with confidence"
   }
   
   // Current role details
@@ -100,32 +127,115 @@ export const getCharityResponse = (userMessage: string): string => {
   }
   
   // Why UX
-  if (normalized.match(/(why ux|why design|love about|enjoy about)/)) {
-    return "I love designing products that help people think more clearly, especially as AI becomes more embedded in everyday tools 💡"
+  if (normalized.match(/(why ux|why design|love about design|enjoy about design)/)) {
+    return "I love designing products that help people think more clearly, especially as AI becomes more embedded in everyday tools"
   }
   
   // How did you get into UX
   if (normalized.match(/(how did you|how'd you|how you get into|get into|your story|your journey|start.*ux|background|path)/)) {
-    return "in 2020 during COVID my mom volunteered me to build a website - I had no clue what I was doing but figured it out! 😅 I was teaching 4th grade at the time but that sparked my interest. Did a bootcamp at Columbia and here I am"
+    return "in 2020 during COVID my mom volunteered me to build a website - I had no clue what I was doing but figured it out! I was teaching 4th grade at the time but that sparked my interest. Did a bootcamp at Columbia and here I am"
   }
   
   // Teaching
-  if (normalized.match(/(previous|before|teacher|teaching|used to|taught)/)) {
-    return pick(["I was a 4th grade teacher before getting into UX!", "yep I used to teach 4th grade 😊"])
+  if (normalized.match(/(previous|before ux|teacher|teaching|used to do|taught)/)) {
+    return pick(["I was a 4th grade teacher before getting into UX!", "yep I used to teach 4th grade"])
   }
   
   // Education
   if (normalized.match(/(education|school|degree|university|college|study|studied|columbia|njcu)/)) {
-    return "Psychology at NJCU and a UX/UI Bootcamp at Columbia 🎓"
+    return "Psychology at NJCU and a UX/UI Bootcamp at Columbia"
   }
+  
+  // Skills/tools
+  if (normalized.match(/(skill|tool|software|figma|design tool|what tools)/)) {
+    return "Figma mostly - but my real strength is systems thinking, structuring complex workflows into clear flows"
+  }
+  
+  // Strengths
+  if (normalized.match(/(strength|strong suit|good at|best at|superpower)/)) {
+    return "structuring ambiguity and advocating for users, especially those who feel overlooked"
+  }
+  
+  // Weaknesses
+  if (normalized.match(/(weakness|struggle|challenge|difficult|hard for you)/)) {
+    return "I can be a perfectionist sometimes - I have to remind myself that done is better than perfect"
+  }
+  
+  // Process
+  if (normalized.match(/(how do you work|process|approach|method|iterate|design process)/)) {
+    return "super iterative - I refine until things feel precise and trustworthy"
+  }
+  
+  // Feedback
+  if (normalized.match(/(feedback|criticism|critique|handle feedback)/)) {
+    return "I listen, take notes, and like to process before responding"
+  }
+  
+  // Collaboration
+  if (normalized.match(/(collaborat|team|work with others|coworker|teamwork)/)) {
+    return "I work across disciplines to turn complex capabilities into clear experiences"
+  }
+  
+  // Culture
+  if (normalized.match(/(culture|environment|company|thrive|work environment)/)) {
+    return "I thrive with structure and thoughtful decision-making"
+  }
+  
+  // Remote/relocation
+  if (normalized.match(/(relocat|remote|hybrid|office|work from home|wfh)/)) {
+    return "open to relocation and remote - currently hybrid, 2 to 3 days in office"
+  }
+  
+  // Goals
+  if (normalized.match(/(goal|aspir|dream job|where do you see|future|5 years|ten years)/)) {
+    return "I want to keep designing AI experiences that genuinely help people - maybe lead a design team one day"
+  }
+  
+  // What makes you unique
+  if (normalized.match(/(unique|hire you|candidate|stand out|different|why should)/)) {
+    return "I focus on making things make sense, not just look good - I design systems that help people think clearly"
+  }
+  
+  // ============================================
+  // CASE STUDIES & PROJECTS
+  // ============================================
+  
+  // Favorite case study
+  if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/)) {
+    return "LINK:silas:my favorite is Silas, the AI companion - you can check it out here if you'd like!"
+  }
+  
+  // Projects/Case Studies
+  if (normalized.match(/^(projects?|portfolio|case stud)/i)) {
+    return "I have three - Teammate, Meetly, and Silas! check out the case study folders in the dock"
+  }
+  
+  // Teammate
+  if (normalized.match(/teammate/)) {
+    return "LINK:teammate:it's a dating app for sports fans - click here to check it out!"
+  }
+  
+  // Meetly
+  if (normalized.match(/meetly/)) {
+    return "LINK:meetly:a scheduling and meeting management platform - click here to see it!"
+  }
+  
+  // Silas
+  if (normalized.match(/silas|most recent|latest project/)) {
+    return "LINK:silas:my most recent project - it's an AI companion! click here to check it out"
+  }
+  
+  // ============================================
+  // LOCATION & ORIGIN
+  // ============================================
   
   // Where do you live
   if (normalized.match(/^where.*(live|based|located|stay|at)\??$/i) || normalized === 'location') {
-    return pick(["New Jersey!", "I'm in New Jersey", "NJ 😊"])
+    return pick(["New Jersey!", "I'm in New Jersey", "NJ"])
   }
   
   // Where are you from
-  if (normalized.match(/(where.*from|originally|grew up|where you from)/)) {
+  if (normalized.match(/(where.*from|originally|grew up|where you from|hometown)/)) {
     return "born in Chicago but I live in New Jersey now"
   }
   
@@ -134,19 +244,23 @@ export const getCharityResponse = (userMessage: string): string => {
     return "yep I was born there! moved to New Jersey when I was 10"
   }
   
-  // Remote/relocation
-  if (normalized.match(/(relocat|remote|hybrid|office)/)) {
-    return "open to relocation and remote - currently hybrid, 2 to 3 days in office"
+  // New Jersey
+  if (normalized.match(/jersey|nj/)) {
+    return "yep that's where I'm at now!"
   }
   
+  // ============================================
+  // FAMILY & RELATIONSHIPS
+  // ============================================
+  
   // Family
-  if (normalized.match(/^family\??$/i)) {
-    return "my mom and our dog Hunter 🐕"
+  if (normalized.match(/^family\??$/i) || normalized.match(/tell me about your family/)) {
+    return "my mom and our dog Hunter"
   }
   
   // Mom
   if (normalized.match(/(mom|mother|mama|ma\b)/)) {
-    return "my mom and I are super close - she's the one who encouraged me to pursue UX 💕"
+    return "my mom and I are super close - she's the one who encouraged me to pursue UX"
   }
   
   // Dad
@@ -154,14 +268,19 @@ export const getCharityResponse = (userMessage: string): string => {
     return "my dad passed when I was 13"
   }
   
+  // Sorry about dad
+  if (normalized.match(/(sorry to hear|sorry about|condolence|that's tough|that's hard)/)) {
+    return "thank you, I appreciate that"
+  }
+  
   // Siblings
-  if (normalized.match(/(sibling|brother|sister|bro\b|sis\b)/)) {
+  if (normalized.match(/(sibling|brother|sister|bro\b|sis\b|only child)/)) {
     return "no siblings, just me!"
   }
   
   // Pet / Dog
   if (normalized.match(/(pet|dog|dalmatian|hunter|puppy|pup)/)) {
-    return "I have a Dalmatian named Hunter! 🐕 he's 2 with liver spots - brown instead of black"
+    return "I have a Dalmatian named Hunter! he's 2 with liver spots - brown instead of black"
   }
   
   // Married
@@ -176,207 +295,308 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // Dating/relationship - redirect warmly
   if (normalized.match(/(dating|relationship|boyfriend|girlfriend|seeing anyone|love life|boo\b|bae\b|talking to someone)/)) {
-    return "haha that's a bit personal 😅 happy to share more about my work or background though!"
+    return "haha that's a bit personal - happy to share more about my work or background though!"
   }
   
   // Kids
-  if (normalized.match(/(kid|children|babies|do you have kid)/)) {
-    return pick(["no I don't have any kids", "nope no kids!", "no kids 😊"])
+  if (normalized.match(/(kid|children|babies|do you have kid|want kids)/)) {
+    return pick(["no I don't have any kids", "nope no kids!", "no kids"])
   }
   
-  // Age
-  if (normalized.match(/(how old|age|your age|what's your age|whats your age)/)) {
-    return pick(["I'm 30!", "30 😊", "I'm 30 years old"])
+  // ============================================
+  // FOOD & DRINKS
+  // ============================================
+  
+  // Do you like food (general)
+  if (normalized.match(/^do you like food\??$/i) || normalized.match(/^you like food\??$/i)) {
+    return "yes I love food!"
   }
   
-  // Birthday
-  if (normalized.match(/(birthday|birth|born.*when|when.*born|bday)/)) {
-    return "May 25th! 🎂"
+  // What kind of food / favorite food
+  if (normalized.match(/(what kind of food|favorite food|fav food|type of food|food do you like)/)) {
+    return "lamb chops with fig jam! that's my go-to"
   }
   
-  // Favorite color
-  if (normalized.match(/(favorite )?colou?r|fav colou?r/)) {
-    return "pink! 💗"
+  // Lamb chops follow-up
+  if (normalized.match(/lamb|fig jam/)) {
+    return "yes it's so good! the sweetness of the fig jam with the lamb is perfect"
   }
+  
+  // Favorite meal
+  if (normalized.match(/(favorite meal|best meal|go-to meal)/)) {
+    return "lamb chops with fig jam for dinner, and apple pie with vanilla bean ice cream for dessert"
+  }
+  
+  // Breakfast
+  if (normalized.match(/breakfast/)) {
+    return "I'm a simple breakfast person - eggs and toast or a good smoothie"
+  }
+  
+  // Lunch
+  if (normalized.match(/lunch/)) {
+    return "usually something quick - a salad or sandwich"
+  }
+  
+  // Dinner
+  if (normalized.match(/dinner/)) {
+    return "lamb chops with fig jam is my favorite dinner!"
+  }
+  
+  // Dessert
+  if (normalized.match(/(dessert|sweet tooth|sweets)/)) {
+    return "apple pie with vanilla bean ice cream! or white chocolate chip cookies"
+  }
+  
+  // Cookies
+  if (normalized.match(/cookie/)) {
+    return "white chocolate chip cookies - but no macadamia!"
+  }
+  
+  // Chocolate
+  if (normalized.match(/(chocolate|do you like chocolate)/)) {
+    return "I like chocolate but not too much of it - white chocolate is my favorite though"
+  }
+  
+  // White chocolate follow-up
+  if (normalized.match(/white chocolate/)) {
+    return "yes! especially in cookies"
+  }
+  
+  // Ice cream
+  if (normalized.match(/ice cream/)) {
+    return "vanilla bean is my go-to, especially with apple pie"
+  }
+  
+  // Pizza
+  if (normalized.match(/pizza/)) {
+    return "who doesn't love pizza? I like a good margherita"
+  }
+  
+  // Coffee or tea
+  if (normalized.match(/(coffee|tea|caffeine|drink in the morning)/)) {
+    return "coffee for sure - I need it to start my day"
+  }
+  
+  // Alcohol / drinks
+  if (normalized.match(/(alcohol|drink|wine|beer|cocktail)/)) {
+    return "I'm not a big drinker but I'll have wine occasionally"
+  }
+  
+  // Cooking
+  if (normalized.match(/(cook|cooking|chef|make food)/)) {
+    return "I can cook! nothing fancy but I can hold my own in the kitchen"
+  }
+  
+  // Restaurant
+  if (normalized.match(/(restaurant|eat out|dining out|favorite restaurant)/)) {
+    return "I love trying new places - anything with good vibes and good food"
+  }
+  
+  // ============================================
+  // ENTERTAINMENT & HOBBIES
+  // ============================================
   
   // Hobbies
-  if (normalized.match(/^hobbies\??$/i) || normalized.match(/^interests\??$/i)) {
-    return "spending time with Hunter, quality time with my mom, and watching good shows 📺"
+  if (normalized.match(/^hobbies\??$/i) || normalized.match(/^interests\??$/i) || normalized.match(/what are your hobbies/)) {
+    return "spending time with Hunter, quality time with my mom, and watching good shows"
   }
   
   // Free time / fun
   if (normalized.match(/(free time|for fun|fun\??$|weekend|what you do for fun|whatchu do for fun)/)) {
-    return "I love spending time with my dog Hunter, hanging with my mom, and finding good shows to binge 😊"
-  }
-  
-  // Passion / outside work
-  if (normalized.match(/(passion|outside work)/)) {
-    return "Hunter, family time, and getting lost in a really good show"
+    return "I love spending time with my dog Hunter, hanging with my mom, and finding good shows to binge"
   }
   
   // TV/Shows
-  if (normalized.match(/(tv|show|watch|netflix|favorite show|fav show|binge)/)) {
-    return "Emily in Paris is my favorite! 💕"
+  if (normalized.match(/(tv|show|watch|netflix|favorite show|fav show|binge|streaming)/)) {
+    return "Emily in Paris is my favorite!"
+  }
+  
+  // Emily in Paris follow-up
+  if (normalized.match(/emily|paris/)) {
+    return "yes I love it! the fashion, the drama, everything"
   }
   
   // Movies
   if (normalized.match(/movie/)) {
-    return "I actually prefer shows over movies 📺"
+    return "I actually prefer shows over movies - I like getting invested in characters over time"
   }
   
   // Music
-  if (normalized.match(/(music|listen|song|artist|jazz|playlist|spotify|what you listen)/)) {
-    return "jazz while working - Miles Davis, Kenny G 🎷 and I'm super nostalgic for early 2000s music"
+  if (normalized.match(/(music|listen to|song|artist|playlist|spotify|what you listen|favorite music)/)) {
+    return "jazz while working - Miles Davis, Kenny G - and I'm super nostalgic for early 2000s music"
   }
   
-  // Food
-  if (normalized.match(/(food|eat|meal|restaurant|hungry|favorite food|fav food|what you eat|whatchu eat)/)) {
-    return "lamb chops with fig jam! 😋 and apple pie with vanilla bean ice cream for dessert"
+  // Jazz follow-up
+  if (normalized.match(/jazz|miles davis|kenny g/)) {
+    return "yes! it's perfect for focusing while I work"
   }
   
-  // Cookies
-  if (normalized.match(/(cookie|dessert|sweet|treat)/)) {
-    return "white chocolate chip cookies - but no macadamia! 🍪"
+  // 2000s music
+  if (normalized.match(/(2000|early 2000|throwback|nostalgic|old school)/)) {
+    return "yes! that era just hits different - Usher, Beyonce, all of it"
   }
   
-  // Skills/tools
-  if (normalized.match(/(skill|tool|software|figma|design tool)/)) {
-    return "Figma mostly - but my real strength is systems thinking, structuring complex workflows into clear flows"
+  // Reading
+  if (normalized.match(/(read|book|reading)/)) {
+    return "I read sometimes but I'm more of a TV person honestly"
   }
   
-  // Strengths
-  if (normalized.match(/(strength|strong|good at|best at)/)) {
-    return "structuring ambiguity and advocating for users, especially those who feel overlooked 💪"
+  // Exercise / fitness
+  if (normalized.match(/(exercise|workout|gym|fitness|run|yoga)/)) {
+    return "I try to stay active - walks with Hunter mostly"
   }
   
-  // Process
-  if (normalized.match(/(how.*work|process|approach|method|iterate)/)) {
-    return "super iterative - I refine until things feel precise and trustworthy"
+  // Sports
+  if (normalized.match(/(sport|team|football|basketball|baseball|soccer)/)) {
+    return "I'm not super into sports but I designed Teammate which is for sports fans!"
   }
   
-  // Feedback
-  if (normalized.match(/(feedback|criticism|critique)/)) {
-    return "I listen, take notes, and like to process before responding"
+  // Travel
+  if (normalized.match(/(travel|vacation|trip|visit|been to|want to go)/)) {
+    return "I love traveling! always looking for my next trip"
   }
   
-  // Collaboration
-  if (normalized.match(/(collaborat|team|work with others|coworker)/)) {
-    return "I work across disciplines to turn complex capabilities into clear experiences"
+  // Favorite place
+  if (normalized.match(/(favorite place|favorite city|best place|where would you)/)) {
+    return "I haven't been everywhere but I'd love to visit Paris one day - maybe because of Emily in Paris haha"
   }
   
-  // Culture
-  if (normalized.match(/(culture|environment|company|thrive)/)) {
-    return "I thrive with structure and thoughtful decision-making"
+  // Gaming
+  if (normalized.match(/(game|gaming|video game|play games)/)) {
+    return "I'm not much of a gamer but I respect it"
   }
+  
+  // Social media
+  if (normalized.match(/(social media|instagram|twitter|tiktok|facebook)/)) {
+    return "I'm on socials but I try not to spend too much time on them"
+  }
+  
+  // ============================================
+  // PERSONALITY & PREFERENCES
+  // ============================================
   
   // Personality
-  if (normalized.match(/(personality|describe yourself|kind of person|type of person)/)) {
-    return "definitely an observer and listener - I like to evaluate before responding 🤔"
+  if (normalized.match(/(personality|describe yourself|kind of person|type of person|what are you like)/)) {
+    return "definitely an observer and listener - I like to evaluate before responding"
   }
   
-  // Favorite case study
-  if (normalized.match(/(favorite|fav|best|proudest).*(case study|project|work)/)) {
-    return "LINK:silas:my favorite is Silas, the AI companion 💜 you can check it out here if you'd like!"
+  // Introvert/extrovert
+  if (normalized.match(/(introvert|extrovert|ambivert|social)/)) {
+    return "I'd say I'm more of an introvert but I can turn it on when I need to"
   }
   
-  // Projects/Case Studies
-  if (normalized.match(/^(projects?|portfolio|case stud)/i)) {
-    return "I have three - Teammate, Meetly, and Silas! check out the case study folders in the dock 📁"
+  // Morning/night person
+  if (normalized.match(/(morning person|night owl|early bird|night person)/)) {
+    return "I'm more of a morning person - I like getting things done early"
   }
   
-  // Teammate
-  if (normalized.match(/teammate/)) {
-    return "LINK:teammate:it's a dating app for sports fans ⚽ click here to check it out!"
+  // Favorite color
+  if (normalized.match(/(favorite )?colou?r|fav colou?r/)) {
+    return "pink!"
   }
   
-  // Meetly
-  if (normalized.match(/meetly/)) {
-    return "LINK:meetly:a scheduling and meeting management platform 📅 click here to see it!"
+  // Favorite season
+  if (normalized.match(/(favorite season|fav season|spring|summer|fall|winter|autumn)/)) {
+    return "fall - I love the cozy vibes and the fashion"
   }
   
-  // Silas
-  if (normalized.match(/silas|most recent|latest/)) {
-    return "LINK:silas:my most recent project - it's an AI companion! 🤖 click here to check it out"
+  // Pet peeves
+  if (normalized.match(/(pet peeve|annoy|bother|hate when)/)) {
+    return "when things aren't organized or clear - probably why I got into UX haha"
   }
   
-  // What makes you unique
-  if (normalized.match(/(unique|hire|candidate|stand out|different|why should)/)) {
-    return "I focus on making things make sense, not just look good - I design systems that help people think clearly 💡"
+  // Fears
+  if (normalized.match(/(fear|afraid|scared|phobia)/)) {
+    return "heights for sure"
   }
   
   // Fun fact
-  if (normalized.match(/(fun fact|interesting|childhood|young|kid|cool.*about)/)) {
-    return "I used to make movies in Windows Movie Maker as a kid 😂"
+  if (normalized.match(/(fun fact|interesting fact|something interesting|cool fact|tell me something)/)) {
+    return "I used to make movies in Windows Movie Maker as a kid - maybe that was my first taste of creating digital experiences"
   }
+  
+  // Guilty pleasure
+  if (normalized.match(/(guilty pleasure|guilty)/)) {
+    return "rewatching Emily in Paris for the hundredth time"
+  }
+  
+  // Superpower
+  if (normalized.match(/(superpower|if you could have|one power)/)) {
+    return "teleportation so I could travel anywhere instantly"
+  }
+  
+  // ============================================
+  // CONTACT & CLOSING
+  // ============================================
   
   // Contact
   if (normalized.match(/(contact|email|reach|connect|linkedin|work together|hit you up|hmu)/)) {
-    return "feel free to reach out! my contact info is in the portfolio 📧"
+    return "feel free to reach out! my contact info is in the portfolio"
   }
   
   // Navigate
   if (normalized.match(/(macbook|navigate|explore|around|click|folder|desktop|what can i|where should)/)) {
-    return "check out the case study folders in the dock, or explore Photos, Notes, and other apps! 😊"
+    return "check out the case study folders in the dock, or explore Photos, Notes, and other apps!"
   }
   
-  // Thank you - handle variations
+  // Thank you
   if (normalized.match(/(thank|thanks|appreciate|preciate|thx|ty\b)/)) {
-    return pick(["of course!", "you're welcome! 😊", "anytime!", "no problem!"])
+    return pick(["of course!", "you're welcome!", "anytime!", "no problem!"])
   }
   
-  // Bye - handle variations
+  // Bye
   if (normalized.match(/(bye|goodbye|see you|take care|later|peace|deuces|gotta go|ima head out|imma head out)/)) {
-    return pick(["take care! 👋", "bye! 😊", "see ya!", "later! ✌️"])
+    return pick(["take care!", "bye!", "see ya!", "later!"])
   }
   
   // Nice to meet you
   if (normalized.match(/(nice to meet|pleasure|good to meet)/)) {
-    return pick(["nice to meet you too! 😊", "likewise!", "same here!"])
+    return pick(["nice to meet you too!", "likewise!", "same here!"])
   }
   
-  // Cool / awesome / nice responses - handle slang
+  // Cool / awesome / nice responses
   if (normalized.match(/^(cool|awesome|nice|great|wow|amazing|interesting|dope|fire|lit|sick|tight|bet)[\s!.]*$/i)) {
-    return pick(["thanks! 😊", "appreciate it!", "thank you!"])
+    return pick(["thanks!", "appreciate it!", "thank you!"])
   }
   
-  // Ok / okay / got it - handle variations
+  // Ok / okay / got it
   if (normalized.match(/^(ok|okay|k|kk|got it|i see|makes sense|word|copy|heard)[\s!.]*$/i)) {
-    return pick(["let me know if you have any other questions!", "cool cool 😊", "awesome!"])
+    return pick(["let me know if you have any other questions!", "cool cool", "awesome!"])
   }
   
   // That's cool/dope etc
   if (normalized.match(/^that'?s (cool|dope|fire|lit|sick|awesome|amazing)[\s!.]*$/i)) {
-    return pick(["thanks! 😊", "appreciate that!", "thank you! let me know if you wanna know more about anything"])
+    return pick(["thanks!", "appreciate that!", "thank you! let me know if you wanna know more about anything"])
   }
   
   // Compliments
   if (normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed)/)) {
-    return pick(["aww thank you so much! 💕", "that means a lot, thank you! 😊", "you're so sweet, thanks!"])
+    return pick(["aww thank you so much!", "that means a lot, thank you!", "you're so sweet, thanks!"])
   }
   
   // Inappropriate/personal questions - redirect warmly
-  if (normalized.match(/(sexy|hot\b|attractive|beautiful|cute|date me|go out|number|phone|address|where do you live exactly|salary|money|income|politics|religion|vote)/)) {
-    return "haha I'd love to share more about my work and case studies instead! 😊"
+  if (normalized.match(/(sexy|hot\b|attractive|beautiful|cute|date me|go out|number|phone|address|where do you live exactly|salary|how much|money|income|politics|religion|vote)/)) {
+    return "haha I'd love to share more about my work and case studies instead!"
   }
   
   // Help
   if (normalized.match(/^help\??$/i) || normalized.match(/what can i ask/)) {
-    return "ask me about my work, background, or case studies - or just say hi! 👋"
+    return "ask me about my work, background, or case studies - or just say hi!"
   }
   
   // Lol / haha responses
   if (normalized.match(/^(lol|lmao|haha|hehe|rofl|dead|dying)[\s!.]*$/i)) {
-    return pick(["haha 😄", "glad I could make you laugh!", "😂"])
+    return pick(["haha", "glad I could make you laugh!"])
   }
   
   // I like that / love that
   if (normalized.match(/^i (like|love) that[\s!.]*$/i)) {
-    return pick(["thanks! 😊", "glad you like it!", "appreciate it!"])
+    return pick(["thanks!", "glad you like it!", "appreciate it!"])
   }
   
   // Default - warm and diplomatic
   return pick([
-    "hmm I'm not sure about that one - but feel free to ask me about my work, background, or projects! 😊",
+    "hmm I'm not sure about that one - but feel free to ask me about my work, background, or projects!",
     "ooh that's a new one! feel free to ask me about my case studies or background",
     "not sure I have an answer for that, but I'd love to chat about my work or experience!"
   ])
