@@ -431,9 +431,24 @@ export const getCharityResponse = (userMessage: string): string => {
     return "yes I love sci-fi! there's something about exploring the unknown"
   }
   
-  // Music
-  if (normalized.match(/(music|listen to|song|artist|playlist|spotify|what you listen|favorite music)/)) {
+  // Music - vague single word
+  if (normalized.match(/^music[\s!?.]*$/i)) {
+    return "what do you mean by music?"
+  }
+  
+  // Music - specific questions
+  if (normalized.match(/(what kind of music|what music|favorite music|fav music|listen to|what you listen|type of music)/)) {
     return "jazz while working - Miles Davis, Kenny G - and I'm super nostalgic for early 2000s music"
+  }
+  
+  // Music while working
+  if (normalized.match(/(music.*work|work.*music|listen.*while)/)) {
+    return "jazz! Miles Davis and Kenny G help me focus"
+  }
+  
+  // Song/artist/playlist
+  if (normalized.match(/(song|artist|playlist|spotify)/)) {
+    return "I love jazz - Miles Davis, Kenny G - and early 2000s R&B like Usher and Beyonce"
   }
   
   // Jazz follow-up
@@ -556,12 +571,12 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // Phone call request
   if (normalized.match(/(call you|phone call|can i call|give me your number|your number|talk on the phone)/)) {
-    return "if you'd like to contact me personally, you can email me at charitydupont@gmail.com"
+    return "if you'd like to contact me personally, you can email me at charitydupont@google.com"
   }
   
   // Contact
   if (normalized.match(/(contact|email|reach|connect|linkedin|work together|hit you up|hmu)/)) {
-    return "feel free to reach out! you can email me at charitydupont@gmail.com"
+    return "feel free to reach out! you can email me at charitydupont@google.com"
   }
   
   // Navigate

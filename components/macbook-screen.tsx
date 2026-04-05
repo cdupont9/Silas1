@@ -590,13 +590,23 @@ export function MacBookScreen() {
                 <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-white" />
-              {/* Battery - macOS style with percentage */}
-              <div className="flex items-center gap-1">
-                <span className="text-[12px] text-white">72%</span>
-                <div className="w-[22px] h-[11px] border-[1.5px] border-white rounded-[3px] relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '70%' }} />
+              {/* Music Toggle */}
+              <button
+                onClick={() => setAudioEnabled(!audioEnabled)}
+                className="p-0.5"
+              >
+                {audioEnabled ? (
+                  <Volume2 className="w-4 h-4 text-white" />
+                ) : (
+                  <VolumeX className="w-4 h-4 text-white/60" />
+                )}
+              </button>
+              {/* Battery - iOS style */}
+              <div className="flex items-center gap-0.5">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[4px] relative flex items-center justify-start p-[2px]">
+                  <div className="h-full bg-white rounded-[2px]" style={{ width: '72%' }} />
                 </div>
-                <div className="w-[2px] h-[5px] bg-white rounded-r-sm opacity-60 -ml-[1px]" />
+                <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-full" />
               </div>
             </div>
           </div>
@@ -677,14 +687,24 @@ export function MacBookScreen() {
                 <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
                 <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
               </div>
-              <Wifi className="w-4 h-4 text-white" />
-              {/* Battery - iOS style with percentage */}
-              <div className="flex items-center gap-1">
-                <span className="text-[12px] text-white">72%</span>
-                <div className="w-[22px] h-[11px] border-[1.5px] border-white rounded-[3px] relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '70%' }} />
+<Wifi className="w-4 h-4 text-white" />
+              {/* Music Toggle */}
+              <button
+                onClick={() => setAudioEnabled(!audioEnabled)}
+                className="p-0.5"
+              >
+                {audioEnabled ? (
+                  <Volume2 className="w-4 h-4 text-white" />
+                ) : (
+                  <VolumeX className="w-4 h-4 text-white/60" />
+                )}
+              </button>
+              {/* Battery - iOS style */}
+              <div className="flex items-center gap-0.5">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[4px] relative flex items-center justify-start p-[2px]">
+                  <div className="h-full bg-white rounded-[2px]" style={{ width: '72%' }} />
                 </div>
-                <div className="w-[2px] h-[5px] bg-white rounded-r-sm opacity-60 -ml-[1px]" />
+                <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-full" />
               </div>
             </div>
           </div>
