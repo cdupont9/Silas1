@@ -97,8 +97,13 @@ export const getCharityResponse = (userMessage: string): string => {
   // ============================================
   
   // Simple yes/no follow-ups
-  if (normalized.match(/^(yes|yep|yeah|yea|ya|yup|yuh|mhm|uh huh|bet|aight|ight|fasho|fo sho|fosho)[\s!?.]*$/i)) {
-    return pick(["nice!", "awesome", "great", "love that"])
+  if (normalized.match(/^(yes|yep|yeah|yea|ya|yup|yuh|mhm|uh huh)[\s!?.]*$/i)) {
+    return "LINK:teammate:Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together. You can view the case study here."
+  }
+  
+  // No response - when they say no to a clarifying question
+  if (normalized.match(/^(no|nope|nah|naw|not really|nevermind|never mind)[\s!?.]*$/i)) {
+    return "I'm not sure about that one. Feel free to ask me something else!"
   }
   
   if (normalized.match(/^(no|nope|nah|naw)[\s!?.]*$/i)) {
@@ -266,8 +271,13 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I have three case studies - Teammate, Meetly, and Silas. You can check out the case study folders in the dock, or ask me about any of them!"
   }
   
-  // Teammate
-  if (normalized.match(/teammates?/)) {
+  // Teammate - ask clarifying question first
+  if (normalized.match(/^teammates?[\s!?.]*$/i)) {
+    return "are you referring to my case study?"
+  }
+  
+  // Teammate case study - when they confirm or ask directly about the case study
+  if (normalized.match(/(teammate.*case study|case study.*teammate|tell me about teammate|what is teammate|teammate project)/i)) {
     return "LINK:teammate:Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together. You can view the case study here."
   }
   
