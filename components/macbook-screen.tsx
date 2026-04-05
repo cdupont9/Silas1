@@ -448,22 +448,32 @@ export function MacBookScreen() {
     e.preventDefault()
     if (!mobileInput.trim() || mobileIsTyping) return
 
-    const messageText = mobileInput.trim()
-    const autoHeart = shouldAutoHeart(messageText)
-
-    const userMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
-      role: 'user',
-      text: messageText,
-      time: getCurrentTime(),
-      reaction: autoHeart ? '❤️' : undefined,
-    }
-
-    setChatMessages(prev => [...prev, userMessage])
-    setMobileInput('')
-    setMobileIsTyping(true)
-
-    await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
+const messageText = mobileInput.trim()
+  const autoHeart = shouldAutoHeart(messageText)
+  const messageId = `user-${Date.now()}`
+  
+  const userMessage: ChatMessage = {
+    id: messageId,
+    role: 'user',
+    text: messageText,
+    time: getCurrentTime(),
+    reaction: undefined, // Will be added after delay
+  }
+  
+  setChatMessages(prev => [...prev, userMessage])
+  setMobileInput('')
+  setMobileIsTyping(true)
+  
+  // Add heart reaction after 3 second delay if deserved
+  if (autoHeart) {
+    setTimeout(() => {
+      setChatMessages(prev => prev.map(msg => 
+        msg.id === messageId ? { ...msg, reaction: '❤️' } : msg
+      ))
+    }, 3000)
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
 
     const response = getCharityResponse(userMessage.text)
 
@@ -969,32 +979,42 @@ export function MacBookScreen() {
             {/* Interactive Messages with Charity */}
             <div className="flex-1 overflow-y-auto px-4 py-4">
               {chatMessages.map((msg) => (
-                <div key={msg.id} className={`flex mb-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[75%] px-4 py-2.5 ${msg.role === 'user'
-                      ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
-                      : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
-                    }`}>
-                    {msg.text.startsWith('GIF:') ? (
-                      <img 
-                        src={
-                          msg.text === 'GIF:shocked' 
-                            ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
-                            : msg.text === 'GIF:disappointed'
-                            ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
-                            : msg.text === 'GIF:sideye'
-                            ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
-                            : msg.text === 'GIF:confused'
-                            ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
-                            : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
-                        }
-                        alt="Reaction"
-                        className="w-24 h-auto rounded-lg"
-                      />
-                    ) : (
-                      <p className="text-[17px] leading-snug">
-                        {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)/gi, '$1') : msg.text}
-                      </p>
+                <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className="relative">
+                    {/* Reaction display - upper left corner like iMessage */}
+                    {msg.reaction && (
+                      <div className={`absolute -top-2 ${msg.role === 'assistant' ? 'left-2' : '-left-2'} z-10`}>
+                        <span className="text-sm bg-[#2c2c2e] rounded-full px-1.5 py-0.5 shadow-sm border border-white/10">
+                          {msg.reaction}
+                        </span>
+                      </div>
                     )}
+                    <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
+                        ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
+                        : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
+                      }`}>
+                      {msg.text.startsWith('GIF:') ? (
+                        <img 
+                          src={
+                            msg.text === 'GIF:shocked' 
+                              ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
+                              : msg.text === 'GIF:disappointed'
+                              ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                              : msg.text === 'GIF:sideye'
+                              ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
+                              : msg.text === 'GIF:confused'
+                              ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
+                              : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
+                          }
+                          alt="Reaction"
+                          className="w-24 h-auto rounded-lg"
+                        />
+                      ) : (
+                        <p className="text-[17px] leading-snug">
+                          {msg.text.startsWith('LINK:') ? msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)/gi, '$1') : msg.text}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}

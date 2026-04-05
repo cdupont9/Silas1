@@ -747,7 +747,7 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // "Why" follow-up after insults or criticism
   if (normalized.match(/^why[\s!?.]*$/i)) {
-    return "I don't think that was a great response. Is there something I can help you with?"
+    return "I don't think that was a great message. Is there something I can help you with?"
   }
   
   // Mean or rude comments - respond gracefully
@@ -805,22 +805,32 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
     e.preventDefault()
     if (!input.trim() || isTyping) return
     
-    const messageText = input.trim()
-    const autoHeart = shouldAutoHeart(messageText)
-    
-    const userMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
-      role: 'user',
-      text: messageText,
-      time: getCurrentTime(),
-      reaction: autoHeart ? '❤️' : undefined,
-    }
-    
-    setMessages(prev => [...prev, userMessage])
-    setInput('')
-    setIsTyping(true)
-    
-    await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
+const messageText = input.trim()
+  const autoHeart = shouldAutoHeart(messageText)
+  const messageId = `user-${Date.now()}`
+  
+  const userMessage: ChatMessage = {
+    id: messageId,
+    role: 'user',
+    text: messageText,
+    time: getCurrentTime(),
+    reaction: undefined, // Will be added after delay
+  }
+  
+  setMessages(prev => [...prev, userMessage])
+  setInput('')
+  setIsTyping(true)
+  
+  // Add heart reaction after 3 second delay if deserved
+  if (autoHeart) {
+    setTimeout(() => {
+      setMessages(prev => prev.map(msg => 
+        msg.id === messageId ? { ...msg, reaction: '❤️' } : msg
+      ))
+    }, 3000)
+  }
+  
+  await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
     
     const response = getCharityResponse(userMessage.text)
     
@@ -912,10 +922,10 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                 )}
               </div>
               
-              {/* Reaction display */}
+              {/* Reaction display - upper left corner like iMessage */}
               {message.reaction && (
-                <div className={`absolute -bottom-2 ${message.role === 'assistant' ? 'right-0' : 'left-0'}`}>
-                  <span className="text-sm bg-white rounded-full px-1 shadow-sm border border-black/10">
+                <div className={`absolute -top-2 ${message.role === 'assistant' ? 'left-2' : '-left-2'}`}>
+                  <span className="text-sm bg-white rounded-full px-1.5 py-0.5 shadow-sm border border-black/10">
                     {message.reaction}
                   </span>
                 </div>
