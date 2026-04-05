@@ -339,22 +339,27 @@ export const getCharityResponse = (userMessage: string): string => {
   
   // Dessert
   if (normalized.match(/(dessert|sweet tooth|sweets)/)) {
-    return "apple pie with vanilla bean ice cream! or white chocolate chip cookies"
+    return "apple pie with vanilla bean ice cream"
+  }
+  
+  // White chocolate - must check before general chocolate
+  if (normalized.match(/white chocolate/)) {
+    return "yes I like white chocolate chip cookies without any nuts"
   }
   
   // Cookies
   if (normalized.match(/cookie/)) {
-    return "white chocolate chip cookies - but no macadamia!"
+    return "white chocolate chip cookies without the macadamia nuts - Pepperidge Farm makes my favorite"
   }
   
-  // Chocolate
+  // Chocolate (general)
   if (normalized.match(/(chocolate|do you like chocolate)/)) {
-    return "I like chocolate but not too much of it - white chocolate is my favorite though"
+    return "I like chocolate but not too much of it"
   }
   
-  // White chocolate follow-up
-  if (normalized.match(/white chocolate/)) {
-    return "yes! especially in cookies"
+  // What do you mean / follow-up clarification
+  if (normalized.match(/(what do you mean|what you mean|wdym|huh\??$|explain)/)) {
+    return "haha sorry if that was confusing - feel free to ask me something else!"
   }
   
   // Ice cream
