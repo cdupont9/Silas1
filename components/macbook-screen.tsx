@@ -2841,9 +2841,36 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               ) : (
                 /* Safari Start Page */
                 <div className="w-full h-full flex flex-col items-center justify-start pt-16 px-8">
-                  {/* Favorites */}
+                  {/* Browse - Embeddable Sites */}
                   <div className="w-full max-w-[600px]">
-                    <h2 className="text-white/60 text-sm font-medium mb-4">Favorites</h2>
+                    <h2 className="text-white/60 text-sm font-medium mb-4">Browse</h2>
+                    <div className="grid grid-cols-4 gap-4">
+                      {[
+                        { name: 'Wikipedia', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/1200px-Wikipedia%27s_W.svg.png', url: 'https://en.wikipedia.org' },
+                        { name: 'DuckDuckGo', icon: 'https://duckduckgo.com/assets/icons/meta/DDG-iOS-icon_152x152.png', url: 'https://duckduckgo.com' },
+                        { name: 'Archive', icon: 'https://archive.org/images/glogo.jpg', url: 'https://archive.org' },
+                        { name: 'CodePen', icon: 'https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico', url: 'https://codepen.io' },
+                      ].map((site) => (
+                        <button
+                          key={site.name}
+                          onClick={() => {
+                            setSafariUrl(site.url)
+                            setSafariInputUrl(site.url)
+                          }}
+                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                        >
+                          <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                            <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
+                          </div>
+                          <span className="text-white/80 text-xs">{site.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* My Links - External Sites */}
+                  <div className="w-full max-w-[600px] mt-8">
+                    <h2 className="text-white/60 text-sm font-medium mb-4">My Links</h2>
                     <div className="grid grid-cols-4 gap-4">
                       {[
                         { name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
@@ -2862,13 +2889,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
                           </div>
                           <span className="text-white/80 text-xs">{site.name}</span>
+                          <svg className="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
                         </a>
                       ))}
                     </div>
                   </div>
                   
                   {/* Privacy Report */}
-                  <div className="w-full max-w-[600px] mt-12">
+                  <div className="w-full max-w-[600px] mt-8">
                     <div className="bg-white/5 rounded-xl p-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
@@ -2881,27 +2911,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <p className="text-white/50 text-xs">Safari helps keep you safe from trackers</p>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  
-                  {/* Reading List */}
-                  <div className="w-full max-w-[600px] mt-8">
-                    <h2 className="text-white/60 text-sm font-medium mb-4">Reading List</h2>
-                    <div className="space-y-2">
-                      <a 
-                        href="https://linkedin.com/in/charitydupont"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors text-left"
-                      >
-                        <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
-                          <span className="text-white text-xs font-bold">in</span>
-                        </div>
-                        <div>
-                          <p className="text-white/90 text-sm">Charity Dupont - LinkedIn</p>
-                          <p className="text-white/50 text-xs">linkedin.com</p>
-                        </div>
-                      </a>
                     </div>
                   </div>
                 </div>
