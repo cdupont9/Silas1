@@ -2840,7 +2840,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {/* Wikipedia Header */}
                   <div className="bg-white border-b border-gray-200 px-4 py-2">
                     <div className="flex items-center gap-4">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/150px-Wikipedia-logo-v2.svg.png" alt="Wikipedia" className="h-12" />
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/150px-Wikipedia-logo-v2.svg.png" alt="Wikipedia" className="h-10" />
+                      <div className="flex items-center gap-2">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/1200px-Wikipedia%27s_W.svg.png" alt="" className="w-4 h-4" />
+                        <span className="text-sm font-medium text-black">Wikipedia</span>
+                        <span className="text-sm text-gray-500">The Free Encyclopedia</span>
+                      </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                           <span>Article</span>
@@ -2906,9 +2911,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <div className="border border-gray-300 bg-gray-50 text-sm">
                           <div className="bg-gray-200 px-3 py-2 text-center font-semibold text-black">Charity Dupont</div>
                           <div className="p-3">
-                            <div className="w-full h-40 bg-gray-300 mb-3 flex items-center justify-center">
-                              <span className="text-gray-500 text-xs">Photo</span>
-                            </div>
+<img 
+                              src={CHARITY_PHOTO_URL}
+                              alt="Charity Dupont"
+                              className="w-full h-48 object-cover mb-1"
+                            />
+                            <p className="text-[10px] text-gray-500 text-center mb-3">Dupont in 2024</p>
                             <table className="w-full text-xs">
                               <tbody>
                                 <tr className="border-b border-gray-200">
