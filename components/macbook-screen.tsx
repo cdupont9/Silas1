@@ -266,6 +266,57 @@ export function MacBookScreen() {
   // Audio state
   const [audioEnabled, setAudioEnabled] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  
+  // Music player state (Hilary Duff - Metamorphosis)
+  const [musicPlayerOpen, setMusicPlayerOpen] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
+  const metamorphosisRef = useRef<HTMLAudioElement | null>(null)
+  
+  const metamorphosisTracks = [
+    { title: "So Yesterday", duration: "3:34", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { title: "Come Clean", duration: "3:32", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { title: "Metamorphosis", duration: "3:27", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+    { title: "Little Voice", duration: "3:19", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+    { title: "Where Did I Go Right?", duration: "3:45", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
+    { title: "Anywhere But Here", duration: "3:22", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" },
+    { title: "The Math", duration: "3:15", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" },
+    { title: "Love Just Is", duration: "4:02", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
+    { title: "Sweet Sixteen", duration: "3:28", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3" },
+    { title: "Party Up", duration: "3:05", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3" },
+    { title: "Workin' It Out", duration: "3:33", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3" },
+    { title: "Why Not", duration: "3:40", src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3" },
+  ]
+  
+  const togglePlayPause = () => {
+    if (metamorphosisRef.current) {
+      if (isPlaying) {
+        metamorphosisRef.current.pause()
+      } else {
+        metamorphosisRef.current.play()
+      }
+      setIsPlaying(!isPlaying)
+    }
+  }
+  
+  const playTrack = (index: number) => {
+    setCurrentTrackIndex(index)
+    if (metamorphosisRef.current) {
+      metamorphosisRef.current.src = metamorphosisTracks[index].src
+      metamorphosisRef.current.play()
+      setIsPlaying(true)
+    }
+  }
+  
+  const nextTrack = () => {
+    const next = (currentTrackIndex + 1) % metamorphosisTracks.length
+    playTrack(next)
+  }
+  
+  const prevTrack = () => {
+    const prev = currentTrackIndex === 0 ? metamorphosisTracks.length - 1 : currentTrackIndex - 1
+    playTrack(prev)
+  }
 
   // Initialize audio
   useEffect(() => {
@@ -2176,7 +2227,128 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
           </div>
+          
+          {/* Hilary Duff - Metamorphosis Album */}
+          <div 
+            className="cursor-pointer hover:scale-105 transition-transform"
+            onDoubleClick={() => setMusicPlayerOpen(true)}
+          >
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/en/c/c5/Hilary_Duff_-_Metamorphosis.png"
+              alt="Hilary Duff - Metamorphosis"
+              className="w-40 h-40 rounded-xl shadow-lg object-cover"
+            />
+            <p className="text-white text-xs text-center mt-2 font-medium drop-shadow-lg">Metamorphosis</p>
+            <p className="text-white/70 text-[10px] text-center drop-shadow-lg">Hilary Duff</p>
+          </div>
         </div>
+
+        {/* Music Player Window */}
+        {musicPlayerOpen && (
+          <div className={`absolute w-[380px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] rounded-xl shadow-2xl overflow-hidden border border-white/10 ${focusedWindow === 'music' ? 'z-40' : 'z-20'}`}
+            style={{ left: 400, top: 100 }}
+            onClick={() => focusWindow('music')}
+          >
+            {/* Title Bar */}
+            <div className="h-[40px] bg-[#0f0f1a] flex items-center px-4 border-b border-white/10">
+              <div className="flex gap-2">
+                <button
+                  onClick={() => { setMusicPlayerOpen(false); if (metamorphosisRef.current) { metamorphosisRef.current.pause(); setIsPlaying(false); } }}
+                  className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                />
+                <button className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                <button className="w-3 h-3 rounded-full bg-[#28c840]" />
+              </div>
+              <span className="flex-1 text-center text-sm font-medium text-white/80">Music</span>
+            </div>
+            
+            {/* Album Art & Now Playing */}
+            <div className="p-6">
+              <img 
+                src="https://upload.wikimedia.org/wikipedia/en/c/c5/Hilary_Duff_-_Metamorphosis.png"
+                alt="Metamorphosis"
+                className="w-48 h-48 mx-auto rounded-lg shadow-xl"
+              />
+              <div className="text-center mt-4">
+                <p className="text-white font-semibold text-lg">{metamorphosisTracks[currentTrackIndex].title}</p>
+                <p className="text-white/60 text-sm">Hilary Duff - Metamorphosis</p>
+              </div>
+              
+              {/* Progress Bar */}
+              <div className="mt-4 px-2">
+                <div className="w-full h-1 bg-white/20 rounded-full">
+                  <div className="w-1/3 h-full bg-pink-500 rounded-full" />
+                </div>
+                <div className="flex justify-between text-[10px] text-white/40 mt-1">
+                  <span>1:12</span>
+                  <span>{metamorphosisTracks[currentTrackIndex].duration}</span>
+                </div>
+              </div>
+              
+              {/* Controls */}
+              <div className="flex items-center justify-center gap-6 mt-4">
+                <button onClick={prevTrack} className="text-white/60 hover:text-white transition-colors">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+                  </svg>
+                </button>
+                <button 
+                  onClick={togglePlayPause}
+                  className="w-14 h-14 rounded-full bg-white flex items-center justify-center hover:scale-105 transition-transform"
+                >
+                  {isPlaying ? (
+                    <svg className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
+                    </svg>
+                  ) : (
+                    <svg className="w-6 h-6 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  )}
+                </button>
+                <button onClick={nextTrack} className="text-white/60 hover:text-white transition-colors">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            {/* Track List */}
+            <div className="max-h-[200px] overflow-y-auto border-t border-white/10">
+              {metamorphosisTracks.map((track, index) => (
+                <button
+                  key={index}
+                  onClick={() => playTrack(index)}
+                  className={`w-full flex items-center justify-between px-4 py-2.5 hover:bg-white/5 transition-colors ${currentTrackIndex === index ? 'bg-white/10' : ''}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className={`text-xs w-5 ${currentTrackIndex === index ? 'text-pink-500' : 'text-white/40'}`}>
+                      {currentTrackIndex === index && isPlaying ? (
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                        </svg>
+                      ) : (
+                        index + 1
+                      )}
+                    </span>
+                    <span className={`text-sm ${currentTrackIndex === index ? 'text-pink-500 font-medium' : 'text-white/80'}`}>
+                      {track.title}
+                    </span>
+                  </div>
+                  <span className="text-xs text-white/40">{track.duration}</span>
+                </button>
+              ))}
+            </div>
+            
+            {/* Hidden Audio Element */}
+            <audio 
+              ref={metamorphosisRef}
+              src={metamorphosisTracks[0].src}
+              onEnded={nextTrack}
+            />
+          </div>
+        )}
 
         {/* macOS Photos App Window */}
         {photosWindow.isOpen && !photosWindow.isMinimized && (
