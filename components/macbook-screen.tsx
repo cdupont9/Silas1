@@ -271,13 +271,6 @@ export function MacBookScreen() {
     ad1: true,
     ad2: true,
     ad3: true,
-    ad4: true,
-    ad5: true,
-    ad6: true,
-    ad7: true,
-    ad8: true,
-    ad9: true,
-    ad10: true,
   })
 
   // Audio state
@@ -2791,7 +2784,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               {/* Navigation Buttons */}
               <div className="flex gap-2 mr-3">
                 <button 
-                  onClick={() => { setSafariUrl(''); setSafariInputUrl(''); setShowAds({ad1: true, ad2: true, ad3: true, ad4: true, ad5: true, ad6: true, ad7: true, ad8: true, ad9: true, ad10: true}); }}
+                  onClick={() => { setSafariUrl(''); setSafariInputUrl(''); setShowAds({ad1: true, ad2: true, ad3: true}); }}
                   className={`w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center transition-colors ${safariUrl ? 'text-black/70' : 'text-black/30'}`}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2938,147 +2931,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     </div>
                   )}
                   
-                  {/* Popup Ad 4 - Sketch License */}
-                  {showAds.ad4 && (
-                    <div className="absolute bottom-32 right-8 w-[240px] bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-right-4 duration-400">
-                      <button 
-                        onClick={() => setShowAds(prev => ({...prev, ad4: false}))}
-                        className="absolute top-1 right-1 w-5 h-5 bg-black/20 hover:bg-black/30 rounded-full flex items-center justify-center text-white text-xs"
-                      >
-                        x
-                      </button>
-                      <div className="p-4 text-center">
-                        <div className="w-12 h-12 bg-white rounded-xl mx-auto mb-2 flex items-center justify-center shadow-lg">
-                          <svg className="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                          </svg>
-                        </div>
-                        <p className="text-white font-bold text-sm mb-1">Sketch License Sale!</p>
-                        <p className="text-white/80 text-xs mb-3">Save 40% - Limited Time Only</p>
-                        <button className="w-full bg-white text-orange-600 font-bold text-xs py-2 rounded-lg hover:bg-white/90">
-                          Get Sketch Now - $69
-                        </button>
-<p className="text-white/60 text-[9px] mt-2">Was $99 - Offer ends soon!</p>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Popup Ad 5 - InVision */}
-                  {showAds.ad5 && (
-                    <div className="absolute top-[45%] left-4 w-[200px] bg-gradient-to-br from-pink-500 to-red-500 rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in duration-300">
-                      <button 
-                        onClick={() => setShowAds(prev => ({...prev, ad5: false}))}
-                        className="absolute top-1 right-1 w-4 h-4 bg-black/30 hover:bg-black/50 rounded-full flex items-center justify-center text-white text-[10px]"
-                      >
-                        x
-                      </button>
-                      <div className="p-3 text-center">
-                        <p className="text-white font-bold text-xs">InVision Studio</p>
-                        <p className="text-white/80 text-[10px] mb-2">Design at the speed of thought</p>
-                        <button className="bg-white text-pink-600 text-[10px] font-bold px-3 py-1 rounded">Download Free</button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Popup Ad 6 - Webflow */}
-                  {showAds.ad6 && (
-                    <div className="absolute top-4 left-[40%] w-[220px] bg-[#146EF5] rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-8 duration-500">
-                      <button 
-                        onClick={() => setShowAds(prev => ({...prev, ad6: false}))}
-                        className="absolute top-1 right-1 w-4 h-4 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-[10px]"
-                      >
-                        x
-                      </button>
-                      <div className="p-3">
-                        <p className="text-white font-bold text-sm">Webflow</p>
-                        <p className="text-white/80 text-[10px] mb-2">Build websites visually. No code needed.</p>
-                        <button className="w-full bg-white text-[#146EF5] text-[10px] font-bold py-1.5 rounded-lg">Start for Free</button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Popup Ad 7 - Notion */}
-                  {showAds.ad7 && (
-                    <div className="absolute top-[30%] right-4 w-[180px] bg-white border-2 border-black rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-right-8 duration-400">
-                      <button 
-                        onClick={() => setShowAds(prev => ({...prev, ad7: false}))}
-                        className="absolute top-1 right-1 w-4 h-4 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-[10px]"
-                      >
-                        x
-                      </button>
-                      <div className="p-3 text-center">
-                        <div className="text-2xl mb-1">📝</div>
-                        <p className="text-black font-bold text-xs">Notion for Teams</p>
-                        <p className="text-gray-600 text-[9px] mb-2">All-in-one workspace</p>
-                        <button className="bg-black text-white text-[9px] font-bold px-3 py-1 rounded">Try Free</button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Popup Ad 8 - Miro */}
-                  {showAds.ad8 && (
-                    <div className="absolute bottom-8 left-[35%] w-[250px] bg-[#FFD02F] rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-600">
-                      <button 
-                        onClick={() => setShowAds(prev => ({...prev, ad8: false}))}
-                        className="absolute top-1 right-1 w-4 h-4 bg-black/20 hover:bg-black/30 rounded-full flex items-center justify-center text-black text-[10px]"
-                      >
-                        x
-                      </button>
-                      <div className="p-3 flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                          <span className="text-[#FFD02F] font-black text-lg">M</span>
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-black font-bold text-xs">Miro Whiteboard</p>
-                          <p className="text-black/70 text-[9px]">Collaborate anywhere</p>
-                        </div>
-                        <button className="bg-black text-white text-[9px] font-bold px-2 py-1 rounded">Go</button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Popup Ad 9 - Framer */}
-                  {showAds.ad9 && (
-                    <div className="absolute top-[60%] left-[50%] w-[200px] bg-black rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in zoom-in duration-700">
-                      <button 
-                        onClick={() => setShowAds(prev => ({...prev, ad9: false}))}
-                        className="absolute top-1 right-1 w-4 h-4 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white text-[10px]"
-                      >
-                        x
-                      </button>
-                      <div className="p-3 text-center">
-                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-lg mx-auto mb-2" />
-                        <p className="text-white font-bold text-xs">Framer</p>
-                        <p className="text-white/60 text-[9px] mb-2">Ship sites faster</p>
-                        <button className="bg-white text-black text-[9px] font-bold px-4 py-1 rounded-full">Start Free</button>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Popup Ad 10 - Coursera UX */}
-                  {showAds.ad10 && (
-                    <div className="absolute bottom-16 right-[25%] w-[270px] bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-800">
-                      <button 
-                        onClick={() => setShowAds(prev => ({...prev, ad10: false}))}
-                        className="absolute top-1 right-1 w-4 h-4 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-[10px]"
-                      >
-                        x
-                      </button>
-                      <div className="bg-blue-600 p-2">
-                        <p className="text-white font-bold text-[10px]">GOOGLE UX DESIGN CERTIFICATE</p>
-                      </div>
-                      <div className="p-3">
-                        <p className="text-gray-800 text-xs font-medium mb-1">Start your UX career today</p>
-                        <p className="text-gray-500 text-[9px] mb-2">No experience required. 100% online.</p>
-                        <div className="flex items-center gap-2">
-                          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-3" />
-                          <span className="text-[9px] text-gray-500">on Coursera</span>
-                        </div>
-                        <button className="w-full bg-blue-600 text-white text-[10px] font-bold py-1.5 rounded mt-2">Enroll Now - Free</button>
-                      </div>
-                    </div>
-                  )}
-
                   {/* Wikipedia Header */}
                   <div className="bg-white border-b border-gray-200 px-4 py-2">
                     <div className="flex items-center gap-4">
