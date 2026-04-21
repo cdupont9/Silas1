@@ -265,8 +265,8 @@ export function MacBookScreen() {
   
   // Safari browser URL state
   const [safariPosition, setSafariPosition] = useState({ x: 120, y: 50 })
-  const [safariUrl, setSafariUrl] = useState('https://www.google.com')
-  const [safariInputUrl, setSafariInputUrl] = useState('https://www.google.com')
+  const [safariUrl, setSafariUrl] = useState('')
+  const [safariInputUrl, setSafariInputUrl] = useState('')
 
   // Audio state
   const [audioEnabled, setAudioEnabled] = useState(false)
@@ -2829,14 +2829,85 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
             
-            {/* Browser Content - iframe */}
-            <div className="w-full h-[calc(100%-52px)] bg-white">
-              <iframe
-                src={safariUrl}
-                className="w-full h-full border-0"
-                title="Safari Browser"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-              />
+{/* Browser Content */}
+            <div className="w-full h-[calc(100%-52px)] bg-[#1e1e1e] overflow-auto">
+              {safariUrl ? (
+                <iframe
+                  src={safariUrl}
+                  className="w-full h-full border-0"
+                  title="Safari Browser"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                />
+              ) : (
+                /* Safari Start Page */
+                <div className="w-full h-full flex flex-col items-center justify-start pt-16 px-8">
+                  {/* Favorites */}
+                  <div className="w-full max-w-[600px]">
+                    <h2 className="text-white/60 text-sm font-medium mb-4">Favorites</h2>
+                    <div className="grid grid-cols-4 gap-4">
+                      {[
+                        { name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
+                        { name: 'Behance', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Behance_logo.svg', url: 'https://behance.net' },
+                        { name: 'Dribbble', icon: 'https://cdn.dribbble.com/assets/favicon-b38525134603b9513174ec887944bde1a869eb6cd414f4c1a082030c93a0f68b.ico', url: 'https://dribbble.com' },
+                        { name: 'GitHub', icon: 'https://github.githubassets.com/favicons/favicon-dark.svg', url: 'https://github.com' },
+                      ].map((site) => (
+                        <button
+                          key={site.name}
+                          onClick={() => {
+                            setSafariUrl(site.url)
+                            setSafariInputUrl(site.url)
+                          }}
+                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                        >
+                          <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                            <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
+                          </div>
+                          <span className="text-white/80 text-xs">{site.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Privacy Report */}
+                  <div className="w-full max-w-[600px] mt-12">
+                    <div className="bg-white/5 rounded-xl p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                          <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-white/90 text-sm font-medium">Privacy Report</p>
+                          <p className="text-white/50 text-xs">Safari helps keep you safe from trackers</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Reading List */}
+                  <div className="w-full max-w-[600px] mt-8">
+                    <h2 className="text-white/60 text-sm font-medium mb-4">Reading List</h2>
+                    <div className="space-y-2">
+                      <button 
+                        onClick={() => {
+                          setSafariUrl('https://linkedin.com/in/charitydupont')
+                          setSafariInputUrl('https://linkedin.com/in/charitydupont')
+                        }}
+                        className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors text-left"
+                      >
+                        <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">in</span>
+                        </div>
+                        <div>
+                          <p className="text-white/90 text-sm">Charity Dupont - LinkedIn</p>
+                          <p className="text-white/50 text-xs">linkedin.com</p>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
