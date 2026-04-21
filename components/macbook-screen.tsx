@@ -2851,19 +2851,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         { name: 'Dribbble', icon: 'https://cdn.dribbble.com/assets/favicon-b38525134603b9513174ec887944bde1a869eb6cd414f4c1a082030c93a0f68b.ico', url: 'https://dribbble.com' },
                         { name: 'GitHub', icon: 'https://github.githubassets.com/favicons/favicon-dark.svg', url: 'https://github.com' },
                       ].map((site) => (
-                        <button
+                        <a
                           key={site.name}
-                          onClick={() => {
-                            setSafariUrl(site.url)
-                            setSafariInputUrl(site.url)
-                          }}
+                          href={site.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
                         >
                           <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
                             <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
                           </div>
                           <span className="text-white/80 text-xs">{site.name}</span>
-                        </button>
+                        </a>
                       ))}
                     </div>
                   </div>
@@ -2889,11 +2888,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="w-full max-w-[600px] mt-8">
                     <h2 className="text-white/60 text-sm font-medium mb-4">Reading List</h2>
                     <div className="space-y-2">
-                      <button 
-                        onClick={() => {
-                          setSafariUrl('https://linkedin.com/in/charitydupont')
-                          setSafariInputUrl('https://linkedin.com/in/charitydupont')
-                        }}
+                      <a 
+                        href="https://linkedin.com/in/charitydupont"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors text-left"
                       >
                         <div className="w-10 h-10 rounded-lg bg-blue-600 flex items-center justify-center">
@@ -2903,7 +2901,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <p className="text-white/90 text-sm">Charity Dupont - LinkedIn</p>
                           <p className="text-white/50 text-xs">linkedin.com</p>
                         </div>
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
