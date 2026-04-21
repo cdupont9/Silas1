@@ -267,6 +267,12 @@ export function MacBookScreen() {
   const [safariPosition, setSafariPosition] = useState({ x: 120, y: 50 })
   const [safariUrl, setSafariUrl] = useState('')
   const [safariInputUrl, setSafariInputUrl] = useState('')
+  const [showAds, setShowAds] = useState<{[key: string]: boolean}>({
+    ad1: true,
+    ad2: true,
+    ad3: true,
+    ad4: true,
+  })
 
   // Audio state
   const [audioEnabled, setAudioEnabled] = useState(false)
@@ -2779,7 +2785,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               {/* Navigation Buttons */}
               <div className="flex gap-2 mr-3">
                 <button 
-                  onClick={() => { setSafariUrl(''); setSafariInputUrl(''); }}
+                  onClick={() => { setSafariUrl(''); setSafariInputUrl(''); setShowAds({ad1: true, ad2: true, ad3: true, ad4: true}); }}
                   className={`w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center transition-colors ${safariUrl ? 'text-black/70' : 'text-black/30'}`}
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -2836,7 +2842,120 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <div className="w-full h-[calc(100%-52px)] bg-[#1e1e1e] overflow-auto">
               {safariUrl === 'wikipedia' ? (
                 /* Fake Wikipedia Page about Charity Dupont */
-                <div className="w-full min-h-full bg-white">
+                <div className="w-full min-h-full bg-white relative">
+                  
+                  {/* Popup Ad 1 - Figma Pro */}
+                  {showAds.ad1 && (
+                    <div className="absolute top-8 left-8 w-[280px] bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-top-4 duration-300">
+                      <button 
+                        onClick={() => setShowAds(prev => ({...prev, ad1: false}))}
+                        className="absolute top-1 right-1 w-5 h-5 bg-black/30 hover:bg-black/50 rounded-full flex items-center justify-center text-white text-xs"
+                      >
+                        x
+                      </button>
+                      <div className="p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                            <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+                            </svg>
+                          </div>
+                          <span className="text-white font-bold text-sm">Figma Pro</span>
+                        </div>
+                        <p className="text-white/90 text-xs mb-3">Design faster with AI. Get 50% off your first year!</p>
+                        <button className="w-full bg-white text-purple-600 font-semibold text-xs py-2 rounded-md hover:bg-white/90">
+                          Claim Offer Now
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Popup Ad 2 - UX Bootcamp */}
+                  {showAds.ad2 && (
+                    <div className="absolute top-20 right-12 w-[260px] bg-white rounded-xl shadow-2xl border border-gray-200 z-50 overflow-hidden animate-in fade-in slide-in-from-right-4 duration-500">
+                      <button 
+                        onClick={() => setShowAds(prev => ({...prev, ad2: false}))}
+                        className="absolute top-1 right-1 w-5 h-5 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center text-gray-600 text-xs"
+                      >
+                        x
+                      </button>
+                      <div className="bg-gradient-to-r from-blue-500 to-cyan-400 p-3">
+                        <p className="text-white font-bold text-sm">Become a UX Designer</p>
+                        <p className="text-white/80 text-[10px]">in just 12 weeks!</p>
+                      </div>
+                      <div className="p-3">
+                        <p className="text-gray-600 text-xs mb-2">Join 50,000+ students who landed jobs at Google, Meta & more</p>
+                        <div className="flex gap-1 mb-2">
+                          {[1,2,3,4,5].map(i => (
+                            <svg key={i} className="w-3 h-3 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                          ))}
+                          <span className="text-[10px] text-gray-500 ml-1">4.9 (2,847 reviews)</span>
+                        </div>
+                        <button className="w-full bg-blue-500 text-white font-semibold text-xs py-2 rounded-md hover:bg-blue-600">
+                          Start Free Trial
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Popup Ad 3 - Adobe Creative Cloud */}
+                  {showAds.ad3 && (
+                    <div className="absolute bottom-24 left-16 w-[300px] bg-[#1a1a1a] rounded-lg shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-700">
+                      <button 
+                        onClick={() => setShowAds(prev => ({...prev, ad3: false}))}
+                        className="absolute top-2 right-2 w-5 h-5 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white text-xs"
+                      >
+                        x
+                      </button>
+                      <div className="p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-red-500 via-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                            <span className="text-white font-bold text-sm">Cc</span>
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold text-sm">Adobe Creative Cloud</p>
+                            <p className="text-gray-400 text-[10px]">All Apps Plan</p>
+                          </div>
+                        </div>
+                        <p className="text-gray-300 text-xs mb-3">Get Photoshop, Illustrator, XD & 20+ apps for just $54.99/mo</p>
+                        <div className="flex gap-2">
+                          <button className="flex-1 bg-blue-600 text-white font-semibold text-xs py-2 rounded-md hover:bg-blue-700">
+                            Buy Now
+                          </button>
+                          <button className="flex-1 border border-gray-600 text-gray-300 font-semibold text-xs py-2 rounded-md hover:bg-white/5">
+                            Free Trial
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  {/* Popup Ad 4 - Sketch License */}
+                  {showAds.ad4 && (
+                    <div className="absolute bottom-32 right-8 w-[240px] bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl shadow-2xl z-50 overflow-hidden animate-in fade-in slide-in-from-right-4 duration-400">
+                      <button 
+                        onClick={() => setShowAds(prev => ({...prev, ad4: false}))}
+                        className="absolute top-1 right-1 w-5 h-5 bg-black/20 hover:bg-black/30 rounded-full flex items-center justify-center text-white text-xs"
+                      >
+                        x
+                      </button>
+                      <div className="p-4 text-center">
+                        <div className="w-12 h-12 bg-white rounded-xl mx-auto mb-2 flex items-center justify-center shadow-lg">
+                          <svg className="w-8 h-8 text-orange-500" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                          </svg>
+                        </div>
+                        <p className="text-white font-bold text-sm mb-1">Sketch License Sale!</p>
+                        <p className="text-white/80 text-xs mb-3">Save 40% - Limited Time Only</p>
+                        <button className="w-full bg-white text-orange-600 font-bold text-xs py-2 rounded-lg hover:bg-white/90">
+                          Get Sketch Now - $69
+                        </button>
+                        <p className="text-white/60 text-[9px] mt-2">Was $99 - Offer ends soon!</p>
+                      </div>
+                    </div>
+                  )}
                   {/* Wikipedia Header */}
                   <div className="bg-white border-b border-gray-200 px-4 py-2">
                     <div className="flex items-center gap-4">
