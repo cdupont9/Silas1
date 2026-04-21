@@ -263,8 +263,7 @@ export function MacBookScreen() {
   // Help search state
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
   
-  // Safari browser state
-  const [safariWindow, setSafariWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  // Safari browser URL state
   const [safariPosition, setSafariPosition] = useState({ x: 120, y: 50 })
   const [safariUrl, setSafariUrl] = useState('https://www.google.com')
   const [safariInputUrl, setSafariInputUrl] = useState('https://www.google.com')
@@ -2767,7 +2766,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               {/* Window Controls */}
               <div className="flex gap-2 mr-4">
                 <button
-                  onClick={() => setSafariWindow({ isOpen: false, isMinimized: false })}
+                  onClick={() => setSafariWindow({ isOpen: false, isMinimized: false, project: null })}
                   className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
                 />
                 <button
@@ -2910,7 +2909,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           }
           label="Safari"
-          onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false }); setFocusedWindow('safari'); }}
+          onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: null }); setFocusedWindow('safari'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
