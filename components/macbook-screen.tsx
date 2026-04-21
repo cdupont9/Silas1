@@ -262,6 +262,12 @@ export function MacBookScreen() {
 
   // Help search state
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
+  
+  // Safari browser state
+  const [safariWindow, setSafariWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [safariPosition, setSafariPosition] = useState({ x: 120, y: 50 })
+  const [safariUrl, setSafariUrl] = useState('https://www.google.com')
+  const [safariInputUrl, setSafariInputUrl] = useState('https://www.google.com')
 
   // Audio state
   const [audioEnabled, setAudioEnabled] = useState(false)
@@ -2734,6 +2740,108 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
+        {/* Safari Browser Window */}
+        {safariWindow.isOpen && !safariWindow.isMinimized && (
+          <div
+            className={`absolute w-[900px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 ${focusedWindow === 'safari' ? 'z-40' : 'z-20'}`}
+            style={{ left: safariPosition.x, top: safariPosition.y }}
+            onClick={() => setFocusedWindow('safari')}
+          >
+            {/* Safari Title Bar */}
+            <div 
+              className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d4d4d4] flex items-center px-4 border-b border-black/10 cursor-move"
+              onMouseDown={(e) => {
+                const startX = e.clientX - safariPosition.x
+                const startY = e.clientY - safariPosition.y
+                const handleMouseMove = (e: MouseEvent) => {
+                  setSafariPosition({ x: e.clientX - startX, y: e.clientY - startY })
+                }
+                const handleMouseUp = () => {
+                  document.removeEventListener('mousemove', handleMouseMove)
+                  document.removeEventListener('mouseup', handleMouseUp)
+                }
+                document.addEventListener('mousemove', handleMouseMove)
+                document.addEventListener('mouseup', handleMouseUp)
+              }}
+            >
+              {/* Window Controls */}
+              <div className="flex gap-2 mr-4">
+                <button
+                  onClick={() => setSafariWindow({ isOpen: false, isMinimized: false })}
+                  className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                />
+                <button
+                  onClick={() => setSafariWindow(prev => ({ ...prev, isMinimized: true }))}
+                  className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                />
+                <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1db954] transition-colors" />
+              </div>
+              
+              {/* Navigation Buttons */}
+              <div className="flex gap-2 mr-3">
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* URL Bar */}
+              <div className="flex-1 max-w-[500px]">
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    let url = safariInputUrl
+                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                      url = 'https://' + url
+                    }
+                    setSafariUrl(url)
+                    setSafariInputUrl(url)
+                  }}
+                  className="w-full"
+                >
+                  <input
+                    type="text"
+                    value={safariInputUrl}
+                    onChange={(e) => setSafariInputUrl(e.target.value)}
+                    className="w-full h-7 px-3 bg-white rounded-md border border-black/10 text-sm text-center text-black/70 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                    placeholder="Search or enter website name"
+                  />
+                </form>
+              </div>
+              
+              {/* Right side icons */}
+              <div className="flex gap-2 ml-3">
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </button>
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+            {/* Browser Content - iframe */}
+            <div className="w-full h-[calc(100%-52px)] bg-white">
+              <iframe
+                src={safariUrl}
+                className="w-full h-full border-0"
+                title="Safari Browser"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+              />
+            </div>
+          </div>
+        )}
+
         {/* Safari Case Study Windows - Multiple can be open */}
         {Object.entries(openCaseStudies).map(([projectId, state]) => (
           state.isOpen && !state.isMinimized && (
@@ -2791,6 +2899,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Photos"
           onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
+        />
+        
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-b from-[#5ac8fa] to-[#007aff] flex items-center justify-center">
+              <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 1.5c4.687 0 8.5 3.813 8.5 8.5s-3.813 8.5-8.5 8.5-8.5-3.813-8.5-8.5 3.813-8.5 8.5-8.5zm0 1.5a7 7 0 100 14 7 7 0 000-14zm-.25 1.75l.5 4.5 3.25 2.75-1 1.25-4-3V6.75h1.25z"/>
+              </svg>
+            </div>
+          }
+          label="Safari"
+          onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false }); setFocusedWindow('safari'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
