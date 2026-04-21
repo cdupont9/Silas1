@@ -2831,7 +2831,112 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             
 {/* Browser Content */}
             <div className="w-full h-[calc(100%-52px)] bg-[#1e1e1e] overflow-auto">
-              {safariUrl ? (
+              {safariUrl === 'wikipedia' ? (
+                /* Fake Wikipedia Page about Charity Dupont */
+                <div className="w-full min-h-full bg-white">
+                  {/* Wikipedia Header */}
+                  <div className="bg-white border-b border-gray-200 px-4 py-2">
+                    <div className="flex items-center gap-4">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/150px-Wikipedia-logo-v2.svg.png" alt="Wikipedia" className="h-12" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                          <span>Article</span>
+                          <span>Talk</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Wikipedia Content */}
+                  <div className="max-w-[900px] mx-auto px-6 py-6">
+                    <h1 className="text-3xl font-serif text-black border-b border-gray-300 pb-2 mb-4">Charity Dupont</h1>
+                    
+                    <div className="flex gap-6">
+                      {/* Main Content */}
+                      <div className="flex-1 text-sm text-gray-800 leading-relaxed">
+                        <p className="mb-4">
+                          <b>Charity Dupont</b> is an American <a href="#" className="text-blue-600 hover:underline">UX/UI designer</a> and <a href="#" className="text-blue-600 hover:underline">AI experience designer</a> currently working at <a href="#" className="text-blue-600 hover:underline">Google</a>. She is known for her work in designing AI-powered user experiences and her focus on creating intuitive, human-centered digital products.
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Early life and education</h2>
+                        <p className="mb-4">
+                          Dupont began her career in web design during the <a href="#" className="text-blue-600 hover:underline">COVID-19 pandemic</a>, initially working on websites for clients through a family connection. This early experience sparked her interest in digital design and user experience.
+                        </p>
+                        <p className="mb-4">
+                          She later pursued formal training in UX/UI design at <a href="#" className="text-blue-600 hover:underline">Columbia University</a>, completing a comprehensive bootcamp program while simultaneously working full-time as a fourth-grade teacher. This period demonstrated her ability to balance multiple demanding responsibilities while developing new professional skills.
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Career</h2>
+                        <p className="mb-4">
+                          Through a connection with one of her professors at Columbia, Dupont was introduced to an opportunity at <a href="#" className="text-blue-600 hover:underline">Google</a>, where she currently works as a UX designer. Her work focuses on AI-driven user experiences, requiring her to design for systems with variable and unpredictable outputs.
+                        </p>
+                        <p className="mb-4">
+                          Dupont&apos;s approach to AI UX design emphasizes clarity, transparency, and user control. She has noted that designing for AI differs significantly from traditional UX because &quot;you are not designing a fixed path—you are designing systems that can change based on input.&quot;
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Design philosophy</h2>
+                        <p className="mb-4">
+                          Dupont is known for her iterative approach to design, often moving quickly from understanding a problem directly into prototyping. She emphasizes the importance of early feedback and has spoken about overcoming perfectionism in her creative process.
+                        </p>
+                        <p className="mb-4">
+                          Her design philosophy centers on making &quot;things make sense, not just look good,&quot; focusing on systems that help users think clearly rather than purely aesthetic considerations.
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Skills and expertise</h2>
+                        <ul className="list-disc ml-6 mb-4">
+                          <li>AI/ML user experience design</li>
+                          <li>Prototyping and live coding</li>
+                          <li>Human-centered design</li>
+                          <li>Design systems</li>
+                          <li>User research and testing</li>
+                        </ul>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">References</h2>
+                        <div className="text-xs text-gray-600">
+                          <p>1. &quot;UX Design in the Age of AI&quot; - Columbia University Design Program</p>
+                          <p>2. Google Design Team Profile, 2024</p>
+                        </div>
+                      </div>
+                      
+                      {/* Infobox */}
+                      <div className="w-[220px] shrink-0">
+                        <div className="border border-gray-300 bg-gray-50 text-sm">
+                          <div className="bg-gray-200 px-3 py-2 text-center font-semibold text-black">Charity Dupont</div>
+                          <div className="p-3">
+                            <div className="w-full h-40 bg-gray-300 mb-3 flex items-center justify-center">
+                              <span className="text-gray-500 text-xs">Photo</span>
+                            </div>
+                            <table className="w-full text-xs">
+                              <tbody>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Occupation</td>
+                                  <td className="py-1 text-gray-800">UX Designer</td>
+                                </tr>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Employer</td>
+                                  <td className="py-1 text-gray-800">Google</td>
+                                </tr>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Education</td>
+                                  <td className="py-1 text-gray-800">Columbia University</td>
+                                </tr>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Known for</td>
+                                  <td className="py-1 text-gray-800">AI UX Design</td>
+                                </tr>
+                                <tr>
+                                  <td className="py-1 font-semibold text-gray-700">Website</td>
+                                  <td className="py-1"><a href="#" className="text-blue-600 hover:underline">charitydupont.com</a></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : safariUrl ? (
                 <iframe
                   src={safariUrl}
                   className="w-full h-full border-0"
@@ -2846,10 +2951,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     <h2 className="text-white/60 text-sm font-medium mb-4">Browse</h2>
                     <div className="grid grid-cols-4 gap-4">
                       {[
-                        { name: 'Wikipedia', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/1200px-Wikipedia%27s_W.svg.png', url: 'https://en.wikipedia.org' },
-                        { name: 'DuckDuckGo', icon: 'https://duckduckgo.com/assets/icons/meta/DDG-iOS-icon_152x152.png', url: 'https://duckduckgo.com' },
-                        { name: 'Archive', icon: 'https://archive.org/images/glogo.jpg', url: 'https://archive.org' },
-                        { name: 'CodePen', icon: 'https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico', url: 'https://codepen.io' },
+                        { name: 'Wikipedia', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/1200px-Wikipedia%27s_W.svg.png', url: 'wikipedia' },
                       ].map((site) => (
                         <button
                           key={site.name}
