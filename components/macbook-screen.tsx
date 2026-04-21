@@ -2231,10 +2231,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           {/* Hilary Duff - Metamorphosis Album */}
           <div 
             className="cursor-pointer hover:scale-105 transition-transform"
-            onDoubleClick={() => setMusicPlayerOpen(true)}
+            onClick={() => setMusicPlayerOpen(true)}
           >
             <img 
-              src="https://upload.wikimedia.org/wikipedia/en/c/c5/Hilary_Duff_-_Metamorphosis.png"
+              src="https://i.scdn.co/image/ab67616d0000b273b0a5e782eb285283adc81ef9"
               alt="Hilary Duff - Metamorphosis"
               className="w-40 h-40 rounded-xl shadow-lg object-cover"
             />
@@ -2265,7 +2265,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             {/* Album Art & Now Playing */}
             <div className="p-6">
               <img 
-                src="https://upload.wikimedia.org/wikipedia/en/c/c5/Hilary_Duff_-_Metamorphosis.png"
+                src="https://i.scdn.co/image/ab67616d0000b273b0a5e782eb285283adc81ef9"
                 alt="Metamorphosis"
                 className="w-48 h-48 mx-auto rounded-lg shadow-xl"
               />
