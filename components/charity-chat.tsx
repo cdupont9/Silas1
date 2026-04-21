@@ -259,6 +259,137 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I want to keep designing AI experiences that genuinely help people - maybe lead a design team one day"
   }
 
+  // ============================================
+  // UX & DESIGN PROCESS
+  // ============================================
+
+  // Prioritizing design
+  if (normalized.match(/priority|prioritize|what (do you |to )design first|where do you start/i)) {
+    return "I focus on what defines the structure of the experience first. I try to identify the core user flow and build outward from that."
+  }
+
+  // Ambiguity
+  if (normalized.match(/ambiguity|uncertainty|unclear|vague|don't have all the info/i)) {
+    return "I'm comfortable with ambiguity, but I try to create structure quickly. I usually break problems down and start prototyping to make uncertainty more visible."
+  }
+
+  // When is it good enough?
+  if (normalized.match(/good enough|when to ship|ready to go|finished|done/i)) {
+    return "When it clearly solves the user problem and the core flow is understandable. It does not need to be perfect, but it needs to be functional and clear."
+  }
+
+  // Balancing user vs business
+  if (normalized.match(/balance|user vs business|business needs|stakeholders/i)) {
+    return "I try to understand both sides and find alignment. I focus on what still allows a good user experience while meeting business constraints."
+  }
+
+  // Disagreement with PM/Engineer
+  if (normalized.match(/disagree|conflict|pm|engineer|dev|don't agree/i)) {
+    return "I approach it through communication and understanding the reasoning behind their perspective. I try to align on the goal rather than the opinion."
+  }
+
+  // What is good UX?
+  if (normalized.match(/what is (good )?ux|definition of ux|ux meaning/i)) {
+    return "Good UX is when the user does not feel confusion. The system feels intuitive, and the user is able to accomplish their goal without friction."
+  }
+
+  // ============================================
+  // AI UX SPECIFIC
+  // ============================================
+
+  // AI UX vs Traditional
+  if (normalized.match(/ai ux vs|traditional ux|difference in ai/i)) {
+    return "AI UX is less predictable. You are not designing a fixed path - you are designing systems that can change based on input. That requires more focus on clarity and uncertainty."
+  }
+
+  // Probabilistic systems
+  if (normalized.match(/probabilistic|variability|predictability|multiple outcomes/i)) {
+    return "You have to design for variability. That means thinking about multiple outcomes instead of a single fixed flow."
+  }
+
+  // Incorrect AI output
+  if (normalized.match(/incorrect|ai (makes a )?mistake|hallucination|wrong output/i)) {
+    return "You need clear feedback loops and ways for users to correct or refine outputs instead of assuming the AI is always correct."
+  }
+
+  // AI explanation/Transparency
+  if (normalized.match(/explain itself|transparency|why did the ai|explainable ai/i)) {
+    return "When the output affects user decision-making or when trust is important. Otherwise, too much explanation can create friction."
+  }
+
+  // Designing trust
+  if (normalized.match(/trust|reliable|believe the ai/i)) {
+    return "Trust comes from clarity, transparency, and consistency in how the system behaves."
+  }
+
+  // Prevent over-reliance
+  if (normalized.match(/over-reliance|blindly following|lazy users/i)) {
+    return "Make sure users are still making decisions, not just accepting outputs. Keep users in control."
+  }
+
+  // Human-in-the-loop
+  if (normalized.match(/human in the loop|hitl|human involvement/i)) {
+    return "It means the user is always part of the decision process, not just receiving outputs passively."
+  }
+
+  // Failure cases
+  if (normalized.match(/failure case|edge case|ai error|something goes wrong/i)) {
+    return "You have to design for uncertainty, errors, and unexpected outputs so users always know what to do next."
+  }
+
+  // ============================================
+  // WORKFLOW & TOOLS (expanded)
+  // ============================================
+
+  // Starting from zero
+  if (normalized.match(/blank slate|starting from (zero|scratch)|new project/i)) {
+    return "I start by understanding the problem, then quickly move into low-fidelity prototyping."
+  }
+
+  // Research to Prototype
+  if (normalized.match(/wireframe|prototype|workflow/i)) {
+    return "I tend to compress this. I move from understanding directly into prototyping, then refine through iteration."
+  }
+
+  // Testing
+  if (normalized.match(/test|user testing|validate|how do you test/i)) {
+    return "I test by sharing early versions and observing confusion points or friction in understanding."
+  }
+
+  // Failures & Disagreements
+  if (normalized.match(/failure|mistake|regret|disagree later/i)) {
+    return "I've had moments where I realized I focused too much on polish early instead of structure. I would adjust by prioritizing iteration sooner."
+  }
+
+  // ============================================
+  // CAREER & INTERVIEW QUESTIONS
+  // ============================================
+
+  // Walk through career
+  if (normalized.match(/walk me through|your story|career path/i)) {
+    return "During COVID, I started working on websites through a client of my mom, and that was my initial hands-on experience with web design. From there, I moved into more structured learning through UX/UI training at Columbia University while also working full-time and teaching fourth grade. Through one of my professors, I was ultimately connected to an opportunity at Google, where I currently work."
+  }
+
+  // Why you?
+  if (normalized.match(/why you|hire you|what (makes you|do you) bring/i)) {
+    return "Because I focus on clarity, iteration, and translating ideas into functional systems quickly while staying open to feedback."
+  }
+
+  // Why UX/AI UX?
+  if (normalized.match(/why (ux|ai ux)|passion/i)) {
+    return "Because it introduces complexity and unpredictability, which requires deeper thinking about systems and behavior."
+  }
+
+  // Environment preference
+  if (normalized.match(/work best|ideal environment|workspace/i)) {
+    return "Clear goals, structured expectations, and space to explore solutions."
+  }
+
+  // Motivation
+  if (normalized.match(/motivation|what drives you|stability/i)) {
+    return "Stability is my primary motivator. A stable foundation allows for clarity, focus, and sustained growth."
+  }
+
   // What makes you unique
   if (normalized.match(/(unique|hire you|candidate|stand out|different|why should)/)) {
     return "I focus on making things make sense, not just look good - I design systems that help people think clearly"
