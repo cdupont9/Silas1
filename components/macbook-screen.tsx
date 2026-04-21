@@ -2778,12 +2778,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               
               {/* Navigation Buttons */}
               <div className="flex gap-2 mr-3">
-                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                <button 
+                  onClick={() => { setSafariUrl(''); setSafariInputUrl(''); }}
+                  className={`w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center transition-colors ${safariUrl ? 'text-black/70' : 'text-black/30'}`}
+                >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
-                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/30">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
