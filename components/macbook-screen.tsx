@@ -365,7 +365,11 @@ export function MacBookScreen() {
   const personalVideos = [
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/1248d3d2-9378-4a55-8436-27859afc42b0.MP4",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/48012242-743F-4BD3-9D46-776EFC06129D.MP4",
-    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4"
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_0222.MOV",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov"
   ]
   const [currentTime, setCurrentTime] = useState("")
   const [loginTime, setLoginTime] = useState("")
