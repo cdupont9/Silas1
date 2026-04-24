@@ -941,8 +941,8 @@ const messageText = mobileInput.trim()
                   onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }}
                   className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-[#5ef67a] to-[#45d34a] flex items-center justify-center">
-                    <MessageCircle className="w-6 h-6 text-white" />
+                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMessage_logo.svg-FX2uXRLcx7RuPBmMqC6YlrYIocaLrP.png" alt="Messages" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-gray-900 text-sm font-medium">Messages</span>
                 </button>
@@ -4856,10 +4856,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] flex items-center justify-center">
-              <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.04 2 11c0 2.21.9 4.21 2.36 5.73-.14 1.52-.75 2.98-1.68 4.12 1.46-.11 2.93-.52 4.19-1.25 1.46.59 3.11.9 4.83.9 5.52 0 10-4.04 10-9s-4.48-9-10-9z" />
-              </svg>
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMessage_logo.svg-FX2uXRLcx7RuPBmMqC6YlrYIocaLrP.png" alt="Messages" className="w-full h-full object-cover" />
             </div>
           }
           label="Messages"
