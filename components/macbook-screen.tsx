@@ -2704,41 +2704,68 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               {/* Project Modal - Netflix Styled Full Case Study */}
               {netflixModal.type === 'project' && netflixModal.data && (
                 <div className="bg-[#141414] text-white">
-                  {/* Hero Section */}
-                  <div className="relative h-[70vh] min-h-[500px]">
-                    <img 
-                      src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.screenshot} 
-                      alt={caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-[#141414]/50 to-transparent" />
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-transparent to-transparent" />
-                    
-                    {/* Hero Content */}
-                    <div className="absolute bottom-0 left-0 right-0 p-12">
-                      <div className="flex items-center gap-4 mb-4">
+                  {/* Hero Section - Gradient Background, NO screenshot */}
+                  <div className={`relative py-16 px-12 ${
+                    netflixModal.data === 'silas' ? 'bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]' :
+                    netflixModal.data === 'teammate' ? 'bg-gradient-to-br from-[#2d1f1f] via-[#3d2a2a] to-[#4a3333]' :
+                    'bg-gradient-to-br from-[#1f1f2d] via-[#2a2a3d] to-[#33334a]'
+                  }`}>
+                    <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10">
+                      {/* App Preview - Small */}
+                      <div className="w-32 flex-shrink-0">
                         <img 
-                          src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.icon} 
-                          alt=""
-                          className="w-16 h-16 rounded-xl object-cover"
+                          src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.screenshot} 
+                          alt={caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
+                          className="w-full h-auto rounded-xl shadow-2xl"
                         />
-                        <div>
-                          <span className="text-red-500 text-sm font-semibold uppercase tracking-wider">Case Study</span>
-                          <h1 className="text-5xl font-bold">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}</h1>
+                      </div>
+                      
+                      {/* Hero Text */}
+                      <div className="text-center md:text-left flex-1">
+                        <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
+                          <img 
+                            src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.icon} 
+                            alt=""
+                            className="w-12 h-12 rounded-xl object-cover"
+                          />
+                          <span className="text-red-500 text-xs font-semibold uppercase tracking-wider">Case Study</span>
+                        </div>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-3">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}</h1>
+                        <p className="text-xl text-white/80 italic mb-3">
+                          &ldquo;{caseStudies[netflixModal.data as keyof typeof caseStudies]?.hero}&rdquo;
+                        </p>
+                        <p className="text-white/60 mb-4 max-w-xl">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.subtitle}</p>
+                        
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-white/50 justify-center md:justify-start">
+                          <span className="text-green-500 font-bold">
+                            {netflixModal.data === 'silas' ? '98%' : netflixModal.data === 'teammate' ? '95%' : '92%'} Match
+                          </span>
+                          <span>{caseStudies[netflixModal.data as keyof typeof caseStudies]?.timeline}</span>
+                          <span className="border border-white/30 px-2 py-0.5 text-xs rounded">HD</span>
+                          <span>{caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}</span>
                         </div>
                       </div>
-                      <p className="text-3xl font-light text-white/90 mb-2 italic">
-                        &ldquo;{caseStudies[netflixModal.data as keyof typeof caseStudies]?.hero}&rdquo;
-                      </p>
-                      <p className="text-xl text-white/70 mb-6">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.subtitle}</p>
-                      
-                      <div className="flex items-center gap-6 text-sm text-white/60">
-                        <span className="text-green-500 font-bold text-lg">
-                          {netflixModal.data === 'silas' ? '98%' : netflixModal.data === 'teammate' ? '95%' : '92%'} Match
-                        </span>
-                        <span>{caseStudies[netflixModal.data as keyof typeof caseStudies]?.timeline}</span>
-                        <span className="border border-white/40 px-2 py-0.5 text-xs">HD</span>
-                        <span>{caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}</span>
+                    </div>
+                  </div>
+                  
+                  {/* Project Info Bar */}
+                  <div className="bg-[#1a1a1a] border-y border-white/10 py-6 px-12">
+                    <div className="max-w-5xl mx-auto grid grid-cols-4 gap-6 text-center">
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Role</p>
+                        <p className="text-white text-sm">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}</p>
+                      </div>
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Year</p>
+                        <p className="text-white text-sm">2024</p>
+                      </div>
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Timeline</p>
+                        <p className="text-white text-sm">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.timeline}</p>
+                      </div>
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Type</p>
+                        <p className="text-white text-sm">UX Case Study</p>
                       </div>
                     </div>
                   </div>
@@ -2813,149 +2840,149 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {netflixModal.data === 'silas' && (
                     <>
                       {/* The Silas Hub */}
-                      <div className="px-12 py-16">
-                        <h2 className="text-2xl font-bold mb-4 text-white">The Silas Hub</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">The Silas Hub</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
                           The Control Center where users see everything - money, orders, and schedule - in one simple list. It doesn&apos;t feel like tech; it feels like a calm morning briefing.
                         </p>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-4 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Dashboard" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Dashboard</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Dashboard" className="w-full max-w-[120px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Dashboard</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Memory Graph</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full max-w-[120px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Memory Graph</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Silas Artifact</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact" className="w-full max-w-[120px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Silas Artifact</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Profile</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile" className="w-full max-w-[120px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Profile</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Wardrobe & Weather */}
-                      <div className="px-12 py-16 bg-[#1a1a1a]">
-                        <h2 className="text-2xl font-bold mb-4 text-white">Wardrobe & Weather</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Wardrobe & Weather</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
                           Silas knows what&apos;s in the closet because it read past shopping receipts. It suggests weather-appropriate outfits with backup options.
                         </p>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                        <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Weather Insight</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather" className="w-full max-w-[120px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Weather Insight</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Receipt" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Digital Receipt</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Receipt" className="w-full max-w-[120px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Digital Receipt</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Outfit Suggestion</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit" className="w-full max-w-[120px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Outfit Suggestion</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Time Management */}
-                      <div className="px-12 py-16">
-                        <h2 className="text-2xl font-bold mb-4 text-white">Time Management</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">Time Management</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
                           Silas understands the physical requirement of traveling. It checks live traffic and offers to book a rideshare at the perfect time.
                         </p>
-                        <div className="grid grid-cols-2 gap-6 max-w-lg mx-auto">
+                        <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Calendar View</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Calendar View</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2057%20%281%29-Cu9zZu25QBG1eFO1YhOVu3lK9vnkSe.png" alt="Rideshare" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Rideshare Suggestion</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2057%20%281%29-Cu9zZu25QBG1eFO1YhOVu3lK9vnkSe.png" alt="Rideshare" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Rideshare</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Financial Intelligence */}
-                      <div className="px-12 py-16 bg-[#1a1a1a]">
-                        <h2 className="text-2xl font-bold mb-4 text-white">Financial Intelligence</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Financial Intelligence</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
                           Instead of confusing codes, Silas displays clear digital receipts. Re-order items directly from your statement - a shoppable catalog.
                         </p>
-                        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <div className="grid grid-cols-5 gap-3 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-xs mt-2 uppercase tracking-wider">Dashboard</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Dashboard</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transactions" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-xs mt-2 uppercase tracking-wider">Transactions</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transactions" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Transactions</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-xs mt-2 uppercase tracking-wider">Receipt</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Receipt</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-xs mt-2 uppercase tracking-wider">Cart</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Cart</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-xs mt-2 uppercase tracking-wider">Checkout</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Checkout</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Product Intelligence */}
-                      <div className="px-12 py-16">
-                        <h2 className="text-2xl font-bold mb-4 text-white">Product Intelligence</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">Product Intelligence</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
                           Search your personal internet. A search engine that cuts through the noise and gives clear, confident choices.
                         </p>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2065-ocyRHiATuNmFkhHzo61QPbO8UARepe.png" alt="Search" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Product Search</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2065-ocyRHiATuNmFkhHzo61QPbO8UARepe.png" alt="Search" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Search</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Results" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Results</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Results" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Results</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Suggestion" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Suggestion</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Suggestion" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Suggestion</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Info" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Product Info</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Info" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Product Info</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Travel Booking */}
-                      <div className="px-12 py-16 bg-[#1a1a1a]">
-                        <h2 className="text-2xl font-bold mb-4 text-white">Explainable Travel Booking</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Explainable Travel Booking</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
                           Silas knows preferences like aisle seats, frequent flyer numbers, and typical budget. Instead of overwhelming options, it presents the best matches.
                         </p>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Trips" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Active Trips</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Trips" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Active Trips</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Preferences</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Preferences</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-BYJJFHCkeMOlIjGP5sQCqcHB3L3MKv.png" alt="Flights" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Flight Options</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-BYJJFHCkeMOlIjGP5sQCqcHB3L3MKv.png" alt="Flights" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Flight Options</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-VzAQN2LlRHTJhHPMzYzNb2M2kCeUgP.png" alt="Booking" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Booking</p>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-VzAQN2LlRHTJhHPMzYzNb2M2kCeUgP.png" alt="Booking" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Booking</p>
                           </div>
                         </div>
                       </div>
@@ -2965,58 +2992,122 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {/* Project Screenshots - Teammate */}
                   {netflixModal.data === 'teammate' && (
                     <>
-                      {/* App Screens */}
-                      <div className="px-12 py-16">
-                        <h2 className="text-2xl font-bold mb-4 text-white">App Experience</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
-                          Teammate leverages sports APIs to filter matches by fandom intensity and streamlines first date logistics by auto-scheduling dates around live game events.
-                        </p>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png" alt="Splash" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Splash Screen</p>
+                      {/* The Competition */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">The Competition</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-xl p-5 border border-white/10">
+                            <div className="flex items-center gap-2 mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/classic-bumble-logo-editable-and-for-tech-branding-and-creative-design-free-png-GQUpsWRD0QoLNqhIzdRe2J51TYAH7o.webp" alt="Bumble" className="w-8 h-8 rounded-lg object-cover" />
+                              <h3 className="font-semibold text-yellow-500">Bumble</h3>
+                            </div>
+                            <p className="text-green-400 text-xs mb-1">Pros: Inclusive, user-friendly</p>
+                            <p className="text-red-400 text-xs">Cons: High competition, fatigue</p>
                           </div>
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Home" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Home</p>
+                          <div className="bg-[#1f1f1f] rounded-xl p-5 border border-white/10">
+                            <div className="flex items-center gap-2 mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tinder-app-logo-tinder-app-logo-transparent-tinder-app-icon-transparent-free-free-png-PDRTDpNBdjoBo1j4DFXEHy6P36zP0Y.webp" alt="Tinder" className="w-8 h-8 rounded-lg object-cover" />
+                              <h3 className="font-semibold text-red-500">Tinder</h3>
+                            </div>
+                            <p className="text-green-400 text-xs mb-1">Pros: Global reach, simple UI</p>
+                            <p className="text-red-400 text-xs">Cons: Casual dating reputation</p>
                           </div>
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone%2014%20%282%29-GQWI9FJcahOG6W7TXuC14GnxYH2C1p.png" alt="Matching" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Matching</p>
-                          </div>
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iPhone%2014%20%283%29-YlEHjnVpBhdcLDY6hRbDLSvKfwJdBP.png" alt="Profile" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Profile</p>
+                          <div className="bg-[#1f1f1f] rounded-xl p-5 border border-white/10">
+                            <div className="flex items-center gap-2 mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hinge-white-logo-icon-clean-with-transparent-background-for-ui-use-free-png-x8G86pfW3DS0MPdgJKfUAix4t3nz4e.webp" alt="Hinge" className="w-8 h-8 rounded-lg object-contain bg-white p-1" />
+                              <h3 className="font-semibold text-white">Hinge</h3>
+                            </div>
+                            <p className="text-green-400 text-xs mb-1">Pros: Quality over quantity</p>
+                            <p className="text-red-400 text-xs">Cons: Slower matching</p>
                           </div>
                         </div>
                       </div>
 
-                      {/* Features Section */}
-                      <div className="px-12 py-16 bg-[#1a1a1a]">
-                        <h2 className="text-2xl font-bold mb-8 text-white">Key Features</h2>
-                        <div className="grid md:grid-cols-3 gap-8">
-                          <div className="bg-[#252525] rounded-xl p-6">
-                            <div className="w-12 h-12 rounded-full bg-pink-600/20 flex items-center justify-center mb-4">
-                              <Heart className="w-6 h-6 text-pink-500" />
+                      {/* User Persona */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">User Persona</h2>
+                        <p className="text-white/70 italic text-center mb-8">&ldquo;Dating would be so much better if I could find someone who shares my love for sports.&rdquo;</p>
+                        <div className="flex flex-col md:flex-row gap-8 items-start max-w-4xl mx-auto">
+                          <div className="flex-shrink-0 text-center">
+                            <div className="w-40 h-48 rounded-lg overflow-hidden mx-auto mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5596c2979c96a2539e3168b8a3ac2bdfc26c3f84-mA8gGyFSaJVUWN1jUAVKb37z4yDtHr.png" alt="Hunter" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-lg font-semibold mb-2">Character-Based Matching</h3>
-                            <p className="text-white/60 text-sm">Match based on personality traits and fandom intensity, not just surface-level preferences.</p>
+                            <h3 className="text-lg font-bold text-white">Hunter Fielding</h3>
+                            <p className="text-white/50 text-xs">36 / Duke Marketing Director</p>
                           </div>
-                          <div className="bg-[#252525] rounded-xl p-6">
-                            <div className="w-12 h-12 rounded-full bg-green-600/20 flex items-center justify-center mb-4">
-                              <MapPin className="w-6 h-6 text-green-500" />
+                          <div className="flex-1 grid md:grid-cols-2 gap-4">
+                            <div className="bg-[#252525] rounded-lg p-4">
+                              <h4 className="text-sm font-semibold text-green-400 mb-2">Goals & Needs</h4>
+                              <ul className="text-white/60 text-xs space-y-1">
+                                <li>Connect with sports enthusiasts</li>
+                                <li>Attend games with a partner</li>
+                                <li>Find fellow Duke fans</li>
+                              </ul>
                             </div>
-                            <h3 className="text-lg font-semibold mb-2">Safe Public Venues</h3>
-                            <p className="text-white/60 text-sm">First dates at sports events - naturally safe, public environments for meeting new people.</p>
+                            <div className="bg-[#252525] rounded-lg p-4">
+                              <h4 className="text-sm font-semibold text-red-400 mb-2">Pain Points</h4>
+                              <ul className="text-white/60 text-xs space-y-1">
+                                <li>Hard to find sports fans on apps</li>
+                                <li>Limited time due to work</li>
+                                <li>Dates don&apos;t align with interests</li>
+                              </ul>
+                            </div>
                           </div>
-                          <div className="bg-[#252525] rounded-xl p-6">
-                            <div className="w-12 h-12 rounded-full bg-blue-600/20 flex items-center justify-center mb-4">
-                              <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        </div>
+                      </div>
+
+                      {/* App Screens */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">App Experience</h2>
+                        <p className="text-white/60 mb-6 text-sm">
+                          Teammate leverages sports APIs to filter matches by fandom intensity and auto-schedules dates around live game events.
+                        </p>
+                        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png" alt="Splash" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Splash</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Home" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Home</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iphone%2014%20%282%29-GQWI9FJcahOG6W7TXuC14GnxYH2C1p.png" alt="Matching" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Matching</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/iPhone%2014%20%283%29-YlEHjnVpBhdcLDY6hRbDLSvKfwJdBP.png" alt="Profile" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Profile</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Key Features */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">Key Features</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <div className="w-10 h-10 rounded-full bg-pink-600/20 flex items-center justify-center mb-3">
+                              <Heart className="w-5 h-5 text-pink-500" />
+                            </div>
+                            <h3 className="font-semibold mb-1 text-sm">Character-Based Matching</h3>
+                            <p className="text-white/50 text-xs">Match based on personality and fandom intensity.</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <div className="w-10 h-10 rounded-full bg-green-600/20 flex items-center justify-center mb-3">
+                              <MapPin className="w-5 h-5 text-green-500" />
+                            </div>
+                            <h3 className="font-semibold mb-1 text-sm">Safe Public Venues</h3>
+                            <p className="text-white/50 text-xs">First dates at sports events - safe, public environments.</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center mb-3">
+                              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                               </svg>
                             </div>
-                            <h3 className="text-lg font-semibold mb-2">Auto-Scheduled Dates</h3>
-                            <p className="text-white/60 text-sm">Dates automatically scheduled around live game events for the perfect sports fan experience.</p>
+                            <h3 className="font-semibold mb-1 text-sm">Auto-Scheduled Dates</h3>
+                            <p className="text-white/50 text-xs">Dates around live game events.</p>
                           </div>
                         </div>
                       </div>
@@ -3026,60 +3117,174 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {/* Project Screenshots - Meetly */}
                   {netflixModal.data === 'meetly' && (
                     <>
-                      {/* App Screens */}
-                      <div className="px-12 py-16">
-                        <h2 className="text-2xl font-bold mb-4 text-white">App Experience</h2>
-                        <p className="text-white/70 mb-8 max-w-3xl">
-                          Meetly simplifies scheduling through user-friendly tools and voting options. The interface eliminates lengthy communication by allowing participants to input availability easily.
-                        </p>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png" alt="Logo" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">App Icon</p>
+                      {/* Problem Statement */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-4 text-white">Problem Statement</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-lg p-5 border border-white/10">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Task</h3>
+                            <p className="text-white/60 text-xs">Design a mobile app or responsive website to meet a specific community need.</p>
                           </div>
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Home Screen</p>
+                          <div className="bg-[#1f1f1f] rounded-lg p-5 border border-white/10">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Outcome</h3>
+                            <p className="text-white/60 text-xs">Develop Meetly, an app to simplify scheduling social hangouts among friends.</p>
                           </div>
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-NxCyMVIJGN7cLb0IIpKIkxPR4ld2r1.png" alt="Group" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Group View</p>
-                          </div>
-                          <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-uqgmxWZ87qcnQ5qYe4N17Fp9LVZdqK.png" alt="Voting" className="w-full rounded-xl" />
-                            <p className="text-white/50 text-sm mt-3 uppercase tracking-wider">Voting Screen</p>
+                          <div className="bg-[#1f1f1f] rounded-lg p-5 border border-white/10">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Goal</h3>
+                            <p className="text-white/60 text-xs">Combine calendar with social ease of a messaging app.</p>
                           </div>
                         </div>
                       </div>
 
-                      {/* Features */}
-                      <div className="px-12 py-16 bg-[#1a1a1a]">
-                        <h2 className="text-2xl font-bold mb-8 text-white">Key Features</h2>
-                        <div className="grid md:grid-cols-3 gap-8">
-                          <div className="bg-[#252525] rounded-xl p-6">
-                            <div className="w-12 h-12 rounded-full bg-purple-600/20 flex items-center justify-center mb-4">
-                              <svg className="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                              </svg>
-                            </div>
-                            <h3 className="text-lg font-semibold mb-2">Voting System</h3>
-                            <p className="text-white/60 text-sm">Democratic decision-making with easy voting on times, places, and activities.</p>
+                      {/* User Persona */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">User Persona & Scenario</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-6">
+                          <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Busy Professional</h3>
+                            <p className="text-white/60 text-xs">Gina Hargreaves, 30-year-old Marketing Director.</p>
                           </div>
-                          <div className="bg-[#252525] rounded-xl p-6">
-                            <div className="w-12 h-12 rounded-full bg-indigo-600/20 flex items-center justify-center mb-4">
-                              <svg className="w-6 h-6 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                              </svg>
-                            </div>
-                            <h3 className="text-lg font-semibold mb-2">Calendar Integration</h3>
-                            <p className="text-white/60 text-sm">Seamless sync with existing calendars to find overlapping free times.</p>
+                          <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">Pain Points</h3>
+                            <p className="text-white/60 text-xs">Coordination fatigue and FOMO due to work commitments.</p>
                           </div>
-                          <div className="bg-[#252525] rounded-xl p-6">
-                            <div className="w-12 h-12 rounded-full bg-pink-600/20 flex items-center justify-center mb-4">
-                              <MessageCircle className="w-6 h-6 text-pink-500" />
-                            </div>
-                            <h3 className="text-lg font-semibold mb-2">Contextual Chat</h3>
-                            <p className="text-white/60 text-sm">Built-in messaging keeps all coordination in one place, no app switching needed.</p>
+                          <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">Core Need</h3>
+                            <p className="text-white/60 text-xs">A hassle-free solution for planning in limited free time.</p>
+                          </div>
+                        </div>
+                        <div className="max-w-2xl mx-auto">
+                          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-ZhAnbMMomKNYq6IDGqTVXQSpImMfcK.jpg" alt="User Persona" className="w-full rounded-lg" />
+                        </div>
+                      </div>
+
+                      {/* Research Synthesis */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">Synthesis & Ideation</h2>
+                        <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto mb-6">
+                          <div>
+                            <h3 className="text-sm font-semibold text-white/80 mb-3 text-center">User Research</h3>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ApLgUHySGxYaPLs-5ZFkUdVzlnsmvsq6Vqp0PWKvAcVfQK.png" alt="Research" className="w-full rounded-lg" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-semibold text-white/80 mb-3 text-center">Feature Prioritization</h3>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4ZAJu3RfxsHn87J-C40JZ9GtirbtlXMkE0VCQ1jcCnpZ3X.png" alt="Prioritization" className="w-full rounded-lg" />
+                          </div>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-3 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-indigo-400 text-xs font-semibold mb-1">Key Insight</h4>
+                            <p className="text-white/50 text-xs">Users appreciate connecting via existing social media.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-indigo-400 text-xs font-semibold mb-1">Key Insight</h4>
+                            <p className="text-white/50 text-xs">Need easier way to see friend availability.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-indigo-400 text-xs font-semibold mb-1">Key Insight</h4>
+                            <p className="text-white/50 text-xs">Privacy filters for sharing calendar without work details.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* User Journey */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">The User Journey</h2>
+                        <p className="text-white/60 text-sm text-center mb-6">From &ldquo;Texting Frustration&rdquo; to &ldquo;Meetly Success&rdquo;</p>
+                        <div className="max-w-3xl mx-auto">
+                          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8DQzUCALXHxbSfU-iN3Pe3zl6xMPnwCcP9vtIQb2ebcDyr.png" alt="User Journey" className="w-full rounded-lg" />
+                        </div>
+                      </div>
+
+                      {/* Usability Testing */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">Usability Testing & Iteration</h2>
+                        <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30 max-w-xl mx-auto mb-6">
+                          <h3 className="text-indigo-400 font-semibold text-sm mb-2">Test Objective</h3>
+                          <p className="text-white/60 text-xs">Assess effectiveness in scheduling a hangout, adding friends, and voting.</p>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-3 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-green-400 text-xs font-semibold mb-1">Change 1</h4>
+                            <p className="text-white/50 text-xs">Added Direct Invite Creation - click date and create invite.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-green-400 text-xs font-semibold mb-1">Change 2</h4>
+                            <p className="text-white/50 text-xs">Adjusted Logic Flow - deadlines before occasion.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-green-400 text-xs font-semibold mb-1">Change 3</h4>
+                            <p className="text-white/50 text-xs">Voting Confirmations for user clarity.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Final Solution */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Final Solution</h2>
+                        <p className="text-white/60 mb-6 text-sm">The complete Meetly experience from personal calendar to group coordination.</p>
+                        
+                        {/* Key Features */}
+                        <div className="grid md:grid-cols-3 gap-3 max-w-2xl mx-auto mb-8">
+                          <div className="bg-[#252525] rounded-lg p-4 text-center">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-1">The Dashboard</h3>
+                            <p className="text-white/50 text-xs">Centralized view of hangouts</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-4 text-center">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-1">Voting Screen</h3>
+                            <p className="text-white/50 text-xs">Simplified group decisions</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-4 text-center">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-1">Contextual Chat</h3>
+                            <p className="text-white/50 text-xs">Messaging with calendar</p>
+                          </div>
+                        </div>
+                        
+                        {/* App Screens Row 1 */}
+                        <div className="grid grid-cols-5 gap-3 max-w-3xl mx-auto mb-4">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Home</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-kvBQ0w5m9bcMxJDLYcbuSSVJrEcrPc.png" alt="Chat" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-Y8hW7TmOJfVaW1Iizh9CJkHWFsIeSd.png" alt="Vote" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-ytP9uUYl1tfuGMTjpRlMvbw57l8wBx.png" alt="Vote 2" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote 2</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-Zx75LyunsQWz207iWPdSipbuqvblvQ.png" alt="Vote 3" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote 3</p>
+                          </div>
+                        </div>
+
+                        {/* App Screens Row 2 */}
+                        <div className="grid grid-cols-5 gap-3 max-w-3xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2028-cLMG7tLrO3aQdiYlfASDZRvCUyqBwb.png" alt="Chat 2" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat 2</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2029-APo5XHVqWgkh2mMOv6e2p6mj91YUmK.png" alt="Chat 3" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat 3</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2030-7MAPn6ktJNerulMwPugsHcYNOqgrdA.png" alt="Time" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Set Time</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2031-0VLOPEN9C6TZam8ou1yfaXriYe3iON.png" alt="Success" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Success</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2032-X5DdZgQI5aSWfhkZd9trlhxvPG8ZEU.png" alt="End" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Home End</p>
                           </div>
                         </div>
                       </div>
