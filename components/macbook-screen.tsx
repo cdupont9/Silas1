@@ -706,60 +706,51 @@ const messageText = mobileInput.trim()
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
           {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-[50px] flex items-center justify-between px-6 pt-3 z-10">
-            <span className="text-white text-[15px] font-semibold">{loginTime}</span>
-            <div className="flex items-center gap-1">
-              {/* Signal dots */}
-              <div className="flex gap-[3px] mr-1">
-                <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
-                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-10">
+            <span className="text-white text-sm font-medium">{loginTime}</span>
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
               </div>
-              <Wifi className="w-[18px] h-[18px] text-white" />
-              {/* Music Toggle */}
+              <Wifi className="w-4 h-4 text-white" />
               <button
                 onClick={() => setAudioEnabled(!audioEnabled)}
-                className="p-0.5 ml-1"
+                className="p-0.5"
               >
                 {audioEnabled ? (
-                  <Volume2 className="w-[18px] h-[18px] text-white" />
+                  <Volume2 className="w-4 h-4 text-white" />
                 ) : (
-                  <VolumeX className="w-[18px] h-[18px] text-white/60" />
+                  <VolumeX className="w-4 h-4 text-white/60" />
                 )}
               </button>
-              {/* iOS Battery with percentage */}
-              <div className="flex items-center gap-1 ml-1">
-                <div className="relative flex items-center">
-                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
-                  </div>
-                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-                </div>
-                <span className="text-white text-[12px] font-medium">52</span>
+              <div className="w-6 h-3 border border-white rounded-sm relative">
+                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
               </div>
             </div>
           </div>
           
-          {/* Lock Screen Content - Uses flex to fill available space */}
-          <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6">
+          {/* Lock Screen Content */}
+          <div className="relative z-10 flex-1 flex flex-col items-center pt-16">
             {/* Time */}
             {mounted && (
-              <div className="text-center mb-4">
-                <div className="text-white text-[64px] font-light leading-none tracking-tight">{loginTime}</div>
-                <div className="text-white/80 text-base mt-1">{currentTime.split("  ")[0]}</div>
+              <div className="text-center mb-2">
+                <div className="text-white text-[70px] font-light leading-none tracking-tight">{loginTime}</div>
+                <div className="text-white/80 text-lg mt-1">{currentTime.split("  ")[0]}</div>
               </div>
             )}
 
             {/* Messages Notification */}
-            <div className="w-full max-w-[320px] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
+            <div className="mt-6 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl overflow-hidden">
                   <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="flex-1">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/70 text-xs line-clamp-2">Welcome to my portfolio! Feel free to check out my case studies.</p>
+                  <p className="text-white/70 text-xs">Welcome to my portfolio on my iPhone! Feel free to check out my case studies.</p>
                 </div>
               </div>
             </div>
@@ -768,32 +759,32 @@ const messageText = mobileInput.trim()
             <button
               onClick={() => setMobileScreen("home")}
               onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
-              className="mt-5 px-12 py-3 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-base active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
+              className="mt-6 px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
             >
               Enter
             </button>
           </div>
 
-          {/* Bottom Controls - Fixed at bottom */}
-          <div className="relative z-20 pb-6 px-10 flex flex-col items-center">
+          {/* Bottom Controls - Flashlight and Camera at very bottom */}
+          <div className="absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20">
             {/* Flashlight and Camera */}
-            <div className="w-full flex justify-between mb-3">
+            <div className="w-full flex justify-between mb-4">
               <button 
                 onClick={toggleFlashlight}
-                className={`w-11 h-11 backdrop-blur-xl rounded-full flex items-center justify-center transition-colors ${flashlightOn ? 'bg-yellow-400' : 'bg-white/20'}`}
+                className={`w-12 h-12 backdrop-blur-xl rounded-full flex items-center justify-center transition-colors ${flashlightOn ? 'bg-yellow-400' : 'bg-white/20'}`}
               >
-                <Flashlight className={`w-5 h-5 ${flashlightOn ? 'text-black' : 'text-white'}`} />
+                <Flashlight className={`w-6 h-6 ${flashlightOn ? 'text-black' : 'text-white'}`} />
               </button>
               <button 
                 onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
-                className="w-11 h-11 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center active:bg-white/30 transition-colors"
+                className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center active:bg-white/30 transition-colors"
               >
-                <Camera className="w-5 h-5 text-white" />
+                <Camera className="w-6 h-6 text-white" />
               </button>
             </div>
 
             {/* Home Indicator */}
-            <div className="w-36 h-1 bg-white rounded-full" />
+            <div className="w-36 h-1.5 bg-white rounded-full" />
           </div>
         </div>
       )
@@ -1017,21 +1008,15 @@ const messageText = mobileInput.trim()
             <div className="h-[50px] flex items-center justify-between px-6 pt-3 bg-[#000]">
               <span className="text-white text-[15px] font-semibold">{loginTime}</span>
               <div className="flex items-center gap-1">
-                <div className="flex gap-[3px] mr-1">
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                <div className="flex items-end gap-[2px] h-3">
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
-                <Wifi className="w-[18px] h-[18px] text-white" />
-                <div className="flex items-center gap-1 ml-1">
-                  <div className="relative flex items-center">
-                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
-                    </div>
-                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-                  </div>
-                  <span className="text-white text-[12px] font-medium">52</span>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="w-6 h-3 border border-white rounded-sm relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
               </div>
             </div>
@@ -1244,21 +1229,15 @@ const messageText = mobileInput.trim()
           <div className="h-12 flex items-center justify-between px-6 pt-2 bg-[#000]">
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
-              <div className="flex gap-[3px] mr-1">
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+              <div className="flex items-end gap-[2px] h-3">
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
-                <Wifi className="w-[18px] h-[18px] text-white" />
-                <div className="flex items-center gap-1 ml-1">
-                  <div className="relative flex items-center">
-                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
-                    </div>
-                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-                  </div>
-                  <span className="text-white text-[12px] font-medium">52</span>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="w-6 h-3 border border-white rounded-sm relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
             </div>
           </div>
@@ -1597,21 +1576,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="h-12 flex items-center justify-between px-6 pt-2">
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
-              <div className="flex gap-[3px] mr-1">
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+              <div className="flex items-end gap-[2px] h-3">
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
-                <Wifi className="w-[18px] h-[18px] text-white" />
-                <div className="flex items-center gap-1 ml-1">
-                  <div className="relative flex items-center">
-                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
-                    </div>
-                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-                  </div>
-                  <span className="text-white text-[12px] font-medium">52</span>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="w-6 h-3 border border-white rounded-sm relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
             </div>
           </div>
@@ -1989,26 +1962,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           {/* Floating Header */}
           <div className="absolute top-0 left-0 right-0 z-10">
             {/* Status Bar */}
-            <div className="h-[50px] flex items-center justify-between px-6 pt-3">
-              <span className="text-white text-[15px] font-semibold">{loginTime}</span>
-              <div className="flex items-center gap-1">
-                {/* Signal dots */}
-                <div className="flex gap-[3px] mr-1">
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
-                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+            <div className="h-12 flex items-center justify-between px-6 pt-2">
+              <span className="text-white text-sm font-medium">{loginTime}</span>
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-end gap-[2px] h-3">
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
-                <Wifi className="w-[18px] h-[18px] text-white" />
-                {/* iOS Battery with percentage */}
-                <div className="flex items-center gap-1 ml-1">
-                  <div className="relative flex items-center">
-                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
-                    </div>
-                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-                  </div>
-                  <span className="text-white text-[12px] font-medium">52</span>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="w-6 h-3 border border-white rounded-sm relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
               </div>
             </div>
