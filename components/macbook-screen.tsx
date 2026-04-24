@@ -880,7 +880,7 @@ const messageText = mobileInput.trim()
           </div>
 
           {/* Scrollable Content Area */}
-          <div className="relative z-10 h-full pt-14 pb-4 overflow-y-auto">
+          <div className="relative z-10 h-full pt-14 pb-4 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch' }}>
             {/* Profile Card */}
             <div className="mx-4 mt-4 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-xl">
               <div className="flex items-center gap-4">
@@ -2090,39 +2090,98 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
               </div>
             ) : (
-              /* Safari Start Page */
-              <div className="w-full h-full flex flex-col items-center pt-12 px-6">
-                {/* Wikipedia Favorite */}
-                <div className="w-full max-w-[300px]">
-                  <h2 className="text-white/60 text-sm font-medium mb-4">Favorites</h2>
-                  <button
-                    onClick={() => setMobileSafariUrl('wikipedia')}
-                    className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-white/5 transition-colors"
-                  >
-                    <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center overflow-hidden p-2">
-                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-full h-full object-contain" />
-                    </div>
-                    <span className="text-white/80 text-sm">Wikipedia</span>
-                  </button>
+              /* Safari Start Page - iOS Style */
+              <div className="w-full h-full bg-[#1c1c1e] overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch' }}>
+                {/* Favorites Section */}
+                <div className="pt-8 px-4">
+                  <h2 className="text-[#8e8e93] text-xs font-semibold uppercase tracking-wide mb-4 px-2">Favorites</h2>
+                  <div className="grid grid-cols-4 gap-4">
+                    {/* Wikipedia */}
+                    <button
+                      onClick={() => setMobileSafariUrl('wikipedia')}
+                      className="flex flex-col items-center gap-2 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-lg">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-12 h-12 object-contain" />
+                      </div>
+                      <span className="text-white text-xs">Wikipedia</span>
+                    </button>
+                    
+                    {/* LinkedIn */}
+                    <a
+                      href="https://linkedin.com/in/charitydupont"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-2 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-lg">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" className="w-10 h-10 object-contain" />
+                      </div>
+                      <span className="text-white text-xs">LinkedIn</span>
+                    </a>
+                    
+                    {/* Google */}
+                    <a
+                      href="https://google.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-2 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-lg">
+                        <img src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" alt="Google" className="w-8 h-8 object-contain" />
+                      </div>
+                      <span className="text-white text-xs">Google</span>
+                    </a>
+                    
+                    {/* Apple */}
+                    <a
+                      href="https://apple.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-2 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-black flex items-center justify-center overflow-hidden shadow-lg">
+                        <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                      </div>
+                      <span className="text-white text-xs">Apple</span>
+                    </a>
+                  </div>
                 </div>
                 
-                {/* My Links */}
-                <div className="w-full max-w-[300px] mt-8">
-                  <h2 className="text-white/60 text-sm font-medium mb-4">My Links</h2>
-                  <a
-                    href="https://linkedin.com/in/charitydupont"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" className="w-8 h-8 object-contain" />
+                {/* Frequently Visited */}
+                <div className="mt-8 px-4">
+                  <h2 className="text-[#8e8e93] text-xs font-semibold uppercase tracking-wide mb-4 px-2">Frequently Visited</h2>
+                  <div className="space-y-0">
+                    <button
+                      onClick={() => setMobileSafariUrl('wikipedia')}
+                      className="w-full flex items-center gap-3 p-3 rounded-xl active:bg-white/5 transition-colors"
+                    >
+                      <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center overflow-hidden">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-8 h-8 object-contain" />
+                      </div>
+                      <div className="flex-1 text-left">
+                        <p className="text-white text-sm font-medium">Charity Dupont - Wikipedia</p>
+                        <p className="text-[#8e8e93] text-xs">en.wikipedia.org</p>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Privacy Report */}
+                <div className="mt-8 mx-4 mb-8 bg-[#2c2c2e] rounded-xl p-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[#0a84ff] flex items-center justify-center">
+                      <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
                     </div>
-                    <span className="text-white/80 text-sm">LinkedIn</span>
-                    <svg className="w-4 h-4 text-white/40 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
+                    <div className="flex-1">
+                      <p className="text-white text-sm font-medium">Privacy Report</p>
+                      <p className="text-[#8e8e93] text-xs">Safari prevented 3 trackers</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
