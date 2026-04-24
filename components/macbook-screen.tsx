@@ -285,9 +285,92 @@ export function MacBookScreen() {
   const [showMobileReactions, setShowMobileReactions] = useState<string | null>(null)
   const MOBILE_REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
   
-  // Mobile GIF input state
-  const [showGifInput, setShowGifInput] = useState(false)
-  const [gifUrl, setGifUrl] = useState('')
+  // Mobile GIF picker state
+  const [showGifPicker, setShowGifPicker] = useState(false)
+  const [gifSearch, setGifSearch] = useState('')
+  const [gifResults, setGifResults] = useState<Array<{id: string, url: string, preview: string}>>([])
+  const [gifLoading, setGifLoading] = useState(false)
+  
+  // Pre-loaded trending GIFs for different categories
+  const TRENDING_GIFS = {
+    trending: [
+      { id: '1', url: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif', preview: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/200w.gif' },
+      { id: '2', url: 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif', preview: 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/200w.gif' },
+      { id: '3', url: 'https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif', preview: 'https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/200w.gif' },
+      { id: '4', url: 'https://media.giphy.com/media/l41lGvinEgARjB2HC/giphy.gif', preview: 'https://media.giphy.com/media/l41lGvinEgARjB2HC/200w.gif' },
+      { id: '5', url: 'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif', preview: 'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif' },
+      { id: '6', url: 'https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif', preview: 'https://media.giphy.com/media/26u4cqiYI30juCOGY/200w.gif' },
+    ],
+    birthday: [
+      { id: 'b1', url: 'https://media.giphy.com/media/g5R9dok94mrIvplmZd/giphy.gif', preview: 'https://media.giphy.com/media/g5R9dok94mrIvplmZd/200w.gif' },
+      { id: 'b2', url: 'https://media.giphy.com/media/WRL7YgP42OKns22wRD/giphy.gif', preview: 'https://media.giphy.com/media/WRL7YgP42OKns22wRD/200w.gif' },
+      { id: 'b3', url: 'https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif', preview: 'https://media.giphy.com/media/artj92V8o75VPL7AeQ/200w.gif' },
+      { id: 'b4', url: 'https://media.giphy.com/media/KdC9XVrVYOVu6zZiMH/giphy.gif', preview: 'https://media.giphy.com/media/KdC9XVrVYOVu6zZiMH/200w.gif' },
+    ],
+    love: [
+      { id: 'l1', url: 'https://media.giphy.com/media/3o7TKoWXm3okO1kgHC/giphy.gif', preview: 'https://media.giphy.com/media/3o7TKoWXm3okO1kgHC/200w.gif' },
+      { id: 'l2', url: 'https://media.giphy.com/media/l0HlOvJ7yaacpuSas/giphy.gif', preview: 'https://media.giphy.com/media/l0HlOvJ7yaacpuSas/200w.gif' },
+      { id: 'l3', url: 'https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif', preview: 'https://media.giphy.com/media/26BRv0ThflsHCqDrG/200w.gif' },
+      { id: 'l4', url: 'https://media.giphy.com/media/M90mJvfWfd5mbUuULX/giphy.gif', preview: 'https://media.giphy.com/media/M90mJvfWfd5mbUuULX/200w.gif' },
+    ],
+    funny: [
+      { id: 'f1', url: 'https://media.giphy.com/media/10JhviFuU2gWD6/giphy.gif', preview: 'https://media.giphy.com/media/10JhviFuU2gWD6/200w.gif' },
+      { id: 'f2', url: 'https://media.giphy.com/media/3oEjHAUOqG3lSS0f1C/giphy.gif', preview: 'https://media.giphy.com/media/3oEjHAUOqG3lSS0f1C/200w.gif' },
+      { id: 'f3', url: 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif', preview: 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/200w.gif' },
+      { id: 'f4', url: 'https://media.giphy.com/media/xUA7bdHu0xn1hVLAIg/giphy.gif', preview: 'https://media.giphy.com/media/xUA7bdHu0xn1hVLAIg/200w.gif' },
+    ],
+    happy: [
+      { id: 'h1', url: 'https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif', preview: 'https://media.giphy.com/media/5GoVLqeAOo6PK/200w.gif' },
+      { id: 'h2', url: 'https://media.giphy.com/media/l0MYGb1LuZ3n7dRnO/giphy.gif', preview: 'https://media.giphy.com/media/l0MYGb1LuZ3n7dRnO/200w.gif' },
+      { id: 'h3', url: 'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/giphy.gif', preview: 'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/200w.gif' },
+      { id: 'h4', url: 'https://media.giphy.com/media/BlVnrxJgTGsUw/giphy.gif', preview: 'https://media.giphy.com/media/BlVnrxJgTGsUw/200w.gif' },
+    ],
+    sad: [
+      { id: 's1', url: 'https://media.giphy.com/media/d2lcHJTG5Tscg/giphy.gif', preview: 'https://media.giphy.com/media/d2lcHJTG5Tscg/200w.gif' },
+      { id: 's2', url: 'https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif', preview: 'https://media.giphy.com/media/OPU6wzx8JrHna/200w.gif' },
+      { id: 's3', url: 'https://media.giphy.com/media/L95W4wv8nnb9K/giphy.gif', preview: 'https://media.giphy.com/media/L95W4wv8nnb9K/200w.gif' },
+      { id: 's4', url: 'https://media.giphy.com/media/3o6wrvdHFbwBrUFenu/giphy.gif', preview: 'https://media.giphy.com/media/3o6wrvdHFbwBrUFenu/200w.gif' },
+    ],
+    dogs: [
+      { id: 'd1', url: 'https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif', preview: 'https://media.giphy.com/media/mCRJDo24UvJMA/200w.gif' },
+      { id: 'd2', url: 'https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif', preview: 'https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/200w.gif' },
+      { id: 'd3', url: 'https://media.giphy.com/media/Y4pAQv58ETJgRwoLxj/giphy.gif', preview: 'https://media.giphy.com/media/Y4pAQv58ETJgRwoLxj/200w.gif' },
+      { id: 'd4', url: 'https://media.giphy.com/media/qrwthQPPQrtEk/giphy.gif', preview: 'https://media.giphy.com/media/qrwthQPPQrtEk/200w.gif' },
+    ],
+    thank: [
+      { id: 't1', url: 'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif', preview: 'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/200w.gif' },
+      { id: 't2', url: 'https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy.gif', preview: 'https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/200w.gif' },
+      { id: 't3', url: 'https://media.giphy.com/media/osjgQPWRx3cac/giphy.gif', preview: 'https://media.giphy.com/media/osjgQPWRx3cac/200w.gif' },
+      { id: 't4', url: 'https://media.giphy.com/media/l3q2wJsC23ikJg9xe/giphy.gif', preview: 'https://media.giphy.com/media/l3q2wJsC23ikJg9xe/200w.gif' },
+    ],
+  }
+  
+  // Search GIFs based on query
+  const searchGifs = (query: string) => {
+    setGifLoading(true)
+    const q = query.toLowerCase().trim()
+    
+    // Match to categories
+    if (q.includes('birthday') || q.includes('bday')) {
+      setGifResults(TRENDING_GIFS.birthday)
+    } else if (q.includes('love') || q.includes('heart')) {
+      setGifResults(TRENDING_GIFS.love)
+    } else if (q.includes('funny') || q.includes('lol') || q.includes('laugh')) {
+      setGifResults(TRENDING_GIFS.funny)
+    } else if (q.includes('happy') || q.includes('yay') || q.includes('excited')) {
+      setGifResults(TRENDING_GIFS.happy)
+    } else if (q.includes('sad') || q.includes('cry')) {
+      setGifResults(TRENDING_GIFS.sad)
+    } else if (q.includes('dog') || q.includes('puppy') || q.includes('pet')) {
+      setGifResults(TRENDING_GIFS.dogs)
+    } else if (q.includes('thank') || q.includes('thanks')) {
+      setGifResults(TRENDING_GIFS.thank)
+    } else {
+      setGifResults(TRENDING_GIFS.trending)
+    }
+    
+    setTimeout(() => setGifLoading(false), 300)
+  }
   
   const addMobileReaction = (messageId: string, reaction: string) => {
     setChatMessages(prev => prev.map(msg => 
@@ -298,28 +381,76 @@ export function MacBookScreen() {
     setShowMobileReactions(null)
   }
   
-  const sendGif = (url: string) => {
-    if (!url.trim()) return
+  const sendGif = (gifData: {id: string, url: string, preview: string}, searchTerm?: string) => {
     const newMsg = {
       id: `msg-${Date.now()}`,
       role: 'user' as const,
-      text: `IMG:${url.trim()}`,
+      text: `IMG:${gifData.url}`,
       time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
     }
     setChatMessages(prev => [...prev, newMsg])
-    setGifUrl('')
-    setShowGifInput(false)
+    setShowGifPicker(false)
+    setGifSearch('')
+    setGifResults([])
     
-    // Get Charity's response to GIF
+    // Get Charity's contextual response to GIF based on category
     setMobileIsTyping(true)
     setTimeout(() => {
-      const responses = [
-        "Nice GIF!",
-        "Haha love it!",
-        "That's a good one!",
-        "LOL!",
-        "I like that!"
-      ]
+      let responses: string[]
+      const term = (searchTerm || gifSearch).toLowerCase()
+      
+      if (term.includes('birthday') || term.includes('bday')) {
+        responses = [
+          "Aww thank you! My birthday is actually coming up in December!",
+          "Birthday vibes! I love celebrations",
+          "This is so cute! Reminds me of my last birthday with Hunter"
+        ]
+      } else if (term.includes('love') || term.includes('heart')) {
+        responses = [
+          "Aww that's so sweet!",
+          "Love this! You're so kind",
+          "This made me smile! Thank you"
+        ]
+      } else if (term.includes('funny') || term.includes('lol') || term.includes('laugh')) {
+        responses = [
+          "Hahaha! That's hilarious!",
+          "LOL this is so funny!",
+          "I needed that laugh today!"
+        ]
+      } else if (term.includes('happy') || term.includes('yay') || term.includes('excited')) {
+        responses = [
+          "Yay! Love the positive energy!",
+          "This makes me happy too!",
+          "Such good vibes!"
+        ]
+      } else if (term.includes('sad') || term.includes('cry')) {
+        responses = [
+          "Aww, is everything okay?",
+          "Hope things get better!",
+          "I'm here if you want to talk about anything"
+        ]
+      } else if (term.includes('dog') || term.includes('puppy') || term.includes('pet')) {
+        responses = [
+          "Omg so cute! Reminds me of Hunter!",
+          "I love dogs! Hunter would love this",
+          "Aww! This is adorable - Hunter is a Dalmatian btw!"
+        ]
+      } else if (term.includes('thank')) {
+        responses = [
+          "You're welcome! Happy to help!",
+          "Of course! Anytime!",
+          "No problem at all!"
+        ]
+      } else {
+        responses = [
+          "Nice GIF!",
+          "Haha love it!",
+          "That's a good one!",
+          "I like that!",
+          "Great choice!"
+        ]
+      }
+      
       const response = responses[Math.floor(Math.random() * responses.length)]
       const charityMsg = {
         id: `msg-${Date.now() + 1}`,
@@ -1187,16 +1318,16 @@ const messageText = mobileInput.trim()
             </div>
 
             {/* Interactive Messages with Charity */}
-            <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-4">
+            <div className="flex-1 overflow-y-auto px-4 py-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+              <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
               {chatMessages.map((msg) => (
-                <div key={msg.id} className={`flex mb-3 w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div 
-                    className="relative max-w-[80%]"
+                    className="relative"
+                    style={{ maxWidth: '75%' }}
                     onDoubleClick={() => msg.role === 'assistant' && setShowMobileReactions(showMobileReactions === msg.id ? null : msg.id)}
                   >
                     {/* Reaction display - iOS style */}
-                    {/* User messages (blue): reaction on LEFT with dot trailing left */}
-                    {/* Assistant messages (gray): reaction on RIGHT with dot trailing right */}
                     {msg.reaction && (
                       <div className={`absolute -top-3 z-50 ${msg.role === 'user' ? '-left-3' : '-right-3'}`}>
                         <div className="relative">
@@ -1223,7 +1354,7 @@ const messageText = mobileInput.trim()
                       </div>
                     )}
                     
-                    <div className={`max-w-[75%] min-w-0 px-4 py-2.5 break-words ${msg.role === 'user'
+                    <div className={`px-4 py-2.5 ${msg.role === 'user'
                         ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
                         : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
                       }`}>
@@ -1289,34 +1420,78 @@ const messageText = mobileInput.trim()
               )}
             </div>
 
-            {/* GIF Input Modal */}
-            {showGifInput && (
-              <div className="absolute inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-                <div className="bg-[#1c1c1e] rounded-2xl p-4 w-full max-w-sm">
-                  <h3 className="text-white text-lg font-semibold mb-3">Add GIF URL</h3>
-                  <input
-                    type="url"
-                    placeholder="Paste GIF URL here..."
-                    value={gifUrl}
-                    onChange={(e) => setGifUrl(e.target.value)}
-                    className="w-full bg-black/50 text-white px-4 py-3 rounded-xl border border-white/20 outline-none mb-3"
-                    autoFocus
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => { setShowGifInput(false); setGifUrl(''); }}
-                      className="flex-1 py-2 text-white bg-gray-600 rounded-xl"
-                    >
+            {/* GIF Picker Slide-up Panel */}
+            {showGifPicker && (
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1c1c1e] rounded-t-2xl z-50 animate-in slide-in-from-bottom duration-300" style={{ height: '55%' }}>
+                {/* Handle bar */}
+                <div className="flex justify-center py-2">
+                  <div className="w-10 h-1 bg-white/30 rounded-full" />
+                </div>
+                
+                {/* Search bar */}
+                <div className="px-3 pb-2">
+                  <div className="flex items-center gap-2 bg-black/40 rounded-xl px-3 py-2">
+                    <Search className="w-4 h-4 text-white/50" />
+                    <input
+                      type="text"
+                      placeholder="Search GIFs..."
+                      value={gifSearch}
+                      onChange={(e) => {
+                        setGifSearch(e.target.value)
+                        if (e.target.value.length > 1) {
+                          searchGifs(e.target.value)
+                        } else if (e.target.value.length === 0) {
+                          setGifResults(TRENDING_GIFS.trending)
+                        }
+                      }}
+                      className="flex-1 bg-transparent text-white text-[15px] placeholder-white/40 outline-none"
+                      autoFocus
+                    />
+                    <button onClick={() => setShowGifPicker(false)} className="text-[#0b84fe] text-[15px] font-medium">
                       Cancel
                     </button>
-                    <button
-                      onClick={() => sendGif(gifUrl)}
-                      disabled={!gifUrl.trim()}
-                      className="flex-1 py-2 text-white bg-[#0b84fe] rounded-xl disabled:opacity-50"
-                    >
-                      Send
-                    </button>
                   </div>
+                </div>
+                
+                {/* Category pills */}
+                <div className="px-3 pb-2 flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+                  {['Trending', 'Birthday', 'Love', 'Funny', 'Happy', 'Sad', 'Dogs', 'Thank You'].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setGifSearch(cat.toLowerCase())
+                        searchGifs(cat.toLowerCase())
+                      }}
+                      className={`px-3 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap ${
+                        gifSearch.toLowerCase() === cat.toLowerCase() 
+                          ? 'bg-[#0b84fe] text-white' 
+                          : 'bg-black/40 text-white/70'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+                
+                {/* GIF grid */}
+                <div className="flex-1 overflow-y-auto px-2 pb-4" style={{ scrollbarWidth: 'none', height: 'calc(100% - 110px)' }}>
+                  {gifLoading ? (
+                    <div className="flex items-center justify-center h-32">
+                      <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-1">
+                      {(gifResults.length > 0 ? gifResults : TRENDING_GIFS.trending).map((gif) => (
+                        <button
+                          key={gif.id}
+                          onClick={() => sendGif(gif, gifSearch)}
+                          className="aspect-square rounded-lg overflow-hidden bg-black/20"
+                        >
+                          <img src={gif.preview || gif.url} alt="GIF" className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -1325,7 +1500,10 @@ const messageText = mobileInput.trim()
             <form onSubmit={handleMobileChatSubmit} className="bg-black px-3 py-2 pb-8 flex items-center gap-2">
               <button 
                 type="button" 
-                onClick={() => setShowGifInput(true)}
+                onClick={() => {
+                  setShowGifPicker(true)
+                  setGifResults(TRENDING_GIFS.trending)
+                }}
                 className="w-8 h-8 bg-[#3b3b3d] rounded-full flex items-center justify-center"
               >
                 <Plus className="w-5 h-5 text-white" />
