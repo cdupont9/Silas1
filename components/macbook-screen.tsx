@@ -2014,35 +2014,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           {/* Photo Grid - 3 columns like iOS */}
           <div className="flex-1 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="grid grid-cols-3 gap-0.5">
-              {/* Captured photos first */}
-              {capturedPhotos.map((photo, idx) => (
-                <button
-                  key={`captured-${idx}`}
-                  onClick={() => setViewingPhoto(idx)}
-                  className="aspect-square overflow-hidden relative"
-                >
-                  <img src={photo} alt={`Captured ${idx + 1}`} className="w-full h-full object-cover" />
-                  {idx === 0 && (
-                    <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
-                      <Camera className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                </button>
-              ))}
-              {/* Personal photos */}
-              {personalPhotos.map((photo, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
-                  className="aspect-square overflow-hidden relative"
-                >
-                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
-                  {idx === 0 && capturedPhotos.length === 0 && (
-                    <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
-                  )}
-                </button>
-              ))}
-              {/* Personal videos */}
+              {/* Personal videos at top */}
               {personalVideos.map((video, idx) => (
                 <button
                   key={`video-${idx}`}
@@ -2068,6 +2040,34 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="absolute bottom-1 right-1 bg-black/60 rounded px-1.5 py-0.5">
                     <span className="text-white text-[10px] font-medium">0:30</span>
                   </div>
+                </button>
+              ))}
+              {/* Captured photos */}
+              {capturedPhotos.map((photo, idx) => (
+                <button
+                  key={`captured-${idx}`}
+                  onClick={() => setViewingPhoto(idx)}
+                  className="aspect-square overflow-hidden relative"
+                >
+                  <img src={photo} alt={`Captured ${idx + 1}`} className="w-full h-full object-cover" />
+                  {idx === 0 && (
+                    <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
+                      <Camera className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </button>
+              ))}
+              {/* Personal photos */}
+              {personalPhotos.map((photo, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
+                  className="aspect-square overflow-hidden relative"
+                >
+                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                  {idx === 0 && capturedPhotos.length === 0 && (
+                    <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
+)}
                 </button>
               ))}
             </div>
