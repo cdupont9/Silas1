@@ -227,7 +227,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -272,6 +272,13 @@ export function MacBookScreen() {
   const [mobileSafariUrl, setMobileSafariUrl] = useState('')
   const [showDownloadBanner, setShowDownloadBanner] = useState(true)
   const [downloadExpanded, setDownloadExpanded] = useState(false)
+  
+  // Camera and Flashlight state
+  const [flashlightOn, setFlashlightOn] = useState(false)
+  const [capturedPhotos, setCapturedPhotos] = useState<string[]>([])
+  const [cameraFacing, setCameraFacing] = useState<'user' | 'environment'>('environment')
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const streamRef = useRef<MediaStream | null>(null)
   
 
   // Audio state
@@ -404,6 +411,90 @@ export function MacBookScreen() {
     setProjectsFolder({ isOpen: false, isMinimized: false })
     setSafariWindow({ isOpen: false, isMinimized: false, project: null })
     setMessagesWindow({ isOpen: false, isMinimized: false })
+  }
+  
+  // Flashlight toggle using device torch
+  const toggleFlashlight = async () => {
+    try {
+      if (flashlightOn) {
+        // Turn off
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop())
+          streamRef.current = null
+        }
+        setFlashlightOn(false)
+      } else {
+        // Turn on
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' }
+        })
+        const track = stream.getVideoTracks()[0]
+        // @ts-expect-error - torch is not in TypeScript types
+        await track.applyConstraints({ advanced: [{ torch: true }] })
+        streamRef.current = stream
+        setFlashlightOn(true)
+      }
+    } catch {
+      // Fallback: just toggle visual state if torch not supported
+      setFlashlightOn(!flashlightOn)
+    }
+  }
+  
+  // Start camera
+  const startCamera = async (facing: 'user' | 'environment' = 'environment') => {
+    try {
+      // Stop any existing stream
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop())
+      }
+      
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: facing, width: { ideal: 1920 }, height: { ideal: 1080 } },
+        audio: false
+      })
+      
+      streamRef.current = stream
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+      }
+    } catch (err) {
+      console.log('[v0] Camera error:', err)
+    }
+  }
+  
+  // Stop camera
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current = null
+    }
+  }
+  
+  // Capture photo
+  const capturePhoto = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas')
+      canvas.width = videoRef.current.videoWidth
+      canvas.height = videoRef.current.videoHeight
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        // Flip horizontally for front camera
+        if (cameraFacing === 'user') {
+          ctx.translate(canvas.width, 0)
+          ctx.scale(-1, 1)
+        }
+        ctx.drawImage(videoRef.current, 0, 0)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.9)
+        setCapturedPhotos(prev => [dataUrl, ...prev])
+      }
+    }
+  }
+  
+  // Switch camera
+  const switchCamera = () => {
+    const newFacing = cameraFacing === 'user' ? 'environment' : 'user'
+    setCameraFacing(newFacing)
+    startCamera(newFacing)
   }
 
   // Drag handlers for widgets and windows
@@ -709,13 +800,19 @@ const messageText = mobileInput.trim()
           </div>
 
           {/* Bottom Controls */}
-          <div className="absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20">
+          <div className={`absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20 transition-all duration-300 ${downloadExpanded ? 'translate-y-0' : ''}`}>
             {/* Flashlight and Camera */}
             <div className="w-full flex justify-between mb-8">
-              <button className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
-                <Flashlight className="w-6 h-6 text-white" />
+              <button 
+                onClick={toggleFlashlight}
+                className={`w-12 h-12 backdrop-blur-xl rounded-full flex items-center justify-center transition-colors ${flashlightOn ? 'bg-yellow-400' : 'bg-white/20'}`}
+              >
+                <Flashlight className={`w-6 h-6 ${flashlightOn ? 'text-black' : 'text-white'}`} />
               </button>
-              <button className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
+              <button 
+                onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
+                className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center active:bg-white/30 transition-colors"
+              >
                 <Camera className="w-6 h-6 text-white" />
               </button>
             </div>
@@ -1736,7 +1833,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             {/* Full Photo View */}
             <div className="flex-1 flex items-center justify-center px-0 bg-white overflow-hidden min-h-0">
               <img
-                src={personalPhotos[viewingPhoto]}
+                src={viewingPhoto < capturedPhotos.length ? capturedPhotos[viewingPhoto] : personalPhotos[viewingPhoto - capturedPhotos.length]}
                 alt={`Photo ${viewingPhoto + 1}`}
                 className="max-w-full max-h-full object-contain"
               />
@@ -1744,12 +1841,21 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
             {/* Thumbnail Strip */}
             <div className="bg-white py-2 px-2 flex-shrink-0">
-              <div className="flex gap-1 overflow-x-auto justify-center">
+              <div className="flex gap-1 overflow-x-auto justify-center scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+                {capturedPhotos.map((photo, idx) => (
+                  <button
+                    key={`thumb-captured-${idx}`}
+                    onClick={() => setViewingPhoto(idx)}
+                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
+                  >
+                    <img src={photo} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
                 {personalPhotos.map((photo, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setViewingPhoto(idx)}
-                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
+                    onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
+                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${capturedPhotos.length + idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
                   >
                     <img src={photo} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -1830,16 +1936,32 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
 
           {/* Photo Grid - 3 columns like iOS */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="grid grid-cols-3 gap-0.5">
-              {personalPhotos.map((photo, idx) => (
+              {/* Captured photos first */}
+              {capturedPhotos.map((photo, idx) => (
                 <button
-                  key={idx}
+                  key={`captured-${idx}`}
                   onClick={() => setViewingPhoto(idx)}
                   className="aspect-square overflow-hidden relative"
                 >
-                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img src={photo} alt={`Captured ${idx + 1}`} className="w-full h-full object-cover" />
                   {idx === 0 && (
+                    <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
+                      <Camera className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </button>
+              ))}
+              {/* Personal photos */}
+              {personalPhotos.map((photo, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
+                  className="aspect-square overflow-hidden relative"
+                >
+                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                  {idx === 0 && capturedPhotos.length === 0 && (
                     <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
                   )}
                 </button>
@@ -2025,6 +2147,103 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             >
               <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
             </button>
+          </div>
+        </div>
+      )
+}
+    
+    // iPhone Camera App
+    if (mobileScreen === "camera") {
+      return (
+        <div className="h-[100dvh] w-full bg-black flex flex-col relative overflow-hidden">
+          {/* Camera Feed */}
+          <video 
+            ref={videoRef}
+            autoPlay 
+            playsInline 
+            muted
+            className={`absolute inset-0 w-full h-full object-cover ${cameraFacing === 'user' ? 'scale-x-[-1]' : ''}`}
+          />
+          
+          {/* Status Bar */}
+          <div className="relative z-10 h-12 flex items-center justify-between px-6 pt-2">
+            <span className="text-white text-sm font-medium drop-shadow-lg">{loginTime}</span>
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-white rounded-[1px] drop-shadow" />
+                <div className="w-[3px] h-[7px] bg-white rounded-[1px] drop-shadow" />
+                <div className="w-[3px] h-[9px] bg-white rounded-[1px] drop-shadow" />
+                <div className="w-[3px] h-[11px] bg-white rounded-[1px] drop-shadow" />
+              </div>
+              <Wifi className="w-4 h-4 text-white drop-shadow" />
+              <div className="w-6 h-3 border border-white rounded-sm relative drop-shadow">
+                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+              </div>
+            </div>
+          </div>
+          
+          {/* Top Controls */}
+          <div className="relative z-10 flex items-center justify-between px-6 py-4">
+            <button 
+              onClick={() => setFlashlightOn(!flashlightOn)}
+              className={`w-10 h-10 rounded-full flex items-center justify-center ${flashlightOn ? 'bg-yellow-400' : 'bg-black/40 backdrop-blur'}`}
+            >
+              <Flashlight className={`w-5 h-5 ${flashlightOn ? 'text-black' : 'text-white'}`} />
+            </button>
+            <div className="text-white/80 text-sm font-medium">Photo</div>
+            <button 
+              onClick={() => { stopCamera(); setMobileScreen('lock'); }}
+              className="text-white text-sm font-medium"
+            >
+              Done
+            </button>
+          </div>
+          
+          {/* Spacer */}
+          <div className="flex-1" />
+          
+          {/* Bottom Controls */}
+          <div className="relative z-10 pb-8 px-8">
+            {/* Mode Selector */}
+            <div className="flex items-center justify-center gap-6 mb-6 text-white/60 text-sm">
+              <span>Video</span>
+              <span className="text-yellow-500 font-semibold">Photo</span>
+              <span>Portrait</span>
+            </div>
+            
+            {/* Camera Controls */}
+            <div className="flex items-center justify-between">
+              {/* Last Photo Thumbnail */}
+              <button 
+                onClick={() => { stopCamera(); setMobileScreen('photos'); }}
+                className="w-12 h-12 rounded-lg overflow-hidden border-2 border-white/30"
+              >
+                {capturedPhotos.length > 0 ? (
+                  <img src={capturedPhotos[0]} alt="Last photo" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-gray-800" />
+                )}
+              </button>
+              
+              {/* Shutter Button */}
+              <button 
+                onClick={capturePhoto}
+                className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center active:scale-95 transition-transform"
+              >
+                <div className="w-16 h-16 rounded-full bg-white" />
+              </button>
+              
+              {/* Flip Camera */}
+              <button 
+                onClick={switchCamera}
+                className="w-12 h-12 rounded-full bg-black/40 backdrop-blur flex items-center justify-center"
+              >
+                <RotateCw className="w-6 h-6 text-white" />
+              </button>
+            </div>
+            
+            {/* Home Indicator */}
+            <div className="mt-6 mx-auto w-36 h-1 bg-white/40 rounded-full" />
           </div>
         </div>
       )

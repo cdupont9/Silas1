@@ -10,6 +10,12 @@ export const metadata: Metadata = {
   title: "Charity's Portfolio",
   description: "Creative Developer & Designer Portfolio",
   generator: 'v0.app',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: "Charity's Portfolio",
+  },
   icons: {
     icon: [
       {
