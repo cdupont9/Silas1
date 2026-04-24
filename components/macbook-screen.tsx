@@ -590,7 +590,7 @@ const messageText = mobileInput.trim()
   if (autoHeart) {
     setTimeout(() => {
       setChatMessages(prev => prev.map(msg => 
-        msg.id === messageId ? { ...msg, reaction: '❤️' } : msg
+        msg.id === messageId ? { ...msg, reaction: '���️' } : msg
       ))
     }, 3000)
   }
@@ -1129,17 +1129,17 @@ const messageText = mobileInput.trim()
               {chatMessages.map((msg) => (
                 <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className="relative">
-                    {/* Reaction display - iMessage style with blue bubble and trailing circles */}
+                    {/* Reaction display - iOS style gray bubble at top-left corner */}
                     {msg.reaction && (
-                      <div className={`absolute -top-4 -left-2 z-10`}>
+                      <div className={`absolute -top-3 ${msg.role === 'user' ? '-right-2' : '-left-2'} z-10`}>
                         <div className="relative">
-                          {/* Main reaction bubble - bright blue like iMessage */}
-                          <div className="w-8 h-8 bg-[#0b84fe] rounded-full flex items-center justify-center shadow-lg">
+                          {/* Main reaction bubble - gray like iOS */}
+                          <div className="w-7 h-7 bg-[#e5e5ea] rounded-full flex items-center justify-center shadow-sm border border-gray-200">
                             <span className="text-sm">{msg.reaction}</span>
                           </div>
-                          {/* Trailing circles like iMessage thought bubble */}
-                          <div className="absolute -bottom-0.5 right-0 w-2.5 h-2.5 bg-[#0b84fe] rounded-full" />
-                          <div className="absolute -bottom-2 -right-1 w-1.5 h-1.5 bg-[#0b84fe] rounded-full" />
+                          {/* Trailing circles like iOS thought bubble */}
+                          <div className={`absolute -bottom-0.5 ${msg.role === 'user' ? 'left-0' : 'right-0'} w-2 h-2 bg-[#e5e5ea] rounded-full border border-gray-200`} />
+                          <div className={`absolute -bottom-2 ${msg.role === 'user' ? '-left-1' : '-right-1'} w-1.5 h-1.5 bg-[#e5e5ea] rounded-full border border-gray-200`} />
                         </div>
                       </div>
                     )}
@@ -1767,6 +1767,33 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="bg-[#f2f2f7] py-2">
             <div className="mx-auto w-36 h-1 bg-black/20 rounded-full" />
           </div>
+
+          {/* Leaving Portfolio Popup */}
+          {showLeavingPopup && (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+              <div className="bg-white rounded-2xl p-6 max-w-sm mx-4 shadow-2xl">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Leaving Portfolio</h3>
+                <p className="text-gray-600 mb-6">You are now leaving Charity Dupont&apos;s MacBook portfolio.</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <a
+                    href={showLeavingPopup}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors text-center"
+                  >
+                    Continue
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )
     }
@@ -2317,6 +2344,33 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <div className="mx-auto w-36 h-1 bg-black/20 rounded-full" />
             </button>
           </div>
+
+          {/* Leaving Portfolio Popup */}
+          {showLeavingPopup && (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+              <div className="bg-white rounded-2xl p-6 max-w-sm mx-4 shadow-2xl">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Leaving Portfolio</h3>
+                <p className="text-gray-600 mb-6">You are now leaving Charity Dupont&apos;s MacBook portfolio.</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <a
+                    href={showLeavingPopup}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors text-center"
+                  >
+                    Continue
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )
     }
