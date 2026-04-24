@@ -4208,12 +4208,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z" />
           </svg>
           {/* Battery - same style as mobile */}
-          <div className="flex items-center">
+          <div className="flex items-center ml-1">
             <div className="relative flex items-center">
-              <div className="w-[22px] h-[11px] border-[1.5px] border-current rounded-[3px] relative overflow-hidden opacity-90">
+              <div className="w-[25px] h-[12px] border-[1.5px] border-current rounded-[3px] relative overflow-hidden">
                 <div className="absolute inset-[1px] bg-current rounded-[1px]" style={{ width: '80%' }} />
               </div>
-              <div className="w-[1.5px] h-[5px] bg-current rounded-r-sm ml-[0.5px] opacity-90" />
+              <div className="w-[1.5px] h-[5px] bg-current rounded-r-sm ml-[1px]" />
             </div>
           </div>
           <button
