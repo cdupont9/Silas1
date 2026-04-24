@@ -241,6 +241,7 @@ export function MacBookScreen() {
   const [selectedNote, setSelectedNote] = useState<number | null>(null)
   const [viewingPhoto, setViewingPhoto] = useState<number | null>(null)
   const [viewingVideo, setViewingVideo] = useState<number | null>(null)
+  const [viewingMediaIndex, setViewingMediaIndex] = useState<number | null>(null)
   const [password, setPassword] = useState("")
   const [aboutWindow, setAboutWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [projectsFolder, setProjectsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
@@ -1823,69 +1824,38 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
     // iPhone Photos App
     if (mobileScreen === "photos") {
-      // Video Viewer - iOS Style
-      if (viewingVideo !== null) {
-        return (
-          <div className="h-screen w-full bg-black flex flex-col overflow-hidden relative">
-            {/* Video Player - Full Screen */}
-            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden">
-              <video
-                src={personalVideos[viewingVideo]}
-                controls
-                autoPlay
-                playsInline
-                className="w-full h-full object-contain"
-                style={{
-                  // iOS-style video controls
-                  colorScheme: 'dark'
-                }}
-              />
-            </div>
-
-            {/* Top Overlay - Back button and options */}
-            <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/60 to-transparent pt-12 pb-8 px-4">
-              <div className="flex items-center justify-between">
-                <button 
-                  onClick={() => setViewingVideo(null)} 
-                  className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
-                >
-                  <ChevronLeft className="w-6 h-6 text-white" />
-                </button>
-                <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <MoreHorizontal className="w-5 h-5 text-white" />
-                </button>
-              </div>
-            </div>
-
-            {/* Bottom Overlay - Share and actions */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent pb-8 pt-12 px-6">
-              <div className="flex items-center justify-between">
-                <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                  <Share className="w-5 h-5 text-white" />
-                </button>
-                <div className="flex items-center gap-4">
-                  <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <Heart className="w-5 h-5 text-white" />
-                  </button>
-                  <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                    <Trash2 className="w-5 h-5 text-white" />
-                  </button>
-                </div>
-              </div>
-              {/* Home Indicator */}
-              <div className="mt-4">
-                <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
-              </div>
-            </div>
-          </div>
-        )
+      // Build combined media array for the entire Photos section
+      const allMedia: Array<{type: 'photo' | 'video' | 'captured', src: string, originalIndex: number}> = []
+      
+      // Add captured photos first
+      capturedPhotos.forEach((photo, idx) => {
+        allMedia.push({ type: 'captured', src: photo, originalIndex: idx })
+      })
+      
+      // Mix personal photos and videos
+      const videoPositions = [0, 3, 6, 9, 12, 15, 18]
+      let photoIdx = 0
+      let videoIdx = 0
+      
+      for (let i = 0; i < personalPhotos.length + personalVideos.length; i++) {
+        if (videoPositions.includes(i - capturedPhotos.length) && videoIdx < personalVideos.length) {
+          allMedia.push({ type: 'video', src: personalVideos[videoIdx], originalIndex: videoIdx })
+          videoIdx++
+        } else if (photoIdx < personalPhotos.length) {
+          allMedia.push({ type: 'photo', src: personalPhotos[photoIdx], originalIndex: photoIdx })
+          photoIdx++
+        }
       }
 
-      if (viewingPhoto !== null) {
+      // Media Viewer - unified for photos and videos with swipeable thumbnails
+      if (viewingMediaIndex !== null) {
+        const currentMedia = allMedia[viewingMediaIndex]
+        const isVideo = currentMedia?.type === 'video'
+        
         return (
           <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
             {/* Status Bar */}
-            <div className="h-12 flex items-center justify-between px-6 pt-2">
+            <div className="flex-shrink-0 h-12 flex items-center justify-between px-6 pt-2">
               <span className="text-white text-sm font-medium">{loginTime}</span>
               <div className="flex items-center gap-1.5">
                 <div className="flex items-end gap-[2px] h-3">
@@ -1901,81 +1871,112 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
 
-            {/* Header - Day name and time */}
-            <div className="px-4 py-2 flex items-center justify-between">
-              <button onClick={() => setViewingPhoto(null)} className="text-[#0a84ff]">
+            {/* Header */}
+            <div className="flex-shrink-0 px-4 py-2 flex items-center justify-between">
+              <button onClick={() => setViewingMediaIndex(null)} className="text-[#0a84ff]">
                 <ChevronLeft className="w-7 h-7" />
               </button>
               <div className="text-center">
-                <p className="text-white text-[17px] font-semibold">Friday</p>
-                <p className="text-white/60 text-[13px]">10:52 PM</p>
+                <p className="text-white text-[15px]">{isVideo ? 'Video' : 'Photo'}</p>
               </div>
               <button className="text-[#0a84ff]">
                 <MoreHorizontal className="w-6 h-6" />
               </button>
             </div>
 
-            {/* Full Photo View */}
-            <div className="flex-1 flex items-center justify-center px-0 bg-white overflow-hidden min-h-0">
-              <img
-                src={viewingPhoto < capturedPhotos.length ? capturedPhotos[viewingPhoto] : personalPhotos[viewingPhoto - capturedPhotos.length]}
-                alt={`Photo ${viewingPhoto + 1}`}
-                className="max-w-full max-h-full object-contain"
-              />
+            {/* Main Media View */}
+            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden min-h-0 relative">
+              {/* Swipe left/right buttons */}
+              {viewingMediaIndex > 0 && (
+                <button 
+                  onClick={() => setViewingMediaIndex(viewingMediaIndex - 1)}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center z-10"
+                >
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </button>
+              )}
+              {viewingMediaIndex < allMedia.length - 1 && (
+                <button 
+                  onClick={() => setViewingMediaIndex(viewingMediaIndex + 1)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center z-10"
+                >
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </button>
+              )}
+              
+              {isVideo ? (
+                <video
+                  key={currentMedia.src}
+                  src={currentMedia.src}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="max-w-full max-h-full object-contain"
+                  style={{ colorScheme: 'dark' }}
+                />
+              ) : (
+                <img
+                  src={currentMedia.src}
+                  alt="Media"
+                  className="max-w-full max-h-full object-contain"
+                />
+              )}
             </div>
 
-            {/* Thumbnail Strip */}
-            <div className="bg-white py-2 px-2 flex-shrink-0">
-              <div className="flex gap-1 overflow-x-auto justify-center scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
-                {capturedPhotos.map((photo, idx) => (
+            {/* iOS-style Thumbnail Strip - Swipeable */}
+            <div className="flex-shrink-0 bg-black/90 py-3 px-2">
+              <div 
+                className="flex gap-1.5 overflow-x-auto scrollbar-none px-2" 
+                style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+              >
+                {allMedia.map((media, idx) => (
                   <button
-                    key={`thumb-captured-${idx}`}
-                    onClick={() => setViewingPhoto(idx)}
-                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
+                    key={`thumb-${idx}`}
+                    onClick={() => setViewingMediaIndex(idx)}
+                    className={`w-12 h-12 flex-shrink-0 rounded-sm overflow-hidden relative transition-all ${
+                      idx === viewingMediaIndex 
+                        ? 'ring-2 ring-white scale-105' 
+                        : 'opacity-60'
+                    }`}
                   >
-                    <img src={photo} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-                {personalPhotos.map((photo, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
-                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${capturedPhotos.length + idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
-                  >
-                    <img src={photo} alt="" className="w-full h-full object-cover" />
+                    {media.type === 'video' ? (
+                      <>
+                        <video src={media.src} className="w-full h-full object-cover" muted playsInline preload="metadata" />
+                        <div className="absolute bottom-0.5 left-0.5">
+                          <svg className="w-2.5 h-2.5 text-white drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </>
+                    ) : (
+                      <img src={media.src} alt="" className="w-full h-full object-cover" />
+                    )}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* Action Toolbar */}
-            <div className="bg-white py-2 px-8 flex items-center justify-between flex-shrink-0">
-              <button className="text-[#0a84ff]">
-                <Share className="w-6 h-6" />
+            {/* iOS Action Toolbar */}
+            <div className="flex-shrink-0 bg-black py-3 px-6 flex items-center justify-between">
+              <button className="p-2">
+                <Share className="w-6 h-6 text-[#0a84ff]" />
               </button>
-              <div className="flex items-center gap-6">
-                <button className="text-[#0a84ff]">
-                  <Heart className="w-6 h-6" />
-                </button>
-                <button className="text-[#0a84ff]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
-                  </svg>
-                </button>
-                <button className="text-[#0a84ff]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-                  </svg>
-                </button>
-              </div>
-              <button className="text-[#0a84ff]">
-                <Trash2 className="w-6 h-6" />
+              <button className="p-2">
+                <Heart className="w-6 h-6 text-[#0a84ff]" />
+              </button>
+              <button className="p-2">
+                <svg className="w-6 h-6 text-[#0a84ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </button>
+              <button className="p-2">
+                <Trash2 className="w-6 h-6 text-[#0a84ff]" />
               </button>
             </div>
 
             {/* Home Indicator */}
-            <div className="bg-white py-2">
-              <div className="mx-auto w-36 h-1 bg-black/20 rounded-full" />
+            <div className="flex-shrink-0 bg-black pb-2 pt-1">
+              <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
             </div>
           </div>
         )
@@ -2001,122 +2002,103 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
 
           {/* Header with Back button and Library title */}
-          <div className="px-4 pt-2 pb-1">
-            <div className="flex items-center justify-between mb-2">
-              <button onClick={() => setMobileScreen('home')} className="flex items-center gap-1 text-[#0a84ff]">
-                <ChevronLeft className="w-6 h-6" />
-                <span className="text-[17px]">Back</span>
+          <div className="px-4 pt-2 pb-3">
+            <div className="flex items-center justify-between mb-3">
+              <button onClick={() => setMobileScreen('home')} className="flex items-center gap-0.5 text-[#0a84ff]">
+                <ChevronLeft className="w-5 h-5" />
+                <span className="text-[17px]">Library</span>
               </button>
-              <div className="flex items-center gap-3">
-                <button className="text-white/80 text-[17px]">Select</button>
-                <div className="w-8 h-8 rounded-full overflow-hidden">
-                  <img src={MEMOJI_URL} alt="Profile" className="w-full h-full object-cover" />
-                </div>
-              </div>
+              <button className="text-[#0a84ff] text-[17px]">Select</button>
             </div>
-            <div>
-              <h1 className="text-white text-3xl font-bold">Library</h1>
-              <p className="text-white/60 text-[15px]">Mar 13, 2026</p>
+            <div className="flex items-center justify-between">
+              <h1 className="text-white text-2xl font-bold">All Photos</h1>
+              <button className="text-[#0a84ff] text-[15px]">
+                <MoreHorizontal className="w-6 h-6" />
+              </button>
             </div>
           </div>
 
-          {/* Photo Grid - 3 columns like iOS - Mixed photos and videos */}
+          {/* Photo Grid - 3 columns like iOS */}
           <div className="flex-1 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="grid grid-cols-3 gap-0.5">
-              {(() => {
-                // Create mixed media array with photos and videos interspersed
-                const allMedia: Array<{type: 'photo' | 'video' | 'captured', src: string, index: number}> = []
-                
-                // Add captured photos first
-                capturedPhotos.forEach((photo, idx) => {
-                  allMedia.push({ type: 'captured', src: photo, index: idx })
-                })
-                
-                // Mix personal photos and videos
-                const videoPositions = [0, 3, 5, 8, 11, 14, 17] // Positions where videos will appear
-                let photoIdx = 0
-                let videoIdx = 0
-                
-                for (let i = 0; i < personalPhotos.length + personalVideos.length; i++) {
-                  if (videoPositions.includes(i) && videoIdx < personalVideos.length) {
-                    allMedia.push({ type: 'video', src: personalVideos[videoIdx], index: videoIdx })
-                    videoIdx++
-                  } else if (photoIdx < personalPhotos.length) {
-                    allMedia.push({ type: 'photo', src: personalPhotos[photoIdx], index: photoIdx })
-                    photoIdx++
-                  }
-                }
-                
-                return allMedia.map((item, idx) => {
-                  if (item.type === 'video') {
-                    return (
-                      <button
-                        key={`video-${item.index}`}
-                        onClick={() => setViewingVideo(item.index)}
-                        className="aspect-square overflow-hidden relative bg-black"
-                      >
-                        <video 
-                          src={item.src} 
-                          className="w-full h-full object-cover"
-                          muted
-                          playsInline
-                          preload="metadata"
-                        />
-                        {/* iOS-style video indicator - small play icon bottom left */}
-                        <div className="absolute bottom-1 left-1 flex items-center gap-1">
-                          <svg className="w-3 h-3 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z" />
-                          </svg>
-                          <span className="text-white text-[11px] font-semibold drop-shadow-md">0:30</span>
+            <div className="grid grid-cols-3 gap-[1px] bg-black">
+              {allMedia.map((item, idx) => {
+                if (item.type === 'video') {
+                  return (
+                    <button
+                      key={`media-${idx}`}
+                      onClick={() => setViewingMediaIndex(idx)}
+                      className="aspect-square overflow-hidden relative bg-black"
+                    >
+                      <video 
+                        src={item.src} 
+                        className="w-full h-full object-cover"
+                        muted
+                        playsInline
+                        preload="metadata"
+                      />
+                      {/* iOS-style video indicator */}
+                      <div className="absolute bottom-1 left-1 flex items-center gap-0.5">
+                        <svg className="w-3 h-3 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                        <span className="text-white text-[11px] font-medium drop-shadow-md">0:30</span>
+                      </div>
+                    </button>
+                  )
+                } else {
+                  return (
+                    <button
+                      key={`media-${idx}`}
+                      onClick={() => setViewingMediaIndex(idx)}
+                      className="aspect-square overflow-hidden relative"
+                    >
+                      <img src={item.src} alt="" className="w-full h-full object-cover" />
+                      {item.type === 'captured' && item.originalIndex === 0 && (
+                        <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
+                          <Camera className="w-3 h-3 text-white" />
                         </div>
-                      </button>
-                    )
-                  } else if (item.type === 'captured') {
-                    return (
-                      <button
-                        key={`captured-${item.index}`}
-                        onClick={() => setViewingPhoto(item.index)}
-                        className="aspect-square overflow-hidden relative"
-                      >
-                        <img src={item.src} alt={`Captured ${item.index + 1}`} className="w-full h-full object-cover" />
-                        {item.index === 0 && (
-                          <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
-                            <Camera className="w-3 h-3 text-white" />
-                          </div>
-                        )}
-                      </button>
-                    )
-                  } else {
-                    return (
-                      <button
-                        key={`photo-${item.index}`}
-                        onClick={() => setViewingPhoto(capturedPhotos.length + item.index)}
-                        className="aspect-square overflow-hidden relative"
-                      >
-                        <img src={item.src} alt={`Photo ${item.index + 1}`} className="w-full h-full object-cover" />
-                        {item.index === 0 && capturedPhotos.length === 0 && (
-                          <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
-                        )}
-                      </button>
-                    )
-                  }
-                })
-              })()}
+                      )}
+                    </button>
+                  )
+                }
+              })}
             </div>
           </div>
 
-          {/* Bottom Filter Bar */}
-          <div className="bg-black/90 px-4 py-3 flex items-center justify-center">
-            <div className="flex items-center gap-2 bg-white/10 rounded-full px-1 py-1">
-              <button className="px-4 py-1.5 text-white/60 text-[15px]">Years</button>
-              <button className="px-4 py-1.5 text-white/60 text-[15px]">Months</button>
-              <button className="px-4 py-1.5 bg-white/20 rounded-full text-white text-[15px]">All</button>
+          {/* iOS Bottom Tab Bar */}
+          <div className="flex-shrink-0 bg-[#1c1c1e] border-t border-white/10 py-2 px-6">
+            <div className="flex items-center justify-around">
+              <button className="flex flex-col items-center gap-1">
+                <svg className="w-6 h-6 text-[#0a84ff]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V5h14v14H5z"/>
+                  <path d="M7 7h4v4H7zM13 7h4v4h-4zM7 13h4v4H7zM13 13h4v4h-4z"/>
+                </svg>
+                <span className="text-[10px] text-[#0a84ff]">Library</span>
+              </button>
+              <button className="flex flex-col items-center gap-1">
+                <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+                <span className="text-[10px] text-white/50">For You</span>
+              </button>
+              <button className="flex flex-col items-center gap-1">
+                <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <span className="text-[10px] text-white/50">Albums</span>
+              </button>
+              <button className="flex flex-col items-center gap-1">
+                <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+                <span className="text-[10px] text-white/50">Search</span>
+              </button>
             </div>
           </div>
 
           {/* Home Indicator */}
-          <div className="bg-black py-2">
-            <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+          <div className="flex-shrink-0 bg-[#1c1c1e] pb-2 pt-1">
+            <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
           </div>
         </div>
       )
