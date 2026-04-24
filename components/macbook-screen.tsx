@@ -2443,21 +2443,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </form>
             <p className="text-white/40 text-xs mt-3">No password needed to access</p>
-            
-            {/* DupontFlix Button */}
-            <button
-              onClick={() => {
-                setScreenState("netflixLoading")
-                setTimeout(() => setScreenState("netflix"), 2500)
-              }}
-              className="mt-8 group flex items-center gap-2 text-white/50 hover:text-white transition-colors"
-            >
-              <span className="text-sm">Click here for</span>
-              <span className="text-sm font-semibold text-red-500 group-hover:text-red-400 transition-colors">DupontFlix</span>
-              <svg className="w-4 h-4 text-red-500 group-hover:text-red-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </button>
           </div>
         </div>
       </div>
@@ -3670,19 +3655,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <DropdownMenuSeparator className="bg-black/10" />
               <DropdownMenuItem className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 System Settings...
-              </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-black/10" />
-              <DropdownMenuItem 
-                onClick={() => {
-                  setScreenState("netflixLoading")
-                  setTimeout(() => setScreenState("netflix"), 2500)
-                }}
-                className="cursor-pointer focus:bg-red-500 focus:text-white"
-              >
-                <svg className="w-4 h-4 mr-2 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M5.398 0v.006c3.028 8.556 5.37 15.175 8.348 23.596 2.344.058 4.85.398 4.854.398-2.8-7.924-5.923-16.747-8.487-24zm8.489 0v9.63L18.6 22.951c-.043-7.86-.004-15.913.002-22.95zM5.398 1.05V24c1.873-.225 2.81-.312 4.715-.398v-9.22z"/>
-                </svg>
-                <span className="text-red-500 font-medium">DupontFlix</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-black/10" />
               <DropdownMenuItem className="cursor-pointer focus:bg-blue-500 focus:text-white">
