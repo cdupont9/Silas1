@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -548,7 +548,7 @@ export function MacBookScreen() {
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5380-slsfm6sbzMLaACQBWI4xxdUiuTOvHd.jpg"
   ]
   
-  // Personal videos for mobile Photos library only
+  // Personal videos
   const personalVideos = [
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/1248d3d2-9378-4a55-8436-27859afc42b0.MP4",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/48012242-743F-4BD3-9D46-776EFC06129D.MP4",
@@ -557,6 +557,28 @@ export function MacBookScreen() {
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov"
+  ]
+  
+  // Combined media for desktop Photos app (mixed photos and videos)
+  const desktopMedia: Array<{type: 'photo' | 'video', url: string}> = [
+    { type: 'photo', url: "/images/sunflowers-sunrise.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/1248d3d2-9378-4a55-8436-27859afc42b0.MP4" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7592-px1oAdcjTmaa9c7aTzlifKeaOqtueY.jpg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_6030-HDajKbzLzr6NbShaVi96ClYMP8BhmX.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/48012242-743F-4BD3-9D46-776EFC06129D.MP4" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3f8de33d-4c26-4ebb-9f10-d1ed1073fe58.JPG-Z2f5Pmtz0aNiNTX7UVFea7jzrLPwrf.jpeg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0089.JPG-ny4ZUKnkaTaq64nuENlExBo5Mqmi5q.jpeg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2e2f3d08-d3fe-45db-a7a2-b93ecc0bea49.JPG-cSfHYSFu1O8pB2zkZPiM3QYrCRLWGO.jpeg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0402-B6ik9cU5RksRk7f02Hsd1qgBPFD9Yi.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_0222.MOV" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8746%20%281%29-ykl4qPdci0vLiSAJwAbpTJlqY79eHb.jpg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facetune_05-10-2025-08-52-01-QaKLBArAwKX819Wed7HtYbzdlq4UK1.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1207.JPG-Wv7RabMUc5nFqjUZD3HiibNmpVMM90.jpeg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5380-slsfm6sbzMLaACQBWI4xxdUiuTOvHd.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov" },
   ]
   const [currentTime, setCurrentTime] = useState("")
   const [loginTime, setLoginTime] = useState("")
@@ -4372,18 +4394,32 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     {/* Grid Header */}
                     <div className="px-4 py-3 border-b border-white/10">
                       <h2 className="text-white text-lg font-semibold">All Photos</h2>
-                      <p className="text-white/50 text-xs">{personalPhotos.length} photos</p>
+                      <p className="text-white/50 text-xs">{desktopMedia.length} items</p>
                     </div>
                     {/* Photo Grid */}
                     <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
                       <div className="grid grid-cols-4 gap-2">
-                        {personalPhotos.map((photo, idx) => (
+                        {desktopMedia.map((media, idx) => (
                           <button
                             key={idx}
                             onClick={() => setSelectedPhotoIndex(idx)}
-                            className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
+                            className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all relative"
                           >
-                            <img src={photo} alt="" className="w-full h-full object-cover" />
+                            {media.type === 'video' ? (
+                              <>
+                                <video src={media.url} className="w-full h-full object-cover" muted />
+                                <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                                  <div className="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center">
+                                    <Play className="w-4 h-4 text-black ml-0.5" fill="black" />
+                                  </div>
+                                </div>
+                                <div className="absolute bottom-1 right-1 bg-black/60 px-1.5 py-0.5 rounded text-[10px] text-white">
+                                  Video
+                                </div>
+                              </>
+                            ) : (
+                              <img src={media.url} alt="" className="w-full h-full object-cover" />
+                            )}
                           </button>
                         ))}
                       </div>
@@ -4400,29 +4436,38 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <ChevronLeft className="w-4 h-4" />
                         All Photos
                       </button>
-                      <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {personalPhotos.length}</span>
+                      <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {desktopMedia.length}</span>
                       <div className="flex gap-2">
                         <button
-                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + personalPhotos.length) % personalPhotos.length : 0)}
+                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + desktopMedia.length) % desktopMedia.length : 0)}
                           className="p-1 rounded hover:bg-white/10"
                         >
                           <ChevronLeft className="w-5 h-5 text-white/60" />
                         </button>
                         <button
-                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % personalPhotos.length : 0)}
+                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % desktopMedia.length : 0)}
                           className="p-1 rounded hover:bg-white/10"
                         >
                           <ChevronRight className="w-5 h-5 text-white/60" />
                         </button>
                       </div>
                     </div>
-                    {/* Photo Detail */}
+                    {/* Photo/Video Detail */}
                     <div className="flex-1 flex items-center justify-center p-4 h-[calc(100%-52px)]">
-                      <img
-                        src={personalPhotos[selectedPhotoIndex]}
-                        alt=""
-                        className="max-w-full max-h-full object-contain rounded-lg"
-                      />
+                      {desktopMedia[selectedPhotoIndex].type === 'video' ? (
+                        <video
+                          src={desktopMedia[selectedPhotoIndex].url}
+                          controls
+                          autoPlay
+                          className="max-w-full max-h-full object-contain rounded-lg"
+                        />
+                      ) : (
+                        <img
+                          src={desktopMedia[selectedPhotoIndex].url}
+                          alt=""
+                          className="max-w-full max-h-full object-contain rounded-lg"
+                        />
+                      )}
                     </div>
                   </>
                 )}
