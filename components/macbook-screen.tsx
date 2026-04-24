@@ -259,6 +259,20 @@ export function MacBookScreen() {
   const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
+  
+  // Music app state
+  const [musicWindow, setMusicWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [musicPosition, setMusicPosition] = useState({ x: 200, y: 80 })
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
+  
+  // YouTube music playlist
+  const musicPlaylist = [
+    { id: 'Qe2pjBYskUU', title: 'Chill Vibes', artist: 'Lo-Fi Mix' },
+    { id: 'jfKfPfyJRdk', title: 'Lofi Hip Hop Radio', artist: 'Lofi Girl' },
+    { id: '5qap5aO4i9A', title: 'Chill Study Beats', artist: 'ChilledCow' },
+    { id: 'DWcJFNfaw9c', title: 'Jazz Vibes', artist: 'Relaxing Jazz Piano' },
+  ]
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
 
@@ -738,6 +752,7 @@ export function MacBookScreen() {
       case 'backgrounds': position = backgroundsPosition; break
       case 'messages': position = messagesPosition; break
       case 'notes': position = notesPosition; break
+      case 'music': position = musicPosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -762,6 +777,7 @@ export function MacBookScreen() {
       case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
+      case 'music': setMusicPosition({ x: newX, y: newY }); break
     }
   }
 
@@ -4425,7 +4441,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       <p className="text-white/50 text-xs">{desktopMedia.length} items</p>
                     </div>
                     {/* Photo Grid */}
-                    <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
+                    <div className="p-4 overflow-y-auto h-[calc(100%-60px)]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                       <div className="grid grid-cols-4 gap-2">
                         {desktopMedia.map((media, idx) => (
                           <button
@@ -4496,6 +4512,129 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     </div>
                   </>
                 )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Music Window with YouTube */}
+        {musicWindow.isOpen && !musicWindow.isMinimized && (
+          <div
+            className={`absolute w-[420px] ${focusedWindow === 'music' ? 'z-40' : 'z-20'}`}
+            onClick={() => focusWindow('music')}
+            style={{ left: musicPosition.x, top: musicPosition.y }}
+          >
+            <div className="bg-[#1a1a1a] backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/10">
+              {/* Music App Title Bar */}
+              <div
+                onMouseDown={(e) => { focusWindow('music'); handleMouseDown('music', e); }}
+                className="h-[52px] bg-gradient-to-b from-[#2d2d2d] to-[#1f1f1f] flex items-center px-4 gap-4 border-b border-white/5 cursor-grab active:cursor-grabbing"
+              >
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setMusicWindow({ isOpen: false, isMinimized: false })}
+                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                  />
+                  <button
+                    onClick={() => setMusicWindow({ ...musicWindow, isMinimized: true })}
+                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                  />
+                  <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
+                </div>
+                <span className="flex-1 text-center text-sm font-medium text-white/80">Music</span>
+              </div>
+
+              {/* Music Content */}
+              <div className="flex">
+                {/* Sidebar */}
+                <div className="w-[140px] bg-[#252525] border-r border-white/10 p-3">
+                  <p className="text-[10px] text-white/40 font-semibold uppercase tracking-wider mb-2">Library</p>
+                  <button className="w-full text-left px-3 py-1.5 rounded-md bg-[#fa2d48]/20 text-[#fa2d48] text-sm mb-1 flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    Now Playing
+                  </button>
+                  <button className="w-full text-left px-3 py-1.5 rounded-md text-white/60 hover:bg-white/5 text-sm mb-1 flex items-center gap-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M15 6H3v2h12V6zm0 4H3v2h12v-2zM3 16h8v-2H3v2zM17 6v8.18c-.31-.11-.65-.18-1-.18-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3V8h3V6h-5z"/></svg>
+                    Playlist
+                  </button>
+                </div>
+
+                {/* Main Content */}
+                <div className="flex-1 p-4">
+                  {/* YouTube Embed */}
+                  <div className="aspect-video bg-black rounded-lg overflow-hidden mb-4">
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${musicPlaylist[currentTrackIndex].id}?autoplay=${isPlaying ? 1 : 0}&rel=0`}
+                      title={musicPlaylist[currentTrackIndex].title}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+
+                  {/* Track Info */}
+                  <div className="text-center mb-4">
+                    <h3 className="text-white font-semibold">{musicPlaylist[currentTrackIndex].title}</h3>
+                    <p className="text-white/50 text-sm">{musicPlaylist[currentTrackIndex].artist}</p>
+                  </div>
+
+                  {/* Playback Controls */}
+                  <div className="flex items-center justify-center gap-6 mb-4">
+                    <button 
+                      onClick={() => setCurrentTrackIndex((prev) => (prev - 1 + musicPlaylist.length) % musicPlaylist.length)}
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+                    </button>
+                    <button 
+                      onClick={() => setIsPlaying(!isPlaying)}
+                      className="w-12 h-12 rounded-full bg-white flex items-center justify-center hover:scale-105 transition-transform"
+                    >
+                      {isPlaying ? (
+                        <svg className="w-5 h-5 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                      ) : (
+                        <svg className="w-5 h-5 text-black ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                      )}
+                    </button>
+                    <button 
+                      onClick={() => setCurrentTrackIndex((prev) => (prev + 1) % musicPlaylist.length)}
+                      className="text-white/60 hover:text-white transition-colors"
+                    >
+                      <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+                    </button>
+                  </div>
+
+                  {/* Playlist */}
+                  <div className="space-y-1">
+                    {musicPlaylist.map((track, idx) => (
+                      <button
+                        key={track.id}
+                        onClick={() => { setCurrentTrackIndex(idx); setIsPlaying(true); }}
+                        className={`w-full flex items-center gap-3 p-2 rounded-lg transition-colors ${
+                          currentTrackIndex === idx ? 'bg-[#fa2d48]/20' : 'hover:bg-white/5'
+                        }`}
+                      >
+                        <div className="w-10 h-10 bg-gradient-to-br from-[#fa2d48] to-[#ff6b6b] rounded-md flex items-center justify-center">
+                          {currentTrackIndex === idx && isPlaying ? (
+                            <div className="flex gap-0.5">
+                              <div className="w-0.5 h-3 bg-white animate-pulse" />
+                              <div className="w-0.5 h-4 bg-white animate-pulse" style={{ animationDelay: '0.1s' }} />
+                              <div className="w-0.5 h-2 bg-white animate-pulse" style={{ animationDelay: '0.2s' }} />
+                            </div>
+                          ) : (
+                            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                          )}
+                        </div>
+                        <div className="text-left">
+                          <p className={`text-sm ${currentTrackIndex === idx ? 'text-[#fa2d48]' : 'text-white'}`}>{track.title}</p>
+                          <p className="text-xs text-white/40">{track.artist}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -5275,6 +5414,20 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           label="Photos"
           onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
         />
+
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-[#fc3c44] via-[#fc3c44] to-[#fc3c44]">
+              <div className="w-full h-full flex items-center justify-center">
+                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+              </div>
+            </div>
+          }
+          label="Music"
+          onClick={() => { setMusicWindow({ isOpen: true, isMinimized: false }); focusWindow('music'); }}
+        />
         
         <DockIcon
           icon={
@@ -5319,7 +5472,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         />
 
         {/* Minimized Windows Section */}
-        {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
+        {(photosWindow.isMinimized || musicWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
           <>
             <div className="w-px h-10 bg-white/30 mx-1" />
 
@@ -5347,6 +5500,24 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
                 <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
                   Photos
+                </div>
+              </button>
+            )}
+
+            {musicWindow.isMinimized && (
+              <button
+                onClick={() => { setMusicWindow({ isOpen: true, isMinimized: false }); focusWindow('music'); }}
+                className="group relative"
+              >
+                <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg border border-white/20 transition-all duration-200 ease-out group-hover:-translate-y-3 group-hover:scale-110">
+                  <div className="w-full h-full bg-gradient-to-br from-[#fc3c44] to-[#fc3c44] flex items-center justify-center">
+                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                    </svg>
+                  </div>
+                </div>
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/75 backdrop-blur-xl text-white text-[11px] px-3 py-1.5 rounded-md whitespace-nowrap shadow-lg pointer-events-none">
+                  Music
                 </div>
               </button>
             )}
