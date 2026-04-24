@@ -1129,27 +1129,12 @@ const messageText = mobileInput.trim()
               {chatMessages.map((msg) => (
                 <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className="relative">
-                    {/* Reaction display - iOS style gray bubble */}
-                    {/* For assistant (Charity) messages: reaction on top-LEFT, dots trail down-right */}
-                    {/* For user messages: reaction on top-RIGHT, dots trail down-left */}
+                    {/* Reaction display - iOS style */}
+                    {/* For user messages (blue): reaction on LEFT */}
+                    {/* For assistant messages (gray): reaction on RIGHT */}
                     {msg.reaction && (
-                      <div className={`absolute -top-5 ${msg.role === 'user' ? '-right-4' : '-left-4'} z-50`}>
-                        {/* Main reaction bubble - small gray like iOS */}
-                        <div className="w-7 h-7 bg-gray-400 rounded-full flex items-center justify-center shadow-md ring-2 ring-black/80">
-                          <span className="text-sm leading-none">{msg.reaction}</span>
-                        </div>
-                        {/* Trailing dots */}
-                        {msg.role === 'user' ? (
-                          <>
-                            <div className="absolute bottom-1 -left-1 w-2 h-2 bg-gray-400 rounded-full shadow-sm" />
-                            <div className="absolute -bottom-1 -left-2.5 w-1.5 h-1.5 bg-gray-400 rounded-full shadow-sm" />
-                          </>
-                        ) : (
-                          <>
-                            <div className="absolute bottom-1 -right-1 w-2 h-2 bg-gray-400 rounded-full shadow-sm" />
-                            <div className="absolute -bottom-1 -right-2.5 w-1.5 h-1.5 bg-gray-400 rounded-full shadow-sm" />
-                          </>
-                        )}
+                      <div className={`absolute -top-3 flex items-center justify-center w-6 h-6 bg-white border border-gray-100 rounded-full shadow-md text-[14px] z-50 ${msg.role === 'user' ? '-left-2' : '-right-2'}`}>
+                        {msg.reaction}
                       </div>
                     )}
                     <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
