@@ -913,8 +913,11 @@ const messageText = mobileInput.trim()
                   <VolumeX className="w-4 h-4 text-white/60" />
                 )}
               </button>
-              <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
