@@ -21,6 +21,9 @@ const REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍
 // Helper to pick random response
 const pick = (options: string[]) => options[Math.floor(Math.random() * options.length)]
 
+// Helper to capitalize first letter of response
+const cap = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
+
 // Check if message deserves auto heart reaction from Charity
 export const shouldAutoHeart = (msg: string): boolean => {
   const normalized = msg.toLowerCase().trim()
@@ -52,22 +55,22 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Positive emoji reactions
   if (normalized.match(/^[\s]*[❤️💕💗💖💜🥰😍🤗👏🙌💯🔥✨⭐️💫🌟👍🤩😊😁]+[\s]*$/)) {
-    return pick(["thank you!", "appreciate that!", ":)"])
+    return pick(["Thank you!", "Appreciate that!", ":)"])
   }
 
   // Sad/crying emoji reactions
   if (normalized.match(/^[\s]*[😢😭😿💔🥺😞😔]+[\s]*$/)) {
-    return pick(["hope you're okay!", "is everything alright?", "hope things get better"])
+    return pick(["Hope you're okay!", "Is everything alright?", "Hope things get better"])
   }
 
   // Laughing emoji reactions
   if (normalized.match(/^[\s]*[😂🤣😆😹]+[\s]*$/)) {
-    return pick(["glad that made you laugh!", "that's funny!", ":)"])
+    return pick(["Glad that made you laugh!", "That's funny!", ":)"])
   }
 
   // Thinking/confused emoji
   if (normalized.match(/^[\s]*[🤔🧐😕❓]+[\s]*$/)) {
-    return "feel free to ask me anything! I'm happy to clarify"
+    return "Feel free to ask me anything! I'm happy to clarify"
   }
 
   // ============================================
@@ -76,27 +79,27 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Work (vague)
   if (normalized.match(/^work[\s!?.]*$/i)) {
-    return "what would you like to know about my work? I'm a UX Designer at Google"
+    return "What would you like to know about my work? I'm a UX Designer at Google"
   }
 
   // School (vague)
   if (normalized.match(/^school[\s!?.]*$/i)) {
-    return "what do you mean by school? are you asking about my education?"
+    return "What do you mean by school? Are you asking about my education?"
   }
 
   // Family (vague)
   if (normalized.match(/^family[\s!?.]*$/i)) {
-    return "are you asking about my family? I have my mom and our dog Hunter"
+    return "Are you asking about my family? I have my mom and our dog Hunter"
   }
 
   // Life (vague)
   if (normalized.match(/^life[\s!?.]*$/i)) {
-    return "what do you mean by life? feel free to ask me something more specific"
+    return "What do you mean by life? Feel free to ask me something more specific"
   }
 
   // Love (vague)
   if (normalized.match(/^love[\s!?.]*$/i)) {
-    return "what do you mean by love?"
+    return "What do you mean by love?"
   }
 
   // ============================================
@@ -105,40 +108,40 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Simple yes/no follow-ups
   if (normalized.match(/^(yes|yep|yeah|yea|ya|yup|yuh|mhm|uh huh)[\s!?.]*$/i)) {
-    return pick(["great!", "nice!", "okay!"])
+    return pick(["Great!", "Nice!", "Okay!"])
   }
 
   // No response
   if (normalized.match(/^(no|nope|nah|naw|not really|nevermind|never mind)[\s!?.]*$/i)) {
-    return pick(["okay!", "no problem!", "that's fine!"])
+    return pick(["Okay!", "No problem!", "That's fine!"])
   }
 
   if (normalized.match(/^(no|nope|nah|naw)[\s!?.]*$/i)) {
-    return pick(["no worries!", "all good", "that's okay!"])
+    return pick(["No worries!", "All good", "That's okay!"])
   }
 
   // Confirmation follow-ups
   if (normalized.match(/^at google\??$/i)) {
-    return pick(["yep!", "yes!", "that's right"])
+    return pick(["Yep!", "Yes!", "That's right"])
   }
 
   if (normalized.match(/^(really|for real|fr|deadass|no cap|serious|seriously)\??$/i)) {
-    return pick(["yep!", "for real", "100%"])
+    return pick(["Yep!", "For real", "100%"])
   }
 
   // Greetings
   if (normalized.match(/^(hi+|hey+|hello+|sup|yo+|howdy|wassup|wasup|whaddup|what's good|whats good|ayy+|ayo+|hiya)[\s!.?]*$/i)) {
-    return pick(["hey!", "hi there!", "hello!", "hi!"])
+    return pick(["Hey!", "Hi there!", "Hello!", "Hi!"])
   }
 
   // How are you
   if (normalized.match(/^(how are you+|how's it going|how you doing|how u doing|how you doin|what's up|whats up|wassup|wyd|what you doing|whatchu doing|how's everything|hows everything|how are ya|how ya doing|how u)[\s!?.]*$/i)) {
-    return pick(["doing well! how about you?", "I'm great, thanks for asking!", "doing good, thanks! and you?"])
+    return pick(["Doing well! How about you?", "I'm great, thanks for asking!", "Doing good, thanks! And you?"])
   }
 
   // What's good / what's poppin
   if (normalized.match(/^(what'?s good|whats good|what'?s poppin|whats poppin|what'?s crackin|whats crackin)[\s!?.]*$/i)) {
-    return pick(["not much! how are you?", "doing well, thanks! and you?", "all good here, how about you?"])
+    return pick(["Not much! How are you?", "Doing well, thanks! And you?", "All good here, how about you?"])
   }
 
   // ============================================
@@ -147,7 +150,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Name
   if (normalized.match(/^(what'?s your name|whats your name|your name|who are you|who dis|who this|who is this)\??$/i) || normalized === 'name') {
-    return pick(["I'm Charity!", "Charity", "my name's Charity"])
+    return pick(["I'm Charity!", "Charity", "My name's Charity"])
   }
 
   // Full name
@@ -157,7 +160,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Age - vague single word
   if (normalized.match(/^age[\s!?.]*$/i)) {
-    return "are you asking how old I am? I'm 30"
+    return "Are you asking how old I am? I'm 30"
   }
 
   // Age - specific questions
@@ -181,7 +184,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Where do you work
   if (normalized.match(/^(where do you work|where you work|where u work|where do u work)\??$/i) || normalized.match(/^where.*you.*work/i)) {
-    return pick(["I work at Google!", "Google", "at Google!"])
+    return pick(["I work at Google!", "Google", "At Google!"])
   }
 
   // About/Tell me about yourself
@@ -201,12 +204,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // How did you get into UX
   if (normalized.match(/(how did you|how'd you|how you get into|get into|your story|your journey|start.*ux|background|path)/)) {
-    return "in 2020 during COVID my mom volunteered me to build a website - I had no clue what I was doing but figured it out! I was teaching 4th grade at the time but that sparked my interest. Did a bootcamp at Columbia and here I am"
+    return "In 2020 during COVID my mom volunteered me to build a website - I had no clue what I was doing but figured it out! I was teaching 4th grade at the time but that sparked my interest. Did a bootcamp at Columbia and here I am"
   }
 
   // Teaching
   if (normalized.match(/(previous|before ux|teacher|teaching|used to do|taught)/)) {
-    return pick(["I was a 4th grade teacher before getting into UX!", "yep I used to teach 4th grade"])
+    return pick(["I was a 4th grade teacher before getting into UX!", "Yep I used to teach 4th grade"])
   }
 
   // Education - exclude "case study" and "study" alone to avoid matching case studies
@@ -221,7 +224,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Strengths
   if (normalized.match(/(strength|strong suit|good at|best at|superpower)/)) {
-    return "structuring ambiguity and advocating for users, especially those who feel overlooked"
+    return "Structuring ambiguity and advocating for users, especially those who feel overlooked"
   }
 
   // Weaknesses
@@ -231,7 +234,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Process
   if (normalized.match(/(how do you work|process|approach|method|iterate|design process)/)) {
-    return "very iterative - I refine until things feel precise and trustworthy"
+    return "Very iterative - I refine until things feel precise and trustworthy"
   }
 
   // Feedback
@@ -251,7 +254,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Remote/relocation
   if (normalized.match(/(relocat|remote|hybrid|office|work from home|wfh)/)) {
-    return "open to relocation and remote - currently hybrid, 2 to 3 days in office"
+    return "Open to relocation and remote - currently hybrid, 2 to 3 days in office"
   }
 
   // Goals
@@ -575,17 +578,17 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Where are you from
   if (normalized.match(/(where.*from|originally|grew up|where you from|hometown)/)) {
-    return "born in Chicago but I live in New Jersey now"
+    return "Born in Chicago but I live in New Jersey now"
   }
 
   // Chicago specific
   if (normalized.match(/chicago/)) {
-    return "yep I was born there! moved to New Jersey when I was 10"
+    return "Yep I was born there! Moved to New Jersey when I was 10"
   }
 
   // New Jersey
   if (normalized.match(/jersey|nj/)) {
-    return "yep that's where I'm at now!"
+    return "Yep that's where I'm at now!"
   }
 
   // ============================================
@@ -594,32 +597,32 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Family
   if (normalized.match(/^family\??$/i) || normalized.match(/tell me about your family/)) {
-    return "my mom and our dog Hunter"
+    return "My mom and our dog Hunter"
   }
 
   // Mom
   if (normalized.match(/(mom|mother|mama|ma\b)/)) {
-    return "my mom and I are very close - she's the one who encouraged me to pursue UX"
+    return "My mom and I are very close - she's the one who encouraged me to pursue UX"
   }
 
   // Dad
   if (normalized.match(/(dad|father|pops)/)) {
-    return "my dad passed when I was 13"
+    return "My dad passed when I was 13"
   }
 
   // Sorry about dad
   if (normalized.match(/(sorry to hear|sorry about|condolence|that's tough|that's hard)/)) {
-    return "thank you, I appreciate that"
+    return "Thank you, I appreciate that"
   }
 
   // Siblings
   if (normalized.match(/(sibling|brother|sister|bro\b|sis\b|only child)/)) {
-    return "no siblings, just me!"
+    return "No siblings, just me!"
   }
 
   // Pet - vague single word
   if (normalized.match(/^pets?[\s!?.]*$/i)) {
-    return "are you asking if I have a pet? I have a Dalmatian named Hunter!"
+    return "Are you asking if I have a pet? I have a Dalmatian named Hunter!"
   }
 
   // Pet / Dog - specific
@@ -639,7 +642,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Dating/relationship - redirect warmly
   if (normalized.match(/(dating|relationship|boyfriend|girlfriend|seeing anyone|love life|boo\b|bae\b|talking to someone)/)) {
-    return "that's a bit personal - happy to share more about my work or background though!"
+    return "That's a bit personal - happy to share more about my work or background though!"
   }
 
   // Kids
@@ -653,27 +656,27 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Food - vague single word
   if (normalized.match(/^food[\s!?.]*$/i)) {
-    return "what do you mean by food? are you asking about my favorite food?"
+    return "What do you mean by food? Are you asking about my favorite food?"
   }
 
   // Do you like food (general)
   if (normalized.match(/^do you like food\??$/i) || normalized.match(/^you like food\??$/i)) {
-    return "yes I love food!"
+    return "Yes I love food!"
   }
 
   // What kind of food / favorite food
   if (normalized.match(/(what kind of food|favorite food|fav food|type of food|food do you like)/)) {
-    return "lamb chops with fig jam! that's my go-to"
+    return "Lamb chops with fig jam! That's my go-to"
   }
 
   // Lamb chops follow-up
   if (normalized.match(/lamb|fig jam/)) {
-    return "yes it's so good! the sweetness of the fig jam with the lamb is perfect"
+    return "Yes it's so good! The sweetness of the fig jam with the lamb is perfect"
   }
 
   // Favorite meal
   if (normalized.match(/(favorite meal|best meal|go-to meal)/)) {
-    return "lamb chops with fig jam for dinner, and apple pie with vanilla bean ice cream for dessert"
+    return "Lamb chops with fig jam for dinner, and apple pie with vanilla bean ice cream for dessert"
   }
 
   // Breakfast
@@ -683,27 +686,27 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Lunch
   if (normalized.match(/lunch/)) {
-    return "usually something quick - a salad or sandwich"
+    return "Usually something quick - a salad or sandwich"
   }
 
   // Dinner
   if (normalized.match(/dinner/)) {
-    return "lamb chops with fig jam is my favorite dinner!"
+    return "Lamb chops with fig jam is my favorite dinner!"
   }
 
   // Dessert
   if (normalized.match(/(dessert|sweet tooth|sweets)/)) {
-    return "apple pie with vanilla bean ice cream"
+    return "Apple pie with vanilla bean ice cream"
   }
 
   // White chocolate - must check before general chocolate
   if (normalized.match(/white chocolate/)) {
-    return "yes I like white chocolate chip cookies without any nuts"
+    return "Yes I like white chocolate chip cookies without any nuts"
   }
 
   // Cookies
   if (normalized.match(/cookie/)) {
-    return "white chocolate chip cookies without the macadamia nuts - Pepperidge Farm makes my favorite"
+    return "White chocolate chip cookies without the macadamia nuts - Pepperidge Farm makes my favorite"
   }
 
   // Chocolate (general)
@@ -713,22 +716,22 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // What do you mean / follow-up clarification
   if (normalized.match(/(what do you mean|what you mean|wdym|huh\??$|explain)/)) {
-    return "sorry if that was confusing - feel free to ask me something else!"
+    return "Sorry if that was confusing - feel free to ask me something else!"
   }
 
   // Ice cream
   if (normalized.match(/ice cream/)) {
-    return "vanilla bean is my go-to, especially with apple pie"
+    return "Vanilla bean is my go-to, especially with apple pie"
   }
 
   // Pizza
   if (normalized.match(/pizza/)) {
-    return "who doesn't love pizza? I like a good margherita"
+    return "Who doesn't love pizza? I like a good margherita"
   }
 
   // Coffee or tea
   if (normalized.match(/(coffee|tea|caffeine|drink in the morning)/)) {
-    return "coffee for sure - I need it to start my day"
+    return "Coffee for sure - I need it to start my day"
   }
 
   // Alcohol / drinks
@@ -752,12 +755,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Hobbies - vague single word
   if (normalized.match(/^hobby[\s!?.]*$/i)) {
-    return "what do you mean by hobby? are you asking what I like to do in my free time?"
+    return "What do you mean by hobby? Are you asking what I like to do in my free time?"
   }
 
   // Hobbies
   if (normalized.match(/^hobbies\??$/i) || normalized.match(/^interests\??$/i) || normalized.match(/what are your hobbies/)) {
-    return "spending time with Hunter, quality time with my mom, and watching good shows"
+    return "Spending time with Hunter, quality time with my mom, and watching good shows"
   }
 
   // Free time / fun
@@ -767,12 +770,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // TV - vague single word
   if (normalized.match(/^tv[\s!?.]*$/i)) {
-    return "what do you mean by TV? are you asking what shows I watch?"
+    return "What do you mean by TV? Are you asking what shows I watch?"
   }
 
   // Show - vague single word  
   if (normalized.match(/^shows?[\s!?.]*$/i)) {
-    return "are you asking what shows I watch? Emily in Paris is my favorite!"
+    return "Are you asking what shows I watch? Emily in Paris is my favorite!"
   }
 
   // TV/Shows - specific questions
@@ -782,12 +785,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Emily in Paris follow-up
   if (normalized.match(/emily|paris/)) {
-    return "yes I love it! the fashion, the drama, everything"
+    return "Yes I love it! The fashion, the drama, everything"
   }
 
   // Movie - vague single word
   if (normalized.match(/^movies?[\s!?.]*$/i)) {
-    return "what do you mean by movie? are you asking about my favorite movie or genre?"
+    return "What do you mean by movie? Are you asking about my favorite movie or genre?"
   }
 
   // Favorite movie
@@ -802,22 +805,22 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Sci-fi follow-up
   if (normalized.match(/(sci-fi|scifi|science fiction)/)) {
-    return "yes I love sci-fi! there's something about exploring the unknown"
+    return "Yes I love sci-fi! There's something about exploring the unknown"
   }
 
   // Music - vague single word
   if (normalized.match(/^music[\s!?.]*$/i)) {
-    return "what do you mean by music?"
+    return "What do you mean by music?"
   }
 
   // Music - specific questions
   if (normalized.match(/(what kind of music|what music|favorite music|fav music|listen to|what you listen|type of music)/)) {
-    return "jazz while working - Miles Davis, Kenny G - and I enjoy early 2000s music as well"
+    return "Jazz while working - Miles Davis, Kenny G - and I enjoy early 2000s music as well"
   }
 
   // Music while working
   if (normalized.match(/(music.*work|work.*music|listen.*while)/)) {
-    return "jazz! Miles Davis and Kenny G help me focus"
+    return "Jazz! Miles Davis and Kenny G help me focus"
   }
 
   // Song/artist/playlist
@@ -827,17 +830,17 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Jazz follow-up
   if (normalized.match(/jazz|miles davis|kenny g/)) {
-    return "yes! it's perfect for focusing while I work"
+    return "Yes! It's perfect for focusing while I work"
   }
 
   // 2000s music
   if (normalized.match(/(2000|early 2000|throwback|nostalgic|old school)/)) {
-    return "yes! I love that era , all of it"
+    return "Yes! I love that era, all of it"
   }
 
   // Book - vague single word
   if (normalized.match(/^books?[\s!?.]*$/i)) {
-    return "what do you mean by book? are you asking about my favorite book?"
+    return "What do you mean by book? Are you asking about my favorite book?"
   }
 
   // Favorite book
@@ -847,7 +850,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Jane Austen / Pride and Prejudice follow-up
   if (normalized.match(/(jane austen|pride and prejudice|austen)/)) {
-    return "yes it's a classic! I love the wit and the character development"
+    return "Yes it's a classic! I love the wit and the character development"
   }
 
   // Reading / books (general) - not single word "book"
@@ -857,7 +860,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Horses
   if (normalized.match(/(horse|horses|horseback|riding)/)) {
-    return "yes I like horses!"
+    return "Yes I like horses!"
   }
 
   // Exercise / fitness
@@ -872,7 +875,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Travel - vague single word
   if (normalized.match(/^travel[\s!?.]*$/i)) {
-    return "are you asking if I like to travel? I do! always looking for my next trip"
+    return "Are you asking if I like to travel? I do! Always looking for my next trip"
   }
 
   // Travel - specific
@@ -901,7 +904,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Personality
   if (normalized.match(/(personality|describe yourself|kind of person|type of person|what are you like)/)) {
-    return "definitely an observer and listener - I like to evaluate before responding"
+    return "Definitely an observer and listener - I like to evaluate before responding"
   }
 
   // Introvert/extrovert
@@ -916,7 +919,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Color - vague single word
   if (normalized.match(/^colou?rs?[\s!?.]*$/i)) {
-    return "are you asking about my favorite color? it's pink!"
+    return "Are you asking about my favorite color? It's pink!"
   }
 
   // Favorite color - specific
@@ -926,17 +929,17 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Favorite season
   if (normalized.match(/(favorite season|fav season|spring|summer|fall|winter|autumn)/)) {
-    return "fall - I love the cozy vibes and the fashion"
+    return "Fall - I love the cozy vibes and the fashion"
   }
 
   // Pet peeves
   if (normalized.match(/(pet peeve|annoy|bother|hate when)/)) {
-    return "when things aren't organized or clear - this is why I got into UX"
+    return "When things aren't organized or clear - this is why I got into UX"
   }
 
   // Fears
   if (normalized.match(/(fear|afraid|scared|phobia)/)) {
-    return "heights for sure but ironically I love roller coasters"
+    return "Heights for sure but ironically I love roller coasters"
   }
 
   // Fun fact
@@ -946,12 +949,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Guilty pleasure
   if (normalized.match(/(guilty pleasure|guilty)/)) {
-    return "rewatching Emily in Paris for the hundredth time"
+    return "Rewatching Emily in Paris for the hundredth time"
   }
 
   // Superpower
   if (normalized.match(/(superpower|if you could have|one power)/)) {
-    return "teleportation so I could travel anywhere instantly"
+    return "Teleportation so I could travel anywhere instantly"
   }
 
   // ============================================
@@ -960,62 +963,62 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Phone call request
   if (normalized.match(/(call you|phone call|can i call|give me your number|your number|talk on the phone)/)) {
-    return "if you'd like to contact me personally, you can email me at hello@charitydupont.com"
+    return "If you'd like to contact me personally, you can email me at hello@charitydupont.com"
   }
 
   // Contact
   if (normalized.match(/(contact|email|reach|connect|linkedin|work together|hit you up|hmu)/)) {
-    return "feel free to reach out! you can email me at hello@charitydupont.com"
+    return "Feel free to reach out! You can email me at hello@charitydupont.com"
   }
 
   // Navigate
   if (normalized.match(/(macbook|navigate|explore|around|click|folder|desktop|what can i|where should)/)) {
-    return "check out the case study folders in the dock, or explore Photos, Notes, and other apps!"
+    return "Check out the case study folders in the dock, or explore Photos, Notes, and other apps!"
   }
 
   // Thank you
   if (normalized.match(/(thank|thanks|appreciate|preciate|thx|ty\b)/)) {
-    return pick(["of course!", "you're welcome!", "anytime!", "no problem!"])
+    return pick(["Of course!", "You're welcome!", "Anytime!", "No problem!"])
   }
 
   // Bye
   if (normalized.match(/(bye|goodbye|see you|take care|later|peace|deuces|gotta go|ima head out|imma head out)/)) {
-    return pick(["take care!", "bye!", "see ya!", "later!"])
+    return pick(["Take care!", "Bye!", "See ya!", "Later!"])
   }
 
   // Nice to meet you
   if (normalized.match(/(nice to meet|pleasure|good to meet)/)) {
-    return pick(["nice to meet you too!", "likewise!", "same here!"])
+    return pick(["Nice to meet you too!", "Likewise!", "Same here!"])
   }
 
   // Cool / awesome / nice responses
   if (normalized.match(/^(cool|awesome|nice|great|wow|amazing|interesting|dope|fire|lit|sick|tight|bet)[\s!.]*$/i)) {
-    return pick(["thanks!", "appreciate it!", "thank you!"])
+    return pick(["Thanks!", "Appreciate it!", "Thank you!"])
   }
 
   // Ok / okay / got it
   if (normalized.match(/^(ok|okay|k|kk|got it|i see|makes sense|word|copy|heard)[\s!.]*$/i)) {
-    return pick(["let me know if you have any other questions!", "sounds good!", "great!"])
+    return pick(["Let me know if you have any other questions!", "Sounds good!", "Great!"])
   }
 
   // That's cool/dope etc
   if (normalized.match(/^that'?s (cool|dope|fire|lit|sick|awesome|amazing)[\s!.]*$/i)) {
-    return pick(["thanks!", "appreciate that!", "thank you! let me know if you wanna know more about anything"])
+    return pick(["Thanks!", "Appreciate that!", "Thank you! Let me know if you wanna know more about anything"])
   }
 
   // Appearance compliments - beautiful, pretty, queen
   if (normalized.match(/(beautiful|pretty|gorgeous|stunning|queen|you look good|looking good)/)) {
-    return pick(["thank you!", "you are so kind", "thanks so much!", "thanks!", ":)"])
+    return pick(["Thank you!", "You are so kind", "Thanks so much!", "Thanks!", ":)"])
   }
 
   // General compliments
   if (normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed)/)) {
-    return pick(["thank you so much!", "that means a lot, thank you!", "that's so kind, thanks!"])
+    return pick(["Thank you so much!", "That means a lot, thank you!", "That's so kind, thanks!"])
   }
 
   // Sorry / apologies - show empathy
   if (normalized.match(/^(sorry|i'?m sorry|my bad|my apologies|apologies)[\s!.]*$/i) || normalized.match(/(sorry to hear|sorry about that|sorry for)/)) {
-    return pick(["that's okay!", "it's okay", "no worries at all", "it's all good"])
+    return pick(["That's okay!", "It's okay", "No worries at all", "It's all good"])
   }
 
   // Highly offensive/vulgar words - respond with professional reaction gif only, no text
@@ -1044,24 +1047,24 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Help
   if (normalized.match(/^help\??$/i) || normalized.match(/what can i ask/)) {
-    return "ask me about my work, background, or case studies - or just say hi!"
+    return "Ask me about my work, background, or case studies - or just say hi!"
   }
 
   // Lol / haha responses
   if (normalized.match(/^(lol|lmao|haha|hehe|rofl|dead|dying)[\s!.]*$/i)) {
-    return pick(["that's funny!", "glad I could make you laugh!"])
+    return pick(["That's funny!", "Glad I could make you laugh!"])
   }
 
   // I like that / love that
   if (normalized.match(/^i (like|love) that[\s!.]*$/i)) {
-    return pick(["thanks!", "glad you like it!", "appreciate it!"])
+    return pick(["Thanks!", "Glad you like it!", "Appreciate it!"])
   }
 
   // Default - warm and diplomatic
   return pick([
-    "hmm I'm not sure about that one - but feel free to ask me about my work, background, or projects!",
-    "ooh that's a new one! feel free to ask me about my case studies or background",
-    "not sure I have an answer for that, but I'd love to chat about my work or experience!"
+    "Hmm I'm not sure about that one - but feel free to ask me about my work, background, or projects!",
+    "Ooh that's a new one! Feel free to ask me about my case studies or background",
+    "Not sure I have an answer for that, but I'd love to chat about my work or experience!"
   ])
 }
 
@@ -1147,7 +1150,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto min-h-0 p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden min-h-0 p-4 space-y-3">
         {messages.map((message) => (
           <div key={message.id} className="flex flex-col relative">
             <div
@@ -1225,17 +1228,18 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                 )}
               </div>
 
-              {/* Reaction display - iMessage style with blue bubble and trailing circles */}
+              {/* Reaction display - iOS style */}
+              {/* User messages (blue): reaction on LEFT with dot trailing to the left */}
+              {/* Assistant messages (gray): reaction on RIGHT with dot trailing to the right */}
               {message.reaction && (
-                <div className={`absolute -top-4 ${message.role === 'assistant' ? '-left-2' : '-left-2'}`}>
+                <div className={`absolute -top-3 ${message.role === 'user' ? '-left-3' : '-right-3'} z-50`}>
                   <div className="relative">
-                    {/* Main reaction bubble - bright blue like iMessage */}
-                    <div className="w-9 h-9 bg-[#0b84fe] rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-base">{message.reaction}</span>
+                    {/* Main reaction bubble - white with gray border */}
+                    <div className="w-6 h-6 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-md">
+                      <span className="text-[14px]">{message.reaction}</span>
                     </div>
-                    {/* Trailing circles like iMessage thought bubble */}
-                    <div className="absolute -bottom-0.5 right-0 w-3 h-3 bg-[#0b84fe] rounded-full" />
-                    <div className="absolute -bottom-2 -right-1.5 w-2 h-2 bg-[#0b84fe] rounded-full" />
+                    {/* Single trailing dot */}
+                    <div className={`absolute bottom-0 ${message.role === 'user' ? '-left-1.5' : '-right-1.5'} w-2 h-2 bg-white border border-gray-200 rounded-full shadow-sm`} />
                   </div>
                 </div>
               )}

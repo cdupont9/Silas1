@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -41,7 +41,7 @@ const mobileMessageContacts = [
   {
     id: 'welcome',
     name: 'Charity',
-    avatar: null,
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-03-17%20at%205.41.24%E2%80%AFPM.jpeg-IqAgTgZhAtj7ZVseWJ9tdnbTkwQk0b.png',
     isMe: true,
     lastMessage: 'Welcome to my portfolio on my iPhone!',
     time: 'now',
@@ -81,7 +81,7 @@ const mobileMessageContacts = [
   {
     id: 'silas',
     name: 'Silas Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Silas%20Logo%20%281%29-wRgrFCvMuVpVMqSHMlhEpoHzSqfqS5.png',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg',
     lastMessage: 'Your AI lifestyle assistant',
     time: '9:15 AM',
     unread: false,
@@ -240,6 +240,8 @@ export function MacBookScreen() {
   const [showConversationList, setShowConversationList] = useState(true)
   const [selectedNote, setSelectedNote] = useState<number | null>(null)
   const [viewingPhoto, setViewingPhoto] = useState<number | null>(null)
+  const [viewingVideo, setViewingVideo] = useState<number | null>(null)
+  const [viewingMediaIndex, setViewingMediaIndex] = useState<number | null>(null)
   const [password, setPassword] = useState("")
   const [aboutWindow, setAboutWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [projectsFolder, setProjectsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
@@ -250,11 +252,14 @@ export function MacBookScreen() {
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
+  const [mobileConversations, setMobileConversations] = useState(mobileMessageContacts)
+  const [desktopConversations, setDesktopConversations] = useState(messageContacts)
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [photoViewerOpen, setPhotoViewerOpen] = useState(false)
   const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
+  
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
 
@@ -273,8 +278,192 @@ export function MacBookScreen() {
   
   // Mobile Safari state
   const [mobileSafariUrl, setMobileSafariUrl] = useState('')
-  const [showDownloadBanner, setShowDownloadBanner] = useState(true)
-  const [downloadExpanded, setDownloadExpanded] = useState(false)
+  
+  // Leaving portfolio popup state
+  const [showLeavingPopup, setShowLeavingPopup] = useState<string | null>(null)
+  
+  // Mobile reaction picker state
+  const [showMobileReactions, setShowMobileReactions] = useState<string | null>(null)
+  const MOBILE_REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
+  
+  // Mobile GIF picker state
+  const [showGifPicker, setShowGifPicker] = useState(false)
+  const [gifSearch, setGifSearch] = useState('')
+  const [gifResults, setGifResults] = useState<Array<{id: string, url: string, preview: string}>>([])
+  const [gifLoading, setGifLoading] = useState(false)
+  
+  // Pre-loaded trending GIFs for different categories
+  const TRENDING_GIFS = {
+    trending: [
+      { id: '1', url: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/giphy.gif', preview: 'https://media.giphy.com/media/3o7abKhOpu0NwenH3O/200w.gif' },
+      { id: '2', url: 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif', preview: 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/200w.gif' },
+      { id: '3', url: 'https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif', preview: 'https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/200w.gif' },
+      { id: '4', url: 'https://media.giphy.com/media/l41lGvinEgARjB2HC/giphy.gif', preview: 'https://media.giphy.com/media/l41lGvinEgARjB2HC/200w.gif' },
+      { id: '5', url: 'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif', preview: 'https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/200w.gif' },
+      { id: '6', url: 'https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif', preview: 'https://media.giphy.com/media/26u4cqiYI30juCOGY/200w.gif' },
+    ],
+    birthday: [
+      { id: 'b1', url: 'https://media.giphy.com/media/g5R9dok94mrIvplmZd/giphy.gif', preview: 'https://media.giphy.com/media/g5R9dok94mrIvplmZd/200w.gif' },
+      { id: 'b2', url: 'https://media.giphy.com/media/WRL7YgP42OKns22wRD/giphy.gif', preview: 'https://media.giphy.com/media/WRL7YgP42OKns22wRD/200w.gif' },
+      { id: 'b3', url: 'https://media.giphy.com/media/artj92V8o75VPL7AeQ/giphy.gif', preview: 'https://media.giphy.com/media/artj92V8o75VPL7AeQ/200w.gif' },
+      { id: 'b4', url: 'https://media.giphy.com/media/KdC9XVrVYOVu6zZiMH/giphy.gif', preview: 'https://media.giphy.com/media/KdC9XVrVYOVu6zZiMH/200w.gif' },
+    ],
+    love: [
+      { id: 'l1', url: 'https://media.giphy.com/media/3o7TKoWXm3okO1kgHC/giphy.gif', preview: 'https://media.giphy.com/media/3o7TKoWXm3okO1kgHC/200w.gif' },
+      { id: 'l2', url: 'https://media.giphy.com/media/l0HlOvJ7yaacpuSas/giphy.gif', preview: 'https://media.giphy.com/media/l0HlOvJ7yaacpuSas/200w.gif' },
+      { id: 'l3', url: 'https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif', preview: 'https://media.giphy.com/media/26BRv0ThflsHCqDrG/200w.gif' },
+      { id: 'l4', url: 'https://media.giphy.com/media/M90mJvfWfd5mbUuULX/giphy.gif', preview: 'https://media.giphy.com/media/M90mJvfWfd5mbUuULX/200w.gif' },
+    ],
+    funny: [
+      { id: 'f1', url: 'https://media.giphy.com/media/10JhviFuU2gWD6/giphy.gif', preview: 'https://media.giphy.com/media/10JhviFuU2gWD6/200w.gif' },
+      { id: 'f2', url: 'https://media.giphy.com/media/3oEjHAUOqG3lSS0f1C/giphy.gif', preview: 'https://media.giphy.com/media/3oEjHAUOqG3lSS0f1C/200w.gif' },
+      { id: 'f3', url: 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif', preview: 'https://media.giphy.com/media/3o7btPCcdNniyf0ArS/200w.gif' },
+      { id: 'f4', url: 'https://media.giphy.com/media/xUA7bdHu0xn1hVLAIg/giphy.gif', preview: 'https://media.giphy.com/media/xUA7bdHu0xn1hVLAIg/200w.gif' },
+    ],
+    happy: [
+      { id: 'h1', url: 'https://media.giphy.com/media/5GoVLqeAOo6PK/giphy.gif', preview: 'https://media.giphy.com/media/5GoVLqeAOo6PK/200w.gif' },
+      { id: 'h2', url: 'https://media.giphy.com/media/l0MYGb1LuZ3n7dRnO/giphy.gif', preview: 'https://media.giphy.com/media/l0MYGb1LuZ3n7dRnO/200w.gif' },
+      { id: 'h3', url: 'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/giphy.gif', preview: 'https://media.giphy.com/media/3oz8xRF0v9WMAUVLNK/200w.gif' },
+      { id: 'h4', url: 'https://media.giphy.com/media/BlVnrxJgTGsUw/giphy.gif', preview: 'https://media.giphy.com/media/BlVnrxJgTGsUw/200w.gif' },
+    ],
+    sad: [
+      { id: 's1', url: 'https://media.giphy.com/media/d2lcHJTG5Tscg/giphy.gif', preview: 'https://media.giphy.com/media/d2lcHJTG5Tscg/200w.gif' },
+      { id: 's2', url: 'https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif', preview: 'https://media.giphy.com/media/OPU6wzx8JrHna/200w.gif' },
+      { id: 's3', url: 'https://media.giphy.com/media/L95W4wv8nnb9K/giphy.gif', preview: 'https://media.giphy.com/media/L95W4wv8nnb9K/200w.gif' },
+      { id: 's4', url: 'https://media.giphy.com/media/3o6wrvdHFbwBrUFenu/giphy.gif', preview: 'https://media.giphy.com/media/3o6wrvdHFbwBrUFenu/200w.gif' },
+    ],
+    dogs: [
+      { id: 'd1', url: 'https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif', preview: 'https://media.giphy.com/media/mCRJDo24UvJMA/200w.gif' },
+      { id: 'd2', url: 'https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif', preview: 'https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/200w.gif' },
+      { id: 'd3', url: 'https://media.giphy.com/media/Y4pAQv58ETJgRwoLxj/giphy.gif', preview: 'https://media.giphy.com/media/Y4pAQv58ETJgRwoLxj/200w.gif' },
+      { id: 'd4', url: 'https://media.giphy.com/media/qrwthQPPQrtEk/giphy.gif', preview: 'https://media.giphy.com/media/qrwthQPPQrtEk/200w.gif' },
+    ],
+    thank: [
+      { id: 't1', url: 'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif', preview: 'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/200w.gif' },
+      { id: 't2', url: 'https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/giphy.gif', preview: 'https://media.giphy.com/media/3o6Zt6KHxJTbXCnSvu/200w.gif' },
+      { id: 't3', url: 'https://media.giphy.com/media/osjgQPWRx3cac/giphy.gif', preview: 'https://media.giphy.com/media/osjgQPWRx3cac/200w.gif' },
+      { id: 't4', url: 'https://media.giphy.com/media/l3q2wJsC23ikJg9xe/giphy.gif', preview: 'https://media.giphy.com/media/l3q2wJsC23ikJg9xe/200w.gif' },
+    ],
+  }
+  
+  // Search GIFs based on query
+  const searchGifs = (query: string) => {
+    setGifLoading(true)
+    const q = query.toLowerCase().trim()
+    
+    // Match to categories
+    if (q.includes('birthday') || q.includes('bday')) {
+      setGifResults(TRENDING_GIFS.birthday)
+    } else if (q.includes('love') || q.includes('heart')) {
+      setGifResults(TRENDING_GIFS.love)
+    } else if (q.includes('funny') || q.includes('lol') || q.includes('laugh')) {
+      setGifResults(TRENDING_GIFS.funny)
+    } else if (q.includes('happy') || q.includes('yay') || q.includes('excited')) {
+      setGifResults(TRENDING_GIFS.happy)
+    } else if (q.includes('sad') || q.includes('cry')) {
+      setGifResults(TRENDING_GIFS.sad)
+    } else if (q.includes('dog') || q.includes('puppy') || q.includes('pet')) {
+      setGifResults(TRENDING_GIFS.dogs)
+    } else if (q.includes('thank') || q.includes('thanks')) {
+      setGifResults(TRENDING_GIFS.thank)
+    } else {
+      setGifResults(TRENDING_GIFS.trending)
+    }
+    
+    setTimeout(() => setGifLoading(false), 300)
+  }
+  
+  const addMobileReaction = (messageId: string, reaction: string) => {
+    setChatMessages(prev => prev.map(msg => 
+      msg.id === messageId 
+        ? { ...msg, reaction: msg.reaction === reaction ? undefined : reaction }
+        : msg
+    ))
+    setShowMobileReactions(null)
+  }
+  
+  const sendGif = (gifData: {id: string, url: string, preview: string}, searchTerm?: string) => {
+    const newMsg = {
+      id: `msg-${Date.now()}`,
+      role: 'user' as const,
+      text: `IMG:${gifData.url}`,
+      time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+    }
+    setChatMessages(prev => [...prev, newMsg])
+    setShowGifPicker(false)
+    setGifSearch('')
+    setGifResults([])
+    
+    // Get Charity's contextual response to GIF based on category
+    setMobileIsTyping(true)
+    setTimeout(() => {
+      let responses: string[]
+      const term = (searchTerm || gifSearch).toLowerCase()
+      
+      if (term.includes('birthday') || term.includes('bday')) {
+        responses = [
+          "Aww thank you! My birthday is actually coming up in December!",
+          "Birthday vibes! I love celebrations",
+          "This is so cute! Reminds me of my last birthday with Hunter"
+        ]
+      } else if (term.includes('love') || term.includes('heart')) {
+        responses = [
+          "Aww that's so sweet!",
+          "Love this! You're so kind",
+          "This made me smile! Thank you"
+        ]
+      } else if (term.includes('funny') || term.includes('lol') || term.includes('laugh')) {
+        responses = [
+          "Hahaha! That's hilarious!",
+          "LOL this is so funny!",
+          "I needed that laugh today!"
+        ]
+      } else if (term.includes('happy') || term.includes('yay') || term.includes('excited')) {
+        responses = [
+          "Yay! Love the positive energy!",
+          "This makes me happy too!",
+          "Such good vibes!"
+        ]
+      } else if (term.includes('sad') || term.includes('cry')) {
+        responses = [
+          "Aww, is everything okay?",
+          "Hope things get better!",
+          "I'm here if you want to talk about anything"
+        ]
+      } else if (term.includes('dog') || term.includes('puppy') || term.includes('pet')) {
+        responses = [
+          "Omg so cute! Reminds me of Hunter!",
+          "I love dogs! Hunter would love this",
+          "Aww! This is adorable - Hunter is a Dalmatian btw!"
+        ]
+      } else if (term.includes('thank')) {
+        responses = [
+          "You're welcome! Happy to help!",
+          "Of course! Anytime!",
+          "No problem at all!"
+        ]
+      } else {
+        responses = [
+          "Nice GIF!",
+          "Haha love it!",
+          "That's a good one!",
+          "I like that!",
+          "Great choice!"
+        ]
+      }
+      
+      const response = responses[Math.floor(Math.random() * responses.length)]
+      const charityMsg = {
+        id: `msg-${Date.now() + 1}`,
+        role: 'assistant' as const,
+        text: response,
+        time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+      }
+      setChatMessages(prev => [...prev, charityMsg])
+      setMobileIsTyping(false)
+    }, 1500)
+  }
+  
   
   // Camera and Flashlight state
   const [flashlightOn, setFlashlightOn] = useState(false)
@@ -358,6 +547,39 @@ export function MacBookScreen() {
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facetune_05-10-2025-08-52-01-QaKLBArAwKX819Wed7HtYbzdlq4UK1.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1207.JPG-Wv7RabMUc5nFqjUZD3HiibNmpVMM90.jpeg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5380-slsfm6sbzMLaACQBWI4xxdUiuTOvHd.jpg"
+  ]
+  
+  // Personal videos
+  const personalVideos = [
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/1248d3d2-9378-4a55-8436-27859afc42b0.MP4",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/48012242-743F-4BD3-9D46-776EFC06129D.MP4",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_0222.MOV",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov"
+  ]
+  
+  // Combined media for desktop Photos app (mixed photos and videos)
+  const desktopMedia: Array<{type: 'photo' | 'video', url: string}> = [
+    { type: 'photo', url: "/images/sunflowers-sunrise.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/1248d3d2-9378-4a55-8436-27859afc42b0.MP4" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7592-px1oAdcjTmaa9c7aTzlifKeaOqtueY.jpg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_6030-HDajKbzLzr6NbShaVi96ClYMP8BhmX.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/48012242-743F-4BD3-9D46-776EFC06129D.MP4" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/3f8de33d-4c26-4ebb-9f10-d1ed1073fe58.JPG-Z2f5Pmtz0aNiNTX7UVFea7jzrLPwrf.jpeg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0089.JPG-ny4ZUKnkaTaq64nuENlExBo5Mqmi5q.jpeg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2e2f3d08-d3fe-45db-a7a2-b93ecc0bea49.JPG-cSfHYSFu1O8pB2zkZPiM3QYrCRLWGO.jpeg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0402-B6ik9cU5RksRk7f02Hsd1qgBPFD9Yi.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_0222.MOV" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8746%20%281%29-ykl4qPdci0vLiSAJwAbpTJlqY79eHb.jpg" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facetune_05-10-2025-08-52-01-QaKLBArAwKX819Wed7HtYbzdlq4UK1.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1207.JPG-Wv7RabMUc5nFqjUZD3HiibNmpVMM90.jpeg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov" },
+    { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5380-slsfm6sbzMLaACQBWI4xxdUiuTOvHd.jpg" },
+    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov" },
   ]
   const [currentTime, setCurrentTime] = useState("")
   const [loginTime, setLoginTime] = useState("")
@@ -541,6 +763,7 @@ export function MacBookScreen() {
       case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
+      case 'music': setMusicPosition({ x: newX, y: newY }); break
     }
   }
 
@@ -573,7 +796,7 @@ const messageText = mobileInput.trim()
   if (autoHeart) {
     setTimeout(() => {
       setChatMessages(prev => prev.map(msg => 
-        msg.id === messageId ? { ...msg, reaction: '❤️' } : msg
+        msg.id === messageId ? { ...msg, reaction: '���️' } : msg
       ))
     }, 3000)
   }
@@ -697,7 +920,6 @@ const messageText = mobileInput.trim()
           <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-10">
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
-              {/* Cellular Bars */}
               <div className="flex items-end gap-[2px] h-3">
                 <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
                 <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
@@ -705,7 +927,6 @@ const messageText = mobileInput.trim()
                 <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-white" />
-              {/* Music Toggle */}
               <button
                 onClick={() => setAudioEnabled(!audioEnabled)}
                 className="p-0.5"
@@ -716,12 +937,11 @@ const messageText = mobileInput.trim()
                   <VolumeX className="w-4 h-4 text-white/60" />
                 )}
               </button>
-              {/* Battery - iOS style */}
-              <div className="flex items-center gap-0.5">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[4px] relative flex items-center justify-start p-[2px]">
-                  <div className="h-full bg-white rounded-[2px]" style={{ width: '72%' }} />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
                 </div>
-                <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-full" />
+                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -744,64 +964,12 @@ const messageText = mobileInput.trim()
                 </div>
                 <div className="flex-1">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/70 text-xs">Welcome to my portfolio on my iPhone! Feel free to check out my case studies.</p>
+                  <p className="text-white/70 text-xs">{mobileConversations.find(c => c.id === 'welcome')?.messages?.slice(-1)[0]?.text || 'Welcome to my portfolio on my iPhone!'}</p>
                 </div>
               </div>
             </div>
             
-            {/* Download App Notification */}
-            {showDownloadBanner && (
-              <div className="mt-3 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl border border-white/10 overflow-hidden">
-                <div 
-                  className="p-4 flex items-center gap-3 cursor-pointer active:bg-white/10 transition-colors"
-                  onClick={() => setDownloadExpanded(!downloadExpanded)}
-                >
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-white text-sm font-semibold">Download App</p>
-                    <p className="text-white/70 text-xs">Tap to get the app for your device</p>
-                  </div>
-                  <button 
-                    onClick={(e) => { e.stopPropagation(); setShowDownloadBanner(false); }}
-                    className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
-                  >
-                    <X className="w-3 h-3 text-white/80" />
-                  </button>
-                </div>
-                
-                {/* Expanded Download Options */}
-                {downloadExpanded && (
-                  <div className="px-4 pb-4 flex gap-2">
-                    <a 
-                      href="/downloads/portfolio.ipa" 
-                      download
-                      className="flex-1 bg-black/40 backdrop-blur text-white text-xs font-medium py-2.5 rounded-xl flex items-center justify-center gap-1.5 active:bg-black/60 transition-colors"
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                      </svg>
-                      iOS
-                    </a>
-                    <a 
-                      href="/downloads/portfolio.apk" 
-                      download
-                      className="flex-1 bg-[#3DDC84]/80 backdrop-blur text-white text-xs font-medium py-2.5 rounded-xl flex items-center justify-center gap-1.5 active:bg-[#3DDC84] transition-colors"
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.523 2.047a.5.5 0 00-.7.252l-1.456 3.24a9.3 9.3 0 00-6.734 0L7.177 2.3a.5.5 0 10-.9.447l1.378 3.07A9.25 9.25 0 003 13.5h18a9.25 9.25 0 00-4.655-7.683l1.378-3.07a.5.5 0 00-.2-.7zM7 11a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2zM3 14.5h18v1A7.5 7.5 0 0113.5 23h-3A7.5 7.5 0 013 15.5z"/>
-                      </svg>
-                      Android
-                    </a>
-                  </div>
-                )}
-              </div>
-            )}
-            
-            {/* Enter Button - Moved up */}
+            {/* Enter Button */}
             <button
               onClick={() => setMobileScreen("home")}
               onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
@@ -850,34 +1018,36 @@ const messageText = mobileInput.trim()
           )}
 
           {/* Status Bar - iOS style */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20">
-            <span className="text-white text-sm font-medium">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              {/* Cellular Bars */}
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+          <div className="absolute top-0 left-0 right-0 h-[50px] flex items-center justify-between px-6 pt-3 z-20">
+            <span className="text-white text-[15px] font-semibold">{loginTime}</span>
+            <div className="flex items-center gap-1">
+              {/* Signal dots */}
+              <div className="flex gap-[3px] mr-1">
+                <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
               </div>
-<Wifi className="w-4 h-4 text-white" />
+              <Wifi className="w-[18px] h-[18px] text-white" />
               {/* Music Toggle */}
               <button
                 onClick={() => setAudioEnabled(!audioEnabled)}
-                className="p-0.5"
+                className="p-0.5 ml-1"
               >
                 {audioEnabled ? (
-                  <Volume2 className="w-4 h-4 text-white" />
+                  <Volume2 className="w-[18px] h-[18px] text-white" />
                 ) : (
-                  <VolumeX className="w-4 h-4 text-white/60" />
+                  <VolumeX className="w-[18px] h-[18px] text-white/60" />
                 )}
               </button>
-              {/* Battery - iOS style */}
-              <div className="flex items-center gap-0.5">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[4px] relative flex items-center justify-start p-[2px]">
-                  <div className="h-full bg-white rounded-[2px]" style={{ width: '72%' }} />
+              {/* iOS Battery */}
+              <div className="flex items-center ml-1">
+                <div className="relative flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
-                <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-full" />
               </div>
             </div>
           </div>
@@ -964,72 +1134,66 @@ const messageText = mobileInput.trim()
               </div>
             </div>
 
-            {/* Quick Access */}
+            {/* Quick Access - Icons Only */}
             <div className="mx-4 mt-6 mb-6">
               <h2 className="text-white text-lg font-semibold mb-3">Quick Access</h2>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-4 gap-3">
                 {/* Photos */}
                 <button
                   onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
                 >
                   <div className="w-12 h-12 rounded-xl overflow-hidden">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
                   </div>
-                  <span className="text-gray-900 text-sm font-medium">Photos</span>
                 </button>
 
                 {/* Messages */}
                 <button
                   onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-[#5ef67a] to-[#45d34a] flex items-center justify-center">
-                    <MessageCircle className="w-6 h-6 text-white" />
+                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMessage_logo.svg-FX2uXRLcx7RuPBmMqC6YlrYIocaLrP.png" alt="Messages" className="w-full h-full object-cover" />
                   </div>
-                  <span className="text-gray-900 text-sm font-medium">Messages</span>
                 </button>
 
                 {/* Notes */}
                 <button
                   onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
                 >
                   <div className="w-12 h-12 rounded-xl overflow-hidden">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
                   </div>
-                  <span className="text-gray-900 text-sm font-medium">Notes</span>
                 </button>
 
-                {/* About */}
-                <button
-                  onClick={() => setMobileScreen('about')}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
-                  <span className="text-gray-900 text-sm font-medium">About Me</span>
-                </button>
-                
                 {/* Safari */}
                 <button
                   onClick={() => { setMobileSafariUrl(''); setMobileScreen('safari'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
                 >
                   <div className="w-12 h-12 rounded-xl overflow-hidden">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
                   </div>
-                  <span className="text-gray-900 text-sm font-medium">Safari</span>
                 </button>
                 
                 {/* Camera */}
                 <button
                   onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
                 >
                   <div className="w-12 h-12 rounded-xl overflow-hidden">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/590-5908700_camera-icon-ios-11-camera-icon-hd-png-b9u1osHLSOoiE66jNAWPRNxc5tCbSP.png" alt="Camera" className="w-full h-full object-cover" />
                   </div>
-                  <span className="text-gray-900 text-sm font-medium">Camera</span>
+                </button>
+
+                {/* About */}
+                <button
+                  onClick={() => setMobileScreen('about')}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
                 </button>
               </div>
             </div>
@@ -1041,16 +1205,20 @@ const messageText = mobileInput.trim()
 
     // iPhone iMessage Screen - Authentic iOS Messages
     if (mobileScreen === "messages") {
-      const contact = mobileMessageContacts.find(c => c.id === selectedContact) || mobileMessageContacts[0]
+      const contact = mobileConversations.find(c => c.id === selectedContact) || mobileConversations[0]
 
       // Conversation List View
       if (showConversationList) {
         return (
-          <div className="h-screen w-full bg-black flex flex-col">
+          <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
+            <style>{`
+              .hide-scrollbar::-webkit-scrollbar { display: none; }
+              .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            `}</style>
             {/* Status Bar */}
-            <div className="h-12 flex items-center justify-between px-6 pt-2 bg-[#000]">
-              <span className="text-white text-sm font-medium">{loginTime}</span>
-              <div className="flex items-center gap-1.5">
+            <div className="h-[50px] flex items-center justify-between px-6 pt-3 bg-[#000]">
+              <span className="text-white text-[15px] font-semibold">{loginTime}</span>
+              <div className="flex items-center gap-1">
                 <div className="flex items-end gap-[2px] h-3">
                   <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
                   <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
@@ -1058,8 +1226,11 @@ const messageText = mobileInput.trim()
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -1085,36 +1256,50 @@ const messageText = mobileInput.trim()
             </div>
 
             {/* Conversation List */}
-            <div className="flex-1 overflow-y-auto">
-              {mobileMessageContacts.map((c, idx) => (
+            <div className="flex-1 overflow-y-auto overflow-x-hidden hide-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
+              {mobileConversations.map((c) => (
                 <button
                   key={c.id}
-                  onClick={() => { setSelectedContact(c.id); setShowConversationList(false); }}
+                  onClick={() => { 
+                    setSelectedContact(c.id); 
+                    setShowConversationList(false);
+                    // Mark as read
+                    setMobileConversations(prev => prev.map(conv => 
+                      conv.id === c.id ? { ...conv, unread: false } : conv
+                    ));
+                  }}
                   className="w-full flex items-center gap-3 px-4 py-3 active:bg-[#1c1c1e]"
                 >
-                  <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
+                  {/* Unread indicator */}
+                  {c.unread && (
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#007AFF] flex-shrink-0 absolute left-2" />
+                  )}
+                  <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
                     {c.avatar ? (
                       <img src={c.avatar} alt={c.name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-                        <span className="text-white text-xl font-semibold">{c.name.charAt(0)}</span>
+                        <span className="text-white text-lg font-semibold">{c.name.charAt(0)}</span>
                       </div>
                     )}
                   </div>
-                  <div className="flex-1 text-left border-b border-white/10 pb-3">
-                    <div className="flex justify-between items-center">
-                      <p className="text-white text-[17px] font-medium">{c.name}</p>
-                      <span className="text-white/40 text-[15px]">{c.time}</span>
+                  <div className="flex-1 min-w-0 text-left border-b border-white/10 pb-3">
+                    <div className="flex justify-between items-center gap-2">
+                      <p className="text-white text-[17px] font-medium truncate">{c.name}</p>
+                      <div className="flex items-center gap-1 flex-shrink-0">
+                        <span className="text-white/40 text-[15px]">{c.time}</span>
+                        <ChevronRight className="w-4 h-4 text-white/30" />
+                      </div>
                     </div>
-                    <p className="text-white/50 text-[15px] truncate mt-0.5">{c.lastMessage}</p>
+                    <p className="text-white/50 text-[15px] truncate mt-0.5 pr-2">{c.messages[c.messages.length - 1]?.text || c.lastMessage}</p>
                   </div>
                 </button>
               ))}
             </div>
 
             {/* Home Indicator */}
-            <div className="bg-black py-2">
-              <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+            <div className="bg-black py-2 flex-shrink-0">
+              <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
             </div>
           </div>
         )
@@ -1135,8 +1320,11 @@ const messageText = mobileInput.trim()
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -1149,8 +1337,8 @@ const messageText = mobileInput.trim()
                   <span className="text-[17px]">Back</span>
                 </button>
                 <div className="flex flex-col items-center">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-                    <span className="text-white text-sm font-semibold">C</span>
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] font-medium mt-0.5">Charity</span>
                 </div>
@@ -1163,25 +1351,43 @@ const messageText = mobileInput.trim()
             </div>
 
             {/* Interactive Messages with Charity */}
-            <div className="flex-1 overflow-y-auto px-4 py-4">
+            <div className="flex-1 overflow-y-auto px-4 py-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+              <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
               {chatMessages.map((msg) => (
                 <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className="relative">
-                    {/* Reaction display - iMessage style with blue bubble and trailing circles */}
+                  <div 
+                    className="relative"
+                    style={{ maxWidth: '75%' }}
+                    onDoubleClick={() => msg.role === 'assistant' && setShowMobileReactions(showMobileReactions === msg.id ? null : msg.id)}
+                  >
+                    {/* Reaction display - iOS style */}
                     {msg.reaction && (
-                      <div className={`absolute -top-4 -left-2 z-10`}>
+                      <div className={`absolute -top-3 z-50 ${msg.role === 'user' ? '-left-3' : '-right-3'}`}>
                         <div className="relative">
-                          {/* Main reaction bubble - bright blue like iMessage */}
-                          <div className="w-8 h-8 bg-[#0b84fe] rounded-full flex items-center justify-center shadow-lg">
-                            <span className="text-sm">{msg.reaction}</span>
+                          <div className="w-6 h-6 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-md">
+                            <span className="text-[14px]">{msg.reaction}</span>
                           </div>
-                          {/* Trailing circles like iMessage thought bubble */}
-                          <div className="absolute -bottom-0.5 right-0 w-2.5 h-2.5 bg-[#0b84fe] rounded-full" />
-                          <div className="absolute -bottom-2 -right-1 w-1.5 h-1.5 bg-[#0b84fe] rounded-full" />
+                          <div className={`absolute bottom-0 ${msg.role === 'user' ? '-left-1.5' : '-right-1.5'} w-2 h-2 bg-white border border-gray-200 rounded-full shadow-sm`} />
                         </div>
                       </div>
                     )}
-                    <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
+                    
+                    {/* Reaction picker */}
+                    {showMobileReactions === msg.id && (
+                      <div className="absolute bottom-full mb-2 left-0 bg-white rounded-full shadow-lg border border-black/10 px-2 py-1.5 flex gap-1 z-50">
+                        {MOBILE_REACTIONS.map((reaction) => (
+                          <button
+                            key={reaction}
+                            onClick={() => addMobileReaction(msg.id, reaction)}
+                            className="hover:scale-125 transition-transform text-lg px-0.5"
+                          >
+                            {reaction}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    
+                    <div className={`px-4 py-2.5 ${msg.role === 'user'
                         ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
                         : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
                       }`}>
@@ -1200,6 +1406,12 @@ const messageText = mobileInput.trim()
                           }
                           alt="Reaction"
                           className="w-24 h-auto rounded-lg"
+                        />
+                      ) : msg.text.startsWith('IMG:') ? (
+                        <img 
+                          src={msg.text.replace('IMG:', '')}
+                          alt="User GIF"
+                          className="max-w-full h-auto rounded-lg"
                         />
                       ) : (
                         <div className="text-[17px] leading-snug">
@@ -1241,9 +1453,92 @@ const messageText = mobileInput.trim()
               )}
             </div>
 
+            {/* GIF Picker Slide-up Panel */}
+            {showGifPicker && (
+              <div className="absolute bottom-0 left-0 right-0 bg-[#1c1c1e] rounded-t-2xl z-50 animate-in slide-in-from-bottom duration-300" style={{ height: '55%' }}>
+                {/* Handle bar */}
+                <div className="flex justify-center py-2">
+                  <div className="w-10 h-1 bg-white/30 rounded-full" />
+                </div>
+                
+                {/* Search bar */}
+                <div className="px-3 pb-2">
+                  <div className="flex items-center gap-2 bg-black/40 rounded-xl px-3 py-2">
+                    <Search className="w-4 h-4 text-white/50" />
+                    <input
+                      type="text"
+                      placeholder="Search GIFs..."
+                      value={gifSearch}
+                      onChange={(e) => {
+                        setGifSearch(e.target.value)
+                        if (e.target.value.length > 1) {
+                          searchGifs(e.target.value)
+                        } else if (e.target.value.length === 0) {
+                          setGifResults(TRENDING_GIFS.trending)
+                        }
+                      }}
+                      className="flex-1 bg-transparent text-white text-[15px] placeholder-white/40 outline-none"
+                      autoFocus
+                    />
+                    <button onClick={() => setShowGifPicker(false)} className="text-[#0b84fe] text-[15px] font-medium">
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Category pills */}
+                <div className="px-3 pb-2 flex gap-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+                  {['Trending', 'Birthday', 'Love', 'Funny', 'Happy', 'Sad', 'Dogs', 'Thank You'].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setGifSearch(cat.toLowerCase())
+                        searchGifs(cat.toLowerCase())
+                      }}
+                      className={`px-3 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap ${
+                        gifSearch.toLowerCase() === cat.toLowerCase() 
+                          ? 'bg-[#0b84fe] text-white' 
+                          : 'bg-black/40 text-white/70'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+                
+                {/* GIF grid */}
+                <div className="flex-1 overflow-y-auto px-2 pb-4" style={{ scrollbarWidth: 'none', height: 'calc(100% - 110px)' }}>
+                  {gifLoading ? (
+                    <div className="flex items-center justify-center h-32">
+                      <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-1">
+                      {(gifResults.length > 0 ? gifResults : TRENDING_GIFS.trending).map((gif) => (
+                        <button
+                          key={gif.id}
+                          onClick={() => sendGif(gif, gifSearch)}
+                          className="aspect-square rounded-lg overflow-hidden bg-black/20"
+                        >
+                          <img src={gif.preview || gif.url} alt="GIF" className="w-full h-full object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+            
             {/* Input Bar */}
             <form onSubmit={handleMobileChatSubmit} className="bg-black px-3 py-2 pb-8 flex items-center gap-2">
-              <button type="button" className="w-8 h-8 bg-[#3b3b3d] rounded-full flex items-center justify-center">
+              <button 
+                type="button" 
+                onClick={() => {
+                  setShowGifPicker(true)
+                  setGifResults(TRENDING_GIFS.trending)
+                }}
+                className="w-8 h-8 bg-[#3b3b3d] rounded-full flex items-center justify-center"
+              >
                 <Plus className="w-5 h-5 text-white" />
               </button>
               <div className="flex-1 bg-[#1c1c1e] rounded-full px-4 py-2 border border-white/20 flex items-center">
@@ -1273,15 +1568,18 @@ const messageText = mobileInput.trim()
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
               <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-              </div>
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-              </div>
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+                </div>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                </div>
             </div>
           </div>
 
@@ -1313,7 +1611,7 @@ const messageText = mobileInput.trim()
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-4">
             {contact.messages.map((msg, idx) => (
               <div key={idx} className={`flex mb-2 ${msg.from === 'charity' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[75%] px-4 py-2.5 ${msg.from === 'charity'
@@ -1361,9 +1659,10 @@ const messageText = mobileInput.trim()
             <div className="flex items-center gap-1">
               <Wifi className="w-4 h-4 text-black" />
               <div className="flex items-center">
-                <div className="w-6 h-3 border border-black rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
                 </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -1556,8 +1855,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -1620,15 +1922,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
               <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-              </div>
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-              </div>
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+                </div>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                </div>
             </div>
           </div>
 
@@ -1698,8 +2003,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="w-[3px] h-[11px] bg-black rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-black" />
-              <div className="w-6 h-3 border border-black rounded-sm relative">
-                <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -1788,7 +2096,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <p className="text-[15px] text-[#007aff]">Email</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
                 </a>
-                <a href="https://www.linkedin.com/in/charitydupont" target="_blank" rel="noopener noreferrer" className="px-4 py-3 flex items-center gap-3 active:bg-gray-50">
+                <button onClick={() => setShowLeavingPopup('https://www.linkedin.com/in/charitydupont')} className="px-4 py-3 flex items-center gap-3 active:bg-gray-50 w-full text-left">
                   <div className="w-8 h-8 bg-[#0077b5] rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -1796,7 +2104,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <p className="text-[15px] text-[#007aff]">LinkedIn</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -1805,15 +2113,235 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="bg-[#f2f2f7] py-2">
             <div className="mx-auto w-36 h-1 bg-black/20 rounded-full" />
           </div>
+
+          {/* Leaving Portfolio Popup */}
+          {showLeavingPopup && (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+              <div className="bg-white rounded-2xl p-6 max-w-sm mx-4 shadow-2xl">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Leaving Portfolio</h3>
+                <p className="text-gray-600 mb-6">You are now leaving Charity Dupont&apos;s MacBook portfolio.</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <a
+                    href={showLeavingPopup}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors text-center"
+                  >
+                    Continue
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )
     }
 
     // iPhone Photos App
     if (mobileScreen === "photos") {
-      if (viewingPhoto !== null) {
+      // Build combined media array for the entire Photos section
+      const allMedia: Array<{type: 'photo' | 'video' | 'captured', src: string, originalIndex: number}> = []
+      
+      // Add captured photos first
+      capturedPhotos.forEach((photo, idx) => {
+        allMedia.push({ type: 'captured', src: photo, originalIndex: idx })
+      })
+      
+      // Mix personal photos and videos throughout the grid
+      const videoPositions = [0, 2, 5, 8, 11, 14, 17] // 7 positions for 7 videos
+      let photoIdx = 0
+      let videoIdx = 0
+      const totalItems = personalPhotos.length + personalVideos.length
+      
+      for (let i = 0; i < totalItems; i++) {
+        if (videoPositions.includes(i) && videoIdx < personalVideos.length) {
+          allMedia.push({ type: 'video', src: personalVideos[videoIdx], originalIndex: videoIdx })
+          videoIdx++
+        } else if (photoIdx < personalPhotos.length) {
+          allMedia.push({ type: 'photo', src: personalPhotos[photoIdx], originalIndex: photoIdx })
+          photoIdx++
+        }
+      }
+      
+      // Add any remaining videos that weren't placed
+      while (videoIdx < personalVideos.length) {
+        allMedia.push({ type: 'video', src: personalVideos[videoIdx], originalIndex: videoIdx })
+        videoIdx++
+      }
+
+      // Media Viewer - unified for photos and videos with swipeable thumbnails
+      if (viewingMediaIndex !== null) {
+        const currentMedia = allMedia[viewingMediaIndex]
+        const isVideo = currentMedia?.type === 'video'
+        
         return (
           <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
+            {/* Status Bar */}
+            <div className="flex-shrink-0 h-12 flex items-center justify-between px-6 pt-2">
+              <span className="text-white text-sm font-medium">{loginTime}</span>
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-end gap-[2px] h-3">
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+                </div>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                </div>
+              </div>
+            </div>
+
+            {/* Header */}
+            <div className="flex-shrink-0 px-4 py-2 flex items-center justify-between">
+              <button onClick={() => setViewingMediaIndex(null)} className="text-[#0a84ff]">
+                <ChevronLeft className="w-7 h-7" />
+              </button>
+              <div className="text-center">
+                <p className="text-white text-[15px]">{isVideo ? 'Video' : 'Photo'}</p>
+              </div>
+              <button className="text-[#0a84ff]">
+                <MoreHorizontal className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Main Media View */}
+            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden min-h-0">
+              {isVideo ? (
+                <video
+                  key={currentMedia.src}
+                  src={currentMedia.src}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-contain"
+                  style={{ colorScheme: 'dark' }}
+                />
+              ) : (
+                <img
+                  src={currentMedia.src}
+                  alt="Media"
+                  className="max-w-full max-h-full object-contain"
+                />
+              )}
+            </div>
+
+            {/* iOS-style Thumbnail Strip - Swipeable */}
+            <div className="flex-shrink-0 bg-black/90 py-3 px-2">
+              <div 
+                className="flex gap-1.5 overflow-x-auto scrollbar-none px-2" 
+                style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+              >
+                {allMedia.map((media, idx) => (
+                  <button
+                    key={`thumb-${idx}`}
+                    onClick={() => setViewingMediaIndex(idx)}
+                    className={`w-12 h-12 flex-shrink-0 rounded-sm overflow-hidden relative transition-all ${
+                      idx === viewingMediaIndex 
+                        ? 'ring-2 ring-white scale-105' 
+                        : 'opacity-60'
+                    }`}
+                  >
+                    {media.type === 'video' ? (
+                      <>
+                        <video src={media.src} className="w-full h-full object-cover" muted playsInline preload="metadata" />
+                        <div className="absolute bottom-0.5 left-0.5">
+                          <svg className="w-2.5 h-2.5 text-white drop-shadow" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      </>
+                    ) : (
+                      <img src={media.src} alt="" className="w-full h-full object-cover" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* iOS Action Toolbar */}
+            <div className="flex-shrink-0 bg-black py-3 px-6 flex items-center justify-between">
+              <button className="p-2">
+                <Share className="w-6 h-6 text-[#0a84ff]" />
+              </button>
+              <button className="p-2">
+                <Heart className="w-6 h-6 text-[#0a84ff]" />
+              </button>
+              <button className="p-2">
+                <svg className="w-6 h-6 text-[#0a84ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </button>
+              <button className="p-2">
+                <Trash2 className="w-6 h-6 text-[#0a84ff]" />
+              </button>
+            </div>
+
+            {/* Home Indicator */}
+            <div className="flex-shrink-0 bg-black pb-2 pt-1">
+              <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
+            </div>
+          </div>
+        )
+      }
+
+      return (
+        <div className="h-[100dvh] w-full bg-black flex flex-col relative overflow-hidden">
+          {/* Photo Grid - Full screen, extends behind header */}
+          <div className="absolute inset-0 overflow-y-auto scrollbar-none pt-[140px] pb-[70px]" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="grid grid-cols-3 gap-[2px]">
+              {allMedia.map((item, idx) => {
+                if (item.type === 'video') {
+                  return (
+                    <button
+                      key={`media-${idx}`}
+                      onClick={() => setViewingMediaIndex(idx)}
+                      className="aspect-square overflow-hidden relative bg-black"
+                    >
+                      <video 
+                        src={item.src} 
+                        className="w-full h-full object-cover"
+                        muted
+                        playsInline
+                        preload="metadata"
+                      />
+                      {/* iOS-style video indicator */}
+                      <div className="absolute bottom-1 left-1 flex items-center gap-0.5">
+                        <svg className="w-3 h-3 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                        <span className="text-white text-[11px] font-medium drop-shadow-md">0:30</span>
+                      </div>
+                    </button>
+                  )
+                } else {
+                  return (
+                    <button
+                      key={`media-${idx}`}
+                      onClick={() => setViewingMediaIndex(idx)}
+                      className="aspect-square overflow-hidden relative"
+                    >
+                      <img src={item.src} alt="" className="w-full h-full object-cover" />
+                    </button>
+                  )
+                }
+              })}
+            </div>
+          </div>
+
+          {/* Floating Header */}
+          <div className="absolute top-0 left-0 right-0 z-10">
             {/* Status Bar */}
             <div className="h-12 flex items-center justify-between px-6 pt-2">
               <span className="text-white text-sm font-medium">{loginTime}</span>
@@ -1825,177 +2353,69 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
 
-            {/* Header - Day name and time */}
-            <div className="px-4 py-2 flex items-center justify-between">
-              <button onClick={() => setViewingPhoto(null)} className="text-[#0a84ff]">
-                <ChevronLeft className="w-7 h-7" />
-              </button>
-              <div className="text-center">
-                <p className="text-white text-[17px] font-semibold">Friday</p>
-                <p className="text-white/60 text-[13px]">10:52 PM</p>
+            {/* Library Header */}
+            <div className="px-4 pt-1 pb-3 flex items-start justify-between">
+              <div>
+                <h1 className="text-white text-[34px] font-bold leading-tight">Library</h1>
+                <p className="text-white/60 text-[15px]">Apr 23, 2026</p>
               </div>
-              <button className="text-[#0a84ff]">
-                <MoreHorizontal className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Full Photo View */}
-            <div className="flex-1 flex items-center justify-center px-0 bg-white overflow-hidden min-h-0">
-              <img
-                src={viewingPhoto < capturedPhotos.length ? capturedPhotos[viewingPhoto] : personalPhotos[viewingPhoto - capturedPhotos.length]}
-                alt={`Photo ${viewingPhoto + 1}`}
-                className="max-w-full max-h-full object-contain"
-              />
-            </div>
-
-            {/* Thumbnail Strip */}
-            <div className="bg-white py-2 px-2 flex-shrink-0">
-              <div className="flex gap-1 overflow-x-auto justify-center scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
-                {capturedPhotos.map((photo, idx) => (
-                  <button
-                    key={`thumb-captured-${idx}`}
-                    onClick={() => setViewingPhoto(idx)}
-                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
-                  >
-                    <img src={photo} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-                {personalPhotos.map((photo, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
-                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${capturedPhotos.length + idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
-                  >
-                    <img src={photo} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Action Toolbar */}
-            <div className="bg-white py-2 px-8 flex items-center justify-between flex-shrink-0">
-              <button className="text-[#0a84ff]">
-                <Share className="w-6 h-6" />
-              </button>
-              <div className="flex items-center gap-6">
-                <button className="text-[#0a84ff]">
-                  <Heart className="w-6 h-6" />
-                </button>
-                <button className="text-[#0a84ff]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+              <div className="flex items-center gap-3 pt-1">
+                {/* Search button */}
+                <button className="w-[34px] h-[34px] rounded-full bg-[#0a84ff] flex items-center justify-center">
+                  <svg className="w-[18px] h-[18px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                   </svg>
                 </button>
-                <button className="text-[#0a84ff]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
-                  </svg>
+                {/* Select button */}
+                <button className="px-3 py-1.5 rounded-full bg-white/20 text-white text-[15px] font-medium">
+                  Select
+                </button>
+                {/* Profile with notification */}
+                <button onClick={() => setMobileScreen('home')} className="relative">
+                  <div className="w-[34px] h-[34px] rounded-full overflow-hidden">
+                    <img src={MEMOJI_URL} alt="Profile" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="absolute -top-0.5 -right-0.5 w-[14px] h-[14px] bg-red-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-[9px] font-bold">!</span>
+                  </div>
                 </button>
               </div>
-              <button className="text-[#0a84ff]">
-                <Trash2 className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Home Indicator */}
-            <div className="bg-white py-2">
-              <div className="mx-auto w-36 h-1 bg-black/20 rounded-full" />
-            </div>
-          </div>
-        )
-      }
-
-      return (
-        <div className="h-screen w-full bg-black flex flex-col">
-          {/* Status Bar */}
-          <div className="h-12 flex items-center justify-between px-6 pt-2">
-            <span className="text-white text-sm font-medium">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-              </div>
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-              </div>
-            </div>
-          </div>
-
-          {/* Header with Back button and Library title */}
-          <div className="px-4 pt-2 pb-1">
-            <div className="flex items-center justify-between mb-2">
-              <button onClick={() => setMobileScreen('home')} className="flex items-center gap-1 text-[#0a84ff]">
-                <ChevronLeft className="w-6 h-6" />
-                <span className="text-[17px]">Back</span>
-              </button>
-              <div className="flex items-center gap-3">
-                <button className="text-white/80 text-[17px]">Select</button>
-                <div className="w-8 h-8 rounded-full overflow-hidden">
-                  <img src={MEMOJI_URL} alt="Profile" className="w-full h-full object-cover" />
-                </div>
-              </div>
-            </div>
-            <div>
-              <h1 className="text-white text-3xl font-bold">Library</h1>
-              <p className="text-white/60 text-[15px]">Mar 13, 2026</p>
-            </div>
-          </div>
-
-          {/* Photo Grid - 3 columns like iOS */}
-          <div className="flex-1 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="grid grid-cols-3 gap-0.5">
-              {/* Captured photos first */}
-              {capturedPhotos.map((photo, idx) => (
-                <button
-                  key={`captured-${idx}`}
-                  onClick={() => setViewingPhoto(idx)}
-                  className="aspect-square overflow-hidden relative"
-                >
-                  <img src={photo} alt={`Captured ${idx + 1}`} className="w-full h-full object-cover" />
-                  {idx === 0 && (
-                    <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
-                      <Camera className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                </button>
-              ))}
-              {/* Personal photos */}
-              {personalPhotos.map((photo, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
-                  className="aspect-square overflow-hidden relative"
-                >
-                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
-                  {idx === 0 && capturedPhotos.length === 0 && (
-                    <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
-                  )}
-                </button>
-              ))}
             </div>
           </div>
 
           {/* Bottom Filter Bar */}
-          <div className="bg-black/90 px-4 py-3 flex items-center justify-center">
-            <div className="flex items-center gap-2 bg-white/10 rounded-full px-1 py-1">
-              <button className="px-4 py-1.5 text-white/60 text-[15px]">Years</button>
-              <button className="px-4 py-1.5 text-white/60 text-[15px]">Months</button>
-              <button className="px-4 py-1.5 bg-white/20 rounded-full text-white text-[15px]">All</button>
+          <div className="absolute bottom-0 left-0 right-0 z-10 bg-black/80 backdrop-blur-xl">
+            <div className="flex items-center justify-center gap-3 py-3 px-4">
+              {/* Sort button */}
+              <button className="w-[44px] h-[44px] rounded-full bg-white/20 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h6m0 0l-3-3m3 3L3 10M21 17h-6m0 0l3 3m-3-3l3-3" />
+                </svg>
+              </button>
+              {/* Filter pills */}
+              <div className="flex items-center bg-white/20 rounded-full p-1">
+                <button className="px-4 py-2 text-white/70 text-[15px]">Years</button>
+                <button className="px-4 py-2 text-white/70 text-[15px]">Months</button>
+                <button className="px-4 py-2 bg-white/30 rounded-full text-white text-[15px] font-medium">All</button>
+              </div>
+              {/* Close button */}
+              <button onClick={() => setMobileScreen('home')} className="w-[44px] h-[44px] rounded-full bg-white/20 flex items-center justify-center">
+                <X className="w-5 h-5 text-white" />
+              </button>
             </div>
-          </div>
-
-          {/* Home Indicator */}
-          <div className="bg-black py-2">
-            <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+            {/* Home Indicator */}
+            <div className="pb-2 pt-1">
+              <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
+            </div>
           </div>
         </div>
       )
@@ -2016,8 +2436,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="w-[3px] h-[11px] bg-black rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-black" />
-              <div className="w-6 h-3 border border-black rounded-sm relative">
-                <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '70%' }} />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -2110,29 +2533,25 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wikipedia_Logo_1.0-wubSVX4dY2rqtnrJ5XcvoYYLBXGILS.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
                       </div>
                       <span className="text-gray-800 text-[11px]">Wikipedia</span>
                     </button>
                     
                     {/* LinkedIn */}
-                    <a
-                      href="https://linkedin.com/in/charitydupont"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://linkedin.com/in/charitydupont')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-[#0077b5] flex items-center justify-center overflow-hidden shadow-sm">
                         <span className="text-white text-2xl font-bold">in</span>
                       </div>
                       <span className="text-gray-800 text-[11px]">LinkedIn</span>
-                    </a>
+                    </button>
                     
                     {/* Google */}
-                    <a
-                      href="https://google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://google.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2141,13 +2560,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </span>
                       </div>
                       <span className="text-gray-800 text-[11px]">Google</span>
-                    </a>
+                    </button>
                     
                     {/* Apple */}
-                    <a
-                      href="https://apple.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://apple.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2156,7 +2573,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </svg>
                       </div>
                       <span className="text-gray-800 text-[11px]">Apple</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
                 
@@ -2173,16 +2590,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wikipedia_Logo_1.0-wubSVX4dY2rqtnrJ5XcvoYYLBXGILS.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
                       </div>
                       <span className="text-gray-800 text-[11px] leading-tight text-center">Charity Dupont</span>
                     </button>
                     
                     {/* Google */}
-                    <a
-                      href="https://google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://google.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2194,7 +2609,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </svg>
                       </div>
                       <span className="text-gray-800 text-[11px]">Google</span>
-                    </a>
+                    </button>
                     
                     {/* Images */}
                     <button
@@ -2207,10 +2622,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     </button>
                     
                     {/* Support */}
-                    <a
-                      href="https://support.google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://support.google.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2222,7 +2635,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </svg>
                       </div>
                       <span className="text-gray-800 text-[11px]">Support</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
                 
@@ -2286,6 +2699,33 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <div className="mx-auto w-36 h-1 bg-black/20 rounded-full" />
             </button>
           </div>
+
+          {/* Leaving Portfolio Popup */}
+          {showLeavingPopup && (
+            <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+              <div className="bg-white rounded-2xl p-6 max-w-sm mx-4 shadow-2xl">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">Leaving Portfolio</h3>
+                <p className="text-gray-600 mb-6">You are now leaving Charity Dupont&apos;s MacBook portfolio.</p>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <a
+                    href={showLeavingPopup}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setShowLeavingPopup(null)}
+                    className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors text-center"
+                  >
+                    Continue
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )
     }
@@ -2304,18 +2744,24 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           />
           
           {/* Status Bar */}
-          <div className="relative z-10 h-12 flex items-center justify-between px-6 pt-2">
-            <span className="text-white text-sm font-medium drop-shadow-lg">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px] drop-shadow" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px] drop-shadow" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px] drop-shadow" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px] drop-shadow" />
+          <div className="relative z-10 h-[50px] flex items-center justify-between px-6 pt-3">
+            <span className="text-white text-[15px] font-semibold drop-shadow-lg">{loginTime}</span>
+            <div className="flex items-center gap-1">
+              <div className="flex gap-[3px] mr-1">
+                <div className="w-[5px] h-[5px] rounded-full bg-white drop-shadow" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white drop-shadow" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30 drop-shadow" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30 drop-shadow" />
               </div>
-              <Wifi className="w-4 h-4 text-white drop-shadow" />
-              <div className="w-6 h-3 border border-white rounded-sm relative drop-shadow">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+              <Wifi className="w-[18px] h-[18px] text-white drop-shadow" />
+              <div className="flex items-center gap-1 ml-1">
+                <div className="relative flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden drop-shadow">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px] drop-shadow" />
+                </div>
+                <span className="text-white text-[12px] font-medium drop-shadow">52</span>
               </div>
             </div>
           </div>
@@ -2387,7 +2833,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       )
     }
 
-  }
+    }
   // ==================== END MOBILE EXPERIENCE ====================
 
   // Login Screen (Desktop Only)
@@ -2407,10 +2853,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="absolute top-3 right-4 flex items-center gap-3 text-white/80">
             <Wifi className="w-4 h-4" />
             <div className="flex items-center">
-              <div className="w-6 h-3 border border-white/80 rounded-sm relative">
-                <div className="absolute inset-[2px] bg-green-400 rounded-[1px]" />
+              <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[3px] relative overflow-hidden">
+                <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
               </div>
-              <div className="w-0.5 h-1.5 bg-white/80 rounded-r-sm" />
+              <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-sm ml-[1px]" />
             </div>
           </div>
           {mounted && (
@@ -2641,17 +3087,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div>
             <h2 className="text-xl font-semibold text-white mb-4">Connect With Me</h2>
             <div className="flex gap-4">
-              <a
-                href="https://linkedin.com/in/charitydupont"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setShowLeavingPopup('https://linkedin.com/in/charitydupont')}
                 className="flex items-center gap-3 bg-[#0077b5] text-white px-6 py-3 rounded hover:bg-[#006399] transition-colors"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
                 LinkedIn
-              </a>
+              </button>
               <a
                 href="mailto:charity@example.com"
                 className="flex items-center gap-3 bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
@@ -3458,17 +3902,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             between complex functionality and beautiful design.
                           </p>
                           <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                            <a
-                              href="https://linkedin.com/in/charitydupont"
-                              target="_blank"
-                              rel="noopener noreferrer"
+                            <button
+                              onClick={() => setShowLeavingPopup('https://linkedin.com/in/charitydupont')}
                               className="flex items-center gap-2 bg-[#0077b5] text-white px-6 py-3 rounded-full hover:bg-[#006399] transition-colors"
                             >
                               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                               </svg>
                               Connect on LinkedIn
-                            </a>
+                            </button>
                             <a
                               href="mailto:charity@example.com"
                               className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-black/80 transition-colors"
@@ -3814,13 +4256,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <svg className="w-4 h-4 opacity-90" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.71 7.71L12 2h-1v7.59L6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 11 14.41V22h1l5.71-5.71-4.3-4.29 4.3-4.29zM13 5.83l1.88 1.88L13 9.59V5.83zm1.88 10.46L13 18.17v-3.76l1.88 1.88z" />
           </svg>
-          {/* Battery - macOS style with percentage */}
-          <div className="flex items-center gap-1">
-            <span className="text-[12px] opacity-90">72%</span>
-            <div className="w-[22px] h-[11px] border-[1.5px] border-current rounded-[3px] relative opacity-90">
-              <div className="absolute inset-[2px] bg-current rounded-[1px]" style={{ width: '70%' }} />
+          {/* Battery - same style as mobile */}
+          <div className="flex items-center ml-1">
+            <div className="relative flex items-center">
+              <div className="w-[25px] h-[12px] border-[1.5px] border-current rounded-[3px] relative overflow-hidden">
+                <div className="absolute inset-[1px] bg-current rounded-[1px]" style={{ width: '80%' }} />
+              </div>
+              <div className="w-[1.5px] h-[5px] bg-current rounded-r-sm ml-[1px]" />
             </div>
-            <div className="w-[2px] h-[5px] bg-current rounded-r-sm opacity-60 -ml-[1px]" />
           </div>
           <button
             onClick={() => setAudioEnabled(!audioEnabled)}
@@ -3975,18 +4418,29 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     {/* Grid Header */}
                     <div className="px-4 py-3 border-b border-white/10">
                       <h2 className="text-white text-lg font-semibold">All Photos</h2>
-                      <p className="text-white/50 text-xs">{personalPhotos.length} photos</p>
+                      <p className="text-white/50 text-xs">{desktopMedia.length} items</p>
                     </div>
                     {/* Photo Grid */}
-                    <div className="p-4 overflow-y-auto h-[calc(100%-60px)]">
+                    <div className="p-4 overflow-y-auto h-[calc(100%-60px)]" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                       <div className="grid grid-cols-4 gap-2">
-                        {personalPhotos.map((photo, idx) => (
+                        {desktopMedia.map((media, idx) => (
                           <button
                             key={idx}
                             onClick={() => setSelectedPhotoIndex(idx)}
-                            className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all"
+                            className="aspect-square rounded-lg overflow-hidden hover:ring-2 hover:ring-blue-500 transition-all relative"
                           >
-                            <img src={photo} alt="" className="w-full h-full object-cover" />
+                            {media.type === 'video' ? (
+                              <>
+                                <video src={media.url} className="w-full h-full object-cover" muted />
+                                <div className="absolute bottom-1 left-1">
+                                  <svg className="w-3.5 h-3.5 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
+                                </div>
+                              </>
+                            ) : (
+                              <img src={media.url} alt="" className="w-full h-full object-cover" />
+                            )}
                           </button>
                         ))}
                       </div>
@@ -4003,29 +4457,38 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <ChevronLeft className="w-4 h-4" />
                         All Photos
                       </button>
-                      <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {personalPhotos.length}</span>
+                      <span className="flex-1 text-center text-white/60 text-sm">{selectedPhotoIndex + 1} of {desktopMedia.length}</span>
                       <div className="flex gap-2">
                         <button
-                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + personalPhotos.length) % personalPhotos.length : 0)}
+                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev - 1 + desktopMedia.length) % desktopMedia.length : 0)}
                           className="p-1 rounded hover:bg-white/10"
                         >
                           <ChevronLeft className="w-5 h-5 text-white/60" />
                         </button>
                         <button
-                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % personalPhotos.length : 0)}
+                          onClick={() => setSelectedPhotoIndex((prev) => prev !== null ? (prev + 1) % desktopMedia.length : 0)}
                           className="p-1 rounded hover:bg-white/10"
                         >
                           <ChevronRight className="w-5 h-5 text-white/60" />
                         </button>
                       </div>
                     </div>
-                    {/* Photo Detail */}
+                    {/* Photo/Video Detail */}
                     <div className="flex-1 flex items-center justify-center p-4 h-[calc(100%-52px)]">
-                      <img
-                        src={personalPhotos[selectedPhotoIndex]}
-                        alt=""
-                        className="max-w-full max-h-full object-contain rounded-lg"
-                      />
+                      {desktopMedia[selectedPhotoIndex].type === 'video' ? (
+                        <video
+                          src={desktopMedia[selectedPhotoIndex].url}
+                          controls
+                          autoPlay
+                          className="max-w-full max-h-full object-contain rounded-lg"
+                        />
+                      ) : (
+                        <img
+                          src={desktopMedia[selectedPhotoIndex].url}
+                          alt=""
+                          className="max-w-full max-h-full object-contain rounded-lg"
+                        />
+                      )}
                     </div>
                   </>
                 )}
@@ -4278,10 +4741,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
               </div>
               <div className="flex-1 overflow-auto">
-                {messageContacts.map((contact) => (
+                {desktopConversations.map((contact) => (
                   <button
                     key={contact.id}
-                    onClick={() => setSelectedContact(contact.id)}
+                    onClick={() => {
+                      setSelectedContact(contact.id);
+                      // Mark as read
+                      setDesktopConversations(prev => prev.map(conv => 
+                        conv.id === contact.id ? { ...conv, unread: false } : conv
+                      ));
+                    }}
                     className={`w-full p-3 flex items-start gap-3 hover:bg-black/5 transition-colors text-left ${selectedContact === contact.id ? 'bg-blue-500 text-white hover:bg-blue-500' : ''}`}
                   >
                     <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center flex-shrink-0">
@@ -4296,7 +4765,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <span className={`text-[13px] font-medium truncate ${selectedContact === contact.id ? 'text-white' : 'text-black'}`}>{contact.name}</span>
                         <span className={`text-[10px] ${selectedContact === contact.id ? 'text-white/70' : 'text-black/40'}`}>{contact.time}</span>
                       </div>
-                      <p className={`text-[11px] truncate mt-0.5 ${selectedContact === contact.id ? 'text-white/80' : 'text-black/50'}`}>{contact.lastMessage}</p>
+                      <p className={`text-[11px] truncate mt-0.5 ${selectedContact === contact.id ? 'text-white/80' : 'text-black/50'}`}>{contact.id === 'welcome' ? (chatMessages[chatMessages.length - 1]?.text || contact.lastMessage) : contact.lastMessage}</p>
                     </div>
                     {contact.unread && selectedContact !== contact.id && (
                       <div className="w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0 mt-1" />
@@ -4313,11 +4782,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <div className="flex-1 flex flex-col bg-white">
                 <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
                   <span className="text-[13px] font-medium text-black/80">
-                    {messageContacts.find(c => c.id === selectedContact)?.name}
+                    {desktopConversations.find(c => c.id === selectedContact)?.name}
                   </span>
                 </div>
                 <div className="flex-1 overflow-auto p-4 space-y-3">
-                  {messageContacts.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
+                  {desktopConversations.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
                     <div key={idx} className="flex flex-col">
                       <div className={`max-w-[70%] ${msg.from === 'charity' ? 'self-end' : 'self-start'}`}>
                         <div className={`rounded-2xl px-4 py-2 ${msg.from === 'charity' ? 'bg-blue-500 text-white' : 'bg-[#e9e9eb] text-black'}`}>
@@ -4573,7 +5042,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
             
 {/* Browser Content */}
-            <div className="w-full h-[calc(100%-52px)] bg-[#1e1e1e] overflow-auto">
+            <div className="w-full h-[calc(100%-52px)] bg-white overflow-auto">
               {safariUrl === 'wikipedia' ? (
                 /* Fake Wikipedia Page about Charity Dupont */
                 <div className="w-full min-h-full bg-white">
@@ -4691,70 +5160,51 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 />
               ) : (
-                /* Safari Start Page */
-                <div className="w-full h-full flex flex-col items-center justify-start pt-16 px-8">
-                  {/* Browse - Embeddable Sites */}
-                  <div className="w-full max-w-[600px]">
-                    <h2 className="text-white/60 text-sm font-medium mb-4">Browse</h2>
-                    <div className="grid grid-cols-4 gap-4">
+                /* Safari Start Page - Light Theme */
+                <div className="w-full h-full bg-[#f5f5f7] flex flex-col items-center justify-start pt-12 px-8">
+                  {/* Favorites */}
+                  <div className="w-full max-w-[700px]">
+                    <h2 className="text-gray-500 text-xs font-medium mb-4 uppercase tracking-wide">Favorites</h2>
+                    <div className="grid grid-cols-6 gap-6">
                       {[
-                        { name: 'Wikipedia', icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png', url: 'wikipedia' },
+                        { name: 'Wikipedia', icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wikipedia_Logo_1.0-wubSVX4dY2rqtnrJ5XcvoYYLBXGILS.png', url: 'wikipedia' },
+                        { name: 'Google', icon: 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png', url: 'https://google.com' },
+                        { name: 'Apple', icon: 'https://www.apple.com/favicon.ico', url: 'https://apple.com' },
+                        { name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
                       ].map((site) => (
                         <button
                           key={site.name}
                           onClick={() => {
-                            setSafariUrl(site.url)
-                            setSafariInputUrl(site.url)
+                            if (site.url.startsWith('http')) {
+                              window.open(site.url, '_blank')
+                            } else {
+                              setSafariUrl(site.url)
+                              setSafariInputUrl(site.url)
+                            }
                           }}
-                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                          className="flex flex-col items-center gap-2 group"
                         >
-                          <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center overflow-hidden p-1">
+                          <div className="w-14 h-14 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center overflow-hidden p-2 group-hover:shadow-md transition-shadow">
                             <img src={site.icon} alt={site.name} className="w-full h-full object-contain" />
                           </div>
-                          <span className="text-white/80 text-xs">{site.name}</span>
+                          <span className="text-gray-700 text-xs">{site.name}</span>
                         </button>
                       ))}
                     </div>
                   </div>
                   
-                  {/* My Links - External Sites */}
-                  <div className="w-full max-w-[600px] mt-8">
-                    <h2 className="text-white/60 text-sm font-medium mb-4">My Links</h2>
-                    <div className="grid grid-cols-4 gap-4">
-                      {[
-{ name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
-                      ].map((site) => (
-                        <a
-                          key={site.name}
-                          href={site.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
-                        >
-                          <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
-                            <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
-                          </div>
-                          <span className="text-white/80 text-xs">{site.name}</span>
-                          <svg className="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                  
                   {/* Privacy Report */}
-                  <div className="w-full max-w-[600px] mt-8">
-                    <div className="bg-white/5 rounded-xl p-4">
+                  <div className="w-full max-w-[700px] mt-10">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                          <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                           </svg>
                         </div>
                         <div>
-                          <p className="text-white/90 text-sm font-medium">Privacy Report</p>
-                          <p className="text-white/50 text-xs">Safari helps keep you safe from trackers</p>
+                          <p className="text-gray-900 text-sm font-medium">Privacy Report</p>
+                          <p className="text-gray-500 text-xs">Safari helped prevent 3 trackers from profiling you</p>
                         </div>
                       </div>
                     </div>
@@ -4804,10 +5254,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-b from-[#5bf675] to-[#0cbd2a] flex items-center justify-center">
-              <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.04 2 11c0 2.21.9 4.21 2.36 5.73-.14 1.52-.75 2.98-1.68 4.12 1.46-.11 2.93-.52 4.19-1.25 1.46.59 3.11.9 4.83.9 5.52 0 10-4.04 10-9s-4.48-9-10-9z" />
-              </svg>
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMessage_logo.svg-FX2uXRLcx7RuPBmMqC6YlrYIocaLrP.png" alt="Messages" className="w-full h-full object-cover" />
             </div>
           }
           label="Messages"
@@ -4822,6 +5270,20 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Photos"
           onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
+        />
+
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-[#fc3c44] via-[#fc3c44] to-[#fc3c44]">
+              <div className="w-full h-full flex items-center justify-center">
+                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+              </div>
+            </div>
+          }
+          label="Music"
+          onClick={() => { setMusicWindow({ isOpen: true, isMinimized: false }); focusWindow('music'); }}
         />
         
         <DockIcon
@@ -6081,6 +6543,33 @@ function MeetlyCaseStudy() {
           <p className="text-black/40 text-xs">2026 Charity Dupont</p>
         </div>
       </div>
+
+      {/* Leaving Portfolio Popup */}
+      {showLeavingPopup && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-6 max-w-sm mx-4 shadow-2xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Leaving Portfolio</h3>
+            <p className="text-gray-600 mb-6">You are now leaving Charity Dupont&apos;s MacBook portfolio.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowLeavingPopup(null)}
+                className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <a
+                href={showLeavingPopup}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setShowLeavingPopup(null)}
+                className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors text-center"
+              >
+                Continue
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
