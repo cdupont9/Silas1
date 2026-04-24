@@ -1133,27 +1133,23 @@ const messageText = mobileInput.trim()
                     {/* For assistant (Charity) messages: reaction on top-LEFT, dots trail down-right */}
                     {/* For user messages: reaction on top-RIGHT, dots trail down-left */}
                     {msg.reaction && (
-                      <div className={`absolute -top-4 ${msg.role === 'user' ? '-right-3' : '-left-3'} z-10`}>
-                        <div className="relative">
-                          {/* Main reaction bubble - gray like iOS */}
-                          <div className="w-8 h-8 bg-[#e5e5ea] rounded-full flex items-center justify-center shadow-sm">
-                            <span className="text-base">{msg.reaction}</span>
-                          </div>
-                          {/* Trailing circles - positioned to connect to the message corner */}
-                          {msg.role === 'user' ? (
-                            <>
-                              {/* User message: dots go down-left from reaction to message */}
-                              <div className="absolute bottom-0 -left-0.5 w-2.5 h-2.5 bg-[#e5e5ea] rounded-full" />
-                              <div className="absolute -bottom-1.5 -left-2 w-1.5 h-1.5 bg-[#e5e5ea] rounded-full" />
-                            </>
-                          ) : (
-                            <>
-                              {/* Assistant message: dots go down-right from reaction to message */}
-                              <div className="absolute bottom-0 -right-0.5 w-2.5 h-2.5 bg-[#e5e5ea] rounded-full" />
-                              <div className="absolute -bottom-1.5 -right-2 w-1.5 h-1.5 bg-[#e5e5ea] rounded-full" />
-                            </>
-                          )}
+                      <div className={`absolute -top-5 ${msg.role === 'user' ? '-right-4' : '-left-4'} z-50`}>
+                        {/* Main reaction bubble - small gray like iOS */}
+                        <div className="w-7 h-7 bg-gray-400 rounded-full flex items-center justify-center shadow-md ring-2 ring-black/80">
+                          <span className="text-sm leading-none">{msg.reaction}</span>
                         </div>
+                        {/* Trailing dots */}
+                        {msg.role === 'user' ? (
+                          <>
+                            <div className="absolute bottom-1 -left-1 w-2 h-2 bg-gray-400 rounded-full shadow-sm" />
+                            <div className="absolute -bottom-1 -left-2.5 w-1.5 h-1.5 bg-gray-400 rounded-full shadow-sm" />
+                          </>
+                        ) : (
+                          <>
+                            <div className="absolute bottom-1 -right-1 w-2 h-2 bg-gray-400 rounded-full shadow-sm" />
+                            <div className="absolute -bottom-1 -right-2.5 w-1.5 h-1.5 bg-gray-400 rounded-full shadow-sm" />
+                          </>
+                        )}
                       </div>
                     )}
                     <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
