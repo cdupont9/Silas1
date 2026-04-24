@@ -4691,70 +4691,80 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                 />
               ) : (
-                /* Safari Start Page */
-                <div className="w-full h-full flex flex-col items-center justify-start pt-16 px-8">
-                  {/* Browse - Embeddable Sites */}
-                  <div className="w-full max-w-[600px]">
-                    <h2 className="text-white/60 text-sm font-medium mb-4">Browse</h2>
-                    <div className="grid grid-cols-4 gap-4">
+                /* Safari Start Page - Light Theme */
+                <div className="w-full h-full bg-[#f5f5f7] flex flex-col items-center justify-start pt-12 px-8">
+                  {/* Favorites */}
+                  <div className="w-full max-w-[700px]">
+                    <h2 className="text-gray-500 text-xs font-medium mb-4 uppercase tracking-wide">Favorites</h2>
+                    <div className="grid grid-cols-6 gap-6">
                       {[
                         { name: 'Wikipedia', icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png', url: 'wikipedia' },
+                        { name: 'Google', icon: 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png', url: 'https://google.com' },
+                        { name: 'Apple', icon: 'https://www.apple.com/favicon.ico', url: 'https://apple.com' },
+                        { name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
                       ].map((site) => (
                         <button
                           key={site.name}
                           onClick={() => {
-                            setSafariUrl(site.url)
-                            setSafariInputUrl(site.url)
+                            if (site.url.startsWith('http')) {
+                              window.open(site.url, '_blank')
+                            } else {
+                              setSafariUrl(site.url)
+                              setSafariInputUrl(site.url)
+                            }
                           }}
-                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                          className="flex flex-col items-center gap-2 group"
                         >
-                          <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center overflow-hidden p-1">
+                          <div className="w-14 h-14 rounded-xl bg-white shadow-sm border border-gray-200 flex items-center justify-center overflow-hidden p-2 group-hover:shadow-md transition-shadow">
                             <img src={site.icon} alt={site.name} className="w-full h-full object-contain" />
                           </div>
-                          <span className="text-white/80 text-xs">{site.name}</span>
+                          <span className="text-gray-700 text-xs">{site.name}</span>
                         </button>
                       ))}
                     </div>
                   </div>
                   
-                  {/* My Links - External Sites */}
-                  <div className="w-full max-w-[600px] mt-8">
-                    <h2 className="text-white/60 text-sm font-medium mb-4">My Links</h2>
-                    <div className="grid grid-cols-4 gap-4">
-                      {[
-{ name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
-                      ].map((site) => (
-                        <a
-                          key={site.name}
-                          href={site.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
-                        >
-                          <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
-                            <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
+                  {/* Reading List */}
+                  <div className="w-full max-w-[700px] mt-10">
+                    <h2 className="text-gray-500 text-xs font-medium mb-4 uppercase tracking-wide">Reading List</h2>
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                      <div className="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors">
+                        <div className="flex items-start gap-3">
+                          <div className="w-16 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
+                            <span className="text-white text-xs font-bold">UX</span>
                           </div>
-                          <span className="text-white/80 text-xs">{site.name}</span>
-                          <svg className="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                        </a>
-                      ))}
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-gray-900 text-sm font-medium truncate">Design Principles for AI Interfaces</h3>
+                            <p className="text-gray-500 text-xs mt-0.5">nngroup.com</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                        <div className="flex items-start gap-3">
+                          <div className="w-16 h-12 rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center shrink-0">
+                            <span className="text-white text-xs font-bold">AI</span>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-gray-900 text-sm font-medium truncate">The Future of Human-Computer Interaction</h3>
+                            <p className="text-gray-500 text-xs mt-0.5">medium.com</p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
                   {/* Privacy Report */}
-                  <div className="w-full max-w-[600px] mt-8">
-                    <div className="bg-white/5 rounded-xl p-4">
+                  <div className="w-full max-w-[700px] mt-10">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                          <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                          <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                           </svg>
                         </div>
                         <div>
-                          <p className="text-white/90 text-sm font-medium">Privacy Report</p>
-                          <p className="text-white/50 text-xs">Safari helps keep you safe from trackers</p>
+                          <p className="text-gray-900 text-sm font-medium">Privacy Report</p>
+                          <p className="text-gray-500 text-xs">Safari helped prevent 3 trackers from profiling you</p>
                         </div>
                       </div>
                     </div>
