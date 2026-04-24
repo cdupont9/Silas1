@@ -2959,7 +2959,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     <h2 className="text-white/60 text-sm font-medium mb-4">Browse</h2>
                     <div className="grid grid-cols-4 gap-4">
                       {[
-                        { name: 'Wikipedia', icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/1200px-Wikipedia%27s_W.svg.png', url: 'wikipedia' },
+                        { name: 'Wikipedia', icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png', url: 'wikipedia' },
                       ].map((site) => (
                         <button
                           key={site.name}
@@ -2969,8 +2969,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           }}
                           className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
                         >
-                          <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
-                            <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
+                          <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center overflow-hidden p-1">
+                            <img src={site.icon} alt={site.name} className="w-full h-full object-contain" />
                           </div>
                           <span className="text-white/80 text-xs">{site.name}</span>
                         </button>
