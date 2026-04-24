@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -227,7 +227,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -267,6 +267,10 @@ export function MacBookScreen() {
   const [safariPosition, setSafariPosition] = useState({ x: 120, y: 50 })
   const [safariUrl, setSafariUrl] = useState('')
   const [safariInputUrl, setSafariInputUrl] = useState('')
+  
+  // Mobile Safari state
+  const [mobileSafariUrl, setMobileSafariUrl] = useState('')
+  const [showDownloadBanner, setShowDownloadBanner] = useState(true)
   
 
   // Audio state
@@ -626,6 +630,47 @@ const messageText = mobileInput.trim()
               </div>
             </div>
           </div>
+          
+          {/* Download App Banner */}
+          {showDownloadBanner && (
+            <div className="absolute top-14 left-4 right-4 z-20 bg-white/95 backdrop-blur-xl rounded-2xl p-3 shadow-xl border border-white/20">
+              <button 
+                onClick={() => setShowDownloadBanner(false)}
+                className="absolute top-2 right-2 w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 text-xs"
+              >
+                x
+              </button>
+              <div className="flex items-center gap-3">
+                <img src={MEMOJI_URL} alt="App" className="w-12 h-12 rounded-xl shadow" />
+                <div className="flex-1">
+                  <p className="text-gray-900 font-semibold text-sm">Get the Portfolio App</p>
+                  <p className="text-gray-500 text-xs">Download for iOS or Android</p>
+                </div>
+              </div>
+              <div className="flex gap-2 mt-3">
+                <a 
+                  href="/downloads/portfolio.ipa" 
+                  download
+                  className="flex-1 bg-black text-white text-xs font-medium py-2 rounded-lg flex items-center justify-center gap-1.5"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                  </svg>
+                  iOS (IPA)
+                </a>
+                <a 
+                  href="/downloads/portfolio.apk" 
+                  download
+                  className="flex-1 bg-[#3DDC84] text-white text-xs font-medium py-2 rounded-lg flex items-center justify-center gap-1.5"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.523 2.047a.5.5 0 00-.7.252l-1.456 3.24a9.3 9.3 0 00-6.734 0L7.177 2.3a.5.5 0 10-.9.447l1.378 3.07A9.25 9.25 0 003 13.5h18a9.25 9.25 0 00-4.655-7.683l1.378-3.07a.5.5 0 00-.2-.7zM7 11a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2zM3 14.5h18v1A7.5 7.5 0 0113.5 23h-3A7.5 7.5 0 013 15.5z"/>
+                  </svg>
+                  Android (APK)
+                </a>
+              </div>
+            </div>
+          )}
 
           {/* Lock Screen Content */}
           <div className="relative z-10 h-full flex flex-col items-center pt-20">
@@ -851,6 +896,17 @@ const messageText = mobileInput.trim()
                 >
                   <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
                   <span className="text-gray-900 text-sm font-medium">About Me</span>
+                </button>
+                
+                {/* Safari */}
+                <button
+                  onClick={() => { setMobileSafariUrl(''); setMobileScreen('safari'); }}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-gray-900 text-sm font-medium">Safari</span>
                 </button>
               </div>
             </div>
@@ -1791,6 +1847,172 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           {/* Home Indicator */}
           <div className="bg-black py-2">
             <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+          </div>
+        </div>
+      )
+    }
+    
+    // iPhone Safari Browser
+    if (mobileScreen === "safari") {
+      return (
+        <div className="h-[100dvh] w-full bg-[#1e1e1e] flex flex-col">
+          {/* Status Bar */}
+          <div className="h-12 flex items-center justify-between px-6 pt-2 bg-[#1e1e1e]">
+            <span className="text-white text-sm font-medium">{loginTime}</span>
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+              </div>
+              <Wifi className="w-4 h-4 text-white" />
+              <div className="w-6 h-3 border border-white rounded-sm relative">
+                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '70%' }} />
+              </div>
+            </div>
+          </div>
+          
+          {/* URL Bar */}
+          <div className="px-4 py-2 bg-[#1e1e1e]">
+            <div className="bg-[#2c2c2e] rounded-xl px-4 py-2 flex items-center gap-2">
+              <span className="text-white/40 text-sm">
+                {mobileSafariUrl === 'wikipedia' ? 'en.wikipedia.org' : 'Search or enter website'}
+              </span>
+            </div>
+          </div>
+          
+          {/* Browser Content */}
+          <div className="flex-1 overflow-auto bg-[#1e1e1e]">
+            {mobileSafariUrl === 'wikipedia' ? (
+              /* Mobile Wikipedia Page about Charity Dupont */
+              <div className="w-full min-h-full bg-white">
+                {/* Wikipedia Header */}
+                <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wikipedia-wordmark-en-25-QgUVUwhHCCccrX81eTmsdUDTQRfIQ6.svg" alt="Wikipedia" className="h-4" />
+                </div>
+                
+                {/* Wikipedia Content */}
+                <div className="px-4 py-4">
+                  <h1 className="text-2xl font-serif text-black border-b border-gray-300 pb-2 mb-4">Charity Dupont</h1>
+                  
+                  {/* Infobox - Mobile Style */}
+                  <div className="border border-gray-300 bg-gray-50 text-sm mb-4">
+                    <div className="bg-gray-200 px-3 py-2 text-center font-semibold text-black">Charity Dupont</div>
+                    <div className="p-3">
+                      <img 
+                        src={CHARITY_PHOTO_URL}
+                        alt="Charity Dupont"
+                        className="w-full h-48 object-cover mb-2"
+                      />
+                      <p className="text-[10px] text-gray-500 text-center mb-3">Dupont in 2024</p>
+                      <table className="w-full text-xs">
+                        <tbody>
+                          <tr className="border-b border-gray-200">
+                            <td className="py-1 font-semibold text-gray-700">Occupation</td>
+                            <td className="py-1 text-gray-800">UX Designer</td>
+                          </tr>
+                          <tr className="border-b border-gray-200">
+                            <td className="py-1 font-semibold text-gray-700">Employer</td>
+                            <td className="py-1 text-gray-800">Google</td>
+                          </tr>
+                          <tr className="border-b border-gray-200">
+                            <td className="py-1 font-semibold text-gray-700">Education</td>
+                            <td className="py-1 text-gray-800">Columbia University</td>
+                          </tr>
+                          <tr>
+                            <td className="py-1 font-semibold text-gray-700">Known for</td>
+                            <td className="py-1 text-gray-800">AI UX Design</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-gray-800 leading-relaxed mb-4">
+                    <b>Charity Dupont</b> is an American <span className="text-blue-600">UX/UI designer</span> and <span className="text-blue-600">AI experience designer</span> currently working at <span className="text-blue-600">Google</span>.
+                  </p>
+                  
+                  <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Early life</h2>
+                  <p className="text-sm text-gray-800 leading-relaxed mb-4">
+                    Dupont began her career during the COVID-19 pandemic and later pursued formal training at Columbia University while working as a teacher.
+                  </p>
+                  
+                  <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Career</h2>
+                  <p className="text-sm text-gray-800 leading-relaxed mb-4">
+                    Through a connection at Columbia, Dupont joined Google as a UX designer focusing on AI-driven experiences.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              /* Safari Start Page */
+              <div className="w-full h-full flex flex-col items-center pt-12 px-6">
+                {/* Wikipedia Favorite */}
+                <div className="w-full max-w-[300px]">
+                  <h2 className="text-white/60 text-sm font-medium mb-4">Favorites</h2>
+                  <button
+                    onClick={() => setMobileSafariUrl('wikipedia')}
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl hover:bg-white/5 transition-colors"
+                  >
+                    <div className="w-20 h-20 rounded-2xl bg-white flex items-center justify-center overflow-hidden p-2">
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-full h-full object-contain" />
+                    </div>
+                    <span className="text-white/80 text-sm">Wikipedia</span>
+                  </button>
+                </div>
+                
+                {/* My Links */}
+                <div className="w-full max-w-[300px] mt-8">
+                  <h2 className="text-white/60 text-sm font-medium mb-4">My Links</h2>
+                  <a
+                    href="https://linkedin.com/in/charitydupont"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                      <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn" className="w-8 h-8 object-contain" />
+                    </div>
+                    <span className="text-white/80 text-sm">LinkedIn</span>
+                    <svg className="w-4 h-4 text-white/40 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Bottom Navigation Bar */}
+          <div className="bg-[#1e1e1e] border-t border-white/10 px-4 py-2">
+            <div className="flex items-center justify-between">
+              <button 
+                onClick={() => setMobileSafariUrl('')}
+                className={`p-2 ${mobileSafariUrl ? 'text-[#0a84ff]' : 'text-white/30'}`}
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button className="p-2 text-white/30">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+              <button className="p-2 text-[#0a84ff]">
+                <Share2 className="w-5 h-5" />
+              </button>
+              <button className="p-2 text-[#0a84ff]">
+                <BookOpen className="w-5 h-5" />
+              </button>
+              <button className="p-2 text-[#0a84ff]">
+                <Layers className="w-5 h-5" />
+              </button>
+            </div>
+            
+            {/* Home Button */}
+            <button 
+              onClick={() => setMobileScreen('home')}
+              className="w-full mt-2 py-2 text-center"
+            >
+              <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+            </button>
           </div>
         </div>
       )
