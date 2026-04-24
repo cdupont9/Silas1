@@ -5274,20 +5274,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-[#fc3c44] via-[#fc3c44] to-[#fc3c44]">
-              <div className="w-full h-full flex items-center justify-center">
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                </svg>
-              </div>
-            </div>
-          }
-          label="Music"
-          onClick={() => { setMusicWindow({ isOpen: true, isMinimized: false }); focusWindow('music'); }}
-        />
-        
-        <DockIcon
-          icon={
             <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
               <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
             </div>
