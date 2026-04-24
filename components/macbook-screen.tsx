@@ -260,11 +260,6 @@ export function MacBookScreen() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   
-  // Record player state for desktop (plays YouTube playlist)
-  const [isRecordPlaying, setIsRecordPlaying] = useState(false)
-  
-  // Mobile music screen state  
-  const [mobileShowMusic, setMobileShowMusic] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
 
@@ -1199,18 +1194,6 @@ const messageText = mobileInput.trim()
                   className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
                 >
                   <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
-                </button>
-                
-                {/* Music */}
-                <button
-                  onClick={() => setMobileScreen('music')}
-                  className="bg-gradient-to-br from-[#fc3c44] to-[#d62d35] rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <div className="w-12 h-12 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
-                    </svg>
-                  </div>
                 </button>
               </div>
             </div>
@@ -2850,119 +2833,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       )
     }
 
-    // iPhone Music Screen - YouTube Playlist
-    if (mobileScreen === "music") {
-      return (
-        <div className="h-screen w-full bg-gradient-to-b from-[#1a1a1a] to-black flex flex-col overflow-hidden">
-          {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-50">
-            <div className="text-white text-sm font-medium" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
-            <div className="flex items-center gap-2">
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="flex items-center">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-                </div>
-                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-              </div>
-            </div>
-          </div>
-
-          {/* Header with Back Button */}
-          <div className="pt-14 px-4 flex items-center gap-3">
-            <button
-              onClick={() => setMobileScreen('home')}
-              className="p-2 -ml-2 text-[#fc3c44]"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <h1 className="text-white text-xl font-semibold">Music</h1>
-          </div>
-
-          {/* Album Art / Record Animation */}
-          <div className="flex-1 flex flex-col items-center justify-center px-8">
-            <div className="relative">
-              {/* Animated Record */}
-              <div 
-                className={`w-64 h-64 rounded-full bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#1a1a1a] shadow-2xl ${mobileShowMusic ? 'animate-spin' : ''}`}
-                style={{ animationDuration: '3s' }}
-              >
-                {/* Vinyl grooves */}
-                <div className="absolute inset-4 rounded-full border border-[#2a2a2a]" />
-                <div className="absolute inset-8 rounded-full border border-[#252525]" />
-                <div className="absolute inset-12 rounded-full border border-[#2a2a2a]" />
-                <div className="absolute inset-16 rounded-full border border-[#252525]" />
-                <div className="absolute inset-20 rounded-full border border-[#2a2a2a]" />
-                
-                {/* Center label */}
-                <div className="absolute inset-[90px] rounded-full bg-gradient-to-br from-[#fc3c44] to-[#d62d35] flex items-center justify-center">
-                  <div className="w-4 h-4 rounded-full bg-[#1a1a1a]" />
-                </div>
-                
-                {/* Shine effect */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-transparent" />
-              </div>
-            </div>
-
-            {/* Track Info */}
-            <div className="mt-8 text-center">
-              <h2 className="text-white text-2xl font-bold">Chill Vibes</h2>
-              <p className="text-white/60 text-lg mt-1">YouTube Playlist</p>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="w-full mt-8">
-              <div className="h-1 bg-white/20 rounded-full overflow-hidden">
-                <div className={`h-full bg-[#fc3c44] rounded-full ${mobileShowMusic ? 'animate-pulse' : ''}`} style={{ width: mobileShowMusic ? '45%' : '0%', transition: 'width 0.5s' }} />
-              </div>
-              <div className="flex justify-between mt-2 text-xs text-white/40">
-                <span>{mobileShowMusic ? '1:23' : '0:00'}</span>
-                <span>3:45</span>
-              </div>
-            </div>
-
-            {/* Playback Controls */}
-            <div className="flex items-center justify-center gap-8 mt-8">
-              <button className="text-white/60">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-              </button>
-              <button 
-                onClick={() => setMobileShowMusic(!mobileShowMusic)}
-                className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-lg active:scale-95 transition-transform"
-              >
-                {mobileShowMusic ? (
-                  <svg className="w-7 h-7 text-black" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                ) : (
-                  <svg className="w-7 h-7 text-black ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                )}
-              </button>
-              <button className="text-white/60">
-                <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-              </button>
-            </div>
-          </div>
-
-          {/* Hidden YouTube iframe for audio when playing */}
-          {mobileShowMusic && (
-            <iframe
-              className="hidden"
-              width="0"
-              height="0"
-              src="https://www.youtube.com/embed/videoseries?list=PLQe2pjBYskUU8SLNFxA8EvoSt1JqQDD7x&autoplay=1&loop=1"
-              title="Music Playlist"
-              allow="autoplay"
-            />
-          )}
-
-          {/* Home Indicator */}
-          <div className="pb-4 flex justify-center">
-            <div className="w-36 h-1 bg-white/40 rounded-full" />
-          </div>
-        </div>
-      )
     }
-
-  }
   // ==================== END MOBILE EXPERIENCE ====================
 
   // Login Screen (Desktop Only)
@@ -4495,74 +4366,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
           
           </div>
-
-        {/* Vintage Record Player Widget - Upper Right */}
-        <div className="absolute top-[45px] right-6 z-30">
-          <div className="bg-gradient-to-b from-[#8b4513] to-[#5c3317] rounded-xl p-4 shadow-2xl border border-[#a0522d]/50 w-[180px]">
-            {/* Wood grain texture overlay */}
-            <div className="absolute inset-0 opacity-20 rounded-xl" style={{ background: 'repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px)' }} />
-            
-            {/* Record */}
-            <div className="relative">
-              <div 
-                className={`w-[150px] h-[150px] rounded-full bg-gradient-to-br from-[#1a1a1a] via-[#333] to-[#1a1a1a] mx-auto shadow-inner relative ${isRecordPlaying ? 'animate-spin' : ''}`}
-                style={{ animationDuration: '3s' }}
-              >
-                {/* Vinyl grooves */}
-                <div className="absolute inset-2 rounded-full border border-[#2a2a2a]" />
-                <div className="absolute inset-4 rounded-full border border-[#252525]" />
-                <div className="absolute inset-6 rounded-full border border-[#2a2a2a]" />
-                <div className="absolute inset-8 rounded-full border border-[#252525]" />
-                <div className="absolute inset-10 rounded-full border border-[#2a2a2a]" />
-                
-                {/* Center label */}
-                <div className="absolute inset-[45px] rounded-full bg-gradient-to-br from-[#b8860b] to-[#8b6914] flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-[#1a1a1a]" />
-                </div>
-                
-                {/* Shine effect */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
-              </div>
-              
-              {/* Tonearm */}
-              <div 
-                className={`absolute top-2 right-2 w-16 h-1.5 bg-gradient-to-r from-[#c0c0c0] to-[#a0a0a0] rounded-full shadow origin-right transition-transform duration-500 ${isRecordPlaying ? 'rotate-[-25deg]' : 'rotate-[15deg]'}`}
-              >
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-3 bg-[#333] rounded-sm" />
-              </div>
-            </div>
-            
-            {/* Controls */}
-            <div className="flex items-center justify-center gap-3 mt-3 relative z-10">
-              <button
-                onClick={() => setIsRecordPlaying(!isRecordPlaying)}
-                className="w-10 h-10 rounded-full bg-gradient-to-b from-[#d4a574] to-[#b8956c] flex items-center justify-center shadow-md hover:scale-105 transition-transform border border-[#c4956d]"
-              >
-                {isRecordPlaying ? (
-                  <svg className="w-4 h-4 text-[#3d2817]" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-                ) : (
-                  <svg className="w-4 h-4 text-[#3d2817] ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                )}
-              </button>
-            </div>
-            
-            {/* Track info */}
-            <p className="text-[10px] text-[#d4a574] text-center mt-2 font-medium truncate">Now Playing</p>
-            <p className="text-[9px] text-[#b8956c] text-center truncate">Chill Vibes</p>
-            
-            {/* Hidden YouTube iframe for audio */}
-            {isRecordPlaying && (
-              <iframe
-                className="hidden"
-                width="0"
-                height="0"
-                src="https://www.youtube.com/embed/videoseries?list=PLQe2pjBYskUU8SLNFxA8EvoSt1JqQDD7x&autoplay=1&loop=1"
-                title="Music Playlist"
-                allow="autoplay"
-              />
-            )}
-          </div>
-        </div>
 
         {/* macOS Photos App Window */}
         {photosWindow.isOpen && !photosWindow.isMinimized && (
