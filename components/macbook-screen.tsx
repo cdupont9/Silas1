@@ -81,7 +81,7 @@ const mobileMessageContacts = [
   {
     id: 'silas',
     name: 'Silas Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Silas%20Logo%20%281%29-wRgrFCvMuVpVMqSHMlhEpoHzSqfqS5.png',
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg',
     lastMessage: 'Your AI lifestyle assistant',
     time: '9:15 AM',
     unread: false,
@@ -285,6 +285,10 @@ export function MacBookScreen() {
   const [showMobileReactions, setShowMobileReactions] = useState<string | null>(null)
   const MOBILE_REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
   
+  // Mobile GIF input state
+  const [showGifInput, setShowGifInput] = useState(false)
+  const [gifUrl, setGifUrl] = useState('')
+  
   const addMobileReaction = (messageId: string, reaction: string) => {
     setChatMessages(prev => prev.map(msg => 
       msg.id === messageId 
@@ -292,6 +296,40 @@ export function MacBookScreen() {
         : msg
     ))
     setShowMobileReactions(null)
+  }
+  
+  const sendGif = (url: string) => {
+    if (!url.trim()) return
+    const newMsg = {
+      id: `msg-${Date.now()}`,
+      role: 'user' as const,
+      text: `IMG:${url.trim()}`,
+      time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+    }
+    setChatMessages(prev => [...prev, newMsg])
+    setGifUrl('')
+    setShowGifInput(false)
+    
+    // Get Charity's response to GIF
+    setMobileIsTyping(true)
+    setTimeout(() => {
+      const responses = [
+        "Nice GIF!",
+        "Haha love it!",
+        "That's a good one!",
+        "LOL!",
+        "I like that!"
+      ]
+      const response = responses[Math.floor(Math.random() * responses.length)]
+      const charityMsg = {
+        id: `msg-${Date.now() + 1}`,
+        role: 'assistant' as const,
+        text: response,
+        time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+      }
+      setChatMessages(prev => [...prev, charityMsg])
+      setMobileIsTyping(false)
+    }, 1500)
   }
   
   
@@ -1064,10 +1102,21 @@ const messageText = mobileInput.trim()
               {mobileConversations.map((c, idx) => (
                 <button
                   key={c.id}
-                  onClick={() => { setSelectedContact(c.id); setShowConversationList(false); }}
+                  onClick={() => { 
+                    setSelectedContact(c.id); 
+                    setShowConversationList(false);
+                    // Mark as read
+                    setMobileConversations(prev => prev.map(conv => 
+                      conv.id === c.id ? { ...conv, unread: false } : conv
+                    ));
+                  }}
                   className="w-full flex items-center gap-3 px-4 py-3 active:bg-[#1c1c1e]"
                 >
-                  <div className="w-14 h-14 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
+                  {/* Unread indicator */}
+                  {c.unread && (
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#007AFF] flex-shrink-0" />
+                  )}
+                  <div className={`w-14 h-14 rounded-full overflow-hidden bg-gray-600 flex-shrink-0 ${!c.unread ? 'ml-0' : ''}`}>
                     {c.avatar ? (
                       <img src={c.avatar} alt={c.name} className="w-full h-full object-cover" />
                     ) : (
@@ -1124,8 +1173,8 @@ const messageText = mobileInput.trim()
                   <span className="text-[17px]">Back</span>
                 </button>
                 <div className="flex flex-col items-center">
-                  <div className="w-8 h-8 rounded-full overflow-hidden bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-                    <span className="text-white text-sm font-semibold">C</span>
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] font-medium mt-0.5">Charity</span>
                 </div>
@@ -1140,9 +1189,9 @@ const messageText = mobileInput.trim()
             {/* Interactive Messages with Charity */}
             <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-4">
               {chatMessages.map((msg) => (
-                <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div key={msg.id} className={`flex mb-3 w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div 
-                    className="relative"
+                    className="relative max-w-[80%]"
                     onDoubleClick={() => msg.role === 'assistant' && setShowMobileReactions(showMobileReactions === msg.id ? null : msg.id)}
                   >
                     {/* Reaction display - iOS style */}
@@ -1174,7 +1223,7 @@ const messageText = mobileInput.trim()
                       </div>
                     )}
                     
-                    <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
+                    <div className={`max-w-[75%] min-w-0 px-4 py-2.5 break-words ${msg.role === 'user'
                         ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
                         : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
                       }`}>
@@ -1193,6 +1242,12 @@ const messageText = mobileInput.trim()
                           }
                           alt="Reaction"
                           className="w-24 h-auto rounded-lg"
+                        />
+                      ) : msg.text.startsWith('IMG:') ? (
+                        <img 
+                          src={msg.text.replace('IMG:', '')}
+                          alt="User GIF"
+                          className="max-w-full h-auto rounded-lg"
                         />
                       ) : (
                         <div className="text-[17px] leading-snug">
@@ -1234,9 +1289,45 @@ const messageText = mobileInput.trim()
               )}
             </div>
 
+            {/* GIF Input Modal */}
+            {showGifInput && (
+              <div className="absolute inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+                <div className="bg-[#1c1c1e] rounded-2xl p-4 w-full max-w-sm">
+                  <h3 className="text-white text-lg font-semibold mb-3">Add GIF URL</h3>
+                  <input
+                    type="url"
+                    placeholder="Paste GIF URL here..."
+                    value={gifUrl}
+                    onChange={(e) => setGifUrl(e.target.value)}
+                    className="w-full bg-black/50 text-white px-4 py-3 rounded-xl border border-white/20 outline-none mb-3"
+                    autoFocus
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => { setShowGifInput(false); setGifUrl(''); }}
+                      className="flex-1 py-2 text-white bg-gray-600 rounded-xl"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={() => sendGif(gifUrl)}
+                      disabled={!gifUrl.trim()}
+                      className="flex-1 py-2 text-white bg-[#0b84fe] rounded-xl disabled:opacity-50"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            
             {/* Input Bar */}
             <form onSubmit={handleMobileChatSubmit} className="bg-black px-3 py-2 pb-8 flex items-center gap-2">
-              <button type="button" className="w-8 h-8 bg-[#3b3b3d] rounded-full flex items-center justify-center">
+              <button 
+                type="button" 
+                onClick={() => setShowGifInput(true)}
+                className="w-8 h-8 bg-[#3b3b3d] rounded-full flex items-center justify-center"
+              >
                 <Plus className="w-5 h-5 text-white" />
               </button>
               <div className="flex-1 bg-[#1c1c1e] rounded-full px-4 py-2 border border-white/20 flex items-center">
@@ -4399,7 +4490,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 {desktopConversations.map((contact) => (
                   <button
                     key={contact.id}
-                    onClick={() => setSelectedContact(contact.id)}
+                    onClick={() => {
+                      setSelectedContact(contact.id);
+                      // Mark as read
+                      setDesktopConversations(prev => prev.map(conv => 
+                        conv.id === contact.id ? { ...conv, unread: false } : conv
+                      ));
+                    }}
                     className={`w-full p-3 flex items-start gap-3 hover:bg-black/5 transition-colors text-left ${selectedContact === contact.id ? 'bg-blue-500 text-white hover:bg-blue-500' : ''}`}
                   >
                     <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center flex-shrink-0">
