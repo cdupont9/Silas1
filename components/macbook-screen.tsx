@@ -234,6 +234,9 @@ export function MacBookScreen() {
   const [screenState, setScreenState] = useState<ScreenState>("login")
   const [mobileScreen, setMobileScreen] = useState<MobileScreenState>("lock")
   const [mobileCaseStudy, setMobileCaseStudy] = useState<string | null>(null)
+  
+  // Netflix experience state
+  const [netflixModal, setNetflixModal] = useState<{ type: 'project' | 'about' | 'gallery' | null, data?: string | number }>({ type: null })
   const [showConversationList, setShowConversationList] = useState(true)
   const [selectedNote, setSelectedNote] = useState<number | null>(null)
   const [viewingPhoto, setViewingPhoto] = useState<number | null>(null)
@@ -2459,18 +2462,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
     )
   }
 
-  // Netflix Loading Screen
+  // Netflix Loading Screen - Charity Flicks
   if (screenState === "netflixLoading") {
     return (
       <div className="h-screen w-full bg-black flex items-center justify-center">
         <div className="relative">
-          {/* Netflix-style N logo animation */}
-          <svg className="w-24 h-32 animate-pulse" viewBox="0 0 111 30" fill="none">
-            <path
-              d="M105.062 14.28L111 30c-1.75-.25-3.499-.563-5.28-.845l-3.345-8.686-3.437 7.969c-1.687-.282-3.344-.376-5.031-.595l6.093-13.125L94.093 0h5.063l3.062 7.874L105.156 0h5.156l-5.25 14.28zM90.47 0h-4.594v27.25c1.5.094 3.062.156 4.594.343V0zM0 0l4.47 12.906c-1.626.5-3.25 1-4.907 1.53L0 0zm4.47 12.906L9 27.25c-1.407-.094-2.813-.22-4.22-.376L.094 14.562c1.5-.53 3-.968 4.375-1.656zM76.47 0v21.718c-1.97-.032-3.906-.157-5.813-.282V0h-4.532V23.75c-1.968-.188-3.875-.407-5.843-.625V0h-4.532v22.625c-2.062-.313-4.156-.625-6.25-1V0H45v20.312c-2.062-.5-4.187-.97-6.312-1.5V0h-4.532v16.812c-2.093-.688-4.218-1.376-6.375-2.125V0H23.25V12.5c-2.062-.907-4.219-1.782-6.407-2.782V0h-4.531V6.812A52.584 52.584 0 006 4.281V0H0v1.28l4.53 14.033 4.345 10.78c1.75.313 3.531.594 5.313.813L9.844 16.656l4.844 11.844c1.781.188 3.593.343 5.406.437l-4.313-10.655 4.313 10.343c1.812.063 3.625.094 5.469.063l-4.313-9.563 4.313 9.281a107.4 107.4 0 005.5-.313l-4.22-8.155 4.22 7.75c1.844-.187 3.656-.437 5.5-.718l-4.157-6.782 4.157 6.282c1.843-.375 3.656-.782 5.5-1.22l-4.063-5.343 4.063 4.624a63.954 63.954 0 005.469-1.75l-3.97-3.876L51 22.47c1.812-.75 3.625-1.563 5.469-2.407l-3.875-2.438 3.875 1.531c1.781-.97 3.594-1.97 5.406-3.032l-3.75-.968 3.75.156a52.727 52.727 0 005.281-4.094V0h-4.469v6.938A58.556 58.556 0 0058.5 9.75V0h-4.532v13.094a64.58 64.58 0 01-4.187 3.062V0H45.25v18.75a74.61 74.61 0 01-4.5 2.594V0h-4.531v23.562c-1.282.594-2.563 1.157-3.875 1.72V0h-4.532v27.28c-1.25.407-2.5.782-3.75 1.126V0H19.53v29.563c-1.218.25-2.437.468-3.656.656V0h-4.531z"
-              fill="#E50914"
-            />
-          </svg>
+          {/* Charity Flicks logo animation */}
+          <h1 className="text-6xl font-bold tracking-tight animate-pulse font-[family-name:var(--font-bebas-neue)]">
+            <span className="text-red-600">CHARITY</span>
+            <span className="text-white ml-2">FLICKS</span>
+          </h1>
           {/* Red glow effect */}
           <div className="absolute inset-0 bg-red-600/20 blur-3xl rounded-full scale-150" />
         </div>
@@ -2485,10 +2486,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Netflix Header */}
         <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-gradient-to-b from-black/80 to-transparent">
           <div className="flex items-center gap-8">
-            {/* Netflix-style Logo */}
-            <svg className="w-24 h-7" viewBox="0 0 111 30" fill="#E50914">
-              <path d="M105.062 14.28L111 30c-1.75-.25-3.499-.563-5.28-.845l-3.345-8.686-3.437 7.969c-1.687-.282-3.344-.376-5.031-.595l6.093-13.125L94.093 0h5.063l3.062 7.874L105.156 0h5.156l-5.25 14.28zM90.47 0h-4.594v27.25c1.5.094 3.062.156 4.594.343V0zM81.094 0h-4.594v30h4.594V0zM72.47 0h-4.594v30h4.594V0zM63.094 20.156c1.25.25 2.5.438 3.78.595-.093-6.375-.314-12.687-.47-19.062h-3.31v18.467zM57.844 0h-4.594v27.562c1.5.157 3.062.282 4.594.47V0zM45.5 0l4.47 12.906c-1.626.5-3.25 1-4.907 1.53L45.5 0zm4.47 12.906L54.22 28c-1.407-.094-2.813-.22-4.22-.376l-4.03-14.718zM35.75 0h-4.594v24.375c1.5.344 3.062.656 4.594 1V0zM26.375 0h-4.594v22.25c1.5.468 3.062.906 4.594 1.375V0zM17 0h-4.594v19.938c1.5.593 3.062 1.156 4.594 1.75V0zM7.625 0H3.031v17.438c1.5.718 3.062 1.406 4.594 2.125V0zM0 0v14.75c1.5.844 3.062 1.656 4.594 2.5V0H0z"/>
-            </svg>
+            {/* Charity Flicks Logo */}
+            <h1 className="text-2xl font-bold tracking-tight cursor-pointer font-[family-name:var(--font-bebas-neue)]">
+              <span className="text-red-600">CHARITY</span>
+              <span className="text-white ml-1">FLICKS</span>
+            </h1>
             <nav className="hidden md:flex items-center gap-6">
               <span className="text-white font-medium text-sm">Home</span>
               <span className="text-gray-400 text-sm hover:text-gray-300 cursor-pointer transition-colors">Case Studies</span>
@@ -2551,7 +2553,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <p className="text-gray-400 max-w-xl mb-6 line-clamp-3">{caseStudies.silas.overview}</p>
             <div className="flex items-center gap-3">
               <button 
-                onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: 'silas' }); setScreenState("desktop"); setFocusedWindow('safari'); }}
+                onClick={() => setNetflixModal({ type: 'project', data: 'silas' })}
                 className="flex items-center gap-2 bg-white text-black px-8 py-3 rounded font-semibold hover:bg-gray-200 transition-colors"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -2559,7 +2561,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </svg>
                 View Project
               </button>
-              <button className="flex items-center gap-2 bg-gray-600/70 text-white px-6 py-3 rounded font-semibold hover:bg-gray-600 transition-colors">
+              <button 
+                onClick={() => setNetflixModal({ type: 'project', data: 'silas' })}
+                className="flex items-center gap-2 bg-gray-600/70 text-white px-6 py-3 rounded font-semibold hover:bg-gray-600 transition-colors"
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -2578,7 +2583,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               {Object.entries(caseStudies).map(([key, study]) => (
                 <button
                   key={key}
-                  onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: key }); setScreenState("desktop"); setFocusedWindow('safari'); }}
+                  onClick={() => setNetflixModal({ type: 'project', data: key })}
                   className="flex-shrink-0 group relative w-64 aspect-video rounded overflow-hidden hover:scale-105 hover:z-10 transition-transform duration-300"
                 >
                   <img src={study.screenshot} alt={study.title} className="w-full h-full object-cover" />
@@ -2601,7 +2606,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <h2 className="text-xl font-semibold text-white mb-4">About Me</h2>
             <div className="flex gap-2">
               <button
-                onClick={() => { setAboutWindow({ isOpen: true, isMinimized: false }); setScreenState("desktop"); setFocusedWindow('about'); }}
+                onClick={() => setNetflixModal({ type: 'about' })}
                 className="flex-shrink-0 group relative w-80 aspect-[4/3] rounded overflow-hidden hover:scale-105 hover:z-10 transition-transform duration-300"
               >
                 <img src={CHARITY_PHOTO_URL} alt="Charity" className="w-full h-full object-cover" />
@@ -2634,12 +2639,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <h2 className="text-xl font-semibold text-white mb-4">My Gallery</h2>
             <div className="flex gap-2 overflow-x-auto scrollbar-none pb-4" style={{ WebkitOverflowScrolling: 'touch' }}>
               {personalPhotos.slice(0, 8).map((photo, idx) => (
-                <div
+                <button
                   key={idx}
+                  onClick={() => setNetflixModal({ type: 'gallery', data: idx })}
                   className="flex-shrink-0 w-48 aspect-square rounded overflow-hidden hover:scale-105 hover:z-10 transition-transform duration-300 cursor-pointer"
                 >
                   <img src={photo} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -2659,13 +2665,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </svg>
                 LinkedIn
               </a>
-              <button
-                onClick={() => { setMessagesWindow({ isOpen: true, isMinimized: false }); setScreenState("desktop"); setFocusedWindow('messages'); }}
+              <a
+                href="mailto:charity@example.com"
                 className="flex items-center gap-3 bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
               >
                 <MessageCircle className="w-5 h-5" />
                 Message Me
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -2675,6 +2681,237 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <p className="text-gray-500 text-sm">Charity Dupont Portfolio &bull; 2024</p>
           <p className="text-gray-600 text-xs mt-2">This is a portfolio experience inspired by Netflix UI. Click the profile icon to switch to MacBook view.</p>
         </footer>
+
+        {/* Netflix-style Modal */}
+        {netflixModal.type && (
+          <div 
+            className="fixed inset-0 z-[100] flex items-start justify-center pt-12 pb-12 overflow-y-auto"
+            onClick={() => setNetflixModal({ type: null })}
+          >
+            {/* Backdrop */}
+            <div className="fixed inset-0 bg-black/80" />
+            
+            {/* Modal Content */}
+            <div 
+              className="relative w-full max-w-4xl mx-4 bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setNetflixModal({ type: null })}
+                className="absolute top-4 right-4 z-10 w-9 h-9 bg-[#181818] rounded-full flex items-center justify-center hover:bg-[#282828] transition-colors"
+              >
+                <X className="w-5 h-5 text-white" />
+              </button>
+
+              {/* Project Modal */}
+              {netflixModal.type === 'project' && netflixModal.data && (
+                <>
+                  {/* Hero Image */}
+                  <div className="relative aspect-video">
+                    <img 
+                      src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.screenshot} 
+                      alt={caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-8">
+                      <h2 className="text-4xl font-bold text-white mb-2">
+                        {caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
+                      </h2>
+                      <div className="flex items-center gap-4">
+                        <span className="text-green-500 font-semibold">
+                          {netflixModal.data === 'silas' ? '98%' : netflixModal.data === 'teammate' ? '95%' : '92%'} Match
+                        </span>
+                        <span className="text-gray-400">2024</span>
+                        <span className="border border-gray-500 text-gray-400 text-xs px-1">HD</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-8">
+                    <div className="grid grid-cols-3 gap-8">
+                      <div className="col-span-2">
+                        <p className="text-white text-lg mb-6">
+                          {caseStudies[netflixModal.data as keyof typeof caseStudies]?.subtitle}
+                        </p>
+                        <p className="text-gray-300 leading-relaxed">
+                          {caseStudies[netflixModal.data as keyof typeof caseStudies]?.overview}
+                        </p>
+                        
+                        {/* Problem & Solution */}
+                        <div className="mt-8 space-y-6">
+                          <div>
+                            <h3 className="text-white font-semibold mb-2">The Challenge</h3>
+                            <p className="text-gray-400">
+                              {caseStudies[netflixModal.data as keyof typeof caseStudies]?.problem}
+                            </p>
+                          </div>
+                          <div>
+                            <h3 className="text-white font-semibold mb-2">The Solution</h3>
+                            <p className="text-gray-400">
+                              {caseStudies[netflixModal.data as keyof typeof caseStudies]?.solution}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Key Features */}
+                        <div className="mt-8">
+                          <h3 className="text-white font-semibold mb-4">Key Features</h3>
+                          <div className="grid grid-cols-2 gap-3">
+                            {caseStudies[netflixModal.data as keyof typeof caseStudies]?.features.map((feature, idx) => (
+                              <div key={idx} className="flex items-center gap-2 text-gray-300">
+                                <div className="w-1.5 h-1.5 bg-red-600 rounded-full" />
+                                {feature}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Sidebar */}
+                      <div className="space-y-4">
+                        <div>
+                          <span className="text-gray-500 text-sm">Role:</span>
+                          <span className="text-white ml-2">
+                            {caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-gray-500 text-sm">Duration:</span>
+                          <span className="text-white ml-2">
+                            {caseStudies[netflixModal.data as keyof typeof caseStudies]?.duration}
+                          </span>
+                        </div>
+                        <div>
+                          <span className="text-gray-500 text-sm">Tools:</span>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            {caseStudies[netflixModal.data as keyof typeof caseStudies]?.tools.map((tool, idx) => (
+                              <span key={idx} className="text-white text-sm bg-[#333] px-2 py-1 rounded">
+                                {tool}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* About Modal */}
+              {netflixModal.type === 'about' && (
+                <>
+                  {/* Hero Image */}
+                  <div className="relative h-80">
+                    <img 
+                      src={CHARITY_PHOTO_URL}
+                      alt="Charity Dupont"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-8">
+                      <h2 className="text-4xl font-bold text-white mb-2">Charity Dupont</h2>
+                      <p className="text-xl text-gray-300">UX/UI Designer at Google</p>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-8">
+                    <div className="grid grid-cols-3 gap-8">
+                      <div className="col-span-2">
+                        <p className="text-gray-300 leading-relaxed text-lg mb-6">
+                          Hey there! I&apos;m Charity, a passionate UX/UI designer currently working at Google. 
+                          I specialize in creating intuitive, user-centered digital experiences that bridge the gap 
+                          between complex functionality and beautiful design.
+                        </p>
+                        <p className="text-gray-400 leading-relaxed mb-6">
+                          With a background from Columbia University and years of experience in the tech industry, 
+                          I&apos;ve had the privilege of working on products that reach millions of users worldwide. 
+                          My approach combines data-driven insights with creative problem-solving to deliver 
+                          designs that not only look great but also drive real results.
+                        </p>
+                        <p className="text-gray-400 leading-relaxed">
+                          When I&apos;m not designing, you can find me exploring new coffee shops, taking photos, 
+                          or experimenting with new creative tools and technologies.
+                        </p>
+
+                        {/* Skills */}
+                        <div className="mt-8">
+                          <h3 className="text-white font-semibold mb-4">Skills & Expertise</h3>
+                          <div className="flex flex-wrap gap-2">
+                            {['UI Design', 'UX Research', 'Prototyping', 'Design Systems', 'Figma', 'User Testing', 'Motion Design', 'Accessibility'].map((skill, idx) => (
+                              <span key={idx} className="text-white text-sm bg-red-600/20 border border-red-600/40 px-3 py-1 rounded-full">
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Sidebar */}
+                      <div className="space-y-4">
+                        <div>
+                          <span className="text-gray-500 text-sm">Location:</span>
+                          <span className="text-white ml-2">New York, NY</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-500 text-sm">Company:</span>
+                          <span className="text-white ml-2">Google</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-500 text-sm">Education:</span>
+                          <span className="text-white ml-2">Columbia University</span>
+                        </div>
+                        <div className="pt-4">
+                          <a
+                            href="https://linkedin.com/in/charitydupont"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 text-[#0077b5] hover:underline"
+                          >
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            LinkedIn Profile
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Gallery Modal */}
+              {netflixModal.type === 'gallery' && typeof netflixModal.data === 'number' && (
+                <div className="p-4">
+                  <div className="relative aspect-[4/3] max-h-[70vh]">
+                    <img 
+                      src={personalPhotos[netflixModal.data]}
+                      alt={`Gallery ${netflixModal.data + 1}`}
+                      className="w-full h-full object-contain bg-black rounded-lg"
+                    />
+                  </div>
+                  {/* Thumbnail strip */}
+                  <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-none">
+                    {personalPhotos.slice(0, 8).map((photo, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setNetflixModal({ type: 'gallery', data: idx })}
+                        className={`flex-shrink-0 w-20 aspect-video rounded overflow-hidden transition-all ${
+                          idx === netflixModal.data ? 'ring-2 ring-white scale-105' : 'opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <img src={photo} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     )
   }
