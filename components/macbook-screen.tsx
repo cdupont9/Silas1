@@ -1832,19 +1832,26 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         allMedia.push({ type: 'captured', src: photo, originalIndex: idx })
       })
       
-      // Mix personal photos and videos
-      const videoPositions = [0, 3, 6, 9, 12, 15, 18]
+      // Mix personal photos and videos throughout the grid
+      const videoPositions = [0, 2, 5, 8, 11, 14, 17] // 7 positions for 7 videos
       let photoIdx = 0
       let videoIdx = 0
+      const totalItems = personalPhotos.length + personalVideos.length
       
-      for (let i = 0; i < personalPhotos.length + personalVideos.length; i++) {
-        if (videoPositions.includes(i - capturedPhotos.length) && videoIdx < personalVideos.length) {
+      for (let i = 0; i < totalItems; i++) {
+        if (videoPositions.includes(i) && videoIdx < personalVideos.length) {
           allMedia.push({ type: 'video', src: personalVideos[videoIdx], originalIndex: videoIdx })
           videoIdx++
         } else if (photoIdx < personalPhotos.length) {
           allMedia.push({ type: 'photo', src: personalPhotos[photoIdx], originalIndex: photoIdx })
           photoIdx++
         }
+      }
+      
+      // Add any remaining videos that weren't placed
+      while (videoIdx < personalVideos.length) {
+        allMedia.push({ type: 'video', src: personalVideos[videoIdx], originalIndex: videoIdx })
+        videoIdx++
       }
 
       // Media Viewer - unified for photos and videos with swipeable thumbnails
