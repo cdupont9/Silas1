@@ -281,6 +281,19 @@ export function MacBookScreen() {
   // Leaving portfolio popup state
   const [showLeavingPopup, setShowLeavingPopup] = useState<string | null>(null)
   
+  // Mobile reaction picker state
+  const [showMobileReactions, setShowMobileReactions] = useState<string | null>(null)
+  const MOBILE_REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
+  
+  const addMobileReaction = (messageId: string, reaction: string) => {
+    setChatMessages(prev => prev.map(msg => 
+      msg.id === messageId 
+        ? { ...msg, reaction: msg.reaction === reaction ? undefined : reaction }
+        : msg
+    ))
+    setShowMobileReactions(null)
+  }
+  
   
   // Camera and Flashlight state
   const [flashlightOn, setFlashlightOn] = useState(false)
@@ -1125,10 +1138,13 @@ const messageText = mobileInput.trim()
             </div>
 
             {/* Interactive Messages with Charity */}
-            <div className="flex-1 overflow-y-auto px-4 py-4">
+            <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-4">
               {chatMessages.map((msg) => (
                 <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className="relative">
+                  <div 
+                    className="relative"
+                    onDoubleClick={() => msg.role === 'assistant' && setShowMobileReactions(showMobileReactions === msg.id ? null : msg.id)}
+                  >
                     {/* Reaction display - iOS style */}
                     {/* User messages (blue): reaction on LEFT with dot trailing left */}
                     {/* Assistant messages (gray): reaction on RIGHT with dot trailing right */}
@@ -1142,6 +1158,22 @@ const messageText = mobileInput.trim()
                         </div>
                       </div>
                     )}
+                    
+                    {/* Reaction picker */}
+                    {showMobileReactions === msg.id && (
+                      <div className="absolute bottom-full mb-2 left-0 bg-white rounded-full shadow-lg border border-black/10 px-2 py-1.5 flex gap-1 z-50">
+                        {MOBILE_REACTIONS.map((reaction) => (
+                          <button
+                            key={reaction}
+                            onClick={() => addMobileReaction(msg.id, reaction)}
+                            className="hover:scale-125 transition-transform text-lg px-0.5"
+                          >
+                            {reaction}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    
                     <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
                         ? 'bg-[#0b84fe] text-white rounded-[20px] rounded-br-[4px]'
                         : 'bg-[#3b3b3d] text-white rounded-[20px] rounded-bl-[4px]'
@@ -1274,7 +1306,7 @@ const messageText = mobileInput.trim()
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-4">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden px-4 py-4">
             {contact.messages.map((msg, idx) => (
               <div key={idx} className={`flex mb-2 ${msg.from === 'charity' ? 'justify-end' : 'justify-start'}`}>
                 <div className={`max-w-[75%] px-4 py-2.5 ${msg.from === 'charity'
