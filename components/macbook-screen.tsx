@@ -1130,11 +1130,16 @@ const messageText = mobileInput.trim()
                 <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className="relative">
                     {/* Reaction display - iOS style */}
-                    {/* For user messages (blue): reaction on LEFT */}
-                    {/* For assistant messages (gray): reaction on RIGHT */}
+                    {/* User messages (blue): reaction on LEFT with dot trailing left */}
+                    {/* Assistant messages (gray): reaction on RIGHT with dot trailing right */}
                     {msg.reaction && (
-                      <div className={`absolute -top-3 flex items-center justify-center w-6 h-6 bg-white border border-gray-100 rounded-full shadow-md text-[14px] z-50 ${msg.role === 'user' ? '-left-2' : '-right-2'}`}>
-                        {msg.reaction}
+                      <div className={`absolute -top-3 z-50 ${msg.role === 'user' ? '-left-3' : '-right-3'}`}>
+                        <div className="relative">
+                          <div className="w-6 h-6 bg-white border border-gray-200 rounded-full flex items-center justify-center shadow-md">
+                            <span className="text-[14px]">{msg.reaction}</span>
+                          </div>
+                          <div className={`absolute bottom-0 ${msg.role === 'user' ? '-left-1.5' : '-right-1.5'} w-2 h-2 bg-white border border-gray-200 rounded-full shadow-sm`} />
+                        </div>
                       </div>
                     )}
                     <div className={`max-w-[220px] px-4 py-2.5 ${msg.role === 'user'
