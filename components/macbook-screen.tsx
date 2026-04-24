@@ -755,7 +755,7 @@ const messageText = mobileInput.trim()
                 </div>
                 <div className="flex-1">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/70 text-xs">{mobileConversations.find(c => c.id === 'welcome')?.messages[mobileConversations.find(c => c.id === 'welcome')?.messages.length - 1]?.text || 'Welcome to my portfolio on my iPhone!'}</p>
+                  <p className="text-white/70 text-xs">{mobileConversations.find(c => c.id === 'welcome')?.messages?.slice(-1)[0]?.text || 'Welcome to my portfolio on my iPhone!'}</p>
                 </div>
               </div>
             </div>
