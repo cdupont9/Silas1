@@ -41,7 +41,7 @@ const mobileMessageContacts = [
   {
     id: 'welcome',
     name: 'Charity',
-    avatar: null,
+    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-03-17%20at%205.41.24%E2%80%AFPM.jpeg-IqAgTgZhAtj7ZVseWJ9tdnbTkwQk0b.png',
     isMe: true,
     lastMessage: 'Welcome to my portfolio on my iPhone!',
     time: 'now',
@@ -1190,7 +1190,11 @@ const messageText = mobileInput.trim()
       // Conversation List View
       if (showConversationList) {
         return (
-          <div className="h-screen w-full bg-black flex flex-col">
+          <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
+            <style>{`
+              .hide-scrollbar::-webkit-scrollbar { display: none; }
+              .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            `}</style>
             {/* Status Bar */}
             <div className="h-[50px] flex items-center justify-between px-6 pt-3 bg-[#000]">
               <span className="text-white text-[15px] font-semibold">{loginTime}</span>
@@ -1229,8 +1233,8 @@ const messageText = mobileInput.trim()
             </div>
 
             {/* Conversation List */}
-            <div className="flex-1 overflow-y-auto">
-              {mobileConversations.map((c, idx) => (
+            <div className="flex-1 overflow-y-auto overflow-x-hidden hide-scrollbar" style={{ WebkitOverflowScrolling: 'touch' }}>
+              {mobileConversations.map((c) => (
                 <button
                   key={c.id}
                   onClick={() => { 
@@ -1245,31 +1249,34 @@ const messageText = mobileInput.trim()
                 >
                   {/* Unread indicator */}
                   {c.unread && (
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#007AFF] flex-shrink-0" />
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#007AFF] flex-shrink-0 absolute left-2" />
                   )}
-                  <div className={`w-14 h-14 rounded-full overflow-hidden bg-gray-600 flex-shrink-0 ${!c.unread ? 'ml-0' : ''}`}>
+                  <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
                     {c.avatar ? (
                       <img src={c.avatar} alt={c.name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-gray-400 to-gray-600 flex items-center justify-center">
-                        <span className="text-white text-xl font-semibold">{c.name.charAt(0)}</span>
+                        <span className="text-white text-lg font-semibold">{c.name.charAt(0)}</span>
                       </div>
                     )}
                   </div>
-                  <div className="flex-1 text-left border-b border-white/10 pb-3">
-                    <div className="flex justify-between items-center">
-                      <p className="text-white text-[17px] font-medium">{c.name}</p>
-                      <span className="text-white/40 text-[15px]">{c.time}</span>
+                  <div className="flex-1 min-w-0 text-left border-b border-white/10 pb-3">
+                    <div className="flex justify-between items-center gap-2">
+                      <p className="text-white text-[17px] font-medium truncate">{c.name}</p>
+                      <div className="flex items-center gap-1 flex-shrink-0">
+                        <span className="text-white/40 text-[15px]">{c.time}</span>
+                        <ChevronRight className="w-4 h-4 text-white/30" />
+                      </div>
                     </div>
-                    <p className="text-white/50 text-[15px] truncate mt-0.5">{c.messages[c.messages.length - 1]?.text || c.lastMessage}</p>
+                    <p className="text-white/50 text-[15px] truncate mt-0.5 pr-2">{c.messages[c.messages.length - 1]?.text || c.lastMessage}</p>
                   </div>
                 </button>
               ))}
             </div>
 
             {/* Home Indicator */}
-            <div className="bg-black py-2">
-              <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+            <div className="bg-black py-2 flex-shrink-0">
+              <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
             </div>
           </div>
         )
