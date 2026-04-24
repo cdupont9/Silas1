@@ -1129,17 +1129,30 @@ const messageText = mobileInput.trim()
               {chatMessages.map((msg) => (
                 <div key={msg.id} className={`flex mb-3 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className="relative">
-                    {/* Reaction display - iOS style gray bubble at top-left corner */}
+                    {/* Reaction display - iOS style gray bubble */}
+                    {/* For assistant (Charity) messages: reaction on top-LEFT, dots trail down-right */}
+                    {/* For user messages: reaction on top-RIGHT, dots trail down-left */}
                     {msg.reaction && (
-                      <div className={`absolute -top-3 ${msg.role === 'user' ? '-right-2' : '-left-2'} z-10`}>
+                      <div className={`absolute -top-4 ${msg.role === 'user' ? '-right-3' : '-left-3'} z-10`}>
                         <div className="relative">
                           {/* Main reaction bubble - gray like iOS */}
-                          <div className="w-7 h-7 bg-[#e5e5ea] rounded-full flex items-center justify-center shadow-sm border border-gray-200">
-                            <span className="text-sm">{msg.reaction}</span>
+                          <div className="w-8 h-8 bg-[#e5e5ea] rounded-full flex items-center justify-center shadow-sm">
+                            <span className="text-base">{msg.reaction}</span>
                           </div>
-                          {/* Trailing circles like iOS thought bubble */}
-                          <div className={`absolute -bottom-0.5 ${msg.role === 'user' ? 'left-0' : 'right-0'} w-2 h-2 bg-[#e5e5ea] rounded-full border border-gray-200`} />
-                          <div className={`absolute -bottom-2 ${msg.role === 'user' ? '-left-1' : '-right-1'} w-1.5 h-1.5 bg-[#e5e5ea] rounded-full border border-gray-200`} />
+                          {/* Trailing circles - positioned to connect to the message corner */}
+                          {msg.role === 'user' ? (
+                            <>
+                              {/* User message: dots go down-left from reaction to message */}
+                              <div className="absolute bottom-0 -left-0.5 w-2.5 h-2.5 bg-[#e5e5ea] rounded-full" />
+                              <div className="absolute -bottom-1.5 -left-2 w-1.5 h-1.5 bg-[#e5e5ea] rounded-full" />
+                            </>
+                          ) : (
+                            <>
+                              {/* Assistant message: dots go down-right from reaction to message */}
+                              <div className="absolute bottom-0 -right-0.5 w-2.5 h-2.5 bg-[#e5e5ea] rounded-full" />
+                              <div className="absolute -bottom-1.5 -right-2 w-1.5 h-1.5 bg-[#e5e5ea] rounded-full" />
+                            </>
+                          )}
                         </div>
                       </div>
                     )}
