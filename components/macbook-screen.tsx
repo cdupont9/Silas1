@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -2682,265 +2682,184 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <p className="text-gray-600 text-xs mt-2">This is a portfolio experience inspired by Netflix UI. Click the profile icon to switch to MacBook view.</p>
         </footer>
 
-        {/* Netflix-style Modal */}
+{/* Netflix-style Modal - Full Case Study */}
         {netflixModal.type && (
           <div 
-            className="fixed inset-0 z-[100] flex items-start justify-center pt-12 pb-12 overflow-y-auto"
+            className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/90"
             onClick={() => setNetflixModal({ type: null })}
           >
-            {/* Backdrop */}
-            <div className="fixed inset-0 bg-black/80" />
-            
             {/* Modal Content */}
             <div 
-              className="relative w-full max-w-4xl mx-4 bg-[#181818] rounded-lg overflow-hidden shadow-2xl"
+              className="relative w-full max-w-6xl my-8 mx-4 bg-white rounded-xl overflow-hidden shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
+              {/* Close Button - Fixed position */}
               <button
                 onClick={() => setNetflixModal({ type: null })}
-                className="absolute top-4 right-4 z-10 w-9 h-9 bg-[#181818] rounded-full flex items-center justify-center hover:bg-[#282828] transition-colors"
+                className="fixed top-6 right-6 z-[110] w-12 h-12 bg-black/80 hover:bg-black rounded-full flex items-center justify-center transition-colors shadow-lg"
               >
-                <X className="w-5 h-5 text-white" />
+                <X className="w-6 h-6 text-white" />
               </button>
 
-              {/* Project Modal */}
+              {/* Project Modal - Render full case study */}
               {netflixModal.type === 'project' && netflixModal.data && (
-                <>
-                  {/* Hero Image */}
-                  <div className="relative aspect-video">
-                    <img 
-                      src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.screenshot} 
-                      alt={caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-8">
-                      <h2 className="text-4xl font-bold text-white mb-2">
-                        {caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
-                      </h2>
-                      <div className="flex items-center gap-4">
-                        <span className="text-green-500 font-semibold">
-                          {netflixModal.data === 'silas' ? '98%' : netflixModal.data === 'teammate' ? '95%' : '92%'} Match
-                        </span>
-                        <span className="text-gray-400">2024</span>
-                        <span className="border border-gray-500 text-gray-400 text-xs px-1">HD</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      <div className="md:col-span-2">
-                        <p className="text-red-500 text-xl font-semibold italic mb-2">
-                          &ldquo;{caseStudies[netflixModal.data as keyof typeof caseStudies]?.hero}&rdquo;
-                        </p>
-                        <p className="text-white text-lg mb-4">
-                          {caseStudies[netflixModal.data as keyof typeof caseStudies]?.subtitle}
-                        </p>
-                        <p className="text-gray-300 leading-relaxed">
-                          {caseStudies[netflixModal.data as keyof typeof caseStudies]?.overview}
-                        </p>
-                        
-                        {/* Challenge & Solution */}
-                        <div className="mt-8 space-y-6">
-                          <div>
-                            <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-                              <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                              </svg>
-                              The Challenge
-                            </h3>
-                            <p className="text-gray-400 leading-relaxed">
-                              {caseStudies[netflixModal.data as keyof typeof caseStudies]?.challenge}
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
-                              <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              The Solution
-                            </h3>
-                            <p className="text-gray-400 leading-relaxed">
-                              {caseStudies[netflixModal.data as keyof typeof caseStudies]?.solution}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Key Results */}
-                        <div className="mt-8">
-                          <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                            <svg className="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                            </svg>
-                            Key Results
-                          </h3>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            {caseStudies[netflixModal.data as keyof typeof caseStudies]?.results.map((result, idx) => (
-                              <div key={idx} className="flex items-center gap-2 text-gray-300 bg-white/5 rounded-lg px-3 py-2">
-                                <div className="w-2 h-2 bg-red-600 rounded-full flex-shrink-0" />
-                                {result}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Sidebar */}
-                      <div className="space-y-6 bg-[#222] rounded-lg p-4">
-                        {/* Project Icon */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-lg overflow-hidden">
-                            <img 
-                              src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.icon} 
-                              alt={caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div>
-                            <p className="text-white font-semibold">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}</p>
-                            <p className="text-gray-500 text-xs">Case Study</p>
-                          </div>
-                        </div>
-                        
-                        <div className="border-t border-gray-700 pt-4 space-y-4">
-                          <div>
-                            <span className="text-gray-500 text-xs uppercase tracking-wide">Role</span>
-                            <p className="text-white mt-1">
-                              {caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}
-                            </p>
-                          </div>
-                          <div>
-                            <span className="text-gray-500 text-xs uppercase tracking-wide">Timeline</span>
-                            <p className="text-white mt-1">
-                              {caseStudies[netflixModal.data as keyof typeof caseStudies]?.timeline}
-                            </p>
-                          </div>
-                          <div>
-                            <span className="text-gray-500 text-xs uppercase tracking-wide">Tools Used</span>
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              {caseStudies[netflixModal.data as keyof typeof caseStudies]?.tools.map((tool, idx) => (
-                                <span key={idx} className="text-white text-xs bg-[#333] border border-gray-600 px-2 py-1 rounded">
-                                  {tool}
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </>
+                <div className="relative">
+                  {/* Render the actual full case study component */}
+                  {netflixModal.data === 'teammate' && <TeammateCaseStudy />}
+                  {netflixModal.data === 'meetly' && <MeetlyCaseStudy />}
+                  {netflixModal.data === 'silas' && <SilasCaseStudy />}
+                </div>
               )}
 
-              {/* About Modal */}
+              {/* About Modal - Full Profile */}
               {netflixModal.type === 'about' && (
-                <>
-                  {/* Hero Image */}
-                  <div className="relative h-80">
-                    <img 
-                      src={CHARITY_PHOTO_URL}
-                      alt="Charity Dupont"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-8">
-                      <h2 className="text-4xl font-bold text-white mb-2">Charity Dupont</h2>
-                      <p className="text-xl text-gray-300">UX/UI Designer at Google</p>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-8">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      <div className="md:col-span-2">
-                        <p className="text-gray-300 leading-relaxed text-lg mb-6">
-                          Hey there! I&apos;m Charity, a passionate UX/UI designer currently working at Google. 
-                          I specialize in creating intuitive, user-centered digital experiences that bridge the gap 
-                          between complex functionality and beautiful design.
-                        </p>
-                        <p className="text-gray-400 leading-relaxed mb-6">
-                          With a background from Columbia University and years of experience in the tech industry, 
-                          I&apos;ve had the privilege of working on products that reach millions of users worldwide. 
-                          My approach combines data-driven insights with creative problem-solving to deliver 
-                          designs that not only look great but also drive real results.
-                        </p>
-                        <p className="text-gray-400 leading-relaxed">
-                          When I&apos;m not designing, you can find me exploring new coffee shops, taking photos, 
-                          or experimenting with new creative tools and technologies.
-                        </p>
-
-                        {/* Skills */}
-                        <div className="mt-8">
-                          <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
-                            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                            </svg>
-                            Skills & Expertise
-                          </h3>
-                          <div className="flex flex-wrap gap-2">
-                            {['UI Design', 'UX Research', 'Prototyping', 'Design Systems', 'Figma', 'User Testing', 'Motion Design', 'Accessibility'].map((skill, idx) => (
-                              <span key={idx} className="text-white text-sm bg-red-600/20 border border-red-600/40 px-3 py-1.5 rounded-full">
-                                {skill}
-                              </span>
-                            ))}
+                <div className="bg-gradient-to-b from-purple-50 to-white">
+                  {/* Hero Section */}
+                  <div className="relative py-20 px-8">
+                    <div className="max-w-4xl mx-auto">
+                      <div className="flex flex-col md:flex-row items-center gap-12">
+                        {/* Profile Photo */}
+                        <div className="w-64 h-64 rounded-3xl overflow-hidden shadow-2xl flex-shrink-0">
+                          <img 
+                            src={CHARITY_PHOTO_URL}
+                            alt="Charity Dupont"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        
+                        {/* Bio */}
+                        <div className="text-center md:text-left">
+                          <h1 className="text-5xl font-bold text-black mb-4">Charity Dupont</h1>
+                          <p className="text-2xl text-purple-600 font-medium mb-4">UX/UI Designer at Google</p>
+                          <p className="text-black/70 leading-relaxed text-lg mb-6">
+                            Hey there! I&apos;m Charity, a passionate UX/UI designer currently working at Google. 
+                            I specialize in creating intuitive, user-centered digital experiences that bridge the gap 
+                            between complex functionality and beautiful design.
+                          </p>
+                          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                            <a
+                              href="https://linkedin.com/in/charitydupont"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 bg-[#0077b5] text-white px-6 py-3 rounded-full hover:bg-[#006399] transition-colors"
+                            >
+                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                              </svg>
+                              Connect on LinkedIn
+                            </a>
+                            <a
+                              href="mailto:charity@example.com"
+                              className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-black/80 transition-colors"
+                            >
+                              <Mail className="w-5 h-5" />
+                              Send Email
+                            </a>
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
 
-                      {/* Sidebar */}
-                      <div className="bg-[#222] rounded-lg p-4 space-y-4">
-                        <div>
-                          <span className="text-gray-500 text-xs uppercase tracking-wide">Location</span>
-                          <p className="text-white mt-1">New York, NY</p>
-                        </div>
-                        <div>
-                          <span className="text-gray-500 text-xs uppercase tracking-wide">Company</span>
-                          <p className="text-white mt-1">Google</p>
-                        </div>
-                        <div>
-                          <span className="text-gray-500 text-xs uppercase tracking-wide">Education</span>
-                          <p className="text-white mt-1">Columbia University</p>
-                        </div>
-                        <div className="pt-4 border-t border-gray-700">
-                          <a
-                            href="https://linkedin.com/in/charitydupont"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 text-[#0077b5] hover:underline"
-                          >
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                            LinkedIn Profile
-                          </a>
-                        </div>
+                  {/* Details Section */}
+                  <div className="max-w-4xl mx-auto px-8 py-16">
+                    <div className="grid md:grid-cols-4 gap-8 mb-16">
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <MapPin className="w-8 h-8 mx-auto mb-3 text-purple-600" />
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Location</h3>
+                        <p className="text-black font-medium">New York, NY</p>
+                      </div>
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <svg className="w-8 h-8 mx-auto mb-3 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Company</h3>
+                        <p className="text-black font-medium">Google</p>
+                      </div>
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <GraduationCap className="w-8 h-8 mx-auto mb-3 text-purple-600" />
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Education</h3>
+                        <p className="text-black font-medium">Columbia University</p>
+                      </div>
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <Briefcase className="w-8 h-8 mx-auto mb-3 text-purple-600" />
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Experience</h3>
+                        <p className="text-black font-medium">5+ Years</p>
+                      </div>
+                    </div>
+
+                    {/* About Text */}
+                    <div className="prose prose-lg max-w-none mb-16">
+                      <h2 className="text-2xl font-bold text-black mb-6">About Me</h2>
+                      <p className="text-black/70 leading-relaxed mb-4">
+                        With a background from Columbia University and years of experience in the tech industry, 
+                        I&apos;ve had the privilege of working on products that reach millions of users worldwide. 
+                        My approach combines data-driven insights with creative problem-solving to deliver 
+                        designs that not only look great but also drive real results.
+                      </p>
+                      <p className="text-black/70 leading-relaxed">
+                        When I&apos;m not designing, you can find me exploring new coffee shops, taking photos, 
+                        or experimenting with new creative tools and technologies. I believe that great design 
+                        comes from understanding people deeply and translating those insights into experiences 
+                        that feel intuitive and delightful.
+                      </p>
+                    </div>
+
+                    {/* Skills */}
+                    <div>
+                      <h2 className="text-2xl font-bold text-black mb-6">Skills & Expertise</h2>
+                      <div className="flex flex-wrap gap-3">
+                        {['UI Design', 'UX Research', 'Prototyping', 'Design Systems', 'Figma', 'User Testing', 'Motion Design', 'Accessibility', 'Information Architecture', 'Wireframing', 'Visual Design', 'Interaction Design'].map((skill, idx) => (
+                          <span key={idx} className="text-black text-sm bg-purple-100 border border-purple-200 px-4 py-2 rounded-full font-medium">
+                            {skill}
+                          </span>
+                        ))}
                       </div>
                     </div>
                   </div>
-                </>
+                </div>
               )}
 
-              {/* Gallery Modal */}
+              {/* Gallery Modal - Full Screen */}
               {netflixModal.type === 'gallery' && typeof netflixModal.data === 'number' && (
-                <div className="p-4">
-                  <div className="relative aspect-[4/3] max-h-[70vh]">
-                    <img 
-                      src={personalPhotos[netflixModal.data]}
-                      alt={`Gallery ${netflixModal.data + 1}`}
-                      className="w-full h-full object-contain bg-black rounded-lg"
-                    />
+                <div className="bg-black min-h-[80vh] flex flex-col">
+                  {/* Main Image */}
+                  <div className="flex-1 flex items-center justify-center p-4">
+                    <div className="relative w-full max-w-5xl">
+                      <img 
+                        src={personalPhotos[netflixModal.data]}
+                        alt={`Gallery ${netflixModal.data + 1}`}
+                        className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+                      />
+                      {/* Navigation Arrows */}
+                      <button
+                        onClick={() => setNetflixModal({ type: 'gallery', data: Math.max(0, (netflixModal.data as number) - 1) })}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center transition-colors"
+                        disabled={netflixModal.data === 0}
+                      >
+                        <ChevronLeft className="w-8 h-8 text-white" />
+                      </button>
+                      <button
+                        onClick={() => setNetflixModal({ type: 'gallery', data: Math.min(personalPhotos.length - 1, (netflixModal.data as number) + 1) })}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center transition-colors"
+                        disabled={netflixModal.data === personalPhotos.length - 1}
+                      >
+                        <ChevronRight className="w-8 h-8 text-white" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Image Counter */}
+                  <div className="text-center text-white/60 text-sm py-2">
+                    {(netflixModal.data as number) + 1} / {personalPhotos.length}
                   </div>
                   {/* Thumbnail strip */}
-                  <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-none">
+                  <div className="flex gap-3 p-4 overflow-x-auto scrollbar-none justify-center bg-black/50">
                     {personalPhotos.slice(0, 8).map((photo, idx) => (
                       <button
                         key={idx}
                         onClick={() => setNetflixModal({ type: 'gallery', data: idx })}
-                        className={`flex-shrink-0 w-20 aspect-video rounded overflow-hidden transition-all ${
-                          idx === netflixModal.data ? 'ring-2 ring-white scale-105' : 'opacity-60 hover:opacity-100'
+                        className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden transition-all ${
+                          idx === netflixModal.data ? 'ring-2 ring-white scale-110' : 'opacity-50 hover:opacity-100'
                         }`}
                       >
                         <img src={photo} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
