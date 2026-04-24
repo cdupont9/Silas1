@@ -227,7 +227,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "netflix" | "netflixCaseStudy"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -1032,6 +1032,28 @@ const messageText = mobileInput.trim()
                   <span className="text-gray-900 text-sm font-medium">Camera</span>
                 </button>
               </div>
+            </div>
+
+            {/* Wild Experience Banner */}
+            <div className="mx-4 mb-6">
+              <button
+                onClick={() => setMobileScreen('netflix')}
+                className="w-full bg-gradient-to-r from-[#141414] to-[#2d2d2d] rounded-2xl p-5 shadow-xl active:scale-[0.98] transition-transform border border-red-600/30"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center shadow-lg">
+                    <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M5.398 0v.006c3.028 8.556 5.37 15.175 8.348 23.596 2.344.058 4.85.398 4.854.398-2.8-7.924-5.923-16.747-8.487-24zm8.489 0v9.63L18.6 22.951c-.043-7.86-.004-15.913.002-22.95zM5.398 1.05V24c1.873-.225 2.81-.312 4.715-.398v-9.22z"/>
+                    </svg>
+                  </div>
+                  <div className="flex-1 text-left">
+                    <h3 className="font-bold text-white text-lg">Wild Experience</h3>
+                    <p className="text-red-400 text-sm">Charity Flicks - Netflix Style</p>
+                    <p className="text-white/50 text-xs mt-1">Tap to explore portfolio</p>
+                  </div>
+                  <ChevronRight className="w-6 h-6 text-red-500" />
+                </div>
+              </button>
             </div>
           </div>
         </div>
@@ -2381,6 +2403,266 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             
             {/* Home Indicator */}
             <div className="mt-6 mx-auto w-36 h-1 bg-white/40 rounded-full" />
+          </div>
+        </div>
+      )
+    }
+
+    // Mobile Netflix/Wild Experience
+    if (mobileScreen === "netflix") {
+      return (
+        <div className="h-[100dvh] w-full bg-[#141414] overflow-hidden flex flex-col">
+          {/* Netflix Header */}
+          <div className="flex-shrink-0 bg-[#141414] pt-12 pb-3 px-4 border-b border-white/10">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => setMobileScreen('home')}
+                className="text-white/70 text-sm flex items-center gap-1"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                Back
+              </button>
+              <div className="flex items-center gap-2">
+                <svg className="w-6 h-6 text-red-600" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M5.398 0v.006c3.028 8.556 5.37 15.175 8.348 23.596 2.344.058 4.85.398 4.854.398-2.8-7.924-5.923-16.747-8.487-24zm8.489 0v9.63L18.6 22.951c-.043-7.86-.004-15.913.002-22.95zM5.398 1.05V24c1.873-.225 2.81-.312 4.715-.398v-9.22z"/>
+                </svg>
+                <span className="text-white font-bold text-lg">Charity Flicks</span>
+              </div>
+              <div className="w-12" />
+            </div>
+          </div>
+
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+            {/* Hero */}
+            <div className="relative h-56">
+              <img 
+                src={caseStudies.silas.screenshot}
+                alt="Silas"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <span className="text-red-500 text-xs font-semibold uppercase tracking-wider">Featured</span>
+                <h2 className="text-white text-2xl font-bold">Silas</h2>
+                <p className="text-white/60 text-xs mt-1">{caseStudies.silas.subtitle}</p>
+              </div>
+            </div>
+
+            {/* Case Studies Grid */}
+            <div className="px-4 py-6">
+              <h3 className="text-white font-semibold mb-4">All Case Studies</h3>
+              <div className="space-y-4">
+                {/* Silas */}
+                <button
+                  onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('netflixCaseStudy'); }}
+                  className="w-full bg-[#1f1f1f] rounded-xl overflow-hidden flex active:scale-[0.98] transition-transform"
+                >
+                  <img src={caseStudies.silas.screenshot} alt="Silas" className="w-24 h-24 object-cover" />
+                  <div className="flex-1 p-3 text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <img src={caseStudies.silas.icon} alt="" className="w-6 h-6 rounded-md" />
+                      <span className="text-white font-semibold">Silas</span>
+                      <span className="text-green-500 text-xs font-bold ml-auto">98% Match</span>
+                    </div>
+                    <p className="text-white/50 text-xs line-clamp-2">{caseStudies.silas.subtitle}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-white/40 text-[10px]">{caseStudies.silas.timeline}</span>
+                      <span className="text-white/40 text-[10px]">|</span>
+                      <span className="text-white/40 text-[10px]">{caseStudies.silas.role}</span>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Teammate */}
+                <button
+                  onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('netflixCaseStudy'); }}
+                  className="w-full bg-[#1f1f1f] rounded-xl overflow-hidden flex active:scale-[0.98] transition-transform"
+                >
+                  <img src={caseStudies.teammate.screenshot} alt="Teammate" className="w-24 h-24 object-cover" />
+                  <div className="flex-1 p-3 text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <img src={caseStudies.teammate.icon} alt="" className="w-6 h-6 rounded-md" />
+                      <span className="text-white font-semibold">Teammate</span>
+                      <span className="text-green-500 text-xs font-bold ml-auto">95% Match</span>
+                    </div>
+                    <p className="text-white/50 text-xs line-clamp-2">{caseStudies.teammate.subtitle}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-white/40 text-[10px]">{caseStudies.teammate.timeline}</span>
+                      <span className="text-white/40 text-[10px]">|</span>
+                      <span className="text-white/40 text-[10px]">{caseStudies.teammate.role}</span>
+                    </div>
+                  </div>
+                </button>
+
+                {/* Meetly */}
+                <button
+                  onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('netflixCaseStudy'); }}
+                  className="w-full bg-[#1f1f1f] rounded-xl overflow-hidden flex active:scale-[0.98] transition-transform"
+                >
+                  <img src={caseStudies.meetly.screenshot} alt="Meetly" className="w-24 h-24 object-cover" />
+                  <div className="flex-1 p-3 text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <img src={caseStudies.meetly.icon} alt="" className="w-6 h-6 rounded-md" />
+                      <span className="text-white font-semibold">Meetly</span>
+                      <span className="text-green-500 text-xs font-bold ml-auto">92% Match</span>
+                    </div>
+                    <p className="text-white/50 text-xs line-clamp-2">{caseStudies.meetly.subtitle}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-white/40 text-[10px]">{caseStudies.meetly.timeline}</span>
+                      <span className="text-white/40 text-[10px]">|</span>
+                      <span className="text-white/40 text-[10px]">{caseStudies.meetly.role}</span>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* About Section */}
+            <div className="px-4 pb-6">
+              <div className="bg-[#1f1f1f] rounded-xl p-4">
+                <div className="flex items-center gap-3 mb-3">
+                  <img src={MEMOJI_URL} alt="Charity" className="w-12 h-12 rounded-full" />
+                  <div>
+                    <h4 className="text-white font-semibold">Charity Dupont</h4>
+                    <p className="text-white/50 text-xs">UX/UI Designer</p>
+                  </div>
+                </div>
+                <p className="text-white/60 text-xs leading-relaxed">
+                  Focused on creating intuitive digital experiences that combine beautiful design with meaningful functionality.
+                </p>
+              </div>
+            </div>
+
+            {/* Home Indicator Space */}
+            <div className="h-8" />
+          </div>
+
+          {/* Home Indicator */}
+          <div className="flex-shrink-0 pb-2 pt-1 bg-[#141414]">
+            <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
+          </div>
+        </div>
+      )
+    }
+
+    // Mobile Netflix Case Study View
+    if (mobileScreen === "netflixCaseStudy" && mobileCaseStudy) {
+      const study = caseStudies[mobileCaseStudy as keyof typeof caseStudies]
+      return (
+        <div className="h-[100dvh] w-full bg-[#141414] overflow-hidden flex flex-col">
+          {/* Header */}
+          <div className="flex-shrink-0 bg-[#141414]/90 backdrop-blur-xl pt-12 pb-3 px-4 border-b border-white/10 z-10">
+            <div className="flex items-center justify-between">
+              <button
+                onClick={() => setMobileScreen('netflix')}
+                className="text-white/70 text-sm flex items-center gap-1"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                Back
+              </button>
+              <span className="text-white font-semibold">{study.title}</span>
+              <div className="w-12" />
+            </div>
+          </div>
+
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+            {/* Hero */}
+            <div className={`relative py-8 px-4 ${
+              mobileCaseStudy === 'silas' ? 'bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]' :
+              mobileCaseStudy === 'teammate' ? 'bg-gradient-to-br from-[#2d1f1f] via-[#3d2a2a] to-[#4a3333]' :
+              'bg-gradient-to-br from-[#1f1f2d] via-[#2a2a3d] to-[#33334a]'
+            }`}>
+              <div className="flex items-center gap-4">
+                <img src={study.screenshot} alt={study.title} className="w-20 h-auto rounded-lg shadow-xl" />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <img src={study.icon} alt="" className="w-8 h-8 rounded-lg" />
+                    <span className="text-red-500 text-[10px] font-semibold uppercase">Case Study</span>
+                  </div>
+                  <h1 className="text-white text-2xl font-bold">{study.title}</h1>
+                  <p className="text-white/60 text-xs mt-1 italic">&ldquo;{study.hero}&rdquo;</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 mt-4 text-[10px] text-white/50">
+                <span className="text-green-500 font-bold">
+                  {mobileCaseStudy === 'silas' ? '98%' : mobileCaseStudy === 'teammate' ? '95%' : '92%'} Match
+                </span>
+                <span>{study.timeline}</span>
+                <span className="border border-white/30 px-1.5 py-0.5 rounded text-[8px]">HD</span>
+                <span>{study.role}</span>
+              </div>
+            </div>
+
+            {/* Overview */}
+            <div className="p-4">
+              <h2 className="text-white font-semibold mb-2">Overview</h2>
+              <p className="text-white/60 text-sm leading-relaxed">{study.overview}</p>
+            </div>
+
+            {/* Challenge & Solution */}
+            <div className="px-4 pb-4">
+              <div className="bg-[#1f1f1f] rounded-xl p-4 mb-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-6 h-6 rounded-full bg-red-600/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white font-semibold text-sm">The Challenge</h3>
+                </div>
+                <p className="text-white/50 text-xs leading-relaxed">{study.challenge}</p>
+              </div>
+              <div className="bg-[#1f1f1f] rounded-xl p-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-6 h-6 rounded-full bg-green-600/20 flex items-center justify-center">
+                    <svg className="w-3 h-3 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-white font-semibold text-sm">The Solution</h3>
+                </div>
+                <p className="text-white/50 text-xs leading-relaxed">{study.solution}</p>
+              </div>
+            </div>
+
+            {/* Results */}
+            <div className="px-4 pb-4">
+              <h2 className="text-white font-semibold mb-3">Key Results</h2>
+              <div className="flex flex-wrap gap-2">
+                {study.results.map((result, idx) => (
+                  <span key={idx} className="bg-red-600/10 border border-red-600/30 rounded-full px-3 py-1.5 text-white text-xs">
+                    {result}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Tools */}
+            <div className="px-4 pb-4">
+              <h2 className="text-white font-semibold mb-3">Tools & Technologies</h2>
+              <div className="flex flex-wrap gap-2">
+                {study.tools.map((tool, idx) => (
+                  <span key={idx} className="bg-[#333] text-white px-3 py-1.5 rounded-lg text-xs">
+                    {tool}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-4 py-4 border-t border-white/10">
+              <p className="text-white/30 text-xs text-center">Case Study by Charity Dupont</p>
+            </div>
+
+            {/* Home Indicator Space */}
+            <div className="h-8" />
+          </div>
+
+          {/* Home Indicator */}
+          <div className="flex-shrink-0 pb-2 pt-1 bg-[#141414]">
+            <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
           </div>
         </div>
       )
