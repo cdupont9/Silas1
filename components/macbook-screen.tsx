@@ -724,17 +724,17 @@ const messageText = mobileInput.trim()
           </div>
           
           {/* Lock Screen Content */}
-          <div className="relative z-10 h-full flex flex-col items-center pt-20">
+          <div className="relative z-10 flex-1 flex flex-col items-center pt-16">
             {/* Time */}
             {mounted && (
               <div className="text-center mb-2">
-                <div className="text-white text-[80px] font-light leading-none tracking-tight">{loginTime}</div>
-                <div className="text-white/80 text-xl mt-1">{currentTime.split("  ")[0]}</div>
+                <div className="text-white text-[70px] font-light leading-none tracking-tight">{loginTime}</div>
+                <div className="text-white/80 text-lg mt-1">{currentTime.split("  ")[0]}</div>
               </div>
             )}
 
             {/* Messages Notification */}
-            <div className="mt-8 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
+            <div className="mt-6 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl overflow-hidden">
                   <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
@@ -797,12 +797,21 @@ const messageText = mobileInput.trim()
                 )}
               </div>
             )}
+            
+            {/* Enter Button - Moved up */}
+            <button
+              onClick={() => setMobileScreen("home")}
+              onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
+              className="mt-6 px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
+            >
+              Enter
+            </button>
           </div>
 
-          {/* Bottom Controls */}
-          <div className={`absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20 transition-all duration-300 ${downloadExpanded ? 'translate-y-0' : ''}`}>
+          {/* Bottom Controls - Flashlight and Camera at very bottom */}
+          <div className="absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20">
             {/* Flashlight and Camera */}
-            <div className="w-full flex justify-between mb-8">
+            <div className="w-full flex justify-between mb-4">
               <button 
                 onClick={toggleFlashlight}
                 className={`w-12 h-12 backdrop-blur-xl rounded-full flex items-center justify-center transition-colors ${flashlightOn ? 'bg-yellow-400' : 'bg-white/20'}`}
@@ -817,17 +826,8 @@ const messageText = mobileInput.trim()
               </button>
             </div>
 
-            {/* Enter Button - Centered */}
-            <button
-              onClick={() => setMobileScreen("home")}
-              onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
-              className="px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
-            >
-              Enter
-            </button>
-
             {/* Home Indicator */}
-            <div className="mt-8 w-36 h-1.5 bg-white rounded-full" />
+            <div className="w-36 h-1.5 bg-white rounded-full" />
           </div>
         </div>
       )
@@ -1016,6 +1016,17 @@ const messageText = mobileInput.trim()
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-gray-900 text-sm font-medium">Safari</span>
+                </button>
+                
+                {/* Camera */}
+                <button
+                  onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
+                    <Camera className="w-6 h-6 text-white" />
+                  </div>
+                  <span className="text-gray-900 text-sm font-medium">Camera</span>
                 </button>
               </div>
             </div>
