@@ -1,15 +1,26 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Geist, Geist_Mono, Bebas_Neue } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const bebasNeue = Bebas_Neue({ 
+  weight: '400',
+  subsets: ["latin"],
+  variable: '--font-bebas-neue'
+});
 
 export const metadata: Metadata = {
   title: "Charity's Portfolio",
   description: "Creative Developer & Designer Portfolio",
   generator: 'v0.app',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: "Charity's Portfolio",
+  },
   icons: {
     icon: [
       {
@@ -36,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased">
+      <body className={`font-sans antialiased ${bebasNeue.variable}`}>
         {children}
         <Analytics />
       </body>

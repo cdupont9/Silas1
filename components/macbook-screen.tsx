@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -172,7 +172,7 @@ const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/S
 const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png"
 const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
-type ScreenState = "login" | "loading" | "desktop"
+type ScreenState = "login" | "loading" | "desktop" | "netflix" | "netflixLoading"
 
 // Case study content for each project
 const caseStudies = {
@@ -227,13 +227,16 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
   const [screenState, setScreenState] = useState<ScreenState>("login")
   const [mobileScreen, setMobileScreen] = useState<MobileScreenState>("lock")
   const [mobileCaseStudy, setMobileCaseStudy] = useState<string | null>(null)
+  
+  // Netflix experience state
+  const [netflixModal, setNetflixModal] = useState<{ type: 'project' | 'about' | 'gallery' | null, data?: string | number }>({ type: null })
   const [showConversationList, setShowConversationList] = useState(true)
   const [selectedNote, setSelectedNote] = useState<number | null>(null)
   const [viewingPhoto, setViewingPhoto] = useState<number | null>(null)
@@ -262,11 +265,29 @@ export function MacBookScreen() {
 
   // Help search state
   const [helpSearchQuery, setHelpSearchQuery] = useState('')
+  
+  // Safari browser URL state
+  const [safariPosition, setSafariPosition] = useState({ x: 120, y: 50 })
+  const [safariUrl, setSafariUrl] = useState('')
+  const [safariInputUrl, setSafariInputUrl] = useState('')
+  
+  // Mobile Safari state
+  const [mobileSafariUrl, setMobileSafariUrl] = useState('')
+  const [showDownloadBanner, setShowDownloadBanner] = useState(true)
+  const [downloadExpanded, setDownloadExpanded] = useState(false)
+  
+  // Camera and Flashlight state
+  const [flashlightOn, setFlashlightOn] = useState(false)
+  const [capturedPhotos, setCapturedPhotos] = useState<string[]>([])
+  const [cameraFacing, setCameraFacing] = useState<'user' | 'environment'>('environment')
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const streamRef = useRef<MediaStream | null>(null)
+  
 
   // Audio state
   const [audioEnabled, setAudioEnabled] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
-
+  
   // Initialize audio
   useEffect(() => {
     audioRef.current = new Audio(AUDIO_URL)
@@ -393,6 +414,90 @@ export function MacBookScreen() {
     setProjectsFolder({ isOpen: false, isMinimized: false })
     setSafariWindow({ isOpen: false, isMinimized: false, project: null })
     setMessagesWindow({ isOpen: false, isMinimized: false })
+  }
+  
+  // Flashlight toggle using device torch
+  const toggleFlashlight = async () => {
+    try {
+      if (flashlightOn) {
+        // Turn off
+        if (streamRef.current) {
+          streamRef.current.getTracks().forEach(track => track.stop())
+          streamRef.current = null
+        }
+        setFlashlightOn(false)
+      } else {
+        // Turn on
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'environment' }
+        })
+        const track = stream.getVideoTracks()[0]
+        // @ts-expect-error - torch is not in TypeScript types
+        await track.applyConstraints({ advanced: [{ torch: true }] })
+        streamRef.current = stream
+        setFlashlightOn(true)
+      }
+    } catch {
+      // Fallback: just toggle visual state if torch not supported
+      setFlashlightOn(!flashlightOn)
+    }
+  }
+  
+  // Start camera
+  const startCamera = async (facing: 'user' | 'environment' = 'environment') => {
+    try {
+      // Stop any existing stream
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop())
+      }
+      
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: facing, width: { ideal: 1920 }, height: { ideal: 1080 } },
+        audio: false
+      })
+      
+      streamRef.current = stream
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream
+      }
+    } catch (err) {
+      console.log('[v0] Camera error:', err)
+    }
+  }
+  
+  // Stop camera
+  const stopCamera = () => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop())
+      streamRef.current = null
+    }
+  }
+  
+  // Capture photo
+  const capturePhoto = () => {
+    if (videoRef.current) {
+      const canvas = document.createElement('canvas')
+      canvas.width = videoRef.current.videoWidth
+      canvas.height = videoRef.current.videoHeight
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        // Flip horizontally for front camera
+        if (cameraFacing === 'user') {
+          ctx.translate(canvas.width, 0)
+          ctx.scale(-1, 1)
+        }
+        ctx.drawImage(videoRef.current, 0, 0)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.9)
+        setCapturedPhotos(prev => [dataUrl, ...prev])
+      }
+    }
+  }
+  
+  // Switch camera
+  const switchCamera = () => {
+    const newFacing = cameraFacing === 'user' ? 'environment' : 'user'
+    setCameraFacing(newFacing)
+    startCamera(newFacing)
   }
 
   // Drag handlers for widgets and windows
@@ -620,19 +725,19 @@ const messageText = mobileInput.trim()
               </div>
             </div>
           </div>
-
+          
           {/* Lock Screen Content */}
-          <div className="relative z-10 h-full flex flex-col items-center pt-20">
+          <div className="relative z-10 flex-1 flex flex-col items-center pt-16">
             {/* Time */}
             {mounted && (
               <div className="text-center mb-2">
-                <div className="text-white text-[80px] font-light leading-none tracking-tight">{loginTime}</div>
-                <div className="text-white/80 text-xl mt-1">{currentTime.split("  ")[0]}</div>
+                <div className="text-white text-[70px] font-light leading-none tracking-tight">{loginTime}</div>
+                <div className="text-white/80 text-lg mt-1">{currentTime.split("  ")[0]}</div>
               </div>
             )}
 
-            {/* Notification */}
-            <div className="mt-8 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
+            {/* Messages Notification */}
+            <div className="mt-6 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl overflow-hidden">
                   <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
@@ -643,31 +748,89 @@ const messageText = mobileInput.trim()
                 </div>
               </div>
             </div>
+            
+            {/* Download App Notification */}
+            {showDownloadBanner && (
+              <div className="mt-3 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl border border-white/10 overflow-hidden">
+                <div 
+                  className="p-4 flex items-center gap-3 cursor-pointer active:bg-white/10 transition-colors"
+                  onClick={() => setDownloadExpanded(!downloadExpanded)}
+                >
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-white text-sm font-semibold">Download App</p>
+                    <p className="text-white/70 text-xs">Tap to get the app for your device</p>
+                  </div>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); setShowDownloadBanner(false); }}
+                    className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
+                  >
+                    <X className="w-3 h-3 text-white/80" />
+                  </button>
+                </div>
+                
+                {/* Expanded Download Options */}
+                {downloadExpanded && (
+                  <div className="px-4 pb-4 flex gap-2">
+                    <a 
+                      href="/downloads/portfolio.ipa" 
+                      download
+                      className="flex-1 bg-black/40 backdrop-blur text-white text-xs font-medium py-2.5 rounded-xl flex items-center justify-center gap-1.5 active:bg-black/60 transition-colors"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                      </svg>
+                      iOS
+                    </a>
+                    <a 
+                      href="/downloads/portfolio.apk" 
+                      download
+                      className="flex-1 bg-[#3DDC84]/80 backdrop-blur text-white text-xs font-medium py-2.5 rounded-xl flex items-center justify-center gap-1.5 active:bg-[#3DDC84] transition-colors"
+                    >
+                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.523 2.047a.5.5 0 00-.7.252l-1.456 3.24a9.3 9.3 0 00-6.734 0L7.177 2.3a.5.5 0 10-.9.447l1.378 3.07A9.25 9.25 0 003 13.5h18a9.25 9.25 0 00-4.655-7.683l1.378-3.07a.5.5 0 00-.2-.7zM7 11a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2zM3 14.5h18v1A7.5 7.5 0 0113.5 23h-3A7.5 7.5 0 013 15.5z"/>
+                      </svg>
+                      Android
+                    </a>
+                  </div>
+                )}
+              </div>
+            )}
+            
+            {/* Enter Button - Moved up */}
+            <button
+              onClick={() => setMobileScreen("home")}
+              onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
+              className="mt-6 px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
+            >
+              Enter
+            </button>
           </div>
 
-          {/* Bottom Controls */}
+          {/* Bottom Controls - Flashlight and Camera at very bottom */}
           <div className="absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20">
             {/* Flashlight and Camera */}
-            <div className="w-full flex justify-between mb-8">
-              <button className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
-                <Flashlight className="w-6 h-6 text-white" />
+            <div className="w-full flex justify-between mb-4">
+              <button 
+                onClick={toggleFlashlight}
+                className={`w-12 h-12 backdrop-blur-xl rounded-full flex items-center justify-center transition-colors ${flashlightOn ? 'bg-yellow-400' : 'bg-white/20'}`}
+              >
+                <Flashlight className={`w-6 h-6 ${flashlightOn ? 'text-black' : 'text-white'}`} />
               </button>
-              <button className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center">
+              <button 
+                onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
+                className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center active:bg-white/30 transition-colors"
+              >
                 <Camera className="w-6 h-6 text-white" />
               </button>
             </div>
 
-            {/* Enter Button - Centered */}
-            <button
-              onClick={() => setMobileScreen("home")}
-              onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
-              className="px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
-            >
-              Enter
-            </button>
-
             {/* Home Indicator */}
-            <div className="mt-8 w-36 h-1.5 bg-white rounded-full" />
+            <div className="w-36 h-1.5 bg-white rounded-full" />
           </div>
         </div>
       )
@@ -720,7 +883,7 @@ const messageText = mobileInput.trim()
           </div>
 
           {/* Scrollable Content Area */}
-          <div className="relative z-10 h-full pt-14 pb-4 overflow-y-auto">
+          <div className="relative z-10 h-full pt-14 pb-4 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch' }}>
             {/* Profile Card */}
             <div className="mx-4 mt-4 bg-white/95 backdrop-blur-xl rounded-2xl p-5 shadow-xl">
               <div className="flex items-center gap-4">
@@ -846,8 +1009,31 @@ const messageText = mobileInput.trim()
                   <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
                   <span className="text-gray-900 text-sm font-medium">About Me</span>
                 </button>
+                
+                {/* Safari */}
+                <button
+                  onClick={() => { setMobileSafariUrl(''); setMobileScreen('safari'); }}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-gray-900 text-sm font-medium">Safari</span>
+                </button>
+                
+                {/* Camera */}
+                <button
+                  onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
+                  className="bg-white/95 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center gap-2 shadow-lg active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/590-5908700_camera-icon-ios-11-camera-icon-hd-png-b9u1osHLSOoiE66jNAWPRNxc5tCbSP.png" alt="Camera" className="w-full h-full object-cover" />
+                  </div>
+                  <span className="text-gray-900 text-sm font-medium">Camera</span>
+                </button>
               </div>
             </div>
+
           </div>
         </div>
       )
@@ -1345,7 +1531,7 @@ Tap on any project below to view the full case study.`
           hasImages: false,
           content: `Let's Connect!
 
-Email: charitydupont@google.com
+Email: hello@charitydupont.com
 LinkedIn: www.linkedin.com/in/charitydupont
 Portfolio: charitydupont.com
 Location: New York, New York
@@ -1592,7 +1778,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">CONTACT</p>
                 </div>
-                <a href="mailto:charitydupont@google.com" className="px-4 py-3 flex items-center gap-3 border-b border-gray-100 active:bg-gray-50">
+                <a href="mailto:hello@charitydupont.com" className="px-4 py-3 flex items-center gap-3 border-b border-gray-100 active:bg-gray-50">
                   <div className="w-8 h-8 bg-[#007aff] rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
@@ -1662,7 +1848,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             {/* Full Photo View */}
             <div className="flex-1 flex items-center justify-center px-0 bg-white overflow-hidden min-h-0">
               <img
-                src={personalPhotos[viewingPhoto]}
+                src={viewingPhoto < capturedPhotos.length ? capturedPhotos[viewingPhoto] : personalPhotos[viewingPhoto - capturedPhotos.length]}
                 alt={`Photo ${viewingPhoto + 1}`}
                 className="max-w-full max-h-full object-contain"
               />
@@ -1670,12 +1856,21 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
             {/* Thumbnail Strip */}
             <div className="bg-white py-2 px-2 flex-shrink-0">
-              <div className="flex gap-1 overflow-x-auto justify-center">
+              <div className="flex gap-1 overflow-x-auto justify-center scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
+                {capturedPhotos.map((photo, idx) => (
+                  <button
+                    key={`thumb-captured-${idx}`}
+                    onClick={() => setViewingPhoto(idx)}
+                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
+                  >
+                    <img src={photo} alt="" className="w-full h-full object-cover" />
+                  </button>
+                ))}
                 {personalPhotos.map((photo, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setViewingPhoto(idx)}
-                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
+                    onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
+                    className={`w-8 h-8 flex-shrink-0 rounded overflow-hidden ${capturedPhotos.length + idx === viewingPhoto ? 'ring-2 ring-[#0a84ff]' : ''}`}
                   >
                     <img src={photo} alt="" className="w-full h-full object-cover" />
                   </button>
@@ -1756,16 +1951,32 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
 
           {/* Photo Grid - 3 columns like iOS */}
-          <div className="flex-1 overflow-y-auto">
+          <div className="flex-1 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="grid grid-cols-3 gap-0.5">
-              {personalPhotos.map((photo, idx) => (
+              {/* Captured photos first */}
+              {capturedPhotos.map((photo, idx) => (
                 <button
-                  key={idx}
+                  key={`captured-${idx}`}
                   onClick={() => setViewingPhoto(idx)}
                   className="aspect-square overflow-hidden relative"
                 >
-                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                  <img src={photo} alt={`Captured ${idx + 1}`} className="w-full h-full object-cover" />
                   {idx === 0 && (
+                    <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
+                      <Camera className="w-3 h-3 text-white" />
+                    </div>
+                  )}
+                </button>
+              ))}
+              {/* Personal photos */}
+              {personalPhotos.map((photo, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
+                  className="aspect-square overflow-hidden relative"
+                >
+                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
+                  {idx === 0 && capturedPhotos.length === 0 && (
                     <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
                   )}
                 </button>
@@ -1789,6 +2000,393 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         </div>
       )
     }
+    
+    // iPhone Safari Browser
+    if (mobileScreen === "safari") {
+      return (
+        <div className="h-[100dvh] w-full bg-[#f2f2f7] flex flex-col">
+          {/* Status Bar */}
+          <div className="h-12 flex items-center justify-between px-6 pt-2 bg-[#f2f2f7]">
+            <span className="text-black text-sm font-medium">{loginTime}</span>
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[7px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[9px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[11px] bg-black rounded-[1px]" />
+              </div>
+              <Wifi className="w-4 h-4 text-black" />
+              <div className="w-6 h-3 border border-black rounded-sm relative">
+                <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '70%' }} />
+              </div>
+            </div>
+          </div>
+          
+          {/* URL Bar */}
+          <div className="px-4 py-2 bg-[#f2f2f7]">
+            <div className="bg-[#e5e5ea] rounded-xl px-4 py-2.5 flex items-center justify-center">
+              <Search className="w-4 h-4 text-gray-500 mr-2" />
+              <span className="text-gray-500 text-sm">
+                {mobileSafariUrl === 'wikipedia' ? 'en.wikipedia.org' : 'Search or enter website name'}
+              </span>
+            </div>
+          </div>
+          
+          {/* Browser Content */}
+          <div className="flex-1 overflow-auto bg-[#f2f2f7]">
+            {mobileSafariUrl === 'wikipedia' ? (
+              /* Mobile Wikipedia Page about Charity Dupont */
+              <div className="w-full min-h-full bg-white">
+                {/* Wikipedia Header */}
+                <div className="bg-white border-b border-gray-200 px-4 py-3 sticky top-0 z-10">
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wikipedia-wordmark-en-25-QgUVUwhHCCccrX81eTmsdUDTQRfIQ6.svg" alt="Wikipedia" className="h-4" />
+                </div>
+                
+                {/* Wikipedia Content */}
+                <div className="px-4 py-4">
+                  <h1 className="text-2xl font-serif text-black border-b border-gray-300 pb-2 mb-4">Charity Dupont</h1>
+                  
+                  {/* Infobox - Mobile Style */}
+                  <div className="border border-gray-300 bg-gray-50 text-sm mb-4">
+                    <div className="bg-gray-200 px-3 py-2 text-center font-semibold text-black">Charity Dupont</div>
+                    <div className="p-3">
+                      <img 
+                        src={CHARITY_PHOTO_URL}
+                        alt="Charity Dupont"
+                        className="w-full h-48 object-cover mb-2"
+                      />
+                      <p className="text-[10px] text-gray-500 text-center mb-3">Dupont in 2024</p>
+                      <table className="w-full text-xs">
+                        <tbody>
+                          <tr className="border-b border-gray-200">
+                            <td className="py-1 font-semibold text-gray-700">Occupation</td>
+                            <td className="py-1 text-gray-800">UX Designer</td>
+                          </tr>
+                          <tr className="border-b border-gray-200">
+                            <td className="py-1 font-semibold text-gray-700">Employer</td>
+                            <td className="py-1 text-gray-800">Google</td>
+                          </tr>
+                          <tr className="border-b border-gray-200">
+                            <td className="py-1 font-semibold text-gray-700">Education</td>
+                            <td className="py-1 text-gray-800">Columbia University</td>
+                          </tr>
+                          <tr>
+                            <td className="py-1 font-semibold text-gray-700">Known for</td>
+                            <td className="py-1 text-gray-800">AI UX Design</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-gray-800 leading-relaxed mb-4">
+                    <b>Charity Dupont</b> is an American <span className="text-blue-600">UX/UI designer</span> and <span className="text-blue-600">AI experience designer</span> currently working at <span className="text-blue-600">Google</span>.
+                  </p>
+                  
+                  <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Early life</h2>
+                  <p className="text-sm text-gray-800 leading-relaxed mb-4">
+                    Dupont began her career during the COVID-19 pandemic and later pursued formal training at Columbia University while working as a teacher.
+                  </p>
+                  
+                  <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Career</h2>
+                  <p className="text-sm text-gray-800 leading-relaxed mb-4">
+                    Through a connection at Columbia, Dupont joined Google as a UX designer focusing on AI-driven experiences.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              /* Safari Start Page - iOS Light Style */
+              <div className="w-full h-full bg-[#f2f2f7] overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch' }}>
+                {/* Favorites Section */}
+                <div className="pt-6 px-4">
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    <h2 className="text-black text-lg font-bold">Favorites</h2>
+                    <span className="text-[#007aff] text-sm">Show More</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-3">
+                    {/* Wikipedia */}
+                    <button
+                      onClick={() => setMobileSafariUrl('wikipedia')}
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
+                      </div>
+                      <span className="text-gray-800 text-[11px]">Wikipedia</span>
+                    </button>
+                    
+                    {/* LinkedIn */}
+                    <a
+                      href="https://linkedin.com/in/charitydupont"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-[#0077b5] flex items-center justify-center overflow-hidden shadow-sm">
+                        <span className="text-white text-2xl font-bold">in</span>
+                      </div>
+                      <span className="text-gray-800 text-[11px]">LinkedIn</span>
+                    </a>
+                    
+                    {/* Google */}
+                    <a
+                      href="https://google.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
+                        <span className="text-2xl font-medium">
+                          <span className="text-[#4285f4]">G</span>
+                        </span>
+                      </div>
+                      <span className="text-gray-800 text-[11px]">Google</span>
+                    </a>
+                    
+                    {/* Apple */}
+                    <a
+                      href="https://apple.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
+                        <svg className="w-7 h-7 text-black" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                        </svg>
+                      </div>
+                      <span className="text-gray-800 text-[11px]">Apple</span>
+                    </a>
+                  </div>
+                </div>
+                
+                {/* Frequently Visited */}
+                <div className="mt-6 px-4">
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    <h2 className="text-black text-lg font-bold">Frequently Visited</h2>
+                    <span className="text-[#007aff] text-sm">Show More</span>
+                  </div>
+                  <div className="grid grid-cols-4 gap-3">
+                    {/* Wikipedia */}
+                    <button
+                      onClick={() => setMobileSafariUrl('wikipedia')}
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
+                      </div>
+                      <span className="text-gray-800 text-[11px] leading-tight text-center">Charity Dupont</span>
+                    </button>
+                    
+                    {/* Google */}
+                    <a
+                      href="https://google.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
+                        <svg className="w-8 h-8" viewBox="0 0 24 24">
+                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                      </div>
+                      <span className="text-gray-800 text-[11px]">Google</span>
+                    </a>
+                    
+                    {/* Images */}
+                    <button
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
+                        <Camera className="w-6 h-6 text-gray-600" />
+                      </div>
+                      <span className="text-gray-800 text-[11px]">Images</span>
+                    </button>
+                    
+                    {/* Support */}
+                    <a
+                      href="https://support.google.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
+                        <svg className="w-8 h-8" viewBox="0 0 24 24">
+                          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                      </div>
+                      <span className="text-gray-800 text-[11px]">Support</span>
+                    </a>
+                  </div>
+                </div>
+                
+                {/* Siri Suggestions */}
+                <div className="mt-6 px-4 pb-8">
+                  <div className="flex items-center justify-between mb-4 px-1">
+                    <h2 className="text-black text-lg font-bold">Siri Suggestions</h2>
+                    <span className="text-[#007aff] text-sm">Edit</span>
+                  </div>
+                  <button
+                    onClick={() => setMobileSafariUrl('wikipedia')}
+                    className="w-full bg-white rounded-xl p-3 shadow-sm border border-gray-200 flex items-start gap-3 active:bg-gray-50 transition-colors"
+                  >
+                    <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                      <img src={CHARITY_PHOTO_URL} alt="Charity" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 text-left">
+                      <p className="text-black text-sm font-semibold">Charity Dupont - Wikipedia</p>
+                      <p className="text-gray-500 text-xs mt-0.5">wikipedia.org</p>
+                      <div className="flex items-center gap-1.5 mt-1.5">
+                        <div className="w-4 h-4 rounded bg-green-500 flex items-center justify-center">
+                          <MessageCircle className="w-2.5 h-2.5 text-white" />
+                        </div>
+                        <span className="text-gray-500 text-[10px]">From Messages</span>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Bottom Navigation Bar */}
+          <div className="bg-[#f2f2f7] border-t border-gray-300 px-4 py-2">
+            <div className="flex items-center justify-between">
+              <button 
+                onClick={() => setMobileSafariUrl('')}
+                className={`p-2 ${mobileSafariUrl ? 'text-[#007aff]' : 'text-gray-400'}`}
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button className="p-2 text-gray-400">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+              <button className="p-2 text-[#007aff]">
+                <Share2 className="w-5 h-5" />
+              </button>
+              <button className="p-2 text-[#007aff]">
+                <BookOpen className="w-5 h-5" />
+              </button>
+              <button className="p-2 text-[#007aff]">
+                <Layers className="w-5 h-5" />
+              </button>
+            </div>
+            
+{/* Home Button */}
+            <button 
+              onClick={() => setMobileScreen('home')}
+              className="w-full mt-2 py-2 text-center"
+            >
+              <div className="mx-auto w-36 h-1 bg-black/20 rounded-full" />
+            </button>
+          </div>
+        </div>
+      )
+    }
+    
+    // iPhone Camera App
+    if (mobileScreen === "camera") {
+      return (
+        <div className="h-[100dvh] w-full bg-black flex flex-col relative overflow-hidden">
+          {/* Camera Feed */}
+          <video 
+            ref={videoRef}
+            autoPlay 
+            playsInline 
+            muted
+            className={`absolute inset-0 w-full h-full object-cover ${cameraFacing === 'user' ? 'scale-x-[-1]' : ''}`}
+          />
+          
+          {/* Status Bar */}
+          <div className="relative z-10 h-12 flex items-center justify-between px-6 pt-2">
+            <span className="text-white text-sm font-medium drop-shadow-lg">{loginTime}</span>
+            <div className="flex items-center gap-1.5">
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-white rounded-[1px] drop-shadow" />
+                <div className="w-[3px] h-[7px] bg-white rounded-[1px] drop-shadow" />
+                <div className="w-[3px] h-[9px] bg-white rounded-[1px] drop-shadow" />
+                <div className="w-[3px] h-[11px] bg-white rounded-[1px] drop-shadow" />
+              </div>
+              <Wifi className="w-4 h-4 text-white drop-shadow" />
+              <div className="w-6 h-3 border border-white rounded-sm relative drop-shadow">
+                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+              </div>
+            </div>
+          </div>
+          
+          {/* Top Controls */}
+          <div className="relative z-10 flex items-center justify-between px-6 py-4">
+            <button 
+              onClick={() => setFlashlightOn(!flashlightOn)}
+              className={`w-10 h-10 rounded-full flex items-center justify-center ${flashlightOn ? 'bg-yellow-400' : 'bg-black/40 backdrop-blur'}`}
+            >
+              <Flashlight className={`w-5 h-5 ${flashlightOn ? 'text-black' : 'text-white'}`} />
+            </button>
+            <div className="text-white/80 text-sm font-medium">Photo</div>
+            <button 
+              onClick={() => { stopCamera(); setMobileScreen('lock'); }}
+              className="text-white text-sm font-medium"
+            >
+              Done
+            </button>
+          </div>
+          
+          {/* Spacer */}
+          <div className="flex-1" />
+          
+          {/* Bottom Controls */}
+          <div className="relative z-10 pb-8 px-8">
+            {/* Mode Selector */}
+            <div className="flex items-center justify-center gap-6 mb-6 text-white/60 text-sm">
+              <span>Video</span>
+              <span className="text-yellow-500 font-semibold">Photo</span>
+              <span>Portrait</span>
+            </div>
+            
+            {/* Camera Controls */}
+            <div className="flex items-center justify-between">
+              {/* Last Photo Thumbnail */}
+              <button 
+                onClick={() => { stopCamera(); setMobileScreen('photos'); }}
+                className="w-12 h-12 rounded-lg overflow-hidden border-2 border-white/30"
+              >
+                {capturedPhotos.length > 0 ? (
+                  <img src={capturedPhotos[0]} alt="Last photo" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-gray-800" />
+                )}
+              </button>
+              
+              {/* Shutter Button */}
+              <button 
+                onClick={capturePhoto}
+                className="w-20 h-20 rounded-full border-4 border-white flex items-center justify-center active:scale-95 transition-transform"
+              >
+                <div className="w-16 h-16 rounded-full bg-white" />
+              </button>
+              
+              {/* Flip Camera */}
+              <button 
+                onClick={switchCamera}
+                className="w-12 h-12 rounded-full bg-black/40 backdrop-blur flex items-center justify-center"
+              >
+                <RotateCw className="w-6 h-6 text-white" />
+              </button>
+            </div>
+            
+            {/* Home Indicator */}
+            <div className="mt-6 mx-auto w-36 h-1 bg-white/40 rounded-full" />
+          </div>
+        </div>
+      )
+    }
+
   }
   // ==================== END MOBILE EXPERIENCE ====================
 
@@ -1847,6 +2445,1153 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <p className="text-white/40 text-xs mt-3">No password needed to access</p>
           </div>
         </div>
+      </div>
+    )
+  }
+
+  // Netflix Loading Screen - DupontFlix
+  if (screenState === "netflixLoading") {
+    return (
+      <div className="h-screen w-full bg-black flex items-center justify-center">
+        <div className="relative">
+          {/* DupontFlix logo animation */}
+          <h1 className="text-6xl font-bold tracking-tight animate-pulse font-[family-name:var(--font-bebas-neue)]">
+            <span className="text-red-600">DUPONT</span>
+            <span className="text-white ml-2">FLIX</span>
+          </h1>
+          {/* Red glow effect */}
+          <div className="absolute inset-0 bg-red-600/20 blur-3xl rounded-full scale-150" />
+        </div>
+      </div>
+    )
+  }
+
+  // Netflix Experience Screen
+  if (screenState === "netflix") {
+    return (
+      <div className="h-screen w-full bg-[#141414] overflow-y-auto scrollbar-none">
+        {/* Netflix Header */}
+        <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4 bg-gradient-to-b from-black/80 to-transparent">
+          <div className="flex items-center gap-8">
+            {/* DupontFlix Logo */}
+            <h1 className="text-2xl font-bold tracking-tight cursor-pointer font-[family-name:var(--font-bebas-neue)]">
+              <span className="text-red-600">DUPONT</span>
+              <span className="text-white ml-1">FLIX</span>
+            </h1>
+            <nav className="hidden md:flex items-center gap-6">
+              <span className="text-white font-medium text-sm">Home</span>
+              <span className="text-gray-400 text-sm hover:text-gray-300 cursor-pointer transition-colors">Case Studies</span>
+              <span className="text-gray-400 text-sm hover:text-gray-300 cursor-pointer transition-colors">About Me</span>
+              <span className="text-gray-400 text-sm hover:text-gray-300 cursor-pointer transition-colors">Gallery</span>
+            </nav>
+          </div>
+          <div className="flex items-center gap-4">
+            <Search className="w-5 h-5 text-white cursor-pointer hover:text-gray-300" />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2">
+                  <img src={MEMOJI_URL} alt="Profile" className="w-8 h-8 rounded object-cover" />
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="bg-[#141414] border border-gray-700 text-white min-w-[200px]">
+                <DropdownMenuItem 
+                  onClick={() => setScreenState("login")}
+                  className="cursor-pointer hover:bg-white/10 focus:bg-white/10 text-white"
+                >
+                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  Switch to MacBook View
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-gray-700" />
+                <DropdownMenuItem className="cursor-pointer hover:bg-white/10 focus:bg-white/10 text-gray-400">
+                  <User className="w-4 h-4 mr-2" />
+                  Manage Profiles
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </header>
+
+        {/* Hero Section - Featured Project */}
+        <div className="relative h-[85vh] min-h-[600px]">
+          {/* Hero Background */}
+          <div className="absolute inset-0">
+            <img 
+              src={caseStudies.silas.screenshot} 
+              alt="Silas" 
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#141414] via-[#141414]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-transparent" />
+          </div>
+          
+          {/* Hero Content */}
+          <div className="relative z-10 h-full flex flex-col justify-end pb-32 px-12">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-red-500 font-bold text-lg tracking-wider">C</span>
+              <span className="text-gray-300 text-sm uppercase tracking-widest">Portfolio</span>
+            </div>
+            <h1 className="text-6xl font-bold text-white mb-4 max-w-2xl">{caseStudies.silas.title}</h1>
+            <p className="text-xl text-gray-200 mb-2">{caseStudies.silas.subtitle}</p>
+            <p className="text-gray-400 max-w-xl mb-6 line-clamp-3">{caseStudies.silas.overview}</p>
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setNetflixModal({ type: 'project', data: 'silas' })}
+                className="flex items-center gap-2 bg-white text-black px-8 py-3 rounded font-semibold hover:bg-gray-200 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                View Project
+              </button>
+              <button 
+                onClick={() => setNetflixModal({ type: 'project', data: 'silas' })}
+                className="flex items-center gap-2 bg-gray-600/70 text-white px-6 py-3 rounded font-semibold hover:bg-gray-600 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                More Info
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Content Rows */}
+        <div className="relative z-20 -mt-32 pb-20 px-12 space-y-8">
+          {/* My Case Studies Row */}
+          <div>
+            <h2 className="text-xl font-semibold text-white mb-4">My Case Studies</h2>
+            <div className="flex gap-2 overflow-x-auto scrollbar-none pb-4" style={{ WebkitOverflowScrolling: 'touch' }}>
+              {Object.entries(caseStudies).map(([key, study]) => (
+                <button
+                  key={key}
+                  onClick={() => setNetflixModal({ type: 'project', data: key })}
+                  className="flex-shrink-0 group relative w-64 aspect-video rounded overflow-hidden hover:scale-105 hover:z-10 transition-transform duration-300"
+                >
+                  <img src={study.screenshot} alt={study.title} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform">
+                    <p className="text-white font-semibold text-sm">{study.title}</p>
+                    <p className="text-gray-400 text-xs">{study.subtitle}</p>
+                  </div>
+                  {/* Netflix-style match percentage */}
+                  <div className="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-0.5 rounded">
+                    {key === 'silas' ? '98%' : key === 'teammate' ? '95%' : '92%'} Match
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* About Me Row */}
+          <div>
+            <h2 className="text-xl font-semibold text-white mb-4">About Me</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setNetflixModal({ type: 'about' })}
+                className="flex-shrink-0 group relative w-80 aspect-[4/3] rounded overflow-hidden hover:scale-105 hover:z-10 transition-transform duration-300"
+              >
+                <img src={CHARITY_PHOTO_URL} alt="Charity" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <p className="text-white font-bold text-lg">Charity Dupont</p>
+                  <p className="text-gray-300 text-sm">UX/UI Designer at Google</p>
+                  <p className="text-gray-400 text-xs mt-1">Columbia University &bull; New York</p>
+                </div>
+              </button>
+              {/* Resume Card */}
+              <div className="flex-shrink-0 w-64 aspect-[4/3] rounded overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 p-6 flex flex-col justify-between hover:scale-105 transition-transform cursor-pointer">
+                <div>
+                  <FileText className="w-10 h-10 text-red-500 mb-3" />
+                  <p className="text-white font-semibold">Resume</p>
+                  <p className="text-gray-400 text-sm">View my experience</p>
+                </div>
+                <div className="flex items-center gap-2 text-gray-500 text-xs">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  PDF Download
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Gallery Row */}
+          <div>
+            <h2 className="text-xl font-semibold text-white mb-4">My Gallery</h2>
+            <div className="flex gap-2 overflow-x-auto scrollbar-none pb-4" style={{ WebkitOverflowScrolling: 'touch' }}>
+              {personalPhotos.slice(0, 8).map((photo, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setNetflixModal({ type: 'gallery', data: idx })}
+                  className="flex-shrink-0 w-48 aspect-square rounded overflow-hidden hover:scale-105 hover:z-10 transition-transform duration-300 cursor-pointer"
+                >
+                  <img src={photo} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover" />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Row */}
+          <div>
+            <h2 className="text-xl font-semibold text-white mb-4">Connect With Me</h2>
+            <div className="flex gap-4">
+              <a
+                href="https://linkedin.com/in/charitydupont"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-[#0077b5] text-white px-6 py-3 rounded hover:bg-[#006399] transition-colors"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                LinkedIn
+              </a>
+              <a
+                href="mailto:charity@example.com"
+                className="flex items-center gap-3 bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Message Me
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Netflix Footer */}
+        <footer className="px-12 py-8 border-t border-gray-800">
+          <p className="text-gray-500 text-sm">Charity Dupont Portfolio &bull; 2024</p>
+          <p className="text-gray-600 text-xs mt-2">This is a portfolio experience inspired by Netflix UI. Click the profile icon to switch to MacBook view.</p>
+        </footer>
+
+{/* Netflix-style Modal - Full Case Study */}
+        {netflixModal.type && (
+          <div 
+            className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto bg-black/90"
+            onClick={() => setNetflixModal({ type: null })}
+          >
+            {/* Modal Content */}
+            <div 
+              className="relative w-full max-w-6xl my-8 mx-4 bg-white rounded-xl overflow-hidden shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button - Fixed position */}
+              <button
+                onClick={() => setNetflixModal({ type: null })}
+                className="fixed top-6 right-6 z-[110] w-12 h-12 bg-black/80 hover:bg-black rounded-full flex items-center justify-center transition-colors shadow-lg"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
+
+              {/* Project Modal - Netflix Styled Full Case Study */}
+              {netflixModal.type === 'project' && netflixModal.data && (
+                <div className="bg-[#141414] text-white">
+                  {/* Hero Section - Gradient Background, NO screenshot */}
+                  <div className={`relative py-16 px-12 ${
+                    netflixModal.data === 'silas' ? 'bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]' :
+                    netflixModal.data === 'teammate' ? 'bg-gradient-to-br from-[#2d1f1f] via-[#3d2a2a] to-[#4a3333]' :
+                    'bg-gradient-to-br from-[#1f1f2d] via-[#2a2a3d] to-[#33334a]'
+                  }`}>
+                    <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10">
+                      {/* App Preview - Small */}
+                      <div className="w-32 flex-shrink-0">
+                        <img 
+                          src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.screenshot} 
+                          alt={caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}
+                          className="w-full h-auto rounded-xl shadow-2xl"
+                        />
+                      </div>
+                      
+                      {/* Hero Text */}
+                      <div className="text-center md:text-left flex-1">
+                        <div className="flex items-center gap-3 mb-4 justify-center md:justify-start">
+                          <img 
+                            src={caseStudies[netflixModal.data as keyof typeof caseStudies]?.icon} 
+                            alt=""
+                            className="w-12 h-12 rounded-xl object-cover"
+                          />
+                          <span className="text-red-500 text-xs font-semibold uppercase tracking-wider">Case Study</span>
+                        </div>
+                        <h1 className="text-4xl md:text-5xl font-bold mb-3">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.title}</h1>
+                        <p className="text-xl text-white/80 italic mb-3">
+                          &ldquo;{caseStudies[netflixModal.data as keyof typeof caseStudies]?.hero}&rdquo;
+                        </p>
+                        <p className="text-white/60 mb-4 max-w-xl">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.subtitle}</p>
+                        
+                        <div className="flex flex-wrap items-center gap-4 text-sm text-white/50 justify-center md:justify-start">
+                          <span className="text-green-500 font-bold">
+                            {netflixModal.data === 'silas' ? '98%' : netflixModal.data === 'teammate' ? '95%' : '92%'} Match
+                          </span>
+                          <span>{caseStudies[netflixModal.data as keyof typeof caseStudies]?.timeline}</span>
+                          <span className="border border-white/30 px-2 py-0.5 text-xs rounded">HD</span>
+                          <span>{caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Project Info Bar */}
+                  <div className="bg-[#1a1a1a] border-y border-white/10 py-6 px-12">
+                    <div className="max-w-5xl mx-auto grid grid-cols-4 gap-6 text-center">
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Role</p>
+                        <p className="text-white text-sm">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}</p>
+                      </div>
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Year</p>
+                        <p className="text-white text-sm">2024</p>
+                      </div>
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Timeline</p>
+                        <p className="text-white text-sm">{caseStudies[netflixModal.data as keyof typeof caseStudies]?.timeline}</p>
+                      </div>
+                      <div>
+                        <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Type</p>
+                        <p className="text-white text-sm">UX Case Study</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Overview Section */}
+                  <div className="px-12 py-16">
+                    <div className="max-w-4xl">
+                      <h2 className="text-2xl font-bold mb-6 text-white">Overview</h2>
+                      <p className="text-lg text-white/80 leading-relaxed">
+                        {caseStudies[netflixModal.data as keyof typeof caseStudies]?.overview}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Challenge & Solution */}
+                  <div className="px-12 py-16 bg-[#1a1a1a]">
+                    <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                      <div className="bg-[#252525] rounded-xl p-8">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-10 h-10 rounded-full bg-red-600/20 flex items-center justify-center">
+                            <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                            </svg>
+                          </div>
+                          <h3 className="text-xl font-bold text-white">The Challenge</h3>
+                        </div>
+                        <p className="text-white/70 leading-relaxed">
+                          {caseStudies[netflixModal.data as keyof typeof caseStudies]?.challenge}
+                        </p>
+                      </div>
+                      <div className="bg-[#252525] rounded-xl p-8">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-10 h-10 rounded-full bg-green-600/20 flex items-center justify-center">
+                            <svg className="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                          </div>
+                          <h3 className="text-xl font-bold text-white">The Solution</h3>
+                        </div>
+                        <p className="text-white/70 leading-relaxed">
+                          {caseStudies[netflixModal.data as keyof typeof caseStudies]?.solution}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Key Results */}
+                  <div className="px-12 py-16">
+                    <h2 className="text-2xl font-bold mb-8 text-white">Key Results</h2>
+                    <div className="flex flex-wrap gap-4">
+                      {caseStudies[netflixModal.data as keyof typeof caseStudies]?.results.map((result, idx) => (
+                        <div key={idx} className="bg-red-600/10 border border-red-600/30 rounded-full px-6 py-3 text-white">
+                          {result}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Tools Used */}
+                  <div className="px-12 py-16 bg-[#1a1a1a]">
+                    <h2 className="text-2xl font-bold mb-8 text-white">Tools & Technologies</h2>
+                    <div className="flex flex-wrap gap-3">
+                      {caseStudies[netflixModal.data as keyof typeof caseStudies]?.tools.map((tool, idx) => (
+                        <span key={idx} className="bg-[#333] text-white px-4 py-2 rounded-lg text-sm">
+                          {tool}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Project Screenshots - Silas */}
+                  {netflixModal.data === 'silas' && (
+                    <>
+                      {/* The Silas Hub */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">The Silas Hub</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          The Control Center where users see everything - money, orders, and schedule - in one simple list. It doesn&apos;t feel like tech; it feels like a calm morning briefing.
+                        </p>
+                        <div className="grid grid-cols-4 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Dashboard" className="w-full max-w-[180px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Dashboard</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full max-w-[180px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Memory Graph</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact" className="w-full max-w-[180px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Silas Artifact</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile" className="w-full max-w-[180px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Profile</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Wardrobe & Weather */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Wardrobe & Weather</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          Silas knows what&apos;s in the closet because it read past shopping receipts. It suggests weather-appropriate outfits with backup options.
+                        </p>
+                        <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather" className="w-full max-w-[180px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Weather Insight</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Receipt" className="w-full max-w-[180px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Digital Receipt</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit" className="w-full max-w-[180px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Outfit Suggestion</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Time Management */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">Time Management</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          Silas understands the physical requirement of traveling. It checks live traffic and offers to book a rideshare at the perfect time.
+                        </p>
+                        <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Calendar View</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2057%20%281%29-Cu9zZu25QBG1eFO1YhOVu3lK9vnkSe.png" alt="Rideshare" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Rideshare</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Financial Intelligence */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Financial Intelligence</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          Instead of confusing codes, Silas displays clear digital receipts. Re-order items directly from your statement - a shoppable catalog.
+                        </p>
+                        <div className="grid grid-cols-5 gap-3 max-w-2xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Dashboard</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transactions" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Transactions</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Receipt</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Cart</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Checkout</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Product Intelligence */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">Product Intelligence</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          Search your personal internet. A search engine that cuts through the noise and gives clear, confident choices.
+                        </p>
+                        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2065-ocyRHiATuNmFkhHzo61QPbO8UARepe.png" alt="Search" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Search</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Results" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Results</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Suggestion" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Suggestion</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Info" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Product Info</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Travel Booking */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Explainable Travel Booking</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          Silas knows preferences like aisle seats, frequent flyer numbers, and typical budget. Instead of overwhelming options, it presents the best matches.
+                        </p>
+                        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Trips" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Dashboard</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">User Profile</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2035-eWU7OhpjguXv14rdS2Ory9fIkMjVdX.png" alt="Seat Analysis" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Seat Analysis</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2034-8M9jhf6mWZmXLQF2tpgiEf4ACmo9y6.png" alt="Flight Insight" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Flight Insight</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Juno (Contextual Commerce) */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">Juno (Contextual Commerce)</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          Silas surfaces a &ldquo;memory&rdquo; from three days ago - a text from Daniel saying, &ldquo;Hunter is out of dog food.&rdquo; Silas isn&apos;t interrupting; it&apos;s enhancing the current shopping session.
+                        </p>
+                        <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2030-Ufk6p1qH3uiJ1KqZJgRhvsrF1zih2i.png" alt="Curated" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Suggestion</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2047%20%281%29-KQ3MkvZW8wwcuw3jJYlSAYBYG4bPRy.png" alt="Context" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Context</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2032-yueRj2B5riZiLHfqrPI13oDescaphw.png" alt="Evidence" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Evidence</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Silas Books */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Silas Books (Theme-Based Discovery)</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          Silas shows a book not because it&apos;s a bestseller, but because of a specific sentence highlighted weeks ago.
+                        </p>
+                        <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2017-vD7J5N5WQLvcYy6tMmCCAoDvPhgtA5.png" alt="Library" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Dashboard</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2018-rtZzFsJ28O39L8eX3CLDF6Eu1UxUum.png" alt="Why This Book" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Suggestion</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2019-v9hgskr7Du3wKiL9bcYrcYYPoBcd96.png" alt="Excerpt" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Reasoning</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Lost & Found */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-2 text-white">Lost & Found</h2>
+                        <p className="text-white/60 mb-6 max-w-3xl text-sm">
+                          A visual retracing tool that utilizes digital breadcrumbs to solve physical-world problems. If you misplace a physical item, Silas creates a chronological &ldquo;map of presence&rdquo;.
+                        </p>
+                        <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-KeljTUoA1uAKwrfQGClFbh2qr2dmlF.png" alt="Search" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Search</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-doimziRe3RcEQohrjCdlfiDtUsU4hK.png" alt="Item Selected" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Item Selected</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2039-whUo54tXaqQerB5onNBUTWIds6OVap.png" alt="Scanning" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Scanning</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2040-63dYmc1scg8VFvIDMELM1Nd643oDAo.png" alt="Detected" className="w-full max-w-[160px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Detected</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Results */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">Results</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <h3 className="text-purple-400 font-semibold text-sm mb-2">Conceptual Validation</h3>
+                            <p className="text-white/50 text-xs">Successfully demonstrates how a connected, proactive system can reduce mental load.</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <h3 className="text-purple-400 font-semibold text-sm mb-2">Context Continuity</h3>
+                            <p className="text-white/50 text-xs">Proves we can speed up a user&apos;s day without taking away their ability to make choices.</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <h3 className="text-purple-400 font-semibold text-sm mb-2">Theoretical Impact</h3>
+                            <p className="text-white/50 text-xs">Technology should be an invisible, helpful layer that quietly supports everyday life.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Project Screenshots - Teammate */}
+                  {netflixModal.data === 'teammate' && (
+                    <>
+                      {/* The Competition */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">The Competition</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-xl p-5 border border-white/10">
+                            <div className="flex items-center gap-2 mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/classic-bumble-logo-editable-and-for-tech-branding-and-creative-design-free-png-GQUpsWRD0QoLNqhIzdRe2J51TYAH7o.webp" alt="Bumble" className="w-8 h-8 rounded-lg object-cover" />
+                              <h3 className="font-semibold text-yellow-500">Bumble</h3>
+                            </div>
+                            <p className="text-green-400 text-xs mb-1">Pros: Inclusive, user-friendly</p>
+                            <p className="text-red-400 text-xs">Cons: High competition, fatigue</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-xl p-5 border border-white/10">
+                            <div className="flex items-center gap-2 mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tinder-app-logo-tinder-app-logo-transparent-tinder-app-icon-transparent-free-free-png-PDRTDpNBdjoBo1j4DFXEHy6P36zP0Y.webp" alt="Tinder" className="w-8 h-8 rounded-lg object-cover" />
+                              <h3 className="font-semibold text-red-500">Tinder</h3>
+                            </div>
+                            <p className="text-green-400 text-xs mb-1">Pros: Global reach, simple UI</p>
+                            <p className="text-red-400 text-xs">Cons: Casual dating reputation</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-xl p-5 border border-white/10">
+                            <div className="flex items-center gap-2 mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hinge-white-logo-icon-clean-with-transparent-background-for-ui-use-free-png-x8G86pfW3DS0MPdgJKfUAix4t3nz4e.webp" alt="Hinge" className="w-8 h-8 rounded-lg object-contain bg-white p-1" />
+                              <h3 className="font-semibold text-white">Hinge</h3>
+                            </div>
+                            <p className="text-green-400 text-xs mb-1">Pros: Quality over quantity</p>
+                            <p className="text-red-400 text-xs">Cons: Slower matching</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* User Persona */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">User Persona</h2>
+                        <p className="text-white/70 italic text-center mb-8">&ldquo;Dating would be so much better if I could find someone who shares my love for sports.&rdquo;</p>
+                        <div className="flex flex-col md:flex-row gap-8 items-start max-w-4xl mx-auto">
+                          <div className="flex-shrink-0 text-center">
+                            <div className="w-40 h-48 rounded-lg overflow-hidden mx-auto mb-3">
+                              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5596c2979c96a2539e3168b8a3ac2bdfc26c3f84-mA8gGyFSaJVUWN1jUAVKb37z4yDtHr.png" alt="Hunter" className="w-full h-full object-cover" />
+                            </div>
+                            <h3 className="text-lg font-bold text-white">Hunter Fielding</h3>
+                            <p className="text-white/50 text-xs">36 / Duke Marketing Director</p>
+                          </div>
+                          <div className="flex-1 grid md:grid-cols-2 gap-4">
+                            <div className="bg-[#252525] rounded-lg p-4">
+                              <h4 className="text-sm font-semibold text-green-400 mb-2">Goals & Needs</h4>
+                              <ul className="text-white/60 text-xs space-y-1">
+                                <li>Connect with sports enthusiasts</li>
+                                <li>Attend games with a partner</li>
+                                <li>Find fellow Duke fans</li>
+                              </ul>
+                            </div>
+                            <div className="bg-[#252525] rounded-lg p-4">
+                              <h4 className="text-sm font-semibold text-red-400 mb-2">Pain Points</h4>
+                              <ul className="text-white/60 text-xs space-y-1">
+                                <li>Hard to find sports fans on apps</li>
+                                <li>Limited time due to work</li>
+                                <li>Dates don&apos;t align with interests</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* User Research */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">User Research</h2>
+                        <div className="space-y-4 max-w-3xl mx-auto">
+                          <div className="bg-[#2a1f1f] rounded-lg p-5 border border-[#D85A5A]/30">
+                            <h3 className="text-[#D85A5A] font-semibold text-sm mb-2">The Character Proxy</h3>
+                            <p className="text-white/60 text-xs">Users seek partners with a sports background because they associate it with positive qualities like &ldquo;teamwork and determination.&rdquo;</p>
+                          </div>
+                          <div className="bg-[#2a2a1f] rounded-lg p-5 border border-orange-500/30">
+                            <h3 className="text-orange-400 font-semibold text-sm mb-2">The &ldquo;Newbie&rdquo; Opportunity</h3>
+                            <p className="text-white/60 text-xs">Users are &ldquo;open to trying new sports,&rdquo; especially if guided by an enthusiastic partner.</p>
+                          </div>
+                          <div className="bg-[#1f2a1f] rounded-lg p-5 border border-green-500/30">
+                            <h3 className="text-green-400 font-semibold text-sm mb-2">Safety & Depth</h3>
+                            <p className="text-white/60 text-xs">Users find current dating apps &ldquo;lacking in depth and safety.&rdquo; We focused on secure public venues like sports events.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Final Solution - All 9 Screens */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Final Solution</h2>
+                        <p className="text-white/60 mb-6 text-sm">
+                          High-fidelity screens showcasing the complete Teammate experience.
+                        </p>
+                        <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Splash</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Home</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Matches" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Matches</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Matched</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Messages</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Chat</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Schedule</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Purchase" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Purchase</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full max-w-[150px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Confirmation</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Key Features */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">Key Features</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <div className="w-10 h-10 rounded-full bg-pink-600/20 flex items-center justify-center mb-3">
+                              <Heart className="w-5 h-5 text-pink-500" />
+                            </div>
+                            <h3 className="font-semibold mb-1 text-sm">Character-Based Matching</h3>
+                            <p className="text-white/50 text-xs">Match based on personality and fandom intensity.</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <div className="w-10 h-10 rounded-full bg-green-600/20 flex items-center justify-center mb-3">
+                              <MapPin className="w-5 h-5 text-green-500" />
+                            </div>
+                            <h3 className="font-semibold mb-1 text-sm">Safe Public Venues</h3>
+                            <p className="text-white/50 text-xs">First dates at sports events - safe, public environments.</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-5">
+                            <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center mb-3">
+                              <svg className="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
+                            </div>
+                            <h3 className="font-semibold mb-1 text-sm">Auto-Scheduled Dates</h3>
+                            <p className="text-white/50 text-xs">Dates around live game events.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Future Ideas */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">Future Ideas</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#D85A5A]/20 border border-[#D85A5A]/40 rounded-lg p-4 text-center">
+                            <h3 className="text-[#D85A5A] font-semibold text-sm mb-2">Virtual Viewing</h3>
+                            <p className="text-white/50 text-xs">Live stream option to watch games together virtually.</p>
+                          </div>
+                          <div className="bg-[#D85A5A]/20 border border-[#D85A5A]/40 rounded-lg p-4 text-center">
+                            <h3 className="text-[#D85A5A] font-semibold text-sm mb-2">Community</h3>
+                            <p className="text-white/50 text-xs">Expanding beyond dating to find platonic friends.</p>
+                          </div>
+                          <div className="bg-[#D85A5A]/20 border border-[#D85A5A]/40 rounded-lg p-4 text-center">
+                            <h3 className="text-[#D85A5A] font-semibold text-sm mb-2">Dynamic UI</h3>
+                            <p className="text-white/50 text-xs">Colors change to represent the fanbase being swiped.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Project Screenshots - Meetly */}
+                  {netflixModal.data === 'meetly' && (
+                    <>
+                      {/* Problem Statement */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-4 text-white">Problem Statement</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-lg p-5 border border-white/10">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Task</h3>
+                            <p className="text-white/60 text-xs">Design a mobile app or responsive website to meet a specific community need.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-5 border border-white/10">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Outcome</h3>
+                            <p className="text-white/60 text-xs">Develop Meetly, an app to simplify scheduling social hangouts among friends.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-5 border border-white/10">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Goal</h3>
+                            <p className="text-white/60 text-xs">Combine calendar with social ease of a messaging app.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* User Persona */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">User Persona & Scenario</h2>
+                        <div className="grid md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-6">
+                          <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">The Busy Professional</h3>
+                            <p className="text-white/60 text-xs">Gina Hargreaves, 30-year-old Marketing Director.</p>
+                          </div>
+                          <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">Pain Points</h3>
+                            <p className="text-white/60 text-xs">Coordination fatigue and FOMO due to work commitments.</p>
+                          </div>
+                          <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-2">Core Need</h3>
+                            <p className="text-white/60 text-xs">A hassle-free solution for planning in limited free time.</p>
+                          </div>
+                        </div>
+                        <div className="max-w-2xl mx-auto">
+                          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-ZhAnbMMomKNYq6IDGqTVXQSpImMfcK.jpg" alt="User Persona" className="w-full rounded-lg" />
+                        </div>
+                      </div>
+
+                      {/* Research Synthesis */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">Synthesis & Ideation</h2>
+                        <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto mb-6">
+                          <div>
+                            <h3 className="text-sm font-semibold text-white/80 mb-3 text-center">User Research</h3>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ApLgUHySGxYaPLs-5ZFkUdVzlnsmvsq6Vqp0PWKvAcVfQK.png" alt="Research" className="w-full rounded-lg" />
+                          </div>
+                          <div>
+                            <h3 className="text-sm font-semibold text-white/80 mb-3 text-center">Feature Prioritization</h3>
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/4ZAJu3RfxsHn87J-C40JZ9GtirbtlXMkE0VCQ1jcCnpZ3X.png" alt="Prioritization" className="w-full rounded-lg" />
+                          </div>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-3 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-indigo-400 text-xs font-semibold mb-1">Key Insight</h4>
+                            <p className="text-white/50 text-xs">Users appreciate connecting via existing social media.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-indigo-400 text-xs font-semibold mb-1">Key Insight</h4>
+                            <p className="text-white/50 text-xs">Need easier way to see friend availability.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-indigo-400 text-xs font-semibold mb-1">Key Insight</h4>
+                            <p className="text-white/50 text-xs">Privacy filters for sharing calendar without work details.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* User Journey */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-6 text-white">The User Journey</h2>
+                        <p className="text-white/60 text-sm text-center mb-6">From &ldquo;Texting Frustration&rdquo; to &ldquo;Meetly Success&rdquo;</p>
+                        <div className="max-w-3xl mx-auto">
+                          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/8DQzUCALXHxbSfU-iN3Pe3zl6xMPnwCcP9vtIQb2ebcDyr.png" alt="User Journey" className="w-full rounded-lg" />
+                        </div>
+                      </div>
+
+                      {/* Usability Testing */}
+                      <div className="px-12 py-12">
+                        <h2 className="text-xl font-bold mb-6 text-white">Usability Testing & Iteration</h2>
+                        <div className="bg-indigo-900/30 rounded-lg p-4 border border-indigo-500/30 max-w-xl mx-auto mb-6">
+                          <h3 className="text-indigo-400 font-semibold text-sm mb-2">Test Objective</h3>
+                          <p className="text-white/60 text-xs">Assess effectiveness in scheduling a hangout, adding friends, and voting.</p>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-3 max-w-3xl mx-auto">
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-green-400 text-xs font-semibold mb-1">Change 1</h4>
+                            <p className="text-white/50 text-xs">Added Direct Invite Creation - click date and create invite.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-green-400 text-xs font-semibold mb-1">Change 2</h4>
+                            <p className="text-white/50 text-xs">Adjusted Logic Flow - deadlines before occasion.</p>
+                          </div>
+                          <div className="bg-[#1f1f1f] rounded-lg p-4 border border-white/10">
+                            <h4 className="text-green-400 text-xs font-semibold mb-1">Change 3</h4>
+                            <p className="text-white/50 text-xs">Voting Confirmations for user clarity.</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Final Solution */}
+                      <div className="px-12 py-12 bg-[#1a1a1a]">
+                        <h2 className="text-xl font-bold mb-2 text-white">Final Solution</h2>
+                        <p className="text-white/60 mb-6 text-sm">The complete Meetly experience from personal calendar to group coordination.</p>
+                        
+                        {/* Key Features */}
+                        <div className="grid md:grid-cols-3 gap-3 max-w-2xl mx-auto mb-8">
+                          <div className="bg-[#252525] rounded-lg p-4 text-center">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-1">The Dashboard</h3>
+                            <p className="text-white/50 text-xs">Centralized view of hangouts</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-4 text-center">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-1">Voting Screen</h3>
+                            <p className="text-white/50 text-xs">Simplified group decisions</p>
+                          </div>
+                          <div className="bg-[#252525] rounded-lg p-4 text-center">
+                            <h3 className="text-indigo-400 font-semibold text-sm mb-1">Contextual Chat</h3>
+                            <p className="text-white/50 text-xs">Messaging with calendar</p>
+                          </div>
+                        </div>
+                        
+                        {/* App Screens Row 1 */}
+                        <div className="grid grid-cols-5 gap-3 max-w-3xl mx-auto mb-4">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Home</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-kvBQ0w5m9bcMxJDLYcbuSSVJrEcrPc.png" alt="Chat" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-Y8hW7TmOJfVaW1Iizh9CJkHWFsIeSd.png" alt="Vote" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-ytP9uUYl1tfuGMTjpRlMvbw57l8wBx.png" alt="Vote 2" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote 2</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-Zx75LyunsQWz207iWPdSipbuqvblvQ.png" alt="Vote 3" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote 3</p>
+                          </div>
+                        </div>
+
+                        {/* App Screens Row 2 */}
+                        <div className="grid grid-cols-5 gap-3 max-w-3xl mx-auto">
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2028-cLMG7tLrO3aQdiYlfASDZRvCUyqBwb.png" alt="Chat 2" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat 2</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2029-APo5XHVqWgkh2mMOv6e2p6mj91YUmK.png" alt="Chat 3" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat 3</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2030-7MAPn6ktJNerulMwPugsHcYNOqgrdA.png" alt="Time" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Set Time</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2031-0VLOPEN9C6TZam8ou1yfaXriYe3iON.png" alt="Success" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Success</p>
+                          </div>
+                          <div className="text-center">
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2032-X5DdZgQI5aSWfhkZd9trlhxvPG8ZEU.png" alt="End" className="w-full max-w-[140px] mx-auto rounded-lg" />
+                            <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Home End</p>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {/* Footer */}
+                  <div className="px-12 py-8 border-t border-white/10">
+                    <p className="text-white/40 text-sm">Case Study by Charity Dupont</p>
+                  </div>
+                </div>
+              )}
+
+              {/* About Modal - Full Profile */}
+              {netflixModal.type === 'about' && (
+                <div className="bg-gradient-to-b from-purple-50 to-white">
+                  {/* Hero Section */}
+                  <div className="relative py-20 px-8">
+                    <div className="max-w-4xl mx-auto">
+                      <div className="flex flex-col md:flex-row items-center gap-12">
+                        {/* Profile Photo */}
+                        <div className="w-64 h-64 rounded-3xl overflow-hidden shadow-2xl flex-shrink-0">
+                          <img 
+                            src={CHARITY_PHOTO_URL}
+                            alt="Charity Dupont"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        
+                        {/* Bio */}
+                        <div className="text-center md:text-left">
+                          <h1 className="text-5xl font-bold text-black mb-4">Charity Dupont</h1>
+                          <p className="text-2xl text-purple-600 font-medium mb-4">UX/UI Designer at Google</p>
+                          <p className="text-black/70 leading-relaxed text-lg mb-6">
+                            Hey there! I&apos;m Charity, a passionate UX/UI designer currently working at Google. 
+                            I specialize in creating intuitive, user-centered digital experiences that bridge the gap 
+                            between complex functionality and beautiful design.
+                          </p>
+                          <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                            <a
+                              href="https://linkedin.com/in/charitydupont"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-2 bg-[#0077b5] text-white px-6 py-3 rounded-full hover:bg-[#006399] transition-colors"
+                            >
+                              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                              </svg>
+                              Connect on LinkedIn
+                            </a>
+                            <a
+                              href="mailto:charity@example.com"
+                              className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-black/80 transition-colors"
+                            >
+                              <Mail className="w-5 h-5" />
+                              Send Email
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Details Section */}
+                  <div className="max-w-4xl mx-auto px-8 py-16">
+                    <div className="grid md:grid-cols-4 gap-8 mb-16">
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <MapPin className="w-8 h-8 mx-auto mb-3 text-purple-600" />
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Location</h3>
+                        <p className="text-black font-medium">New York, NY</p>
+                      </div>
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <svg className="w-8 h-8 mx-auto mb-3 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Company</h3>
+                        <p className="text-black font-medium">Google</p>
+                      </div>
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <GraduationCap className="w-8 h-8 mx-auto mb-3 text-purple-600" />
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Education</h3>
+                        <p className="text-black font-medium">Columbia University</p>
+                      </div>
+                      <div className="text-center p-6 bg-white rounded-2xl shadow-lg">
+                        <Briefcase className="w-8 h-8 mx-auto mb-3 text-purple-600" />
+                        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Experience</h3>
+                        <p className="text-black font-medium">5+ Years</p>
+                      </div>
+                    </div>
+
+                    {/* About Text */}
+                    <div className="prose prose-lg max-w-none mb-16">
+                      <h2 className="text-2xl font-bold text-black mb-6">About Me</h2>
+                      <p className="text-black/70 leading-relaxed mb-4">
+                        With a background from Columbia University and years of experience in the tech industry, 
+                        I&apos;ve had the privilege of working on products that reach millions of users worldwide. 
+                        My approach combines data-driven insights with creative problem-solving to deliver 
+                        designs that not only look great but also drive real results.
+                      </p>
+                      <p className="text-black/70 leading-relaxed">
+                        When I&apos;m not designing, you can find me exploring new coffee shops, taking photos, 
+                        or experimenting with new creative tools and technologies. I believe that great design 
+                        comes from understanding people deeply and translating those insights into experiences 
+                        that feel intuitive and delightful.
+                      </p>
+                    </div>
+
+                    {/* Skills */}
+                    <div>
+                      <h2 className="text-2xl font-bold text-black mb-6">Skills & Expertise</h2>
+                      <div className="flex flex-wrap gap-3">
+                        {['UI Design', 'UX Research', 'Prototyping', 'Design Systems', 'Figma', 'User Testing', 'Motion Design', 'Accessibility', 'Information Architecture', 'Wireframing', 'Visual Design', 'Interaction Design'].map((skill, idx) => (
+                          <span key={idx} className="text-black text-sm bg-purple-100 border border-purple-200 px-4 py-2 rounded-full font-medium">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Gallery Modal - Full Screen */}
+              {netflixModal.type === 'gallery' && typeof netflixModal.data === 'number' && (
+                <div className="bg-black min-h-[80vh] flex flex-col">
+                  {/* Main Image */}
+                  <div className="flex-1 flex items-center justify-center p-4">
+                    <div className="relative w-full max-w-5xl">
+                      <img 
+                        src={personalPhotos[netflixModal.data]}
+                        alt={`Gallery ${netflixModal.data + 1}`}
+                        className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
+                      />
+                      {/* Navigation Arrows */}
+                      <button
+                        onClick={() => setNetflixModal({ type: 'gallery', data: Math.max(0, (netflixModal.data as number) - 1) })}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center transition-colors"
+                        disabled={netflixModal.data === 0}
+                      >
+                        <ChevronLeft className="w-8 h-8 text-white" />
+                      </button>
+                      <button
+                        onClick={() => setNetflixModal({ type: 'gallery', data: Math.min(personalPhotos.length - 1, (netflixModal.data as number) + 1) })}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/80 rounded-full flex items-center justify-center transition-colors"
+                        disabled={netflixModal.data === personalPhotos.length - 1}
+                      >
+                        <ChevronRight className="w-8 h-8 text-white" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Image Counter */}
+                  <div className="text-center text-white/60 text-sm py-2">
+                    {(netflixModal.data as number) + 1} / {personalPhotos.length}
+                  </div>
+                  {/* Thumbnail strip */}
+                  <div className="flex gap-3 p-4 overflow-x-auto scrollbar-none justify-center bg-black/50">
+                    {personalPhotos.slice(0, 8).map((photo, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setNetflixModal({ type: 'gallery', data: idx })}
+                        className={`flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden transition-all ${
+                          idx === netflixModal.data ? 'ring-2 ring-white scale-110' : 'opacity-50 hover:opacity-100'
+                        }`}
+                      >
+                        <img src={photo} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     )
   }
@@ -2176,7 +3921,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
           </div>
-        </div>
+          
+          </div>
 
         {/* macOS Photos App Window */}
         {photosWindow.isOpen && !photosWindow.isMinimized && (
@@ -2494,7 +4240,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-black/50 uppercase tracking-wider">Mail</p>
-                    <a href="mailto:charitydupont@google.com" className="text-sm text-blue-500 mt-0.5 hover:underline">charitydupont@google.com</a>
+                    <a href="mailto:hello@charitydupont.com" className="text-sm text-blue-500 mt-0.5 hover:underline">hello@charitydupont.com</a>
                   </div>
                 </div>
               </div>
@@ -2677,7 +4423,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       I am a dedicated and passionate UX/UI designer, leveraging my unique background and commitment to continuous learning to drive meaningful and impactful user experiences.
                     </p>
                     <p className="text-black/80">
-                      {"Let's"} connect: <a href="mailto:charitydupont@google.com" className="text-blue-500 hover:underline">charitydupont@google.com</a>
+                      {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
                     </p>
                   </div>
                 )}
@@ -2729,6 +4475,292 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <span className="text-[11px] text-black/70 font-medium">Silas</span>
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* Safari Browser Window */}
+        {safariWindow.isOpen && !safariWindow.isMinimized && (
+          <div
+            className={`absolute w-[900px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 ${focusedWindow === 'safari' ? 'z-40' : 'z-20'}`}
+            style={{ left: safariPosition.x, top: safariPosition.y }}
+            onClick={() => setFocusedWindow('safari')}
+          >
+            {/* Safari Title Bar */}
+            <div 
+              className="h-[52px] bg-gradient-to-b from-[#e8e8e8] to-[#d4d4d4] flex items-center px-4 border-b border-black/10 cursor-move"
+              onMouseDown={(e) => {
+                const startX = e.clientX - safariPosition.x
+                const startY = e.clientY - safariPosition.y
+                const handleMouseMove = (e: MouseEvent) => {
+                  setSafariPosition({ x: e.clientX - startX, y: e.clientY - startY })
+                }
+                const handleMouseUp = () => {
+                  document.removeEventListener('mousemove', handleMouseMove)
+                  document.removeEventListener('mouseup', handleMouseUp)
+                }
+                document.addEventListener('mousemove', handleMouseMove)
+                document.addEventListener('mouseup', handleMouseUp)
+              }}
+            >
+              {/* Window Controls */}
+              <div className="flex gap-2 mr-4">
+                <button
+                  onClick={() => setSafariWindow({ isOpen: false, isMinimized: false, project: null })}
+                  className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                />
+                <button
+                  onClick={() => setSafariWindow(prev => ({ ...prev, isMinimized: true }))}
+                  className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                />
+                <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1db954] transition-colors" />
+              </div>
+              
+              {/* Navigation Buttons */}
+              <div className="flex gap-2 mr-3">
+                <button 
+                  onClick={() => { setSafariUrl(''); setSafariInputUrl(''); }}
+                  className={`w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center transition-colors ${safariUrl ? 'text-black/70' : 'text-black/30'}`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/30">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* URL Bar */}
+              <div className="flex-1 max-w-[500px]">
+                <form 
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    let url = safariInputUrl
+                    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                      url = 'https://' + url
+                    }
+                    setSafariUrl(url)
+                    setSafariInputUrl(url)
+                  }}
+                  className="w-full"
+                >
+                  <input
+                    type="text"
+                    value={safariInputUrl}
+                    onChange={(e) => setSafariInputUrl(e.target.value)}
+                    className="w-full h-7 px-3 bg-white rounded-md border border-black/10 text-sm text-center text-black/70 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+                    placeholder="Search or enter website name"
+                  />
+                </form>
+              </div>
+              
+              {/* Right side icons */}
+              <div className="flex gap-2 ml-3">
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                </button>
+                <button className="w-7 h-7 rounded-md hover:bg-black/5 flex items-center justify-center text-black/40">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            
+{/* Browser Content */}
+            <div className="w-full h-[calc(100%-52px)] bg-[#1e1e1e] overflow-auto">
+              {safariUrl === 'wikipedia' ? (
+                /* Fake Wikipedia Page about Charity Dupont */
+                <div className="w-full min-h-full bg-white">
+                  
+                  {/* Wikipedia Header */}
+                  <div className="bg-white border-b border-gray-200 px-4 py-2">
+                    <div className="flex items-center gap-4">
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wikipedia-wordmark-en-25-QgUVUwhHCCccrX81eTmsdUDTQRfIQ6.svg" alt="Wikipedia" className="h-4" />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                          <span className="text-black font-medium">Article</span>
+                          <span>Talk</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Wikipedia Content */}
+                  <div className="max-w-[900px] mx-auto px-6 py-6">
+                    <h1 className="text-3xl font-serif text-black border-b border-gray-300 pb-2 mb-4">Charity Dupont</h1>
+                    
+                    <div className="flex gap-6">
+                      {/* Main Content */}
+                      <div className="flex-1 text-sm text-gray-800 leading-relaxed">
+                        <p className="mb-4">
+                          <b>Charity Dupont</b> is an American <a href="#" className="text-blue-600 hover:underline">UX/UI designer</a> and <a href="#" className="text-blue-600 hover:underline">AI experience designer</a> currently working at <a href="#" className="text-blue-600 hover:underline">Google</a>. She is known for her work in designing AI-powered user experiences and her focus on creating intuitive, human-centered digital products.
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Early life and education</h2>
+                        <p className="mb-4">
+                          Dupont began her career in web design during the <a href="#" className="text-blue-600 hover:underline">COVID-19 pandemic</a>, initially working on websites for clients through a family connection. This early experience sparked her interest in digital design and user experience.
+                        </p>
+                        <p className="mb-4">
+                          She later pursued formal training in UX/UI design at <a href="#" className="text-blue-600 hover:underline">Columbia University</a>, completing a comprehensive bootcamp program while simultaneously working full-time as a fourth-grade teacher. This period demonstrated her ability to balance multiple demanding responsibilities while developing new professional skills.
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Career</h2>
+                        <p className="mb-4">
+                          Through a connection with one of her professors at Columbia, Dupont was introduced to an opportunity at <a href="#" className="text-blue-600 hover:underline">Google</a>, where she currently works as a UX designer. Her work focuses on AI-driven user experiences, requiring her to design for systems with variable and unpredictable outputs.
+                        </p>
+                        <p className="mb-4">
+                          Dupont&apos;s approach to AI UX design emphasizes clarity, transparency, and user control. She has noted that designing for AI differs significantly from traditional UX because &quot;you are not designing a fixed path—you are designing systems that can change based on input.&quot;
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Design philosophy</h2>
+                        <p className="mb-4">
+                          Dupont is known for her iterative approach to design, often moving quickly from understanding a problem directly into prototyping. She emphasizes the importance of early feedback and has spoken about overcoming perfectionism in her creative process.
+                        </p>
+                        <p className="mb-4">
+                          Her design philosophy centers on making &quot;things make sense, not just look good,&quot; focusing on systems that help users think clearly rather than purely aesthetic considerations.
+                        </p>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Skills and expertise</h2>
+                        <ul className="list-disc ml-6 mb-4">
+                          <li>AI/ML user experience design</li>
+                          <li>Prototyping and live coding</li>
+                          <li>Human-centered design</li>
+                          <li>Design systems</li>
+                          <li>User research and testing</li>
+                        </ul>
+                        
+                        <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">References</h2>
+                        <div className="text-xs text-gray-600">
+                          <p>1. &quot;UX Design in the Age of AI&quot; - Columbia University Design Program</p>
+                          <p>2. Google Design Team Profile, 2024</p>
+                        </div>
+                      </div>
+                      
+                      {/* Infobox */}
+                      <div className="w-[220px] shrink-0">
+                        <div className="border border-gray-300 bg-gray-50 text-sm">
+                          <div className="bg-gray-200 px-3 py-2 text-center font-semibold text-black">Charity Dupont</div>
+                          <div className="p-3">
+<img 
+                              src={CHARITY_PHOTO_URL}
+                              alt="Charity Dupont"
+                              className="w-full h-48 object-cover mb-1"
+                            />
+                            <p className="text-[10px] text-gray-500 text-center mb-3">Dupont in 2024</p>
+                            <table className="w-full text-xs">
+                              <tbody>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Occupation</td>
+                                  <td className="py-1 text-gray-800">UX Designer</td>
+                                </tr>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Employer</td>
+                                  <td className="py-1 text-gray-800">Google</td>
+                                </tr>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Education</td>
+                                  <td className="py-1 text-gray-800">Columbia University</td>
+                                </tr>
+                                <tr className="border-b border-gray-200">
+                                  <td className="py-1 font-semibold text-gray-700">Known for</td>
+                                  <td className="py-1 text-gray-800">AI UX Design</td>
+                                </tr>
+                                <tr>
+                                  <td className="py-1 font-semibold text-gray-700">Website</td>
+                                  <td className="py-1"><a href="#" className="text-blue-600 hover:underline">charitydupont.com</a></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : safariUrl ? (
+                <iframe
+                  src={safariUrl}
+                  className="w-full h-full border-0"
+                  title="Safari Browser"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                />
+              ) : (
+                /* Safari Start Page */
+                <div className="w-full h-full flex flex-col items-center justify-start pt-16 px-8">
+                  {/* Browse - Embeddable Sites */}
+                  <div className="w-full max-w-[600px]">
+                    <h2 className="text-white/60 text-sm font-medium mb-4">Browse</h2>
+                    <div className="grid grid-cols-4 gap-4">
+                      {[
+                        { name: 'Wikipedia', icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png', url: 'wikipedia' },
+                      ].map((site) => (
+                        <button
+                          key={site.name}
+                          onClick={() => {
+                            setSafariUrl(site.url)
+                            setSafariInputUrl(site.url)
+                          }}
+                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                        >
+                          <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center overflow-hidden p-1">
+                            <img src={site.icon} alt={site.name} className="w-full h-full object-contain" />
+                          </div>
+                          <span className="text-white/80 text-xs">{site.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* My Links - External Sites */}
+                  <div className="w-full max-w-[600px] mt-8">
+                    <h2 className="text-white/60 text-sm font-medium mb-4">My Links</h2>
+                    <div className="grid grid-cols-4 gap-4">
+                      {[
+{ name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
+                      ].map((site) => (
+                        <a
+                          key={site.name}
+                          href={site.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-white/5 transition-colors"
+                        >
+                          <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center overflow-hidden">
+                            <img src={site.icon} alt={site.name} className="w-8 h-8 object-contain" />
+                          </div>
+                          <span className="text-white/80 text-xs">{site.name}</span>
+                          <svg className="w-3 h-3 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  
+                  {/* Privacy Report */}
+                  <div className="w-full max-w-[600px] mt-8">
+                    <div className="bg-white/5 rounded-xl p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                          <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                          </svg>
+                        </div>
+                        <div>
+                          <p className="text-white/90 text-sm font-medium">Privacy Report</p>
+                          <p className="text-white/50 text-xs">Safari helps keep you safe from trackers</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -2790,6 +4822,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Photos"
           onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
+        />
+        
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
+            </div>
+          }
+          label="Safari"
+          onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: null }); setFocusedWindow('safari'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />

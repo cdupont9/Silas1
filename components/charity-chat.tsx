@@ -259,8 +259,264 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I want to keep designing AI experiences that genuinely help people - maybe lead a design team one day"
   }
 
+  // ============================================
+  // UX & DESIGN PROCESS
+  // ============================================
+
+  // Prioritizing design
+  if (normalized.match(/prioriti|what (do you |to )design first|where do you start|how do you decide what|what comes first/i)) {
+    return "I focus on what defines the structure of the experience first. I try to identify the core user flow and build outward from that. If everything feels equally important, I start with the part that helps define structure for the rest of the system."
+  }
+
+  // Ambiguity
+  if (normalized.match(/ambiguity|uncertain|unclear|vague|don't have all the info|early design|not fully defined/i)) {
+    return "I'm comfortable with ambiguity, but I try to create structure quickly. I usually break problems down and start prototyping to make uncertainty more visible. If something is unclear, I focus on what the user is trying to do, what the system is trying to solve, and what constraints exist."
+  }
+
+  // When is it good enough?
+  if (normalized.match(/good enough|when to ship|ready to go|when is a design done|when do you stop/i)) {
+    return "When it clearly solves the user problem and the core flow is understandable. It does not need to be perfect, but it needs to be functional and clear."
+  }
+
+  // Balancing user vs business
+  if (normalized.match(/balance|user vs business|business needs|stakeholder|user needs vs/i)) {
+    return "I try to understand both sides and find alignment. I focus on what still allows a good user experience while meeting business constraints."
+  }
+
+  // Disagreement with PM/Engineer
+  if (normalized.match(/disagree.*(pm|engineer|dev)|conflict.*(pm|engineer)|pm.*(disagree|conflict)|engineer.*(disagree|conflict)/i)) {
+    return "I approach it through communication and understanding the reasoning behind their perspective. I focus on alignment around the goal rather than defending a specific solution."
+  }
+
+  // What is good UX?
+  if (normalized.match(/what is (good )?ux|definition of ux|ux meaning|define ux/i)) {
+    return "Good UX is when the user does not feel confusion. The system feels intuitive, and the user is able to accomplish their goal without friction."
+  }
+
+  // ============================================
+  // AI UX SPECIFIC
+  // ============================================
+
+  // AI UX vs Traditional / How is AI different
+  if (normalized.match(/ai ux vs|traditional ux|difference.*(ai|designing)|how is (ai|designing for ai) different|ai.*(different|unique)/i)) {
+    return "Designing for AI is different because the output is not always consistent or predictable. In traditional UX, you can design a fixed flow, but with AI you have to account for variability, uncertainty, and edge cases. It feels more like designing a conversation between user and system rather than a static flow."
+  }
+
+  // Probabilistic systems
+  if (normalized.match(/probabilistic|variability|predictability|multiple outcomes|variable output/i)) {
+    return "You have to design for variability. That means thinking about multiple outcomes instead of a single fixed flow."
+  }
+
+  // Incorrect AI output / hallucination
+  if (normalized.match(/incorrect|ai.*(mistake|wrong)|hallucination|wrong output|ai error|when ai is wrong/i)) {
+    return "You need clear feedback loops and ways for users to correct or refine outputs instead of assuming the AI is always correct."
+  }
+
+  // AI explanation/Transparency / when should AI explain
+  if (normalized.match(/explain itself|transparency|why did the ai|explainable|when should ai explain|show.*(context|reasoning)/i)) {
+    return "When the output affects user decision-making or when trust is important. Show enough context so users understand why something happened without overwhelming them. Otherwise, too much explanation can create friction."
+  }
+
+  // Designing trust in AI
+  if (normalized.match(/trust.*(ai|design)|design.*(trust|reliable)|believe the ai|how do you build trust/i)) {
+    return "Trust comes from clarity, transparency, and consistency in how the system behaves. Users need to understand what the AI is doing and why it is producing certain outputs, even if it is not perfect. It's less about making the AI seem perfect, and more about making it understandable."
+  }
+
+  // Prevent over-reliance
+  if (normalized.match(/over-reliance|blindly following|lazy user|too dependent|rely too much/i)) {
+    return "Make sure users are still making decisions, not just accepting outputs. Keep users in control."
+  }
+
+  // Human-in-the-loop
+  if (normalized.match(/human.*(loop|involvement)|hitl|user.*(decision|control)/i)) {
+    return "It means the user is always part of the decision process, not just receiving outputs passively."
+  }
+
+  // Failure cases / edge cases
+  if (normalized.match(/failure case|edge case|something goes wrong|design for failure|when things break/i)) {
+    return "You have to design for uncertainty, errors, and unexpected outputs so users always know what to do next."
+  }
+
+  // AI that helps decisions
+  if (normalized.match(/ai.*(help|assist).*(decision|choose)|decision.*(support|making)/i)) {
+    return "I would design it so the user still understands options and reasoning, not just outputs."
+  }
+
+  // Onboarding adaptive AI
+  if (normalized.match(/onboard.*(ai|adaptive)|adaptive.*(onboard|learn)|ai.*(learn|adapt)/i)) {
+    return "Start simple, then gradually introduce complexity as the system learns more about the user."
+  }
+
+  // Showing uncertainty / confidence
+  if (normalized.match(/show.*(uncertainty|confidence)|uncertain.*(ui|display)|confidence level/i)) {
+    return "Use UI signals that communicate confidence or variability instead of presenting everything as absolute."
+  }
+
+  // Feedback loops
+  if (normalized.match(/feedback loop|correct.*(ai|output)|refine.*(output|result)|guide the ai/i)) {
+    return "Give users ways to correct, refine, or guide the AI output over time."
+  }
+
+  // ============================================
+  // WORKFLOW & TOOLS
+  // ============================================
+
+  // Starting from zero / new project
+  if (normalized.match(/blank slate|start.*(zero|scratch|nothing)|new project|from the beginning|where do you begin/i)) {
+    return "I start by understanding the problem, then quickly move into low-fidelity prototyping."
+  }
+
+  // Research to Prototype / workflow
+  if (normalized.match(/wireframe|prototype|workflow|research to design|your process/i)) {
+    return "I tend to compress this. I move from understanding directly into prototyping, then refine through iteration."
+  }
+
+  // Tools
+  if (normalized.match(/what tool|which tool|tools do you use|software|figma|sketch/i)) {
+    return "I use tools that help me move quickly from idea to prototype, especially AI-assisted tools and coding-based prototyping environments."
+  }
+
+  // Testing / validation
+  if (normalized.match(/test|user testing|validate|how do you test|usability/i)) {
+    return "I test by sharing early versions and observing confusion points or friction in understanding."
+  }
+
+  // Feedback incorporation
+  if (normalized.match(/incorporate feedback|handle feedback|feedback.*(early|often)|respond to feedback/i)) {
+    return "I try to incorporate feedback early and often, instead of waiting until the end. I listen first, reflect, and then respond. I try to fully understand feedback before reacting."
+  }
+
+  // Design failure / mistake
+  if (normalized.match(/design.*(fail|mistake)|fail.*(design|project)|mistake.*(made|learn)|regret/i)) {
+    return "I don't think I've had a full failure, but I've had moments where I realized I focused too much on polish early instead of structure. What I learned is that getting feedback earlier is more effective because it prevents going too far in the wrong direction."
+  }
+
+  // Shipped something not proud of
+  if (normalized.match(/shipped.*(not proud|regret)|not proud.*(ship|launch)|wish.*(done better|different)/i)) {
+    return "I've shipped work where I later felt I could have improved clarity or structure, but I treated it as part of the learning process."
+  }
+
+  // Most complex UX problem
+  if (normalized.match(/complex.*(ux|problem|challenge)|hardest.*(design|ux)|difficult.*(project|problem)/i)) {
+    return "Complexity usually comes from working with systems that have multiple possible outcomes, especially in AI-driven interfaces."
+  }
+
+  // ============================================
+  // CAREER & BEHAVIORAL
+  // ============================================
+
+  // Walk through career / tell me about yourself
+  if (normalized.match(/walk me through|your story|career path|tell me about yourself|how did you get (here|into|started)|your background|your journey/i)) {
+    return "During COVID, I was asked to work on a website for one of my mom's clients. That was my initial entry into web design. Over time, I continued learning and completed a UX/UI bootcamp at Columbia University while working full-time and teaching fourth grade. Through one of my professors, I was connected to an opportunity at Google, where I currently work."
+  }
+
+  // End-to-end project
+  if (normalized.match(/end.to.end|project.*(start to finish|worked on)|walk me through a project/i)) {
+    return "Most of my work has involved taking ideas and turning them into structured prototypes, especially using AI tools and live coding to bring designs closer to real implementation. My approach is to start with understanding the problem, move into prototyping quickly, and refine through iteration rather than trying to make things perfect upfront."
+  }
+
+  // Why leaving / looking for new role
+  if (normalized.match(/why.*(leave|leaving|looking)|reason.*(leave|new)|looking for.*(new|change)/i)) {
+    return "If I choose to leave a position, the primary reason would be to grow and expand my skill set. I aim to work in environments where I am challenged and pushed beyond my current knowledge and comfort level."
+  }
+
+  // Strengths / what do you do well
+  if (normalized.match(/strength|do.*(well|best)|good at|excel/i)) {
+    return "I perform strongly in areas involving AI work, prototyping, live coding, and translating concepts into functional design prototypes."
+  }
+
+  // Weaknesses / not good at
+  if (normalized.match(/weakness|not good at|struggle|improve|working on/i)) {
+    return "I avoid defining myself in terms of being 'not good' at specific things, as I maintain a growth-oriented mindset. I do recognize that I am still growing in areas like perfectionism and letting go of early drafts. I've been learning that iteration is more important than polish in early stages."
+  }
+
+  // Perfectionism / struggle
+  if (normalized.match(/perfectionism|perfection|struggle.*(professional|most)|hardest.*(professional|challenge)/i)) {
+    return "I have struggled most with perfectionism. I tend to prefer highly polished work and have not always been comfortable sharing early drafts. Over time, I have learned that early-stage work is an essential part of the design process. I have become more comfortable sharing work earlier and iterating based on feedback."
+  }
+
+  // Why you? / hire you
+  if (normalized.match(/why (you|should.*hire)|hire you|what.*(makes you|bring)|why.*candidate/i)) {
+    return "Because I focus on clarity, iteration, and translating ideas into functional systems quickly while staying open to feedback."
+  }
+
+  // Why UX / why AI UX
+  if (normalized.match(/why ux|why ai|passion.*(ux|design)|interested in (ux|ai|design)/i)) {
+    return "I started through web design during COVID, but over time I became more interested in how people interact with systems, not just how things look. AI UX specifically is interesting because it introduces complexity and uncertainty, and I like working in spaces where you have to think through how systems behave, not just how they look."
+  }
+
+  // Best environment / work style
+  if (normalized.match(/work best|ideal environment|workspace|type of environment|work style/i)) {
+    return "I work best in environments where there is clarity on goals, but also space to explore solutions. I like structure in terms of expectations, but flexibility in how I get to the solution."
+  }
+
+  // Motivation
+  if (normalized.match(/motivat|what drives you|stability|what keeps you going/i)) {
+    return "Stability is my primary motivator. A stable foundation allows for clarity, focus, and sustained growth. From that position, I am better able to perform effectively and develop professionally."
+  }
+
+  // What are you looking for
+  if (normalized.match(/looking for|want in.*(role|job)|ideal.*(role|position|opportunity)/i)) {
+    return "Opportunities to grow, work on challenging systems, and continue developing my skills in UX and AI."
+  }
+
+  // What excites you
+  if (normalized.match(/excite|passionate about|energize|enjoy most/i)) {
+    return "Work that involves problem solving, system thinking, and building interactive experiences that are meaningful for users."
+  }
+
+  // Work that makes you disengage
+  if (normalized.match(/disengage|unmotivat|boring|lose interest|not engaged/i)) {
+    return "Work becomes more difficult to engage with when the purpose or expectations are unclear. When that occurs, I focus on re-establishing clarity by understanding the objective and asking questions as needed."
+  }
+
+  // Missed deadline / made a mistake
+  if (normalized.match(/missed.*(deadline|meeting)|made a mistake|error.*(made|commit)|mess up/i)) {
+    return "I missed a meeting once due to misreading the scheduled time. Once I realized the error, I joined immediately and apologized to the team. I followed up with my manager to provide updates. The situation reinforced the importance of verifying details carefully."
+  }
+
+  // Reliable under pressure / chaos
+  if (normalized.match(/reliable|chaos|pressure|last minute|tight deadline|fast.paced|stressful/i)) {
+    return "I remain reliable in fast-paced or high-pressure situations. I focus on prioritization, organization, and ensuring that deliverables are completed even when timelines are compressed."
+  }
+
+  // Self-manage / need direction
+  if (normalized.match(/self.manage|direction|independent|autonomous|manage yourself|supervision/i)) {
+    return "I am able to self-manage while ensuring clarity on expectations. I take detailed notes during meetings, confirm understanding when needed, and structure my work based on defined priorities. When uncertainty arises, I ask clarifying questions rather than making assumptions."
+  }
+
+  // Defensive with feedback
+  if (normalized.match(/defensive|feedback|criticism|critique|handle (negative )?feedback/i)) {
+    return "I do not get defensive with feedback. Feedback is an important part of growth, particularly in collaborative environments. I listen, reflect, and then incorporate feedback thoughtfully into my work."
+  }
+
+  // Consistency
+  if (normalized.match(/consistent|fade|sustain|maintain.*(effort|performance)|long.term/i)) {
+    return "I maintain consistency throughout the duration of projects. I focus on sustaining performance from beginning to end and rely on structure and planning to ensure continuity in my work."
+  }
+
+  // Would you leave quickly
+  if (normalized.match(/leave quickly|jump ship|short.term|loyal|stay.*(long|committed)/i)) {
+    return "I do not leave roles quickly for new opportunities. I prioritize long-term growth, contribution, and depth within a role. I prefer to build meaningful experience and develop within a position over time."
+  }
+
+  // Normal week / daily routine
+  if (normalized.match(/normal week|typical day|daily routine|week look like|day.to.day/i)) {
+    return "A typical week begins with setting up my workspace, reviewing my calendar, and checking emails and messages. My time is then structured around meetings, focused work sessions, and ongoing task management throughout the day."
+  }
+
+  // Stressed / overwhelmed
+  if (normalized.match(/stress|overwhelm|anxious|handle pressure|cope/i)) {
+    return "When experiencing stress or overwhelm, I step away briefly to reset. This may include taking a short walk, getting water or coffee, and then returning to the task with a clearer perspective."
+  }
+
+  // People you don't get along with
+  if (normalized.match(/don't get along|difficult.*(people|coworker)|conflict.*(team|people)|hard to work with/i)) {
+    return "I have not encountered situations where I am unable to work effectively with someone professionally. I separate personal feelings from work and focus on collaboration, communication, and the shared goal. Professional relationships are about maintaining respect, clear communication, and doing the work effectively as a team."
+  }
+
   // What makes you unique
-  if (normalized.match(/(unique|hire you|candidate|stand out|different|why should)/)) {
+  if (normalized.match(/unique|stand out|different|special about you/i)) {
     return "I focus on making things make sense, not just look good - I design systems that help people think clearly"
   }
 
@@ -704,12 +960,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Phone call request
   if (normalized.match(/(call you|phone call|can i call|give me your number|your number|talk on the phone)/)) {
-    return "if you'd like to contact me personally, you can email me at charitydupont@google.com"
+    return "if you'd like to contact me personally, you can email me at hello@charitydupont.com"
   }
 
   // Contact
   if (normalized.match(/(contact|email|reach|connect|linkedin|work together|hit you up|hmu)/)) {
-    return "feel free to reach out! you can email me at charitydupont@google.com"
+    return "feel free to reach out! you can email me at hello@charitydupont.com"
   }
 
   // Navigate
