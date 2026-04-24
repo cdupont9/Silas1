@@ -1351,7 +1351,7 @@ Tap on any project below to view the full case study.`
           hasImages: false,
           content: `Let's Connect!
 
-Email: charitydupont@google.com
+Email: hello@charitydupont.com
 LinkedIn: www.linkedin.com/in/charitydupont
 Portfolio: charitydupont.com
 Location: New York, New York
@@ -1598,7 +1598,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">CONTACT</p>
                 </div>
-                <a href="mailto:charitydupont@google.com" className="px-4 py-3 flex items-center gap-3 border-b border-gray-100 active:bg-gray-50">
+                <a href="mailto:hello@charitydupont.com" className="px-4 py-3 flex items-center gap-3 border-b border-gray-100 active:bg-gray-50">
                   <div className="w-8 h-8 bg-[#007aff] rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" />
@@ -2501,7 +2501,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-black/50 uppercase tracking-wider">Mail</p>
-                    <a href="mailto:charitydupont@google.com" className="text-sm text-blue-500 mt-0.5 hover:underline">charitydupont@google.com</a>
+                    <a href="mailto:hello@charitydupont.com" className="text-sm text-blue-500 mt-0.5 hover:underline">hello@charitydupont.com</a>
                   </div>
                 </div>
               </div>
@@ -2684,7 +2684,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       I am a dedicated and passionate UX/UI designer, leveraging my unique background and commitment to continuous learning to drive meaningful and impactful user experiences.
                     </p>
                     <p className="text-black/80">
-                      {"Let's"} connect: <a href="mailto:charitydupont@google.com" className="text-blue-500 hover:underline">charitydupont@google.com</a>
+                      {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
                     </p>
                   </div>
                 )}

@@ -960,12 +960,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Phone call request
   if (normalized.match(/(call you|phone call|can i call|give me your number|your number|talk on the phone)/)) {
-    return "if you'd like to contact me personally, you can email me at charitydupont@google.com"
+    return "if you'd like to contact me personally, you can email me at hello@charitydupont.com"
   }
 
   // Contact
   if (normalized.match(/(contact|email|reach|connect|linkedin|work together|hit you up|hmu)/)) {
-    return "feel free to reach out! you can email me at charitydupont@google.com"
+    return "feel free to reach out! you can email me at hello@charitydupont.com"
   }
 
   // Navigate
