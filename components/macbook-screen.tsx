@@ -4573,7 +4573,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
             
 {/* Browser Content */}
-            <div className="w-full h-[calc(100%-52px)] bg-[#1e1e1e] overflow-auto">
+            <div className="w-full h-[calc(100%-52px)] bg-white overflow-auto">
               {safariUrl === 'wikipedia' ? (
                 /* Fake Wikipedia Page about Charity Dupont */
                 <div className="w-full min-h-full bg-white">
