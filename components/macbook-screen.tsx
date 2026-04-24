@@ -240,6 +240,7 @@ export function MacBookScreen() {
   const [showConversationList, setShowConversationList] = useState(true)
   const [selectedNote, setSelectedNote] = useState<number | null>(null)
   const [viewingPhoto, setViewingPhoto] = useState<number | null>(null)
+  const [viewingVideo, setViewingVideo] = useState<number | null>(null)
   const [password, setPassword] = useState("")
   const [aboutWindow, setAboutWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [projectsFolder, setProjectsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
@@ -358,6 +359,13 @@ export function MacBookScreen() {
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facetune_05-10-2025-08-52-01-QaKLBArAwKX819Wed7HtYbzdlq4UK1.jpg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1207.JPG-Wv7RabMUc5nFqjUZD3HiibNmpVMM90.jpeg",
     "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5380-slsfm6sbzMLaACQBWI4xxdUiuTOvHd.jpg"
+  ]
+  
+  // Personal videos for mobile Photos library only
+  const personalVideos = [
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/1248d3d2-9378-4a55-8436-27859afc42b0.MP4",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/48012242-743F-4BD3-9D46-776EFC06129D.MP4",
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4"
   ]
   const [currentTime, setCurrentTime] = useState("")
   const [loginTime, setLoginTime] = useState("")
@@ -1811,6 +1819,59 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
     // iPhone Photos App
     if (mobileScreen === "photos") {
+      // Video Viewer
+      if (viewingVideo !== null) {
+        return (
+          <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
+            {/* Status Bar */}
+            <div className="h-12 flex items-center justify-between px-6 pt-2">
+              <span className="text-white text-sm font-medium">{loginTime}</span>
+              <div className="flex items-center gap-1.5">
+                <div className="flex items-end gap-[2px] h-3">
+                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
+                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+                </div>
+                <Wifi className="w-4 h-4 text-white" />
+                <div className="w-6 h-3 border border-white rounded-sm relative">
+                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+              </div>
+            </div>
+
+            {/* Header */}
+            <div className="px-4 py-2 flex items-center justify-between">
+              <button onClick={() => setViewingVideo(null)} className="text-[#0a84ff]">
+                <ChevronLeft className="w-7 h-7" />
+              </button>
+              <div className="text-center">
+                <p className="text-white text-[17px] font-semibold">Video</p>
+              </div>
+              <button className="text-[#0a84ff]">
+                <MoreHorizontal className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Video Player */}
+            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden min-h-0">
+              <video
+                src={personalVideos[viewingVideo]}
+                controls
+                autoPlay
+                playsInline
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            {/* Home Indicator */}
+            <div className="bg-black py-2">
+              <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+            </div>
+          </div>
+        )
+      }
+
       if (viewingPhoto !== null) {
         return (
           <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
@@ -1979,6 +2040,34 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {idx === 0 && capturedPhotos.length === 0 && (
                     <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
                   )}
+                </button>
+              ))}
+              {/* Personal videos */}
+              {personalVideos.map((video, idx) => (
+                <button
+                  key={`video-${idx}`}
+                  onClick={() => setViewingVideo(idx)}
+                  className="aspect-square overflow-hidden relative bg-gray-900"
+                >
+                  <video 
+                    src={video} 
+                    className="w-full h-full object-cover"
+                    muted
+                    playsInline
+                    preload="metadata"
+                  />
+                  {/* Play icon overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                    <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center">
+                      <svg className="w-5 h-5 text-black ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                  {/* Video duration indicator */}
+                  <div className="absolute bottom-1 right-1 bg-black/60 rounded px-1.5 py-0.5">
+                    <span className="text-white text-[10px] font-medium">0:30</span>
+                  </div>
                 </button>
               ))}
             </div>
