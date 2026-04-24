@@ -1230,8 +1230,11 @@ const messageText = mobileInput.trim()
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -1321,8 +1324,11 @@ const messageText = mobileInput.trim()
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -1572,8 +1578,11 @@ const messageText = mobileInput.trim()
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
             </div>
           </div>
@@ -1654,9 +1663,10 @@ const messageText = mobileInput.trim()
             <div className="flex items-center gap-1">
               <Wifi className="w-4 h-4 text-black" />
               <div className="flex items-center">
-                <div className="w-6 h-3 border border-black rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
                 </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -1849,8 +1859,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -1919,8 +1932,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
             </div>
           </div>
@@ -1991,8 +2007,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="w-[3px] h-[11px] bg-black rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-black" />
-              <div className="w-6 h-3 border border-black rounded-sm relative">
-                <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -2179,8 +2198,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -2335,8 +2357,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
                 </div>
                 <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <div className="flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
               </div>
             </div>
@@ -2415,8 +2440,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="w-[3px] h-[11px] bg-black rounded-[1px]" />
               </div>
               <Wifi className="w-4 h-4 text-black" />
-              <div className="w-6 h-3 border border-black rounded-sm relative">
-                <div className="absolute inset-[2px] bg-black rounded-[1px]" style={{ width: '70%' }} />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
               </div>
             </div>
           </div>
@@ -2829,10 +2857,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="absolute top-3 right-4 flex items-center gap-3 text-white/80">
             <Wifi className="w-4 h-4" />
             <div className="flex items-center">
-              <div className="w-6 h-3 border border-white/80 rounded-sm relative">
-                <div className="absolute inset-[2px] bg-green-400 rounded-[1px]" />
+              <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[3px] relative overflow-hidden">
+                <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
               </div>
-              <div className="w-0.5 h-1.5 bg-white/80 rounded-r-sm" />
+              <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-sm ml-[1px]" />
             </div>
           </div>
           {mounted && (
@@ -4408,13 +4436,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             {media.type === 'video' ? (
                               <>
                                 <video src={media.url} className="w-full h-full object-cover" muted />
-                                <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                                  <div className="w-8 h-8 rounded-full bg-white/80 flex items-center justify-center">
-                                    <Play className="w-4 h-4 text-black ml-0.5" fill="black" />
-                                  </div>
-                                </div>
-                                <div className="absolute bottom-1 right-1 bg-black/60 px-1.5 py-0.5 rounded text-[10px] text-white">
-                                  Video
+                                <div className="absolute bottom-1 left-1">
+                                  <svg className="w-3.5 h-3.5 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z" />
+                                  </svg>
                                 </div>
                               </>
                             ) : (
