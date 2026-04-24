@@ -1823,54 +1823,59 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
     // iPhone Photos App
     if (mobileScreen === "photos") {
-      // Video Viewer
+      // Video Viewer - iOS Style
       if (viewingVideo !== null) {
         return (
-          <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
-            {/* Status Bar */}
-            <div className="h-12 flex items-center justify-between px-6 pt-2">
-              <span className="text-white text-sm font-medium">{loginTime}</span>
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-end gap-[2px] h-3">
-                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-                </div>
-                <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-                </div>
-              </div>
-            </div>
-
-            {/* Header */}
-            <div className="px-4 py-2 flex items-center justify-between">
-              <button onClick={() => setViewingVideo(null)} className="text-[#0a84ff]">
-                <ChevronLeft className="w-7 h-7" />
-              </button>
-              <div className="text-center">
-                <p className="text-white text-[17px] font-semibold">Video</p>
-              </div>
-              <button className="text-[#0a84ff]">
-                <MoreHorizontal className="w-6 h-6" />
-              </button>
-            </div>
-
-            {/* Video Player */}
-            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden min-h-0">
+          <div className="h-screen w-full bg-black flex flex-col overflow-hidden relative">
+            {/* Video Player - Full Screen */}
+            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden">
               <video
                 src={personalVideos[viewingVideo]}
                 controls
                 autoPlay
                 playsInline
-                className="max-w-full max-h-full object-contain"
+                className="w-full h-full object-contain"
+                style={{
+                  // iOS-style video controls
+                  colorScheme: 'dark'
+                }}
               />
             </div>
 
-            {/* Home Indicator */}
-            <div className="bg-black py-2">
-              <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+            {/* Top Overlay - Back button and options */}
+            <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/60 to-transparent pt-12 pb-8 px-4">
+              <div className="flex items-center justify-between">
+                <button 
+                  onClick={() => setViewingVideo(null)} 
+                  className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                >
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </button>
+                <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <MoreHorizontal className="w-5 h-5 text-white" />
+                </button>
+              </div>
+            </div>
+
+            {/* Bottom Overlay - Share and actions */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent pb-8 pt-12 px-6">
+              <div className="flex items-center justify-between">
+                <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                  <Share className="w-5 h-5 text-white" />
+                </button>
+                <div className="flex items-center gap-4">
+                  <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Heart className="w-5 h-5 text-white" />
+                  </button>
+                  <button className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                    <Trash2 className="w-5 h-5 text-white" />
+                  </button>
+                </div>
+              </div>
+              {/* Home Indicator */}
+              <div className="mt-4">
+                <div className="mx-auto w-36 h-1 bg-white/40 rounded-full" />
+              </div>
             </div>
           </div>
         )
@@ -2015,65 +2020,88 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           </div>
 
-          {/* Photo Grid - 3 columns like iOS */}
+          {/* Photo Grid - 3 columns like iOS - Mixed photos and videos */}
           <div className="flex-1 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <div className="grid grid-cols-3 gap-0.5">
-              {/* Personal videos at top */}
-              {personalVideos.map((video, idx) => (
-                <button
-                  key={`video-${idx}`}
-                  onClick={() => setViewingVideo(idx)}
-                  className="aspect-square overflow-hidden relative bg-gray-900"
-                >
-                  <video 
-                    src={video} 
-                    className="w-full h-full object-cover"
-                    muted
-                    playsInline
-                    preload="metadata"
-                  />
-                  {/* Play icon overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center">
-                      <svg className="w-5 h-5 text-black ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                    </div>
-                  </div>
-                  {/* Video duration indicator */}
-                  <div className="absolute bottom-1 right-1 bg-black/60 rounded px-1.5 py-0.5">
-                    <span className="text-white text-[10px] font-medium">0:30</span>
-                  </div>
-                </button>
-              ))}
-              {/* Captured photos */}
-              {capturedPhotos.map((photo, idx) => (
-                <button
-                  key={`captured-${idx}`}
-                  onClick={() => setViewingPhoto(idx)}
-                  className="aspect-square overflow-hidden relative"
-                >
-                  <img src={photo} alt={`Captured ${idx + 1}`} className="w-full h-full object-cover" />
-                  {idx === 0 && (
-                    <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
-                      <Camera className="w-3 h-3 text-white" />
-                    </div>
-                  )}
-                </button>
-              ))}
-              {/* Personal photos */}
-              {personalPhotos.map((photo, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setViewingPhoto(capturedPhotos.length + idx)}
-                  className="aspect-square overflow-hidden relative"
-                >
-                  <img src={photo} alt={`Photo ${idx + 1}`} className="w-full h-full object-cover" />
-                  {idx === 0 && capturedPhotos.length === 0 && (
-                    <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
-)}
-                </button>
-              ))}
+              {(() => {
+                // Create mixed media array with photos and videos interspersed
+                const allMedia: Array<{type: 'photo' | 'video' | 'captured', src: string, index: number}> = []
+                
+                // Add captured photos first
+                capturedPhotos.forEach((photo, idx) => {
+                  allMedia.push({ type: 'captured', src: photo, index: idx })
+                })
+                
+                // Mix personal photos and videos
+                const videoPositions = [0, 3, 5, 8, 11, 14, 17] // Positions where videos will appear
+                let photoIdx = 0
+                let videoIdx = 0
+                
+                for (let i = 0; i < personalPhotos.length + personalVideos.length; i++) {
+                  if (videoPositions.includes(i) && videoIdx < personalVideos.length) {
+                    allMedia.push({ type: 'video', src: personalVideos[videoIdx], index: videoIdx })
+                    videoIdx++
+                  } else if (photoIdx < personalPhotos.length) {
+                    allMedia.push({ type: 'photo', src: personalPhotos[photoIdx], index: photoIdx })
+                    photoIdx++
+                  }
+                }
+                
+                return allMedia.map((item, idx) => {
+                  if (item.type === 'video') {
+                    return (
+                      <button
+                        key={`video-${item.index}`}
+                        onClick={() => setViewingVideo(item.index)}
+                        className="aspect-square overflow-hidden relative bg-black"
+                      >
+                        <video 
+                          src={item.src} 
+                          className="w-full h-full object-cover"
+                          muted
+                          playsInline
+                          preload="metadata"
+                        />
+                        {/* iOS-style video indicator - small play icon bottom left */}
+                        <div className="absolute bottom-1 left-1 flex items-center gap-1">
+                          <svg className="w-3 h-3 text-white drop-shadow-md" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                          <span className="text-white text-[11px] font-semibold drop-shadow-md">0:30</span>
+                        </div>
+                      </button>
+                    )
+                  } else if (item.type === 'captured') {
+                    return (
+                      <button
+                        key={`captured-${item.index}`}
+                        onClick={() => setViewingPhoto(item.index)}
+                        className="aspect-square overflow-hidden relative"
+                      >
+                        <img src={item.src} alt={`Captured ${item.index + 1}`} className="w-full h-full object-cover" />
+                        {item.index === 0 && (
+                          <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
+                            <Camera className="w-3 h-3 text-white" />
+                          </div>
+                        )}
+                      </button>
+                    )
+                  } else {
+                    return (
+                      <button
+                        key={`photo-${item.index}`}
+                        onClick={() => setViewingPhoto(capturedPhotos.length + item.index)}
+                        className="aspect-square overflow-hidden relative"
+                      >
+                        <img src={item.src} alt={`Photo ${item.index + 1}`} className="w-full h-full object-cover" />
+                        {item.index === 0 && capturedPhotos.length === 0 && (
+                          <Heart className="absolute bottom-1 left-1 w-4 h-4 text-white fill-white" />
+                        )}
+                      </button>
+                    )
+                  }
+                })
+              })()}
             </div>
           </div>
 
