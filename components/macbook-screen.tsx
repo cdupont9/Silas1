@@ -1622,7 +1622,6 @@ const messageText = mobileInput.trim()
                 </div>
               </div>
             ))}
-            <p className="text-center text-white/30 text-[11px] mt-2">Today {contact.time}</p>
           </div>
 
           {/* Input Bar */}
@@ -4792,7 +4791,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <div className={`rounded-2xl px-4 py-2 ${msg.from === 'charity' ? 'bg-blue-500 text-white' : 'bg-[#e9e9eb] text-black'}`}>
                           <p className="text-[13px] leading-relaxed">{msg.text}</p>
                         </div>
-                        <span className={`text-[10px] text-black/40 mt-1 ${msg.from === 'charity' ? 'text-right' : 'text-left'} block`}>{msg.time}</span>
                       </div>
                     </div>
                   ))}
