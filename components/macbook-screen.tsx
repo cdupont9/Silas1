@@ -252,6 +252,8 @@ export function MacBookScreen() {
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
+  const [mobileConversations, setMobileConversations] = useState(mobileMessageContacts)
+  const [desktopConversations, setDesktopConversations] = useState(messageContacts)
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const [photoViewerOpen, setPhotoViewerOpen] = useState(false)
   const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
@@ -275,6 +277,9 @@ export function MacBookScreen() {
   
   // Mobile Safari state
   const [mobileSafariUrl, setMobileSafariUrl] = useState('')
+  
+  // Leaving portfolio popup state
+  const [showLeavingPopup, setShowLeavingPopup] = useState<string | null>(null)
   
   
   // Camera and Flashlight state
@@ -750,7 +755,7 @@ const messageText = mobileInput.trim()
                 </div>
                 <div className="flex-1">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/70 text-xs">Welcome to my portfolio on my iPhone! Feel free to check out my case studies.</p>
+                  <p className="text-white/70 text-xs">{mobileConversations.find(c => c.id === 'welcome')?.messages[mobileConversations.find(c => c.id === 'welcome')?.messages.length - 1]?.text || 'Welcome to my portfolio on my iPhone!'}</p>
                 </div>
               </div>
             </div>
@@ -998,7 +1003,7 @@ const messageText = mobileInput.trim()
 
     // iPhone iMessage Screen - Authentic iOS Messages
     if (mobileScreen === "messages") {
-      const contact = mobileMessageContacts.find(c => c.id === selectedContact) || mobileMessageContacts[0]
+      const contact = mobileConversations.find(c => c.id === selectedContact) || mobileConversations[0]
 
       // Conversation List View
       if (showConversationList) {
@@ -1043,7 +1048,7 @@ const messageText = mobileInput.trim()
 
             {/* Conversation List */}
             <div className="flex-1 overflow-y-auto">
-              {mobileMessageContacts.map((c, idx) => (
+              {mobileConversations.map((c, idx) => (
                 <button
                   key={c.id}
                   onClick={() => { setSelectedContact(c.id); setShowConversationList(false); }}
@@ -1063,7 +1068,7 @@ const messageText = mobileInput.trim()
                       <p className="text-white text-[17px] font-medium">{c.name}</p>
                       <span className="text-white/40 text-[15px]">{c.time}</span>
                     </div>
-                    <p className="text-white/50 text-[15px] truncate mt-0.5">{c.lastMessage}</p>
+                    <p className="text-white/50 text-[15px] truncate mt-0.5">{c.messages[c.messages.length - 1]?.text || c.lastMessage}</p>
                   </div>
                 </button>
               ))}
@@ -1745,7 +1750,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <p className="text-[15px] text-[#007aff]">Email</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
                 </a>
-                <a href="https://www.linkedin.com/in/charitydupont" target="_blank" rel="noopener noreferrer" className="px-4 py-3 flex items-center gap-3 active:bg-gray-50">
+                <button onClick={() => setShowLeavingPopup('https://www.linkedin.com/in/charitydupont')} className="px-4 py-3 flex items-center gap-3 active:bg-gray-50 w-full text-left">
                   <div className="w-8 h-8 bg-[#0077b5] rounded-lg flex items-center justify-center">
                     <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
@@ -1753,7 +1758,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <p className="text-[15px] text-[#007aff]">LinkedIn</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -2146,29 +2151,25 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wikipedia_Logo_1.0-wubSVX4dY2rqtnrJ5XcvoYYLBXGILS.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
                       </div>
                       <span className="text-gray-800 text-[11px]">Wikipedia</span>
                     </button>
                     
                     {/* LinkedIn */}
-                    <a
-                      href="https://linkedin.com/in/charitydupont"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://linkedin.com/in/charitydupont')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-[#0077b5] flex items-center justify-center overflow-hidden shadow-sm">
                         <span className="text-white text-2xl font-bold">in</span>
                       </div>
                       <span className="text-gray-800 text-[11px]">LinkedIn</span>
-                    </a>
+                    </button>
                     
                     {/* Google */}
-                    <a
-                      href="https://google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://google.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2177,13 +2178,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </span>
                       </div>
                       <span className="text-gray-800 text-[11px]">Google</span>
-                    </a>
+                    </button>
                     
                     {/* Apple */}
-                    <a
-                      href="https://apple.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://apple.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2192,7 +2191,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </svg>
                       </div>
                       <span className="text-gray-800 text-[11px]">Apple</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
                 
@@ -2209,16 +2208,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
-                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wikipedia_Logo_1.0-wubSVX4dY2rqtnrJ5XcvoYYLBXGILS.png" alt="Wikipedia" className="w-11 h-11 object-contain" />
                       </div>
                       <span className="text-gray-800 text-[11px] leading-tight text-center">Charity Dupont</span>
                     </button>
                     
                     {/* Google */}
-                    <a
-                      href="https://google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://google.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2230,7 +2227,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </svg>
                       </div>
                       <span className="text-gray-800 text-[11px]">Google</span>
-                    </a>
+                    </button>
                     
                     {/* Images */}
                     <button
@@ -2243,10 +2240,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     </button>
                     
                     {/* Support */}
-                    <a
-                      href="https://support.google.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => setShowLeavingPopup('https://support.google.com')}
                       className="flex flex-col items-center gap-1.5 active:opacity-70 transition-opacity"
                     >
                       <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center overflow-hidden shadow-sm border border-gray-200">
@@ -2258,7 +2253,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </svg>
                       </div>
                       <span className="text-gray-800 text-[11px]">Support</span>
-                    </a>
+                    </button>
                   </div>
                 </div>
                 
@@ -2683,17 +2678,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div>
             <h2 className="text-xl font-semibold text-white mb-4">Connect With Me</h2>
             <div className="flex gap-4">
-              <a
-                href="https://linkedin.com/in/charitydupont"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                onClick={() => setShowLeavingPopup('https://linkedin.com/in/charitydupont')}
                 className="flex items-center gap-3 bg-[#0077b5] text-white px-6 py-3 rounded hover:bg-[#006399] transition-colors"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                 </svg>
                 LinkedIn
-              </a>
+              </button>
               <a
                 href="mailto:charity@example.com"
                 className="flex items-center gap-3 bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700 transition-colors"
@@ -3500,17 +3493,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             between complex functionality and beautiful design.
                           </p>
                           <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                            <a
-                              href="https://linkedin.com/in/charitydupont"
-                              target="_blank"
-                              rel="noopener noreferrer"
+                            <button
+                              onClick={() => setShowLeavingPopup('https://linkedin.com/in/charitydupont')}
                               className="flex items-center gap-2 bg-[#0077b5] text-white px-6 py-3 rounded-full hover:bg-[#006399] transition-colors"
                             >
                               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                               </svg>
                               Connect on LinkedIn
-                            </a>
+                            </button>
                             <a
                               href="mailto:charity@example.com"
                               className="flex items-center gap-2 bg-black text-white px-6 py-3 rounded-full hover:bg-black/80 transition-colors"
@@ -4320,7 +4311,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
               </div>
               <div className="flex-1 overflow-auto">
-                {messageContacts.map((contact) => (
+                {desktopConversations.map((contact) => (
                   <button
                     key={contact.id}
                     onClick={() => setSelectedContact(contact.id)}
@@ -4338,7 +4329,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <span className={`text-[13px] font-medium truncate ${selectedContact === contact.id ? 'text-white' : 'text-black'}`}>{contact.name}</span>
                         <span className={`text-[10px] ${selectedContact === contact.id ? 'text-white/70' : 'text-black/40'}`}>{contact.time}</span>
                       </div>
-                      <p className={`text-[11px] truncate mt-0.5 ${selectedContact === contact.id ? 'text-white/80' : 'text-black/50'}`}>{contact.lastMessage}</p>
+                      <p className={`text-[11px] truncate mt-0.5 ${selectedContact === contact.id ? 'text-white/80' : 'text-black/50'}`}>{contact.id === 'welcome' ? (chatMessages[chatMessages.length - 1]?.text || contact.lastMessage) : contact.lastMessage}</p>
                     </div>
                     {contact.unread && selectedContact !== contact.id && (
                       <div className="w-2.5 h-2.5 rounded-full bg-blue-500 flex-shrink-0 mt-1" />
@@ -4355,11 +4346,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <div className="flex-1 flex flex-col bg-white">
                 <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4">
                   <span className="text-[13px] font-medium text-black/80">
-                    {messageContacts.find(c => c.id === selectedContact)?.name}
+                    {desktopConversations.find(c => c.id === selectedContact)?.name}
                   </span>
                 </div>
                 <div className="flex-1 overflow-auto p-4 space-y-3">
-                  {messageContacts.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
+                  {desktopConversations.find(c => c.id === selectedContact)?.messages.map((msg, idx) => (
                     <div key={idx} className="flex flex-col">
                       <div className={`max-w-[70%] ${msg.from === 'charity' ? 'self-end' : 'self-start'}`}>
                         <div className={`rounded-2xl px-4 py-2 ${msg.from === 'charity' ? 'bg-blue-500 text-white' : 'bg-[#e9e9eb] text-black'}`}>
@@ -4740,7 +4731,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     <h2 className="text-gray-500 text-xs font-medium mb-4 uppercase tracking-wide">Favorites</h2>
                     <div className="grid grid-cols-6 gap-6">
                       {[
-                        { name: 'Wikipedia', icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/png-clipart-wikipedia-logo-wordmark-wikimedia-foundation-bolder-globe-text-W6ROwqQudOgpJogvLmxG0hGhpRa20f.png', url: 'wikipedia' },
+                        { name: 'Wikipedia', icon: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Wikipedia_Logo_1.0-wubSVX4dY2rqtnrJ5XcvoYYLBXGILS.png', url: 'wikipedia' },
                         { name: 'Google', icon: 'https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png', url: 'https://google.com' },
                         { name: 'Apple', icon: 'https://www.apple.com/favicon.ico', url: 'https://apple.com' },
                         { name: 'LinkedIn', icon: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png', url: 'https://linkedin.com/in/charitydupont' },
@@ -4763,35 +4754,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <span className="text-gray-700 text-xs">{site.name}</span>
                         </button>
                       ))}
-                    </div>
-                  </div>
-                  
-                  {/* Reading List */}
-                  <div className="w-full max-w-[700px] mt-10">
-                    <h2 className="text-gray-500 text-xs font-medium mb-4 uppercase tracking-wide">Reading List</h2>
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                      <div className="p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors">
-                        <div className="flex items-start gap-3">
-                          <div className="w-16 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shrink-0">
-                            <span className="text-white text-xs font-bold">UX</span>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="text-gray-900 text-sm font-medium truncate">Design Principles for AI Interfaces</h3>
-                            <p className="text-gray-500 text-xs mt-0.5">nngroup.com</p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-4 hover:bg-gray-50 cursor-pointer transition-colors">
-                        <div className="flex items-start gap-3">
-                          <div className="w-16 h-12 rounded-lg bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center shrink-0">
-                            <span className="text-white text-xs font-bold">AI</span>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="text-gray-900 text-sm font-medium truncate">The Future of Human-Computer Interaction</h3>
-                            <p className="text-gray-500 text-xs mt-0.5">medium.com</p>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                   
@@ -6131,6 +6093,33 @@ function MeetlyCaseStudy() {
           <p className="text-black/40 text-xs">2026 Charity Dupont</p>
         </div>
       </div>
+
+      {/* Leaving Portfolio Popup */}
+      {showLeavingPopup && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-6 max-w-sm mx-4 shadow-2xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Leaving Portfolio</h3>
+            <p className="text-gray-600 mb-6">You are now leaving Charity Dupont&apos;s MacBook portfolio.</p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowLeavingPopup(null)}
+                className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+              >
+                Cancel
+              </button>
+              <a
+                href={showLeavingPopup}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setShowLeavingPopup(null)}
+                className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors text-center"
+              >
+                Continue
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
