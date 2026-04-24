@@ -275,8 +275,7 @@ export function MacBookScreen() {
   
   // Mobile Safari state
   const [mobileSafariUrl, setMobileSafariUrl] = useState('')
-  const [showDownloadBanner, setShowDownloadBanner] = useState(true)
-  const [downloadExpanded, setDownloadExpanded] = useState(false)
+  
   
   // Camera and Flashlight state
   const [flashlightOn, setFlashlightOn] = useState(false)
@@ -707,143 +706,94 @@ const messageText = mobileInput.trim()
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
 
           {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-10">
-            <span className="text-white text-sm font-medium">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              {/* Cellular Bars */}
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+          <div className="absolute top-0 left-0 right-0 h-[50px] flex items-center justify-between px-6 pt-3 z-10">
+            <span className="text-white text-[15px] font-semibold">{loginTime}</span>
+            <div className="flex items-center gap-1">
+              {/* Signal dots */}
+              <div className="flex gap-[3px] mr-1">
+                <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
               </div>
-              <Wifi className="w-4 h-4 text-white" />
+              <Wifi className="w-[18px] h-[18px] text-white" />
               {/* Music Toggle */}
               <button
                 onClick={() => setAudioEnabled(!audioEnabled)}
-                className="p-0.5"
+                className="p-0.5 ml-1"
               >
                 {audioEnabled ? (
-                  <Volume2 className="w-4 h-4 text-white" />
+                  <Volume2 className="w-[18px] h-[18px] text-white" />
                 ) : (
-                  <VolumeX className="w-4 h-4 text-white/60" />
+                  <VolumeX className="w-[18px] h-[18px] text-white/60" />
                 )}
               </button>
-              {/* Battery - iOS style */}
-              <div className="flex items-center gap-0.5">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[4px] relative flex items-center justify-start p-[2px]">
-                  <div className="h-full bg-white rounded-[2px]" style={{ width: '72%' }} />
+              {/* iOS Battery with percentage */}
+              <div className="flex items-center gap-1 ml-1">
+                <div className="relative flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
-                <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-full" />
+                <span className="text-white text-[12px] font-medium">52</span>
               </div>
             </div>
           </div>
           
-          {/* Lock Screen Content */}
-          <div className="relative z-10 flex-1 flex flex-col items-center pt-16">
+          {/* Lock Screen Content - Uses flex to fill available space */}
+          <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-6">
             {/* Time */}
             {mounted && (
-              <div className="text-center mb-2">
-                <div className="text-white text-[70px] font-light leading-none tracking-tight">{loginTime}</div>
-                <div className="text-white/80 text-lg mt-1">{currentTime.split("  ")[0]}</div>
+              <div className="text-center mb-4">
+                <div className="text-white text-[64px] font-light leading-none tracking-tight">{loginTime}</div>
+                <div className="text-white/80 text-base mt-1">{currentTime.split("  ")[0]}</div>
               </div>
             )}
 
             {/* Messages Notification */}
-            <div className="mt-6 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
+            <div className="w-full max-w-[320px] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl overflow-hidden">
+                <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0">
                   <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/70 text-xs">Welcome to my portfolio on my iPhone! Feel free to check out my case studies.</p>
+                  <p className="text-white/70 text-xs line-clamp-2">Welcome to my portfolio! Feel free to check out my case studies.</p>
                 </div>
               </div>
             </div>
             
-            {/* Download App Notification */}
-            {showDownloadBanner && (
-              <div className="mt-3 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl border border-white/10 overflow-hidden">
-                <div 
-                  className="p-4 flex items-center gap-3 cursor-pointer active:bg-white/10 transition-colors"
-                  onClick={() => setDownloadExpanded(!downloadExpanded)}
-                >
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-white text-sm font-semibold">Download App</p>
-                    <p className="text-white/70 text-xs">Tap to get the app for your device</p>
-                  </div>
-                  <button 
-                    onClick={(e) => { e.stopPropagation(); setShowDownloadBanner(false); }}
-                    className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center"
-                  >
-                    <X className="w-3 h-3 text-white/80" />
-                  </button>
-                </div>
-                
-                {/* Expanded Download Options */}
-                {downloadExpanded && (
-                  <div className="px-4 pb-4 flex gap-2">
-                    <a 
-                      href="/downloads/portfolio.ipa" 
-                      download
-                      className="flex-1 bg-black/40 backdrop-blur text-white text-xs font-medium py-2.5 rounded-xl flex items-center justify-center gap-1.5 active:bg-black/60 transition-colors"
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                      </svg>
-                      iOS
-                    </a>
-                    <a 
-                      href="/downloads/portfolio.apk" 
-                      download
-                      className="flex-1 bg-[#3DDC84]/80 backdrop-blur text-white text-xs font-medium py-2.5 rounded-xl flex items-center justify-center gap-1.5 active:bg-[#3DDC84] transition-colors"
-                    >
-                      <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M17.523 2.047a.5.5 0 00-.7.252l-1.456 3.24a9.3 9.3 0 00-6.734 0L7.177 2.3a.5.5 0 10-.9.447l1.378 3.07A9.25 9.25 0 003 13.5h18a9.25 9.25 0 00-4.655-7.683l1.378-3.07a.5.5 0 00-.2-.7zM7 11a1 1 0 110-2 1 1 0 010 2zm10 0a1 1 0 110-2 1 1 0 010 2zM3 14.5h18v1A7.5 7.5 0 0113.5 23h-3A7.5 7.5 0 013 15.5z"/>
-                      </svg>
-                      Android
-                    </a>
-                  </div>
-                )}
-              </div>
-            )}
-            
-            {/* Enter Button - Moved up */}
+            {/* Enter Button */}
             <button
               onClick={() => setMobileScreen("home")}
               onTouchEnd={(e) => { e.preventDefault(); setMobileScreen("home"); }}
-              className="mt-6 px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
+              className="mt-5 px-12 py-3 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-base active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
             >
               Enter
             </button>
           </div>
 
-          {/* Bottom Controls - Flashlight and Camera at very bottom */}
-          <div className="absolute bottom-0 left-0 right-0 pb-8 px-10 flex flex-col items-center z-20">
+          {/* Bottom Controls - Fixed at bottom */}
+          <div className="relative z-20 pb-6 px-10 flex flex-col items-center">
             {/* Flashlight and Camera */}
-            <div className="w-full flex justify-between mb-4">
+            <div className="w-full flex justify-between mb-3">
               <button 
                 onClick={toggleFlashlight}
-                className={`w-12 h-12 backdrop-blur-xl rounded-full flex items-center justify-center transition-colors ${flashlightOn ? 'bg-yellow-400' : 'bg-white/20'}`}
+                className={`w-11 h-11 backdrop-blur-xl rounded-full flex items-center justify-center transition-colors ${flashlightOn ? 'bg-yellow-400' : 'bg-white/20'}`}
               >
-                <Flashlight className={`w-6 h-6 ${flashlightOn ? 'text-black' : 'text-white'}`} />
+                <Flashlight className={`w-5 h-5 ${flashlightOn ? 'text-black' : 'text-white'}`} />
               </button>
               <button 
                 onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
-                className="w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center active:bg-white/30 transition-colors"
+                className="w-11 h-11 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center active:bg-white/30 transition-colors"
               >
-                <Camera className="w-6 h-6 text-white" />
+                <Camera className="w-5 h-5 text-white" />
               </button>
             </div>
 
             {/* Home Indicator */}
-            <div className="w-36 h-1.5 bg-white rounded-full" />
+            <div className="w-36 h-1 bg-white rounded-full" />
           </div>
         </div>
       )
@@ -863,34 +813,37 @@ const messageText = mobileInput.trim()
           )}
 
           {/* Status Bar - iOS style */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 pt-2 z-20">
-            <span className="text-white text-sm font-medium">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              {/* Cellular Bars */}
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+          <div className="absolute top-0 left-0 right-0 h-[50px] flex items-center justify-between px-6 pt-3 z-20">
+            <span className="text-white text-[15px] font-semibold">{loginTime}</span>
+            <div className="flex items-center gap-1">
+              {/* Signal dots */}
+              <div className="flex gap-[3px] mr-1">
+                <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
               </div>
-<Wifi className="w-4 h-4 text-white" />
+              <Wifi className="w-[18px] h-[18px] text-white" />
               {/* Music Toggle */}
               <button
                 onClick={() => setAudioEnabled(!audioEnabled)}
-                className="p-0.5"
+                className="p-0.5 ml-1"
               >
                 {audioEnabled ? (
-                  <Volume2 className="w-4 h-4 text-white" />
+                  <Volume2 className="w-[18px] h-[18px] text-white" />
                 ) : (
-                  <VolumeX className="w-4 h-4 text-white/60" />
+                  <VolumeX className="w-[18px] h-[18px] text-white/60" />
                 )}
               </button>
-              {/* Battery - iOS style */}
-              <div className="flex items-center gap-0.5">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white/80 rounded-[4px] relative flex items-center justify-start p-[2px]">
-                  <div className="h-full bg-white rounded-[2px]" style={{ width: '72%' }} />
+              {/* iOS Battery with percentage */}
+              <div className="flex items-center gap-1 ml-1">
+                <div className="relative flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
                 </div>
-                <div className="w-[1.5px] h-[5px] bg-white/80 rounded-r-full" />
+                <span className="text-white text-[12px] font-medium">52</span>
               </div>
             </div>
           </div>
@@ -1061,18 +1014,24 @@ const messageText = mobileInput.trim()
         return (
           <div className="h-screen w-full bg-black flex flex-col">
             {/* Status Bar */}
-            <div className="h-12 flex items-center justify-between px-6 pt-2 bg-[#000]">
-              <span className="text-white text-sm font-medium">{loginTime}</span>
-              <div className="flex items-center gap-1.5">
-                <div className="flex items-end gap-[2px] h-3">
-                  <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                  <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                  <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                  <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
+            <div className="h-[50px] flex items-center justify-between px-6 pt-3 bg-[#000]">
+              <span className="text-white text-[15px] font-semibold">{loginTime}</span>
+              <div className="flex items-center gap-1">
+                <div className="flex gap-[3px] mr-1">
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
                 </div>
-                <Wifi className="w-4 h-4 text-white" />
-                <div className="w-6 h-3 border border-white rounded-sm relative">
-                  <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                <Wifi className="w-[18px] h-[18px] text-white" />
+                <div className="flex items-center gap-1 ml-1">
+                  <div className="relative flex items-center">
+                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                    </div>
+                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                  </div>
+                  <span className="text-white text-[12px] font-medium">52</span>
                 </div>
               </div>
             </div>
@@ -1285,16 +1244,22 @@ const messageText = mobileInput.trim()
           <div className="h-12 flex items-center justify-between px-6 pt-2 bg-[#000]">
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-              </div>
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-              </div>
+              <div className="flex gap-[3px] mr-1">
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                </div>
+                <Wifi className="w-[18px] h-[18px] text-white" />
+                <div className="flex items-center gap-1 ml-1">
+                  <div className="relative flex items-center">
+                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                    </div>
+                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                  </div>
+                  <span className="text-white text-[12px] font-medium">52</span>
+                </div>
             </div>
           </div>
 
@@ -1632,16 +1597,22 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="h-12 flex items-center justify-between px-6 pt-2">
             <span className="text-white text-sm font-medium">{loginTime}</span>
             <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-              </div>
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-              </div>
+              <div className="flex gap-[3px] mr-1">
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                </div>
+                <Wifi className="w-[18px] h-[18px] text-white" />
+                <div className="flex items-center gap-1 ml-1">
+                  <div className="relative flex items-center">
+                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                    </div>
+                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                  </div>
+                  <span className="text-white text-[12px] font-medium">52</span>
+                </div>
             </div>
           </div>
 
@@ -1972,44 +1943,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       }
 
       return (
-        <div className="h-screen w-full bg-black flex flex-col">
-          {/* Status Bar */}
-          <div className="h-12 flex items-center justify-between px-6 pt-2">
-            <span className="text-white text-sm font-medium">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px]" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px]" />
-              </div>
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="w-6 h-3 border border-white rounded-sm relative">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-              </div>
-            </div>
-          </div>
-
-          {/* Header with Back button and Library title */}
-          <div className="px-4 pt-2 pb-3">
-            <div className="flex items-center justify-between mb-3">
-              <button onClick={() => setMobileScreen('home')} className="flex items-center gap-0.5 text-[#0a84ff]">
-                <ChevronLeft className="w-5 h-5" />
-                <span className="text-[17px]">Library</span>
-              </button>
-              <button className="text-[#0a84ff] text-[17px]">Select</button>
-            </div>
-            <div className="flex items-center justify-between">
-              <h1 className="text-white text-2xl font-bold">All Photos</h1>
-              <button className="text-[#0a84ff] text-[15px]">
-                <MoreHorizontal className="w-6 h-6" />
-              </button>
-            </div>
-          </div>
-
-          {/* Photo Grid - 3 columns like iOS */}
-          <div className="flex-1 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <div className="grid grid-cols-3 gap-[1px] bg-black">
+        <div className="h-[100dvh] w-full bg-black flex flex-col relative overflow-hidden">
+          {/* Photo Grid - Full screen, extends behind header */}
+          <div className="absolute inset-0 overflow-y-auto scrollbar-none pt-[140px] pb-[70px]" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div className="grid grid-cols-3 gap-[2px]">
               {allMedia.map((item, idx) => {
                 if (item.type === 'video') {
                   return (
@@ -2042,11 +1979,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       className="aspect-square overflow-hidden relative"
                     >
                       <img src={item.src} alt="" className="w-full h-full object-cover" />
-                      {item.type === 'captured' && item.originalIndex === 0 && (
-                        <div className="absolute top-1 right-1 bg-green-500 rounded-full p-0.5">
-                          <Camera className="w-3 h-3 text-white" />
-                        </div>
-                      )}
                     </button>
                   )
                 }
@@ -2054,40 +1986,87 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           </div>
 
-          {/* iOS Bottom Tab Bar */}
-          <div className="flex-shrink-0 bg-[#1c1c1e] border-t border-white/10 py-2 px-6">
-            <div className="flex items-center justify-around">
-              <button className="flex flex-col items-center gap-1">
-                <svg className="w-6 h-6 text-[#0a84ff]" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V5h14v14H5z"/>
-                  <path d="M7 7h4v4H7zM13 7h4v4h-4zM7 13h4v4H7zM13 13h4v4h-4z"/>
-                </svg>
-                <span className="text-[10px] text-[#0a84ff]">Library</span>
-              </button>
-              <button className="flex flex-col items-center gap-1">
-                <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-                <span className="text-[10px] text-white/50">For You</span>
-              </button>
-              <button className="flex flex-col items-center gap-1">
-                <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                </svg>
-                <span className="text-[10px] text-white/50">Albums</span>
-              </button>
-              <button className="flex flex-col items-center gap-1">
-                <svg className="w-6 h-6 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>
-                <span className="text-[10px] text-white/50">Search</span>
-              </button>
+          {/* Floating Header */}
+          <div className="absolute top-0 left-0 right-0 z-10">
+            {/* Status Bar */}
+            <div className="h-[50px] flex items-center justify-between px-6 pt-3">
+              <span className="text-white text-[15px] font-semibold">{loginTime}</span>
+              <div className="flex items-center gap-1">
+                {/* Signal dots */}
+                <div className="flex gap-[3px] mr-1">
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                  <div className="w-[5px] h-[5px] rounded-full bg-white/30" />
+                </div>
+                <Wifi className="w-[18px] h-[18px] text-white" />
+                {/* iOS Battery with percentage */}
+                <div className="flex items-center gap-1 ml-1">
+                  <div className="relative flex items-center">
+                    <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                      <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                    </div>
+                    <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+                  </div>
+                  <span className="text-white text-[12px] font-medium">52</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Library Header */}
+            <div className="px-4 pt-1 pb-3 flex items-start justify-between">
+              <div>
+                <h1 className="text-white text-[34px] font-bold leading-tight">Library</h1>
+                <p className="text-white/60 text-[15px]">Apr 23, 2026</p>
+              </div>
+              <div className="flex items-center gap-3 pt-1">
+                {/* Search button */}
+                <button className="w-[34px] h-[34px] rounded-full bg-[#0a84ff] flex items-center justify-center">
+                  <svg className="w-[18px] h-[18px] text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+                </button>
+                {/* Select button */}
+                <button className="px-3 py-1.5 rounded-full bg-white/20 text-white text-[15px] font-medium">
+                  Select
+                </button>
+                {/* Profile with notification */}
+                <button onClick={() => setMobileScreen('home')} className="relative">
+                  <div className="w-[34px] h-[34px] rounded-full overflow-hidden">
+                    <img src={MEMOJI_URL} alt="Profile" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="absolute -top-0.5 -right-0.5 w-[14px] h-[14px] bg-red-500 rounded-full flex items-center justify-center">
+                    <span className="text-white text-[9px] font-bold">!</span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* Home Indicator */}
-          <div className="flex-shrink-0 bg-[#1c1c1e] pb-2 pt-1">
-            <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
+          {/* Bottom Filter Bar */}
+          <div className="absolute bottom-0 left-0 right-0 z-10 bg-black/80 backdrop-blur-xl">
+            <div className="flex items-center justify-center gap-3 py-3 px-4">
+              {/* Sort button */}
+              <button className="w-[44px] h-[44px] rounded-full bg-white/20 flex items-center justify-center">
+                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 7h6m0 0l-3-3m3 3L3 10M21 17h-6m0 0l3 3m-3-3l3-3" />
+                </svg>
+              </button>
+              {/* Filter pills */}
+              <div className="flex items-center bg-white/20 rounded-full p-1">
+                <button className="px-4 py-2 text-white/70 text-[15px]">Years</button>
+                <button className="px-4 py-2 text-white/70 text-[15px]">Months</button>
+                <button className="px-4 py-2 bg-white/30 rounded-full text-white text-[15px] font-medium">All</button>
+              </div>
+              {/* Close button */}
+              <button onClick={() => setMobileScreen('home')} className="w-[44px] h-[44px] rounded-full bg-white/20 flex items-center justify-center">
+                <X className="w-5 h-5 text-white" />
+              </button>
+            </div>
+            {/* Home Indicator */}
+            <div className="pb-2 pt-1">
+              <div className="mx-auto w-36 h-1 bg-white/30 rounded-full" />
+            </div>
           </div>
         </div>
       )
@@ -2396,18 +2375,24 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           />
           
           {/* Status Bar */}
-          <div className="relative z-10 h-12 flex items-center justify-between px-6 pt-2">
-            <span className="text-white text-sm font-medium drop-shadow-lg">{loginTime}</span>
-            <div className="flex items-center gap-1.5">
-              <div className="flex items-end gap-[2px] h-3">
-                <div className="w-[3px] h-[5px] bg-white rounded-[1px] drop-shadow" />
-                <div className="w-[3px] h-[7px] bg-white rounded-[1px] drop-shadow" />
-                <div className="w-[3px] h-[9px] bg-white rounded-[1px] drop-shadow" />
-                <div className="w-[3px] h-[11px] bg-white rounded-[1px] drop-shadow" />
+          <div className="relative z-10 h-[50px] flex items-center justify-between px-6 pt-3">
+            <span className="text-white text-[15px] font-semibold drop-shadow-lg">{loginTime}</span>
+            <div className="flex items-center gap-1">
+              <div className="flex gap-[3px] mr-1">
+                <div className="w-[5px] h-[5px] rounded-full bg-white drop-shadow" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white drop-shadow" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30 drop-shadow" />
+                <div className="w-[5px] h-[5px] rounded-full bg-white/30 drop-shadow" />
               </div>
-              <Wifi className="w-4 h-4 text-white drop-shadow" />
-              <div className="w-6 h-3 border border-white rounded-sm relative drop-shadow">
-                <div className="absolute inset-[2px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+              <Wifi className="w-[18px] h-[18px] text-white drop-shadow" />
+              <div className="flex items-center gap-1 ml-1">
+                <div className="relative flex items-center">
+                  <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden drop-shadow">
+                    <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '52%' }} />
+                  </div>
+                  <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px] drop-shadow" />
+                </div>
+                <span className="text-white text-[12px] font-medium drop-shadow">52</span>
               </div>
             </div>
           </div>
