@@ -2849,19 +2849,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-4 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Dashboard" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png" alt="Dashboard" className="w-full max-w-[180px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Dashboard</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png" alt="Memory Graph" className="w-full max-w-[180px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Memory Graph</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2049-eWXPE7MhIBYjtU2dTioypBSJ7YLAFu.png" alt="Artifact" className="w-full max-w-[180px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Silas Artifact</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%205-CoLHjTGJIGVxKq0lDGLNL8rsuaj3Kc.png" alt="Profile" className="w-full max-w-[180px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Profile</p>
                           </div>
                         </div>
@@ -2875,15 +2875,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2044-hjfKPYLluWbP2lMrL8npfvI9wDzWj4.png" alt="Weather" className="w-full max-w-[180px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Weather Insight</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Receipt" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2045-0TAyyhQvFToSEhuW2lis0hG8Wgtf6a.png" alt="Receipt" className="w-full max-w-[180px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Digital Receipt</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit" className="w-full max-w-[100px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2046-COrFKfLbKbBu2awRROrZE1CmhOml8A.png" alt="Outfit" className="w-full max-w-[180px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Outfit Suggestion</p>
                           </div>
                         </div>
@@ -2897,11 +2897,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-2 gap-4 max-w-xs mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%206-3BWoc3sGlIiBjCsv7cS7MukzS2JKb5.png" alt="Calendar" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Calendar View</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2057%20%281%29-Cu9zZu25QBG1eFO1YhOVu3lK9vnkSe.png" alt="Rideshare" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2057%20%281%29-Cu9zZu25QBG1eFO1YhOVu3lK9vnkSe.png" alt="Rideshare" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Rideshare</p>
                           </div>
                         </div>
@@ -2915,23 +2915,23 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-5 gap-3 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png" alt="Bank" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Dashboard</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transactions" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2010-rwCKLW3zZDHoKKcPMbFsH6UeG52IUz.png" alt="Transactions" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Transactions</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2011-IC9n1zWbfj5jyU7kUBFHUrKKeVI0Cn.png" alt="Receipt" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Receipt</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2013-nPCwx99f2gEUc7lsbVvU7H0SD1kUK4.png" alt="Cart" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Cart</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2014%20%281%29-OXKYf0kMTuOWJBYdbnXzpy12kiyUiU.png" alt="Checkout" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Checkout</p>
                           </div>
                         </div>
@@ -2945,19 +2945,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2065-ocyRHiATuNmFkhHzo61QPbO8UARepe.png" alt="Search" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2065-ocyRHiATuNmFkhHzo61QPbO8UARepe.png" alt="Search" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Search</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Results" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2067-mzMNEdzuINot8FvvxbF5EC7aohTEzQ.png" alt="Results" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Results</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Suggestion" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2027-PcN4dIn4xM4ixJizZUBBEwehjepqmK.png" alt="Suggestion" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Suggestion</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Info" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2069-l5wXllCRrLE4KeU3EtTeDdwmGDcMwI.png" alt="Info" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Product Info</p>
                           </div>
                         </div>
@@ -2971,19 +2971,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Trips" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2033-P3fqjFVc3EnheB5FOrBsPQztDU8l6G.png" alt="Trips" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Dashboard</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2036-o7eNyjMDJOSPhCHXDwl2B5o4wuscqy.png" alt="Preferences" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">User Profile</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2035-eWU7OhpjguXv14rdS2Ory9fIkMjVdX.png" alt="Seat Analysis" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2035-eWU7OhpjguXv14rdS2Ory9fIkMjVdX.png" alt="Seat Analysis" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Seat Analysis</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2034-8M9jhf6mWZmXLQF2tpgiEf4ACmo9y6.png" alt="Flight Insight" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2034-8M9jhf6mWZmXLQF2tpgiEf4ACmo9y6.png" alt="Flight Insight" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Flight Insight</p>
                           </div>
                         </div>
@@ -2997,15 +2997,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2030-Ufk6p1qH3uiJ1KqZJgRhvsrF1zih2i.png" alt="Curated" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2030-Ufk6p1qH3uiJ1KqZJgRhvsrF1zih2i.png" alt="Curated" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Suggestion</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2047%20%281%29-KQ3MkvZW8wwcuw3jJYlSAYBYG4bPRy.png" alt="Context" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2047%20%281%29-KQ3MkvZW8wwcuw3jJYlSAYBYG4bPRy.png" alt="Context" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Context</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2032-yueRj2B5riZiLHfqrPI13oDescaphw.png" alt="Evidence" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2032-yueRj2B5riZiLHfqrPI13oDescaphw.png" alt="Evidence" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Evidence</p>
                           </div>
                         </div>
@@ -3019,15 +3019,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-3 gap-4 max-w-xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2017-vD7J5N5WQLvcYy6tMmCCAoDvPhgtA5.png" alt="Library" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2017-vD7J5N5WQLvcYy6tMmCCAoDvPhgtA5.png" alt="Library" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Dashboard</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2018-rtZzFsJ28O39L8eX3CLDF6Eu1UxUum.png" alt="Why This Book" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2018-rtZzFsJ28O39L8eX3CLDF6Eu1UxUum.png" alt="Why This Book" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Suggestion</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2019-v9hgskr7Du3wKiL9bcYrcYYPoBcd96.png" alt="Excerpt" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2019-v9hgskr7Du3wKiL9bcYrcYYPoBcd96.png" alt="Excerpt" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Reasoning</p>
                           </div>
                         </div>
@@ -3041,19 +3041,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-KeljTUoA1uAKwrfQGClFbh2qr2dmlF.png" alt="Search" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2037-KeljTUoA1uAKwrfQGClFbh2qr2dmlF.png" alt="Search" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Search</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-doimziRe3RcEQohrjCdlfiDtUsU4hK.png" alt="Item Selected" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2038-doimziRe3RcEQohrjCdlfiDtUsU4hK.png" alt="Item Selected" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Item Selected</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2039-whUo54tXaqQerB5onNBUTWIds6OVap.png" alt="Scanning" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2039-whUo54tXaqQerB5onNBUTWIds6OVap.png" alt="Scanning" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Scanning</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2040-63dYmc1scg8VFvIDMELM1Nd643oDAo.png" alt="Detected" className="w-full max-w-[90px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%2040-63dYmc1scg8VFvIDMELM1Nd643oDAo.png" alt="Detected" className="w-full max-w-[160px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[10px] mt-2 uppercase tracking-wider">Detected</p>
                           </div>
                         </div>
@@ -3174,39 +3174,39 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </p>
                         <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Splash</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Home</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Matches" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Matches" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Matches</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Matched</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Messages</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Chat</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Schedule</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Purchase" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Purchase" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Purchase</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full max-w-[80px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full max-w-[150px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[9px] mt-1 uppercase tracking-wider">Confirmation</p>
                           </div>
                         </div>
@@ -3392,23 +3392,23 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         {/* App Screens Row 1 */}
                         <div className="grid grid-cols-5 gap-3 max-w-3xl mx-auto mb-4">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png" alt="Home" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Home</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-kvBQ0w5m9bcMxJDLYcbuSSVJrEcrPc.png" alt="Chat" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-kvBQ0w5m9bcMxJDLYcbuSSVJrEcrPc.png" alt="Chat" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-Y8hW7TmOJfVaW1Iizh9CJkHWFsIeSd.png" alt="Vote" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2025-Y8hW7TmOJfVaW1Iizh9CJkHWFsIeSd.png" alt="Vote" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-ytP9uUYl1tfuGMTjpRlMvbw57l8wBx.png" alt="Vote 2" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-ytP9uUYl1tfuGMTjpRlMvbw57l8wBx.png" alt="Vote 2" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote 2</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-Zx75LyunsQWz207iWPdSipbuqvblvQ.png" alt="Vote 3" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-Zx75LyunsQWz207iWPdSipbuqvblvQ.png" alt="Vote 3" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Vote 3</p>
                           </div>
                         </div>
@@ -3416,23 +3416,23 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         {/* App Screens Row 2 */}
                         <div className="grid grid-cols-5 gap-3 max-w-3xl mx-auto">
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2028-cLMG7tLrO3aQdiYlfASDZRvCUyqBwb.png" alt="Chat 2" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2028-cLMG7tLrO3aQdiYlfASDZRvCUyqBwb.png" alt="Chat 2" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat 2</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2029-APo5XHVqWgkh2mMOv6e2p6mj91YUmK.png" alt="Chat 3" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2029-APo5XHVqWgkh2mMOv6e2p6mj91YUmK.png" alt="Chat 3" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Chat 3</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2030-7MAPn6ktJNerulMwPugsHcYNOqgrdA.png" alt="Time" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2030-7MAPn6ktJNerulMwPugsHcYNOqgrdA.png" alt="Time" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Set Time</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2031-0VLOPEN9C6TZam8ou1yfaXriYe3iON.png" alt="Success" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2031-0VLOPEN9C6TZam8ou1yfaXriYe3iON.png" alt="Success" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Success</p>
                           </div>
                           <div className="text-center">
-                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2032-X5DdZgQI5aSWfhkZd9trlhxvPG8ZEU.png" alt="End" className="w-full max-w-[70px] mx-auto rounded-lg" />
+                            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2032-X5DdZgQI5aSWfhkZd9trlhxvPG8ZEU.png" alt="End" className="w-full max-w-[140px] mx-auto rounded-lg" />
                             <p className="text-white/40 text-[8px] mt-1 uppercase tracking-wider">Home End</p>
                           </div>
                         </div>
