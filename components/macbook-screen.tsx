@@ -1885,25 +1885,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
 
             {/* Main Media View */}
-            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden min-h-0 relative">
-              {/* Swipe left/right buttons */}
-              {viewingMediaIndex > 0 && (
-                <button 
-                  onClick={() => setViewingMediaIndex(viewingMediaIndex - 1)}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center z-10"
-                >
-                  <ChevronLeft className="w-6 h-6 text-white" />
-                </button>
-              )}
-              {viewingMediaIndex < allMedia.length - 1 && (
-                <button 
-                  onClick={() => setViewingMediaIndex(viewingMediaIndex + 1)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center z-10"
-                >
-                  <ChevronRight className="w-6 h-6 text-white" />
-                </button>
-              )}
-              
+            <div className="flex-1 flex items-center justify-center bg-black overflow-hidden min-h-0">
               {isVideo ? (
                 <video
                   key={currentMedia.src}
@@ -1911,7 +1893,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   controls
                   autoPlay
                   playsInline
-                  className="max-w-full max-h-full object-contain"
+                  className="w-full h-full object-contain"
                   style={{ colorScheme: 'dark' }}
                 />
               ) : (
