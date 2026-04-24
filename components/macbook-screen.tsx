@@ -2842,15 +2842,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {/* Wikipedia Header */}
                   <div className="bg-white border-b border-gray-200 px-4 py-2">
                     <div className="flex items-center gap-4">
-                      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Wikipedia-logo-v2.svg/150px-Wikipedia-logo-v2.svg.png" alt="Wikipedia" className="h-10" />
-                      <div className="flex items-center gap-2">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Wikipedia%27s_W.svg/1200px-Wikipedia%27s_W.svg.png" alt="" className="w-4 h-4" />
-                        <span className="text-sm font-medium text-black">Wikipedia</span>
-                        <span className="text-sm text-gray-500">The Free Encyclopedia</span>
-                      </div>
+                      <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/wikipedia-wordmark-en-25-QgUVUwhHCCccrX81eTmsdUDTQRfIQ6.svg" alt="Wikipedia" className="h-4" />
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <span>Article</span>
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                          <span className="text-black font-medium">Article</span>
                           <span>Talk</span>
                         </div>
                       </div>
