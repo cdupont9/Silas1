@@ -3087,10 +3087,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-b from-[#5ac8fa] to-[#007aff] flex items-center justify-center">
-              <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 1.5c4.687 0 8.5 3.813 8.5 8.5s-3.813 8.5-8.5 8.5-8.5-3.813-8.5-8.5 3.813-8.5 8.5-8.5zm0 1.5a7 7 0 100 14 7 7 0 000-14zm-.25 1.75l.5 4.5 3.25 2.75-1 1.25-4-3V6.75h1.25z"/>
-              </svg>
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
             </div>
           }
           label="Safari"
