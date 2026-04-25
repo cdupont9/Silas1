@@ -351,6 +351,7 @@ export function PacManGame({ width = 400, height = 240, onScoreChange }: PacManG
     }
 
     let lastUpdate = 0
+    let ghostMoveCounter = 0
     const gameLoop = (timestamp: number) => {
       if (timestamp - lastUpdate > 150) { // Game speed
         ctx.fillStyle = '#000'
@@ -361,10 +362,14 @@ export function PacManGame({ width = 400, height = 240, onScoreChange }: PacManG
         if (!gameOver && !gameWon) {
           movePacman()
           
-          // Move ghosts
-          state.ghosts.forEach((ghost, index) => {
-            moveGhost(ghost, index)
-          })
+          // Move ghosts every 2nd frame (slower than Pac-Man)
+          ghostMoveCounter++
+          if (ghostMoveCounter >= 2) {
+            ghostMoveCounter = 0
+            state.ghosts.forEach((ghost, index) => {
+              moveGhost(ghost, index)
+            })
+          }
           
           state.frameCount++
           
