@@ -168,8 +168,8 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 // Full photo for About window
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
-// Resume PDF URL
-const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/Charity%20Dupont%20-%20Resume%20Updated%204_23_2026%20-svNPiZYIFbISmNsWqzclsNaZYgyhKL.pdf"
+// Resume PDF URL (served locally to avoid cross-origin blocking)
+const RESUME_PDF_URL = "/Charity_Dupont_Resume.pdf"
 
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
