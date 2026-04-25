@@ -1208,12 +1208,11 @@ const messageText = mobileInput.trim()
                   onClick={() => setMobileScreen('pacman')}
                   className="bg-black rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform border border-yellow-500/30"
                 >
-                  <div className="w-12 h-12 flex items-center justify-center relative">
-                    <div className="w-6 h-6 bg-yellow-400 rounded-full" style={{ clipPath: 'polygon(100% 50%, 0% 0%, 0% 100%)' }} />
-                    <div className="absolute right-1 top-1 w-3 h-3 bg-red-500 rounded-t-full">
-                      <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full" />
-                    </div>
-                  </div>
+                  <img 
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pngimg.com%20-%20pacman_PNG15-szYyqp90fmny052iob40sjYjmBQtkv.png" 
+                    alt="Pac-Man" 
+                    className="w-12 h-12 object-contain" 
+                  />
                 </button>
               </div>
             </div>
@@ -5383,20 +5382,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         <DockIcon
           icon={
             <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-black flex items-center justify-center">
-              <div className="relative w-8 h-8">
-                {/* Pac-Man */}
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-yellow-400 rounded-full" style={{ clipPath: 'polygon(100% 50%, 0% 0%, 0% 100%)' }} />
-                {/* Dots */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-1">
-                  <div className="w-1 h-1 bg-yellow-200 rounded-full" />
-                  <div className="w-1 h-1 bg-yellow-200 rounded-full" />
-                </div>
-                {/* Ghost */}
-                <div className="absolute right-0 top-0 w-3 h-3 bg-red-500 rounded-t-full">
-                  <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full" />
-                  <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-white rounded-full" />
-                </div>
-              </div>
+              <img 
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pngimg.com%20-%20pacman_PNG15-szYyqp90fmny052iob40sjYjmBQtkv.png" 
+                alt="Pac-Man" 
+                className="w-10 h-10 object-contain" 
+              />
             </div>
           }
           label="Pac-Man"
