@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, ChevronUp, ChevronDown, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -259,6 +259,27 @@ export function MacBookScreen() {
   const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
+  
+  // Pac-Man game state
+  const [pacmanWindow, setPacmanWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [pacmanPosition, setPacmanPosition] = useState({ x: 150, y: 60 })
+  const [pacmanGame, setPacmanGame] = useState({
+    pacman: { x: 7, y: 7, direction: 'right' as 'up' | 'down' | 'left' | 'right' },
+    ghosts: [
+      { x: 1, y: 1, color: '#ff0000' },
+      { x: 13, y: 1, color: '#00ffff' },
+      { x: 1, y: 13, color: '#ffb8ff' },
+      { x: 13, y: 13, color: '#ffb852' }
+    ],
+    dots: Array.from({ length: 15 }, (_, y) => 
+      Array.from({ length: 15 }, (_, x) => 
+        !((x === 7 && y === 7) || (x < 2 && y < 2) || (x > 12 && y < 2) || (x < 2 && y > 12) || (x > 12 && y > 12))
+      )
+    ),
+    score: 0,
+    gameOver: false,
+    gameWon: false
+  })
   
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -739,6 +760,7 @@ export function MacBookScreen() {
       case 'backgrounds': position = backgroundsPosition; break
       case 'messages': position = messagesPosition; break
       case 'notes': position = notesPosition; break
+      case 'pacman': position = pacmanPosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -763,7 +785,7 @@ export function MacBookScreen() {
       case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
-      case 'music': setMusicPosition({ x: newX, y: newY }); break
+      case 'pacman': setPacmanPosition({ x: newX, y: newY }); break
     }
   }
 
@@ -1194,6 +1216,19 @@ const messageText = mobileInput.trim()
                   className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
                 >
                   <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
+                </button>
+                
+                {/* Pac-Man */}
+                <button
+                  onClick={() => setMobileScreen('pacman')}
+                  className="bg-black rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform border border-yellow-500/30"
+                >
+                  <div className="w-12 h-12 flex items-center justify-center relative">
+                    <div className="w-6 h-6 bg-yellow-400 rounded-full" style={{ clipPath: 'polygon(100% 50%, 0% 0%, 0% 100%)' }} />
+                    <div className="absolute right-1 top-1 w-3 h-3 bg-red-500 rounded-t-full">
+                      <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full" />
+                    </div>
+                  </div>
                 </button>
               </div>
             </div>
@@ -2827,6 +2862,236 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             
             {/* Home Indicator */}
             <div className="mt-6 mx-auto w-36 h-1 bg-white/40 rounded-full" />
+          </div>
+        </div>
+      )
+    }
+
+    // Mobile Pac-Man Game
+    if (mobileScreen === "pacman") {
+      return (
+        <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
+          {/* Status Bar */}
+          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-50">
+            <div className="text-white text-sm font-medium" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
+            <div className="flex items-center gap-2">
+              <Wifi className="w-4 h-4 text-white" />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+              </div>
+            </div>
+          </div>
+
+          {/* Header with Back Button */}
+          <div className="pt-14 px-4 flex items-center justify-between">
+            <button
+              onClick={() => setMobileScreen('home')}
+              className="p-2 -ml-2 text-yellow-400"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <h1 className="text-yellow-400 text-xl font-bold">PAC-MAN</h1>
+            <div className="w-10" />
+          </div>
+
+          {/* Score */}
+          <div className="px-4 py-2 flex justify-between items-center">
+            <span className="text-yellow-400 font-bold">SCORE: {pacmanGame.score}</span>
+            {(pacmanGame.gameOver || pacmanGame.gameWon) && (
+              <button
+                onClick={() => setPacmanGame({
+                  pacman: { x: 7, y: 7, direction: 'right' },
+                  ghosts: [
+                    { x: 1, y: 1, color: '#ff0000' },
+                    { x: 13, y: 1, color: '#00ffff' },
+                    { x: 1, y: 13, color: '#ffb8ff' },
+                    { x: 13, y: 13, color: '#ffb852' }
+                  ],
+                  dots: Array.from({ length: 15 }, (_, y) => 
+                    Array.from({ length: 15 }, (_, x) => 
+                      !((x === 7 && y === 7) || (x < 2 && y < 2) || (x > 12 && y < 2) || (x < 2 && y > 12) || (x > 12 && y > 12))
+                    )
+                  ),
+                  score: 0,
+                  gameOver: false,
+                  gameWon: false
+                })}
+                className="px-3 py-1 bg-yellow-500 text-black font-bold rounded text-sm"
+              >
+                PLAY AGAIN
+              </button>
+            )}
+          </div>
+
+          {/* Game Board */}
+          <div className="flex-1 flex items-center justify-center px-4">
+            <div className="relative bg-[#000033] rounded-lg p-2 border-2 border-blue-600 w-full max-w-[320px]">
+              <div className="grid gap-0" style={{ gridTemplateColumns: 'repeat(15, 1fr)' }}>
+                {pacmanGame.dots.map((row, y) => 
+                  row.map((dot, x) => (
+                    <div key={`${x}-${y}`} className="aspect-square flex items-center justify-center relative">
+                      {dot && <div className="w-1 h-1 bg-yellow-200 rounded-full" />}
+                      {pacmanGame.pacman.x === x && pacmanGame.pacman.y === y && (
+                        <div className="absolute w-3 h-3 bg-yellow-400 rounded-full" style={{
+                          clipPath: pacmanGame.pacman.direction === 'right' ? 'polygon(100% 50%, 0% 0%, 0% 100%)' :
+                                   pacmanGame.pacman.direction === 'left' ? 'polygon(0% 50%, 100% 0%, 100% 100%)' :
+                                   pacmanGame.pacman.direction === 'up' ? 'polygon(50% 0%, 0% 100%, 100% 100%)' :
+                                   'polygon(50% 100%, 0% 0%, 100% 0%)',
+                          backgroundColor: '#ffff00'
+                        }} />
+                      )}
+                      {pacmanGame.ghosts.map((ghost, i) => 
+                        ghost.x === x && ghost.y === y && (
+                          <div key={i} className="absolute w-3 h-3 rounded-t-full" style={{ backgroundColor: ghost.color }}>
+                            <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full" />
+                            <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-white rounded-full" />
+                          </div>
+                        )
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+              
+              {/* Game Over / Win Overlay */}
+              {(pacmanGame.gameOver || pacmanGame.gameWon) && (
+                <div className="absolute inset-0 bg-black/80 flex items-center justify-center rounded-lg">
+                  <div className="text-center">
+                    <p className={`text-2xl font-bold ${pacmanGame.gameWon ? 'text-yellow-400' : 'text-red-500'}`}>
+                      {pacmanGame.gameWon ? 'YOU WIN!' : 'GAME OVER'}
+                    </p>
+                    <p className="text-yellow-400 mt-2">Score: {pacmanGame.score}</p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Touch Controls */}
+          <div className="pb-8 px-4">
+            <div className="flex flex-col items-center gap-2">
+              {/* Up */}
+              <button
+                onClick={() => {
+                  if (pacmanGame.gameOver || pacmanGame.gameWon) return
+                  const newY = Math.max(0, pacmanGame.pacman.y - 1)
+                  const newDots = pacmanGame.dots.map(row => [...row])
+                  let newScore = pacmanGame.score
+                  if (newDots[newY][pacmanGame.pacman.x]) {
+                    newDots[newY][pacmanGame.pacman.x] = false
+                    newScore += 10
+                  }
+                  const gameWon = newDots.every(row => row.every(dot => !dot))
+                  const newGhosts = pacmanGame.ghosts.map(ghost => {
+                    const moves = [
+                      { x: Math.max(0, ghost.x - 1), y: ghost.y },
+                      { x: Math.min(14, ghost.x + 1), y: ghost.y },
+                      { x: ghost.x, y: Math.max(0, ghost.y - 1) },
+                      { x: ghost.x, y: Math.min(14, ghost.y + 1) }
+                    ]
+                    return { ...ghost, ...moves[Math.floor(Math.random() * moves.length)] }
+                  })
+                  const gameOver = newGhosts.some(g => g.x === pacmanGame.pacman.x && g.y === newY)
+                  setPacmanGame({ ...pacmanGame, pacman: { ...pacmanGame.pacman, y: newY, direction: 'up' }, ghosts: newGhosts, dots: newDots, score: newScore, gameOver, gameWon })
+                }}
+                className="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center active:bg-yellow-500/40"
+              >
+                <ChevronUp className="w-8 h-8 text-yellow-400" />
+              </button>
+              
+              {/* Left, Down, Right */}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    if (pacmanGame.gameOver || pacmanGame.gameWon) return
+                    const newX = Math.max(0, pacmanGame.pacman.x - 1)
+                    const newDots = pacmanGame.dots.map(row => [...row])
+                    let newScore = pacmanGame.score
+                    if (newDots[pacmanGame.pacman.y][newX]) {
+                      newDots[pacmanGame.pacman.y][newX] = false
+                      newScore += 10
+                    }
+                    const gameWon = newDots.every(row => row.every(dot => !dot))
+                    const newGhosts = pacmanGame.ghosts.map(ghost => {
+                      const moves = [
+                        { x: Math.max(0, ghost.x - 1), y: ghost.y },
+                        { x: Math.min(14, ghost.x + 1), y: ghost.y },
+                        { x: ghost.x, y: Math.max(0, ghost.y - 1) },
+                        { x: ghost.x, y: Math.min(14, ghost.y + 1) }
+                      ]
+                      return { ...ghost, ...moves[Math.floor(Math.random() * moves.length)] }
+                    })
+                    const gameOver = newGhosts.some(g => g.x === newX && g.y === pacmanGame.pacman.y)
+                    setPacmanGame({ ...pacmanGame, pacman: { ...pacmanGame.pacman, x: newX, direction: 'left' }, ghosts: newGhosts, dots: newDots, score: newScore, gameOver, gameWon })
+                  }}
+                  className="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center active:bg-yellow-500/40"
+                >
+                  <ChevronLeft className="w-8 h-8 text-yellow-400" />
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (pacmanGame.gameOver || pacmanGame.gameWon) return
+                    const newY = Math.min(14, pacmanGame.pacman.y + 1)
+                    const newDots = pacmanGame.dots.map(row => [...row])
+                    let newScore = pacmanGame.score
+                    if (newDots[newY][pacmanGame.pacman.x]) {
+                      newDots[newY][pacmanGame.pacman.x] = false
+                      newScore += 10
+                    }
+                    const gameWon = newDots.every(row => row.every(dot => !dot))
+                    const newGhosts = pacmanGame.ghosts.map(ghost => {
+                      const moves = [
+                        { x: Math.max(0, ghost.x - 1), y: ghost.y },
+                        { x: Math.min(14, ghost.x + 1), y: ghost.y },
+                        { x: ghost.x, y: Math.max(0, ghost.y - 1) },
+                        { x: ghost.x, y: Math.min(14, ghost.y + 1) }
+                      ]
+                      return { ...ghost, ...moves[Math.floor(Math.random() * moves.length)] }
+                    })
+                    const gameOver = newGhosts.some(g => g.x === pacmanGame.pacman.x && g.y === newY)
+                    setPacmanGame({ ...pacmanGame, pacman: { ...pacmanGame.pacman, y: newY, direction: 'down' }, ghosts: newGhosts, dots: newDots, score: newScore, gameOver, gameWon })
+                  }}
+                  className="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center active:bg-yellow-500/40"
+                >
+                  <ChevronDown className="w-8 h-8 text-yellow-400" />
+                </button>
+                
+                <button
+                  onClick={() => {
+                    if (pacmanGame.gameOver || pacmanGame.gameWon) return
+                    const newX = Math.min(14, pacmanGame.pacman.x + 1)
+                    const newDots = pacmanGame.dots.map(row => [...row])
+                    let newScore = pacmanGame.score
+                    if (newDots[pacmanGame.pacman.y][newX]) {
+                      newDots[pacmanGame.pacman.y][newX] = false
+                      newScore += 10
+                    }
+                    const gameWon = newDots.every(row => row.every(dot => !dot))
+                    const newGhosts = pacmanGame.ghosts.map(ghost => {
+                      const moves = [
+                        { x: Math.max(0, ghost.x - 1), y: ghost.y },
+                        { x: Math.min(14, ghost.x + 1), y: ghost.y },
+                        { x: ghost.x, y: Math.max(0, ghost.y - 1) },
+                        { x: ghost.x, y: Math.min(14, ghost.y + 1) }
+                      ]
+                      return { ...ghost, ...moves[Math.floor(Math.random() * moves.length)] }
+                    })
+                    const gameOver = newGhosts.some(g => g.x === newX && g.y === pacmanGame.pacman.y)
+                    setPacmanGame({ ...pacmanGame, pacman: { ...pacmanGame.pacman, x: newX, direction: 'right' }, ghosts: newGhosts, dots: newDots, score: newScore, gameOver, gameWon })
+                  }}
+                  className="w-14 h-14 bg-yellow-500/20 rounded-xl flex items-center justify-center active:bg-yellow-500/40"
+                >
+                  <ChevronRight className="w-8 h-8 text-yellow-400" />
+                </button>
+              </div>
+            </div>
+            
+            {/* Home Indicator */}
+            <div className="mt-4 mx-auto w-36 h-1 bg-white/40 rounded-full" />
           </div>
         </div>
       )
@@ -4496,6 +4761,179 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
+        {/* Pac-Man Game Window */}
+        {pacmanWindow.isOpen && !pacmanWindow.isMinimized && (
+          <div
+            className={`absolute w-[380px] ${focusedWindow === 'pacman' ? 'z-40' : 'z-20'}`}
+            onClick={() => focusWindow('pacman')}
+            style={{ left: pacmanPosition.x, top: pacmanPosition.y }}
+          >
+            <div className="bg-black rounded-xl shadow-2xl overflow-hidden border border-yellow-500/30">
+              {/* Title Bar */}
+              <div
+                onMouseDown={(e) => { focusWindow('pacman'); handleMouseDown('pacman', e); }}
+                className="h-[52px] bg-gradient-to-b from-[#1a1a00] to-black flex items-center px-4 gap-4 border-b border-yellow-500/20 cursor-grab active:cursor-grabbing"
+              >
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setPacmanWindow({ isOpen: false, isMinimized: false })}
+                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                  />
+                  <button
+                    onClick={() => setPacmanWindow({ ...pacmanWindow, isMinimized: true })}
+                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                  />
+                  <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
+                </div>
+                <span className="flex-1 text-center text-sm font-bold text-yellow-400">PAC-MAN</span>
+              </div>
+
+              {/* Game Area */}
+              <div className="p-4">
+                {/* Score */}
+                <div className="flex justify-between items-center mb-3">
+                  <span className="text-yellow-400 font-bold text-lg">SCORE: {pacmanGame.score}</span>
+                  {(pacmanGame.gameOver || pacmanGame.gameWon) && (
+                    <button
+                      onClick={() => setPacmanGame({
+                        pacman: { x: 7, y: 7, direction: 'right' },
+                        ghosts: [
+                          { x: 1, y: 1, color: '#ff0000' },
+                          { x: 13, y: 1, color: '#00ffff' },
+                          { x: 1, y: 13, color: '#ffb8ff' },
+                          { x: 13, y: 13, color: '#ffb852' }
+                        ],
+                        dots: Array.from({ length: 15 }, (_, y) => 
+                          Array.from({ length: 15 }, (_, x) => 
+                            !((x === 7 && y === 7) || (x < 2 && y < 2) || (x > 12 && y < 2) || (x < 2 && y > 12) || (x > 12 && y > 12))
+                          )
+                        ),
+                        score: 0,
+                        gameOver: false,
+                        gameWon: false
+                      })}
+                      className="px-3 py-1 bg-yellow-500 text-black font-bold rounded hover:bg-yellow-400 transition-colors text-sm"
+                    >
+                      PLAY AGAIN
+                    </button>
+                  )}
+                </div>
+
+                {/* Game Board */}
+                <div 
+                  className="relative bg-[#000033] rounded-lg p-2 border-2 border-blue-600"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (pacmanGame.gameOver || pacmanGame.gameWon) return
+                    let newX = pacmanGame.pacman.x
+                    let newY = pacmanGame.pacman.y
+                    let newDir = pacmanGame.pacman.direction
+                    
+                    switch(e.key) {
+                      case 'ArrowUp': newY = Math.max(0, newY - 1); newDir = 'up'; break
+                      case 'ArrowDown': newY = Math.min(14, newY + 1); newDir = 'down'; break
+                      case 'ArrowLeft': newX = Math.max(0, newX - 1); newDir = 'left'; break
+                      case 'ArrowRight': newX = Math.min(14, newX + 1); newDir = 'right'; break
+                      default: return
+                    }
+                    e.preventDefault()
+                    
+                    const newDots = pacmanGame.dots.map(row => [...row])
+                    let newScore = pacmanGame.score
+                    if (newDots[newY][newX]) {
+                      newDots[newY][newX] = false
+                      newScore += 10
+                    }
+                    
+                    const gameWon = newDots.every(row => row.every(dot => !dot))
+                    const gameOver = pacmanGame.ghosts.some(g => g.x === newX && g.y === newY)
+                    
+                    // Move ghosts randomly
+                    const newGhosts = pacmanGame.ghosts.map(ghost => {
+                      const moves = [
+                        { x: Math.max(0, ghost.x - 1), y: ghost.y },
+                        { x: Math.min(14, ghost.x + 1), y: ghost.y },
+                        { x: ghost.x, y: Math.max(0, ghost.y - 1) },
+                        { x: ghost.x, y: Math.min(14, ghost.y + 1) }
+                      ]
+                      const move = moves[Math.floor(Math.random() * moves.length)]
+                      return { ...ghost, ...move }
+                    })
+                    
+                    const hitGhost = newGhosts.some(g => g.x === newX && g.y === newY)
+                    
+                    setPacmanGame({
+                      ...pacmanGame,
+                      pacman: { x: newX, y: newY, direction: newDir },
+                      ghosts: newGhosts,
+                      dots: newDots,
+                      score: newScore,
+                      gameOver: gameOver || hitGhost,
+                      gameWon
+                    })
+                  }}
+                >
+                  <div className="grid grid-cols-15 gap-0" style={{ gridTemplateColumns: 'repeat(15, 1fr)' }}>
+                    {pacmanGame.dots.map((row, y) => 
+                      row.map((dot, x) => (
+                        <div key={`${x}-${y}`} className="w-[20px] h-[20px] flex items-center justify-center relative">
+                          {dot && <div className="w-1.5 h-1.5 bg-yellow-200 rounded-full" />}
+                          {pacmanGame.pacman.x === x && pacmanGame.pacman.y === y && (
+                            <div className={`absolute w-4 h-4 bg-yellow-400 rounded-full ${
+                              pacmanGame.pacman.direction === 'right' ? 'clip-path-pacman-right' :
+                              pacmanGame.pacman.direction === 'left' ? 'clip-path-pacman-left' :
+                              pacmanGame.pacman.direction === 'up' ? 'clip-path-pacman-up' :
+                              'clip-path-pacman-down'
+                            }`} style={{
+                              clipPath: pacmanGame.pacman.direction === 'right' ? 'polygon(100% 50%, 0% 0%, 0% 100%)' :
+                                       pacmanGame.pacman.direction === 'left' ? 'polygon(0% 50%, 100% 0%, 100% 100%)' :
+                                       pacmanGame.pacman.direction === 'up' ? 'polygon(50% 0%, 0% 100%, 100% 100%)' :
+                                       'polygon(50% 100%, 0% 0%, 100% 0%)',
+                              backgroundColor: '#ffff00'
+                            }} />
+                          )}
+                          {pacmanGame.ghosts.map((ghost, i) => 
+                            ghost.x === x && ghost.y === y && (
+                              <div key={i} className="absolute w-4 h-4 rounded-t-full" style={{ backgroundColor: ghost.color }}>
+                                <div className="absolute bottom-0 left-0 right-0 h-1 flex">
+                                  <div className="flex-1 rounded-b-full" style={{ backgroundColor: ghost.color }} />
+                                  <div className="flex-1" />
+                                  <div className="flex-1 rounded-b-full" style={{ backgroundColor: ghost.color }} />
+                                </div>
+                                <div className="absolute top-1 left-0.5 w-1.5 h-1.5 bg-white rounded-full">
+                                  <div className="absolute top-0.5 left-0.5 w-0.5 h-0.5 bg-blue-900 rounded-full" />
+                                </div>
+                                <div className="absolute top-1 right-0.5 w-1.5 h-1.5 bg-white rounded-full">
+                                  <div className="absolute top-0.5 right-0.5 w-0.5 h-0.5 bg-blue-900 rounded-full" />
+                                </div>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      ))
+                    )}
+                  </div>
+                  
+                  {/* Game Over / Win Overlay */}
+                  {(pacmanGame.gameOver || pacmanGame.gameWon) && (
+                    <div className="absolute inset-0 bg-black/80 flex items-center justify-center rounded-lg">
+                      <div className="text-center">
+                        <p className={`text-3xl font-bold ${pacmanGame.gameWon ? 'text-yellow-400' : 'text-red-500'}`}>
+                          {pacmanGame.gameWon ? 'YOU WIN!' : 'GAME OVER'}
+                        </p>
+                        <p className="text-yellow-400 mt-2">Score: {pacmanGame.score}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Controls hint */}
+                <p className="text-center text-yellow-400/60 text-xs mt-3">Use arrow keys to move. Click board to focus.</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Backgrounds Finder Window */}
         {backgroundsFolder.isOpen && !backgroundsFolder.isMinimized && (
           <div
@@ -5278,6 +5716,29 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Safari"
           onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: null }); setFocusedWindow('safari'); }}
+        />
+
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-black flex items-center justify-center">
+              <div className="relative w-8 h-8">
+                {/* Pac-Man */}
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 bg-yellow-400 rounded-full" style={{ clipPath: 'polygon(100% 50%, 0% 0%, 0% 100%)' }} />
+                {/* Dots */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 flex gap-1">
+                  <div className="w-1 h-1 bg-yellow-200 rounded-full" />
+                  <div className="w-1 h-1 bg-yellow-200 rounded-full" />
+                </div>
+                {/* Ghost */}
+                <div className="absolute right-0 top-0 w-3 h-3 bg-red-500 rounded-t-full">
+                  <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full" />
+                  <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-white rounded-full" />
+                </div>
+              </div>
+            </div>
+          }
+          label="Pac-Man"
+          onClick={() => { setPacmanWindow({ isOpen: true, isMinimized: false }); focusWindow('pacman'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
