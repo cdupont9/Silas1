@@ -2878,16 +2878,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <ChevronLeft className="w-6 h-6" />
             </button>
             <h1 className="text-yellow-400 text-xl font-bold">PAC-MAN</h1>
-            <span className="text-yellow-400 font-bold text-sm">SCORE: {pacmanScore}</span>
+            <span className="text-yellow-400 font-bold text-sm">{pacmanScore}</span>
           </div>
 
-          {/* Game Area */}
-          <div className="flex-1 flex items-center justify-center px-2 py-4">
-            <PacManGame width={320} height={192} onScoreChange={setPacmanScore} />
+          {/* Game Area - Full Screen */}
+          <div className="flex-1 flex items-center justify-center p-2">
+            <PacManGame width={350} height={450} onScoreChange={setPacmanScore} />
           </div>
 
           {/* Home Indicator */}
-          <div className="pb-4 flex justify-center">
+          <div className="pb-2 flex justify-center">
             <div className="w-36 h-1 bg-white/40 rounded-full" />
           </div>
         </div>
