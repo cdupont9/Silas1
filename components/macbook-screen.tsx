@@ -7,8 +7,7 @@
 import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { TicTacToeGame } from "./tictactoe-game"
-import { MindPuzzlesGame } from "./mind-puzzles-game"
-import { LogicGridPuzzle } from "./logic-grid-puzzle"
+import { BrainGames } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -233,7 +232,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "tictactoe" | "mindpuzzles" | "logicgrid"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "tictactoe" | "braingames"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -271,15 +270,10 @@ export function MacBookScreen() {
   const [tictactoePosition, setTictactoePosition] = useState({ x: 150, y: 60 })
   const [tictactoeScore, setTictactoeScore] = useState(0)
   
-  // Mind Puzzles game state
-  const [mindpuzzlesWindow, setMindpuzzlesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [mindpuzzlesPosition, setMindpuzzlesPosition] = useState({ x: 180, y: 80 })
-  const [mindpuzzlesScore, setMindpuzzlesScore] = useState(0)
-  
-  // Logic Grid Puzzle game state
-  const [logicgridWindow, setLogicgridWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [logicgridPosition, setLogicgridPosition] = useState({ x: 210, y: 100 })
-  const [logicgridScore, setLogicgridScore] = useState(0)
+  // Brain Games state
+  const [braingamesWindow, setBraingamesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [braingamesPosition, setBraingamesPosition] = useState({ x: 180, y: 80 })
+  const [braingamesScore, setBraingamesScore] = useState(0)
   
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -761,8 +755,7 @@ export function MacBookScreen() {
       case 'messages': position = messagesPosition; break
       case 'notes': position = notesPosition; break
       case 'tictactoe': position = tictactoePosition; break
-      case 'mindpuzzles': position = mindpuzzlesPosition; break
-      case 'logicgrid': position = logicgridPosition; break
+      case 'braingames': position = braingamesPosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -788,8 +781,7 @@ export function MacBookScreen() {
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
       case 'tictactoe': setTictactoePosition({ x: newX, y: newY }); break
-      case 'mindpuzzles': setMindpuzzlesPosition({ x: newX, y: newY }); break
-      case 'logicgrid': setLogicgridPosition({ x: newX, y: newY }); break
+      case 'braingames': setBraingamesPosition({ x: newX, y: newY }); break
     }
   }
 
@@ -1241,78 +1233,60 @@ const messageText = mobileInput.trim()
                 >
                   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
                     <style>{`
-                      @keyframes mobileTttPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
-                      .mobile-ttt-x { animation: mobileTttPulse 2s infinite ease-in-out; }
-                      .mobile-ttt-o { animation: mobileTttPulse 2s infinite ease-in-out; animation-delay: 1s; }
+                      @keyframes mTttDraw { 0% { stroke-dashoffset: 20; opacity: 0; } 50% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+                      @keyframes mTttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 8px #f472b6) drop-shadow(0 0 15px #ec4899); } }
+                      @keyframes mTttCircle { 0% { stroke-dashoffset: 40; } 100% { stroke-dashoffset: 0; } }
+                      @keyframes mTttBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+                      .m-ttt-x1 { animation: mTttDraw 1s ease-out forwards, mTttGlow 2s infinite ease-in-out; stroke-dasharray: 20; }
+                      .m-ttt-x2 { animation: mTttDraw 1s ease-out 0.5s forwards, mTttGlow 2s infinite ease-in-out 0.5s; stroke-dasharray: 20; stroke-dashoffset: 20; opacity: 0; }
+                      .m-ttt-o1 { animation: mTttCircle 1s ease-out 1s forwards, mTttGlow 2s infinite ease-in-out 1s; stroke-dasharray: 40; stroke-dashoffset: 40; }
+                      .m-ttt-o2 { animation: mTttCircle 1s ease-out 1.5s forwards, mTttGlow 2s infinite ease-in-out 1.5s; stroke-dasharray: 40; stroke-dashoffset: 40; }
+                      .m-ttt-grid { animation: mTttBounce 3s infinite ease-in-out; }
                     `}</style>
                     <rect width="100" height="100" rx="20" fill="#831843"/>
-                    <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                    <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                    <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                    <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                    <g className="mobile-ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+                    <g className="m-ttt-grid">
+                      <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                      <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                      <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                      <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                    </g>
+                    <g className="m-ttt-x1" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
                       <line x1="24" y1="24" x2="32" y2="32"/>
                       <line x1="32" y1="24" x2="24" y2="32"/>
                     </g>
-                    <circle className="mobile-ttt-o" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
-                    <g className="mobile-ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+                    <circle className="m-ttt-o1" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+                    <g className="m-ttt-x2" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
                       <line x1="68" y1="44" x2="76" y2="52"/>
                       <line x1="76" y1="44" x2="68" y2="52"/>
                     </g>
-                    <circle className="mobile-ttt-o" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+                    <circle className="m-ttt-o2" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
                   </svg>
                   <span className="text-white text-[11px] mt-1">Tic-Tac-Toe</span>
                 </button>
                 
-                {/* Mind Puzzles */}
+                {/* Brain Games */}
                 <button
-                  onClick={() => setMobileScreen('mindpuzzles')}
+                  onClick={() => setMobileScreen('braingames')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
                   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
                     <style>{`
-                      @keyframes mobileDrop { 0% { transform: translateY(-25px); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(20px); opacity: 0; } }
-                      @keyframes mobileFill { 0%, 100% { transform: scaleY(0.8); } 50% { transform: scaleY(1.2); } }
-                      @keyframes mobileDrain { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.5); } }
-                      .mobile-sand-drop { animation: mobileDrop 1.5s infinite linear; }
-                      .mobile-sand-bottom { animation: mobileFill 3s infinite ease-in-out; transform-origin: bottom; }
-                      .mobile-sand-top { animation: mobileDrain 3s infinite ease-in-out; transform-origin: top; }
+                      @keyframes mobileBrainPulse { 0%, 100% { filter: drop-shadow(0 0 5px #f472b6); } 50% { filter: drop-shadow(0 0 15px #ec4899) drop-shadow(0 0 25px #db2777); } }
+                      @keyframes mobileBrainWave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+                      .mobile-brain-glow { animation: mobileBrainPulse 2s infinite ease-in-out; }
+                      .mobile-brain-wave { animation: mobileBrainWave 3s infinite ease-in-out; }
                     `}</style>
-                    <rect width="100" height="100" rx="24" fill="#9d174d"/>
-                    <g>
-                      <path d="M35 25 Q50 50 35 75 H65 Q50 50 65 25 Z" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-                      <path className="mobile-sand-top" d="M38 28 Q50 48 62 28 Z" fill="#f472b6"/>
-                      <path className="mobile-sand-bottom" d="M42 65 Q50 58 58 65 L62 72 H38 Z" fill="#fce7f3"/>
-                      <circle className="mobile-sand-drop" cx="50" cy="48" r="1.5" fill="#fce7f3"/>
-                    </g>
-                    <path d="M32 25 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
-                    <path d="M32 75 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
-                  </svg>
-                  <span className="text-white text-[11px] mt-1">Mind</span>
-                </button>
-                
-                {/* Logic Grid Puzzles */}
-                <button
-                  onClick={() => setMobileScreen('logicgrid')}
-                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
-                >
-                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-                    <style>{`
-                      @keyframes mobileLogicPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6) drop-shadow(0 0 5px #f472b6); } 50% { filter: drop-shadow(0 0 5px #f472b6) drop-shadow(0 0 15px #f472b6); } }
-                      @keyframes mobileLogicPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #a855f7) drop-shadow(0 0 5px #a855f7); } 50% { filter: drop-shadow(0 0 5px #a855f7) drop-shadow(0 0 15px #a855f7); } }
-                      @keyframes mobileLogicPulse3 { 0%, 100% { filter: drop-shadow(0 0 2px #06b6d4) drop-shadow(0 0 5px #06b6d4); } 50% { filter: drop-shadow(0 0 5px #06b6d4) drop-shadow(0 0 15px #06b6d4); } }
-                      .mobile-logic-line1 { animation: mobileLogicPulse1 2s infinite ease-in-out; }
-                      .mobile-logic-line2 { animation: mobileLogicPulse2 2s infinite ease-in-out; animation-delay: 0.5s; }
-                      .mobile-logic-line3 { animation: mobileLogicPulse3 2s infinite ease-in-out; animation-delay: 1s; }
-                    `}</style>
-                    <rect width="100" height="100" rx="20" fill="#020617"/>
-                    <g strokeWidth="4" fill="none" strokeLinecap="round">
-                      <path d="M20 30 H80" stroke="#f472b6" className="mobile-logic-line1"/>
-                      <path d="M30 50 H70" stroke="#a855f7" className="mobile-logic-line2"/>
-                      <path d="M40 70 H60" stroke="#06b6d4" className="mobile-logic-line3"/>
+                    <rect width="100" height="100" rx="20" fill="#831843"/>
+                    <g className="mobile-brain-glow mobile-brain-wave">
+                      <path d="M50 20 C35 20 25 30 25 45 C25 55 30 60 30 65 C30 75 40 80 50 80 C60 80 70 75 70 65 C70 60 75 55 75 45 C75 30 65 20 50 20" fill="none" stroke="#f9a8d4" strokeWidth="3"/>
+                      <path d="M50 30 C45 30 40 35 40 42 C40 50 45 52 50 55 C55 52 60 50 60 42 C60 35 55 30 50 30" fill="#f472b6"/>
+                      <path d="M35 40 Q30 50 35 60" stroke="#fb7185" strokeWidth="2" fill="none"/>
+                      <path d="M65 40 Q70 50 65 60" stroke="#fb7185" strokeWidth="2" fill="none"/>
+                      <circle cx="42" cy="45" r="3" fill="#fce7f3"/>
+                      <circle cx="58" cy="45" r="3" fill="#fce7f3"/>
                     </g>
                   </svg>
-                  <span className="text-white text-[11px] mt-1">Logic</span>
+                  <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
               </div>
             </div>
@@ -3031,8 +3005,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       )
     }
 
-    // Mobile Mind Puzzles Game
-    if (mobileScreen === "mindpuzzles") {
+    // Mobile Brain Games
+    if (mobileScreen === "braingames") {
       return (
         <div className="h-screen w-full bg-gradient-to-b from-pink-950 to-black flex flex-col overflow-hidden">
           {/* Status Bar */}
@@ -3057,56 +3031,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-pink-400 text-xl font-bold drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">MIND PUZZLES</h1>
-            <span className="text-pink-400 font-bold text-sm">Score: {mindpuzzlesScore}</span>
+            <h1 className="text-pink-400 text-xl font-bold drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">BRAIN GAMES</h1>
+            <span className="text-pink-400 font-bold text-sm">Score: {braingamesScore}</span>
           </div>
 
           {/* Game Area - Full Screen */}
           <div className="flex-1 overflow-auto">
-            <MindPuzzlesGame onScoreChange={setMindpuzzlesScore} />
-          </div>
-
-          {/* Home Indicator */}
-          <div className="pb-2 flex justify-center">
-            <div className="w-36 h-1 bg-pink-400/40 rounded-full" />
-          </div>
-        </div>
-      )
-    }
-
-    // Mobile Logic Grid Puzzle Game
-    if (mobileScreen === "logicgrid") {
-      return (
-        <div className="h-screen w-full bg-gradient-to-b from-pink-950 to-black flex flex-col overflow-hidden">
-          {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-50">
-            <div className="text-white text-sm font-medium" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
-            <div className="flex items-center gap-2">
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="flex items-center">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-                </div>
-                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-              </div>
-            </div>
-          </div>
-
-          {/* Header with Back Button */}
-          <div className="pt-14 px-4 flex items-center justify-between">
-            <button
-              onClick={() => setMobileScreen('home')}
-              className="p-2 -ml-2 text-pink-400"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <h1 className="text-pink-400 text-xl font-bold drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">LOGIC PUZZLES</h1>
-            <span className="text-pink-400 font-bold text-sm">Solved: {logicgridScore}</span>
-          </div>
-
-          {/* Game Area - Full Screen */}
-          <div className="flex-1 overflow-auto">
-            <LogicGridPuzzle onScoreChange={setLogicgridScore} />
+            <BrainGames onScoreChange={setBraingamesScore} />
           </div>
 
           {/* Home Indicator */}
@@ -4815,73 +4746,37 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* Mind Puzzles Game Window */}
-        {mindpuzzlesWindow.isOpen && !mindpuzzlesWindow.isMinimized && (
+        {/* Brain Games Window */}
+        {braingamesWindow.isOpen && !braingamesWindow.isMinimized && (
           <div
-            className={`absolute ${focusedWindow === 'mindpuzzles' ? 'z-40' : 'z-20'}`}
-            onClick={() => focusWindow('mindpuzzles')}
-            style={{ left: mindpuzzlesPosition.x, top: mindpuzzlesPosition.y }}
+            className={`absolute ${focusedWindow === 'braingames' ? 'z-40' : 'z-20'}`}
+            onClick={() => focusWindow('braingames')}
+            style={{ left: braingamesPosition.x, top: braingamesPosition.y }}
           >
             <div className="bg-gradient-to-b from-pink-950 to-black rounded-xl shadow-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.2)]">
               {/* Title Bar */}
               <div
-                onMouseDown={(e) => { focusWindow('mindpuzzles'); handleMouseDown('mindpuzzles', e); }}
+                onMouseDown={(e) => { focusWindow('braingames'); handleMouseDown('braingames', e); }}
                 className="h-[52px] bg-gradient-to-b from-pink-900/50 to-pink-950 flex items-center px-4 gap-4 border-b border-pink-500/20 cursor-grab active:cursor-grabbing"
               >
                 <div className="flex gap-2">
                   <button
-                    onClick={() => setMindpuzzlesWindow({ isOpen: false, isMinimized: false })}
+                    onClick={() => setBraingamesWindow({ isOpen: false, isMinimized: false })}
                     className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
                   />
                   <button
-                    onClick={() => setMindpuzzlesWindow({ ...mindpuzzlesWindow, isMinimized: true })}
+                    onClick={() => setBraingamesWindow({ ...braingamesWindow, isMinimized: true })}
                     className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
                   />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
                 </div>
-                <span className="flex-1 text-center text-sm font-bold text-pink-400 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">MIND PUZZLES</span>
-                <span className="text-pink-400 font-bold text-sm">Score: {mindpuzzlesScore}</span>
+                <span className="flex-1 text-center text-sm font-bold text-pink-400 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">BRAIN GAMES</span>
+                <span className="text-pink-400 font-bold text-sm">Score: {braingamesScore}</span>
               </div>
 
               {/* Game Area */}
               <div className="max-h-[500px] overflow-auto">
-                <MindPuzzlesGame onScoreChange={setMindpuzzlesScore} />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Logic Grid Puzzle Game Window */}
-        {logicgridWindow.isOpen && !logicgridWindow.isMinimized && (
-          <div
-            className={`absolute ${focusedWindow === 'logicgrid' ? 'z-40' : 'z-20'}`}
-            onClick={() => focusWindow('logicgrid')}
-            style={{ left: logicgridPosition.x, top: logicgridPosition.y }}
-          >
-            <div className="bg-gradient-to-b from-pink-950 to-black rounded-xl shadow-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.2)]">
-              {/* Title Bar */}
-              <div
-                onMouseDown={(e) => { focusWindow('logicgrid'); handleMouseDown('logicgrid', e); }}
-                className="h-[52px] bg-gradient-to-b from-pink-900/50 to-pink-950 flex items-center px-4 gap-4 border-b border-pink-500/20 cursor-grab active:cursor-grabbing"
-              >
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setLogicgridWindow({ isOpen: false, isMinimized: false })}
-                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
-                  />
-                  <button
-                    onClick={() => setLogicgridWindow({ ...logicgridWindow, isMinimized: true })}
-                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
-                  />
-                  <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
-                </div>
-                <span className="flex-1 text-center text-sm font-bold text-pink-400 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">LOGIC PUZZLES</span>
-                <span className="text-pink-400 font-bold text-sm">Solved: {logicgridScore}</span>
-              </div>
-
-              {/* Game Area */}
-              <div className="max-h-[500px] overflow-auto">
-                <LogicGridPuzzle onScoreChange={setLogicgridScore} />
+                <BrainGames onScoreChange={setBraingamesScore} />
               </div>
             </div>
           </div>
@@ -5703,25 +5598,33 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           icon={
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
               <style>{`
-                @keyframes tttPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
-                .ttt-x { animation: tttPulse 2s infinite ease-in-out; }
-                .ttt-o { animation: tttPulse 2s infinite ease-in-out; animation-delay: 1s; }
+                @keyframes tttDraw { 0% { stroke-dashoffset: 20; opacity: 0; } 50% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
+                @keyframes tttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 8px #f472b6) drop-shadow(0 0 15px #ec4899); } }
+                @keyframes tttCircle { 0% { stroke-dashoffset: 40; } 100% { stroke-dashoffset: 0; } }
+                @keyframes tttBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+                .ttt-x1 { animation: tttDraw 1s ease-out forwards, tttGlow 2s infinite ease-in-out; stroke-dasharray: 20; }
+                .ttt-x2 { animation: tttDraw 1s ease-out 0.5s forwards, tttGlow 2s infinite ease-in-out 0.5s; stroke-dasharray: 20; stroke-dashoffset: 20; opacity: 0; }
+                .ttt-o1 { animation: tttCircle 1s ease-out 1s forwards, tttGlow 2s infinite ease-in-out 1s; stroke-dasharray: 40; stroke-dashoffset: 40; }
+                .ttt-o2 { animation: tttCircle 1s ease-out 1.5s forwards, tttGlow 2s infinite ease-in-out 1.5s; stroke-dasharray: 40; stroke-dashoffset: 40; }
+                .ttt-grid { animation: tttBounce 3s infinite ease-in-out; }
               `}</style>
               <rect width="100" height="100" rx="20" fill="#831843"/>
-              <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-              <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-              <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-              <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-              <g className="ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+              <g className="ttt-grid">
+                <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+              </g>
+              <g className="ttt-x1" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
                 <line x1="24" y1="24" x2="32" y2="32"/>
                 <line x1="32" y1="24" x2="24" y2="32"/>
               </g>
-              <circle className="ttt-o" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
-              <g className="ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+              <circle className="ttt-o1" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+              <g className="ttt-x2" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
                 <line x1="68" y1="44" x2="76" y2="52"/>
                 <line x1="76" y1="44" x2="68" y2="52"/>
               </g>
-              <circle className="ttt-o" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+              <circle className="ttt-o2" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
             </svg>
           }
           label="Tic-Tac-Toe"
@@ -5732,49 +5635,24 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           icon={
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
               <style>{`
-                @keyframes drop { 0% { transform: translateY(-25px); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(20px); opacity: 0; } }
-                @keyframes fill { 0%, 100% { transform: scaleY(0.8); } 50% { transform: scaleY(1.2); } }
-                @keyframes drain { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.5); } }
-                .dock-sand-drop { animation: drop 1.5s infinite linear; }
-                .dock-sand-bottom { animation: fill 3s infinite ease-in-out; transform-origin: bottom; }
-                .dock-sand-top { animation: drain 3s infinite ease-in-out; transform-origin: top; }
+                @keyframes brainPulse { 0%, 100% { filter: drop-shadow(0 0 5px #f472b6); } 50% { filter: drop-shadow(0 0 15px #ec4899) drop-shadow(0 0 25px #db2777); } }
+                @keyframes brainWave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2px); } }
+                .dock-brain-glow { animation: brainPulse 2s infinite ease-in-out; }
+                .dock-brain-wave { animation: brainWave 3s infinite ease-in-out; }
               `}</style>
-              <rect width="100" height="100" rx="24" fill="#9d174d"/>
-              <g>
-                <path d="M35 25 Q50 50 35 75 H65 Q50 50 65 25 Z" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-                <path className="dock-sand-top" d="M38 28 Q50 48 62 28 Z" fill="#f472b6"/>
-                <path className="dock-sand-bottom" d="M42 65 Q50 58 58 65 L62 72 H38 Z" fill="#fce7f3"/>
-                <circle className="dock-sand-drop" cx="50" cy="48" r="1.5" fill="#fce7f3"/>
-              </g>
-              <path d="M32 25 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
-              <path d="M32 75 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
-            </svg>
-          }
-          label="Mind Puzzles"
-          onClick={() => { setMindpuzzlesWindow({ isOpen: true, isMinimized: false }); focusWindow('mindpuzzles'); }}
-        />
-
-        <DockIcon
-          icon={
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-              <style>{`
-                @keyframes logicPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6) drop-shadow(0 0 5px #f472b6); } 50% { filter: drop-shadow(0 0 5px #f472b6) drop-shadow(0 0 15px #f472b6); } }
-                @keyframes logicPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #a855f7) drop-shadow(0 0 5px #a855f7); } 50% { filter: drop-shadow(0 0 5px #a855f7) drop-shadow(0 0 15px #a855f7); } }
-                @keyframes logicPulse3 { 0%, 100% { filter: drop-shadow(0 0 2px #06b6d4) drop-shadow(0 0 5px #06b6d4); } 50% { filter: drop-shadow(0 0 5px #06b6d4) drop-shadow(0 0 15px #06b6d4); } }
-                .logic-line1 { animation: logicPulse1 2s infinite ease-in-out; }
-                .logic-line2 { animation: logicPulse2 2s infinite ease-in-out; animation-delay: 0.5s; }
-                .logic-line3 { animation: logicPulse3 2s infinite ease-in-out; animation-delay: 1s; }
-              `}</style>
-              <rect width="100" height="100" rx="20" fill="#020617"/>
-              <g strokeWidth="4" fill="none" strokeLinecap="round">
-                <path d="M20 30 H80" stroke="#f472b6" className="logic-line1"/>
-                <path d="M30 50 H70" stroke="#a855f7" className="logic-line2"/>
-                <path d="M40 70 H60" stroke="#06b6d4" className="logic-line3"/>
+              <rect width="100" height="100" rx="20" fill="#831843"/>
+              <g className="dock-brain-glow dock-brain-wave">
+                <path d="M50 20 C35 20 25 30 25 45 C25 55 30 60 30 65 C30 75 40 80 50 80 C60 80 70 75 70 65 C70 60 75 55 75 45 C75 30 65 20 50 20" fill="none" stroke="#f9a8d4" strokeWidth="3"/>
+                <path d="M50 30 C45 30 40 35 40 42 C40 50 45 52 50 55 C55 52 60 50 60 42 C60 35 55 30 50 30" fill="#f472b6"/>
+                <path d="M35 40 Q30 50 35 60" stroke="#fb7185" strokeWidth="2" fill="none"/>
+                <path d="M65 40 Q70 50 65 60" stroke="#fb7185" strokeWidth="2" fill="none"/>
+                <circle cx="42" cy="45" r="3" fill="#fce7f3"/>
+                <circle cx="58" cy="45" r="3" fill="#fce7f3"/>
               </g>
             </svg>
           }
-          label="Logic Puzzles"
-          onClick={() => { setLogicgridWindow({ isOpen: true, isMinimized: false }); focusWindow('logicgrid'); }}
+          label="Brain Games"
+          onClick={() => { setBraingamesWindow({ isOpen: true, isMinimized: false }); focusWindow('braingames'); }}
         />
 
         <DockIcon
