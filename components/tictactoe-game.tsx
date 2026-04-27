@@ -172,8 +172,7 @@ export function TicTacToeGame({ onScoreChange }: TicTacToeGameProps) {
     <div className="flex flex-col items-center gap-4 p-4 select-none">
       {/* Header */}
       <div className="text-center">
-        <h2 className="text-pink-400 font-bold text-lg tracking-wide">UX DESIGN EDITION</h2>
-        <p className="text-pink-300/60 text-xs mt-1">Cursor vs Wireframe</p>
+        <h2 className="text-pink-400 font-bold text-lg tracking-wide">YOU VS CHARITY</h2>
       </div>
 
       {/* Scoreboard */}
@@ -186,7 +185,7 @@ export function TicTacToeGame({ onScoreChange }: TicTacToeGameProps) {
         <div className="text-pink-500/30 text-2xl font-light">vs</div>
         <div className="text-center">
           <div className="w-8 h-8 mx-auto mb-1">{UX_SYMBOLS.O}</div>
-          <p className="text-pink-300 text-xs">AI</p>
+          <p className="text-pink-300 text-xs">Charity</p>
           <p className="text-pink-400 font-bold text-xl">{aiScore}</p>
         </div>
       </div>
@@ -234,7 +233,7 @@ export function TicTacToeGame({ onScoreChange }: TicTacToeGameProps) {
               }`}
             >
               {gameStatus === "playerWin" && "You Win!"}
-              {gameStatus === "aiWin" && "AI Wins!"}
+              {gameStatus === "aiWin" && "Charity Wins!"}
               {gameStatus === "draw" && "Draw!"}
             </p>
             <button
@@ -249,7 +248,7 @@ export function TicTacToeGame({ onScoreChange }: TicTacToeGameProps) {
 
       {/* Status */}
       <p className="text-pink-300/60 text-sm">
-        {gameStatus === "playing" && (isPlayerTurn ? "Your turn - tap to place cursor" : "AI is thinking...")}
+        {gameStatus === "playing" && (isPlayerTurn ? "Your turn" : "Charity is thinking...")}
       </p>
 
       {/* Reset Button */}

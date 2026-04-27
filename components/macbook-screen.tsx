@@ -1215,19 +1215,13 @@ const messageText = mobileInput.trim()
                 {/* Tic-Tac-Toe */}
                 <button
                   onClick={() => setMobileScreen('tictactoe')}
-                  className="bg-pink-950 rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform border border-pink-500/30"
+                  className="rounded-xl flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform overflow-hidden"
                 >
-                  <svg viewBox="0 0 48 48" className="w-12 h-12">
-                    {/* Grid */}
-                    <line x1="16" y1="8" x2="16" y2="40" stroke="#ec4899" strokeWidth="2" />
-                    <line x1="32" y1="8" x2="32" y2="40" stroke="#ec4899" strokeWidth="2" />
-                    <line x1="8" y1="16" x2="40" y2="16" stroke="#ec4899" strokeWidth="2" />
-                    <line x1="8" y1="32" x2="40" y2="32" stroke="#ec4899" strokeWidth="2" />
-                    {/* X (cursor) */}
-                    <path d="M10 10 L10 22 L14 18 L18 26 L22 24 L18 16 L24 16 L10 10Z" fill="#f472b6" />
-                    {/* O (wireframe) */}
-                    <rect x="26" y="20" width="12" height="12" rx="2" fill="none" stroke="#f472b6" strokeWidth="1.5" strokeDasharray="2 1" />
-                  </svg>
+                  <img 
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%283%29-NfMBQSz9qzQFiO1cdpfX3JFPRXysLV.png" 
+                    alt="Tic-Tac-Toe" 
+                    className="w-[72px] h-[72px] rounded-xl" 
+                  />
                 </button>
               </div>
             </div>
@@ -5458,19 +5452,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-pink-600 to-pink-900 flex items-center justify-center">
-              <svg viewBox="0 0 48 48" className="w-10 h-10">
-                {/* Grid */}
-                <line x1="16" y1="8" x2="16" y2="40" stroke="#fce7f3" strokeWidth="2" />
-                <line x1="32" y1="8" x2="32" y2="40" stroke="#fce7f3" strokeWidth="2" />
-                <line x1="8" y1="16" x2="40" y2="16" stroke="#fce7f3" strokeWidth="2" />
-                <line x1="8" y1="32" x2="40" y2="32" stroke="#fce7f3" strokeWidth="2" />
-                {/* X (cursor) */}
-                <path d="M10 10 L10 22 L14 18 L18 26 L22 24 L18 16 L24 16 L10 10Z" fill="#fce7f3" />
-                {/* O (wireframe) */}
-                <rect x="26" y="20" width="12" height="12" rx="2" fill="none" stroke="#fce7f3" strokeWidth="1.5" strokeDasharray="2 1" />
-              </svg>
-            </div>
+            <img 
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%283%29-NfMBQSz9qzQFiO1cdpfX3JFPRXysLV.png" 
+              alt="Tic-Tac-Toe" 
+              className="w-12 h-12 rounded-xl shadow-lg" 
+            />
           }
           label="Tic-Tac-Toe"
           onClick={() => { setTictactoeWindow({ isOpen: true, isMinimized: false }); focusWindow('tictactoe'); }}
