@@ -3043,7 +3043,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
 
           {/* Game Area - Full Screen */}
-          <div className="flex-1 overflow-auto">
+          <div className="flex-1 overflow-auto scrollbar-none">
             <BrainGames onScoreChange={setBraingamesScore} />
           </div>
 
@@ -4782,7 +4782,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
 
               {/* Game Area */}
-              <div className="max-h-[500px] overflow-auto">
+              <div className="max-h-[500px] overflow-auto scrollbar-none">
                 <BrainGames onScoreChange={setBraingamesScore} />
               </div>
             </div>
