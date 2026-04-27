@@ -226,11 +226,11 @@ const categoryInfo: Record<PuzzleCategory, { name: string; icon: string; descrip
   }
 }
 
-interface LogicPuzzlesGameProps {
+interface MindPuzzlesGameProps {
   onScoreChange?: (score: number) => void
 }
 
-export function LogicPuzzlesGame({ onScoreChange }: LogicPuzzlesGameProps) {
+export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
   const [selectedCategory, setSelectedCategory] = useState<PuzzleCategory | null>(null)
   const [showInstructions, setShowInstructions] = useState(false)
   const [currentPuzzle, setCurrentPuzzle] = useState<Puzzle | null>(null)
@@ -295,7 +295,7 @@ export function LogicPuzzlesGame({ onScoreChange }: LogicPuzzlesGameProps) {
         {/* Header */}
         <div className="text-center mb-2">
           <h2 className="text-pink-400 font-bold text-xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
-            LOGIC PUZZLES
+            MIND PUZZLES
           </h2>
           <p className="text-pink-300/60 text-xs mt-1">Choose a category</p>
         </div>
