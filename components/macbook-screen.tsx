@@ -1252,9 +1252,25 @@ const messageText = mobileInput.trim()
                   onClick={() => setMobileScreen('mindpuzzles')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] shadow-lg bg-gradient-to-br from-pink-600 via-pink-500 to-fuchsia-600 flex items-center justify-center border border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-                    <span className="text-2xl">🧠</span>
-                  </div>
+                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+                    <style>{`
+                      @keyframes mobileDrop { 0% { transform: translateY(-25px); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(20px); opacity: 0; } }
+                      @keyframes mobileFill { 0%, 100% { transform: scaleY(0.8); } 50% { transform: scaleY(1.2); } }
+                      @keyframes mobileDrain { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.5); } }
+                      .mobile-sand-drop { animation: mobileDrop 1.5s infinite linear; }
+                      .mobile-sand-bottom { animation: mobileFill 3s infinite ease-in-out; transform-origin: bottom; }
+                      .mobile-sand-top { animation: mobileDrain 3s infinite ease-in-out; transform-origin: top; }
+                    `}</style>
+                    <rect width="100" height="100" rx="24" fill="#9d174d"/>
+                    <g>
+                      <path d="M35 25 Q50 50 35 75 H65 Q50 50 65 25 Z" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+                      <path className="mobile-sand-top" d="M38 28 Q50 48 62 28 Z" fill="#f472b6"/>
+                      <path className="mobile-sand-bottom" d="M42 65 Q50 58 58 65 L62 72 H38 Z" fill="#fce7f3"/>
+                      <circle className="mobile-sand-drop" cx="50" cy="48" r="1.5" fill="#fce7f3"/>
+                    </g>
+                    <path d="M32 25 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+                    <path d="M32 75 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+                  </svg>
                   <span className="text-white text-[11px] mt-1">Mind</span>
                 </button>
                 
@@ -5667,9 +5683,25 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl shadow-lg bg-gradient-to-br from-pink-600 via-pink-500 to-fuchsia-600 flex items-center justify-center border border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-              <span className="text-2xl">🧠</span>
-            </div>
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+              <style>{`
+                @keyframes drop { 0% { transform: translateY(-25px); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translateY(20px); opacity: 0; } }
+                @keyframes fill { 0%, 100% { transform: scaleY(0.8); } 50% { transform: scaleY(1.2); } }
+                @keyframes drain { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(0.5); } }
+                .dock-sand-drop { animation: drop 1.5s infinite linear; }
+                .dock-sand-bottom { animation: fill 3s infinite ease-in-out; transform-origin: bottom; }
+                .dock-sand-top { animation: drain 3s infinite ease-in-out; transform-origin: top; }
+              `}</style>
+              <rect width="100" height="100" rx="24" fill="#9d174d"/>
+              <g>
+                <path d="M35 25 Q50 50 35 75 H65 Q50 50 65 25 Z" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+                <path className="dock-sand-top" d="M38 28 Q50 48 62 28 Z" fill="#f472b6"/>
+                <path className="dock-sand-bottom" d="M42 65 Q50 58 58 65 L62 72 H38 Z" fill="#fce7f3"/>
+                <circle className="dock-sand-drop" cx="50" cy="48" r="1.5" fill="#fce7f3"/>
+              </g>
+              <path d="M32 25 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+              <path d="M32 75 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+            </svg>
           }
           label="Mind Puzzles"
           onClick={() => { setMindpuzzlesWindow({ isOpen: true, isMinimized: false }); focusWindow('mindpuzzles'); }}
