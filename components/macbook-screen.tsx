@@ -1181,13 +1181,8 @@ const messageText = mobileInput.trim()
                   onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-gradient-to-b from-[#fff9c4] to-[#ffeb3b] flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" className="w-8 h-8 text-[#f57c00]" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M16 4H8C6.9 4 6 4.9 6 6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/>
-                      <line x1="9" y1="8" x2="15" y2="8" strokeLinecap="round"/>
-                      <line x1="9" y1="11" x2="15" y2="11" strokeLinecap="round"/>
-                      <line x1="9" y1="14" x2="12" y2="14" strokeLinecap="round"/>
-                    </svg>
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] mt-1">Notes</span>
                 </button>
@@ -1197,12 +1192,8 @@ const messageText = mobileInput.trim()
                   onClick={() => setMobileScreen('safari')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-gradient-to-b from-[#5ac8fa] to-[#007aff] flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" className="w-9 h-9" fill="none">
-                      <circle cx="12" cy="12" r="9" stroke="white" strokeWidth="1.5"/>
-                      <polygon points="12,5 14,12 12,19 10,12" fill="white" opacity="0.9"/>
-                      <polygon points="5,12 12,10 19,12 12,14" fill="#ff3b30" opacity="0.9"/>
-                    </svg>
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] mt-1">Safari</span>
                 </button>
