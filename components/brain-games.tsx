@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle } from "lucide-react"
 
 // ============ MIND PUZZLES SECTION ============
@@ -265,35 +265,80 @@ const logicPuzzles: LogicPuzzle[] = [
 ]
 
 // ============ MAIN COMPONENT ============
-interface BrainGamesProps {
-  onScoreChange?: (score: number) => void
-}
-
 type GameMode = "menu" | "mind" | "logic"
 type MindScreen = "category" | "puzzle"
 type LogicScreen = "select" | "puzzle"
 
-export function BrainGames({ onScoreChange }: BrainGamesProps) {
-  // Main state
-  const [gameMode, setGameMode] = useState<GameMode>("menu")
-  const [totalScore, setTotalScore] = useState(0)
+export interface BrainGamesState {
+  gameMode: GameMode
+  totalScore: number
+  mindScreen: MindScreen
+  selectedMindCategory: PuzzleCategory | null
+  currentMindPuzzle: MindPuzzle | null
+  selectedMindAnswer: number | null
+  showMindResult: boolean
+  mindStreak: number
+  logicScreen: LogicScreen
+  currentLogicPuzzleId: string | null
+  logicGrid: GridCell[][]
+  logicComplete: boolean
+  logicCorrect: boolean
+  filterDifficulty: "All" | "Easy" | "Medium" | "Hard"
+}
+
+export const initialBrainGamesState: BrainGamesState = {
+  gameMode: "menu",
+  totalScore: 0,
+  mindScreen: "category",
+  selectedMindCategory: null,
+  currentMindPuzzle: null,
+  selectedMindAnswer: null,
+  showMindResult: false,
+  mindStreak: 0,
+  logicScreen: "select",
+  currentLogicPuzzleId: null,
+  logicGrid: [],
+  logicComplete: false,
+  logicCorrect: false,
+  filterDifficulty: "All"
+}
+
+interface BrainGamesProps {
+  onScoreChange?: (score: number) => void
+  gameState?: BrainGamesState
+  onGameStateChange?: (state: BrainGamesState) => void
+}
+
+export function BrainGames({ onScoreChange, gameState, onGameStateChange }: BrainGamesProps) {
+  const [localState, setLocalState] = useState<BrainGamesState>(gameState || initialBrainGamesState)
   const [showInstructions, setShowInstructions] = useState(false)
   
-  // Mind Puzzles state
-  const [mindScreen, setMindScreen] = useState<MindScreen>("category")
-  const [selectedMindCategory, setSelectedMindCategory] = useState<PuzzleCategory | null>(null)
-  const [currentMindPuzzle, setCurrentMindPuzzle] = useState<MindPuzzle | null>(null)
-  const [selectedMindAnswer, setSelectedMindAnswer] = useState<number | null>(null)
-  const [showMindResult, setShowMindResult] = useState(false)
-  const [mindStreak, setMindStreak] = useState(0)
+  // Sync with external state
+  useEffect(() => {
+    if (gameState) {
+      setLocalState(gameState)
+    }
+  }, [gameState])
   
-  // Logic Grid state
-  const [logicScreen, setLogicScreen] = useState<LogicScreen>("select")
-  const [currentLogicPuzzle, setCurrentLogicPuzzle] = useState<LogicPuzzle | null>(null)
-  const [logicGrid, setLogicGrid] = useState<GridCell[][]>([])
-  const [logicComplete, setLogicComplete] = useState(false)
-  const [logicCorrect, setLogicCorrect] = useState(false)
-  const [filterDifficulty, setFilterDifficulty] = useState<"All" | "Easy" | "Medium" | "Hard">("All")
+  const updateState = useCallback((updates: Partial<BrainGamesState>) => {
+    setLocalState(prev => {
+      const newState = { ...prev, ...updates }
+      onGameStateChange?.(newState)
+      return newState
+    })
+  }, [onGameStateChange])
+  
+  // Destructure state for easier access
+  const { 
+    gameMode, totalScore, mindScreen, selectedMindCategory, currentMindPuzzle,
+    selectedMindAnswer, showMindResult, mindStreak, logicScreen, currentLogicPuzzleId,
+    logicGrid, logicComplete, logicCorrect, filterDifficulty 
+  } = localState
+  
+  // Get current logic puzzle from ID
+  const currentLogicPuzzle = currentLogicPuzzleId 
+    ? logicPuzzles.find(p => p.id === currentLogicPuzzleId) || null 
+    : null
 
   const updateScore = (points: number) => {
     const newScore = totalScore + points

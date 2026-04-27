@@ -1,13 +1,33 @@
 "use client"
 
-import { useState, useCallback } from "react"
-
-interface TicTacToeGameProps {
-  onScoreChange?: (score: number) => void
-}
+import { useState, useCallback, useEffect } from "react"
 
 type Player = "X" | "O" | null
 type Board = Player[]
+
+export interface TicTacToeState {
+  board: Board
+  isPlayerTurn: boolean
+  playerScore: number
+  aiScore: number
+  gameStatus: "playing" | "playerWin" | "aiWin" | "draw"
+  winningLine: number[] | null
+}
+
+export const initialTicTacToeState: TicTacToeState = {
+  board: Array(9).fill(null),
+  isPlayerTurn: true,
+  playerScore: 0,
+  aiScore: 0,
+  gameStatus: "playing",
+  winningLine: null
+}
+
+interface TicTacToeGameProps {
+  onScoreChange?: (score: number) => void
+  gameState?: TicTacToeState
+  onGameStateChange?: (state: TicTacToeState) => void
+}
 
 // UX Design themed symbols
 const UX_SYMBOLS = {
@@ -52,13 +72,25 @@ const WINNING_COMBINATIONS = [
   [2, 4, 6], // anti-diagonal
 ]
 
-export function TicTacToeGame({ onScoreChange }: TicTacToeGameProps) {
-  const [board, setBoard] = useState<Board>(Array(9).fill(null))
-  const [isPlayerTurn, setIsPlayerTurn] = useState(true)
-  const [playerScore, setPlayerScore] = useState(0)
-  const [aiScore, setAiScore] = useState(0)
-  const [gameStatus, setGameStatus] = useState<"playing" | "playerWin" | "aiWin" | "draw">("playing")
-  const [winningLine, setWinningLine] = useState<number[] | null>(null)
+export function TicTacToeGame({ onScoreChange, gameState, onGameStateChange }: TicTacToeGameProps) {
+  const [localState, setLocalState] = useState<TicTacToeState>(gameState || initialTicTacToeState)
+  
+  // Sync with external state
+  useEffect(() => {
+    if (gameState) {
+      setLocalState(gameState)
+    }
+  }, [gameState])
+  
+  const updateState = useCallback((updates: Partial<TicTacToeState>) => {
+    setLocalState(prev => {
+      const newState = { ...prev, ...updates }
+      onGameStateChange?.(newState)
+      return newState
+    })
+  }, [onGameStateChange])
+  
+  const { board, isPlayerTurn, playerScore, aiScore, gameStatus, winningLine } = localState
 
   const checkWinner = useCallback((squares: Board): { winner: Player; line: number[] | null } => {
     for (const combo of WINNING_COMBINATIONS) {
@@ -109,64 +141,60 @@ export function TicTacToeGame({ onScoreChange }: TicTacToeGameProps) {
 
       const newBoard = [...board]
       newBoard[index] = "X"
-      setBoard(newBoard)
 
       const { winner, line } = checkWinner(newBoard)
       if (winner === "X") {
         const newScore = playerScore + 1
-        setPlayerScore(newScore)
-        setGameStatus("playerWin")
-        setWinningLine(line)
+        updateState({ board: newBoard, playerScore: newScore, gameStatus: "playerWin", winningLine: line })
         onScoreChange?.(newScore)
         return
       }
 
       if (isDraw(newBoard)) {
-        setGameStatus("draw")
+        updateState({ board: newBoard, gameStatus: "draw" })
         return
       }
 
-      setIsPlayerTurn(false)
+      updateState({ board: newBoard, isPlayerTurn: false })
 
       // AI move after delay
       setTimeout(() => {
         const aiMove = getAiMove(newBoard)
         const aiBoard = [...newBoard]
         aiBoard[aiMove] = "O"
-        setBoard(aiBoard)
 
         const { winner: aiWinner, line: aiLine } = checkWinner(aiBoard)
         if (aiWinner === "O") {
-          setAiScore((prev) => prev + 1)
-          setGameStatus("aiWin")
-          setWinningLine(aiLine)
+          updateState({ board: aiBoard, aiScore: aiScore + 1, gameStatus: "aiWin", winningLine: aiLine })
           return
         }
 
         if (isDraw(aiBoard)) {
-          setGameStatus("draw")
+          updateState({ board: aiBoard, gameStatus: "draw" })
           return
         }
 
-        setIsPlayerTurn(true)
+        updateState({ board: aiBoard, isPlayerTurn: true })
       }, 500)
     },
-    [board, gameStatus, isPlayerTurn, playerScore, checkWinner, isDraw, getAiMove, onScoreChange]
+    [board, gameStatus, isPlayerTurn, playerScore, aiScore, checkWinner, isDraw, getAiMove, onScoreChange, updateState]
   )
 
   const resetGame = useCallback(() => {
-    setBoard(Array(9).fill(null))
-    setIsPlayerTurn(true)
-    setGameStatus("playing")
-    setWinningLine(null)
-  }, [])
+    updateState({
+      board: Array(9).fill(null),
+      isPlayerTurn: true,
+      gameStatus: "playing",
+      winningLine: null
+    })
+  }, [updateState])
 
   const resetAll = useCallback(() => {
-    resetGame()
-    setPlayerScore(0)
-    setAiScore(0)
+    updateState({
+      ...initialTicTacToeState
+    })
     onScoreChange?.(0)
-  }, [resetGame, onScoreChange])
+  }, [updateState, onScoreChange])
 
   return (
     <div className="flex flex-col items-center gap-4 p-4 select-none">
