@@ -1203,11 +1203,8 @@ const messageText = mobileInput.trim()
                   onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-gradient-to-b from-[#6e6e6e] to-[#3a3a3a] flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" className="w-8 h-8 text-white" fill="currentColor">
-                      <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4z"/>
-                      <path d="M9 2 7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
-                    </svg>
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/590-5908700_camera-icon-ios-11-camera-icon-hd-png-b9u1osHLSOoiE66jNAWPRNxc5tCbSP.png" alt="Camera" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] mt-1">Camera</span>
                 </button>
