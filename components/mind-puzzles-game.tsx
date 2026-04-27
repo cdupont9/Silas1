@@ -292,8 +292,49 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
   if (!selectedCategory) {
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
+        {/* Animated Hourglass Icon */}
+        <div className="w-16 h-16 md:w-20 md:h-20">
+          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            <style>{`
+              @keyframes drop {
+                0% { transform: translateY(-25px); opacity: 0; }
+                20% { opacity: 1; }
+                80% { opacity: 1; }
+                100% { transform: translateY(20px); opacity: 0; }
+              }
+              @keyframes fill {
+                0%, 100% { transform: scaleY(0.8); }
+                50% { transform: scaleY(1.2); }
+              }
+              @keyframes flip {
+                0%, 85% { transform: rotate(0deg); }
+                95%, 100% { transform: rotate(180deg); }
+              }
+              @keyframes drain {
+                0%, 100% { transform: scaleY(1); }
+                50% { transform: scaleY(0.5); }
+              }
+              .sand-drop { animation: drop 1.5s infinite linear; }
+              .sand-bottom { animation: fill 3s infinite ease-in-out; transform-origin: bottom; }
+              .sand-top { animation: drain 3s infinite ease-in-out; transform-origin: top; }
+              .hourglass-body { animation: flip 6s infinite ease-in-out; transform-origin: center; }
+            `}</style>
+            <rect width="100" height="100" rx="24" fill="#9d174d"/>
+            <g className="hourglass-body">
+              <path d="M35 25 Q50 50 35 75 H65 Q50 50 65 25 Z" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round"/>
+              <path className="sand-top" d="M38 28 Q50 48 62 28 Z" fill="#f472b6"/>
+              <path className="sand-bottom" d="M42 65 Q50 58 58 65 L62 72 H38 Z" fill="#fce7f3"/>
+              <circle className="sand-drop" cx="50" cy="48" r="1.5" fill="#fce7f3"/>
+              <circle className="sand-drop" cx="50" cy="48" r="1.5" fill="#fce7f3" style={{animationDelay: '0.5s'}}/>
+              <circle className="sand-drop" cx="50" cy="48" r="1.5" fill="#fce7f3" style={{animationDelay: '1s'}}/>
+            </g>
+            <path d="M32 25 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+            <path d="M32 75 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
+          </svg>
+        </div>
+
         {/* Header */}
-        <div className="text-center mb-2">
+        <div className="text-center">
           <h2 className="text-pink-400 font-bold text-xl md:text-2xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
             MIND PUZZLES
           </h2>
