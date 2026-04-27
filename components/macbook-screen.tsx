@@ -1279,9 +1279,22 @@ const messageText = mobileInput.trim()
                   onClick={() => setMobileScreen('logicgrid')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] shadow-lg bg-gradient-to-br from-fuchsia-600 via-pink-500 to-pink-600 flex items-center justify-center border border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-                    <span className="text-2xl">🔢</span>
-                  </div>
+                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+                    <style>{`
+                      @keyframes mobileLogicPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6) drop-shadow(0 0 5px #f472b6); } 50% { filter: drop-shadow(0 0 5px #f472b6) drop-shadow(0 0 15px #f472b6); } }
+                      @keyframes mobileLogicPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #a855f7) drop-shadow(0 0 5px #a855f7); } 50% { filter: drop-shadow(0 0 5px #a855f7) drop-shadow(0 0 15px #a855f7); } }
+                      @keyframes mobileLogicPulse3 { 0%, 100% { filter: drop-shadow(0 0 2px #06b6d4) drop-shadow(0 0 5px #06b6d4); } 50% { filter: drop-shadow(0 0 5px #06b6d4) drop-shadow(0 0 15px #06b6d4); } }
+                      .mobile-logic-line1 { animation: mobileLogicPulse1 2s infinite ease-in-out; }
+                      .mobile-logic-line2 { animation: mobileLogicPulse2 2s infinite ease-in-out; animation-delay: 0.5s; }
+                      .mobile-logic-line3 { animation: mobileLogicPulse3 2s infinite ease-in-out; animation-delay: 1s; }
+                    `}</style>
+                    <rect width="100" height="100" rx="20" fill="#020617"/>
+                    <g strokeWidth="4" fill="none" strokeLinecap="round">
+                      <path d="M20 30 H80" stroke="#f472b6" className="mobile-logic-line1"/>
+                      <path d="M30 50 H70" stroke="#a855f7" className="mobile-logic-line2"/>
+                      <path d="M40 70 H60" stroke="#06b6d4" className="mobile-logic-line3"/>
+                    </g>
+                  </svg>
                   <span className="text-white text-[11px] mt-1">Logic</span>
                 </button>
               </div>
@@ -5709,9 +5722,22 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl shadow-lg bg-gradient-to-br from-fuchsia-600 via-pink-500 to-pink-600 flex items-center justify-center border border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-              <span className="text-2xl">🔢</span>
-            </div>
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+              <style>{`
+                @keyframes logicPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6) drop-shadow(0 0 5px #f472b6); } 50% { filter: drop-shadow(0 0 5px #f472b6) drop-shadow(0 0 15px #f472b6); } }
+                @keyframes logicPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #a855f7) drop-shadow(0 0 5px #a855f7); } 50% { filter: drop-shadow(0 0 5px #a855f7) drop-shadow(0 0 15px #a855f7); } }
+                @keyframes logicPulse3 { 0%, 100% { filter: drop-shadow(0 0 2px #06b6d4) drop-shadow(0 0 5px #06b6d4); } 50% { filter: drop-shadow(0 0 5px #06b6d4) drop-shadow(0 0 15px #06b6d4); } }
+                .logic-line1 { animation: logicPulse1 2s infinite ease-in-out; }
+                .logic-line2 { animation: logicPulse2 2s infinite ease-in-out; animation-delay: 0.5s; }
+                .logic-line3 { animation: logicPulse3 2s infinite ease-in-out; animation-delay: 1s; }
+              `}</style>
+              <rect width="100" height="100" rx="20" fill="#020617"/>
+              <g strokeWidth="4" fill="none" strokeLinecap="round">
+                <path d="M20 30 H80" stroke="#f472b6" className="logic-line1"/>
+                <path d="M30 50 H70" stroke="#a855f7" className="logic-line2"/>
+                <path d="M40 70 H60" stroke="#06b6d4" className="logic-line3"/>
+              </g>
+            </svg>
           }
           label="Logic Puzzles"
           onClick={() => { setLogicgridWindow({ isOpen: true, isMinimized: false }); focusWindow('logicgrid'); }}
