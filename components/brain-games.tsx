@@ -427,35 +427,7 @@ export function BrainGames({ onScoreChange }: BrainGamesProps) {
   if (gameMode === "menu") {
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
-        {/* Animated 3D Dice Icon */}
-        <div className="w-20 h-20 md:w-24 md:h-24">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-            <style>{`
-              @keyframes menuGoldPulse { 0%, 100% { stroke: #FFD700; filter: drop-shadow(0 0 2px #FFD700) drop-shadow(0 0 8px #B8860B); } 50% { stroke: #FFFACD; filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 15px #FFD700); } }
-              @keyframes menuGoldDots { 0%, 100% { fill: #FFD700; opacity: 1; } 50% { fill: #FFFACD; opacity: 0.7; } }
-              @keyframes menuDiceFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(10deg); } }
-              .menu-dice-3d { animation: menuDiceFloat 4s ease-in-out infinite; transform-origin: center; }
-              .menu-neon-gold { animation: menuGoldPulse 2s infinite ease-in-out; }
-              .menu-gold-dots { animation: menuGoldDots 2s infinite ease-in-out; }
-            `}</style>
-            <rect width="100" height="100" rx="24" fill="#1a1a2e"/>
-            <g className="menu-dice-3d">
-              <path d="M50 20 L80 35 L50 50 L20 35 Z" fill="#000" className="menu-neon-gold" strokeWidth="2"/>
-              <path d="M20 35 L50 50 V80 L20 65 Z" fill="#000" className="menu-neon-gold" strokeWidth="2"/>
-              <path d="M80 35 L50 50 V80 L80 65 Z" fill="#000" className="menu-neon-gold" strokeWidth="2"/>
-              <g className="menu-gold-dots">
-                <circle cx="50" cy="35" r="4"/>
-                <circle cx="32" cy="48" r="3"/>
-                <circle cx="42" cy="65" r="3"/>
-                <circle cx="62" cy="48" r="3"/>
-                <circle cx="68" cy="58" r="3"/>
-                <circle cx="74" cy="68" r="3"/>
-              </g>
-            </g>
-          </svg>
-        </div>
-
-        <div className="text-center">
+        <div className="text-center mt-2">
           <h2 className="text-pink-400 font-bold text-2xl md:text-3xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
             BRAIN GAMES
           </h2>
