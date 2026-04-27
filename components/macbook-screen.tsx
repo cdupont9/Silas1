@@ -6714,33 +6714,6 @@ function MeetlyCaseStudy() {
           <p className="text-black/40 text-xs">2026 Charity Dupont</p>
         </div>
       </div>
-
-      {/* Leaving Portfolio Popup */}
-      {showLeavingPopup && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl p-6 max-w-sm mx-4 shadow-2xl">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Leaving Portfolio</h3>
-            <p className="text-gray-600 mb-6">You are now leaving Charity Dupont&apos;s MacBook portfolio.</p>
-            <div className="flex gap-3">
-              <button
-                onClick={() => setShowLeavingPopup(null)}
-                className="flex-1 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200 transition-colors"
-              >
-                Cancel
-              </button>
-              <a
-                href={showLeavingPopup}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => setShowLeavingPopup(null)}
-                className="flex-1 px-4 py-2.5 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors text-center"
-              >
-                Continue
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
