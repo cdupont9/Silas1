@@ -1192,9 +1192,7 @@ const messageText = mobileInput.trim()
                   onClick={() => setMobileScreen('safari')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
-                  </div>
+                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-[60px] h-[60px] rounded-[14px] shadow-lg object-cover" />
                   <span className="text-white text-[11px] mt-1">Safari</span>
                 </button>
                 
@@ -1203,8 +1201,8 @@ const messageText = mobileInput.trim()
                   onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/590-5908700_camera-icon-ios-11-camera-icon-hd-png-b9u1osHLSOoiE66jNAWPRNxc5tCbSP.png" alt="Camera" className="w-full h-full object-cover" />
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-[#1c1c1e] flex items-center justify-center">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/590-5908700_camera-icon-ios-11-camera-icon-hd-png-b9u1osHLSOoiE66jNAWPRNxc5tCbSP.png" alt="Camera" className="w-[50px] h-[50px] object-contain" />
                   </div>
                   <span className="text-white text-[11px] mt-1">Camera</span>
                 </button>
