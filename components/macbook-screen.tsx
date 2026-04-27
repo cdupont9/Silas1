@@ -1157,71 +1157,78 @@ const messageText = mobileInput.trim()
                 {/* Photos */}
                 <button
                   onClick={() => { setViewingPhoto(null); setMobileScreen('photos'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/ios-photos-lYj3iJkf2hHIHOqn861p1PylGIHn6R.jpg" alt="Photos" className="w-full h-full object-cover" />
                   </div>
+                  <span className="text-white text-[11px] mt-1">Photos</span>
                 </button>
 
                 {/* Messages */}
                 <button
                   onClick={() => { setShowConversationList(true); setMobileScreen('messages'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMessage_logo.svg-FX2uXRLcx7RuPBmMqC6YlrYIocaLrP.png" alt="Messages" className="w-full h-full object-cover" />
                   </div>
+                  <span className="text-white text-[11px] mt-1">Messages</span>
                 </button>
 
-                {/* Notes */}
+{/* Notes */}
                 <button
                   onClick={() => { setSelectedNote(null); setMobileScreen('notes'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-12 h-12 rounded-xl overflow-hidden">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Apple_Notes_icon.svg-wp0HYRwzBWI8Kg13EG3ANIGRAlPpCw.png" alt="Notes" className="w-full h-full object-cover" />
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Notes_iOS-cIejkpE0dQHU3pQnWvocmGAqE1QJuk.png" alt="Notes" className="w-full h-full object-cover" />
                   </div>
+                  <span className="text-white text-[11px] mt-1">Notes</span>
                 </button>
 
-                {/* Safari */}
+{/* Safari */}
                 <button
-                  onClick={() => { setMobileSafariUrl(''); setMobileScreen('safari'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
+                  onClick={() => setMobileScreen('safari')}
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-12 h-12 rounded-xl overflow-hidden">
-                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/j1r7jahhhucj79l3dnbd0dn0k2-3fb52544f2e99df722dce90caa4b32b1-T7rKdRYThUXJQGjNmhkR6JwltwBGHG.png" alt="Safari" className="w-full h-full object-cover" />
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Safari_browser_logo.svg-5PNYe0CY1rJ4dILcNpV2VxBJQvQiRA.png" alt="Safari" className="w-full h-full object-cover" />
                   </div>
+                  <span className="text-white text-[11px] mt-1">Safari</span>
                 </button>
                 
                 {/* Camera */}
                 <button
                   onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-12 h-12 rounded-xl overflow-hidden">
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/590-5908700_camera-icon-ios-11-camera-icon-hd-png-b9u1osHLSOoiE66jNAWPRNxc5tCbSP.png" alt="Camera" className="w-full h-full object-cover" />
                   </div>
+                  <span className="text-white text-[11px] mt-1">Camera</span>
                 </button>
 
                 {/* About */}
                 <button
                   onClick={() => setMobileScreen('about')}
-                  className="bg-white/95 backdrop-blur-xl rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform"
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
+                  <img src={MEMOJI_URL} alt="About" className="w-[60px] h-[60px] rounded-[14px] shadow-lg object-cover" />
+                  <span className="text-white text-[11px] mt-1">About</span>
                 </button>
                 
                 {/* Tic-Tac-Toe */}
                 <button
                   onClick={() => setMobileScreen('tictactoe')}
-                  className="rounded-xl flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform overflow-hidden"
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
                   <img 
                     src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%283%29-NfMBQSz9qzQFiO1cdpfX3JFPRXysLV.png" 
                     alt="Tic-Tac-Toe" 
-                    className="w-[72px] h-[72px] rounded-xl" 
+                    className="w-[60px] h-[60px] rounded-[14px] shadow-lg" 
                   />
+                  <span className="text-white text-[11px] mt-1">Game</span>
                 </button>
               </div>
             </div>
