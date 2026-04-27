@@ -231,7 +231,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "pacman"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -268,9 +268,6 @@ export function MacBookScreen() {
   const [pacmanWindow, setPacmanWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [pacmanPosition, setPacmanPosition] = useState({ x: 150, y: 60 })
   const [pacmanScore, setPacmanScore] = useState(0)
-  
-  // Resume preview state
-  const [showResumePreview, setShowResumePreview] = useState(false)
   
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -845,7 +842,13 @@ const messageText = mobileInput.trim()
   }
 
   const openCaseStudy = (project: string) => {
-    // Check if this case study is already minimized - if so, restore it
+    // Check if this case study is already open (and not minimized) - just focus it
+    if (openCaseStudies[project]?.isOpen && !openCaseStudies[project]?.isMinimized) {
+      setFocusedWindow(`safari-${project}`)
+      return
+    }
+    
+    // Check if this case study is minimized - restore it
     if (openCaseStudies[project]?.isMinimized) {
       setOpenCaseStudies(prev => ({
         ...prev,
@@ -2136,8 +2139,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">RESUME</p>
                 </div>
-                <button 
-                  onClick={() => setShowResumePreview(true)}
+                <a 
+                  href={RESUME_PDF_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="px-4 py-3 flex items-center gap-3 border-b border-gray-100 active:bg-gray-50 w-full text-left"
                 >
                   <div className="w-8 h-8 bg-[#007aff] rounded-lg flex items-center justify-center">
@@ -2148,7 +2153,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <p className="text-[15px] text-[#007aff]">View Resume</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
-                </button>
+                </a>
                 <a 
                   href={RESUME_PDF_URL}
                   download="Charity_Dupont_Resume.pdf"
@@ -2166,29 +2171,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           </div>
 
-          {/* Mobile Resume Preview Modal */}
-          {showResumePreview && (
-            <div className="fixed inset-0 z-[200] flex flex-col bg-black">
-              <div className="h-14 bg-[#1c1c1e] flex items-center justify-between px-4 flex-shrink-0">
-                <button onClick={() => setShowResumePreview(false)} className="text-[#007aff] text-[17px]">
-                  Done
-                </button>
-                <span className="text-white text-[17px] font-medium">Resume</span>
-                <a 
-                  href={RESUME_PDF_URL}
-                  download="Charity_Dupont_Resume.pdf"
-                  className="text-[#007aff] text-[17px]"
-                >
-                  Download
-                </a>
-              </div>
-              <iframe
-                src={`${RESUME_PDF_URL}#toolbar=0`}
-                className="flex-1 w-full bg-white"
-                title="Resume Preview"
-              />
-            </div>
-          )}
+          
 
           {/* Home Indicator */}
           <div className="bg-[#f2f2f7] py-2">
