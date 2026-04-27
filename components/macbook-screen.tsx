@@ -1239,11 +1239,28 @@ const messageText = mobileInput.trim()
                   onClick={() => setMobileScreen('tictactoe')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <img 
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%283%29-NfMBQSz9qzQFiO1cdpfX3JFPRXysLV.png" 
-                    alt="Tic-Tac-Toe" 
-                    className="w-[60px] h-[60px] rounded-[14px] shadow-lg" 
-                  />
+                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+                    <style>{`
+                      @keyframes mobileTttPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+                      .mobile-ttt-x { animation: mobileTttPulse 2s infinite ease-in-out; }
+                      .mobile-ttt-o { animation: mobileTttPulse 2s infinite ease-in-out; animation-delay: 1s; }
+                    `}</style>
+                    <rect width="100" height="100" rx="20" fill="#831843"/>
+                    <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                    <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                    <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                    <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                    <g className="mobile-ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+                      <line x1="24" y1="24" x2="32" y2="32"/>
+                      <line x1="32" y1="24" x2="24" y2="32"/>
+                    </g>
+                    <circle className="mobile-ttt-o" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+                    <g className="mobile-ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+                      <line x1="68" y1="44" x2="76" y2="52"/>
+                      <line x1="76" y1="44" x2="68" y2="52"/>
+                    </g>
+                    <circle className="mobile-ttt-o" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+                  </svg>
                   <span className="text-white text-[11px] mt-1">Tic-Tac-Toe</span>
                 </button>
                 
@@ -5684,11 +5701,28 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%283%29-NfMBQSz9qzQFiO1cdpfX3JFPRXysLV.png" 
-              alt="Tic-Tac-Toe" 
-              className="w-12 h-12 rounded-xl shadow-lg" 
-            />
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+              <style>{`
+                @keyframes tttPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+                .ttt-x { animation: tttPulse 2s infinite ease-in-out; }
+                .ttt-o { animation: tttPulse 2s infinite ease-in-out; animation-delay: 1s; }
+              `}</style>
+              <rect width="100" height="100" rx="20" fill="#831843"/>
+              <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+              <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+              <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+              <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+              <g className="ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+                <line x1="24" y1="24" x2="32" y2="32"/>
+                <line x1="32" y1="24" x2="24" y2="32"/>
+              </g>
+              <circle className="ttt-o" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+              <g className="ttt-x" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+                <line x1="68" y1="44" x2="76" y2="52"/>
+                <line x1="76" y1="44" x2="68" y2="52"/>
+              </g>
+              <circle className="ttt-o" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+            </svg>
           }
           label="Tic-Tac-Toe"
           onClick={() => { setTictactoeWindow({ isOpen: true, isMinimized: false }); focusWindow('tictactoe'); }}
