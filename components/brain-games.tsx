@@ -342,7 +342,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
   const updateScore = (points: number) => {
     const newScore = totalScore + points
-    setTotalScore(newScore)
+    updateState({ totalScore: newScore })
     onScoreChange?.(newScore)
   }
 
@@ -358,31 +358,40 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
   }
 
   const selectMindCategory = (category: PuzzleCategory) => {
-    setSelectedMindCategory(category)
-    setCurrentMindPuzzle(generateMindPuzzle(category))
-    setSelectedMindAnswer(null)
-    setShowMindResult(false)
-    setMindScreen("puzzle")
+    updateState({
+      selectedMindCategory: category,
+      currentMindPuzzle: generateMindPuzzle(category),
+      selectedMindAnswer: null,
+      showMindResult: false,
+      mindScreen: "puzzle"
+    })
   }
 
   const handleMindAnswer = (index: number) => {
     if (showMindResult) return
-    setSelectedMindAnswer(index)
-    setShowMindResult(true)
     
-    if (currentMindPuzzle && index === currentMindPuzzle.correctAnswer) {
-      updateScore(1)
-      setMindStreak(prev => prev + 1)
+    const isCorrect = currentMindPuzzle && index === currentMindPuzzle.correctAnswer
+    if (isCorrect) {
+      const newScore = totalScore + 1
+      updateState({ 
+        selectedMindAnswer: index, 
+        showMindResult: true, 
+        mindStreak: mindStreak + 1,
+        totalScore: newScore
+      })
+      onScoreChange?.(newScore)
     } else {
-      setMindStreak(0)
+      updateState({ selectedMindAnswer: index, showMindResult: true, mindStreak: 0 })
     }
   }
 
   const nextMindPuzzle = () => {
     if (selectedMindCategory) {
-      setCurrentMindPuzzle(generateMindPuzzle(selectedMindCategory))
-      setSelectedMindAnswer(null)
-      setShowMindResult(false)
+      updateState({
+        currentMindPuzzle: generateMindPuzzle(selectedMindCategory),
+        selectedMindAnswer: null,
+        showMindResult: false
+      })
     }
   }
 
@@ -396,24 +405,30 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     const newGrid: GridCell[][] = Array(size).fill(null).map(() =>
       Array(size).fill(null).map(() => ({ value: "empty" as const }))
     )
-    setLogicGrid(newGrid)
-    setLogicComplete(false)
-    setLogicCorrect(false)
+    updateState({ logicGrid: newGrid, logicComplete: false, logicCorrect: false })
   }
 
   const selectLogicPuzzle = (puzzle: LogicPuzzle) => {
-    setCurrentLogicPuzzle(puzzle)
-    initializeLogicGrid(puzzle)
-    setLogicScreen("puzzle")
+    const size = puzzle.categories[0].items.length
+    const newGrid: GridCell[][] = Array(size).fill(null).map(() =>
+      Array(size).fill(null).map(() => ({ value: "empty" as const }))
+    )
+    updateState({ 
+      currentLogicPuzzleId: puzzle.id, 
+      logicGrid: newGrid, 
+      logicComplete: false, 
+      logicCorrect: false,
+      logicScreen: "puzzle" 
+    })
   }
 
   const cycleLogicCell = (row: number, col: number) => {
     if (logicComplete) return
-    const newGrid = [...logicGrid]
+    const newGrid = logicGrid.map(r => r.map(c => ({ ...c })))
     const currentValue = newGrid[row][col].value
     const nextValue = currentValue === "empty" ? "x" : currentValue === "x" ? "o" : "empty"
     newGrid[row][col] = { value: nextValue }
-    setLogicGrid(newGrid)
+    updateState({ logicGrid: newGrid })
   }
 
   const checkLogicSolution = () => {
@@ -425,7 +440,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     
     for (let row = 0; row < size; row++) {
       const oCount = logicGrid[row].filter(cell => cell.value === "o").length
-      if (oCount !== 1) { setLogicComplete(true); setLogicCorrect(false); return }
+      if (oCount !== 1) { updateState({ logicComplete: true, logicCorrect: false }); return }
     }
     
     for (let col = 0; col < size; col++) {
@@ -433,7 +448,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
       for (let row = 0; row < size; row++) {
         if (logicGrid[row][col].value === "o") oCount++
       }
-      if (oCount !== 1) { setLogicComplete(true); setLogicCorrect(false); return }
+      if (oCount !== 1) { updateState({ logicComplete: true, logicCorrect: false }); return }
     }
     
     let correct = true
@@ -448,22 +463,18 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
       if (!correct) break
     }
     
-    setLogicComplete(true)
-    setLogicCorrect(correct)
-    
     if (correct) {
       const points = currentLogicPuzzle.difficulty === "Hard" ? 3 : currentLogicPuzzle.difficulty === "Medium" ? 2 : 1
-      updateScore(points)
+      const newScore = totalScore + points
+      updateState({ logicComplete: true, logicCorrect: true, totalScore: newScore })
+      onScoreChange?.(newScore)
+    } else {
+      updateState({ logicComplete: true, logicCorrect: false })
     }
   }
 
   const backToMenu = () => {
-    setGameMode("menu")
-    setMindScreen("category")
-    setLogicScreen("select")
-    setSelectedMindCategory(null)
-    setCurrentMindPuzzle(null)
-    setCurrentLogicPuzzle(null)
+    updateState({ gameMode: "menu" })
   }
 
   // ============ RENDER ============
@@ -490,7 +501,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         {/* Game Selection */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
           <button
-            onClick={() => setGameMode("mind")}
+            onClick={() => updateState({ gameMode: "mind" })}
             className="flex flex-col items-center gap-3 p-6 bg-gradient-to-br from-pink-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
           >
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
@@ -513,7 +524,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </button>
 
           <button
-            onClick={() => setGameMode("logic")}
+            onClick={() => updateState({ gameMode: "logic" })}
             className="flex flex-col items-center gap-3 p-6 bg-gradient-to-br from-fuchsia-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
           >
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
@@ -614,7 +625,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
         <div className="w-full flex items-center justify-between">
-          <button onClick={() => setMindScreen("category")} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
+          <button onClick={() => updateState({ mindScreen: "category" })} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
             <ChevronLeft className="w-5 h-5" /> Back
           </button>
           <span className="text-pink-400 font-semibold">{selectedMindCategory && mindCategoryInfo[selectedMindCategory].name}</span>
@@ -691,7 +702,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           {(["All", "Easy", "Medium", "Hard"] as const).map((diff) => (
             <button
               key={diff}
-              onClick={() => setFilterDifficulty(diff)}
+              onClick={() => updateState({ filterDifficulty: diff })}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 filterDifficulty === diff
                   ? "bg-pink-500 text-white"
@@ -744,7 +755,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     return (
       <div className="flex flex-col items-center gap-3 p-3 md:p-6 w-full max-w-3xl mx-auto">
         <div className="w-full flex items-center justify-between">
-          <button onClick={() => { setLogicScreen("select"); setCurrentLogicPuzzle(null); setLogicComplete(false); }} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
+          <button onClick={() => updateState({ logicScreen: "select", logicComplete: false })} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
             <ChevronLeft className="w-5 h-5" /> Back
           </button>
           <div className="text-center">
