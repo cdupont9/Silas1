@@ -269,11 +269,13 @@ export function MacBookScreen() {
   const [tictactoeWindow, setTictactoeWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [tictactoePosition, setTictactoePosition] = useState({ x: 150, y: 60 })
   const [tictactoeScore, setTictactoeScore] = useState(0)
+  const [tictactoeGameState, setTictactoeGameState] = useState<TicTacToeState>(initialTicTacToeState)
   
   // Brain Games state
   const [braingamesWindow, setBraingamesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [braingamesPosition, setBraingamesPosition] = useState({ x: 180, y: 80 })
   const [braingamesScore, setBraingamesScore] = useState(0)
+  const [braingamesGameState, setBraingamesGameState] = useState<BrainGamesState>(initialBrainGamesState)
   
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -3001,7 +3003,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
           {/* Game Area - Full Screen */}
           <div className="flex-1 flex items-center justify-center overflow-auto">
-            <TicTacToeGame onScoreChange={setTictactoeScore} />
+            <TicTacToeGame onScoreChange={setTictactoeScore} gameState={tictactoeGameState} onGameStateChange={setTictactoeGameState} />
           </div>
 
           {/* Home Indicator */}
@@ -3044,7 +3046,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
           {/* Game Area - Full Screen */}
           <div className="flex-1 overflow-auto scrollbar-none">
-            <BrainGames onScoreChange={setBraingamesScore} />
+            <BrainGames onScoreChange={setBraingamesScore} gameState={braingamesGameState} onGameStateChange={setBraingamesGameState} />
           </div>
 
           {/* Home Indicator */}
@@ -4748,7 +4750,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
 
               {/* Game Area */}
-              <TicTacToeGame onScoreChange={setTictactoeScore} />
+              <TicTacToeGame onScoreChange={setTictactoeScore} gameState={tictactoeGameState} onGameStateChange={setTictactoeGameState} />
             </div>
           </div>
         )}
@@ -4783,7 +4785,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
               {/* Game Area */}
               <div className="max-h-[500px] overflow-auto scrollbar-none">
-                <BrainGames onScoreChange={setBraingamesScore} />
+                <BrainGames onScoreChange={setBraingamesScore} gameState={braingamesGameState} onGameStateChange={setBraingamesGameState} />
               </div>
             </div>
           </div>
