@@ -1233,33 +1233,33 @@ const messageText = mobileInput.trim()
                 >
                   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
                     <style>{`
-                      @keyframes mTttDraw { 0% { stroke-dashoffset: 20; opacity: 0; } 50% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-                      @keyframes mTttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 8px #f472b6) drop-shadow(0 0 15px #ec4899); } }
-                      @keyframes mTttCircle { 0% { stroke-dashoffset: 40; } 100% { stroke-dashoffset: 0; } }
-                      @keyframes mTttBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-                      .m-ttt-x1 { animation: mTttDraw 1s ease-out forwards, mTttGlow 2s infinite ease-in-out; stroke-dasharray: 20; }
-                      .m-ttt-x2 { animation: mTttDraw 1s ease-out 0.5s forwards, mTttGlow 2s infinite ease-in-out 0.5s; stroke-dasharray: 20; stroke-dashoffset: 20; opacity: 0; }
-                      .m-ttt-o1 { animation: mTttCircle 1s ease-out 1s forwards, mTttGlow 2s infinite ease-in-out 1s; stroke-dasharray: 40; stroke-dashoffset: 40; }
-                      .m-ttt-o2 { animation: mTttCircle 1s ease-out 1.5s forwards, mTttGlow 2s infinite ease-in-out 1.5s; stroke-dasharray: 40; stroke-dashoffset: 40; }
-                      .m-ttt-grid { animation: mTttBounce 3s infinite ease-in-out; }
+                      @keyframes mTttMove1 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, 0); } 66% { transform: translate(24px, 24px); } }
+                      @keyframes mTttMove2 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-24px, 24px); } 66% { transform: translate(0, 24px); } }
+                      @keyframes mTttMove3 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(0, -24px); } 66% { transform: translate(-24px, -24px); } }
+                      @keyframes mTttMove4 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, -24px); } 66% { transform: translate(24px, 0); } }
+                      @keyframes mTttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 6px #ec4899); } }
+                      .m-ttt-piece1 { animation: mTttMove1 4s infinite ease-in-out, mTttGlow 2s infinite; }
+                      .m-ttt-piece2 { animation: mTttMove2 4s infinite ease-in-out 0.5s, mTttGlow 2s infinite 0.5s; }
+                      .m-ttt-piece3 { animation: mTttMove3 4s infinite ease-in-out 1s, mTttGlow 2s infinite 1s; }
+                      .m-ttt-piece4 { animation: mTttMove4 4s infinite ease-in-out 1.5s, mTttGlow 2s infinite 1.5s; }
                     `}</style>
                     <rect width="100" height="100" rx="20" fill="#831843"/>
-                    <g className="m-ttt-grid">
+                    <g>
                       <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                       <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                       <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                       <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                     </g>
-                    <g className="m-ttt-x1" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+                    <g className="m-ttt-piece1" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
                       <line x1="24" y1="24" x2="32" y2="32"/>
                       <line x1="32" y1="24" x2="24" y2="32"/>
                     </g>
-                    <circle className="m-ttt-o1" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
-                    <g className="m-ttt-x2" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
-                      <line x1="68" y1="44" x2="76" y2="52"/>
-                      <line x1="76" y1="44" x2="68" y2="52"/>
+                    <circle className="m-ttt-piece2" cx="50" cy="28" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
+                    <g className="m-ttt-piece3" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
+                      <line x1="68" y1="68" x2="76" y2="76"/>
+                      <line x1="76" y1="68" x2="68" y2="76"/>
                     </g>
-                    <circle className="m-ttt-o2" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+                    <circle className="m-ttt-piece4" cx="28" cy="50" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
                   </svg>
                   <span className="text-white text-[11px] mt-1">Tic-Tac-Toe</span>
                 </button>
@@ -5598,33 +5598,33 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           icon={
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
               <style>{`
-                @keyframes tttDraw { 0% { stroke-dashoffset: 20; opacity: 0; } 50% { opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 1; } }
-                @keyframes tttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 8px #f472b6) drop-shadow(0 0 15px #ec4899); } }
-                @keyframes tttCircle { 0% { stroke-dashoffset: 40; } 100% { stroke-dashoffset: 0; } }
-                @keyframes tttBounce { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-                .ttt-x1 { animation: tttDraw 1s ease-out forwards, tttGlow 2s infinite ease-in-out; stroke-dasharray: 20; }
-                .ttt-x2 { animation: tttDraw 1s ease-out 0.5s forwards, tttGlow 2s infinite ease-in-out 0.5s; stroke-dasharray: 20; stroke-dashoffset: 20; opacity: 0; }
-                .ttt-o1 { animation: tttCircle 1s ease-out 1s forwards, tttGlow 2s infinite ease-in-out 1s; stroke-dasharray: 40; stroke-dashoffset: 40; }
-                .ttt-o2 { animation: tttCircle 1s ease-out 1.5s forwards, tttGlow 2s infinite ease-in-out 1.5s; stroke-dasharray: 40; stroke-dashoffset: 40; }
-                .ttt-grid { animation: tttBounce 3s infinite ease-in-out; }
+                @keyframes tttMove1 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, 0); } 66% { transform: translate(24px, 24px); } }
+                @keyframes tttMove2 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-24px, 24px); } 66% { transform: translate(0, 24px); } }
+                @keyframes tttMove3 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(0, -24px); } 66% { transform: translate(-24px, -24px); } }
+                @keyframes tttMove4 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, -24px); } 66% { transform: translate(24px, 0); } }
+                @keyframes tttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 6px #ec4899); } }
+                .ttt-piece1 { animation: tttMove1 4s infinite ease-in-out, tttGlow 2s infinite; }
+                .ttt-piece2 { animation: tttMove2 4s infinite ease-in-out 0.5s, tttGlow 2s infinite 0.5s; }
+                .ttt-piece3 { animation: tttMove3 4s infinite ease-in-out 1s, tttGlow 2s infinite 1s; }
+                .ttt-piece4 { animation: tttMove4 4s infinite ease-in-out 1.5s, tttGlow 2s infinite 1.5s; }
               `}</style>
               <rect width="100" height="100" rx="20" fill="#831843"/>
-              <g className="ttt-grid">
+              <g>
                 <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                 <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                 <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                 <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
               </g>
-              <g className="ttt-x1" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
+              <g className="ttt-piece1" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
                 <line x1="24" y1="24" x2="32" y2="32"/>
                 <line x1="32" y1="24" x2="24" y2="32"/>
               </g>
-              <circle className="ttt-o1" cx="50" cy="28" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
-              <g className="ttt-x2" stroke="#f472b6" strokeWidth="4" strokeLinecap="round">
-                <line x1="68" y1="44" x2="76" y2="52"/>
-                <line x1="76" y1="44" x2="68" y2="52"/>
+              <circle className="ttt-piece2" cx="50" cy="28" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
+              <g className="ttt-piece3" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
+                <line x1="68" y1="68" x2="76" y2="76"/>
+                <line x1="76" y1="68" x2="68" y2="76"/>
               </g>
-              <circle className="ttt-o2" cx="28" cy="72" r="6" fill="none" stroke="#fb7185" strokeWidth="3"/>
+              <circle className="ttt-piece4" cx="28" cy="50" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
             </svg>
           }
           label="Tic-Tac-Toe"
