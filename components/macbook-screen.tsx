@@ -6,7 +6,7 @@
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
-import { PacManGame } from "./pacman-game"
+import { TicTacToeGame } from "./tictactoe-game"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -231,7 +231,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "pacman"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "tictactoe"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -264,10 +264,10 @@ export function MacBookScreen() {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
   
-  // Pac-Man game state
-  const [pacmanWindow, setPacmanWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [pacmanPosition, setPacmanPosition] = useState({ x: 150, y: 60 })
-  const [pacmanScore, setPacmanScore] = useState(0)
+  // Tic-Tac-Toe game state
+  const [tictactoeWindow, setTictactoeWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [tictactoePosition, setTictactoePosition] = useState({ x: 150, y: 60 })
+  const [tictactoeScore, setTictactoeScore] = useState(0)
   
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -748,7 +748,7 @@ export function MacBookScreen() {
       case 'backgrounds': position = backgroundsPosition; break
       case 'messages': position = messagesPosition; break
       case 'notes': position = notesPosition; break
-      case 'pacman': position = pacmanPosition; break
+      case 'tictactoe': position = tictactoePosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -773,7 +773,7 @@ export function MacBookScreen() {
       case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
-      case 'pacman': setPacmanPosition({ x: newX, y: newY }); break
+      case 'tictactoe': setTictactoePosition({ x: newX, y: newY }); break
     }
   }
 
@@ -1212,16 +1212,22 @@ const messageText = mobileInput.trim()
                   <img src={MEMOJI_URL} alt="About" className="w-12 h-12 rounded-xl object-cover" />
                 </button>
                 
-                {/* Pac-Man */}
+                {/* Tic-Tac-Toe */}
                 <button
-                  onClick={() => setMobileScreen('pacman')}
-                  className="bg-black rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform border border-yellow-500/30"
+                  onClick={() => setMobileScreen('tictactoe')}
+                  className="bg-pink-950 rounded-xl p-3 flex items-center justify-center shadow-lg active:scale-[0.98] transition-transform border border-pink-500/30"
                 >
-                  <img 
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pngimg.com%20-%20pacman_PNG15-szYyqp90fmny052iob40sjYjmBQtkv.png" 
-                    alt="Pac-Man" 
-                    className="w-12 h-12 object-contain" 
-                  />
+                  <svg viewBox="0 0 48 48" className="w-12 h-12">
+                    {/* Grid */}
+                    <line x1="16" y1="8" x2="16" y2="40" stroke="#ec4899" strokeWidth="2" />
+                    <line x1="32" y1="8" x2="32" y2="40" stroke="#ec4899" strokeWidth="2" />
+                    <line x1="8" y1="16" x2="40" y2="16" stroke="#ec4899" strokeWidth="2" />
+                    <line x1="8" y1="32" x2="40" y2="32" stroke="#ec4899" strokeWidth="2" />
+                    {/* X (cursor) */}
+                    <path d="M10 10 L10 22 L14 18 L18 26 L22 24 L18 16 L24 16 L10 10Z" fill="#f472b6" />
+                    {/* O (wireframe) */}
+                    <rect x="26" y="20" width="12" height="12" rx="2" fill="none" stroke="#f472b6" strokeWidth="1.5" strokeDasharray="2 1" />
+                  </svg>
                 </button>
               </div>
             </div>
@@ -2897,10 +2903,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       )
     }
 
-    // Mobile Pac-Man Game
-    if (mobileScreen === "pacman") {
+    // Mobile Tic-Tac-Toe Game
+    if (mobileScreen === "tictactoe") {
       return (
-        <div className="h-screen w-full bg-black flex flex-col overflow-hidden">
+        <div className="h-screen w-full bg-gradient-to-b from-pink-950 to-black flex flex-col overflow-hidden">
           {/* Status Bar */}
           <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-50">
             <div className="text-white text-sm font-medium" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
@@ -2919,22 +2925,22 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="pt-14 px-4 flex items-center justify-between">
             <button
               onClick={() => setMobileScreen('home')}
-              className="p-2 -ml-2 text-yellow-400"
+              className="p-2 -ml-2 text-pink-400"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
-            <h1 className="text-yellow-400 text-xl font-bold">PAC-MAN</h1>
-            <span className="text-yellow-400 font-bold text-sm">{pacmanScore}</span>
+            <h1 className="text-pink-400 text-xl font-bold">TIC-TAC-TOE</h1>
+            <span className="text-pink-400 font-bold text-sm">Wins: {tictactoeScore}</span>
           </div>
 
           {/* Game Area - Full Screen */}
-          <div className="flex-1 flex items-center justify-center p-2">
-            <PacManGame width={350} height={450} onScoreChange={setPacmanScore} />
+          <div className="flex-1 flex items-center justify-center overflow-auto">
+            <TicTacToeGame onScoreChange={setTictactoeScore} />
           </div>
 
           {/* Home Indicator */}
           <div className="pb-2 flex justify-center">
-            <div className="w-36 h-1 bg-white/40 rounded-full" />
+            <div className="w-36 h-1 bg-pink-400/40 rounded-full" />
           </div>
         </div>
       )
@@ -4604,39 +4610,36 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* Pac-Man Game Window */}
-        {pacmanWindow.isOpen && !pacmanWindow.isMinimized && (
+        {/* Tic-Tac-Toe Game Window */}
+        {tictactoeWindow.isOpen && !tictactoeWindow.isMinimized && (
           <div
-            className={`absolute ${focusedWindow === 'pacman' ? 'z-40' : 'z-20'}`}
-            onClick={() => focusWindow('pacman')}
-            style={{ left: pacmanPosition.x, top: pacmanPosition.y }}
+            className={`absolute ${focusedWindow === 'tictactoe' ? 'z-40' : 'z-20'}`}
+            onClick={() => focusWindow('tictactoe')}
+            style={{ left: tictactoePosition.x, top: tictactoePosition.y }}
           >
-            <div className="bg-black rounded-xl shadow-2xl overflow-hidden border border-yellow-500/30">
+            <div className="bg-gradient-to-b from-pink-950 to-black rounded-xl shadow-2xl overflow-hidden border border-pink-500/30">
               {/* Title Bar */}
               <div
-                onMouseDown={(e) => { focusWindow('pacman'); handleMouseDown('pacman', e); }}
-                className="h-[52px] bg-gradient-to-b from-[#1a1a00] to-black flex items-center px-4 gap-4 border-b border-yellow-500/20 cursor-grab active:cursor-grabbing"
+                onMouseDown={(e) => { focusWindow('tictactoe'); handleMouseDown('tictactoe', e); }}
+                className="h-[52px] bg-gradient-to-b from-pink-900/50 to-pink-950 flex items-center px-4 gap-4 border-b border-pink-500/20 cursor-grab active:cursor-grabbing"
               >
                 <div className="flex gap-2">
                   <button
-                    onClick={() => setPacmanWindow({ isOpen: false, isMinimized: false })}
+                    onClick={() => setTictactoeWindow({ isOpen: false, isMinimized: false })}
                     className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
                   />
                   <button
-                    onClick={() => setPacmanWindow({ ...pacmanWindow, isMinimized: true })}
+                    onClick={() => setTictactoeWindow({ ...tictactoeWindow, isMinimized: true })}
                     className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
                   />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
                 </div>
-                <span className="flex-1 text-center text-sm font-bold text-yellow-400">PAC-MAN</span>
-                <span className="text-yellow-400 font-bold text-sm">SCORE: {pacmanScore}</span>
+                <span className="flex-1 text-center text-sm font-bold text-pink-400">TIC-TAC-TOE</span>
+                <span className="text-pink-400 font-bold text-sm">Wins: {tictactoeScore}</span>
               </div>
 
               {/* Game Area */}
-              <div className="p-4">
-                <PacManGame width={400} height={240} onScoreChange={setPacmanScore} />
-                <p className="text-center text-yellow-400/60 text-xs mt-2">Use arrow keys to move</p>
-              </div>
+              <TicTacToeGame onScoreChange={setTictactoeScore} />
             </div>
           </div>
         )}
@@ -5455,16 +5458,22 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-black flex items-center justify-center">
-              <img 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/pngimg.com%20-%20pacman_PNG15-szYyqp90fmny052iob40sjYjmBQtkv.png" 
-                alt="Pac-Man" 
-                className="w-10 h-10 object-contain" 
-              />
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-pink-600 to-pink-900 flex items-center justify-center">
+              <svg viewBox="0 0 48 48" className="w-10 h-10">
+                {/* Grid */}
+                <line x1="16" y1="8" x2="16" y2="40" stroke="#fce7f3" strokeWidth="2" />
+                <line x1="32" y1="8" x2="32" y2="40" stroke="#fce7f3" strokeWidth="2" />
+                <line x1="8" y1="16" x2="40" y2="16" stroke="#fce7f3" strokeWidth="2" />
+                <line x1="8" y1="32" x2="40" y2="32" stroke="#fce7f3" strokeWidth="2" />
+                {/* X (cursor) */}
+                <path d="M10 10 L10 22 L14 18 L18 26 L22 24 L18 16 L24 16 L10 10Z" fill="#fce7f3" />
+                {/* O (wireframe) */}
+                <rect x="26" y="20" width="12" height="12" rx="2" fill="none" stroke="#fce7f3" strokeWidth="1.5" strokeDasharray="2 1" />
+              </svg>
             </div>
           }
-          label="Pac-Man"
-          onClick={() => { setPacmanWindow({ isOpen: true, isMinimized: false }); focusWindow('pacman'); }}
+          label="Tic-Tac-Toe"
+          onClick={() => { setTictactoeWindow({ isOpen: true, isMinimized: false }); focusWindow('tictactoe'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
