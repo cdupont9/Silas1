@@ -1192,7 +1192,7 @@ const messageText = mobileInput.trim()
                   onClick={() => setMobileScreen('safari')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-white">
                     <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/safari-Q8mjePrKGLdGaTiCMgFiFwXcFXAFka.svg" alt="Safari" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] mt-1">Safari</span>
