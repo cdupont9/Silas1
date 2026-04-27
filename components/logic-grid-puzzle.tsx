@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle, Lightbulb } from "lucide-react"
+import { useState } from "react"
+import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle } from "lucide-react"
 
 interface GridCell {
   value: "empty" | "x" | "o"
@@ -16,11 +16,11 @@ interface Puzzle {
     items: string[]
   }[]
   clues: string[]
-  solution: Record<string, string> // e.g., { "Alice": "Red", "Bob": "Blue" }
+  solution: Record<string, string>
 }
 
-// Generate different puzzle types
 const puzzles: Puzzle[] = [
+  // EASY PUZZLES (3x3)
   {
     id: "pets-1",
     title: "Pet Owners",
@@ -52,37 +52,6 @@ const puzzles: Puzzle[] = [
     solution: { "Emma": "Blue", "Jack": "Red", "Lily": "Green" }
   },
   {
-    id: "jobs-1",
-    title: "Career Day",
-    difficulty: "Medium",
-    categories: [
-      { name: "Person", items: ["Dan", "Eve", "Frank", "Grace"] },
-      { name: "Job", items: ["Doctor", "Teacher", "Artist", "Chef"] }
-    ],
-    clues: [
-      "Dan is not the teacher or the chef.",
-      "Eve works in a hospital.",
-      "The artist's name starts with G.",
-      "Frank prepares meals for a living."
-    ],
-    solution: { "Dan": "Teacher", "Eve": "Doctor", "Frank": "Chef", "Grace": "Artist" }
-  },
-  {
-    id: "houses-1",
-    title: "Neighborhood",
-    difficulty: "Medium",
-    categories: [
-      { name: "Person", items: ["Amy", "Ben", "Cara"] },
-      { name: "House Color", items: ["White", "Yellow", "Blue"] }
-    ],
-    clues: [
-      "Amy does not live in the yellow house.",
-      "Ben's house is not white.",
-      "Cara lives in the blue house."
-    ],
-    solution: { "Amy": "White", "Ben": "Yellow", "Cara": "Blue" }
-  },
-  {
     id: "sports-1",
     title: "Sports Day",
     difficulty: "Easy",
@@ -111,6 +80,148 @@ const puzzles: Puzzle[] = [
       "Rose loves pizza."
     ],
     solution: { "Pat": "Salad", "Quinn": "Burger", "Rose": "Pizza" }
+  },
+  // MEDIUM PUZZLES (4x4)
+  {
+    id: "jobs-1",
+    title: "Career Day",
+    difficulty: "Medium",
+    categories: [
+      { name: "Person", items: ["Dan", "Eve", "Frank", "Grace"] },
+      { name: "Job", items: ["Doctor", "Teacher", "Artist", "Chef"] }
+    ],
+    clues: [
+      "Dan is not the teacher or the chef.",
+      "Eve works in a hospital.",
+      "The artist's name starts with G.",
+      "Frank prepares meals for a living."
+    ],
+    solution: { "Dan": "Teacher", "Eve": "Doctor", "Frank": "Chef", "Grace": "Artist" }
+  },
+  {
+    id: "houses-1",
+    title: "Neighborhood",
+    difficulty: "Medium",
+    categories: [
+      { name: "Person", items: ["Amy", "Ben", "Cara", "Derek"] },
+      { name: "House", items: ["White", "Yellow", "Blue", "Red"] }
+    ],
+    clues: [
+      "Amy does not live in the yellow or red house.",
+      "Ben's house is not white or blue.",
+      "Cara lives in the blue house.",
+      "Derek's house is red."
+    ],
+    solution: { "Amy": "White", "Ben": "Yellow", "Cara": "Blue", "Derek": "Red" }
+  },
+  {
+    id: "instruments-1",
+    title: "Music Class",
+    difficulty: "Medium",
+    categories: [
+      { name: "Student", items: ["Hana", "Ivan", "Julia", "Kyle"] },
+      { name: "Instrument", items: ["Piano", "Guitar", "Violin", "Drums"] }
+    ],
+    clues: [
+      "Hana plays a string instrument but not the guitar.",
+      "Ivan is the loudest player in class.",
+      "Julia does not play piano or drums.",
+      "Kyle plays a keyboard instrument."
+    ],
+    solution: { "Hana": "Violin", "Ivan": "Drums", "Julia": "Guitar", "Kyle": "Piano" }
+  },
+  // HARD PUZZLES (5x5)
+  {
+    id: "vacation-1",
+    title: "Vacation Plans",
+    difficulty: "Hard",
+    categories: [
+      { name: "Person", items: ["Anna", "Brian", "Clara", "David", "Elena"] },
+      { name: "Destination", items: ["Paris", "Tokyo", "Sydney", "Rome", "London"] }
+    ],
+    clues: [
+      "Anna is not going to an Asian or Australian city.",
+      "Brian wants to see the Eiffel Tower.",
+      "Clara's destination is in Europe but not in France or Italy.",
+      "David is visiting the largest city in Japan.",
+      "Elena has never been to English-speaking countries.",
+      "The person going to Rome has a name starting with A."
+    ],
+    solution: { "Anna": "Rome", "Brian": "Paris", "Clara": "London", "David": "Tokyo", "Elena": "Sydney" }
+  },
+  {
+    id: "books-1",
+    title: "Book Club",
+    difficulty: "Hard",
+    categories: [
+      { name: "Reader", items: ["Fiona", "George", "Helen", "Ian", "Jenny"] },
+      { name: "Genre", items: ["Mystery", "Romance", "Sci-Fi", "Fantasy", "History"] }
+    ],
+    clues: [
+      "Fiona only reads non-fiction books.",
+      "George loves stories set in the future.",
+      "Helen's favorite genre involves magic and mythical creatures.",
+      "Ian enjoys solving puzzles in his books.",
+      "Jenny is not interested in mystery or sci-fi.",
+      "The romance reader's name has 5 letters."
+    ],
+    solution: { "Fiona": "History", "George": "Sci-Fi", "Helen": "Fantasy", "Ian": "Mystery", "Jenny": "Romance" }
+  },
+  {
+    id: "coffee-1",
+    title: "Coffee Orders",
+    difficulty: "Hard",
+    categories: [
+      { name: "Customer", items: ["Kate", "Leo", "Maya", "Noah", "Olivia"] },
+      { name: "Drink", items: ["Latte", "Espresso", "Mocha", "Cappuccino", "Americano"] }
+    ],
+    clues: [
+      "Kate orders something with chocolate.",
+      "Leo prefers his coffee black without milk.",
+      "Maya's drink has the most milk foam.",
+      "Noah does not drink latte, mocha, or cappuccino.",
+      "Olivia's drink name starts with the same letter as hers.",
+      "The espresso drinker's name has 3 letters."
+    ],
+    solution: { "Kate": "Mocha", "Leo": "Espresso", "Maya": "Cappuccino", "Noah": "Americano", "Olivia": "Latte" }
+  },
+  {
+    id: "pets-hard-1",
+    title: "Animal Shelter",
+    difficulty: "Hard",
+    categories: [
+      { name: "Adopter", items: ["Paula", "Quinn", "Ryan", "Sarah", "Tom"] },
+      { name: "Pet", items: ["Hamster", "Rabbit", "Parrot", "Turtle", "Guinea Pig"] }
+    ],
+    clues: [
+      "Paula adopted a pet that can fly.",
+      "Quinn's pet has a shell.",
+      "Ryan is allergic to fur, so he got a bird or reptile.",
+      "Sarah's pet has long ears.",
+      "Tom did not adopt the parrot or turtle.",
+      "The hamster was adopted by someone whose name starts with T.",
+      "Ryan did not adopt the same type of pet as Paula."
+    ],
+    solution: { "Paula": "Parrot", "Quinn": "Turtle", "Ryan": "Turtle", "Sarah": "Rabbit", "Tom": "Hamster" }
+  },
+  // EXTRA HARD (5x5 with more complex clues)
+  {
+    id: "office-1",
+    title: "Office Floors",
+    difficulty: "Hard",
+    categories: [
+      { name: "Employee", items: ["Alice", "Bob", "Carla", "Doug", "Eva"] },
+      { name: "Floor", items: ["1st", "2nd", "3rd", "4th", "5th"] }
+    ],
+    clues: [
+      "Alice works on a higher floor than Bob.",
+      "Carla is on the middle floor.",
+      "Doug works exactly two floors below Eva.",
+      "Bob is not on the 1st or 5th floor.",
+      "Eva works on an even-numbered floor.",
+      "Alice is not on the top floor."
+    ],
+    solution: { "Alice": "4th", "Bob": "2nd", "Carla": "3rd", "Doug": "2nd", "Eva": "4th" }
   }
 ]
 
@@ -122,12 +233,15 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
   const [currentPuzzle, setCurrentPuzzle] = useState<Puzzle | null>(null)
   const [grid, setGrid] = useState<GridCell[][]>([])
   const [showInstructions, setShowInstructions] = useState(false)
-  const [showHint, setShowHint] = useState(false)
-  const [hintIndex, setHintIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [puzzleComplete, setPuzzleComplete] = useState(false)
   const [isCorrect, setIsCorrect] = useState(false)
   const [showPuzzleSelect, setShowPuzzleSelect] = useState(true)
+  const [filterDifficulty, setFilterDifficulty] = useState<"All" | "Easy" | "Medium" | "Hard">("All")
+
+  const filteredPuzzles = filterDifficulty === "All" 
+    ? puzzles 
+    : puzzles.filter(p => p.difficulty === filterDifficulty)
 
   const initializeGrid = (puzzle: Puzzle) => {
     const size = puzzle.categories[0].items.length
@@ -137,8 +251,6 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
     setGrid(newGrid)
     setPuzzleComplete(false)
     setIsCorrect(false)
-    setHintIndex(0)
-    setShowHint(false)
   }
 
   const selectPuzzle = (puzzle: Puzzle) => {
@@ -164,7 +276,6 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
     const category1 = currentPuzzle.categories[0].items
     const category2 = currentPuzzle.categories[1].items
     
-    // Check if each row has exactly one O
     for (let row = 0; row < size; row++) {
       const oCount = grid[row].filter(cell => cell.value === "o").length
       if (oCount !== 1) {
@@ -174,7 +285,6 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
       }
     }
     
-    // Check if each column has exactly one O
     for (let col = 0; col < size; col++) {
       let oCount = 0
       for (let row = 0; row < size; row++) {
@@ -187,7 +297,6 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
       }
     }
     
-    // Check against solution
     let correct = true
     for (let row = 0; row < size; row++) {
       for (let col = 0; col < size; col++) {
@@ -207,7 +316,7 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
     setIsCorrect(correct)
     
     if (correct) {
-      const newScore = score + 1
+      const newScore = score + (currentPuzzle.difficulty === "Hard" ? 3 : currentPuzzle.difficulty === "Medium" ? 2 : 1)
       setScore(newScore)
       onScoreChange?.(newScore)
     }
@@ -219,13 +328,6 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
     }
   }
 
-  const nextHint = () => {
-    if (currentPuzzle && hintIndex < currentPuzzle.clues.length - 1) {
-      setHintIndex(prev => prev + 1)
-    }
-    setShowHint(true)
-  }
-
   const backToSelect = () => {
     setShowPuzzleSelect(true)
     setCurrentPuzzle(null)
@@ -235,39 +337,76 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
   // Puzzle Selection Screen
   if (showPuzzleSelect) {
     return (
-      <div className="flex flex-col items-center gap-4 p-4 w-full max-w-md mx-auto">
+      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-2">
-          <h2 className="text-pink-400 font-bold text-xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
+          <h2 className="text-pink-400 font-bold text-xl md:text-2xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
             LOGIC PUZZLES
           </h2>
-          <p className="text-pink-300/60 text-xs mt-1">Grid deduction puzzles</p>
+          <p className="text-pink-300/60 text-xs md:text-sm mt-1">Grid deduction puzzles</p>
         </div>
 
         {/* Score */}
         <div className="flex items-center gap-4 bg-pink-950/50 rounded-xl px-4 py-2 border border-pink-500/20">
           <div className="text-center">
-            <p className="text-pink-300/60 text-[10px]">Puzzles Solved</p>
-            <p className="text-pink-400 font-bold text-lg drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{score}</p>
+            <p className="text-pink-300/60 text-[10px] md:text-xs">Total Score</p>
+            <p className="text-pink-400 font-bold text-lg md:text-xl drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{score}</p>
           </div>
         </div>
 
+        {/* Difficulty Filter */}
+        <div className="flex gap-2 flex-wrap justify-center">
+          {(["All", "Easy", "Medium", "Hard"] as const).map((diff) => (
+            <button
+              key={diff}
+              onClick={() => setFilterDifficulty(diff)}
+              className={`px-3 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all ${
+                filterDifficulty === diff
+                  ? "bg-pink-500 text-white shadow-[0_0_15px_rgba(236,72,153,0.5)]"
+                  : "bg-pink-950/50 text-pink-300 border border-pink-500/30 hover:border-pink-400/50"
+              }`}
+            >
+              {diff}
+            </button>
+          ))}
+        </div>
+
         {/* Puzzle List */}
-        <div className="grid grid-cols-1 gap-3 w-full">
-          {puzzles.map((puzzle) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+          {filteredPuzzles.map((puzzle) => (
             <button
               key={puzzle.id}
               onClick={() => selectPuzzle(puzzle)}
-              className="flex items-center gap-4 p-4 bg-gradient-to-r from-pink-950/80 to-pink-900/50 rounded-xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
+              className="flex items-center gap-3 md:gap-4 p-3 md:p-4 bg-gradient-to-r from-pink-950/80 to-pink-900/50 rounded-xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
             >
-              <div className="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center border border-pink-500/30">
-                <span className="text-pink-400 font-bold text-sm">
+              <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center border ${
+                puzzle.difficulty === "Hard" 
+                  ? "bg-red-500/20 border-red-500/30" 
+                  : puzzle.difficulty === "Medium"
+                  ? "bg-yellow-500/20 border-yellow-500/30"
+                  : "bg-green-500/20 border-green-500/30"
+              }`}>
+                <span className={`font-bold text-xs md:text-sm ${
+                  puzzle.difficulty === "Hard" 
+                    ? "text-red-400" 
+                    : puzzle.difficulty === "Medium"
+                    ? "text-yellow-400"
+                    : "text-green-400"
+                }`}>
                   {puzzle.categories[0].items.length}x{puzzle.categories[0].items.length}
                 </span>
               </div>
               <div className="text-left flex-1">
-                <p className="text-pink-300 font-semibold text-sm">{puzzle.title}</p>
-                <p className="text-pink-400/50 text-xs">{puzzle.difficulty} - {puzzle.clues.length} clues</p>
+                <p className="text-pink-300 font-semibold text-sm md:text-base">{puzzle.title}</p>
+                <p className={`text-xs ${
+                  puzzle.difficulty === "Hard" 
+                    ? "text-red-400/70" 
+                    : puzzle.difficulty === "Medium"
+                    ? "text-yellow-400/70"
+                    : "text-green-400/70"
+                }`}>
+                  {puzzle.difficulty} - {puzzle.clues.length} clues
+                </p>
               </div>
               <ChevronLeft className="w-5 h-5 text-pink-400/50 rotate-180" />
             </button>
@@ -277,7 +416,7 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
         {/* Instructions Button */}
         <button
           onClick={() => setShowInstructions(true)}
-          className="flex items-center gap-2 text-pink-400/60 text-xs hover:text-pink-400 transition-colors mt-2"
+          className="flex items-center gap-2 text-pink-400/60 text-xs md:text-sm hover:text-pink-400 transition-colors mt-2"
         >
           <HelpCircle className="w-4 h-4" />
           How to Play
@@ -286,14 +425,20 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
         {/* Instructions Modal */}
         {showInstructions && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-            <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-sm w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
+            <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-md w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
               <h3 className="text-pink-400 font-bold text-lg mb-4 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">How to Play</h3>
               <div className="space-y-3 text-pink-300/80 text-sm">
-                <p><strong>Goal:</strong> Match items from two categories using clues.</p>
-                <p><strong>Tap once:</strong> Mark X (not a match)</p>
-                <p><strong>Tap twice:</strong> Mark O (confirmed match)</p>
-                <p><strong>Tap again:</strong> Clear the cell</p>
-                <p className="pt-2 border-t border-pink-500/20">Each row and column must have exactly ONE O mark. Use the clues to eliminate possibilities!</p>
+                <p><strong className="text-pink-300">Goal:</strong> Match items from two categories using clues.</p>
+                <p><strong className="text-pink-300">Click/Tap once:</strong> Mark X (not a match)</p>
+                <p><strong className="text-pink-300">Click/Tap twice:</strong> Mark O (confirmed match)</p>
+                <p><strong className="text-pink-300">Click/Tap again:</strong> Clear the cell</p>
+                <div className="pt-3 border-t border-pink-500/20 space-y-2">
+                  <p><strong className="text-pink-300">Scoring:</strong></p>
+                  <p className="text-green-400/80">Easy (3x3): +1 point</p>
+                  <p className="text-yellow-400/80">Medium (4x4): +2 points</p>
+                  <p className="text-red-400/80">Hard (5x5): +3 points</p>
+                </div>
+                <p className="pt-2 text-pink-400/60 text-xs">Each row and column must have exactly ONE O mark. Use the clues to eliminate possibilities!</p>
               </div>
               <button
                 onClick={() => setShowInstructions(false)}
@@ -314,9 +459,13 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
   const size = currentPuzzle.categories[0].items.length
   const category1 = currentPuzzle.categories[0]
   const category2 = currentPuzzle.categories[1]
+  const isHard = size >= 5
+  const cellSize = isHard ? "w-8 h-8 md:w-10 md:h-10" : "w-10 h-10 md:w-12 md:h-12"
+  const headerWidth = isHard ? "w-14 md:w-20" : "w-16 md:w-24"
+  const fontSize = isHard ? "text-[8px] md:text-[10px]" : "text-[10px] md:text-xs"
 
   return (
-    <div className="flex flex-col items-center gap-3 p-4 w-full max-w-md mx-auto">
+    <div className="flex flex-col items-center gap-3 p-3 md:p-6 w-full max-w-3xl mx-auto">
       {/* Header */}
       <div className="w-full flex items-center justify-between">
         <button
@@ -326,7 +475,18 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
           <ChevronLeft className="w-5 h-5" />
           Back
         </button>
-        <span className="text-pink-400 font-semibold text-sm">{currentPuzzle.title}</span>
+        <div className="text-center">
+          <span className="text-pink-400 font-semibold text-sm md:text-base">{currentPuzzle.title}</span>
+          <span className={`ml-2 text-xs px-2 py-0.5 rounded ${
+            currentPuzzle.difficulty === "Hard" 
+              ? "bg-red-500/20 text-red-400" 
+              : currentPuzzle.difficulty === "Medium"
+              ? "bg-yellow-500/20 text-yellow-400"
+              : "bg-green-500/20 text-green-400"
+          }`}>
+            {currentPuzzle.difficulty}
+          </span>
+        </div>
         <button
           onClick={() => setShowInstructions(true)}
           className="text-pink-400/60 hover:text-pink-400 transition-colors"
@@ -335,78 +495,83 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
         </button>
       </div>
 
-      {/* Grid */}
-      <div className="bg-pink-950/50 rounded-xl p-3 border border-pink-500/30">
-        {/* Column Headers */}
-        <div className="flex">
-          <div className="w-16 h-8" /> {/* Empty corner */}
-          {category2.items.map((item, idx) => (
-            <div
-              key={idx}
-              className="w-10 h-8 flex items-center justify-center text-[10px] text-pink-300 font-medium px-1 text-center leading-tight"
-            >
-              {item}
+      {/* Main Content - Side by side on desktop */}
+      <div className="flex flex-col lg:flex-row gap-4 w-full items-start">
+        {/* Grid */}
+        <div className="bg-pink-950/50 rounded-xl p-2 md:p-4 border border-pink-500/30 overflow-x-auto">
+          {/* Column Headers */}
+          <div className="flex">
+            <div className={`${headerWidth} h-6 md:h-8`} />
+            {category2.items.map((item, idx) => (
+              <div
+                key={idx}
+                className={`${cellSize} flex items-center justify-center ${fontSize} text-pink-300 font-medium px-0.5 text-center leading-tight`}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+
+          {/* Grid Rows */}
+          {category1.items.map((rowItem, rowIdx) => (
+            <div key={rowIdx} className="flex">
+              {/* Row Header */}
+              <div className={`${headerWidth} ${cellSize} flex items-center ${fontSize} text-pink-300 font-medium pr-1 md:pr-2`}>
+                {rowItem}
+              </div>
+              {/* Cells */}
+              {category2.items.map((_, colIdx) => (
+                <button
+                  key={colIdx}
+                  onClick={() => cycleCell(rowIdx, colIdx)}
+                  disabled={puzzleComplete}
+                  className={`
+                    ${cellSize} border border-pink-500/30 flex items-center justify-center
+                    transition-all hover:bg-pink-500/20
+                    ${grid[rowIdx]?.[colIdx]?.value === "x" ? "bg-red-900/30" : ""}
+                    ${grid[rowIdx]?.[colIdx]?.value === "o" ? "bg-green-900/30" : ""}
+                    ${puzzleComplete ? "opacity-70" : ""}
+                  `}
+                >
+                  {grid[rowIdx]?.[colIdx]?.value === "x" && (
+                    <XCircle className={`${isHard ? "w-4 h-4 md:w-5 md:h-5" : "w-5 h-5 md:w-6 md:h-6"} text-red-400`} />
+                  )}
+                  {grid[rowIdx]?.[colIdx]?.value === "o" && (
+                    <CheckCircle className={`${isHard ? "w-4 h-4 md:w-5 md:h-5" : "w-5 h-5 md:w-6 md:h-6"} text-green-400`} />
+                  )}
+                </button>
+              ))}
             </div>
           ))}
         </div>
 
-        {/* Grid Rows */}
-        {category1.items.map((rowItem, rowIdx) => (
-          <div key={rowIdx} className="flex">
-            {/* Row Header */}
-            <div className="w-16 h-10 flex items-center text-[10px] text-pink-300 font-medium pr-2">
-              {rowItem}
-            </div>
-            {/* Cells */}
-            {category2.items.map((_, colIdx) => (
-              <button
-                key={colIdx}
-                onClick={() => cycleCell(rowIdx, colIdx)}
-                disabled={puzzleComplete}
-                className={`
-                  w-10 h-10 border border-pink-500/30 flex items-center justify-center
-                  transition-all hover:bg-pink-500/20
-                  ${grid[rowIdx]?.[colIdx]?.value === "x" ? "bg-red-900/30" : ""}
-                  ${grid[rowIdx]?.[colIdx]?.value === "o" ? "bg-green-900/30" : ""}
-                  ${puzzleComplete ? "opacity-70" : ""}
-                `}
-              >
-                {grid[rowIdx]?.[colIdx]?.value === "x" && (
-                  <XCircle className="w-5 h-5 text-red-400" />
-                )}
-                {grid[rowIdx]?.[colIdx]?.value === "o" && (
-                  <CheckCircle className="w-5 h-5 text-green-400" />
-                )}
-              </button>
+        {/* Clues Panel */}
+        <div className="flex-1 w-full lg:max-w-sm bg-pink-950/30 rounded-xl p-3 md:p-4 border border-pink-500/20">
+          <p className="text-pink-400 font-semibold text-xs md:text-sm mb-2">Clues:</p>
+          <ul className="space-y-2">
+            {currentPuzzle.clues.map((clue, idx) => (
+              <li key={idx} className="text-pink-300/80 text-xs md:text-sm flex gap-2">
+                <span className="text-pink-500 font-bold">{idx + 1}.</span>
+                <span>{clue}</span>
+              </li>
             ))}
-          </div>
-        ))}
-      </div>
-
-      {/* Clues */}
-      <div className="w-full bg-pink-950/30 rounded-xl p-3 border border-pink-500/20">
-        <p className="text-pink-400 font-semibold text-xs mb-2">Clues:</p>
-        <ul className="space-y-1">
-          {currentPuzzle.clues.map((clue, idx) => (
-            <li key={idx} className="text-pink-300/80 text-xs flex gap-2">
-              <span className="text-pink-500">{idx + 1}.</span>
-              {clue}
-            </li>
-          ))}
-        </ul>
+          </ul>
+        </div>
       </div>
 
       {/* Result Message */}
       {puzzleComplete && (
         <div className={`w-full p-4 rounded-xl ${isCorrect ? 'bg-green-950/50 border border-green-500/30' : 'bg-red-950/50 border border-red-500/30'}`}>
           <p className={`text-sm font-semibold text-center ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
-            {isCorrect ? 'Correct! Well done!' : 'Not quite right. Try again!'}
+            {isCorrect 
+              ? `Correct! +${currentPuzzle.difficulty === "Hard" ? 3 : currentPuzzle.difficulty === "Medium" ? 2 : 1} points!` 
+              : 'Not quite right. Try again!'}
           </p>
         </div>
       )}
 
       {/* Action Buttons */}
-      <div className="flex gap-3 w-full">
+      <div className="flex gap-3 w-full max-w-md">
         <button
           onClick={resetPuzzle}
           className="flex-1 py-3 bg-pink-900/50 text-pink-300 font-semibold rounded-xl hover:bg-pink-800/50 transition-colors flex items-center justify-center gap-2 border border-pink-500/30"
@@ -426,14 +591,14 @@ export function LogicGridPuzzle({ onScoreChange }: LogicGridPuzzleProps) {
       {/* Instructions Modal */}
       {showInstructions && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-sm w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
+          <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-md w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
             <h3 className="text-pink-400 font-bold text-lg mb-4 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">How to Play</h3>
             <div className="space-y-3 text-pink-300/80 text-sm">
-              <p><strong>Goal:</strong> Match items from two categories using clues.</p>
-              <p><strong>Tap once:</strong> Mark X (not a match)</p>
-              <p><strong>Tap twice:</strong> Mark O (confirmed match)</p>
-              <p><strong>Tap again:</strong> Clear the cell</p>
-              <p className="pt-2 border-t border-pink-500/20">Each row and column must have exactly ONE O mark. Use the clues to eliminate possibilities!</p>
+              <p><strong className="text-pink-300">Goal:</strong> Match items from two categories using clues.</p>
+              <p><strong className="text-pink-300">Click/Tap once:</strong> Mark X (not a match)</p>
+              <p><strong className="text-pink-300">Click/Tap twice:</strong> Mark O (confirmed match)</p>
+              <p><strong className="text-pink-300">Click/Tap again:</strong> Clear the cell</p>
+              <p className="pt-2 border-t border-pink-500/20 text-pink-400/60 text-xs">Each row and column must have exactly ONE O mark!</p>
             </div>
             <button
               onClick={() => setShowInstructions(false)}

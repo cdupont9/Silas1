@@ -291,40 +291,40 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
   // Category Selection Screen
   if (!selectedCategory) {
     return (
-      <div className="flex flex-col items-center gap-4 p-4 w-full max-w-md mx-auto">
+      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-2">
-          <h2 className="text-pink-400 font-bold text-xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
+          <h2 className="text-pink-400 font-bold text-xl md:text-2xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
             MIND PUZZLES
           </h2>
-          <p className="text-pink-300/60 text-xs mt-1">Choose a category</p>
+          <p className="text-pink-300/60 text-xs md:text-sm mt-1">Choose a category</p>
         </div>
 
         {/* Score Display */}
-        <div className="flex items-center gap-4 bg-pink-950/50 rounded-xl px-4 py-2 border border-pink-500/20">
+        <div className="flex items-center gap-4 md:gap-6 bg-pink-950/50 rounded-xl px-4 md:px-6 py-2 md:py-3 border border-pink-500/20">
           <div className="text-center">
-            <p className="text-pink-300/60 text-[10px]">Score</p>
-            <p className="text-pink-400 font-bold text-lg drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{score}</p>
+            <p className="text-pink-300/60 text-[10px] md:text-xs">Score</p>
+            <p className="text-pink-400 font-bold text-lg md:text-xl drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{score}</p>
           </div>
           <div className="w-px h-8 bg-pink-500/20" />
           <div className="text-center">
-            <p className="text-pink-300/60 text-[10px]">Streak</p>
-            <p className="text-pink-400 font-bold text-lg drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{streak}🔥</p>
+            <p className="text-pink-300/60 text-[10px] md:text-xs">Streak</p>
+            <p className="text-pink-400 font-bold text-lg md:text-xl drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{streak}</p>
           </div>
         </div>
 
         {/* Category Grid */}
-        <div className="grid grid-cols-1 gap-3 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 w-full">
           {(Object.keys(categoryInfo) as PuzzleCategory[]).map((category) => (
             <button
               key={category}
               onClick={() => selectCategory(category)}
               className="flex items-center gap-4 p-4 bg-gradient-to-r from-pink-950/80 to-pink-900/50 rounded-xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
             >
-              <span className="text-3xl">{categoryInfo[category].icon}</span>
+              <span className="text-3xl md:text-4xl">{categoryInfo[category].icon}</span>
               <div className="text-left flex-1">
-                <p className="text-pink-300 font-semibold text-sm">{categoryInfo[category].name}</p>
-                <p className="text-pink-400/50 text-xs">{categoryInfo[category].description}</p>
+                <p className="text-pink-300 font-semibold text-sm md:text-base">{categoryInfo[category].name}</p>
+                <p className="text-pink-400/50 text-xs md:text-sm">{categoryInfo[category].description}</p>
               </div>
               <ChevronLeft className="w-5 h-5 text-pink-400/50 rotate-180" />
             </button>
@@ -334,7 +334,7 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
         {/* Instructions Button */}
         <button
           onClick={() => setShowInstructions(true)}
-          className="flex items-center gap-2 text-pink-400/60 text-xs hover:text-pink-400 transition-colors mt-2"
+          className="flex items-center gap-2 text-pink-400/60 text-xs md:text-sm hover:text-pink-400 transition-colors mt-2"
         >
           <HelpCircle className="w-4 h-4" />
           How to Play
@@ -343,7 +343,7 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
         {/* Instructions Modal */}
         {showInstructions && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-            <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-sm w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
+            <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-md w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
               <h3 className="text-pink-400 font-bold text-lg mb-4 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">How to Play</h3>
               <div className="space-y-3 text-pink-300/80 text-sm">
                 <p>1. Choose a puzzle category from the menu</p>
@@ -367,7 +367,7 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
 
   // Puzzle Screen
   return (
-    <div className="flex flex-col items-center gap-4 p-4 w-full max-w-md mx-auto">
+    <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
       {/* Header */}
       <div className="w-full flex items-center justify-between">
         <button
@@ -390,22 +390,22 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
       </div>
 
       {/* Score Bar */}
-      <div className="flex items-center gap-4 bg-pink-950/50 rounded-lg px-4 py-2 w-full justify-center border border-pink-500/20">
-        <span className="text-pink-300/60 text-xs">Score: <span className="text-pink-400 font-bold drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{score}</span></span>
+      <div className="flex items-center gap-4 md:gap-6 bg-pink-950/50 rounded-lg px-4 md:px-6 py-2 md:py-3 w-full justify-center border border-pink-500/20">
+        <span className="text-pink-300/60 text-xs md:text-sm">Score: <span className="text-pink-400 font-bold drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{score}</span></span>
         <span className="text-pink-500/30">|</span>
-        <span className="text-pink-300/60 text-xs">Streak: <span className="text-pink-400 font-bold drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{streak}🔥</span></span>
+        <span className="text-pink-300/60 text-xs md:text-sm">Streak: <span className="text-pink-400 font-bold drop-shadow-[0_0_8px_rgba(236,72,153,0.6)]">{streak}</span></span>
       </div>
 
       {/* Puzzle Card */}
       {currentPuzzle && (
-        <div className="w-full bg-gradient-to-b from-pink-950/80 to-pink-900/30 rounded-2xl p-5 border border-pink-500/30 shadow-[0_0_20px_rgba(236,72,153,0.2)]">
+        <div className="w-full bg-gradient-to-b from-pink-950/80 to-pink-900/30 rounded-2xl p-5 md:p-8 border border-pink-500/30 shadow-[0_0_20px_rgba(236,72,153,0.2)]">
           {/* Question */}
-          <p className="text-pink-100 text-base leading-relaxed mb-6 text-center">
+          <p className="text-pink-100 text-base md:text-lg leading-relaxed mb-6 text-center">
             {currentPuzzle.question}
           </p>
 
           {/* Options */}
-          <div className="grid grid-cols-1 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {currentPuzzle.options.map((option, index) => {
               const isSelected = selectedAnswer === index
               const isCorrect = index === currentPuzzle.correctAnswer
@@ -418,7 +418,7 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
                   onClick={() => handleAnswer(index)}
                   disabled={showResult}
                   className={`
-                    relative p-4 rounded-xl font-medium text-sm transition-all
+                    relative p-4 md:p-5 rounded-xl font-medium text-sm md:text-base transition-all
                     ${!showResult ? 'bg-pink-900/50 border border-pink-500/30 text-pink-200 hover:bg-pink-800/50 hover:border-pink-400/50 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)] active:scale-[0.98]' : ''}
                     ${showCorrectHighlight ? 'bg-green-900/50 border-2 border-green-400 text-green-200 shadow-[0_0_15px_rgba(74,222,128,0.4)]' : ''}
                     ${showWrongHighlight ? 'bg-red-900/50 border-2 border-red-400 text-red-200 shadow-[0_0_15px_rgba(248,113,113,0.4)]' : ''}
@@ -439,9 +439,9 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
 
           {/* Explanation */}
           {showResult && (
-            <div className={`mt-4 p-4 rounded-xl ${selectedAnswer === currentPuzzle.correctAnswer ? 'bg-green-950/50 border border-green-500/30' : 'bg-pink-950/50 border border-pink-500/30'}`}>
-              <p className={`text-sm ${selectedAnswer === currentPuzzle.correctAnswer ? 'text-green-300' : 'text-pink-300'}`}>
-                <span className="font-semibold">{selectedAnswer === currentPuzzle.correctAnswer ? '✓ Correct!' : '✗ Not quite.'}</span>
+            <div className={`mt-4 p-4 md:p-5 rounded-xl ${selectedAnswer === currentPuzzle.correctAnswer ? 'bg-green-950/50 border border-green-500/30' : 'bg-pink-950/50 border border-pink-500/30'}`}>
+              <p className={`text-sm md:text-base ${selectedAnswer === currentPuzzle.correctAnswer ? 'text-green-300' : 'text-pink-300'}`}>
+                <span className="font-semibold">{selectedAnswer === currentPuzzle.correctAnswer ? 'Correct!' : 'Not quite.'}</span>
                 {' '}{currentPuzzle.explanation}
               </p>
             </div>
@@ -451,9 +451,9 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
           {showResult && (
             <button
               onClick={nextPuzzle}
-              className="w-full mt-4 py-3 bg-pink-500 text-white font-semibold rounded-xl hover:bg-pink-400 transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(236,72,153,0.5)]"
+              className="w-full md:w-auto md:min-w-[200px] md:mx-auto md:block mt-4 py-3 px-6 bg-pink-500 text-white font-semibold rounded-xl hover:bg-pink-400 transition-colors flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(236,72,153,0.5)]"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className="w-4 h-4 inline mr-2" />
               Next Puzzle
             </button>
           )}
@@ -463,7 +463,7 @@ export function MindPuzzlesGame({ onScoreChange }: MindPuzzlesGameProps) {
       {/* Category Instructions Modal */}
       {showInstructions && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-sm w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
+          <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-md w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-3xl">{categoryInfo[selectedCategory].icon}</span>
               <h3 className="text-pink-400 font-bold text-lg drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">{categoryInfo[selectedCategory].name}</h3>
