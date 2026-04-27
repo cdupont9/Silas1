@@ -7,6 +7,7 @@
 import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { TicTacToeGame } from "./tictactoe-game"
+import { LogicPuzzlesGame } from "./logic-puzzles-game"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -231,7 +232,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "tictactoe"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "tictactoe" | "logicpuzzles"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -268,6 +269,11 @@ export function MacBookScreen() {
   const [tictactoeWindow, setTictactoeWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [tictactoePosition, setTictactoePosition] = useState({ x: 150, y: 60 })
   const [tictactoeScore, setTictactoeScore] = useState(0)
+  
+  // Logic Puzzles game state
+  const [logicpuzzlesWindow, setLogicpuzzlesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [logicpuzzlesPosition, setLogicpuzzlesPosition] = useState({ x: 180, y: 80 })
+  const [logicpuzzlesScore, setLogicpuzzlesScore] = useState(0)
   
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -749,6 +755,7 @@ export function MacBookScreen() {
       case 'messages': position = messagesPosition; break
       case 'notes': position = notesPosition; break
       case 'tictactoe': position = tictactoePosition; break
+      case 'logicpuzzles': position = logicpuzzlesPosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -774,6 +781,7 @@ export function MacBookScreen() {
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
       case 'tictactoe': setTictactoePosition({ x: newX, y: newY }); break
+      case 'logicpuzzles': setLogicpuzzlesPosition({ x: newX, y: newY }); break
     }
   }
 
@@ -1229,6 +1237,17 @@ const messageText = mobileInput.trim()
                     className="w-[60px] h-[60px] rounded-[14px] shadow-lg" 
                   />
                   <span className="text-white text-[11px] mt-1">Tic-Tac-Toe</span>
+                </button>
+                
+                {/* Logic Puzzles */}
+                <button
+                  onClick={() => setMobileScreen('logicpuzzles')}
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-[60px] h-[60px] rounded-[14px] shadow-lg bg-gradient-to-br from-pink-600 via-pink-500 to-fuchsia-600 flex items-center justify-center border border-pink-400/30">
+                    <span className="text-2xl">🧩</span>
+                  </div>
+                  <span className="text-white text-[11px] mt-1">Puzzles</span>
                 </button>
               </div>
             </div>
@@ -2947,6 +2966,49 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       )
     }
 
+    // Mobile Logic Puzzles Game
+    if (mobileScreen === "logicpuzzles") {
+      return (
+        <div className="h-screen w-full bg-gradient-to-b from-pink-950 to-black flex flex-col overflow-hidden">
+          {/* Status Bar */}
+          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-50">
+            <div className="text-white text-sm font-medium" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
+            <div className="flex items-center gap-2">
+              <Wifi className="w-4 h-4 text-white" />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
+              </div>
+            </div>
+          </div>
+
+          {/* Header with Back Button */}
+          <div className="pt-14 px-4 flex items-center justify-between">
+            <button
+              onClick={() => setMobileScreen('home')}
+              className="p-2 -ml-2 text-pink-400"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <h1 className="text-pink-400 text-xl font-bold drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">LOGIC PUZZLES</h1>
+            <span className="text-pink-400 font-bold text-sm">Score: {logicpuzzlesScore}</span>
+          </div>
+
+          {/* Game Area - Full Screen */}
+          <div className="flex-1 overflow-auto">
+            <LogicPuzzlesGame onScoreChange={setLogicpuzzlesScore} />
+          </div>
+
+          {/* Home Indicator */}
+          <div className="pb-2 flex justify-center">
+            <div className="w-36 h-1 bg-pink-400/40 rounded-full" />
+          </div>
+        </div>
+      )
+    }
+
     }
   // ==================== END MOBILE EXPERIENCE ====================
 
@@ -4645,6 +4707,42 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
+        {/* Logic Puzzles Game Window */}
+        {logicpuzzlesWindow.isOpen && !logicpuzzlesWindow.isMinimized && (
+          <div
+            className={`absolute ${focusedWindow === 'logicpuzzles' ? 'z-40' : 'z-20'}`}
+            onClick={() => focusWindow('logicpuzzles')}
+            style={{ left: logicpuzzlesPosition.x, top: logicpuzzlesPosition.y }}
+          >
+            <div className="bg-gradient-to-b from-pink-950 to-black rounded-xl shadow-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.2)]">
+              {/* Title Bar */}
+              <div
+                onMouseDown={(e) => { focusWindow('logicpuzzles'); handleMouseDown('logicpuzzles', e); }}
+                className="h-[52px] bg-gradient-to-b from-pink-900/50 to-pink-950 flex items-center px-4 gap-4 border-b border-pink-500/20 cursor-grab active:cursor-grabbing"
+              >
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setLogicpuzzlesWindow({ isOpen: false, isMinimized: false })}
+                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                  />
+                  <button
+                    onClick={() => setLogicpuzzlesWindow({ ...logicpuzzlesWindow, isMinimized: true })}
+                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                  />
+                  <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
+                </div>
+                <span className="flex-1 text-center text-sm font-bold text-pink-400 drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">LOGIC PUZZLES</span>
+                <span className="text-pink-400 font-bold text-sm">Score: {logicpuzzlesScore}</span>
+              </div>
+
+              {/* Game Area */}
+              <div className="max-h-[500px] overflow-auto">
+                <LogicPuzzlesGame onScoreChange={setLogicpuzzlesScore} />
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Backgrounds Finder Window */}
         {backgroundsFolder.isOpen && !backgroundsFolder.isMinimized && (
           <div
@@ -5467,6 +5565,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Tic-Tac-Toe"
           onClick={() => { setTictactoeWindow({ isOpen: true, isMinimized: false }); focusWindow('tictactoe'); }}
+        />
+
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl shadow-lg bg-gradient-to-br from-pink-600 via-pink-500 to-fuchsia-600 flex items-center justify-center border border-pink-400/30 shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+              <span className="text-2xl">🧩</span>
+            </div>
+          }
+          label="Logic Puzzles"
+          onClick={() => { setLogicpuzzlesWindow({ isOpen: true, isMinimized: false }); focusWindow('logicpuzzles'); }}
         />
 
         <div className="w-px h-10 bg-white/30 mx-1" />
