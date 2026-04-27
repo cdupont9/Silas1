@@ -5743,8 +5743,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           onClick={() => { setLogicgridWindow({ isOpen: true, isMinimized: false }); focusWindow('logicgrid'); }}
         />
 
-        <div className="w-px h-10 bg-white/30 mx-1" />
-
         <DockIcon
           icon={
             <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
