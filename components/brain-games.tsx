@@ -353,9 +353,9 @@ const connectionsPuzzles: ConnectionsPuzzle[] = [
   {
     id: "cp3",
     categories: [
-      { name: "Broadway Chicken", items: ["Hot Honey Chicken", "Buttermilk Chicken", "Honey Mustard Dip", "Westfield NJ"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "VHS Collection", items: ["Cinderella Movie", "Lizzie McGuire Film", "Walk to Remember", "Metamorphosis Concert"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Favorite Drinks", items: ["Apple Juice", "Ginger Ale Mix", "Caramel Ribbon Crunch", "Vanilla Frapp"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Fave Fried Chicken", items: ["Hot Honey Chicken", "Buttermilk Chicken", "Honey Mustard Dip", "Westfield NJ"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "VHS Collection", items: ["Cinderella Movie", "Lizzie McGuire Film", "Walk to Remember", "Princess Diaries DVD"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Favorite Drinks", items: ["Apple Juice", "Ginger Ale", "Caramel Ribbon Crunch", "Vanilla Frapp"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
       { name: "Homeschool Era", items: ["Grandmother", "Cousin Classmates", "4th Grade", "Chicago Days"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
   },
@@ -424,7 +424,7 @@ const connectionsPuzzles: ConnectionsPuzzle[] = [
     id: "cp10",
     categories: [
       { name: "Starbucks Items", items: ["Ribbon Crunch Drink", "Frappuccino Blend", "Caramel Drizzle", "Whipped Cream"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Broadway Chicken", items: ["Hot Honey Chicken", "Westfield Location", "Buttermilk Breading", "Honey on Side"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Fave Fried Chicken", items: ["Hot Honey Flavor", "Westfield Location", "Buttermilk Breading", "Honey on Side"], color: "from-green-500 to-emerald-600", difficulty: 2 },
       { name: "Chinese Order", items: ["Sweet Sour Sauce", "Shrimp Entree", "Fortune Inside", "Rice Bowl"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
       { name: "Flavor Combos", items: ["Lemonade Ginger", "Caramel Vanilla", "Honey Mustard Dip", "Sweet Sour Mix"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
