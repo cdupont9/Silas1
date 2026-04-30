@@ -264,8 +264,44 @@ const logicPuzzles: LogicPuzzle[] = [
   }
 ]
 
+// ============ USER PERSONA SECTION ============
+interface PersonaQuestion {
+  id: string
+  question: string
+  options: string[]
+  correctAnswer: number
+  category: "hobby" | "music" | "goals" | "traits" | "wishlist" | "painpoints"
+}
+
+const personaQuestions: PersonaQuestion[] = [
+  // Hobby
+  { id: "p1", question: "What is Charity's favorite hobby outside of work?", options: ["Reading books", "Visiting museums or historical sites", "Playing video games", "Cooking"], correctAnswer: 1, category: "hobby" },
+  // Music
+  { id: "p2", question: "Who is Charity's favorite singer?", options: ["Taylor Swift", "Beyonce", "Hilary Duff", "Adele"], correctAnswer: 2, category: "music" },
+  // Sports
+  { id: "p3", question: "What sport does Charity enjoy?", options: ["Basketball", "Swimming", "Rollerskating", "Yoga"], correctAnswer: 2, category: "hobby" },
+  // Books
+  { id: "p4", question: "What type of books does Charity enjoy reading?", options: ["Mystery/Thriller", "Self-improvement", "Romance", "Science Fiction"], correctAnswer: 2, category: "hobby" },
+  // Pain Points
+  { id: "p5", question: "What is one of Charity's biggest pet peeves as a UX designer?", options: ["Too many meetings", "Scope creep", "Slow internet", "Open office plans"], correctAnswer: 1, category: "painpoints" },
+  // Goals
+  { id: "p6", question: "Which of these is one of Charity's top career goals?", options: ["Become a CEO", "Making meaningful impact", "Retire early", "Work from the beach"], correctAnswer: 1, category: "goals" },
+  { id: "p7", question: "What does Charity value in her career?", options: ["High salary only", "Work-life balance", "Corner office", "Company car"], correctAnswer: 1, category: "goals" },
+  { id: "p8", question: "Charity believes in continuous learning. True or False?", options: ["True", "False", "Only on weekends", "Only for promotions"], correctAnswer: 0, category: "goals" },
+  { id: "p9", question: "Is leadership growth important to Charity?", options: ["Not at all", "Only for the title", "Yes, growing into senior roles", "She prefers to stay junior"], correctAnswer: 2, category: "goals" },
+  // Wish List
+  { id: "p10", question: "What's on Charity's bucket list?", options: ["Climb Mount Everest", "Speak at conferences", "Become a chef", "Move to Mars"], correctAnswer: 1, category: "wishlist" },
+  { id: "p11", question: "Which country does Charity want to travel to?", options: ["Japan", "Australia", "Greece", "Brazil"], correctAnswer: 2, category: "wishlist" },
+  // Traits
+  { id: "p12", question: "Which personality trait best describes Charity?", options: ["Impatient & rushed", "Creative & curious", "Disorganized", "Prefers working alone"], correctAnswer: 1, category: "traits" },
+  { id: "p13", question: "Is Charity empathetic and caring?", options: ["No, very cold", "Yes, very much so", "Only at work", "Only with family"], correctAnswer: 1, category: "traits" },
+  { id: "p14", question: "How would you describe Charity's demeanor?", options: ["Anxious & stressed", "Calm & patient", "Aggressive", "Indifferent"], correctAnswer: 1, category: "traits" },
+  { id: "p15", question: "Is Charity detail-oriented?", options: ["Not at all", "Only sometimes", "Yes, very detail-oriented", "She overlooks everything"], correctAnswer: 2, category: "traits" },
+  { id: "p16", question: "Which trait does Charity possess?", options: ["Lazy & unmotivated", "Ambitious & driven", "Easily distracted", "Gives up easily"], correctAnswer: 1, category: "traits" },
+]
+
 // ============ MAIN COMPONENT ============
-type GameMode = "menu" | "mind" | "logic"
+type GameMode = "menu" | "mind" | "logic" | "persona"
 type MindScreen = "category" | "puzzle"
 type LogicScreen = "select" | "puzzle"
 
@@ -284,6 +320,12 @@ export interface BrainGamesState {
   logicComplete: boolean
   logicCorrect: boolean
   filterDifficulty: "All" | "Easy" | "Medium" | "Hard"
+  // Persona game state
+  currentPersonaQuestion: PersonaQuestion | null
+  selectedPersonaAnswer: number | null
+  showPersonaResult: boolean
+  personaStreak: number
+  personaQuestionsAnswered: string[]
 }
 
 export const initialBrainGamesState: BrainGamesState = {
@@ -300,7 +342,13 @@ export const initialBrainGamesState: BrainGamesState = {
   logicGrid: [],
   logicComplete: false,
   logicCorrect: false,
-  filterDifficulty: "All"
+  filterDifficulty: "All",
+  // Persona game state
+  currentPersonaQuestion: null,
+  selectedPersonaAnswer: null,
+  showPersonaResult: false,
+  personaStreak: 0,
+  personaQuestionsAnswered: []
 }
 
 interface BrainGamesProps {
@@ -332,7 +380,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
   const { 
     gameMode, totalScore, mindScreen, selectedMindCategory, currentMindPuzzle,
     selectedMindAnswer, showMindResult, mindStreak, logicScreen, currentLogicPuzzleId,
-    logicGrid, logicComplete, logicCorrect, filterDifficulty 
+    logicGrid, logicComplete, logicCorrect, filterDifficulty,
+    currentPersonaQuestion, selectedPersonaAnswer, showPersonaResult, personaStreak, personaQuestionsAnswered
   } = localState
   
   // Get current logic puzzle from ID
@@ -477,6 +526,59 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     updateState({ gameMode: "menu" })
   }
 
+  // Persona game functions
+  const getRandomPersonaQuestion = (): PersonaQuestion => {
+    const unanswered = personaQuestions.filter(q => !personaQuestionsAnswered.includes(q.id))
+    if (unanswered.length === 0) {
+      // Reset if all questions answered
+      return personaQuestions[Math.floor(Math.random() * personaQuestions.length)]
+    }
+    return unanswered[Math.floor(Math.random() * unanswered.length)]
+  }
+
+  const startPersonaGame = () => {
+    const question = getRandomPersonaQuestion()
+    updateState({
+      gameMode: "persona",
+      currentPersonaQuestion: question,
+      selectedPersonaAnswer: null,
+      showPersonaResult: false
+    })
+  }
+
+  const handlePersonaAnswer = (index: number) => {
+    if (showPersonaResult) return
+    
+    const isCorrect = currentPersonaQuestion && index === currentPersonaQuestion.correctAnswer
+    if (isCorrect) {
+      const newScore = totalScore + 1
+      updateState({
+        selectedPersonaAnswer: index,
+        showPersonaResult: true,
+        personaStreak: personaStreak + 1,
+        totalScore: newScore,
+        personaQuestionsAnswered: [...personaQuestionsAnswered, currentPersonaQuestion?.id || '']
+      })
+      onScoreChange?.(newScore)
+    } else {
+      updateState({
+        selectedPersonaAnswer: index,
+        showPersonaResult: true,
+        personaStreak: 0,
+        personaQuestionsAnswered: [...personaQuestionsAnswered, currentPersonaQuestion?.id || '']
+      })
+    }
+  }
+
+  const nextPersonaQuestion = () => {
+    const question = getRandomPersonaQuestion()
+    updateState({
+      currentPersonaQuestion: question,
+      selectedPersonaAnswer: null,
+      showPersonaResult: false
+    })
+  }
+
   // ============ RENDER ============
   
   // Main Menu
@@ -499,7 +601,31 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         </div>
 
         {/* Game Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
+          <button
+            onClick={() => startPersonaGame()}
+            className="flex flex-col items-center gap-3 p-6 bg-gradient-to-br from-violet-950/80 to-pink-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
+          >
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
+              <style>{`
+                @keyframes personaPulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #8b5cf6); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 15px #8b5cf6); } }
+                .persona-icon { animation: personaPulse 2s infinite ease-in-out; }
+              `}</style>
+              <rect width="100" height="100" rx="20" fill="#1e1b4b"/>
+              <g className="persona-icon">
+                <circle cx="50" cy="35" r="15" fill="#8b5cf6"/>
+                <path d="M25 80 Q25 55 50 55 Q75 55 75 80" fill="#c4b5fd"/>
+                <circle cx="45" cy="33" r="2" fill="white"/>
+                <circle cx="55" cy="33" r="2" fill="white"/>
+                <path d="M45 40 Q50 44 55 40" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
+              </g>
+            </svg>
+            <div className="text-center">
+              <p className="text-violet-300 font-bold text-lg">User Persona</p>
+              <p className="text-violet-400/50 text-sm">How well do you know Charity?</p>
+            </div>
+          </button>
+
           <button
             onClick={() => updateState({ gameMode: "mind" })}
             className="flex flex-col items-center gap-3 p-6 bg-gradient-to-br from-pink-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
@@ -561,6 +687,10 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-md w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
               <h3 className="text-pink-400 font-bold text-lg mb-4">Brain Games</h3>
               <div className="space-y-4 text-pink-300/80 text-sm">
+                <div>
+                  <p className="text-violet-300 font-semibold">User Persona</p>
+                  <p>Test how well you know Charity! Answer questions about her hobbies, goals, traits, and more.</p>
+                </div>
                 <div>
                   <p className="text-pink-300 font-semibold">Mind Puzzles</p>
                   <p>Choose a category and solve trivia, riddles, and pattern puzzles. Build streaks for bonus points!</p>
@@ -836,6 +966,122 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               </div>
             )}
           </div>
+        </div>
+      </div>
+    )
+  }
+
+  // User Persona Game
+  if (gameMode === "persona" && currentPersonaQuestion) {
+    const categoryLabels: Record<string, string> = {
+      hobby: "Hobbies & Interests",
+      music: "Music",
+      goals: "Career Goals",
+      traits: "Personality Traits",
+      wishlist: "Bucket List",
+      painpoints: "Pain Points"
+    }
+
+    return (
+      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
+        <div className="w-full flex items-center justify-between">
+          <button onClick={backToMenu} className="flex items-center gap-1 text-violet-400 text-sm hover:text-violet-300">
+            <ChevronLeft className="w-5 h-5" /> Back
+          </button>
+          <div className="flex items-center gap-4">
+            <span className="text-violet-400/60 text-sm">Streak: {personaStreak}</span>
+            <span className="text-violet-400 text-sm font-semibold">Score: {totalScore}</span>
+          </div>
+        </div>
+
+        {/* Persona Card */}
+        <div className="w-full bg-gradient-to-br from-violet-950/80 to-indigo-900/50 rounded-2xl border border-violet-500/30 p-6 shadow-[0_0_30px_rgba(139,92,246,0.2)]">
+          {/* Header */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+              C
+            </div>
+            <div>
+              <h3 className="text-violet-200 font-bold text-xl">Charity Dupont</h3>
+              <p className="text-violet-400/60 text-sm">UX/UI Designer</p>
+            </div>
+          </div>
+
+          {/* Category Badge */}
+          <div className="mb-4">
+            <span className="text-xs px-3 py-1 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
+              {categoryLabels[currentPersonaQuestion.category]}
+            </span>
+          </div>
+
+          {/* Question */}
+          <div className="mb-6">
+            <p className="text-violet-100 text-lg font-medium leading-relaxed">{currentPersonaQuestion.question}</p>
+          </div>
+
+          {/* Answer Options */}
+          <div className="space-y-3">
+            {currentPersonaQuestion.options.map((option, idx) => {
+              const isSelected = selectedPersonaAnswer === idx
+              const isCorrect = idx === currentPersonaQuestion.correctAnswer
+              const showResult = showPersonaResult
+
+              return (
+                <button
+                  key={idx}
+                  onClick={() => handlePersonaAnswer(idx)}
+                  disabled={showResult}
+                  className={`w-full p-4 rounded-xl text-left transition-all flex items-center gap-3
+                    ${!showResult ? 'bg-violet-900/30 hover:bg-violet-800/40 border border-violet-500/20 hover:border-violet-400/40' : ''}
+                    ${showResult && isCorrect ? 'bg-green-900/40 border border-green-500/50' : ''}
+                    ${showResult && isSelected && !isCorrect ? 'bg-red-900/40 border border-red-500/50' : ''}
+                    ${showResult && !isSelected && !isCorrect ? 'bg-violet-900/20 border border-violet-500/10 opacity-50' : ''}
+                  `}
+                >
+                  <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
+                    ${!showResult ? 'bg-violet-500/30 text-violet-300' : ''}
+                    ${showResult && isCorrect ? 'bg-green-500 text-white' : ''}
+                    ${showResult && isSelected && !isCorrect ? 'bg-red-500 text-white' : ''}
+                    ${showResult && !isSelected && !isCorrect ? 'bg-violet-500/20 text-violet-400' : ''}
+                  `}>
+                    {showResult && isCorrect ? <CheckCircle className="w-5 h-5" /> : 
+                     showResult && isSelected && !isCorrect ? <XCircle className="w-5 h-5" /> :
+                     String.fromCharCode(65 + idx)}
+                  </span>
+                  <span className={`flex-1 ${showResult && isCorrect ? 'text-green-300' : showResult && isSelected && !isCorrect ? 'text-red-300' : 'text-violet-200'}`}>
+                    {option}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Result & Next */}
+          {showPersonaResult && (
+            <div className="mt-6 pt-6 border-t border-violet-500/20">
+              <div className={`text-center mb-4 ${selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'text-green-400' : 'text-red-400'}`}>
+                <p className="text-xl font-bold">
+                  {selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'Correct!' : 'Not quite!'}
+                </p>
+                {selectedPersonaAnswer !== currentPersonaQuestion.correctAnswer && (
+                  <p className="text-sm mt-1 text-violet-300/70">
+                    The answer was: {currentPersonaQuestion.options[currentPersonaQuestion.correctAnswer]}
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={nextPersonaQuestion}
+                className="w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+              >
+                Next Question <RefreshCw className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Progress */}
+        <div className="text-center text-violet-400/60 text-sm">
+          {personaQuestionsAnswered.length} of {personaQuestions.length} questions answered
         </div>
       </div>
     )
