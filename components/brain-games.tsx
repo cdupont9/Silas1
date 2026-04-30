@@ -274,34 +274,56 @@ interface PersonaQuestion {
 }
 
 const personaQuestions: PersonaQuestion[] = [
-  // Hobby
-  { id: "p1", question: "What is Charity's favorite hobby outside of work?", options: ["Reading books", "Visiting museums or historical sites", "Playing video games", "Cooking"], correctAnswer: 1, category: "hobby" },
-  // Music
-  { id: "p2", question: "Who is Charity's favorite singer?", options: ["Taylor Swift", "Beyonce", "Hilary Duff", "Adele"], correctAnswer: 2, category: "music" },
-  // Sports
-  { id: "p3", question: "What sport does Charity enjoy?", options: ["Basketball", "Swimming", "Rollerskating", "Yoga"], correctAnswer: 2, category: "hobby" },
-  // Books
-  { id: "p4", question: "What type of books does Charity enjoy reading?", options: ["Mystery/Thriller", "Self-improvement", "Romance", "Science Fiction"], correctAnswer: 2, category: "hobby" },
-  // Pain Points
-  { id: "p5", question: "What is one of Charity's biggest pet peeves as a UX designer?", options: ["Too many meetings", "Scope creep", "Slow internet", "Open office plans"], correctAnswer: 1, category: "painpoints" },
-  // Goals
-  { id: "p6", question: "Which of these is one of Charity's top career goals?", options: ["Become a CEO", "Making meaningful impact", "Retire early", "Work from the beach"], correctAnswer: 1, category: "goals" },
-  { id: "p7", question: "What does Charity value in her career?", options: ["High salary only", "Work-life balance", "Corner office", "Company car"], correctAnswer: 1, category: "goals" },
-  { id: "p8", question: "Charity believes in continuous learning. True or False?", options: ["True", "False", "Only on weekends", "Only for promotions"], correctAnswer: 0, category: "goals" },
-  { id: "p9", question: "Is leadership growth important to Charity?", options: ["Not at all", "Only for the title", "Yes, growing into senior roles", "She prefers to stay junior"], correctAnswer: 2, category: "goals" },
-  // Wish List
-  { id: "p10", question: "What's on Charity's bucket list?", options: ["Climb Mount Everest", "Speak at conferences", "Become a chef", "Move to Mars"], correctAnswer: 1, category: "wishlist" },
-  { id: "p11", question: "Which country does Charity want to travel to?", options: ["Japan", "Australia", "Greece", "Brazil"], correctAnswer: 2, category: "wishlist" },
-  // Traits
-  { id: "p12", question: "Which personality trait best describes Charity?", options: ["Impatient & rushed", "Creative & curious", "Disorganized", "Prefers working alone"], correctAnswer: 1, category: "traits" },
-  { id: "p13", question: "Is Charity empathetic and caring?", options: ["No, very cold", "Yes, very much so", "Only at work", "Only with family"], correctAnswer: 1, category: "traits" },
-  { id: "p14", question: "How would you describe Charity's demeanor?", options: ["Anxious & stressed", "Calm & patient", "Aggressive", "Indifferent"], correctAnswer: 1, category: "traits" },
-  { id: "p15", question: "Is Charity detail-oriented?", options: ["Not at all", "Only sometimes", "Yes, very detail-oriented", "She overlooks everything"], correctAnswer: 2, category: "traits" },
-  { id: "p16", question: "Which trait does Charity possess?", options: ["Lazy & unmotivated", "Ambitious & driven", "Easily distracted", "Gives up easily"], correctAnswer: 1, category: "traits" },
+  // Tricky Hobby Questions
+  { id: "p1", question: "Charity loves exploring on weekends. What does she prefer?", options: ["Hiking national parks", "Shopping at malls", "Visiting museums & historical sites", "Beach lounging"], correctAnswer: 2, category: "hobby" },
+  { id: "p2", question: "What activity did Charity enjoy as a child but hasn't done in years?", options: ["Ice skating", "Horseback riding", "Gymnastics", "Swimming"], correctAnswer: 1, category: "hobby" },
+  { id: "p3", question: "Where does Charity prefer to sit on a roller coaster at Six Flags?", options: ["In the middle for balance", "In the back for extra thrill", "In the front row", "She doesn't ride roller coasters"], correctAnswer: 2, category: "hobby" },
+  // Tricky Music Questions  
+  { id: "p4", question: "Charity was obsessed with a Disney Channel show. Which one?", options: ["Hannah Montana", "That's So Raven", "Lizzie McGuire", "Kim Possible"], correctAnswer: 2, category: "music" },
+  { id: "p5", question: "Charity still owns what format of her favorite childhood movie?", options: ["DVD", "Blu-ray", "VHS", "Digital download"], correctAnswer: 2, category: "music" },
+  { id: "p6", question: "Who is Charity's favorite singer since childhood to present day?", options: ["Britney Spears", "Christina Aguilera", "Hilary Duff", "Jessica Simpson"], correctAnswer: 2, category: "music" },
+  // Tricky Background Questions
+  { id: "p7", question: "Until what grade was Charity homeschooled?", options: ["2nd grade", "3rd grade", "4th grade", "5th grade"], correctAnswer: 2, category: "hobby" },
+  { id: "p8", question: "Who homeschooled Charity?", options: ["Her mother", "Her aunt", "Her grandmother", "A private tutor"], correctAnswer: 2, category: "hobby" },
+  { id: "p9", question: "Charity moved from Chicago to where?", options: ["Connecticut", "New York", "New Jersey", "Pennsylvania"], correctAnswer: 2, category: "hobby" },
+  { id: "p10", question: "How did Charity and her mother travel from Chicago when they moved?", options: ["Flew directly", "Took a train", "Drove straight with no breaks", "Drove with multiple hotel stops"], correctAnswer: 2, category: "hobby" },
+  // Tricky Childhood Dreams
+  { id: "p11", question: "Charity once dreamed of becoming what performer?", options: ["Singer", "Actress", "Ballet dancer", "Gymnast"], correctAnswer: 2, category: "goals" },
+  { id: "p12", question: "When homeschooled, Charity ran a small business. What kind?", options: ["Lemonade stand", "Breakfast business", "Craft sales", "Dog walking"], correctAnswer: 1, category: "goals" },
+  { id: "p13", question: "Besides ballet, Charity also once wanted to be a:", options: ["Doctor", "Cook", "Lawyer", "Teacher"], correctAnswer: 1, category: "goals" },
+  // Tricky Personality
+  { id: "p14", question: "What does Charity value most in her environment?", options: ["Constant excitement", "Peace and quiet", "Loud music", "Social gatherings"], correctAnswer: 1, category: "traits" },
+  { id: "p15", question: "Charity's grandmother homeschooled how many students?", options: ["Just Charity", "Charity and her sibling", "Charity, her cousin, and others", "A full classroom of 20"], correctAnswer: 2, category: "hobby" },
+  // Career - Tricky
+  { id: "p16", question: "What frustrates Charity most as a UX designer?", options: ["Tight deadlines", "Scope creep", "Too many tools", "Remote work"], correctAnswer: 1, category: "painpoints" },
+  { id: "p17", question: "Which combination of values drives Charity's career?", options: ["Fame & fortune", "Impact, balance, learning & leadership", "Speed & efficiency", "Competition & winning"], correctAnswer: 1, category: "goals" },
+  { id: "p18", question: "Charity wants to speak at what type of events?", options: ["Music festivals", "Design conferences", "Political rallies", "Comedy shows"], correctAnswer: 1, category: "wishlist" },
+  { id: "p19", question: "Which European country is on Charity's bucket list?", options: ["Italy", "France", "Greece", "Spain"], correctAnswer: 2, category: "wishlist" },
+  { id: "p20", question: "What book genre does Charity secretly enjoy?", options: ["Horror", "Romance", "True crime", "Fantasy"], correctAnswer: 1, category: "hobby" },
+]
+
+// ============ TWO TRUTHS AND A LIE SECTION ============
+interface TwoTruthsRound {
+  id: string
+  statements: string[]
+  lieIndex: number // which statement is the lie
+}
+
+const twoTruthsRounds: TwoTruthsRound[] = [
+  { id: "tt1", statements: ["I love riding in the front of roller coasters at Six Flags", "I've been skydiving twice", "I like horseback riding but haven't done it since I was little"], lieIndex: 1 },
+  { id: "tt2", statements: ["I was homeschooled until 4th grade", "My grandmother homeschooled me, my cousin, and other kids", "I was homeschooled by a private tutor in our basement"], lieIndex: 2 },
+  { id: "tt3", statements: ["My mother and I drove from Chicago to New Jersey with no breaks", "We ate a lot of snacks on our road trip", "We stopped at 5 different hotels along the way"], lieIndex: 2 },
+  { id: "tt4", statements: ["I used to want to be a ballet dancer", "I used to want to be a professional singer", "I used to want to be a cook"], lieIndex: 1 },
+  { id: "tt5", statements: ["I had a breakfast business when I was homeschooled", "I sold lemonade every summer as a kid", "I value peace and quiet"], lieIndex: 1 },
+  { id: "tt6", statements: ["Hilary Duff is my favorite childhood artist", "I still own the VHS of the Lizzie McGuire movie", "I've met Hilary Duff in person three times"], lieIndex: 2 },
+  { id: "tt7", statements: ["I was obsessed with Lizzie McGuire", "I watched every episode of Hannah Montana first", "I still love Hilary Duff to this day"], lieIndex: 1 },
+  { id: "tt8", statements: ["I moved from Chicago to New Jersey", "I moved from Los Angeles to New Jersey", "I enjoy visiting museums and historical sites"], lieIndex: 1 },
+  { id: "tt9", statements: ["I enjoy rollerskating", "I'm a professional ice skater", "I love reading romance novels"], lieIndex: 1 },
+  { id: "tt10", statements: ["I dream of traveling to Greece", "I want to speak at design conferences", "I've already given a TED talk"], lieIndex: 2 },
 ]
 
 // ============ MAIN COMPONENT ============
-type GameMode = "menu" | "mind" | "logic" | "persona"
+type GameMode = "menu" | "mind" | "logic" | "persona" | "truths"
 type MindScreen = "category" | "puzzle"
 type LogicScreen = "select" | "puzzle"
 
@@ -326,6 +348,12 @@ export interface BrainGamesState {
   showPersonaResult: boolean
   personaStreak: number
   personaQuestionsAnswered: string[]
+  // Two Truths game state
+  currentTruthsRound: TwoTruthsRound | null
+  selectedTruthsAnswer: number | null
+  showTruthsResult: boolean
+  truthsStreak: number
+  truthsRoundsPlayed: string[]
 }
 
 export const initialBrainGamesState: BrainGamesState = {
@@ -348,7 +376,13 @@ export const initialBrainGamesState: BrainGamesState = {
   selectedPersonaAnswer: null,
   showPersonaResult: false,
   personaStreak: 0,
-  personaQuestionsAnswered: []
+  personaQuestionsAnswered: [],
+  // Two Truths game state
+  currentTruthsRound: null,
+  selectedTruthsAnswer: null,
+  showTruthsResult: false,
+  truthsStreak: 0,
+  truthsRoundsPlayed: []
 }
 
 interface BrainGamesProps {
@@ -381,7 +415,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     gameMode, totalScore, mindScreen, selectedMindCategory, currentMindPuzzle,
     selectedMindAnswer, showMindResult, mindStreak, logicScreen, currentLogicPuzzleId,
     logicGrid, logicComplete, logicCorrect, filterDifficulty,
-    currentPersonaQuestion, selectedPersonaAnswer, showPersonaResult, personaStreak, personaQuestionsAnswered
+    currentPersonaQuestion, selectedPersonaAnswer, showPersonaResult, personaStreak, personaQuestionsAnswered,
+    currentTruthsRound, selectedTruthsAnswer, showTruthsResult, truthsStreak, truthsRoundsPlayed
   } = localState
   
   // Get current logic puzzle from ID
@@ -579,6 +614,58 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     })
   }
 
+  // Two Truths game functions
+  const getRandomTruthsRound = (): TwoTruthsRound => {
+    const unplayed = twoTruthsRounds.filter(r => !truthsRoundsPlayed.includes(r.id))
+    if (unplayed.length === 0) {
+      return twoTruthsRounds[Math.floor(Math.random() * twoTruthsRounds.length)]
+    }
+    return unplayed[Math.floor(Math.random() * unplayed.length)]
+  }
+
+  const startTruthsGame = () => {
+    const round = getRandomTruthsRound()
+    updateState({
+      gameMode: "truths",
+      currentTruthsRound: round,
+      selectedTruthsAnswer: null,
+      showTruthsResult: false
+    })
+  }
+
+  const handleTruthsAnswer = (index: number) => {
+    if (showTruthsResult) return
+    
+    const isCorrect = currentTruthsRound && index === currentTruthsRound.lieIndex
+    if (isCorrect) {
+      const newScore = totalScore + 2 // 2 points for finding the lie
+      updateState({
+        selectedTruthsAnswer: index,
+        showTruthsResult: true,
+        truthsStreak: truthsStreak + 1,
+        totalScore: newScore,
+        truthsRoundsPlayed: [...truthsRoundsPlayed, currentTruthsRound?.id || '']
+      })
+      onScoreChange?.(newScore)
+    } else {
+      updateState({
+        selectedTruthsAnswer: index,
+        showTruthsResult: true,
+        truthsStreak: 0,
+        truthsRoundsPlayed: [...truthsRoundsPlayed, currentTruthsRound?.id || '']
+      })
+    }
+  }
+
+  const nextTruthsRound = () => {
+    const round = getRandomTruthsRound()
+    updateState({
+      currentTruthsRound: round,
+      selectedTruthsAnswer: null,
+      showTruthsResult: false
+    })
+  }
+
   // ============ RENDER ============
   
   // Main Menu
@@ -601,12 +688,12 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         </div>
 
         {/* Game Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-4">
           <button
             onClick={() => startPersonaGame()}
-            className="flex flex-col items-center gap-3 p-6 bg-gradient-to-br from-violet-950/80 to-pink-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-violet-950/80 to-pink-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
           >
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
               <style>{`
                 @keyframes personaPulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #8b5cf6); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 15px #8b5cf6); } }
                 .persona-icon { animation: personaPulse 2s infinite ease-in-out; }
@@ -621,16 +708,43 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               </g>
             </svg>
             <div className="text-center">
-              <p className="text-violet-300 font-bold text-lg">User Persona</p>
-              <p className="text-violet-400/50 text-sm">How well do you know Charity?</p>
+              <p className="text-violet-300 font-bold text-sm md:text-lg">User Persona</p>
+              <p className="text-violet-400/50 text-xs md:text-sm">Know Charity?</p>
+            </div>
+          </button>
+
+          <button
+            onClick={() => startTruthsGame()}
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-emerald-950/80 to-teal-900/50 rounded-2xl border border-emerald-500/30 hover:border-emerald-400/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all active:scale-[0.98]"
+          >
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
+              <style>{`
+                @keyframes truthsPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+                @keyframes lieGlow { 0%, 100% { filter: drop-shadow(0 0 3px #ef4444); } 50% { filter: drop-shadow(0 0 10px #ef4444); } }
+                .truths-icon { animation: truthsPulse 2s infinite ease-in-out; }
+                .lie-x { animation: lieGlow 1.5s infinite ease-in-out; }
+              `}</style>
+              <rect width="100" height="100" rx="20" fill="#064e3b"/>
+              <g className="truths-icon">
+                <circle cx="30" cy="35" r="12" fill="#10b981"/>
+                <path d="M24 35 L28 39 L36 31" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="70" cy="35" r="12" fill="#10b981"/>
+                <path d="M64 35 L68 39 L76 31" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                <circle cx="50" cy="70" r="12" fill="#ef4444" className="lie-x"/>
+                <path d="M44 64 L56 76 M56 64 L44 76" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round"/>
+              </g>
+            </svg>
+            <div className="text-center">
+              <p className="text-emerald-300 font-bold text-sm md:text-lg">2 Truths 1 Lie</p>
+              <p className="text-emerald-400/50 text-xs md:text-sm">Find the lie!</p>
             </div>
           </button>
 
           <button
             onClick={() => updateState({ gameMode: "mind" })}
-            className="flex flex-col items-center gap-3 p-6 bg-gradient-to-br from-pink-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-pink-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
           >
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
               <style>{`
                 @keyframes hourglassDrop { 0% { transform: translateY(-10px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
                 .hg-drop { animation: hourglassDrop 1.5s infinite linear; }
@@ -644,16 +758,16 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               <path d="M32 75 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
             </svg>
             <div className="text-center">
-              <p className="text-pink-300 font-bold text-lg">Mind Puzzles</p>
-              <p className="text-pink-400/50 text-sm">Trivia, riddles, sequences</p>
+              <p className="text-pink-300 font-bold text-sm md:text-lg">Mind Puzzles</p>
+              <p className="text-pink-400/50 text-xs md:text-sm">Trivia & riddles</p>
             </div>
           </button>
 
           <button
             onClick={() => updateState({ gameMode: "logic" })}
-            className="flex flex-col items-center gap-3 p-6 bg-gradient-to-br from-fuchsia-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-fuchsia-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
           >
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-16 h-16">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
               <style>{`
                 @keyframes gridPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 10px #f472b6); } }
                 @keyframes gridPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #a855f7); } 50% { filter: drop-shadow(0 0 10px #a855f7); } }
@@ -668,8 +782,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               </g>
             </svg>
             <div className="text-center">
-              <p className="text-pink-300 font-bold text-lg">Logic Grids</p>
-              <p className="text-pink-400/50 text-sm">Deduction puzzles</p>
+              <p className="text-pink-300 font-bold text-sm md:text-lg">Logic Grids</p>
+              <p className="text-pink-400/50 text-xs md:text-sm">Deduction</p>
             </div>
           </button>
         </div>
@@ -689,7 +803,11 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               <div className="space-y-4 text-pink-300/80 text-sm">
                 <div>
                   <p className="text-violet-300 font-semibold">User Persona</p>
-                  <p>Test how well you know Charity! Answer questions about her hobbies, goals, traits, and more.</p>
+                  <p>Test how well you know Charity! Answer tricky questions about her life, hobbies, and personality.</p>
+                </div>
+                <div>
+                  <p className="text-emerald-300 font-semibold">Two Truths & a Lie</p>
+                  <p>Find the lie! Two statements are true, one is false. Can you spot which one?</p>
                 </div>
                 <div>
                   <p className="text-pink-300 font-semibold">Mind Puzzles</p>
@@ -1082,6 +1200,105 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         {/* Progress */}
         <div className="text-center text-violet-400/60 text-sm">
           {personaQuestionsAnswered.length} of {personaQuestions.length} questions answered
+        </div>
+      </div>
+    )
+  }
+
+  // Two Truths and a Lie Game
+  if (gameMode === "truths" && currentTruthsRound) {
+    return (
+      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
+        <div className="w-full flex items-center justify-between">
+          <button onClick={backToMenu} className="flex items-center gap-1 text-emerald-400 text-sm hover:text-emerald-300">
+            <ChevronLeft className="w-5 h-5" /> Back
+          </button>
+          <div className="flex items-center gap-4">
+            <span className="text-emerald-400/60 text-sm">Streak: {truthsStreak}</span>
+            <span className="text-emerald-400 text-sm font-semibold">Score: {totalScore}</span>
+          </div>
+        </div>
+
+        {/* Game Card */}
+        <div className="w-full bg-gradient-to-br from-emerald-950/80 to-teal-900/50 rounded-2xl border border-emerald-500/30 p-6 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+          {/* Header */}
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-2 mb-3">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-white" />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+                <CheckCircle className="w-5 h-5 text-white" />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center">
+                <XCircle className="w-5 h-5 text-white" />
+              </div>
+            </div>
+            <h3 className="text-emerald-200 font-bold text-xl">Two Truths & a Lie</h3>
+            <p className="text-emerald-400/60 text-sm mt-1">Which statement about Charity is FALSE?</p>
+          </div>
+
+          {/* Statements */}
+          <div className="space-y-3">
+            {currentTruthsRound.statements.map((statement, idx) => {
+              const isSelected = selectedTruthsAnswer === idx
+              const isLie = idx === currentTruthsRound.lieIndex
+              const showResult = showTruthsResult
+
+              return (
+                <button
+                  key={idx}
+                  onClick={() => handleTruthsAnswer(idx)}
+                  disabled={showResult}
+                  className={`w-full p-4 rounded-xl text-left transition-all flex items-start gap-3
+                    ${!showResult ? 'bg-emerald-900/30 hover:bg-emerald-800/40 border border-emerald-500/20 hover:border-emerald-400/40' : ''}
+                    ${showResult && isLie ? 'bg-red-900/40 border border-red-500/50' : ''}
+                    ${showResult && isSelected && !isLie ? 'bg-amber-900/40 border border-amber-500/50' : ''}
+                    ${showResult && !isSelected && !isLie ? 'bg-emerald-900/40 border border-emerald-500/50' : ''}
+                  `}
+                >
+                  <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0
+                    ${!showResult ? 'bg-emerald-500/30 text-emerald-300' : ''}
+                    ${showResult && isLie ? 'bg-red-500 text-white' : ''}
+                    ${showResult && isSelected && !isLie ? 'bg-amber-500 text-white' : ''}
+                    ${showResult && !isSelected && !isLie ? 'bg-emerald-500 text-white' : ''}
+                  `}>
+                    {showResult && isLie ? <XCircle className="w-5 h-5" /> : 
+                     showResult && !isLie ? <CheckCircle className="w-5 h-5" /> :
+                     idx + 1}
+                  </span>
+                  <span className={`flex-1 leading-relaxed ${showResult && isLie ? 'text-red-300 line-through' : showResult && isSelected && !isLie ? 'text-amber-300' : showResult ? 'text-emerald-300' : 'text-emerald-200'}`}>
+                    &ldquo;{statement}&rdquo;
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          {/* Result & Next */}
+          {showTruthsResult && (
+            <div className="mt-6 pt-6 border-t border-emerald-500/20">
+              <div className={`text-center mb-4 ${selectedTruthsAnswer === currentTruthsRound.lieIndex ? 'text-green-400' : 'text-amber-400'}`}>
+                <p className="text-xl font-bold">
+                  {selectedTruthsAnswer === currentTruthsRound.lieIndex ? 'You found the lie!' : 'That was actually true!'}
+                </p>
+                <p className="text-sm mt-2 text-emerald-300/70">
+                  The lie was: &ldquo;{currentTruthsRound.statements[currentTruthsRound.lieIndex]}&rdquo;
+                </p>
+              </div>
+              <button
+                onClick={nextTruthsRound}
+                className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+              >
+                Next Round <RefreshCw className="w-4 h-4" />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Progress */}
+        <div className="text-center text-emerald-400/60 text-sm">
+          {truthsRoundsPlayed.length} of {twoTruthsRounds.length} rounds played
         </div>
       </div>
     )
