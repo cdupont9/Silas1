@@ -4956,7 +4956,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     {Object.entries(caseStudies).map(([key, project]) => (
                       <button
                         key={key}
-                        onClick={() => setSafariWindow({ isOpen: true, isMinimized: false, project: key })}
+                        onDoubleClick={() => openCaseStudy(key)}
                         className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
                       >
                         <div className="w-20 h-16 group-hover:scale-110 transition-transform">
