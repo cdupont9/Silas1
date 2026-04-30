@@ -353,7 +353,7 @@ const connectionsPuzzles: ConnectionsPuzzle[] = [
   {
     id: "cp3",
     categories: [
-      { name: "Broadway Chicken", items: ["Hot and Honey", "Buttermilk Battered", "Honey Mustard", "Westfield NJ"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Broadway Chicken", items: ["Hot Honey Chicken", "Buttermilk Chicken", "Honey Mustard Dip", "Westfield NJ"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
       { name: "VHS Collection", items: ["Cinderella Movie", "Lizzie McGuire Film", "Walk to Remember", "Metamorphosis Concert"], color: "from-green-500 to-emerald-600", difficulty: 2 },
       { name: "Favorite Drinks", items: ["Apple Juice", "Ginger Ale Mix", "Caramel Ribbon Crunch", "Vanilla Frapp"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
       { name: "Homeschool Era", items: ["Grandmother", "Cousin Classmates", "4th Grade", "Chicago Days"], color: "from-purple-500 to-violet-600", difficulty: 4 },
@@ -424,7 +424,7 @@ const connectionsPuzzles: ConnectionsPuzzle[] = [
     id: "cp10",
     categories: [
       { name: "Starbucks Items", items: ["Ribbon Crunch Drink", "Frappuccino Blend", "Caramel Drizzle", "Whipped Cream"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Broadway Chicken", items: ["Hot Honey Sauce", "Westfield Location", "Buttermilk Crust", "Side of Honey"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Broadway Chicken", items: ["Hot Honey Chicken", "Westfield Location", "Buttermilk Breading", "Honey on Side"], color: "from-green-500 to-emerald-600", difficulty: 2 },
       { name: "Chinese Order", items: ["Sweet Sour Sauce", "Shrimp Entree", "Fortune Inside", "Rice Bowl"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
       { name: "Flavor Combos", items: ["Lemonade Ginger", "Caramel Vanilla", "Honey Mustard Dip", "Sweet Sour Mix"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
@@ -1450,6 +1450,15 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </div>
         )}
 
+        {/* Last Try Warning */}
+        {!connectionsComplete && connectionsMistakes === 3 && (
+          <div className="w-full p-3 bg-amber-900/40 border border-amber-500/50 rounded-xl text-center">
+            <p className="text-amber-300 font-semibold text-sm">
+              You have one more try before I show you the answer!
+            </p>
+          </div>
+        )}
+
         {/* Selection Counter & Submit */}
         {!connectionsComplete && (
           <div className="w-full flex items-center justify-between">
@@ -1475,17 +1484,18 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           <div className="w-full space-y-4">
             <div className={`text-center ${connectionsSolved.length === 4 ? 'text-green-400' : 'text-red-400'}`}>
               <p className="text-xl font-bold">
-                {connectionsSolved.length === 4 ? 'You got them all!' : 'Game Over!'}
+                {connectionsSolved.length === 4 ? 'You got them all!' : 'Wrong! Here are the answers:'}
               </p>
-              <p className="text-sm mt-1 opacity-70">
-                {connectionsSolved.length}/4 categories found
-              </p>
+              {connectionsSolved.length === 4 && (
+                <p className="text-sm mt-1 opacity-70">
+                  {connectionsSolved.length}/4 categories found
+                </p>
+              )}
             </div>
             
             {/* Show remaining categories if game over from mistakes */}
             {connectionsMistakes >= 4 && connectionsSolved.length < 4 && (
               <div className="space-y-2">
-                <p className="text-pink-300/60 text-xs text-center">The categories were:</p>
                 {currentConnectionsPuzzle.categories
                   .filter((_, idx) => !connectionsSolved.includes(idx))
                   .map((cat, idx) => (
@@ -1501,7 +1511,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               onClick={nextConnectionsPuzzle}
               className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
             >
-              Next Puzzle <RefreshCw className="w-4 h-4" />
+              Try Another Puzzle <RefreshCw className="w-4 h-4" />
             </button>
           </div>
         )}
