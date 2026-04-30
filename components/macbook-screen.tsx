@@ -108,7 +108,7 @@ const messageContacts = [
     messages: [
       { from: 'charity', text: "Hey! Welcome to my portfolio on my MacBook!", time: '10:30 AM' },
       { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Have fun exploring!", time: '10:31 AM' },
+      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Feel free to message me here and talk to me in iMessages. Happy to respond!", time: '10:31 AM' },
     ]
   },
   {
@@ -3399,6 +3399,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <span className="border border-white/30 px-2 py-0.5 text-xs rounded">HD</span>
                           <span>{caseStudies[netflixModal.data as keyof typeof caseStudies]?.role}</span>
                         </div>
+                        
+                        {/* View Full Case Study Button */}
+                        <button
+                          onClick={() => {
+                            openCaseStudy(netflixModal.data as string)
+                            setNetflixModal({ type: null, data: null })
+                          }}
+                          className="mt-6 bg-white hover:bg-white/90 text-black font-bold px-8 py-3 rounded-md flex items-center gap-2 transition-colors"
+                        >
+                          <Play className="w-5 h-5 fill-black" />
+                          View Full Case Study
+                        </button>
                       </div>
                     </div>
                   </div>
