@@ -109,6 +109,7 @@ const messageContacts = [
       { from: 'charity', text: "Hey! Welcome to my portfolio on my MacBook!", time: '10:30 AM' },
       { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
       { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Feel free to message me here and talk to me in iMessages. Happy to respond!", time: '10:31 AM' },
+      { from: 'charity', text: "Hey there, how are you?", time: '10:32 AM' },
     ]
   },
   {
@@ -1107,16 +1108,6 @@ const messageText = mobileInput.trim()
                     </button>
                     <button
                       onClick={() => {
-                        // Add the message to the conversation
-                        setMobileConversations(prev => prev.map(conv => {
-                          if (conv.id === 'welcome') {
-                            return {
-                              ...conv,
-                              messages: [...conv.messages, { from: 'user', text: notificationMessage.text, time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) }]
-                            }
-                          }
-                          return conv
-                        }))
                         setShowMessageNotification(false)
                         setMobileScreen('messages')
                       }}
