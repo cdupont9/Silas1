@@ -296,6 +296,10 @@ export function MacBookScreen() {
   // Mobile Safari state
   const [mobileSafariUrl, setMobileSafariUrl] = useState('')
   
+  // Mobile notification state
+  const [showMessageNotification, setShowMessageNotification] = useState(true)
+  const [notificationMessage] = useState({ sender: 'Visitor', text: 'Hey there, how are you?' })
+  
   // Leaving portfolio popup state
   const [showLeavingPopup, setShowLeavingPopup] = useState<string | null>(null)
   
@@ -1077,6 +1081,51 @@ const messageText = mobileInput.trim()
               </div>
             </div>
           </div>
+          
+          {/* iMessage Notification Popup */}
+          {showMessageNotification && (
+            <div className="absolute top-[55px] left-3 right-3 z-50 animate-in slide-in-from-top duration-300">
+              <div className="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden">
+                <div className="flex items-start p-3 gap-3">
+                  {/* Messages App Icon */}
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-b from-green-400 to-green-600 flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-6 h-6 text-white fill-white" />
+                  </div>
+                  {/* Message Content - Tappable */}
+                  <button
+                    onClick={() => {
+                      // Add the message to the conversation
+                      setMobileConversations(prev => prev.map(conv => {
+                        if (conv.id === 'welcome') {
+                          return {
+                            ...conv,
+                            messages: [...conv.messages, { from: 'user', text: notificationMessage.text, time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) }]
+                          }
+                        }
+                        return conv
+                      }))
+                      setShowMessageNotification(false)
+                      setMobileScreen('messages')
+                    }}
+                    className="flex-1 text-left min-w-0"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-900 text-sm font-semibold">{notificationMessage.sender}</span>
+                      <span className="text-gray-400 text-xs">now</span>
+                    </div>
+                    <p className="text-gray-600 text-sm mt-0.5 truncate">{notificationMessage.text}</p>
+                  </button>
+                  {/* Close Button */}
+                  <button
+                    onClick={() => setShowMessageNotification(false)}
+                    className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 hover:bg-gray-300 transition-colors"
+                  >
+                    <X className="w-3.5 h-3.5 text-gray-500" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Scrollable Content Area */}
           <div className="relative z-10 h-full pt-14 pb-4 overflow-y-auto scrollbar-none" style={{ WebkitOverflowScrolling: 'touch' }}>
