@@ -329,52 +329,119 @@ interface ConnectionsPuzzle {
 }
 
 const connectionsPuzzles: ConnectionsPuzzle[] = [
+  // PUZZLE 1: Tricky - "Candy" could be food, "Only Hope" sounds like goal, "Saved" sounds religious
   {
     id: "cp1",
     categories: [
-      { name: "Hilary Duff Songs", items: ["So Yesterday", "Come Clean", "Why Not", "Fly"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Places Charity Has Visited", items: ["Paris", "Spain", "South Africa", "Italy"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Charity's Favorite Drinks", items: ["Apple Juice", "Lemonade + Ginger Ale", "Caramel Ribbon Crunch", "Vanilla Bean Frapp"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Childhood Memories", items: ["Breakfast Business", "Ballet Dreams", "Homeschooled", "Broom Dancing"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+      { name: "Mandy Moore Songs", items: ["Candy", "Only Hope", "Cry", "Saved"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Places Visited", items: ["Paris", "South Africa", "Spain", "Italy"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Starbucks Order", items: ["Extra Caramel", "Extra Crunch", "Vanilla Bean", "Ribbon Topping"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Childhood Dreams", items: ["Breakfast Business", "Ballet Dancer", "Cook", "Teacher"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
   },
+  // PUZZLE 2: Tricky - "Fly" could be travel, "Come Clean" sounds like cleaning
   {
     id: "cp2",
     categories: [
-      { name: "Mandy Moore Songs", items: ["Candy", "Only Hope", "Cry", "Saved"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Movies Charity Loves", items: ["A Walk to Remember", "Lizzie McGuire Movie", "Cinderella (Brandy)", "The Princess Diaries"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Broadway Chicken Order", items: ["Hot and Honey", "Buttermilk Battered", "Honey Mustard", "Westfield NJ"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Things on VHS", items: ["Cinderella", "Lizzie McGuire", "Metamorphosis Concert", "A Walk to Remember"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+      { name: "Hilary Duff Songs", items: ["So Yesterday", "Come Clean", "Why Not", "Fly"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Road Trip Details", items: ["No Stops", "Straight Through", "With Mom", "Snack Run"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Bucket List Items", items: ["Greece", "Bus Travel", "Conference Speaker", "Leadership Role"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Cinderella Memories", items: ["Broom Dancing", "Little Corner Song", "Whitney Houston", "Brandy"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
   },
+  // PUZZLE 3: Tricky - Food vs locations vs movies
   {
     id: "cp3",
     categories: [
-      { name: "Disney Characters", items: ["Cinderella", "Lizzie McGuire", "Brandy", "Whitney Houston"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Bucket List Destinations", items: ["Greece", "Bus Travel", "Design Conference", "Senior Leadership"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Childhood Dreams", items: ["Ballet Dancer", "Cook", "Teacher", "Designer"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Road Trip: Chicago to NJ", items: ["No Hotel Stops", "Drove Straight Through", "With Mom", "Lots of Snacks"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+      { name: "Broadway Chicken", items: ["Hot and Honey", "Buttermilk Battered", "Honey Mustard", "Westfield NJ"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "VHS Collection", items: ["Cinderella Movie", "Lizzie McGuire Film", "Walk to Remember", "Metamorphosis Concert"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Favorite Drinks", items: ["Apple Juice", "Ginger Ale Mix", "Caramel Ribbon Crunch", "Vanilla Frapp"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Homeschool Era", items: ["Grandmother", "Cousin Classmates", "4th Grade", "Chicago Days"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
   },
+  // PUZZLE 4: Tricky - UX terms vs personality traits vs food
   {
     id: "cp4",
     categories: [
-      { name: "Starbucks Favorites", items: ["Caramel Ribbon Crunch", "Vanilla Bean Frapp", "Extra Caramel", "Extra Crunch"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Chinese Food Order", items: ["Sweet and Sour Shrimp", "White Rice", "Egg Roll", "Fortune Cookie"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "UX Designer Traits", items: ["Empathetic", "Detail-Oriented", "Creative", "Patient"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "In My Own Little Corner", items: ["Broom Dancing", "Singing Along", "Pretending to be Cinderella", "Mom Watching"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+      { name: "Favorite Movies", items: ["Walk to Remember", "Lizzie McGuire", "Brandy Cinderella", "Princess Diaries"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Work Needs", items: ["Peace and Quiet", "Work-Life Balance", "Meaningful Impact", "Creative Freedom"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Chinese Takeout", items: ["Sweet Sour Shrimp", "White Rice", "Egg Roll", "Fortune Cookie"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Personality Traits", items: ["Empathetic", "Detail-Oriented", "Spontaneous", "Patient"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
   },
+  // PUZZLE 5: Tricky - All sound nostalgic
   {
     id: "cp5",
     categories: [
-      { name: "90s/2000s Nostalgia", items: ["Lizzie McGuire", "Hilary Duff", "VHS Tapes", "Metamorphosis"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Roller Coaster Preferences", items: ["Front Row", "Big Drops", "Loop-de-loops", "Screaming Allowed"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Homeschool Life", items: ["Grandmother Teacher", "Cousin Classmates", "4th Grade End", "Chicago Days"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Work Values", items: ["Peace and Quiet", "Work-Life Balance", "Meaningful Impact", "Continuous Learning"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+      { name: "Disney Channel Era", items: ["Lizzie Show", "Hilary Duff", "Early 2000s", "VHS Tapes"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Roller Coaster", items: ["Front Row", "Big Drops", "Loops", "Screaming"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Work Pain Points", items: ["Scope Creep", "Vague Feedback", "Last Minute Changes", "Unclear Requirements"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Cinderella Dancing", items: ["Broom Partner", "Own Little Corner", "Pretend Princess", "Mom Watching"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  // PUZZLE 6: Tricky - Fashion vs travel vs movies
+  {
+    id: "cp6",
+    categories: [
+      { name: "Fashion Love", items: ["80s Style", "90s Aesthetic", "Vintage Vibes", "Retro Looks"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Never Done Yet", items: ["Visit Greece", "Greyhound Bus", "TED Talk", "See Mars"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Walk to Remember Movie", items: ["Mandy Moore Star", "Only Hope Song", "Sad Ending", "Romance Genre"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Grandma's School", items: ["Home Education", "Chicago House", "Multiple Kids", "Until 4th Grade"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  // PUZZLE 7: Super tricky - Similar sounding items across categories
+  {
+    id: "cp7",
+    categories: [
+      { name: "Metamorphosis Album", items: ["So Yesterday Song", "Come Clean Track", "Why Not Single", "Anywhere But Here"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "1997 Cinderella", items: ["Whitney Houston Star", "Brandy Lead", "VHS Format", "Rogers Hammerstein"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Work Environment", items: ["Quiet Space", "Balance Life", "Career Growth", "Make Impact"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Mom Memories", items: ["Chicago Drive", "Bank of America", "Starbucks Find", "Grand Central"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  // PUZZLE 8: Tricky - People vs places vs abstract
+  {
+    id: "cp8",
+    categories: [
+      { name: "Cinderella Cast", items: ["Brandy Norwood", "Whitney Singer", "Whoopi Goldberg", "Bernadette Peters"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Future Goals", items: ["Senior Designer", "Conference Stage", "Greece Trip", "Bus Adventure"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Google Job", items: ["UX Role", "AI Focus", "Meaningful Work", "Team Collaboration"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Teacher Background", items: ["4th Grade Class", "Empathy Skills", "Patience Virtue", "Help Users Learn"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  // PUZZLE 9: Mix of similar items
+  {
+    id: "cp9",
+    categories: [
+      { name: "Drink Ingredients", items: ["Lemonade", "Ginger Ale", "Apple Juice", "Caramel Syrup"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Kid Activities", items: ["Ballet Class", "Horseback Riding", "Cooking Lessons", "Breakfast Selling"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Columbia Era", items: ["New Jersey Move", "Design School", "Career Change", "From Teaching"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Lizzie McGuire", items: ["Hilary Star", "Disney Channel", "VHS Owned", "2000s Show"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  // PUZZLE 10: All food-adjacent but different meanings
+  {
+    id: "cp10",
+    categories: [
+      { name: "Starbucks Items", items: ["Ribbon Crunch Drink", "Frappuccino Blend", "Caramel Drizzle", "Whipped Cream"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Broadway Chicken", items: ["Hot Honey Sauce", "Westfield Location", "Buttermilk Crust", "Side of Honey"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Chinese Order", items: ["Sweet Sour Sauce", "Shrimp Entree", "Fortune Inside", "Rice Bowl"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Flavor Combos", items: ["Lemonade Ginger", "Caramel Vanilla", "Honey Mustard Dip", "Sweet Sour Mix"], color: "from-purple-500 to-violet-600", difficulty: 4 },
     ]
   },
 ]
+
+// Seeded shuffle function for stable randomization per puzzle
+const seededShuffle = (array: string[], seed: string): string[] => {
+  const shuffled = [...array]
+  let seedNum = seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    seedNum = (seedNum * 9301 + 49297) % 233280
+    const j = Math.floor((seedNum / 233280) * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
 interface TwoTruthsRound {
@@ -1312,16 +1379,17 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
   // Connections Puzzle (Group 16 items into 4 categories of 4)
   if (gameMode === "trivia" && currentConnectionsPuzzle) {
-    // Get all items that haven't been solved yet
+    // Get ALL items shuffled once using puzzle ID as seed (stable order)
+    const allItems = currentConnectionsPuzzle.categories.flatMap(cat => cat.items)
+    const shuffledAllItems = seededShuffle(allItems, currentConnectionsPuzzle.id)
+    
+    // Get solved items
     const solvedItems = connectionsSolved.flatMap(idx => 
       currentConnectionsPuzzle.categories[idx].items
     )
-    const remainingItems = currentConnectionsPuzzle.categories
-      .flatMap(cat => cat.items)
-      .filter(item => !solvedItems.includes(item))
     
-    // Shuffle remaining items (but keep it stable during render)
-    const shuffledItems = [...remainingItems].sort(() => 0.5 - Math.random())
+    // Filter out solved items but keep the shuffled order
+    const displayItems = shuffledAllItems.filter(item => !solvedItems.includes(item))
 
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
@@ -1363,7 +1431,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         {/* Item Grid */}
         {!connectionsComplete && (
           <div className="grid grid-cols-4 gap-2 w-full">
-            {remainingItems.map((item) => {
+            {displayItems.map((item) => {
               const isSelected = connectionsSelected.includes(item)
               return (
                 <button
