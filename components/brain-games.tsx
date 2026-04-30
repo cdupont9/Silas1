@@ -282,24 +282,39 @@ const personaQuestions: PersonaQuestion[] = [
   { id: "p4", question: "Charity was obsessed with a Disney Channel show. Which one?", options: ["Hannah Montana", "That's So Raven", "Lizzie McGuire", "Kim Possible"], correctAnswer: 2, category: "music" },
   { id: "p5", question: "Charity still owns what format of her favorite childhood movie?", options: ["DVD", "Blu-ray", "VHS", "Digital download"], correctAnswer: 2, category: "music" },
   { id: "p6", question: "Who is Charity's favorite singer since childhood to present day?", options: ["Britney Spears", "Christina Aguilera", "Hilary Duff", "Jessica Simpson"], correctAnswer: 2, category: "music" },
+  { id: "p7", question: "Which Hilary Duff album does Charity still listen to while driving?", options: ["Dignity", "Hilary Duff", "Metamorphosis", "Breathe In. Breathe Out."], correctAnswer: 2, category: "music" },
+  { id: "p8", question: "Which song is NOT one of Charity's favorites from the Metamorphosis album?", options: ["So Yesterday", "Why Not", "Come Clean", "Fly"], correctAnswer: 3, category: "music" },
+  { id: "p9", question: "Charity also likes which other early 2000s artist?", options: ["Avril Lavigne", "Mandy Moore", "Michelle Branch", "Ashlee Simpson"], correctAnswer: 1, category: "music" },
+  { id: "p10", question: "Which Mandy Moore song is one of Charity's favorites?", options: ["Candy", "Walk Me Home", "In My Pocket", "I Wanna Be With You"], correctAnswer: 0, category: "music" },
+  { id: "p11", question: "What other Mandy Moore song does Charity love?", options: ["Saved", "Only Hope", "Have a Little Faith", "Someday We'll Know"], correctAnswer: 1, category: "music" },
+  // Tricky Food & Drink Questions
+  { id: "p12", question: "What is Charity's favorite drink combination?", options: ["Lemonade and Sprite", "Lemonade and ginger ale", "Lemonade and iced tea", "Lemonade and cranberry"], correctAnswer: 1, category: "hobby" },
+  { id: "p13", question: "Which juice does Charity prefer?", options: ["Orange juice", "Grape juice", "Apple juice", "Cranberry juice"], correctAnswer: 2, category: "hobby" },
+  { id: "p14", question: "What is Charity's favorite takeout restaurant?", options: ["Chick-fil-A", "Popeyes", "Broadway Chicken", "Raising Cane's"], correctAnswer: 2, category: "hobby" },
+  { id: "p15", question: "What is Charity's go-to order at her favorite chicken place?", options: ["Nashville Hot Chicken", "Broadway Hot and Honey Chicken", "Lemon Pepper Wings", "Buffalo Tenders"], correctAnswer: 1, category: "hobby" },
+  { id: "p16", question: "What type of batter does Charity's favorite chicken have?", options: ["Cornmeal crusted", "Panko breaded", "Buttermilk battered", "Flour dusted"], correctAnswer: 2, category: "hobby" },
+  { id: "p17", question: "What sauces does Charity get on the side with her chicken?", options: ["BBQ and ranch", "Honey mustard and honey", "Buffalo and blue cheese", "Ketchup and mayo"], correctAnswer: 1, category: "hobby" },
+  { id: "p18", question: "Where is Charity's favorite chicken restaurant located?", options: ["Newark", "Hoboken", "Westfield", "Jersey City"], correctAnswer: 2, category: "hobby" },
+  { id: "p19", question: "What is Charity's go-to Chinese food order?", options: ["General Tso's chicken", "Sweet and sour shrimp", "Beef and broccoli", "Orange chicken"], correctAnswer: 1, category: "hobby" },
   // Tricky Background Questions
-  { id: "p7", question: "Until what grade was Charity homeschooled?", options: ["2nd grade", "3rd grade", "4th grade", "5th grade"], correctAnswer: 2, category: "hobby" },
-  { id: "p8", question: "Who homeschooled Charity?", options: ["Her mother", "Her aunt", "Her grandmother", "A private tutor"], correctAnswer: 2, category: "hobby" },
-  { id: "p9", question: "Charity moved from Chicago to where?", options: ["Connecticut", "New York", "New Jersey", "Pennsylvania"], correctAnswer: 2, category: "hobby" },
-  { id: "p10", question: "How did Charity and her mother travel from Chicago when they moved?", options: ["Flew directly", "Took a train", "Drove straight with no breaks", "Drove with multiple hotel stops"], correctAnswer: 2, category: "hobby" },
+  { id: "p20", question: "Until what grade was Charity homeschooled?", options: ["2nd grade", "3rd grade", "4th grade", "5th grade"], correctAnswer: 2, category: "hobby" },
+  { id: "p21", question: "Who homeschooled Charity?", options: ["Her mother", "Her aunt", "Her grandmother", "A private tutor"], correctAnswer: 2, category: "hobby" },
+  { id: "p22", question: "Charity moved from Chicago to where?", options: ["Connecticut", "New York", "New Jersey", "Pennsylvania"], correctAnswer: 2, category: "hobby" },
+  { id: "p23", question: "How did Charity and her mother travel from Chicago when they moved?", options: ["Flew directly", "Took a train", "Drove straight with no breaks", "Drove with multiple hotel stops"], correctAnswer: 2, category: "hobby" },
   // Tricky Childhood Dreams
-  { id: "p11", question: "Charity once dreamed of becoming what performer?", options: ["Singer", "Actress", "Ballet dancer", "Gymnast"], correctAnswer: 2, category: "goals" },
-  { id: "p12", question: "When homeschooled, Charity ran a small business. What kind?", options: ["Lemonade stand", "Breakfast business", "Craft sales", "Dog walking"], correctAnswer: 1, category: "goals" },
-  { id: "p13", question: "Besides ballet, Charity also once wanted to be a:", options: ["Doctor", "Cook", "Lawyer", "Teacher"], correctAnswer: 1, category: "goals" },
+  { id: "p24", question: "Charity once dreamed of becoming what performer?", options: ["Singer", "Actress", "Ballet dancer", "Gymnast"], correctAnswer: 2, category: "goals" },
+  { id: "p25", question: "When homeschooled, Charity ran a small business. What kind?", options: ["Lemonade stand", "Breakfast business", "Craft sales", "Dog walking"], correctAnswer: 1, category: "goals" },
+  { id: "p26", question: "Besides ballet, Charity also once wanted to be a:", options: ["Doctor", "Cook", "Lawyer", "Teacher"], correctAnswer: 1, category: "goals" },
   // Tricky Personality
-  { id: "p14", question: "What does Charity value most in her environment?", options: ["Constant excitement", "Peace and quiet", "Loud music", "Social gatherings"], correctAnswer: 1, category: "traits" },
-  { id: "p15", question: "Charity's grandmother homeschooled how many students?", options: ["Just Charity", "Charity and her sibling", "Charity, her cousin, and others", "A full classroom of 20"], correctAnswer: 2, category: "hobby" },
+  { id: "p27", question: "What does Charity value most in her environment?", options: ["Constant excitement", "Peace and quiet", "Loud music", "Social gatherings"], correctAnswer: 1, category: "traits" },
+  { id: "p28", question: "Charity's grandmother homeschooled how many students?", options: ["Just Charity", "Charity and her sibling", "Charity, her cousin, and others", "A full classroom of 20"], correctAnswer: 2, category: "hobby" },
+  { id: "p29", question: "How would you describe Charity's personality?", options: ["Cautious and predictable", "Spontaneous and likes trying new things", "Shy and reserved", "Serious and formal"], correctAnswer: 1, category: "traits" },
   // Career - Tricky
-  { id: "p16", question: "What frustrates Charity most as a UX designer?", options: ["Tight deadlines", "Scope creep", "Too many tools", "Remote work"], correctAnswer: 1, category: "painpoints" },
-  { id: "p17", question: "Which combination of values drives Charity's career?", options: ["Fame & fortune", "Impact, balance, learning & leadership", "Speed & efficiency", "Competition & winning"], correctAnswer: 1, category: "goals" },
-  { id: "p18", question: "Charity wants to speak at what type of events?", options: ["Music festivals", "Design conferences", "Political rallies", "Comedy shows"], correctAnswer: 1, category: "wishlist" },
-  { id: "p19", question: "Which European country is on Charity's bucket list?", options: ["Italy", "France", "Greece", "Spain"], correctAnswer: 2, category: "wishlist" },
-  { id: "p20", question: "What book genre does Charity secretly enjoy?", options: ["Horror", "Romance", "True crime", "Fantasy"], correctAnswer: 1, category: "hobby" },
+  { id: "p30", question: "What frustrates Charity most as a UX designer?", options: ["Tight deadlines", "Scope creep", "Too many tools", "Remote work"], correctAnswer: 1, category: "painpoints" },
+  { id: "p31", question: "Which combination of values drives Charity's career?", options: ["Fame & fortune", "Impact, balance, learning & leadership", "Speed & efficiency", "Competition & winning"], correctAnswer: 1, category: "goals" },
+  { id: "p32", question: "Charity wants to speak at what type of events?", options: ["Music festivals", "Design conferences", "Political rallies", "Comedy shows"], correctAnswer: 1, category: "wishlist" },
+  { id: "p33", question: "Which European country is on Charity's bucket list?", options: ["Italy", "France", "Greece", "Spain"], correctAnswer: 2, category: "wishlist" },
+  { id: "p34", question: "What book genre does Charity secretly enjoy?", options: ["Horror", "Romance", "True crime", "Fantasy"], correctAnswer: 1, category: "hobby" },
 ]
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
@@ -320,6 +335,17 @@ const twoTruthsRounds: TwoTruthsRound[] = [
   { id: "tt8", statements: ["I moved from Chicago to New Jersey", "I moved from Los Angeles to New Jersey", "I enjoy visiting museums and historical sites"], lieIndex: 1 },
   { id: "tt9", statements: ["I enjoy rollerskating", "I'm a professional ice skater", "I love reading romance novels"], lieIndex: 1 },
   { id: "tt10", statements: ["I dream of traveling to Greece", "I want to speak at design conferences", "I've already given a TED talk"], lieIndex: 2 },
+  // New rounds with food and drink
+  { id: "tt11", statements: ["My favorite drink is lemonade mixed with ginger ale", "I prefer orange juice over apple juice", "I love trying new and spontaneous things"], lieIndex: 1 },
+  { id: "tt12", statements: ["My go-to Chinese order is sweet and sour shrimp", "I always order General Tso's chicken", "I still listen to the Metamorphosis album while driving"], lieIndex: 1 },
+  { id: "tt13", statements: ["My favorite takeout is Broadway Hot and Honey Chicken", "I love buttermilk battered chicken", "I prefer grilled chicken over fried"], lieIndex: 2 },
+  { id: "tt14", statements: ["I always get honey mustard and honey on the side", "My favorite chicken place is in Westfield", "I've never been to Broadway Chicken"], lieIndex: 2 },
+  { id: "tt15", statements: ["I love Mandy Moore's song 'Only Hope'", "My favorite Mandy Moore song is 'Cry'", "I've never heard of Mandy Moore"], lieIndex: 2 },
+  { id: "tt16", statements: ["'Candy' by Mandy Moore is one of my favorites", "I prefer Taylor Swift over Mandy Moore", "I like to think I'm spontaneous"], lieIndex: 1 },
+  { id: "tt17", statements: ["'So Yesterday' is one of my favorite Hilary Duff songs", "'Why Not' is on my driving playlist", "I've never listened to the Metamorphosis album"], lieIndex: 2 },
+  { id: "tt18", statements: ["'Come Clean' is a Hilary Duff song I love", "I prefer apple juice over orange juice", "I don't like any citrus drinks"], lieIndex: 2 },
+  { id: "tt19", statements: ["I consider myself spontaneous", "I like trying things that are different", "I'm very predictable and don't like change"], lieIndex: 2 },
+  { id: "tt20", statements: ["Broadway Chicken has the best honey chicken", "I've been to every state in the US", "I drove from Chicago to New Jersey with no hotel stops"], lieIndex: 1 },
 ]
 
 // ============ MAIN COMPONENT ============
