@@ -264,100 +264,127 @@ const logicPuzzles: LogicPuzzle[] = [
   }
 ]
 
-// ============ USER PERSONA SECTION (Needs & Pain Points) ============
-// This is the actual UX User Persona game - focused on needs and pain points
-interface PersonaNeedQuestion {
+// ============ USER PERSONA SECTION (Card Sorting Game) ============
+// Sort statements into the correct UX persona category
+interface PersonaCard {
   id: string
-  question: string
-  options: string[]
-  correctAnswer: number
-  type: "need" | "painpoint" | "goal" | "behavior"
+  statement: string
+  correctCategory: "need" | "painpoint" | "goal" | "behavior"
 }
 
 // Charity's User Persona Story
 const charityPersonaStory = `Charity is a UX/UI Designer who transitioned from being a 4th-grade teacher. She brings empathy and patience from her teaching background into her design work. Growing up homeschooled by her grandmother in Chicago, she learned early on to be resourceful - even running a breakfast business as a kid. After moving to New Jersey with her mother (driving straight through with no breaks!), she pursued her passion for design at Columbia University. Now at Google, she focuses on AI-driven experiences while maintaining her core values of meaningful impact and work-life balance.`
 
-const personaNeedQuestions: PersonaNeedQuestion[] = [
-  // User Needs
-  { id: "pn1", question: "What does Charity need most in her work environment?", options: ["Constant supervision", "Peace and quiet", "Loud brainstorming sessions", "Open floor plans"], correctAnswer: 1, type: "need" },
-  { id: "pn2", question: "Which need drives Charity's career decisions?", options: ["Highest possible salary", "Making meaningful impact", "Fame and recognition", "Minimal responsibility"], correctAnswer: 1, type: "need" },
-  { id: "pn3", question: "What balance does Charity prioritize?", options: ["Work over everything", "Work-life balance", "Social life over work", "Money over time"], correctAnswer: 1, type: "need" },
-  { id: "pn4", question: "What type of growth is essential for Charity?", options: ["Only technical skills", "Continuous learning across areas", "Just salary increases", "Staying in comfort zone"], correctAnswer: 1, type: "need" },
-  { id: "pn5", question: "What leadership goal does Charity have?", options: ["Avoid leadership entirely", "Growing into senior roles", "Stay as individual contributor forever", "Become CEO immediately"], correctAnswer: 1, type: "goal" },
+// Cards to sort into categories
+const personaCards: PersonaCard[] = [
+  // Needs
+  { id: "pc1", statement: "Peace and quiet in work environment", correctCategory: "need" },
+  { id: "pc2", statement: "Making meaningful impact through work", correctCategory: "need" },
+  { id: "pc3", statement: "Work-life balance", correctCategory: "need" },
+  { id: "pc4", statement: "Continuous learning and growth", correctCategory: "need" },
+  { id: "pc5", statement: "Creative freedom in projects", correctCategory: "need" },
+  { id: "pc6", statement: "Clear communication from stakeholders", correctCategory: "need" },
   // Pain Points
-  { id: "pn6", question: "What frustrates Charity MOST in projects?", options: ["Too many designers", "Scope creep", "Short meetings", "Clear requirements"], correctAnswer: 1, type: "painpoint" },
-  { id: "pn7", question: "As a former teacher, what pain point might Charity have?", options: ["Working with stakeholders", "When designs don't help users learn/grow", "Too much user research", "Fast timelines"], correctAnswer: 1, type: "painpoint" },
-  { id: "pn8", question: "What type of feedback bothers Charity?", options: ["Constructive criticism", "Vague feedback without reasoning", "Detailed design reviews", "User testing results"], correctAnswer: 1, type: "painpoint" },
+  { id: "pc7", statement: "Scope creep on projects", correctCategory: "painpoint" },
+  { id: "pc8", statement: "Vague feedback without reasoning", correctCategory: "painpoint" },
+  { id: "pc9", statement: "Designs that don't help users learn", correctCategory: "painpoint" },
+  { id: "pc10", statement: "Last-minute requirement changes", correctCategory: "painpoint" },
+  { id: "pc11", statement: "Unclear project expectations", correctCategory: "painpoint" },
+  { id: "pc12", statement: "Not enough time for user research", correctCategory: "painpoint" },
   // Goals
-  { id: "pn9", question: "What public speaking goal does Charity have?", options: ["Avoid all public speaking", "Speak at design conferences", "Only internal presentations", "Never share her work"], correctAnswer: 1, type: "goal" },
-  { id: "pn10", question: "What travel experience is on Charity's bucket list?", options: ["Flying first class everywhere", "Bus travel adventure", "Only luxury resorts", "Never traveling again"], correctAnswer: 1, type: "goal" },
-  { id: "pn11", question: "Which destination is a goal for Charity?", options: ["Stay local only", "Visit Greece", "Move to Mars", "Never leave NJ"], correctAnswer: 1, type: "goal" },
+  { id: "pc13", statement: "Speak at design conferences", correctCategory: "goal" },
+  { id: "pc14", statement: "Travel to Greece", correctCategory: "goal" },
+  { id: "pc15", statement: "Experience bus travel adventure", correctCategory: "goal" },
+  { id: "pc16", statement: "Grow into senior leadership roles", correctCategory: "goal" },
+  { id: "pc17", statement: "Build a design portfolio brand", correctCategory: "goal" },
+  { id: "pc18", statement: "Mentor junior designers", correctCategory: "goal" },
   // Behaviors
-  { id: "pn12", question: "How does Charity approach new experiences?", options: ["Avoids anything unfamiliar", "Spontaneous, likes trying different things", "Only does planned activities", "Refuses to try new foods"], correctAnswer: 1, type: "behavior" },
-  { id: "pn13", question: "What's Charity's approach to problem-solving?", options: ["Impatient and rushed", "Creative and curious", "Follows only strict rules", "Avoids complex problems"], correctAnswer: 1, type: "behavior" },
-  { id: "pn14", question: "How does Charity handle stress?", options: ["Panics immediately", "Stays calm and patient", "Gives up quickly", "Blames others"], correctAnswer: 1, type: "behavior" },
-  { id: "pn15", question: "What trait helps Charity in UX research?", options: ["Ignoring user feedback", "Empathetic and caring nature", "Rushing through interviews", "Making assumptions"], correctAnswer: 1, type: "behavior" },
-  { id: "pn16", question: "How detail-oriented is Charity?", options: ["Overlooks most details", "Very detail-oriented", "Only cares about big picture", "Doesn't review her work"], correctAnswer: 1, type: "behavior" },
+  { id: "pc19", statement: "Spontaneous, tries new things", correctCategory: "behavior" },
+  { id: "pc20", statement: "Creative and curious problem-solver", correctCategory: "behavior" },
+  { id: "pc21", statement: "Stays calm under pressure", correctCategory: "behavior" },
+  { id: "pc22", statement: "Empathetic with users and teammates", correctCategory: "behavior" },
+  { id: "pc23", statement: "Very detail-oriented", correctCategory: "behavior" },
+  { id: "pc24", statement: "Patient when explaining concepts", correctCategory: "behavior" },
 ]
 
-// ============ KNOW ME QUIZ SECTION (Trivia about Charity) ============
-interface TriviaQuestion {
-  id: string
-  question: string
-  options: string[]
-  correctAnswer: number
-  category: "music" | "food" | "travel" | "background" | "starbucks" | "fashion"
+const categoryInfo = {
+  need: { label: "Needs", color: "from-blue-600 to-blue-800", borderColor: "border-blue-500", bgColor: "bg-blue-950/50" },
+  painpoint: { label: "Pain Points", color: "from-red-600 to-red-800", borderColor: "border-red-500", bgColor: "bg-red-950/50" },
+  goal: { label: "Goals", color: "from-green-600 to-green-800", borderColor: "border-green-500", bgColor: "bg-green-950/50" },
+  behavior: { label: "Behaviors", color: "from-purple-600 to-purple-800", borderColor: "border-purple-500", bgColor: "bg-purple-950/50" },
 }
 
-const triviaQuestions: TriviaQuestion[] = [
-  // Music - Hilary Duff
-  { id: "t1", question: "Who is Charity's favorite singer since childhood?", options: ["Britney Spears", "Christina Aguilera", "Hilary Duff", "Jessica Simpson"], correctAnswer: 2, category: "music" },
-  { id: "t2", question: "Which Hilary Duff album does Charity still listen to while driving?", options: ["Dignity", "Hilary Duff", "Metamorphosis", "Breathe In. Breathe Out."], correctAnswer: 2, category: "music" },
-  { id: "t3", question: "Which song is NOT one of Charity's favorites from Metamorphosis?", options: ["So Yesterday", "Why Not", "Come Clean", "Fly"], correctAnswer: 3, category: "music" },
-  { id: "t4", question: "What Disney Channel show was Charity obsessed with?", options: ["Hannah Montana", "That's So Raven", "Lizzie McGuire", "Kim Possible"], correctAnswer: 2, category: "music" },
-  { id: "t5", question: "Charity still owns the Lizzie McGuire movie on what format?", options: ["DVD", "Blu-ray", "VHS", "Digital download"], correctAnswer: 2, category: "music" },
-  // Music - Mandy Moore
-  { id: "t6", question: "Which other early 2000s artist does Charity love?", options: ["Avril Lavigne", "Mandy Moore", "Michelle Branch", "Ashlee Simpson"], correctAnswer: 1, category: "music" },
-  { id: "t7", question: "Which Mandy Moore song is one of Charity's favorites?", options: ["Candy", "Walk Me Home", "In My Pocket", "I Wanna Be With You"], correctAnswer: 0, category: "music" },
-  { id: "t8", question: "What other Mandy Moore songs does Charity love?", options: ["Saved & Have a Little Faith", "Only Hope & Cry", "I Wanna Be With You & In My Pocket", "Walk Me Home & When I Talk to You"], correctAnswer: 1, category: "music" },
-  { id: "t9", question: "Charity loves 'A Walk to Remember' but what makes her cry?", options: ["The wedding scene", "The ending where she dies", "The star naming scene", "The beginning"], correctAnswer: 1, category: "music" },
+// ============ KNOW ME QUIZ - "THIS OR THAT" FORMAT ============
+// Pick between two options - which one is true about Charity?
+interface ThisOrThatQuestion {
+  id: string
+  category: "music" | "food" | "travel" | "background" | "starbucks" | "fashion"
+  optionA: string
+  optionB: string
+  correctOption: "A" | "B" // Which one is true about Charity
+}
+
+const thisOrThatQuestions: ThisOrThatQuestion[] = [
+  // Music
+  { id: "tot1", category: "music", optionA: "Hilary Duff", optionB: "Britney Spears", correctOption: "A" }, // Favorite childhood artist
+  { id: "tot2", category: "music", optionA: "Metamorphosis album", optionB: "Dignity album", correctOption: "A" }, // Still listens while driving
+  { id: "tot3", category: "music", optionA: "Lizzie McGuire", optionB: "Hannah Montana", correctOption: "A" }, // Obsessed with
+  { id: "tot4", category: "music", optionA: "VHS collection", optionB: "DVD collection", correctOption: "A" }, // Owns Lizzie McGuire on
+  { id: "tot5", category: "music", optionA: "Mandy Moore", optionB: "Christina Aguilera", correctOption: "A" }, // Other fave artist
+  { id: "tot6", category: "music", optionA: "Only Hope", optionB: "Walk Me Home", correctOption: "A" }, // Fave Mandy Moore song
+  { id: "tot7", category: "music", optionA: "A Walk to Remember", optionB: "The Princess Diaries", correctOption: "A" }, // Fave movie (even tho ending makes her cry)
+  { id: "tot8", category: "music", optionA: "So Yesterday", optionB: "With Love", correctOption: "A" }, // Fave Hilary song
+  { id: "tot9", category: "music", optionA: "Come Clean", optionB: "Beat of My Heart", correctOption: "A" }, // Another fave
+  { id: "tot10", category: "music", optionA: "Why Not", optionB: "Fly", correctOption: "A" }, // Driving playlist
   // Food & Drinks
-  { id: "t10", question: "What is Charity's favorite drink combination?", options: ["Lemonade and Sprite", "Lemonade and ginger ale", "Lemonade and iced tea", "Lemonade and cranberry"], correctAnswer: 1, category: "food" },
-  { id: "t11", question: "Which juice does Charity prefer?", options: ["Orange juice", "Grape juice", "Apple juice", "Cranberry juice"], correctAnswer: 2, category: "food" },
-  { id: "t12", question: "What is Charity's favorite takeout restaurant?", options: ["Chick-fil-A", "Popeyes", "Broadway Chicken", "Raising Cane's"], correctAnswer: 2, category: "food" },
-  { id: "t13", question: "What is Charity's go-to order at Broadway Chicken?", options: ["Nashville Hot Chicken", "Broadway Hot and Honey Chicken", "Lemon Pepper Wings", "Buffalo Tenders"], correctAnswer: 1, category: "food" },
-  { id: "t14", question: "What type of batter does her favorite chicken have?", options: ["Cornmeal crusted", "Panko breaded", "Buttermilk battered", "Flour dusted"], correctAnswer: 2, category: "food" },
-  { id: "t15", question: "What sauces does Charity get on the side?", options: ["BBQ and ranch", "Honey mustard and honey", "Buffalo and blue cheese", "Ketchup and mayo"], correctAnswer: 1, category: "food" },
-  { id: "t16", question: "Where is Broadway Chicken located?", options: ["Newark", "Hoboken", "Westfield", "Jersey City"], correctAnswer: 2, category: "food" },
-  { id: "t17", question: "What is Charity's go-to Chinese food order?", options: ["General Tso's chicken", "Sweet and sour shrimp", "Beef and broccoli", "Orange chicken"], correctAnswer: 1, category: "food" },
+  { id: "tot11", category: "food", optionA: "Apple juice", optionB: "Orange juice", correctOption: "A" }, // Preferred juice
+  { id: "tot12", category: "food", optionA: "Lemonade + Ginger ale", optionB: "Lemonade + Sprite", correctOption: "A" }, // Fave drink combo
+  { id: "tot13", category: "food", optionA: "Broadway Chicken", optionB: "Popeyes", correctOption: "A" }, // Fave takeout
+  { id: "tot14", category: "food", optionA: "Hot and Honey Chicken", optionB: "Nashville Hot Chicken", correctOption: "A" }, // Go-to order
+  { id: "tot15", category: "food", optionA: "Buttermilk battered", optionB: "Panko breaded", correctOption: "A" }, // Chicken batter
+  { id: "tot16", category: "food", optionA: "Honey mustard + Honey", optionB: "BBQ + Ranch", correctOption: "A" }, // Sauces
+  { id: "tot17", category: "food", optionA: "Sweet and sour shrimp", optionB: "General Tso's chicken", correctOption: "A" }, // Chinese order
+  { id: "tot18", category: "food", optionA: "Westfield, NJ", optionB: "Hoboken, NJ", correctOption: "A" }, // Broadway Chicken location
   // Starbucks
-  { id: "t18", question: "What is Charity's favorite Starbucks drink?", options: ["Pumpkin Spice Latte", "Caramel Ribbon Crunch", "Mocha Frappuccino", "Iced Americano"], correctAnswer: 1, category: "starbucks" },
-  { id: "t19", question: "How does Charity customize her Caramel Ribbon Crunch?", options: ["Extra whip only", "Extra caramel, extra crunch", "No modifications", "Light ice"], correctAnswer: 1, category: "starbucks" },
-  { id: "t20", question: "What other Starbucks drink does Charity love?", options: ["Chai Tea Latte", "Vanilla Bean Frappuccino with caramel syrup", "Cold Brew", "Matcha Latte"], correctAnswer: 1, category: "starbucks" },
-  { id: "t21", question: "Where did Charity's mom work when she discovered the Vanilla Bean Frappuccino?", options: ["Chase Bank in Times Square", "Bank of America in Grand Central", "Wells Fargo on Wall Street", "Citibank in Midtown"], correctAnswer: 1, category: "starbucks" },
-  { id: "t22", question: "When did Charity start loving Vanilla Bean Frappuccino?", options: ["In college", "As a little girl", "Last year", "In high school"], correctAnswer: 1, category: "starbucks" },
+  { id: "tot19", category: "starbucks", optionA: "Caramel Ribbon Crunch", optionB: "Mocha Frappuccino", correctOption: "A" }, // Fave Starbucks
+  { id: "tot20", category: "starbucks", optionA: "Extra caramel, extra crunch", optionB: "Light ice, no whip", correctOption: "A" }, // How she orders it
+  { id: "tot21", category: "starbucks", optionA: "Vanilla Bean Frapp + caramel", optionB: "Chai Tea Latte", correctOption: "A" }, // Other fave
+  { id: "tot22", category: "starbucks", optionA: "As a little girl", optionB: "In college", correctOption: "A" }, // When she started loving VBF
+  { id: "tot23", category: "starbucks", optionA: "Bank of America, Grand Central", optionB: "Chase Bank, Times Square", correctOption: "A" }, // Where mom worked
   // Background
-  { id: "t23", question: "Until what grade was Charity homeschooled?", options: ["2nd grade", "3rd grade", "4th grade", "5th grade"], correctAnswer: 2, category: "background" },
-  { id: "t24", question: "Who homeschooled Charity?", options: ["Her mother", "Her aunt", "Her grandmother", "A private tutor"], correctAnswer: 2, category: "background" },
-  { id: "t25", question: "How many students did Charity's grandmother homeschool?", options: ["Just Charity", "Charity and her sibling", "Charity, her cousin, and others", "A full classroom of 20"], correctAnswer: 2, category: "background" },
-  { id: "t26", question: "What business did Charity run while homeschooled?", options: ["Lemonade stand", "Breakfast business", "Craft sales", "Dog walking"], correctAnswer: 1, category: "background" },
-  { id: "t27", question: "Charity moved from Chicago to where?", options: ["Connecticut", "New York", "New Jersey", "Pennsylvania"], correctAnswer: 2, category: "background" },
-  { id: "t28", question: "How did Charity and her mother travel from Chicago?", options: ["Flew directly", "Took a train", "Drove straight with no breaks", "Drove with multiple hotel stops"], correctAnswer: 2, category: "background" },
-  { id: "t29", question: "What did Charity dream of becoming as a child?", options: ["Singer", "Actress", "Ballet dancer", "Gymnast"], correctAnswer: 2, category: "background" },
-  { id: "t30", question: "Besides ballet, Charity also wanted to be a:", options: ["Doctor", "Cook", "Lawyer", "Pilot"], correctAnswer: 1, category: "background" },
-  { id: "t31", question: "Where does Charity prefer to sit on a roller coaster?", options: ["In the middle", "In the back", "In the front row", "She doesn't ride them"], correctAnswer: 2, category: "background" },
-  { id: "t32", question: "What childhood activity hasn't Charity done in years?", options: ["Ice skating", "Horseback riding", "Gymnastics", "Swimming"], correctAnswer: 1, category: "background" },
+  { id: "tot24", category: "background", optionA: "4th grade", optionB: "6th grade", correctOption: "A" }, // Homeschooled until
+  { id: "tot25", category: "background", optionA: "Her grandmother", optionB: "Her mother", correctOption: "A" }, // Who homeschooled her
+  { id: "tot26", category: "background", optionA: "Breakfast business", optionB: "Lemonade stand", correctOption: "A" }, // Childhood business
+  { id: "tot27", category: "background", optionA: "Chicago to New Jersey", optionB: "LA to New Jersey", correctOption: "A" }, // Moved from
+  { id: "tot28", category: "background", optionA: "Drove with no breaks", optionB: "Stopped at hotels", correctOption: "A" }, // How they traveled
+  { id: "tot29", category: "background", optionA: "Ballet dancer", optionB: "Singer", correctOption: "A" }, // Childhood dream
+  { id: "tot30", category: "background", optionA: "Cook", optionB: "Doctor", correctOption: "A" }, // Other childhood dream
+  { id: "tot31", category: "background", optionA: "Front row", optionB: "Back row", correctOption: "A" }, // Roller coaster seat
+  { id: "tot32", category: "background", optionA: "Horseback riding", optionB: "Ice skating", correctOption: "A" }, // Hasn't done in years
+  { id: "tot33", category: "background", optionA: "Peace and quiet", optionB: "Loud and busy", correctOption: "A" }, // Values in environment
   // Travel
-  { id: "t33", question: "Which of these has Charity NOT visited?", options: ["Spain", "Italy", "Greece", "Ireland"], correctAnswer: 2, category: "travel" },
-  { id: "t34", question: "Has Charity been to South Africa?", options: ["No, bucket list", "Yes, she has visited", "Planning to go", "Never"], correctAnswer: 1, category: "travel" },
-  { id: "t35", question: "Has Charity been to Paris?", options: ["Yes", "No", "Only the airport", "Planning to go"], correctAnswer: 0, category: "travel" },
-  { id: "t36", question: "What mode of travel has Charity NEVER taken?", options: ["Airplane", "Train", "Greyhound bus", "Car"], correctAnswer: 2, category: "travel" },
-  { id: "t37", question: "What travel is on Charity's bucket list?", options: ["Cruise ship", "Bus travel", "Private jet", "Helicopter tour"], correctAnswer: 1, category: "travel" },
-  // Fashion
-  { id: "t38", question: "Which fashion era is Charity's favorite?", options: ["70s disco", "80s and 90s", "2010s minimalism", "Modern streetwear"], correctAnswer: 1, category: "fashion" },
-  { id: "t39", question: "Charity grew up in which decade?", options: ["Early 80s", "Late 90s and early 2000s", "Mid 2010s", "Late 2000s"], correctAnswer: 1, category: "fashion" },
-  { id: "t40", question: "What book genre does Charity enjoy?", options: ["Horror", "Romance", "True crime", "Fantasy"], correctAnswer: 1, category: "fashion" },
+  { id: "tot34", category: "travel", optionA: "Has been to South Africa", optionB: "Has been to Australia", correctOption: "A" },
+  { id: "tot35", category: "travel", optionA: "Has been to Paris", optionB: "Has been to Tokyo", correctOption: "A" },
+  { id: "tot36", category: "travel", optionA: "Has been to Spain", optionB: "Has been to Portugal", correctOption: "A" },
+  { id: "tot37", category: "travel", optionA: "Never taken Greyhound", optionB: "Never taken Amtrak", correctOption: "A" },
+  { id: "tot38", category: "travel", optionA: "Bus travel bucket list", optionB: "Cruise ship bucket list", correctOption: "A" },
+  { id: "tot39", category: "travel", optionA: "Greece bucket list", optionB: "Japan bucket list", correctOption: "A" },
+  // Fashion & Personality
+  { id: "tot40", category: "fashion", optionA: "80s and 90s fashion", optionB: "Modern streetwear", correctOption: "A" },
+  { id: "tot41", category: "fashion", optionA: "Late 90s kid", optionB: "Early 80s kid", correctOption: "A" },
+  { id: "tot42", category: "fashion", optionA: "Romance novels", optionB: "Horror novels", correctOption: "A" },
+  { id: "tot43", category: "fashion", optionA: "Spontaneous", optionB: "Predictable", correctOption: "A" },
+  { id: "tot44", category: "fashion", optionA: "Loves trying new things", optionB: "Sticks to routine", correctOption: "A" },
 ]
+
+const thisOrThatCategoryInfo: Record<string, { label: string; icon: string; bgColor: string }> = {
+  music: { label: "Music", icon: "🎵", bgColor: "from-pink-600 to-rose-700" },
+  food: { label: "Food & Drinks", icon: "🍽️", bgColor: "from-orange-600 to-amber-700" },
+  travel: { label: "Travel", icon: "✈️", bgColor: "from-blue-600 to-cyan-700" },
+  background: { label: "Background", icon: "📚", bgColor: "from-amber-600 to-yellow-700" },
+  starbucks: { label: "Starbucks", icon: "☕", bgColor: "from-green-600 to-emerald-700" },
+  fashion: { label: "Style & Personality", icon: "👗", bgColor: "from-purple-600 to-violet-700" },
+}
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
 interface TwoTruthsRound {
@@ -427,18 +454,18 @@ export interface BrainGamesState {
   logicComplete: boolean
   logicCorrect: boolean
   filterDifficulty: "All" | "Easy" | "Medium" | "Hard"
-  // Persona game state (needs & pain points)
-  currentPersonaQuestion: PersonaNeedQuestion | null
-  selectedPersonaAnswer: number | null
+  // Persona game state (card sorting)
+  currentPersonaCard: PersonaCard | null
+  selectedCategory: "need" | "painpoint" | "goal" | "behavior" | null
   showPersonaResult: boolean
   personaStreak: number
-  personaQuestionsAnswered: string[]
-  // Trivia game state (know me quiz)
-  currentTriviaQuestion: TriviaQuestion | null
-  selectedTriviaAnswer: number | null
-  showTriviaResult: boolean
-  triviaStreak: number
-  triviaQuestionsAnswered: string[]
+  personaCardsAnswered: string[]
+  // This or That game state (know me quiz)
+  currentThisOrThat: ThisOrThatQuestion | null
+  selectedOption: "A" | "B" | null
+  showThisOrThatResult: boolean
+  thisOrThatStreak: number
+  thisOrThatAnswered: string[]
   // Two Truths game state
   currentTruthsRound: TwoTruthsRound | null
   selectedTruthsAnswer: number | null
@@ -462,18 +489,18 @@ export const initialBrainGamesState: BrainGamesState = {
   logicComplete: false,
   logicCorrect: false,
   filterDifficulty: "All",
-  // Persona game state (needs & pain points)
-  currentPersonaQuestion: null,
-  selectedPersonaAnswer: null,
+  // Persona game state (card sorting)
+  currentPersonaCard: null,
+  selectedCategory: null,
   showPersonaResult: false,
   personaStreak: 0,
-  personaQuestionsAnswered: [],
-  // Trivia game state (know me quiz)
-  currentTriviaQuestion: null,
-  selectedTriviaAnswer: null,
-  showTriviaResult: false,
-  triviaStreak: 0,
-  triviaQuestionsAnswered: [],
+  personaCardsAnswered: [],
+  // This or That game state (know me quiz)
+  currentThisOrThat: null,
+  selectedOption: null,
+  showThisOrThatResult: false,
+  thisOrThatStreak: 0,
+  thisOrThatAnswered: [],
   // Two Truths game state
   currentTruthsRound: null,
   selectedTruthsAnswer: null,
@@ -512,18 +539,20 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     gameMode, totalScore, mindScreen, selectedMindCategory, currentMindPuzzle,
     selectedMindAnswer, showMindResult, mindStreak, logicScreen, currentLogicPuzzleId,
     logicGrid, logicComplete, logicCorrect, filterDifficulty,
-    currentPersonaQuestion, selectedPersonaAnswer, showPersonaResult, personaStreak,
+    showPersonaResult, personaStreak,
     currentTruthsRound, selectedTruthsAnswer, showTruthsResult, truthsStreak
   } = localState
   
-  // Get arrays with fallback to empty arrays (for backwards compatibility with saved state)
-  const personaQuestionsAnswered = localState.personaQuestionsAnswered || []
-  const triviaQuestionsAnswered = localState.triviaQuestionsAnswered || []
+  // Get values with fallback (for backwards compatibility with saved state)
+  const currentPersonaCard = localState.currentPersonaCard || null
+  const selectedCategory = localState.selectedCategory || null
+  const personaCardsAnswered = localState.personaCardsAnswered || []
+  const currentThisOrThat = localState.currentThisOrThat || null
+  const selectedOption = localState.selectedOption || null
+  const showThisOrThatResult = localState.showThisOrThatResult || false
+  const thisOrThatStreak = localState.thisOrThatStreak || 0
+  const thisOrThatAnswered = localState.thisOrThatAnswered || []
   const truthsRoundsPlayed = localState.truthsRoundsPlayed || []
-  const currentTriviaQuestion = localState.currentTriviaQuestion || null
-  const selectedTriviaAnswer = localState.selectedTriviaAnswer ?? null
-  const showTriviaResult = localState.showTriviaResult || false
-  const triviaStreak = localState.triviaStreak || 0
   
   // Get current logic puzzle from ID
   const currentLogicPuzzle = currentLogicPuzzleId 
