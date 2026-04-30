@@ -318,7 +318,7 @@ const categoryInfo = {
 // Pick between two options - which one is true about Charity?
 interface ThisOrThatQuestion {
   id: string
-  category: "music" | "food" | "travel" | "background" | "starbucks" | "fashion"
+  category: "music" | "movies" | "food" | "travel" | "background" | "starbucks" | "fashion"
   optionA: string
   optionB: string
   correctOption: "A" | "B" // Which one is true about Charity
@@ -331,9 +331,9 @@ const thisOrThatQuestions: ThisOrThatQuestion[] = [
   { id: "tot3", category: "music", optionA: "Lizzie McGuire", optionB: "Hannah Montana", correctOption: "A" }, // Obsessed with
   { id: "tot4", category: "music", optionA: "VHS collection", optionB: "DVD collection", correctOption: "A" }, // Owns Lizzie McGuire on
   { id: "tot5", category: "music", optionA: "Mandy Moore", optionB: "Christina Aguilera", correctOption: "A" }, // Other fave artist
-  { id: "tot6", category: "music", optionA: "Only Hope", optionB: "Walk Me Home", correctOption: "A" }, // Fave Mandy Moore song
-  { id: "tot7", category: "music", optionA: "A Walk to Remember", optionB: "The Princess Diaries", correctOption: "A" }, // Fave movie (even tho ending makes her cry)
-  { id: "tot8", category: "music", optionA: "So Yesterday", optionB: "With Love", correctOption: "A" }, // Fave Hilary song
+  { id: "tot6", category: "music", optionA: "Only Hope", optionB: "Walk Me Home", correctOption: "A" }, // Fave Mandy Moore song (from A Walk to Remember soundtrack)
+  { id: "tot7", category: "music", optionA: "So Yesterday", optionB: "With Love", correctOption: "A" }, // Fave Hilary song
+  { id: "tot8", category: "music", optionA: "A Walk to Remember soundtrack", optionB: "The Notebook soundtrack", correctOption: "A" }, // Loves the songs from the movie
   { id: "tot9", category: "music", optionA: "Come Clean", optionB: "Beat of My Heart", correctOption: "A" }, // Another fave
   { id: "tot10", category: "music", optionA: "Why Not", optionB: "Fly", correctOption: "A" }, // Driving playlist
   // Food & Drinks
@@ -369,16 +369,24 @@ const thisOrThatQuestions: ThisOrThatQuestion[] = [
   { id: "tot37", category: "travel", optionA: "Never taken Greyhound", optionB: "Never taken Amtrak", correctOption: "A" },
   { id: "tot38", category: "travel", optionA: "Bus travel bucket list", optionB: "Cruise ship bucket list", correctOption: "A" },
   { id: "tot39", category: "travel", optionA: "Greece bucket list", optionB: "Japan bucket list", correctOption: "A" },
+  // Movies & Disney
+  { id: "tot40", category: "movies", optionA: "Cinderella (Brandy & Whitney)", optionB: "Cinderella (animated 1950)", correctOption: "A" }, // Fave Disney movie
+  { id: "tot41", category: "movies", optionA: "Cinderella", optionB: "Belle", correctOption: "A" }, // Fave Disney character
+  { id: "tot42", category: "movies", optionA: "Still owns it on VHS", optionB: "Has it on DVD", correctOption: "A" }, // Cinderella format
+  { id: "tot43", category: "movies", optionA: "In My Own Little Corner", optionB: "A Dream Is a Wish", correctOption: "A" }, // Song she'd dance to with a broom
+  { id: "tot44", category: "movies", optionA: "A Walk to Remember", optionB: "The Notebook", correctOption: "A" }, // Fave romance movie (ending makes her cry)
+  { id: "tot45", category: "movies", optionA: "Lizzie McGuire Movie", optionB: "Freaky Friday", correctOption: "A" }, // Owns on VHS
   // Fashion & Personality
-  { id: "tot40", category: "fashion", optionA: "80s and 90s fashion", optionB: "Modern streetwear", correctOption: "A" },
-  { id: "tot41", category: "fashion", optionA: "Late 90s kid", optionB: "Early 80s kid", correctOption: "A" },
-  { id: "tot42", category: "fashion", optionA: "Romance novels", optionB: "Horror novels", correctOption: "A" },
-  { id: "tot43", category: "fashion", optionA: "Spontaneous", optionB: "Predictable", correctOption: "A" },
-  { id: "tot44", category: "fashion", optionA: "Loves trying new things", optionB: "Sticks to routine", correctOption: "A" },
+  { id: "tot46", category: "fashion", optionA: "80s and 90s fashion", optionB: "Modern streetwear", correctOption: "A" },
+  { id: "tot47", category: "fashion", optionA: "Late 90s kid", optionB: "Early 80s kid", correctOption: "A" },
+  { id: "tot48", category: "fashion", optionA: "Romance novels", optionB: "Horror novels", correctOption: "A" },
+  { id: "tot49", category: "fashion", optionA: "Spontaneous", optionB: "Predictable", correctOption: "A" },
+  { id: "tot50", category: "fashion", optionA: "Loves trying new things", optionB: "Sticks to routine", correctOption: "A" },
 ]
 
 const thisOrThatCategoryInfo: Record<string, { label: string; icon: string; bgColor: string }> = {
   music: { label: "Music", icon: "🎵", bgColor: "from-pink-600 to-rose-700" },
+  movies: { label: "Movies & Disney", icon: "🎬", bgColor: "from-indigo-600 to-blue-700" },
   food: { label: "Food & Drinks", icon: "🍽️", bgColor: "from-orange-600 to-amber-700" },
   travel: { label: "Travel", icon: "✈️", bgColor: "from-blue-600 to-cyan-700" },
   background: { label: "Background", icon: "📚", bgColor: "from-amber-600 to-yellow-700" },
@@ -429,9 +437,13 @@ const twoTruthsRounds: TwoTruthsRound[] = [
   // Fashion & Personality (same category per round)
   { id: "tt25", category: "fashion", statements: ["I love 80s and 90s fashion", "I grew up in the late 90s and early 2000s", "I think vintage fashion is ugly"], lieIndex: 2 },
   { id: "tt26", category: "personality", statements: ["I consider myself spontaneous", "I like trying things that are different", "I'm very predictable and hate change"], lieIndex: 2 },
+  // Disney & Movies (same category per round)
+  { id: "tt27", category: "disney", statements: ["Cinderella is my favorite Disney character", "My favorite Cinderella is the one with Brandy and Whitney Houston", "My favorite Cinderella is the animated 1950 version"], lieIndex: 2 },
+  { id: "tt28", category: "disney", statements: ["I still own the Brandy Cinderella movie on VHS", "As a kid I would dance with a broom singing 'In My Own Little Corner'", "I've never watched Cinderella"], lieIndex: 2 },
+  { id: "tt29", category: "disney", statements: ["My mom told me I used to dance with a broom to Cinderella songs", "I loved pretending to be Cinderella as a little girl", "I thought Cinderella was boring as a child"], lieIndex: 2 },
   // Goals (same category per round)
-  { id: "tt27", category: "goals", statements: ["I dream of traveling to Greece", "I want to speak at design conferences", "I've already given a TED talk"], lieIndex: 2 },
-  { id: "tt28", category: "goals", statements: ["Work-life balance is important to me", "I want to grow into senior leadership roles", "I only care about salary, not impact"], lieIndex: 2 },
+  { id: "tt30", category: "goals", statements: ["I dream of traveling to Greece", "I want to speak at design conferences", "I've already given a TED talk"], lieIndex: 2 },
+  { id: "tt31", category: "goals", statements: ["Work-life balance is important to me", "I want to grow into senior leadership roles", "I only care about salary, not impact"], lieIndex: 2 },
 ]
 
 // ============ MAIN COMPONENT ============
