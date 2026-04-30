@@ -314,85 +314,67 @@ const categoryInfo = {
   behavior: { label: "Behaviors", color: "from-purple-600 to-purple-800", borderColor: "border-purple-500", bgColor: "bg-purple-950/50" },
 }
 
-// ============ KNOW ME QUIZ - "THIS OR THAT" FORMAT ============
-// Pick between two options - which one is true about Charity?
-interface ThisOrThatQuestion {
+// ============ CONNECTIONS PUZZLE (like NYT Connections) ============
+// Group 16 items into 4 categories of 4 items each
+interface ConnectionsCategory {
+  name: string
+  items: string[]
+  color: string // Tailwind gradient classes
+  difficulty: 1 | 2 | 3 | 4 // 1 = easiest (yellow), 4 = hardest (purple)
+}
+
+interface ConnectionsPuzzle {
   id: string
-  category: "music" | "movies" | "food" | "travel" | "background" | "starbucks" | "fashion"
-  optionA: string
-  optionB: string
-  correctOption: "A" | "B" // Which one is true about Charity
+  categories: ConnectionsCategory[]
 }
 
-const thisOrThatQuestions: ThisOrThatQuestion[] = [
-  // Music
-  { id: "tot1", category: "music", optionA: "Hilary Duff", optionB: "Britney Spears", correctOption: "A" }, // Favorite childhood artist
-  { id: "tot2", category: "music", optionA: "Metamorphosis album", optionB: "Dignity album", correctOption: "A" }, // Still listens while driving
-  { id: "tot3", category: "music", optionA: "Lizzie McGuire", optionB: "Hannah Montana", correctOption: "A" }, // Obsessed with
-  { id: "tot4", category: "music", optionA: "VHS collection", optionB: "DVD collection", correctOption: "A" }, // Owns Lizzie McGuire on
-  { id: "tot5", category: "music", optionA: "Mandy Moore", optionB: "Christina Aguilera", correctOption: "A" }, // Other fave artist
-  { id: "tot6", category: "music", optionA: "Only Hope", optionB: "Walk Me Home", correctOption: "A" }, // Fave Mandy Moore song (from A Walk to Remember soundtrack)
-  { id: "tot7", category: "music", optionA: "So Yesterday", optionB: "With Love", correctOption: "A" }, // Fave Hilary song
-  { id: "tot8", category: "music", optionA: "A Walk to Remember soundtrack", optionB: "The Notebook soundtrack", correctOption: "A" }, // Loves the songs from the movie
-  { id: "tot9", category: "music", optionA: "Come Clean", optionB: "Beat of My Heart", correctOption: "A" }, // Another fave
-  { id: "tot10", category: "music", optionA: "Why Not", optionB: "Fly", correctOption: "A" }, // Driving playlist
-  // Food & Drinks
-  { id: "tot11", category: "food", optionA: "Apple juice", optionB: "Orange juice", correctOption: "A" }, // Preferred juice
-  { id: "tot12", category: "food", optionA: "Lemonade + Ginger ale", optionB: "Lemonade + Sprite", correctOption: "A" }, // Fave drink combo
-  { id: "tot13", category: "food", optionA: "Broadway Chicken", optionB: "Popeyes", correctOption: "A" }, // Fave takeout
-  { id: "tot14", category: "food", optionA: "Hot and Honey Chicken", optionB: "Nashville Hot Chicken", correctOption: "A" }, // Go-to order
-  { id: "tot15", category: "food", optionA: "Buttermilk battered", optionB: "Panko breaded", correctOption: "A" }, // Chicken batter
-  { id: "tot16", category: "food", optionA: "Honey mustard + Honey", optionB: "BBQ + Ranch", correctOption: "A" }, // Sauces
-  { id: "tot17", category: "food", optionA: "Sweet and sour shrimp", optionB: "General Tso's chicken", correctOption: "A" }, // Chinese order
-  { id: "tot18", category: "food", optionA: "Westfield, NJ", optionB: "Hoboken, NJ", correctOption: "A" }, // Broadway Chicken location
-  // Starbucks
-  { id: "tot19", category: "starbucks", optionA: "Caramel Ribbon Crunch", optionB: "Mocha Frappuccino", correctOption: "A" }, // Fave Starbucks
-  { id: "tot20", category: "starbucks", optionA: "Extra caramel, extra crunch", optionB: "Light ice, no whip", correctOption: "A" }, // How she orders it
-  { id: "tot21", category: "starbucks", optionA: "Vanilla Bean Frapp + caramel", optionB: "Chai Tea Latte", correctOption: "A" }, // Other fave
-  { id: "tot22", category: "starbucks", optionA: "As a little girl", optionB: "In college", correctOption: "A" }, // When she started loving VBF
-  { id: "tot23", category: "starbucks", optionA: "Bank of America, Grand Central", optionB: "Chase Bank, Times Square", correctOption: "A" }, // Where mom worked
-  // Background
-  { id: "tot24", category: "background", optionA: "4th grade", optionB: "6th grade", correctOption: "A" }, // Homeschooled until
-  { id: "tot25", category: "background", optionA: "Her grandmother", optionB: "Her mother", correctOption: "A" }, // Who homeschooled her
-  { id: "tot26", category: "background", optionA: "Breakfast business", optionB: "Lemonade stand", correctOption: "A" }, // Childhood business
-  { id: "tot27", category: "background", optionA: "Chicago to New Jersey", optionB: "LA to New Jersey", correctOption: "A" }, // Moved from
-  { id: "tot28", category: "background", optionA: "Drove with no breaks", optionB: "Stopped at hotels", correctOption: "A" }, // How they traveled
-  { id: "tot29", category: "background", optionA: "Ballet dancer", optionB: "Singer", correctOption: "A" }, // Childhood dream
-  { id: "tot30", category: "background", optionA: "Cook", optionB: "Doctor", correctOption: "A" }, // Other childhood dream
-  { id: "tot31", category: "background", optionA: "Front row", optionB: "Back row", correctOption: "A" }, // Roller coaster seat
-  { id: "tot32", category: "background", optionA: "Horseback riding", optionB: "Ice skating", correctOption: "A" }, // Hasn't done in years
-  { id: "tot33", category: "background", optionA: "Peace and quiet", optionB: "Loud and busy", correctOption: "A" }, // Values in environment
-  // Travel
-  { id: "tot34", category: "travel", optionA: "Has been to South Africa", optionB: "Has been to Australia", correctOption: "A" },
-  { id: "tot35", category: "travel", optionA: "Has been to Paris", optionB: "Has been to Tokyo", correctOption: "A" },
-  { id: "tot36", category: "travel", optionA: "Has been to Spain", optionB: "Has been to Portugal", correctOption: "A" },
-  { id: "tot37", category: "travel", optionA: "Never taken Greyhound", optionB: "Never taken Amtrak", correctOption: "A" },
-  { id: "tot38", category: "travel", optionA: "Bus travel bucket list", optionB: "Cruise ship bucket list", correctOption: "A" },
-  { id: "tot39", category: "travel", optionA: "Greece bucket list", optionB: "Japan bucket list", correctOption: "A" },
-  // Movies & Disney
-  { id: "tot40", category: "movies", optionA: "Cinderella (Brandy & Whitney)", optionB: "Cinderella (animated 1950)", correctOption: "A" }, // Fave Disney movie
-  { id: "tot41", category: "movies", optionA: "Cinderella", optionB: "Belle", correctOption: "A" }, // Fave Disney character
-  { id: "tot42", category: "movies", optionA: "Still owns it on VHS", optionB: "Has it on DVD", correctOption: "A" }, // Cinderella format
-  { id: "tot43", category: "movies", optionA: "In My Own Little Corner", optionB: "A Dream Is a Wish", correctOption: "A" }, // Song she'd dance to with a broom
-  { id: "tot44", category: "movies", optionA: "A Walk to Remember", optionB: "The Notebook", correctOption: "A" }, // Fave romance movie (ending makes her cry)
-  { id: "tot45", category: "movies", optionA: "Lizzie McGuire Movie", optionB: "Freaky Friday", correctOption: "A" }, // Owns on VHS
-  // Fashion & Personality
-  { id: "tot46", category: "fashion", optionA: "80s and 90s fashion", optionB: "Modern streetwear", correctOption: "A" },
-  { id: "tot47", category: "fashion", optionA: "Late 90s kid", optionB: "Early 80s kid", correctOption: "A" },
-  { id: "tot48", category: "fashion", optionA: "Romance novels", optionB: "Horror novels", correctOption: "A" },
-  { id: "tot49", category: "fashion", optionA: "Spontaneous", optionB: "Predictable", correctOption: "A" },
-  { id: "tot50", category: "fashion", optionA: "Loves trying new things", optionB: "Sticks to routine", correctOption: "A" },
+const connectionsPuzzles: ConnectionsPuzzle[] = [
+  {
+    id: "cp1",
+    categories: [
+      { name: "Hilary Duff Songs", items: ["So Yesterday", "Come Clean", "Why Not", "Fly"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Places Charity Has Visited", items: ["Paris", "Spain", "South Africa", "Italy"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Charity's Favorite Drinks", items: ["Apple Juice", "Lemonade + Ginger Ale", "Caramel Ribbon Crunch", "Vanilla Bean Frapp"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Childhood Memories", items: ["Breakfast Business", "Ballet Dreams", "Homeschooled", "Broom Dancing"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  {
+    id: "cp2",
+    categories: [
+      { name: "Mandy Moore Songs", items: ["Candy", "Only Hope", "Cry", "Saved"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Movies Charity Loves", items: ["A Walk to Remember", "Lizzie McGuire Movie", "Cinderella (Brandy)", "The Princess Diaries"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Broadway Chicken Order", items: ["Hot and Honey", "Buttermilk Battered", "Honey Mustard", "Westfield NJ"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Things on VHS", items: ["Cinderella", "Lizzie McGuire", "Metamorphosis Concert", "A Walk to Remember"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  {
+    id: "cp3",
+    categories: [
+      { name: "Disney Characters", items: ["Cinderella", "Lizzie McGuire", "Brandy", "Whitney Houston"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Bucket List Destinations", items: ["Greece", "Bus Travel", "Design Conference", "Senior Leadership"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Childhood Dreams", items: ["Ballet Dancer", "Cook", "Teacher", "Designer"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Road Trip: Chicago to NJ", items: ["No Hotel Stops", "Drove Straight Through", "With Mom", "Lots of Snacks"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  {
+    id: "cp4",
+    categories: [
+      { name: "Starbucks Favorites", items: ["Caramel Ribbon Crunch", "Vanilla Bean Frapp", "Extra Caramel", "Extra Crunch"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Chinese Food Order", items: ["Sweet and Sour Shrimp", "White Rice", "Egg Roll", "Fortune Cookie"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "UX Designer Traits", items: ["Empathetic", "Detail-Oriented", "Creative", "Patient"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "In My Own Little Corner", items: ["Broom Dancing", "Singing Along", "Pretending to be Cinderella", "Mom Watching"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
+  {
+    id: "cp5",
+    categories: [
+      { name: "90s/2000s Nostalgia", items: ["Lizzie McGuire", "Hilary Duff", "VHS Tapes", "Metamorphosis"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Roller Coaster Preferences", items: ["Front Row", "Big Drops", "Loop-de-loops", "Screaming Allowed"], color: "from-green-500 to-emerald-600", difficulty: 2 },
+      { name: "Homeschool Life", items: ["Grandmother Teacher", "Cousin Classmates", "4th Grade End", "Chicago Days"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
+      { name: "Work Values", items: ["Peace and Quiet", "Work-Life Balance", "Meaningful Impact", "Continuous Learning"], color: "from-purple-500 to-violet-600", difficulty: 4 },
+    ]
+  },
 ]
-
-const thisOrThatCategoryInfo: Record<string, { label: string; icon: string; bgColor: string }> = {
-  music: { label: "Music", icon: "🎵", bgColor: "from-pink-600 to-rose-700" },
-  movies: { label: "Movies & Disney", icon: "🎬", bgColor: "from-indigo-600 to-blue-700" },
-  food: { label: "Food & Drinks", icon: "🍽️", bgColor: "from-orange-600 to-amber-700" },
-  travel: { label: "Travel", icon: "✈️", bgColor: "from-blue-600 to-cyan-700" },
-  background: { label: "Background", icon: "📚", bgColor: "from-amber-600 to-yellow-700" },
-  starbucks: { label: "Starbucks", icon: "☕", bgColor: "from-green-600 to-emerald-700" },
-  fashion: { label: "Style & Personality", icon: "👗", bgColor: "from-purple-600 to-violet-700" },
-}
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
 interface TwoTruthsRound {
@@ -472,12 +454,13 @@ export interface BrainGamesState {
   showPersonaResult: boolean
   personaStreak: number
   personaCardsAnswered: string[]
-  // This or That game state (know me quiz)
-  currentThisOrThat: ThisOrThatQuestion | null
-  selectedOption: "A" | "B" | null
-  showThisOrThatResult: boolean
-  thisOrThatStreak: number
-  thisOrThatAnswered: string[]
+  // Connections puzzle state (group items into categories)
+  currentConnectionsPuzzle: ConnectionsPuzzle | null
+  connectionsSelected: string[] // Currently selected items (max 4)
+  connectionsSolved: number[] // Indices of solved categories (0-3)
+  connectionsMistakes: number // Number of wrong guesses (max 4)
+  connectionsComplete: boolean
+  connectionsPuzzlesPlayed: string[]
   // Two Truths game state
   currentTruthsRound: TwoTruthsRound | null
   selectedTruthsAnswer: number | null
@@ -507,12 +490,13 @@ export const initialBrainGamesState: BrainGamesState = {
   showPersonaResult: false,
   personaStreak: 0,
   personaCardsAnswered: [],
-  // This or That game state (know me quiz)
-  currentThisOrThat: null,
-  selectedOption: null,
-  showThisOrThatResult: false,
-  thisOrThatStreak: 0,
-  thisOrThatAnswered: [],
+  // Connections puzzle state
+  currentConnectionsPuzzle: null,
+  connectionsSelected: [],
+  connectionsSolved: [],
+  connectionsMistakes: 0,
+  connectionsComplete: false,
+  connectionsPuzzlesPlayed: [],
   // Two Truths game state
   currentTruthsRound: null,
   selectedTruthsAnswer: null,
@@ -559,11 +543,12 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
   const currentPersonaCard = localState.currentPersonaCard || null
   const selectedCategory = localState.selectedCategory || null
   const personaCardsAnswered = localState.personaCardsAnswered || []
-  const currentThisOrThat = localState.currentThisOrThat || null
-  const selectedOption = localState.selectedOption || null
-  const showThisOrThatResult = localState.showThisOrThatResult || false
-  const thisOrThatStreak = localState.thisOrThatStreak || 0
-  const thisOrThatAnswered = localState.thisOrThatAnswered || []
+  const currentConnectionsPuzzle = localState.currentConnectionsPuzzle || null
+  const connectionsSelected = localState.connectionsSelected || []
+  const connectionsSolved = localState.connectionsSolved || []
+  const connectionsMistakes = localState.connectionsMistakes || 0
+  const connectionsComplete = localState.connectionsComplete || false
+  const connectionsPuzzlesPlayed = localState.connectionsPuzzlesPlayed || []
   const truthsRoundsPlayed = localState.truthsRoundsPlayed || []
   
   // Get current logic puzzle from ID
@@ -760,55 +745,93 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     })
   }
 
-  // This or That game functions (KNOW ME QUIZ)
-  const getRandomThisOrThat = (): ThisOrThatQuestion => {
-    const unanswered = thisOrThatQuestions.filter(q => !thisOrThatAnswered.includes(q.id))
-    if (unanswered.length === 0) {
-      return thisOrThatQuestions[Math.floor(Math.random() * thisOrThatQuestions.length)]
+  // Connections puzzle functions (GROUP ITEMS INTO CATEGORIES)
+  const getRandomConnectionsPuzzle = (): ConnectionsPuzzle => {
+    const unplayed = connectionsPuzzles.filter(p => !connectionsPuzzlesPlayed.includes(p.id))
+    if (unplayed.length === 0) {
+      return connectionsPuzzles[Math.floor(Math.random() * connectionsPuzzles.length)]
     }
-    return unanswered[Math.floor(Math.random() * unanswered.length)]
+    return unplayed[Math.floor(Math.random() * unplayed.length)]
   }
 
-  const startThisOrThatGame = () => {
-    const question = getRandomThisOrThat()
+  const startConnectionsGame = () => {
+    const puzzle = getRandomConnectionsPuzzle()
     updateState({
-      gameMode: "trivia",
-      currentThisOrThat: question,
-      selectedOption: null,
-      showThisOrThatResult: false
+      gameMode: "trivia", // reusing trivia mode for connections
+      currentConnectionsPuzzle: puzzle,
+      connectionsSelected: [],
+      connectionsSolved: [],
+      connectionsMistakes: 0,
+      connectionsComplete: false
     })
   }
 
-  const handleThisOrThatSelect = (option: "A" | "B") => {
-    if (showThisOrThatResult) return
+  const handleConnectionsItemClick = (item: string) => {
+    if (connectionsComplete || connectionsMistakes >= 4) return
     
-    const isCorrect = currentThisOrThat && option === currentThisOrThat.correctOption
-    if (isCorrect) {
-      const newScore = totalScore + 1
+    // Check if item is already in a solved category
+    const solvedItems = connectionsSolved.flatMap(idx => 
+      currentConnectionsPuzzle?.categories[idx].items || []
+    )
+    if (solvedItems.includes(item)) return
+    
+    // Toggle selection
+    if (connectionsSelected.includes(item)) {
+      updateState({ connectionsSelected: connectionsSelected.filter(i => i !== item) })
+    } else if (connectionsSelected.length < 4) {
+      updateState({ connectionsSelected: [...connectionsSelected, item] })
+    }
+  }
+
+  const submitConnectionsGuess = () => {
+    if (connectionsSelected.length !== 4 || !currentConnectionsPuzzle) return
+    
+    // Check if selected items match any unsolved category
+    const unsolvedCategories = currentConnectionsPuzzle.categories
+      .map((cat, idx) => ({ cat, idx }))
+      .filter(({ idx }) => !connectionsSolved.includes(idx))
+    
+    const matchedCategory = unsolvedCategories.find(({ cat }) => 
+      cat.items.every(item => connectionsSelected.includes(item))
+    )
+    
+    if (matchedCategory) {
+      const newSolved = [...connectionsSolved, matchedCategory.idx]
+      const isComplete = newSolved.length === 4
+      const newScore = totalScore + (isComplete ? 4 : 1)
+      
       updateState({
-        selectedOption: option,
-        showThisOrThatResult: true,
-        thisOrThatStreak: thisOrThatStreak + 1,
+        connectionsSolved: newSolved,
+        connectionsSelected: [],
+        connectionsComplete: isComplete,
         totalScore: newScore,
-        thisOrThatAnswered: [...thisOrThatAnswered, currentThisOrThat?.id || '']
+        connectionsPuzzlesPlayed: isComplete 
+          ? [...connectionsPuzzlesPlayed, currentConnectionsPuzzle.id]
+          : connectionsPuzzlesPlayed
       })
       onScoreChange?.(newScore)
     } else {
+      // Wrong guess
+      const newMistakes = connectionsMistakes + 1
       updateState({
-        selectedOption: option,
-        showThisOrThatResult: true,
-        thisOrThatStreak: 0,
-        thisOrThatAnswered: [...thisOrThatAnswered, currentThisOrThat?.id || '']
+        connectionsMistakes: newMistakes,
+        connectionsSelected: [],
+        connectionsComplete: newMistakes >= 4,
+        connectionsPuzzlesPlayed: newMistakes >= 4 
+          ? [...connectionsPuzzlesPlayed, currentConnectionsPuzzle.id]
+          : connectionsPuzzlesPlayed
       })
     }
   }
 
-  const nextThisOrThat = () => {
-    const question = getRandomThisOrThat()
+  const nextConnectionsPuzzle = () => {
+    const puzzle = getRandomConnectionsPuzzle()
     updateState({
-      currentThisOrThat: question,
-      selectedOption: null,
-      showThisOrThatResult: false
+      currentConnectionsPuzzle: puzzle,
+      connectionsSelected: [],
+      connectionsSolved: [],
+      connectionsMistakes: 0,
+      connectionsComplete: false
     })
   }
 
@@ -911,26 +934,35 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             </div>
           </button>
 
-          {/* This or That - Pick between two options */}
+          {/* Connections Puzzle - Group items into categories */}
           <button
-            onClick={() => startThisOrThatGame()}
+            onClick={() => startConnectionsGame()}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-pink-950/80 to-rose-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
           >
-            {/* This or That icon - two sides */}
+            {/* Connections grid icon */}
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
               <rect width="100" height="100" rx="20" fill="#831843"/>
-              {/* Left option */}
-              <rect x="12" y="25" width="32" height="50" rx="6" fill="#ec4899"/>
-              <text x="28" y="55" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">A</text>
-              {/* VS */}
-              <text x="50" y="55" textAnchor="middle" fill="#fda4af" fontSize="12" fontWeight="bold">or</text>
-              {/* Right option */}
-              <rect x="56" y="25" width="32" height="50" rx="6" fill="#f472b6"/>
-              <text x="72" y="55" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">B</text>
+              {/* 4x4 grid of items */}
+              <rect x="12" y="12" width="18" height="18" rx="3" fill="#eab308"/>
+              <rect x="33" y="12" width="18" height="18" rx="3" fill="#eab308"/>
+              <rect x="54" y="12" width="18" height="18" rx="3" fill="#22c55e"/>
+              <rect x="75" y="12" width="18" height="18" rx="3" fill="#22c55e"/>
+              <rect x="12" y="33" width="18" height="18" rx="3" fill="#3b82f6"/>
+              <rect x="33" y="33" width="18" height="18" rx="3" fill="#eab308"/>
+              <rect x="54" y="33" width="18" height="18" rx="3" fill="#a855f7"/>
+              <rect x="75" y="33" width="18" height="18" rx="3" fill="#3b82f6"/>
+              <rect x="12" y="54" width="18" height="18" rx="3" fill="#a855f7"/>
+              <rect x="33" y="54" width="18" height="18" rx="3" fill="#22c55e"/>
+              <rect x="54" y="54" width="18" height="18" rx="3" fill="#3b82f6"/>
+              <rect x="75" y="54" width="18" height="18" rx="3" fill="#a855f7"/>
+              <rect x="12" y="75" width="18" height="18" rx="3" fill="#22c55e"/>
+              <rect x="33" y="75" width="18" height="18" rx="3" fill="#3b82f6"/>
+              <rect x="54" y="75" width="18" height="18" rx="3" fill="#eab308"/>
+              <rect x="75" y="75" width="18" height="18" rx="3" fill="#a855f7"/>
             </svg>
             <div className="text-center">
-              <p className="text-pink-300 font-bold text-sm md:text-lg">This or That</p>
-              <p className="text-pink-400/50 text-xs md:text-sm">Pick the right one!</p>
+              <p className="text-pink-300 font-bold text-sm md:text-lg">Connections</p>
+              <p className="text-pink-400/50 text-xs md:text-sm">Group the items!</p>
             </div>
           </button>
 
@@ -1009,8 +1041,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                   <p>Sort statements about Charity into categories: Needs, Pain Points, Goals, or Behaviors.</p>
                 </div>
                 <div>
-                  <p className="text-pink-300 font-semibold">This or That</p>
-                  <p>Pick between two options - which one is true about Charity? Test your knowledge!</p>
+                  <p className="text-pink-300 font-semibold">Connections</p>
+                  <p>Find 4 groups of 4 items that belong together. Select 4 items and submit your guess!</p>
                 </div>
                 <div>
                   <p className="text-emerald-300 font-semibold">Two Truths & a Lie</p>
@@ -1278,9 +1310,18 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     )
   }
 
-  // This or That Game (Pick between two options)
-  if (gameMode === "trivia" && currentThisOrThat) {
-    const catInfo = thisOrThatCategoryInfo[currentThisOrThat.category]
+  // Connections Puzzle (Group 16 items into 4 categories of 4)
+  if (gameMode === "trivia" && currentConnectionsPuzzle) {
+    // Get all items that haven't been solved yet
+    const solvedItems = connectionsSolved.flatMap(idx => 
+      currentConnectionsPuzzle.categories[idx].items
+    )
+    const remainingItems = currentConnectionsPuzzle.categories
+      .flatMap(cat => cat.items)
+      .filter(item => !solvedItems.includes(item))
+    
+    // Shuffle remaining items (but keep it stable during render)
+    const shuffledItems = [...remainingItems].sort(() => 0.5 - Math.random())
 
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
@@ -1289,110 +1330,117 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             <ChevronLeft className="w-5 h-5" /> Back
           </button>
           <div className="flex items-center gap-4">
-            <span className="text-pink-400/60 text-sm">Streak: {thisOrThatStreak}</span>
+            <span className="text-pink-400/60 text-sm">Mistakes: {connectionsMistakes}/4</span>
             <span className="text-pink-400 text-sm font-semibold">Score: {totalScore}</span>
           </div>
         </div>
 
-        {/* Category Badge */}
-        <div className={`px-4 py-2 rounded-full bg-gradient-to-r ${catInfo.bgColor} text-white text-sm font-medium flex items-center gap-2`}>
-          <span>{catInfo.icon}</span>
-          <span>{catInfo.label}</span>
-        </div>
+        {/* Instructions */}
+        <p className="text-pink-200 text-center text-sm">
+          Find 4 groups of 4 items that belong together
+        </p>
 
-        {/* Question */}
-        <p className="text-pink-200 text-center text-sm">Which one is true about Charity?</p>
-
-        {/* This or That Cards */}
-        <div className="flex gap-4 w-full">
-          {/* Option A */}
-          <button
-            onClick={() => handleThisOrThatSelect("A")}
-            disabled={showThisOrThatResult}
-            className={`flex-1 p-5 md:p-6 rounded-2xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
-              showThisOrThatResult
-                ? currentThisOrThat.correctOption === "A"
-                  ? 'bg-green-950/50 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]'
-                  : selectedOption === "A"
-                    ? 'bg-red-950/50 border-red-500'
-                    : 'bg-pink-950/30 border-pink-500/20 opacity-50'
-                : 'bg-gradient-to-br from-pink-900/60 to-rose-900/40 border-pink-500/40 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]'
-            }`}
-          >
-            <p className={`text-base md:text-lg font-medium text-center ${
-              showThisOrThatResult && currentThisOrThat.correctOption === "A" ? 'text-green-300' : 'text-pink-100'
-            }`}>
-              {currentThisOrThat.optionA}
-            </p>
-            {showThisOrThatResult && currentThisOrThat.correctOption === "A" && (
-              <div className="mt-2 flex justify-center">
-                <CheckCircle className="w-6 h-6 text-green-400" />
-              </div>
-            )}
-            {showThisOrThatResult && selectedOption === "A" && currentThisOrThat.correctOption !== "A" && (
-              <div className="mt-2 flex justify-center">
-                <XCircle className="w-6 h-6 text-red-400" />
-              </div>
-            )}
-          </button>
-
-          {/* VS Divider */}
-          <div className="flex items-center">
-            <span className="text-pink-400/60 font-bold text-sm">or</span>
+        {/* Solved Categories (shown at top) */}
+        {connectionsSolved.length > 0 && (
+          <div className="w-full space-y-2">
+            {connectionsSolved
+              .sort((a, b) => currentConnectionsPuzzle.categories[a].difficulty - currentConnectionsPuzzle.categories[b].difficulty)
+              .map(idx => {
+                const cat = currentConnectionsPuzzle.categories[idx]
+                return (
+                  <div 
+                    key={idx}
+                    className={`w-full p-3 rounded-xl bg-gradient-to-r ${cat.color} text-white text-center`}
+                  >
+                    <p className="font-bold text-sm">{cat.name}</p>
+                    <p className="text-xs opacity-80">{cat.items.join(", ")}</p>
+                  </div>
+                )
+              })}
           </div>
+        )}
 
-          {/* Option B */}
-          <button
-            onClick={() => handleThisOrThatSelect("B")}
-            disabled={showThisOrThatResult}
-            className={`flex-1 p-5 md:p-6 rounded-2xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
-              showThisOrThatResult
-                ? currentThisOrThat.correctOption === "B"
-                  ? 'bg-green-950/50 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]'
-                  : selectedOption === "B"
-                    ? 'bg-red-950/50 border-red-500'
-                    : 'bg-pink-950/30 border-pink-500/20 opacity-50'
-                : 'bg-gradient-to-br from-pink-900/60 to-rose-900/40 border-pink-500/40 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]'
-            }`}
-          >
-            <p className={`text-base md:text-lg font-medium text-center ${
-              showThisOrThatResult && currentThisOrThat.correctOption === "B" ? 'text-green-300' : 'text-pink-100'
-            }`}>
-              {currentThisOrThat.optionB}
-            </p>
-            {showThisOrThatResult && currentThisOrThat.correctOption === "B" && (
-              <div className="mt-2 flex justify-center">
-                <CheckCircle className="w-6 h-6 text-green-400" />
-              </div>
-            )}
-            {showThisOrThatResult && selectedOption === "B" && currentThisOrThat.correctOption !== "B" && (
-              <div className="mt-2 flex justify-center">
-                <XCircle className="w-6 h-6 text-red-400" />
-              </div>
-            )}
-          </button>
-        </div>
+        {/* Item Grid */}
+        {!connectionsComplete && (
+          <div className="grid grid-cols-4 gap-2 w-full">
+            {remainingItems.map((item) => {
+              const isSelected = connectionsSelected.includes(item)
+              return (
+                <button
+                  key={item}
+                  onClick={() => handleConnectionsItemClick(item)}
+                  className={`p-2 md:p-3 rounded-lg text-xs md:text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                    isSelected
+                      ? 'bg-pink-500 text-white border-2 border-pink-300 shadow-[0_0_15px_rgba(236,72,153,0.4)]'
+                      : 'bg-pink-900/40 text-pink-100 border border-pink-500/30 hover:border-pink-400/50'
+                  }`}
+                >
+                  {item}
+                </button>
+              )
+            })}
+          </div>
+        )}
 
-        {/* Result & Next */}
-        {showThisOrThatResult && (
-          <div className="w-full space-y-4 mt-2">
-            <div className={`text-center ${selectedOption === currentThisOrThat.correctOption ? 'text-green-400' : 'text-red-400'}`}>
+        {/* Selection Counter & Submit */}
+        {!connectionsComplete && (
+          <div className="w-full flex items-center justify-between">
+            <span className="text-pink-400/60 text-sm">
+              {connectionsSelected.length}/4 selected
+            </span>
+            <button
+              onClick={submitConnectionsGuess}
+              disabled={connectionsSelected.length !== 4}
+              className={`px-6 py-2 rounded-xl font-semibold transition-all ${
+                connectionsSelected.length === 4
+                  ? 'bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white'
+                  : 'bg-pink-900/30 text-pink-400/50 cursor-not-allowed'
+              }`}
+            >
+              Submit
+            </button>
+          </div>
+        )}
+
+        {/* Game Over */}
+        {connectionsComplete && (
+          <div className="w-full space-y-4">
+            <div className={`text-center ${connectionsSolved.length === 4 ? 'text-green-400' : 'text-red-400'}`}>
               <p className="text-xl font-bold">
-                {selectedOption === currentThisOrThat.correctOption ? 'You know me!' : 'Not quite!'}
+                {connectionsSolved.length === 4 ? 'You got them all!' : 'Game Over!'}
+              </p>
+              <p className="text-sm mt-1 opacity-70">
+                {connectionsSolved.length}/4 categories found
               </p>
             </div>
+            
+            {/* Show remaining categories if game over from mistakes */}
+            {connectionsMistakes >= 4 && connectionsSolved.length < 4 && (
+              <div className="space-y-2">
+                <p className="text-pink-300/60 text-xs text-center">The categories were:</p>
+                {currentConnectionsPuzzle.categories
+                  .filter((_, idx) => !connectionsSolved.includes(idx))
+                  .map((cat, idx) => (
+                    <div key={idx} className={`w-full p-2 rounded-lg bg-gradient-to-r ${cat.color} text-white text-center opacity-70`}>
+                      <p className="font-bold text-xs">{cat.name}</p>
+                      <p className="text-[10px] opacity-80">{cat.items.join(", ")}</p>
+                    </div>
+                  ))}
+              </div>
+            )}
+            
             <button
-              onClick={nextThisOrThat}
+              onClick={nextConnectionsPuzzle}
               className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
             >
-              Next <RefreshCw className="w-4 h-4" />
+              Next Puzzle <RefreshCw className="w-4 h-4" />
             </button>
           </div>
         )}
 
         {/* Progress */}
         <div className="text-center text-pink-400/60 text-sm">
-          {thisOrThatAnswered.length} of {thisOrThatQuestions.length} answered
+          {connectionsPuzzlesPlayed.length} of {connectionsPuzzles.length} puzzles played
         </div>
       </div>
     )
