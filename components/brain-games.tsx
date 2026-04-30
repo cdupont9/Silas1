@@ -264,122 +264,151 @@ const logicPuzzles: LogicPuzzle[] = [
   }
 ]
 
-// ============ USER PERSONA SECTION ============
-interface PersonaQuestion {
+// ============ USER PERSONA SECTION (Needs & Pain Points) ============
+// This is the actual UX User Persona game - focused on needs and pain points
+interface PersonaNeedQuestion {
   id: string
   question: string
   options: string[]
   correctAnswer: number
-  category: "hobby" | "music" | "goals" | "traits" | "wishlist" | "painpoints"
+  type: "need" | "painpoint" | "goal" | "behavior"
 }
 
-const personaQuestions: PersonaQuestion[] = [
-  // Tricky Hobby Questions
-  { id: "p1", question: "Charity loves exploring on weekends. What does she prefer?", options: ["Hiking national parks", "Shopping at malls", "Visiting museums & historical sites", "Beach lounging"], correctAnswer: 2, category: "hobby" },
-  { id: "p2", question: "What activity did Charity enjoy as a child but hasn't done in years?", options: ["Ice skating", "Horseback riding", "Gymnastics", "Swimming"], correctAnswer: 1, category: "hobby" },
-  { id: "p3", question: "Where does Charity prefer to sit on a roller coaster at Six Flags?", options: ["In the middle for balance", "In the back for extra thrill", "In the front row", "She doesn't ride roller coasters"], correctAnswer: 2, category: "hobby" },
-  // Tricky Music Questions  
-  { id: "p4", question: "Charity was obsessed with a Disney Channel show. Which one?", options: ["Hannah Montana", "That's So Raven", "Lizzie McGuire", "Kim Possible"], correctAnswer: 2, category: "music" },
-  { id: "p5", question: "Charity still owns what format of her favorite childhood movie?", options: ["DVD", "Blu-ray", "VHS", "Digital download"], correctAnswer: 2, category: "music" },
-  { id: "p6", question: "Who is Charity's favorite singer since childhood to present day?", options: ["Britney Spears", "Christina Aguilera", "Hilary Duff", "Jessica Simpson"], correctAnswer: 2, category: "music" },
-  { id: "p7", question: "Which Hilary Duff album does Charity still listen to while driving?", options: ["Dignity", "Hilary Duff", "Metamorphosis", "Breathe In. Breathe Out."], correctAnswer: 2, category: "music" },
-  { id: "p8", question: "Which song is NOT one of Charity's favorites from the Metamorphosis album?", options: ["So Yesterday", "Why Not", "Come Clean", "Fly"], correctAnswer: 3, category: "music" },
-  { id: "p9", question: "Charity also likes which other early 2000s artist?", options: ["Avril Lavigne", "Mandy Moore", "Michelle Branch", "Ashlee Simpson"], correctAnswer: 1, category: "music" },
-  { id: "p10", question: "Which Mandy Moore song is one of Charity's favorites?", options: ["Candy", "Walk Me Home", "In My Pocket", "I Wanna Be With You"], correctAnswer: 0, category: "music" },
-  { id: "p11", question: "What other Mandy Moore song does Charity love?", options: ["Saved", "Only Hope", "Have a Little Faith", "Someday We'll Know"], correctAnswer: 1, category: "music" },
-  // Tricky Food & Drink Questions
-  { id: "p12", question: "What is Charity's favorite drink combination?", options: ["Lemonade and Sprite", "Lemonade and ginger ale", "Lemonade and iced tea", "Lemonade and cranberry"], correctAnswer: 1, category: "hobby" },
-  { id: "p13", question: "Which juice does Charity prefer?", options: ["Orange juice", "Grape juice", "Apple juice", "Cranberry juice"], correctAnswer: 2, category: "hobby" },
-  { id: "p14", question: "What is Charity's favorite takeout restaurant?", options: ["Chick-fil-A", "Popeyes", "Broadway Chicken", "Raising Cane's"], correctAnswer: 2, category: "hobby" },
-  { id: "p15", question: "What is Charity's go-to order at her favorite chicken place?", options: ["Nashville Hot Chicken", "Broadway Hot and Honey Chicken", "Lemon Pepper Wings", "Buffalo Tenders"], correctAnswer: 1, category: "hobby" },
-  { id: "p16", question: "What type of batter does Charity's favorite chicken have?", options: ["Cornmeal crusted", "Panko breaded", "Buttermilk battered", "Flour dusted"], correctAnswer: 2, category: "hobby" },
-  { id: "p17", question: "What sauces does Charity get on the side with her chicken?", options: ["BBQ and ranch", "Honey mustard and honey", "Buffalo and blue cheese", "Ketchup and mayo"], correctAnswer: 1, category: "hobby" },
-  { id: "p18", question: "Where is Charity's favorite chicken restaurant located?", options: ["Newark", "Hoboken", "Westfield", "Jersey City"], correctAnswer: 2, category: "hobby" },
-  { id: "p19", question: "What is Charity's go-to Chinese food order?", options: ["General Tso's chicken", "Sweet and sour shrimp", "Beef and broccoli", "Orange chicken"], correctAnswer: 1, category: "hobby" },
-  // Tricky Background Questions
-  { id: "p20", question: "Until what grade was Charity homeschooled?", options: ["2nd grade", "3rd grade", "4th grade", "5th grade"], correctAnswer: 2, category: "hobby" },
-  { id: "p21", question: "Who homeschooled Charity?", options: ["Her mother", "Her aunt", "Her grandmother", "A private tutor"], correctAnswer: 2, category: "hobby" },
-  { id: "p22", question: "Charity moved from Chicago to where?", options: ["Connecticut", "New York", "New Jersey", "Pennsylvania"], correctAnswer: 2, category: "hobby" },
-  { id: "p23", question: "How did Charity and her mother travel from Chicago when they moved?", options: ["Flew directly", "Took a train", "Drove straight with no breaks", "Drove with multiple hotel stops"], correctAnswer: 2, category: "hobby" },
-  // Tricky Childhood Dreams
-  { id: "p24", question: "Charity once dreamed of becoming what performer?", options: ["Singer", "Actress", "Ballet dancer", "Gymnast"], correctAnswer: 2, category: "goals" },
-  { id: "p25", question: "When homeschooled, Charity ran a small business. What kind?", options: ["Lemonade stand", "Breakfast business", "Craft sales", "Dog walking"], correctAnswer: 1, category: "goals" },
-  { id: "p26", question: "Besides ballet, Charity also once wanted to be a:", options: ["Doctor", "Cook", "Lawyer", "Teacher"], correctAnswer: 1, category: "goals" },
-  // Tricky Personality
-  { id: "p27", question: "What does Charity value most in her environment?", options: ["Constant excitement", "Peace and quiet", "Loud music", "Social gatherings"], correctAnswer: 1, category: "traits" },
-  { id: "p28", question: "Charity's grandmother homeschooled how many students?", options: ["Just Charity", "Charity and her sibling", "Charity, her cousin, and others", "A full classroom of 20"], correctAnswer: 2, category: "hobby" },
-  { id: "p29", question: "How would you describe Charity's personality?", options: ["Cautious and predictable", "Spontaneous and likes trying new things", "Shy and reserved", "Serious and formal"], correctAnswer: 1, category: "traits" },
-  // Career - Tricky
-  { id: "p30", question: "What frustrates Charity most as a UX designer?", options: ["Tight deadlines", "Scope creep", "Too many tools", "Remote work"], correctAnswer: 1, category: "painpoints" },
-  { id: "p31", question: "Which combination of values drives Charity's career?", options: ["Fame & fortune", "Impact, balance, learning & leadership", "Speed & efficiency", "Competition & winning"], correctAnswer: 1, category: "goals" },
-  { id: "p32", question: "Charity wants to speak at what type of events?", options: ["Music festivals", "Design conferences", "Political rallies", "Comedy shows"], correctAnswer: 1, category: "wishlist" },
-  { id: "p33", question: "Which European country is on Charity's bucket list?", options: ["Italy", "France", "Greece", "Spain"], correctAnswer: 2, category: "wishlist" },
-  { id: "p34", question: "What book genre does Charity secretly enjoy?", options: ["Horror", "Romance", "True crime", "Fantasy"], correctAnswer: 1, category: "hobby" },
-  // Travel Questions
-  { id: "p35", question: "Which of these countries has Charity NOT visited?", options: ["Spain", "Italy", "Greece", "Ireland"], correctAnswer: 2, category: "hobby" },
-  { id: "p36", question: "Has Charity been to South Africa?", options: ["No, it's on her bucket list", "Yes, she has visited", "She's planning to go next year", "She's never heard of it"], correctAnswer: 1, category: "hobby" },
-  { id: "p37", question: "Which UK territory has Charity visited?", options: ["Scotland", "Wales", "UK territory", "None"], correctAnswer: 2, category: "hobby" },
-  { id: "p38", question: "What mode of travel has Charity NEVER taken?", options: ["Airplane", "Train", "Greyhound bus", "Car"], correctAnswer: 2, category: "hobby" },
-  { id: "p39", question: "What type of travel is on Charity's bucket list?", options: ["Cruise ship", "Bus travel", "Private jet", "Helicopter tour"], correctAnswer: 1, category: "wishlist" },
-  { id: "p40", question: "Charity has been to Paris. True or false?", options: ["True", "False", "She's only been to the airport", "She's planning to go"], correctAnswer: 0, category: "hobby" },
-  // Starbucks Questions
-  { id: "p41", question: "What is Charity's favorite Starbucks drink?", options: ["Pumpkin Spice Latte", "Caramel Ribbon Crunch", "Mocha Frappuccino", "Iced Americano"], correctAnswer: 1, category: "hobby" },
-  { id: "p42", question: "How does Charity customize her Caramel Ribbon Crunch?", options: ["Extra whip only", "Extra caramel, extra crunch", "No modifications", "Light ice"], correctAnswer: 1, category: "hobby" },
-  { id: "p43", question: "What other Starbucks drink does Charity love?", options: ["Chai Tea Latte", "Vanilla Bean Frappuccino with caramel syrup", "Cold Brew", "Matcha Latte"], correctAnswer: 1, category: "hobby" },
-  { id: "p44", question: "Where did Charity's mom work when Charity fell in love with Vanilla Bean Frappuccino?", options: ["Chase Bank in Times Square", "Bank of America in Grand Central", "Wells Fargo on Wall Street", "Citibank in Midtown"], correctAnswer: 1, category: "hobby" },
-  { id: "p45", question: "When did Charity start loving Vanilla Bean Frappuccino?", options: ["In college", "As a little girl", "Last year", "In high school"], correctAnswer: 1, category: "hobby" },
-  // Fashion Questions
-  { id: "p46", question: "Which fashion era is Charity's favorite?", options: ["70s disco", "80s and 90s", "2010s minimalism", "Modern streetwear"], correctAnswer: 1, category: "hobby" },
-  { id: "p47", question: "Charity grew up in which decade?", options: ["Early 80s", "Late 90s and early 2000s", "Mid 2010s", "Late 2000s"], correctAnswer: 1, category: "hobby" },
-  { id: "p48", question: "Charity loves fashion from the 80s. What else does she love from that era?", options: ["The music", "The cars", "The technology", "The 90s fashion too"], correctAnswer: 3, category: "hobby" },
+// Charity's User Persona Story
+const charityPersonaStory = `Charity is a UX/UI Designer who transitioned from being a 4th-grade teacher. She brings empathy and patience from her teaching background into her design work. Growing up homeschooled by her grandmother in Chicago, she learned early on to be resourceful - even running a breakfast business as a kid. After moving to New Jersey with her mother (driving straight through with no breaks!), she pursued her passion for design at Columbia University. Now at Google, she focuses on AI-driven experiences while maintaining her core values of meaningful impact and work-life balance.`
+
+const personaNeedQuestions: PersonaNeedQuestion[] = [
+  // User Needs
+  { id: "pn1", question: "What does Charity need most in her work environment?", options: ["Constant supervision", "Peace and quiet", "Loud brainstorming sessions", "Open floor plans"], correctAnswer: 1, type: "need" },
+  { id: "pn2", question: "Which need drives Charity's career decisions?", options: ["Highest possible salary", "Making meaningful impact", "Fame and recognition", "Minimal responsibility"], correctAnswer: 1, type: "need" },
+  { id: "pn3", question: "What balance does Charity prioritize?", options: ["Work over everything", "Work-life balance", "Social life over work", "Money over time"], correctAnswer: 1, type: "need" },
+  { id: "pn4", question: "What type of growth is essential for Charity?", options: ["Only technical skills", "Continuous learning across areas", "Just salary increases", "Staying in comfort zone"], correctAnswer: 1, type: "need" },
+  { id: "pn5", question: "What leadership goal does Charity have?", options: ["Avoid leadership entirely", "Growing into senior roles", "Stay as individual contributor forever", "Become CEO immediately"], correctAnswer: 1, type: "goal" },
+  // Pain Points
+  { id: "pn6", question: "What frustrates Charity MOST in projects?", options: ["Too many designers", "Scope creep", "Short meetings", "Clear requirements"], correctAnswer: 1, type: "painpoint" },
+  { id: "pn7", question: "As a former teacher, what pain point might Charity have?", options: ["Working with stakeholders", "When designs don't help users learn/grow", "Too much user research", "Fast timelines"], correctAnswer: 1, type: "painpoint" },
+  { id: "pn8", question: "What type of feedback bothers Charity?", options: ["Constructive criticism", "Vague feedback without reasoning", "Detailed design reviews", "User testing results"], correctAnswer: 1, type: "painpoint" },
+  // Goals
+  { id: "pn9", question: "What public speaking goal does Charity have?", options: ["Avoid all public speaking", "Speak at design conferences", "Only internal presentations", "Never share her work"], correctAnswer: 1, type: "goal" },
+  { id: "pn10", question: "What travel experience is on Charity's bucket list?", options: ["Flying first class everywhere", "Bus travel adventure", "Only luxury resorts", "Never traveling again"], correctAnswer: 1, type: "goal" },
+  { id: "pn11", question: "Which destination is a goal for Charity?", options: ["Stay local only", "Visit Greece", "Move to Mars", "Never leave NJ"], correctAnswer: 1, type: "goal" },
+  // Behaviors
+  { id: "pn12", question: "How does Charity approach new experiences?", options: ["Avoids anything unfamiliar", "Spontaneous, likes trying different things", "Only does planned activities", "Refuses to try new foods"], correctAnswer: 1, type: "behavior" },
+  { id: "pn13", question: "What's Charity's approach to problem-solving?", options: ["Impatient and rushed", "Creative and curious", "Follows only strict rules", "Avoids complex problems"], correctAnswer: 1, type: "behavior" },
+  { id: "pn14", question: "How does Charity handle stress?", options: ["Panics immediately", "Stays calm and patient", "Gives up quickly", "Blames others"], correctAnswer: 1, type: "behavior" },
+  { id: "pn15", question: "What trait helps Charity in UX research?", options: ["Ignoring user feedback", "Empathetic and caring nature", "Rushing through interviews", "Making assumptions"], correctAnswer: 1, type: "behavior" },
+  { id: "pn16", question: "How detail-oriented is Charity?", options: ["Overlooks most details", "Very detail-oriented", "Only cares about big picture", "Doesn't review her work"], correctAnswer: 1, type: "behavior" },
+]
+
+// ============ KNOW ME QUIZ SECTION (Trivia about Charity) ============
+interface TriviaQuestion {
+  id: string
+  question: string
+  options: string[]
+  correctAnswer: number
+  category: "music" | "food" | "travel" | "background" | "starbucks" | "fashion"
+}
+
+const triviaQuestions: TriviaQuestion[] = [
+  // Music - Hilary Duff
+  { id: "t1", question: "Who is Charity's favorite singer since childhood?", options: ["Britney Spears", "Christina Aguilera", "Hilary Duff", "Jessica Simpson"], correctAnswer: 2, category: "music" },
+  { id: "t2", question: "Which Hilary Duff album does Charity still listen to while driving?", options: ["Dignity", "Hilary Duff", "Metamorphosis", "Breathe In. Breathe Out."], correctAnswer: 2, category: "music" },
+  { id: "t3", question: "Which song is NOT one of Charity's favorites from Metamorphosis?", options: ["So Yesterday", "Why Not", "Come Clean", "Fly"], correctAnswer: 3, category: "music" },
+  { id: "t4", question: "What Disney Channel show was Charity obsessed with?", options: ["Hannah Montana", "That's So Raven", "Lizzie McGuire", "Kim Possible"], correctAnswer: 2, category: "music" },
+  { id: "t5", question: "Charity still owns the Lizzie McGuire movie on what format?", options: ["DVD", "Blu-ray", "VHS", "Digital download"], correctAnswer: 2, category: "music" },
+  // Music - Mandy Moore
+  { id: "t6", question: "Which other early 2000s artist does Charity love?", options: ["Avril Lavigne", "Mandy Moore", "Michelle Branch", "Ashlee Simpson"], correctAnswer: 1, category: "music" },
+  { id: "t7", question: "Which Mandy Moore song is one of Charity's favorites?", options: ["Candy", "Walk Me Home", "In My Pocket", "I Wanna Be With You"], correctAnswer: 0, category: "music" },
+  { id: "t8", question: "What other Mandy Moore songs does Charity love?", options: ["Saved & Have a Little Faith", "Only Hope & Cry", "I Wanna Be With You & In My Pocket", "Walk Me Home & When I Talk to You"], correctAnswer: 1, category: "music" },
+  { id: "t9", question: "Charity loves 'A Walk to Remember' but what makes her cry?", options: ["The wedding scene", "The ending where she dies", "The star naming scene", "The beginning"], correctAnswer: 1, category: "music" },
+  // Food & Drinks
+  { id: "t10", question: "What is Charity's favorite drink combination?", options: ["Lemonade and Sprite", "Lemonade and ginger ale", "Lemonade and iced tea", "Lemonade and cranberry"], correctAnswer: 1, category: "food" },
+  { id: "t11", question: "Which juice does Charity prefer?", options: ["Orange juice", "Grape juice", "Apple juice", "Cranberry juice"], correctAnswer: 2, category: "food" },
+  { id: "t12", question: "What is Charity's favorite takeout restaurant?", options: ["Chick-fil-A", "Popeyes", "Broadway Chicken", "Raising Cane's"], correctAnswer: 2, category: "food" },
+  { id: "t13", question: "What is Charity's go-to order at Broadway Chicken?", options: ["Nashville Hot Chicken", "Broadway Hot and Honey Chicken", "Lemon Pepper Wings", "Buffalo Tenders"], correctAnswer: 1, category: "food" },
+  { id: "t14", question: "What type of batter does her favorite chicken have?", options: ["Cornmeal crusted", "Panko breaded", "Buttermilk battered", "Flour dusted"], correctAnswer: 2, category: "food" },
+  { id: "t15", question: "What sauces does Charity get on the side?", options: ["BBQ and ranch", "Honey mustard and honey", "Buffalo and blue cheese", "Ketchup and mayo"], correctAnswer: 1, category: "food" },
+  { id: "t16", question: "Where is Broadway Chicken located?", options: ["Newark", "Hoboken", "Westfield", "Jersey City"], correctAnswer: 2, category: "food" },
+  { id: "t17", question: "What is Charity's go-to Chinese food order?", options: ["General Tso's chicken", "Sweet and sour shrimp", "Beef and broccoli", "Orange chicken"], correctAnswer: 1, category: "food" },
+  // Starbucks
+  { id: "t18", question: "What is Charity's favorite Starbucks drink?", options: ["Pumpkin Spice Latte", "Caramel Ribbon Crunch", "Mocha Frappuccino", "Iced Americano"], correctAnswer: 1, category: "starbucks" },
+  { id: "t19", question: "How does Charity customize her Caramel Ribbon Crunch?", options: ["Extra whip only", "Extra caramel, extra crunch", "No modifications", "Light ice"], correctAnswer: 1, category: "starbucks" },
+  { id: "t20", question: "What other Starbucks drink does Charity love?", options: ["Chai Tea Latte", "Vanilla Bean Frappuccino with caramel syrup", "Cold Brew", "Matcha Latte"], correctAnswer: 1, category: "starbucks" },
+  { id: "t21", question: "Where did Charity's mom work when she discovered the Vanilla Bean Frappuccino?", options: ["Chase Bank in Times Square", "Bank of America in Grand Central", "Wells Fargo on Wall Street", "Citibank in Midtown"], correctAnswer: 1, category: "starbucks" },
+  { id: "t22", question: "When did Charity start loving Vanilla Bean Frappuccino?", options: ["In college", "As a little girl", "Last year", "In high school"], correctAnswer: 1, category: "starbucks" },
+  // Background
+  { id: "t23", question: "Until what grade was Charity homeschooled?", options: ["2nd grade", "3rd grade", "4th grade", "5th grade"], correctAnswer: 2, category: "background" },
+  { id: "t24", question: "Who homeschooled Charity?", options: ["Her mother", "Her aunt", "Her grandmother", "A private tutor"], correctAnswer: 2, category: "background" },
+  { id: "t25", question: "How many students did Charity's grandmother homeschool?", options: ["Just Charity", "Charity and her sibling", "Charity, her cousin, and others", "A full classroom of 20"], correctAnswer: 2, category: "background" },
+  { id: "t26", question: "What business did Charity run while homeschooled?", options: ["Lemonade stand", "Breakfast business", "Craft sales", "Dog walking"], correctAnswer: 1, category: "background" },
+  { id: "t27", question: "Charity moved from Chicago to where?", options: ["Connecticut", "New York", "New Jersey", "Pennsylvania"], correctAnswer: 2, category: "background" },
+  { id: "t28", question: "How did Charity and her mother travel from Chicago?", options: ["Flew directly", "Took a train", "Drove straight with no breaks", "Drove with multiple hotel stops"], correctAnswer: 2, category: "background" },
+  { id: "t29", question: "What did Charity dream of becoming as a child?", options: ["Singer", "Actress", "Ballet dancer", "Gymnast"], correctAnswer: 2, category: "background" },
+  { id: "t30", question: "Besides ballet, Charity also wanted to be a:", options: ["Doctor", "Cook", "Lawyer", "Pilot"], correctAnswer: 1, category: "background" },
+  { id: "t31", question: "Where does Charity prefer to sit on a roller coaster?", options: ["In the middle", "In the back", "In the front row", "She doesn't ride them"], correctAnswer: 2, category: "background" },
+  { id: "t32", question: "What childhood activity hasn't Charity done in years?", options: ["Ice skating", "Horseback riding", "Gymnastics", "Swimming"], correctAnswer: 1, category: "background" },
+  // Travel
+  { id: "t33", question: "Which of these has Charity NOT visited?", options: ["Spain", "Italy", "Greece", "Ireland"], correctAnswer: 2, category: "travel" },
+  { id: "t34", question: "Has Charity been to South Africa?", options: ["No, bucket list", "Yes, she has visited", "Planning to go", "Never"], correctAnswer: 1, category: "travel" },
+  { id: "t35", question: "Has Charity been to Paris?", options: ["Yes", "No", "Only the airport", "Planning to go"], correctAnswer: 0, category: "travel" },
+  { id: "t36", question: "What mode of travel has Charity NEVER taken?", options: ["Airplane", "Train", "Greyhound bus", "Car"], correctAnswer: 2, category: "travel" },
+  { id: "t37", question: "What travel is on Charity's bucket list?", options: ["Cruise ship", "Bus travel", "Private jet", "Helicopter tour"], correctAnswer: 1, category: "travel" },
+  // Fashion
+  { id: "t38", question: "Which fashion era is Charity's favorite?", options: ["70s disco", "80s and 90s", "2010s minimalism", "Modern streetwear"], correctAnswer: 1, category: "fashion" },
+  { id: "t39", question: "Charity grew up in which decade?", options: ["Early 80s", "Late 90s and early 2000s", "Mid 2010s", "Late 2000s"], correctAnswer: 1, category: "fashion" },
+  { id: "t40", question: "What book genre does Charity enjoy?", options: ["Horror", "Romance", "True crime", "Fantasy"], correctAnswer: 1, category: "fashion" },
 ]
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
 interface TwoTruthsRound {
   id: string
   statements: string[]
-  lieIndex: number // which statement is the lie
+  lieIndex: number
+  category: string // Added category for consistency
 }
 
 const twoTruthsRounds: TwoTruthsRound[] = [
-  { id: "tt1", statements: ["I love riding in the front of roller coasters at Six Flags", "I've been skydiving twice", "I like horseback riding but haven't done it since I was little"], lieIndex: 1 },
-  { id: "tt2", statements: ["I was homeschooled until 4th grade", "My grandmother homeschooled me, my cousin, and other kids", "I was homeschooled by a private tutor in our basement"], lieIndex: 2 },
-  { id: "tt3", statements: ["My mother and I drove from Chicago to New Jersey with no breaks", "We ate a lot of snacks on our road trip", "We stopped at 5 different hotels along the way"], lieIndex: 2 },
-  { id: "tt4", statements: ["I used to want to be a ballet dancer", "I used to want to be a professional singer", "I used to want to be a cook"], lieIndex: 1 },
-  { id: "tt5", statements: ["I had a breakfast business when I was homeschooled", "I sold lemonade every summer as a kid", "I value peace and quiet"], lieIndex: 1 },
-  { id: "tt6", statements: ["Hilary Duff is my favorite childhood artist", "I still own the VHS of the Lizzie McGuire movie", "I've met Hilary Duff in person three times"], lieIndex: 2 },
-  { id: "tt7", statements: ["I was obsessed with Lizzie McGuire", "I watched every episode of Hannah Montana first", "I still love Hilary Duff to this day"], lieIndex: 1 },
-  { id: "tt8", statements: ["I moved from Chicago to New Jersey", "I moved from Los Angeles to New Jersey", "I enjoy visiting museums and historical sites"], lieIndex: 1 },
-  { id: "tt9", statements: ["I enjoy rollerskating", "I'm a professional ice skater", "I love reading romance novels"], lieIndex: 1 },
-  { id: "tt10", statements: ["I dream of traveling to Greece", "I want to speak at design conferences", "I've already given a TED talk"], lieIndex: 2 },
-  // New rounds with food and drink
-  { id: "tt11", statements: ["My favorite drink is lemonade mixed with ginger ale", "I prefer orange juice over apple juice", "I love trying new and spontaneous things"], lieIndex: 1 },
-  { id: "tt12", statements: ["My go-to Chinese order is sweet and sour shrimp", "I always order General Tso's chicken", "I still listen to the Metamorphosis album while driving"], lieIndex: 1 },
-  { id: "tt13", statements: ["My favorite takeout is Broadway Hot and Honey Chicken", "I love buttermilk battered chicken", "I prefer grilled chicken over fried"], lieIndex: 2 },
-  { id: "tt14", statements: ["I always get honey mustard and honey on the side", "My favorite chicken place is in Westfield", "I've never been to Broadway Chicken"], lieIndex: 2 },
-  { id: "tt15", statements: ["I love Mandy Moore's song 'Only Hope'", "My favorite Mandy Moore song is 'Cry'", "I've never heard of Mandy Moore"], lieIndex: 2 },
-  { id: "tt16", statements: ["'Candy' by Mandy Moore is one of my favorites", "I prefer Taylor Swift over Mandy Moore", "I like to think I'm spontaneous"], lieIndex: 1 },
-  { id: "tt17", statements: ["'So Yesterday' is one of my favorite Hilary Duff songs", "'Why Not' is on my driving playlist", "I've never listened to the Metamorphosis album"], lieIndex: 2 },
-  { id: "tt18", statements: ["'Come Clean' is a Hilary Duff song I love", "I prefer apple juice over orange juice", "I don't like any citrus drinks"], lieIndex: 2 },
-  { id: "tt19", statements: ["I consider myself spontaneous", "I like trying things that are different", "I'm very predictable and don't like change"], lieIndex: 2 },
-  { id: "tt20", statements: ["Broadway Chicken has the best honey chicken", "I've been to every state in the US", "I drove from Chicago to New Jersey with no hotel stops"], lieIndex: 1 },
-  // Travel rounds
-  { id: "tt21", statements: ["I've been to Spain, Paris, and Italy", "I've visited South Africa", "I've taken a Greyhound bus across the country"], lieIndex: 2 },
-  { id: "tt22", statements: ["I've never taken a Greyhound bus", "Bus travel is on my bucket list", "I've already done a cross-country bus trip"], lieIndex: 2 },
-  { id: "tt23", statements: ["I've visited Ireland", "I've been to UK territory", "I've traveled to Australia"], lieIndex: 2 },
-  { id: "tt24", statements: ["I want to do bus travel someday", "I've been to 6 different countries", "I've only traveled within the US"], lieIndex: 2 },
-  // Starbucks rounds
-  { id: "tt25", statements: ["My favorite Starbucks drink is Caramel Ribbon Crunch", "I order it with extra caramel and extra crunch", "I've never been to Starbucks"], lieIndex: 2 },
-  { id: "tt26", statements: ["I love the Vanilla Bean Frappuccino with caramel syrup", "My mom worked at Bank of America in Grand Central", "I discovered Starbucks in college"], lieIndex: 2 },
-  { id: "tt27", statements: ["I fell in love with Vanilla Bean Frappuccino as a little girl", "My mom introduced me to Starbucks", "I prefer coffee over frappuccinos"], lieIndex: 2 },
-  // Fashion rounds
-  { id: "tt28", statements: ["I love 80s and 90s fashion", "I grew up in the late 90s", "I think modern fashion is the best"], lieIndex: 2 },
-  { id: "tt29", statements: ["I grew up in the early 2000s", "The 80s aesthetic inspires me", "I only like fashion from the 2020s"], lieIndex: 2 },
-  { id: "tt30", statements: ["I love fashion from the 80s and 90s", "I'm spontaneous and like trying new things", "I hate vintage fashion"], lieIndex: 2 },
+  // Childhood & Background (same category per round)
+  { id: "tt1", category: "childhood", statements: ["I was homeschooled until 4th grade", "My grandmother homeschooled me, my cousin, and other kids", "I was homeschooled by a private tutor in our basement"], lieIndex: 2 },
+  { id: "tt2", category: "childhood", statements: ["I used to want to be a ballet dancer", "I used to want to be a cook", "I used to want to be a professional singer"], lieIndex: 2 },
+  { id: "tt3", category: "childhood", statements: ["I had a breakfast business when homeschooled", "I ran a lemonade stand every summer", "My grandmother taught me entrepreneurship early"], lieIndex: 1 },
+  { id: "tt4", category: "moving", statements: ["My mother and I drove from Chicago to New Jersey", "We drove straight through with no hotel stops", "We stopped at 5 different hotels along the way"], lieIndex: 2 },
+  { id: "tt5", category: "moving", statements: ["I moved from Chicago to New Jersey", "We ate lots of snacks on our road trip", "I moved from Los Angeles to New Jersey"], lieIndex: 2 },
+  // Hobbies (same category per round)
+  { id: "tt6", category: "hobbies", statements: ["I love riding in the front of roller coasters", "I enjoy horseback riding but haven't done it since I was little", "I've been skydiving twice"], lieIndex: 2 },
+  { id: "tt7", category: "hobbies", statements: ["I enjoy rollerskating", "I love visiting museums and historical sites", "I'm a professional ice skater"], lieIndex: 2 },
+  { id: "tt8", category: "hobbies", statements: ["I love reading romance novels", "I value peace and quiet", "I hate trying new things"], lieIndex: 2 },
+  // Hilary Duff (same category per round)
+  { id: "tt9", category: "hilary", statements: ["Hilary Duff is my favorite childhood artist", "I still own the VHS of the Lizzie McGuire movie", "I've met Hilary Duff in person three times"], lieIndex: 2 },
+  { id: "tt10", category: "hilary", statements: ["I was obsessed with Lizzie McGuire", "I still love Hilary Duff to this day", "I watched every episode of Hannah Montana before Lizzie McGuire"], lieIndex: 2 },
+  { id: "tt11", category: "hilary", statements: ["'So Yesterday' is one of my favorite songs", "'Come Clean' is on my driving playlist", "I've never listened to the Metamorphosis album"], lieIndex: 2 },
+  { id: "tt12", category: "hilary", statements: ["I still listen to Metamorphosis while driving", "'Why Not' is one of my favorites", "I think Hilary Duff's music is overrated"], lieIndex: 2 },
+  // Mandy Moore (same category per round)
+  { id: "tt13", category: "mandy", statements: ["I love Mandy Moore's song 'Only Hope'", "'Cry' by Mandy Moore is a favorite", "I've never heard any Mandy Moore songs"], lieIndex: 2 },
+  { id: "tt14", category: "mandy", statements: ["'Candy' by Mandy Moore is one of my favorites", "I love 'A Walk to Remember' even though the ending makes me cry", "I think Mandy Moore is a terrible actress"], lieIndex: 2 },
+  // Food & Drinks (same category per round)
+  { id: "tt15", category: "drinks", statements: ["My favorite drink is lemonade mixed with ginger ale", "I prefer apple juice over orange juice", "I prefer orange juice over apple juice"], lieIndex: 2 },
+  { id: "tt16", category: "food", statements: ["My favorite takeout is Broadway Hot and Honey Chicken", "I love buttermilk battered chicken", "I prefer grilled chicken over fried chicken"], lieIndex: 2 },
+  { id: "tt17", category: "food", statements: ["I get honey mustard and honey on the side", "My favorite chicken place is in Westfield", "I've never been to Broadway Chicken"], lieIndex: 2 },
+  { id: "tt18", category: "food", statements: ["My go-to Chinese order is sweet and sour shrimp", "I always order General Tso's chicken at Chinese restaurants", "I love Chinese takeout"], lieIndex: 1 },
+  // Starbucks (same category per round)
+  { id: "tt19", category: "starbucks", statements: ["My favorite Starbucks drink is Caramel Ribbon Crunch", "I order it with extra caramel and extra crunch", "I've never been to Starbucks"], lieIndex: 2 },
+  { id: "tt20", category: "starbucks", statements: ["I love Vanilla Bean Frappuccino with caramel syrup", "I fell in love with it as a little girl", "I discovered Starbucks in college"], lieIndex: 2 },
+  { id: "tt21", category: "starbucks", statements: ["My mom worked at Bank of America in Grand Central", "That's where I first tried Starbucks", "I prefer hot coffee over frappuccinos"], lieIndex: 2 },
+  // Travel (same category per round)
+  { id: "tt22", category: "travel", statements: ["I've been to Spain, Paris, and Italy", "I've visited South Africa", "I've taken a Greyhound bus across the country"], lieIndex: 2 },
+  { id: "tt23", category: "travel", statements: ["I've never taken a Greyhound bus", "Bus travel is on my bucket list", "I've already done a cross-country bus trip"], lieIndex: 2 },
+  { id: "tt24", category: "travel", statements: ["I've visited Ireland", "I've been to UK territory", "I've traveled to Australia"], lieIndex: 2 },
+  // Fashion & Personality (same category per round)
+  { id: "tt25", category: "fashion", statements: ["I love 80s and 90s fashion", "I grew up in the late 90s and early 2000s", "I think vintage fashion is ugly"], lieIndex: 2 },
+  { id: "tt26", category: "personality", statements: ["I consider myself spontaneous", "I like trying things that are different", "I'm very predictable and hate change"], lieIndex: 2 },
+  // Goals (same category per round)
+  { id: "tt27", category: "goals", statements: ["I dream of traveling to Greece", "I want to speak at design conferences", "I've already given a TED talk"], lieIndex: 2 },
+  { id: "tt28", category: "goals", statements: ["Work-life balance is important to me", "I want to grow into senior leadership roles", "I only care about salary, not impact"], lieIndex: 2 },
 ]
 
 // ============ MAIN COMPONENT ============
-type GameMode = "menu" | "mind" | "logic" | "persona" | "truths"
+type GameMode = "menu" | "mind" | "logic" | "persona" | "truths" | "trivia"
 type MindScreen = "category" | "puzzle"
 type LogicScreen = "select" | "puzzle"
 
@@ -398,12 +427,18 @@ export interface BrainGamesState {
   logicComplete: boolean
   logicCorrect: boolean
   filterDifficulty: "All" | "Easy" | "Medium" | "Hard"
-  // Persona game state
-  currentPersonaQuestion: PersonaQuestion | null
+  // Persona game state (needs & pain points)
+  currentPersonaQuestion: PersonaNeedQuestion | null
   selectedPersonaAnswer: number | null
   showPersonaResult: boolean
   personaStreak: number
   personaQuestionsAnswered: string[]
+  // Trivia game state (know me quiz)
+  currentTriviaQuestion: TriviaQuestion | null
+  selectedTriviaAnswer: number | null
+  showTriviaResult: boolean
+  triviaStreak: number
+  triviaQuestionsAnswered: string[]
   // Two Truths game state
   currentTruthsRound: TwoTruthsRound | null
   selectedTruthsAnswer: number | null
@@ -427,12 +462,18 @@ export const initialBrainGamesState: BrainGamesState = {
   logicComplete: false,
   logicCorrect: false,
   filterDifficulty: "All",
-  // Persona game state
+  // Persona game state (needs & pain points)
   currentPersonaQuestion: null,
   selectedPersonaAnswer: null,
   showPersonaResult: false,
   personaStreak: 0,
   personaQuestionsAnswered: [],
+  // Trivia game state (know me quiz)
+  currentTriviaQuestion: null,
+  selectedTriviaAnswer: null,
+  showTriviaResult: false,
+  triviaStreak: 0,
+  triviaQuestionsAnswered: [],
   // Two Truths game state
   currentTruthsRound: null,
   selectedTruthsAnswer: null,
@@ -466,14 +507,23 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     })
   }, [onGameStateChange])
   
-  // Destructure state for easier access
+  // Destructure state for easier access with fallbacks
   const { 
     gameMode, totalScore, mindScreen, selectedMindCategory, currentMindPuzzle,
     selectedMindAnswer, showMindResult, mindStreak, logicScreen, currentLogicPuzzleId,
     logicGrid, logicComplete, logicCorrect, filterDifficulty,
-    currentPersonaQuestion, selectedPersonaAnswer, showPersonaResult, personaStreak, personaQuestionsAnswered,
-    currentTruthsRound, selectedTruthsAnswer, showTruthsResult, truthsStreak, truthsRoundsPlayed
+    currentPersonaQuestion, selectedPersonaAnswer, showPersonaResult, personaStreak,
+    currentTruthsRound, selectedTruthsAnswer, showTruthsResult, truthsStreak
   } = localState
+  
+  // Get arrays with fallback to empty arrays (for backwards compatibility with saved state)
+  const personaQuestionsAnswered = localState.personaQuestionsAnswered || []
+  const triviaQuestionsAnswered = localState.triviaQuestionsAnswered || []
+  const truthsRoundsPlayed = localState.truthsRoundsPlayed || []
+  const currentTriviaQuestion = localState.currentTriviaQuestion || null
+  const selectedTriviaAnswer = localState.selectedTriviaAnswer ?? null
+  const showTriviaResult = localState.showTriviaResult || false
+  const triviaStreak = localState.triviaStreak || 0
   
   // Get current logic puzzle from ID
   const currentLogicPuzzle = currentLogicPuzzleId 
@@ -617,12 +667,11 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     updateState({ gameMode: "menu" })
   }
 
-  // Persona game functions
-  const getRandomPersonaQuestion = (): PersonaQuestion => {
-    const unanswered = personaQuestions.filter(q => !personaQuestionsAnswered.includes(q.id))
+  // Persona game functions (needs & pain points)
+  const getRandomPersonaQuestion = (): PersonaNeedQuestion => {
+    const unanswered = personaNeedQuestions.filter(q => !personaQuestionsAnswered.includes(q.id))
     if (unanswered.length === 0) {
-      // Reset if all questions answered
-      return personaQuestions[Math.floor(Math.random() * personaQuestions.length)]
+      return personaNeedQuestions[Math.floor(Math.random() * personaNeedQuestions.length)]
     }
     return unanswered[Math.floor(Math.random() * unanswered.length)]
   }
@@ -667,6 +716,58 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
       currentPersonaQuestion: question,
       selectedPersonaAnswer: null,
       showPersonaResult: false
+    })
+  }
+
+  // Trivia game functions (know me quiz)
+  const getRandomTriviaQuestion = (): TriviaQuestion => {
+    const unanswered = triviaQuestions.filter(q => !triviaQuestionsAnswered.includes(q.id))
+    if (unanswered.length === 0) {
+      return triviaQuestions[Math.floor(Math.random() * triviaQuestions.length)]
+    }
+    return unanswered[Math.floor(Math.random() * unanswered.length)]
+  }
+
+  const startTriviaGame = () => {
+    const question = getRandomTriviaQuestion()
+    updateState({
+      gameMode: "trivia",
+      currentTriviaQuestion: question,
+      selectedTriviaAnswer: null,
+      showTriviaResult: false
+    })
+  }
+
+  const handleTriviaAnswer = (index: number) => {
+    if (showTriviaResult) return
+    
+    const isCorrect = currentTriviaQuestion && index === currentTriviaQuestion.correctAnswer
+    if (isCorrect) {
+      const newScore = totalScore + 1
+      updateState({
+        selectedTriviaAnswer: index,
+        showTriviaResult: true,
+        triviaStreak: triviaStreak + 1,
+        totalScore: newScore,
+        triviaQuestionsAnswered: [...triviaQuestionsAnswered, currentTriviaQuestion?.id || '']
+      })
+      onScoreChange?.(newScore)
+    } else {
+      updateState({
+        selectedTriviaAnswer: index,
+        showTriviaResult: true,
+        triviaStreak: 0,
+        triviaQuestionsAnswered: [...triviaQuestionsAnswered, currentTriviaQuestion?.id || '']
+      })
+    }
+  }
+
+  const nextTriviaQuestion = () => {
+    const question = getRandomTriviaQuestion()
+    updateState({
+      currentTriviaQuestion: question,
+      selectedTriviaAnswer: null,
+      showTriviaResult: false
     })
   }
 
@@ -744,36 +845,56 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         </div>
 
         {/* Game Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
+        <div className="grid grid-cols-2 gap-4 w-full mt-4">
+          {/* User Persona - UX focused with needs & pain points */}
           <button
             onClick={() => startPersonaGame()}
-            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-violet-950/80 to-pink-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-violet-950/80 to-indigo-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
           >
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
-              <style>{`
-                @keyframes personaPulse { 0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px #8b5cf6); } 50% { transform: scale(1.05); filter: drop-shadow(0 0 15px #8b5cf6); } }
-                .persona-icon { animation: personaPulse 2s infinite ease-in-out; }
-              `}</style>
-              <rect width="100" height="100" rx="20" fill="#1e1b4b"/>
-              <g className="persona-icon">
-                <circle cx="50" cy="35" r="15" fill="#8b5cf6"/>
-                <path d="M25 80 Q25 55 50 55 Q75 55 75 80" fill="#c4b5fd"/>
-                <circle cx="45" cy="33" r="2" fill="white"/>
-                <circle cx="55" cy="33" r="2" fill="white"/>
-                <path d="M45 40 Q50 44 55 40" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round"/>
-              </g>
-            </svg>
+            <div className="relative">
+              <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white text-xl md:text-2xl font-bold shadow-lg">
+                C
+              </div>
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-500 rounded-full flex items-center justify-center">
+                <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+            </div>
             <div className="text-center">
               <p className="text-violet-300 font-bold text-sm md:text-lg">User Persona</p>
-              <p className="text-violet-400/50 text-xs md:text-sm">Know Charity?</p>
+              <p className="text-violet-400/50 text-xs md:text-sm">Needs & Pain Points</p>
             </div>
           </button>
 
+          {/* Know Me Quiz - Trivia about Charity */}
+          <button
+            onClick={() => startTriviaGame()}
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-pink-950/80 to-rose-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
+          >
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
+              <style>{`
+                @keyframes quizPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+                .quiz-icon { animation: quizPulse 2s infinite ease-in-out; }
+              `}</style>
+              <rect width="100" height="100" rx="20" fill="#831843"/>
+              <g className="quiz-icon">
+                <circle cx="50" cy="50" r="30" fill="#ec4899" />
+                <text x="50" y="58" textAnchor="middle" fill="white" fontSize="32" fontWeight="bold">?</text>
+              </g>
+            </svg>
+            <div className="text-center">
+              <p className="text-pink-300 font-bold text-sm md:text-lg">Know Me Quiz</p>
+              <p className="text-pink-400/50 text-xs md:text-sm">Music, Food & More</p>
+            </div>
+          </button>
+
+          {/* Two Truths and a Lie */}
           <button
             onClick={() => startTruthsGame()}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-emerald-950/80 to-teal-900/50 rounded-2xl border border-emerald-500/30 hover:border-emerald-400/50 hover:shadow-[0_0_30px_rgba(16,185,129,0.3)] transition-all active:scale-[0.98]"
           >
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
               <style>{`
                 @keyframes truthsPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
                 @keyframes lieGlow { 0%, 100% { filter: drop-shadow(0 0 3px #ef4444); } 50% { filter: drop-shadow(0 0 10px #ef4444); } }
@@ -796,14 +917,15 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             </div>
           </button>
 
+          {/* Logic Grids - Charity's Favorite */}
           <button
             onClick={() => updateState({ gameMode: "logic" })}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-amber-950/80 to-orange-900/50 rounded-2xl border border-amber-500/30 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all active:scale-[0.98] relative overflow-hidden"
           >
             <div className="absolute top-2 right-2 px-2 py-0.5 bg-amber-500 rounded-full">
-              <span className="text-[10px] font-bold text-amber-950">CHARITY&apos;S FAVE</span>
+              <span className="text-[10px] font-bold text-amber-950">MY FAVE</span>
             </div>
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
               <style>{`
                 @keyframes gridPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f59e0b); } 50% { filter: drop-shadow(0 0 10px #f59e0b); } }
                 @keyframes gridPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #fbbf24); } 50% { filter: drop-shadow(0 0 10px #fbbf24); } }
@@ -839,7 +961,11 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               <div className="space-y-4 text-pink-300/80 text-sm">
                 <div>
                   <p className="text-violet-300 font-semibold">User Persona</p>
-                  <p>Test how well you know Charity! Answer tricky questions about her life, hobbies, and personality.</p>
+                  <p>Explore Charity as a UX user persona! Learn about her needs, pain points, goals, and behaviors.</p>
+                </div>
+                <div>
+                  <p className="text-pink-300 font-semibold">Know Me Quiz</p>
+                  <p>Test your knowledge about Charity! Questions about her favorite music, food, travel, and more.</p>
                 </div>
                 <div>
                   <p className="text-emerald-300 font-semibold">Two Truths & a Lie</p>
@@ -847,7 +973,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                 </div>
                 <div>
                   <p className="text-amber-300 font-semibold">Logic Grids (Charity&apos;s Favorite!)</p>
-                  <p>Use clues to match items. Click cells to mark X (not a match) or O (confirmed match). This is Charity&apos;s favorite brain game!</p>
+                  <p>Use clues to match items. Click cells to mark X (not a match) or O (confirmed match).</p>
                 </div>
               </div>
               <button
@@ -859,109 +985,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             </div>
           </div>
         )}
-      </div>
-    )
-  }
-
-  // Mind Puzzles - Category Selection
-  if (gameMode === "mind" && mindScreen === "category") {
-    return (
-      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
-        <div className="w-full flex items-center justify-between">
-          <button onClick={backToMenu} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
-            <ChevronLeft className="w-5 h-5" /> Back
-          </button>
-          <span className="text-pink-400 font-bold">Mind Puzzles</span>
-          <span className="text-pink-400/60 text-sm">Score: {totalScore}</span>
-        </div>
-
-        <div className="flex items-center gap-4 bg-pink-950/50 rounded-xl px-4 py-2 border border-pink-500/20">
-          <span className="text-pink-300/60 text-sm">Streak: <span className="text-pink-400 font-bold">{mindStreak}</span></span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-          {(Object.keys(mindCategoryInfo) as PuzzleCategory[]).map((category) => (
-            <button
-              key={category}
-              onClick={() => selectMindCategory(category)}
-              className="flex items-center gap-4 p-4 bg-gradient-to-r from-pink-950/80 to-pink-900/50 rounded-xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)] transition-all"
-            >
-              <div className="w-12 h-12 rounded-lg bg-pink-500/20 flex items-center justify-center text-pink-400 font-bold text-xl">
-                {mindCategoryInfo[category].icon}
-              </div>
-              <div className="text-left flex-1">
-                <p className="text-pink-300 font-semibold">{mindCategoryInfo[category].name}</p>
-                <p className="text-pink-400/50 text-xs">{mindCategoryInfo[category].description}</p>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  // Mind Puzzles - Puzzle Screen
-  if (gameMode === "mind" && mindScreen === "puzzle" && currentMindPuzzle) {
-    return (
-      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
-        <div className="w-full flex items-center justify-between">
-          <button onClick={() => updateState({ mindScreen: "category" })} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
-            <ChevronLeft className="w-5 h-5" /> Back
-          </button>
-          <span className="text-pink-400 font-semibold">{selectedMindCategory && mindCategoryInfo[selectedMindCategory].name}</span>
-          <span className="text-pink-400/60 text-sm">Streak: {mindStreak}</span>
-        </div>
-
-        <div className="w-full bg-gradient-to-b from-pink-950/80 to-pink-900/30 rounded-2xl p-5 md:p-8 border border-pink-500/30">
-          <p className="text-pink-100 text-base md:text-lg leading-relaxed mb-6 text-center">
-            {currentMindPuzzle.question}
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {currentMindPuzzle.options.map((option, index) => {
-              const isSelected = selectedMindAnswer === index
-              const isCorrect = index === currentMindPuzzle.correctAnswer
-              const showCorrectHighlight = showMindResult && isCorrect
-              const showWrongHighlight = showMindResult && isSelected && !isCorrect
-
-              return (
-                <button
-                  key={index}
-                  onClick={() => handleMindAnswer(index)}
-                  disabled={showMindResult}
-                  className={`
-                    relative p-4 rounded-xl font-medium text-sm transition-all
-                    ${!showMindResult ? 'bg-pink-900/50 border border-pink-500/30 text-pink-200 hover:bg-pink-800/50' : ''}
-                    ${showCorrectHighlight ? 'bg-green-900/50 border-2 border-green-400 text-green-200' : ''}
-                    ${showWrongHighlight ? 'bg-red-900/50 border-2 border-red-400 text-red-200' : ''}
-                    ${showMindResult && !isSelected && !isCorrect ? 'opacity-50' : ''}
-                  `}
-                >
-                  {option}
-                  {showCorrectHighlight && <CheckCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-green-400" />}
-                  {showWrongHighlight && <XCircle className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-red-400" />}
-                </button>
-              )
-            })}
-          </div>
-
-          {showMindResult && (
-            <>
-              <div className={`mt-4 p-4 rounded-xl ${selectedMindAnswer === currentMindPuzzle.correctAnswer ? 'bg-green-950/50 border border-green-500/30' : 'bg-pink-950/50 border border-pink-500/30'}`}>
-                <p className={`text-sm ${selectedMindAnswer === currentMindPuzzle.correctAnswer ? 'text-green-300' : 'text-pink-300'}`}>
-                  {selectedMindAnswer === currentMindPuzzle.correctAnswer ? 'Correct! ' : 'Not quite. '}
-                  {currentMindPuzzle.explanation}
-                </p>
-              </div>
-              <button
-                onClick={nextMindPuzzle}
-                className="w-full mt-4 py-3 bg-pink-500 text-white font-semibold rounded-xl hover:bg-pink-400 transition-colors flex items-center justify-center gap-2"
-              >
-                <RefreshCw className="w-4 h-4" /> Next Puzzle
-              </button>
-            </>
-          )}
-        </div>
       </div>
     )
   }
@@ -1121,15 +1144,13 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     )
   }
 
-  // User Persona Game
+  // User Persona Game (Needs & Pain Points)
   if (gameMode === "persona" && currentPersonaQuestion) {
-    const categoryLabels: Record<string, string> = {
-      hobby: "Hobbies & Interests",
-      music: "Music",
-      goals: "Career Goals",
-      traits: "Personality Traits",
-      wishlist: "Bucket List",
-      painpoints: "Pain Points"
+    const typeLabels: Record<string, { label: string; color: string }> = {
+      need: { label: "User Need", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
+      painpoint: { label: "Pain Point", color: "bg-red-500/20 text-red-300 border-red-500/30" },
+      goal: { label: "Goal", color: "bg-green-500/20 text-green-300 border-green-500/30" },
+      behavior: { label: "Behavior", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" }
     }
 
     return (
@@ -1144,61 +1165,184 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </div>
         </div>
 
-        {/* Persona Card */}
-        <div className="w-full bg-gradient-to-br from-violet-950/80 to-indigo-900/50 rounded-2xl border border-violet-500/30 p-6 shadow-[0_0_30px_rgba(139,92,246,0.2)]">
-          {/* Header */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-              C
-            </div>
-            <div>
-              <h3 className="text-violet-200 font-bold text-xl">Charity Dupont</h3>
-              <p className="text-violet-400/60 text-sm">UX/UI Designer</p>
+        {/* UX Persona Card */}
+        <div className="w-full bg-gradient-to-br from-violet-950/80 to-indigo-900/50 rounded-2xl border border-violet-500/30 overflow-hidden shadow-[0_0_30px_rgba(139,92,246,0.2)]">
+          {/* Persona Header - Like a real UX Persona */}
+          <div className="bg-gradient-to-r from-violet-600/30 to-purple-600/30 p-4 border-b border-violet-500/20">
+            <div className="flex items-center gap-4">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg border-4 border-violet-300/30">
+                C
+              </div>
+              <div className="flex-1">
+                <h3 className="text-violet-100 font-bold text-xl">Charity Dupont</h3>
+                <p className="text-violet-300 text-sm">UX/UI Designer at Google</p>
+                <div className="flex gap-2 mt-2 flex-wrap">
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-violet-500/30 text-violet-200">Former Teacher</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-violet-500/30 text-violet-200">Columbia University</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded bg-violet-500/30 text-violet-200">AI/UX Focus</span>
+                </div>
+              </div>
             </div>
           </div>
 
+          {/* Bio Story */}
+          <div className="p-4 border-b border-violet-500/20 bg-violet-900/20">
+            <p className="text-violet-300/80 text-xs leading-relaxed italic">
+              &quot;{charityPersonaStory.slice(0, 150)}...&quot;
+            </p>
+          </div>
+
+          {/* Question Section */}
+          <div className="p-4 md:p-6">
+            {/* Type Badge */}
+            <div className="mb-4">
+              <span className={`text-xs px-3 py-1 rounded-full border ${typeLabels[currentPersonaQuestion.type].color}`}>
+                {typeLabels[currentPersonaQuestion.type].label}
+              </span>
+            </div>
+
+            {/* Question */}
+            <div className="mb-6">
+              <p className="text-violet-100 text-lg font-medium leading-relaxed">{currentPersonaQuestion.question}</p>
+            </div>
+
+            {/* Answer Options */}
+            <div className="space-y-3">
+              {currentPersonaQuestion.options.map((option, idx) => {
+                const isSelected = selectedPersonaAnswer === idx
+                const isCorrect = idx === currentPersonaQuestion.correctAnswer
+                const showResult = showPersonaResult
+
+                return (
+                  <button
+                    key={idx}
+                    onClick={() => handlePersonaAnswer(idx)}
+                    disabled={showResult}
+                    className={`w-full p-4 rounded-xl text-left transition-all flex items-center gap-3
+                      ${!showResult ? 'bg-violet-900/30 hover:bg-violet-800/40 border border-violet-500/20 hover:border-violet-400/40' : ''}
+                      ${showResult && isCorrect ? 'bg-green-900/40 border border-green-500/50' : ''}
+                      ${showResult && isSelected && !isCorrect ? 'bg-red-900/40 border border-red-500/50' : ''}
+                      ${showResult && !isSelected && !isCorrect ? 'bg-violet-900/20 border border-violet-500/10 opacity-50' : ''}
+                    `}
+                  >
+                    <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
+                      ${!showResult ? 'bg-violet-500/30 text-violet-300' : ''}
+                      ${showResult && isCorrect ? 'bg-green-500 text-white' : ''}
+                      ${showResult && isSelected && !isCorrect ? 'bg-red-500 text-white' : ''}
+                      ${showResult && !isSelected && !isCorrect ? 'bg-violet-500/20 text-violet-400' : ''}
+                    `}>
+                      {showResult && isCorrect ? <CheckCircle className="w-5 h-5" /> : 
+                       showResult && isSelected && !isCorrect ? <XCircle className="w-5 h-5" /> :
+                       String.fromCharCode(65 + idx)}
+                    </span>
+                    <span className={`flex-1 ${showResult && isCorrect ? 'text-green-300' : showResult && isSelected && !isCorrect ? 'text-red-300' : 'text-violet-200'}`}>
+                      {option}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Result & Next */}
+            {showPersonaResult && (
+              <div className="mt-6 pt-6 border-t border-violet-500/20">
+                <div className={`text-center mb-4 ${selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'text-green-400' : 'text-red-400'}`}>
+                  <p className="text-xl font-bold">
+                    {selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'Correct!' : 'Not quite!'}
+                  </p>
+                  {selectedPersonaAnswer !== currentPersonaQuestion.correctAnswer && (
+                    <p className="text-sm mt-1 text-violet-300/70">
+                      The answer was: {currentPersonaQuestion.options[currentPersonaQuestion.correctAnswer]}
+                    </p>
+                  )}
+                </div>
+                <button
+                  onClick={nextPersonaQuestion}
+                  className="w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+                >
+                  Next Question <RefreshCw className="w-4 h-4" />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Progress */}
+        <div className="text-center text-violet-400/60 text-sm">
+          {personaQuestionsAnswered.length} of {personaNeedQuestions.length} questions answered
+        </div>
+      </div>
+    )
+  }
+
+  // Know Me Quiz Game (Trivia)
+  if (gameMode === "trivia" && currentTriviaQuestion) {
+    const categoryLabels: Record<string, { label: string; icon: string; color: string }> = {
+      music: { label: "Music", icon: "🎵", color: "bg-pink-500/20 text-pink-300 border-pink-500/30" },
+      food: { label: "Food & Drinks", icon: "🍽️", color: "bg-orange-500/20 text-orange-300 border-orange-500/30" },
+      travel: { label: "Travel", icon: "✈️", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
+      background: { label: "Background", icon: "📚", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
+      starbucks: { label: "Starbucks", icon: "☕", color: "bg-green-500/20 text-green-300 border-green-500/30" },
+      fashion: { label: "Fashion & Style", icon: "👗", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" }
+    }
+
+    return (
+      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
+        <div className="w-full flex items-center justify-between">
+          <button onClick={backToMenu} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
+            <ChevronLeft className="w-5 h-5" /> Back
+          </button>
+          <div className="flex items-center gap-4">
+            <span className="text-pink-400/60 text-sm">Streak: {triviaStreak}</span>
+            <span className="text-pink-400 text-sm font-semibold">Score: {totalScore}</span>
+          </div>
+        </div>
+
+        {/* Quiz Card */}
+        <div className="w-full bg-gradient-to-br from-pink-950/80 to-rose-900/50 rounded-2xl border border-pink-500/30 p-6 shadow-[0_0_30px_rgba(236,72,153,0.2)]">
           {/* Category Badge */}
-          <div className="mb-4">
-            <span className="text-xs px-3 py-1 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
-              {categoryLabels[currentPersonaQuestion.category]}
+          <div className="mb-4 flex items-center gap-2">
+            <span className="text-2xl">{categoryLabels[currentTriviaQuestion.category].icon}</span>
+            <span className={`text-xs px-3 py-1 rounded-full border ${categoryLabels[currentTriviaQuestion.category].color}`}>
+              {categoryLabels[currentTriviaQuestion.category].label}
             </span>
           </div>
 
           {/* Question */}
           <div className="mb-6">
-            <p className="text-violet-100 text-lg font-medium leading-relaxed">{currentPersonaQuestion.question}</p>
+            <p className="text-pink-100 text-lg font-medium leading-relaxed">{currentTriviaQuestion.question}</p>
           </div>
 
           {/* Answer Options */}
           <div className="space-y-3">
-            {currentPersonaQuestion.options.map((option, idx) => {
-              const isSelected = selectedPersonaAnswer === idx
-              const isCorrect = idx === currentPersonaQuestion.correctAnswer
-              const showResult = showPersonaResult
+            {currentTriviaQuestion.options.map((option, idx) => {
+              const isSelected = selectedTriviaAnswer === idx
+              const isCorrect = idx === currentTriviaQuestion.correctAnswer
+              const showResult = showTriviaResult
 
               return (
                 <button
                   key={idx}
-                  onClick={() => handlePersonaAnswer(idx)}
+                  onClick={() => handleTriviaAnswer(idx)}
                   disabled={showResult}
                   className={`w-full p-4 rounded-xl text-left transition-all flex items-center gap-3
-                    ${!showResult ? 'bg-violet-900/30 hover:bg-violet-800/40 border border-violet-500/20 hover:border-violet-400/40' : ''}
+                    ${!showResult ? 'bg-pink-900/30 hover:bg-pink-800/40 border border-pink-500/20 hover:border-pink-400/40' : ''}
                     ${showResult && isCorrect ? 'bg-green-900/40 border border-green-500/50' : ''}
                     ${showResult && isSelected && !isCorrect ? 'bg-red-900/40 border border-red-500/50' : ''}
-                    ${showResult && !isSelected && !isCorrect ? 'bg-violet-900/20 border border-violet-500/10 opacity-50' : ''}
+                    ${showResult && !isSelected && !isCorrect ? 'bg-pink-900/20 border border-pink-500/10 opacity-50' : ''}
                   `}
                 >
                   <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
-                    ${!showResult ? 'bg-violet-500/30 text-violet-300' : ''}
+                    ${!showResult ? 'bg-pink-500/30 text-pink-300' : ''}
                     ${showResult && isCorrect ? 'bg-green-500 text-white' : ''}
                     ${showResult && isSelected && !isCorrect ? 'bg-red-500 text-white' : ''}
-                    ${showResult && !isSelected && !isCorrect ? 'bg-violet-500/20 text-violet-400' : ''}
+                    ${showResult && !isSelected && !isCorrect ? 'bg-pink-500/20 text-pink-400' : ''}
                   `}>
                     {showResult && isCorrect ? <CheckCircle className="w-5 h-5" /> : 
                      showResult && isSelected && !isCorrect ? <XCircle className="w-5 h-5" /> :
                      String.fromCharCode(65 + idx)}
                   </span>
-                  <span className={`flex-1 ${showResult && isCorrect ? 'text-green-300' : showResult && isSelected && !isCorrect ? 'text-red-300' : 'text-violet-200'}`}>
+                  <span className={`flex-1 ${showResult && isCorrect ? 'text-green-300' : showResult && isSelected && !isCorrect ? 'text-red-300' : 'text-pink-200'}`}>
                     {option}
                   </span>
                 </button>
@@ -1207,21 +1351,21 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </div>
 
           {/* Result & Next */}
-          {showPersonaResult && (
-            <div className="mt-6 pt-6 border-t border-violet-500/20">
-              <div className={`text-center mb-4 ${selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'text-green-400' : 'text-red-400'}`}>
+          {showTriviaResult && (
+            <div className="mt-6 pt-6 border-t border-pink-500/20">
+              <div className={`text-center mb-4 ${selectedTriviaAnswer === currentTriviaQuestion.correctAnswer ? 'text-green-400' : 'text-red-400'}`}>
                 <p className="text-xl font-bold">
-                  {selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'Correct!' : 'Not quite!'}
+                  {selectedTriviaAnswer === currentTriviaQuestion.correctAnswer ? 'You know me!' : 'Not quite!'}
                 </p>
-                {selectedPersonaAnswer !== currentPersonaQuestion.correctAnswer && (
-                  <p className="text-sm mt-1 text-violet-300/70">
-                    The answer was: {currentPersonaQuestion.options[currentPersonaQuestion.correctAnswer]}
+                {selectedTriviaAnswer !== currentTriviaQuestion.correctAnswer && (
+                  <p className="text-sm mt-1 text-pink-300/70">
+                    The answer was: {currentTriviaQuestion.options[currentTriviaQuestion.correctAnswer]}
                   </p>
                 )}
               </div>
               <button
-                onClick={nextPersonaQuestion}
-                className="w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+                onClick={nextTriviaQuestion}
+                className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
               >
                 Next Question <RefreshCw className="w-4 h-4" />
               </button>
@@ -1230,8 +1374,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         </div>
 
         {/* Progress */}
-        <div className="text-center text-violet-400/60 text-sm">
-          {personaQuestionsAnswered.length} of {personaQuestions.length} questions answered
+        <div className="text-center text-pink-400/60 text-sm">
+          {triviaQuestionsAnswered.length} of {triviaQuestions.length} questions answered
         </div>
       </div>
     )
