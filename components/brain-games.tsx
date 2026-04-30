@@ -696,107 +696,107 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     updateState({ gameMode: "menu" })
   }
 
-  // Persona game functions (needs & pain points)
-  const getRandomPersonaQuestion = (): PersonaNeedQuestion => {
-    const unanswered = personaNeedQuestions.filter(q => !personaQuestionsAnswered.includes(q.id))
+  // Persona game functions (CARD SORTING)
+  const getRandomPersonaCard = (): PersonaCard => {
+    const unanswered = personaCards.filter(c => !personaCardsAnswered.includes(c.id))
     if (unanswered.length === 0) {
-      return personaNeedQuestions[Math.floor(Math.random() * personaNeedQuestions.length)]
+      return personaCards[Math.floor(Math.random() * personaCards.length)]
     }
     return unanswered[Math.floor(Math.random() * unanswered.length)]
   }
 
   const startPersonaGame = () => {
-    const question = getRandomPersonaQuestion()
+    const card = getRandomPersonaCard()
     updateState({
       gameMode: "persona",
-      currentPersonaQuestion: question,
-      selectedPersonaAnswer: null,
+      currentPersonaCard: card,
+      selectedCategory: null,
       showPersonaResult: false
     })
   }
 
-  const handlePersonaAnswer = (index: number) => {
+  const handlePersonaCategorySelect = (category: "need" | "painpoint" | "goal" | "behavior") => {
     if (showPersonaResult) return
     
-    const isCorrect = currentPersonaQuestion && index === currentPersonaQuestion.correctAnswer
+    const isCorrect = currentPersonaCard && category === currentPersonaCard.correctCategory
     if (isCorrect) {
       const newScore = totalScore + 1
       updateState({
-        selectedPersonaAnswer: index,
+        selectedCategory: category,
         showPersonaResult: true,
         personaStreak: personaStreak + 1,
         totalScore: newScore,
-        personaQuestionsAnswered: [...personaQuestionsAnswered, currentPersonaQuestion?.id || '']
+        personaCardsAnswered: [...personaCardsAnswered, currentPersonaCard?.id || '']
       })
       onScoreChange?.(newScore)
     } else {
       updateState({
-        selectedPersonaAnswer: index,
+        selectedCategory: category,
         showPersonaResult: true,
         personaStreak: 0,
-        personaQuestionsAnswered: [...personaQuestionsAnswered, currentPersonaQuestion?.id || '']
+        personaCardsAnswered: [...personaCardsAnswered, currentPersonaCard?.id || '']
       })
     }
   }
 
-  const nextPersonaQuestion = () => {
-    const question = getRandomPersonaQuestion()
+  const nextPersonaCard = () => {
+    const card = getRandomPersonaCard()
     updateState({
-      currentPersonaQuestion: question,
-      selectedPersonaAnswer: null,
+      currentPersonaCard: card,
+      selectedCategory: null,
       showPersonaResult: false
     })
   }
 
-  // Trivia game functions (know me quiz)
-  const getRandomTriviaQuestion = (): TriviaQuestion => {
-    const unanswered = triviaQuestions.filter(q => !triviaQuestionsAnswered.includes(q.id))
+  // This or That game functions (KNOW ME QUIZ)
+  const getRandomThisOrThat = (): ThisOrThatQuestion => {
+    const unanswered = thisOrThatQuestions.filter(q => !thisOrThatAnswered.includes(q.id))
     if (unanswered.length === 0) {
-      return triviaQuestions[Math.floor(Math.random() * triviaQuestions.length)]
+      return thisOrThatQuestions[Math.floor(Math.random() * thisOrThatQuestions.length)]
     }
     return unanswered[Math.floor(Math.random() * unanswered.length)]
   }
 
-  const startTriviaGame = () => {
-    const question = getRandomTriviaQuestion()
+  const startThisOrThatGame = () => {
+    const question = getRandomThisOrThat()
     updateState({
       gameMode: "trivia",
-      currentTriviaQuestion: question,
-      selectedTriviaAnswer: null,
-      showTriviaResult: false
+      currentThisOrThat: question,
+      selectedOption: null,
+      showThisOrThatResult: false
     })
   }
 
-  const handleTriviaAnswer = (index: number) => {
-    if (showTriviaResult) return
+  const handleThisOrThatSelect = (option: "A" | "B") => {
+    if (showThisOrThatResult) return
     
-    const isCorrect = currentTriviaQuestion && index === currentTriviaQuestion.correctAnswer
+    const isCorrect = currentThisOrThat && option === currentThisOrThat.correctOption
     if (isCorrect) {
       const newScore = totalScore + 1
       updateState({
-        selectedTriviaAnswer: index,
-        showTriviaResult: true,
-        triviaStreak: triviaStreak + 1,
+        selectedOption: option,
+        showThisOrThatResult: true,
+        thisOrThatStreak: thisOrThatStreak + 1,
         totalScore: newScore,
-        triviaQuestionsAnswered: [...triviaQuestionsAnswered, currentTriviaQuestion?.id || '']
+        thisOrThatAnswered: [...thisOrThatAnswered, currentThisOrThat?.id || '']
       })
       onScoreChange?.(newScore)
     } else {
       updateState({
-        selectedTriviaAnswer: index,
-        showTriviaResult: true,
-        triviaStreak: 0,
-        triviaQuestionsAnswered: [...triviaQuestionsAnswered, currentTriviaQuestion?.id || '']
+        selectedOption: option,
+        showThisOrThatResult: true,
+        thisOrThatStreak: 0,
+        thisOrThatAnswered: [...thisOrThatAnswered, currentThisOrThat?.id || '']
       })
     }
   }
 
-  const nextTriviaQuestion = () => {
-    const question = getRandomTriviaQuestion()
+  const nextThisOrThat = () => {
+    const question = getRandomThisOrThat()
     updateState({
-      currentTriviaQuestion: question,
-      selectedTriviaAnswer: null,
-      showTriviaResult: false
+      currentThisOrThat: question,
+      selectedOption: null,
+      showThisOrThatResult: false
     })
   }
 
@@ -875,46 +875,50 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
         {/* Game Selection */}
         <div className="grid grid-cols-2 gap-4 w-full mt-4">
-          {/* User Persona - UX focused with needs & pain points */}
+          {/* User Persona - Card Sorting Game */}
           <button
             onClick={() => startPersonaGame()}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-violet-950/80 to-indigo-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
           >
-            <div className="relative">
-              <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white text-xl md:text-2xl font-bold shadow-lg">
-                C
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-violet-500 rounded-full flex items-center justify-center">
-                <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-            </div>
+            {/* Card sorting icon */}
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
+              <rect width="100" height="100" rx="20" fill="#1e1b4b"/>
+              {/* Stacked cards */}
+              <rect x="20" y="25" width="35" height="50" rx="4" fill="#8b5cf6" transform="rotate(-8 37 50)"/>
+              <rect x="30" y="22" width="35" height="50" rx="4" fill="#a78bfa" transform="rotate(0 47 47)"/>
+              <rect x="40" y="25" width="35" height="50" rx="4" fill="#c4b5fd" transform="rotate(8 57 50)"/>
+              {/* Category buckets */}
+              <rect x="15" y="78" width="16" height="8" rx="2" fill="#3b82f6"/>
+              <rect x="34" y="78" width="16" height="8" rx="2" fill="#ef4444"/>
+              <rect x="53" y="78" width="16" height="8" rx="2" fill="#22c55e"/>
+              <rect x="72" y="78" width="16" height="8" rx="2" fill="#a855f7"/>
+            </svg>
             <div className="text-center">
               <p className="text-violet-300 font-bold text-sm md:text-lg">User Persona</p>
-              <p className="text-violet-400/50 text-xs md:text-sm">Needs & Pain Points</p>
+              <p className="text-violet-400/50 text-xs md:text-sm">Sort the Cards</p>
             </div>
           </button>
 
-          {/* Know Me Quiz - Trivia about Charity */}
+          {/* This or That - Pick between two options */}
           <button
-            onClick={() => startTriviaGame()}
+            onClick={() => startThisOrThatGame()}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-pink-950/80 to-rose-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
           >
+            {/* This or That icon - two sides */}
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
-              <style>{`
-                @keyframes quizPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
-                .quiz-icon { animation: quizPulse 2s infinite ease-in-out; }
-              `}</style>
               <rect width="100" height="100" rx="20" fill="#831843"/>
-              <g className="quiz-icon">
-                <circle cx="50" cy="50" r="30" fill="#ec4899" />
-                <text x="50" y="58" textAnchor="middle" fill="white" fontSize="32" fontWeight="bold">?</text>
-              </g>
+              {/* Left option */}
+              <rect x="12" y="25" width="32" height="50" rx="6" fill="#ec4899"/>
+              <text x="28" y="55" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">A</text>
+              {/* VS */}
+              <text x="50" y="55" textAnchor="middle" fill="#fda4af" fontSize="12" fontWeight="bold">or</text>
+              {/* Right option */}
+              <rect x="56" y="25" width="32" height="50" rx="6" fill="#f472b6"/>
+              <text x="72" y="55" textAnchor="middle" fill="white" fontSize="20" fontWeight="bold">B</text>
             </svg>
             <div className="text-center">
-              <p className="text-pink-300 font-bold text-sm md:text-lg">Know Me Quiz</p>
-              <p className="text-pink-400/50 text-xs md:text-sm">Music, Food & More</p>
+              <p className="text-pink-300 font-bold text-sm md:text-lg">This or That</p>
+              <p className="text-pink-400/50 text-xs md:text-sm">Pick the right one!</p>
             </div>
           </button>
 
@@ -989,19 +993,19 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               <h3 className="text-pink-400 font-bold text-lg mb-4">Brain Games</h3>
               <div className="space-y-4 text-pink-300/80 text-sm">
                 <div>
-                  <p className="text-violet-300 font-semibold">User Persona</p>
-                  <p>Explore Charity as a UX user persona! Learn about her needs, pain points, goals, and behaviors.</p>
+                  <p className="text-violet-300 font-semibold">User Persona (Card Sort)</p>
+                  <p>Sort statements about Charity into categories: Needs, Pain Points, Goals, or Behaviors.</p>
                 </div>
                 <div>
-                  <p className="text-pink-300 font-semibold">Know Me Quiz</p>
-                  <p>Test your knowledge about Charity! Questions about her favorite music, food, travel, and more.</p>
+                  <p className="text-pink-300 font-semibold">This or That</p>
+                  <p>Pick between two options - which one is true about Charity? Test your knowledge!</p>
                 </div>
                 <div>
                   <p className="text-emerald-300 font-semibold">Two Truths & a Lie</p>
                   <p>Find the lie! Two statements are true, one is false. Can you spot which one?</p>
                 </div>
                 <div>
-                  <p className="text-amber-300 font-semibold">Logic Grids (Charity&apos;s Favorite!)</p>
+                  <p className="text-amber-300 font-semibold">Logic Grids (My Favorite!)</p>
                   <p>Use clues to match items. Click cells to mark X (not a match) or O (confirmed match).</p>
                 </div>
               </div>
@@ -1173,15 +1177,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     )
   }
 
-  // User Persona Game (Needs & Pain Points)
-  if (gameMode === "persona" && currentPersonaQuestion) {
-    const typeLabels: Record<string, { label: string; color: string }> = {
-      need: { label: "User Need", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
-      painpoint: { label: "Pain Point", color: "bg-red-500/20 text-red-300 border-red-500/30" },
-      goal: { label: "Goal", color: "bg-green-500/20 text-green-300 border-green-500/30" },
-      behavior: { label: "Behavior", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" }
-    }
-
+  // User Persona Game (CARD SORTING - Sort statements into categories)
+  if (gameMode === "persona" && currentPersonaCard) {
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
         <div className="w-full flex items-center justify-between">
@@ -1194,126 +1191,84 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </div>
         </div>
 
-        {/* UX Persona Card */}
-        <div className="w-full bg-gradient-to-br from-violet-950/80 to-indigo-900/50 rounded-2xl border border-violet-500/30 overflow-hidden shadow-[0_0_30px_rgba(139,92,246,0.2)]">
-          {/* Persona Header - Like a real UX Persona */}
-          <div className="bg-gradient-to-r from-violet-600/30 to-purple-600/30 p-4 border-b border-violet-500/20">
-            <div className="flex items-center gap-4">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg border-4 border-violet-300/30">
-                C
-              </div>
-              <div className="flex-1">
-                <h3 className="text-violet-100 font-bold text-xl">Charity Dupont</h3>
-                <p className="text-violet-300 text-sm">UX/UI Designer at Google</p>
-                <div className="flex gap-2 mt-2 flex-wrap">
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-violet-500/30 text-violet-200">Former Teacher</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-violet-500/30 text-violet-200">Columbia University</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded bg-violet-500/30 text-violet-200">AI/UX Focus</span>
-                </div>
-              </div>
+        {/* Persona Header */}
+        <div className="w-full bg-gradient-to-r from-violet-600/30 to-purple-600/30 rounded-xl p-3 border border-violet-500/20">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white text-lg font-bold shadow-lg">
+              C
             </div>
-          </div>
-
-          {/* Bio Story */}
-          <div className="p-4 border-b border-violet-500/20 bg-violet-900/20">
-            <p className="text-violet-300/80 text-xs leading-relaxed italic">
-              &quot;{charityPersonaStory.slice(0, 150)}...&quot;
-            </p>
-          </div>
-
-          {/* Question Section */}
-          <div className="p-4 md:p-6">
-            {/* Type Badge */}
-            <div className="mb-4">
-              <span className={`text-xs px-3 py-1 rounded-full border ${typeLabels[currentPersonaQuestion.type].color}`}>
-                {typeLabels[currentPersonaQuestion.type].label}
-              </span>
+            <div>
+              <h3 className="text-violet-100 font-bold">Charity Dupont</h3>
+              <p className="text-violet-300/60 text-xs">UX/UI Designer</p>
             </div>
-
-            {/* Question */}
-            <div className="mb-6">
-              <p className="text-violet-100 text-lg font-medium leading-relaxed">{currentPersonaQuestion.question}</p>
-            </div>
-
-            {/* Answer Options */}
-            <div className="space-y-3">
-              {currentPersonaQuestion.options.map((option, idx) => {
-                const isSelected = selectedPersonaAnswer === idx
-                const isCorrect = idx === currentPersonaQuestion.correctAnswer
-                const showResult = showPersonaResult
-
-                return (
-                  <button
-                    key={idx}
-                    onClick={() => handlePersonaAnswer(idx)}
-                    disabled={showResult}
-                    className={`w-full p-4 rounded-xl text-left transition-all flex items-center gap-3
-                      ${!showResult ? 'bg-violet-900/30 hover:bg-violet-800/40 border border-violet-500/20 hover:border-violet-400/40' : ''}
-                      ${showResult && isCorrect ? 'bg-green-900/40 border border-green-500/50' : ''}
-                      ${showResult && isSelected && !isCorrect ? 'bg-red-900/40 border border-red-500/50' : ''}
-                      ${showResult && !isSelected && !isCorrect ? 'bg-violet-900/20 border border-violet-500/10 opacity-50' : ''}
-                    `}
-                  >
-                    <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
-                      ${!showResult ? 'bg-violet-500/30 text-violet-300' : ''}
-                      ${showResult && isCorrect ? 'bg-green-500 text-white' : ''}
-                      ${showResult && isSelected && !isCorrect ? 'bg-red-500 text-white' : ''}
-                      ${showResult && !isSelected && !isCorrect ? 'bg-violet-500/20 text-violet-400' : ''}
-                    `}>
-                      {showResult && isCorrect ? <CheckCircle className="w-5 h-5" /> : 
-                       showResult && isSelected && !isCorrect ? <XCircle className="w-5 h-5" /> :
-                       String.fromCharCode(65 + idx)}
-                    </span>
-                    <span className={`flex-1 ${showResult && isCorrect ? 'text-green-300' : showResult && isSelected && !isCorrect ? 'text-red-300' : 'text-violet-200'}`}>
-                      {option}
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
-
-            {/* Result & Next */}
-            {showPersonaResult && (
-              <div className="mt-6 pt-6 border-t border-violet-500/20">
-                <div className={`text-center mb-4 ${selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'text-green-400' : 'text-red-400'}`}>
-                  <p className="text-xl font-bold">
-                    {selectedPersonaAnswer === currentPersonaQuestion.correctAnswer ? 'Correct!' : 'Not quite!'}
-                  </p>
-                  {selectedPersonaAnswer !== currentPersonaQuestion.correctAnswer && (
-                    <p className="text-sm mt-1 text-violet-300/70">
-                      The answer was: {currentPersonaQuestion.options[currentPersonaQuestion.correctAnswer]}
-                    </p>
-                  )}
-                </div>
-                <button
-                  onClick={nextPersonaQuestion}
-                  className="w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
-                >
-                  Next Question <RefreshCw className="w-4 h-4" />
-                </button>
-              </div>
-            )}
           </div>
         </div>
 
+        {/* Instruction */}
+        <p className="text-violet-300/80 text-sm text-center">
+          Sort this statement into the correct UX persona category
+        </p>
+
+        {/* The Card to Sort */}
+        <div className={`w-full p-6 rounded-2xl border-2 transition-all shadow-lg ${
+          showPersonaResult 
+            ? selectedCategory === currentPersonaCard.correctCategory
+              ? 'bg-green-950/50 border-green-500'
+              : 'bg-red-950/50 border-red-500'
+            : 'bg-gradient-to-br from-violet-900/80 to-indigo-900/60 border-violet-400/50'
+        }`}>
+          <p className="text-violet-100 text-lg md:text-xl font-medium text-center leading-relaxed">
+            &quot;{currentPersonaCard.statement}&quot;
+          </p>
+        </div>
+
+        {/* Category Buckets */}
+        {!showPersonaResult ? (
+          <div className="grid grid-cols-2 gap-3 w-full">
+            {(["need", "painpoint", "goal", "behavior"] as const).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => handlePersonaCategorySelect(cat)}
+                className={`p-4 rounded-xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${categoryInfo[cat].bgColor} ${categoryInfo[cat].borderColor} hover:shadow-lg`}
+              >
+                <div className={`text-sm font-bold bg-gradient-to-r ${categoryInfo[cat].color} bg-clip-text text-transparent`}>
+                  {categoryInfo[cat].label}
+                </div>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="w-full space-y-4">
+            <div className={`text-center ${selectedCategory === currentPersonaCard.correctCategory ? 'text-green-400' : 'text-red-400'}`}>
+              <p className="text-xl font-bold">
+                {selectedCategory === currentPersonaCard.correctCategory ? 'Correct!' : 'Not quite!'}
+              </p>
+              {selectedCategory !== currentPersonaCard.correctCategory && (
+                <p className="text-sm mt-1 text-violet-300/70">
+                  This is a <span className="font-semibold">{categoryInfo[currentPersonaCard.correctCategory].label.slice(0, -1)}</span>
+                </p>
+              )}
+            </div>
+            <button
+              onClick={nextPersonaCard}
+              className="w-full py-3 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+            >
+              Next Card <RefreshCw className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+
         {/* Progress */}
         <div className="text-center text-violet-400/60 text-sm">
-          {personaQuestionsAnswered.length} of {personaNeedQuestions.length} questions answered
+          {personaCardsAnswered.length} of {personaCards.length} cards sorted
         </div>
       </div>
     )
   }
 
-  // Know Me Quiz Game (Trivia)
-  if (gameMode === "trivia" && currentTriviaQuestion) {
-    const categoryLabels: Record<string, { label: string; icon: string; color: string }> = {
-      music: { label: "Music", icon: "🎵", color: "bg-pink-500/20 text-pink-300 border-pink-500/30" },
-      food: { label: "Food & Drinks", icon: "🍽️", color: "bg-orange-500/20 text-orange-300 border-orange-500/30" },
-      travel: { label: "Travel", icon: "✈️", color: "bg-blue-500/20 text-blue-300 border-blue-500/30" },
-      background: { label: "Background", icon: "📚", color: "bg-amber-500/20 text-amber-300 border-amber-500/30" },
-      starbucks: { label: "Starbucks", icon: "☕", color: "bg-green-500/20 text-green-300 border-green-500/30" },
-      fashion: { label: "Fashion & Style", icon: "👗", color: "bg-purple-500/20 text-purple-300 border-purple-500/30" }
-    }
+  // This or That Game (Pick between two options)
+  if (gameMode === "trivia" && currentThisOrThat) {
+    const catInfo = thisOrThatCategoryInfo[currentThisOrThat.category]
 
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
@@ -1322,89 +1277,110 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             <ChevronLeft className="w-5 h-5" /> Back
           </button>
           <div className="flex items-center gap-4">
-            <span className="text-pink-400/60 text-sm">Streak: {triviaStreak}</span>
+            <span className="text-pink-400/60 text-sm">Streak: {thisOrThatStreak}</span>
             <span className="text-pink-400 text-sm font-semibold">Score: {totalScore}</span>
           </div>
         </div>
 
-        {/* Quiz Card */}
-        <div className="w-full bg-gradient-to-br from-pink-950/80 to-rose-900/50 rounded-2xl border border-pink-500/30 p-6 shadow-[0_0_30px_rgba(236,72,153,0.2)]">
-          {/* Category Badge */}
-          <div className="mb-4 flex items-center gap-2">
-            <span className="text-2xl">{categoryLabels[currentTriviaQuestion.category].icon}</span>
-            <span className={`text-xs px-3 py-1 rounded-full border ${categoryLabels[currentTriviaQuestion.category].color}`}>
-              {categoryLabels[currentTriviaQuestion.category].label}
-            </span>
-          </div>
-
-          {/* Question */}
-          <div className="mb-6">
-            <p className="text-pink-100 text-lg font-medium leading-relaxed">{currentTriviaQuestion.question}</p>
-          </div>
-
-          {/* Answer Options */}
-          <div className="space-y-3">
-            {currentTriviaQuestion.options.map((option, idx) => {
-              const isSelected = selectedTriviaAnswer === idx
-              const isCorrect = idx === currentTriviaQuestion.correctAnswer
-              const showResult = showTriviaResult
-
-              return (
-                <button
-                  key={idx}
-                  onClick={() => handleTriviaAnswer(idx)}
-                  disabled={showResult}
-                  className={`w-full p-4 rounded-xl text-left transition-all flex items-center gap-3
-                    ${!showResult ? 'bg-pink-900/30 hover:bg-pink-800/40 border border-pink-500/20 hover:border-pink-400/40' : ''}
-                    ${showResult && isCorrect ? 'bg-green-900/40 border border-green-500/50' : ''}
-                    ${showResult && isSelected && !isCorrect ? 'bg-red-900/40 border border-red-500/50' : ''}
-                    ${showResult && !isSelected && !isCorrect ? 'bg-pink-900/20 border border-pink-500/10 opacity-50' : ''}
-                  `}
-                >
-                  <span className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold
-                    ${!showResult ? 'bg-pink-500/30 text-pink-300' : ''}
-                    ${showResult && isCorrect ? 'bg-green-500 text-white' : ''}
-                    ${showResult && isSelected && !isCorrect ? 'bg-red-500 text-white' : ''}
-                    ${showResult && !isSelected && !isCorrect ? 'bg-pink-500/20 text-pink-400' : ''}
-                  `}>
-                    {showResult && isCorrect ? <CheckCircle className="w-5 h-5" /> : 
-                     showResult && isSelected && !isCorrect ? <XCircle className="w-5 h-5" /> :
-                     String.fromCharCode(65 + idx)}
-                  </span>
-                  <span className={`flex-1 ${showResult && isCorrect ? 'text-green-300' : showResult && isSelected && !isCorrect ? 'text-red-300' : 'text-pink-200'}`}>
-                    {option}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Result & Next */}
-          {showTriviaResult && (
-            <div className="mt-6 pt-6 border-t border-pink-500/20">
-              <div className={`text-center mb-4 ${selectedTriviaAnswer === currentTriviaQuestion.correctAnswer ? 'text-green-400' : 'text-red-400'}`}>
-                <p className="text-xl font-bold">
-                  {selectedTriviaAnswer === currentTriviaQuestion.correctAnswer ? 'You know me!' : 'Not quite!'}
-                </p>
-                {selectedTriviaAnswer !== currentTriviaQuestion.correctAnswer && (
-                  <p className="text-sm mt-1 text-pink-300/70">
-                    The answer was: {currentTriviaQuestion.options[currentTriviaQuestion.correctAnswer]}
-                  </p>
-                )}
-              </div>
-              <button
-                onClick={nextTriviaQuestion}
-                className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
-              >
-                Next Question <RefreshCw className="w-4 h-4" />
-              </button>
-            </div>
-          )}
+        {/* Category Badge */}
+        <div className={`px-4 py-2 rounded-full bg-gradient-to-r ${catInfo.bgColor} text-white text-sm font-medium flex items-center gap-2`}>
+          <span>{catInfo.icon}</span>
+          <span>{catInfo.label}</span>
         </div>
+
+        {/* Question */}
+        <p className="text-pink-200 text-center text-sm">Which one is true about Charity?</p>
+
+        {/* This or That Cards */}
+        <div className="flex gap-4 w-full">
+          {/* Option A */}
+          <button
+            onClick={() => handleThisOrThatSelect("A")}
+            disabled={showThisOrThatResult}
+            className={`flex-1 p-5 md:p-6 rounded-2xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
+              showThisOrThatResult
+                ? currentThisOrThat.correctOption === "A"
+                  ? 'bg-green-950/50 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]'
+                  : selectedOption === "A"
+                    ? 'bg-red-950/50 border-red-500'
+                    : 'bg-pink-950/30 border-pink-500/20 opacity-50'
+                : 'bg-gradient-to-br from-pink-900/60 to-rose-900/40 border-pink-500/40 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]'
+            }`}
+          >
+            <p className={`text-base md:text-lg font-medium text-center ${
+              showThisOrThatResult && currentThisOrThat.correctOption === "A" ? 'text-green-300' : 'text-pink-100'
+            }`}>
+              {currentThisOrThat.optionA}
+            </p>
+            {showThisOrThatResult && currentThisOrThat.correctOption === "A" && (
+              <div className="mt-2 flex justify-center">
+                <CheckCircle className="w-6 h-6 text-green-400" />
+              </div>
+            )}
+            {showThisOrThatResult && selectedOption === "A" && currentThisOrThat.correctOption !== "A" && (
+              <div className="mt-2 flex justify-center">
+                <XCircle className="w-6 h-6 text-red-400" />
+              </div>
+            )}
+          </button>
+
+          {/* VS Divider */}
+          <div className="flex items-center">
+            <span className="text-pink-400/60 font-bold text-sm">or</span>
+          </div>
+
+          {/* Option B */}
+          <button
+            onClick={() => handleThisOrThatSelect("B")}
+            disabled={showThisOrThatResult}
+            className={`flex-1 p-5 md:p-6 rounded-2xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
+              showThisOrThatResult
+                ? currentThisOrThat.correctOption === "B"
+                  ? 'bg-green-950/50 border-green-500 shadow-[0_0_20px_rgba(34,197,94,0.3)]'
+                  : selectedOption === "B"
+                    ? 'bg-red-950/50 border-red-500'
+                    : 'bg-pink-950/30 border-pink-500/20 opacity-50'
+                : 'bg-gradient-to-br from-pink-900/60 to-rose-900/40 border-pink-500/40 hover:border-pink-400 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)]'
+            }`}
+          >
+            <p className={`text-base md:text-lg font-medium text-center ${
+              showThisOrThatResult && currentThisOrThat.correctOption === "B" ? 'text-green-300' : 'text-pink-100'
+            }`}>
+              {currentThisOrThat.optionB}
+            </p>
+            {showThisOrThatResult && currentThisOrThat.correctOption === "B" && (
+              <div className="mt-2 flex justify-center">
+                <CheckCircle className="w-6 h-6 text-green-400" />
+              </div>
+            )}
+            {showThisOrThatResult && selectedOption === "B" && currentThisOrThat.correctOption !== "B" && (
+              <div className="mt-2 flex justify-center">
+                <XCircle className="w-6 h-6 text-red-400" />
+              </div>
+            )}
+          </button>
+        </div>
+
+        {/* Result & Next */}
+        {showThisOrThatResult && (
+          <div className="w-full space-y-4 mt-2">
+            <div className={`text-center ${selectedOption === currentThisOrThat.correctOption ? 'text-green-400' : 'text-red-400'}`}>
+              <p className="text-xl font-bold">
+                {selectedOption === currentThisOrThat.correctOption ? 'You know me!' : 'Not quite!'}
+              </p>
+            </div>
+            <button
+              onClick={nextThisOrThat}
+              className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+            >
+              Next <RefreshCw className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
         {/* Progress */}
         <div className="text-center text-pink-400/60 text-sm">
-          {triviaQuestionsAnswered.length} of {triviaQuestions.length} questions answered
+          {thisOrThatAnswered.length} of {thisOrThatQuestions.length} answered
         </div>
       </div>
     )
