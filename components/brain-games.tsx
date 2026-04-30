@@ -315,6 +315,23 @@ const personaQuestions: PersonaQuestion[] = [
   { id: "p32", question: "Charity wants to speak at what type of events?", options: ["Music festivals", "Design conferences", "Political rallies", "Comedy shows"], correctAnswer: 1, category: "wishlist" },
   { id: "p33", question: "Which European country is on Charity's bucket list?", options: ["Italy", "France", "Greece", "Spain"], correctAnswer: 2, category: "wishlist" },
   { id: "p34", question: "What book genre does Charity secretly enjoy?", options: ["Horror", "Romance", "True crime", "Fantasy"], correctAnswer: 1, category: "hobby" },
+  // Travel Questions
+  { id: "p35", question: "Which of these countries has Charity NOT visited?", options: ["Spain", "Italy", "Greece", "Ireland"], correctAnswer: 2, category: "hobby" },
+  { id: "p36", question: "Has Charity been to South Africa?", options: ["No, it's on her bucket list", "Yes, she has visited", "She's planning to go next year", "She's never heard of it"], correctAnswer: 1, category: "hobby" },
+  { id: "p37", question: "Which UK territory has Charity visited?", options: ["Scotland", "Wales", "UK territory", "None"], correctAnswer: 2, category: "hobby" },
+  { id: "p38", question: "What mode of travel has Charity NEVER taken?", options: ["Airplane", "Train", "Greyhound bus", "Car"], correctAnswer: 2, category: "hobby" },
+  { id: "p39", question: "What type of travel is on Charity's bucket list?", options: ["Cruise ship", "Bus travel", "Private jet", "Helicopter tour"], correctAnswer: 1, category: "wishlist" },
+  { id: "p40", question: "Charity has been to Paris. True or false?", options: ["True", "False", "She's only been to the airport", "She's planning to go"], correctAnswer: 0, category: "hobby" },
+  // Starbucks Questions
+  { id: "p41", question: "What is Charity's favorite Starbucks drink?", options: ["Pumpkin Spice Latte", "Caramel Ribbon Crunch", "Mocha Frappuccino", "Iced Americano"], correctAnswer: 1, category: "hobby" },
+  { id: "p42", question: "How does Charity customize her Caramel Ribbon Crunch?", options: ["Extra whip only", "Extra caramel, extra crunch", "No modifications", "Light ice"], correctAnswer: 1, category: "hobby" },
+  { id: "p43", question: "What other Starbucks drink does Charity love?", options: ["Chai Tea Latte", "Vanilla Bean Frappuccino with caramel syrup", "Cold Brew", "Matcha Latte"], correctAnswer: 1, category: "hobby" },
+  { id: "p44", question: "Where did Charity's mom work when Charity fell in love with Vanilla Bean Frappuccino?", options: ["Chase Bank in Times Square", "Bank of America in Grand Central", "Wells Fargo on Wall Street", "Citibank in Midtown"], correctAnswer: 1, category: "hobby" },
+  { id: "p45", question: "When did Charity start loving Vanilla Bean Frappuccino?", options: ["In college", "As a little girl", "Last year", "In high school"], correctAnswer: 1, category: "hobby" },
+  // Fashion Questions
+  { id: "p46", question: "Which fashion era is Charity's favorite?", options: ["70s disco", "80s and 90s", "2010s minimalism", "Modern streetwear"], correctAnswer: 1, category: "hobby" },
+  { id: "p47", question: "Charity grew up in which decade?", options: ["Early 80s", "Late 90s and early 2000s", "Mid 2010s", "Late 2000s"], correctAnswer: 1, category: "hobby" },
+  { id: "p48", question: "Charity loves fashion from the 80s. What else does she love from that era?", options: ["The music", "The cars", "The technology", "The 90s fashion too"], correctAnswer: 3, category: "hobby" },
 ]
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
@@ -346,6 +363,19 @@ const twoTruthsRounds: TwoTruthsRound[] = [
   { id: "tt18", statements: ["'Come Clean' is a Hilary Duff song I love", "I prefer apple juice over orange juice", "I don't like any citrus drinks"], lieIndex: 2 },
   { id: "tt19", statements: ["I consider myself spontaneous", "I like trying things that are different", "I'm very predictable and don't like change"], lieIndex: 2 },
   { id: "tt20", statements: ["Broadway Chicken has the best honey chicken", "I've been to every state in the US", "I drove from Chicago to New Jersey with no hotel stops"], lieIndex: 1 },
+  // Travel rounds
+  { id: "tt21", statements: ["I've been to Spain, Paris, and Italy", "I've visited South Africa", "I've taken a Greyhound bus across the country"], lieIndex: 2 },
+  { id: "tt22", statements: ["I've never taken a Greyhound bus", "Bus travel is on my bucket list", "I've already done a cross-country bus trip"], lieIndex: 2 },
+  { id: "tt23", statements: ["I've visited Ireland", "I've been to UK territory", "I've traveled to Australia"], lieIndex: 2 },
+  { id: "tt24", statements: ["I want to do bus travel someday", "I've been to 6 different countries", "I've only traveled within the US"], lieIndex: 2 },
+  // Starbucks rounds
+  { id: "tt25", statements: ["My favorite Starbucks drink is Caramel Ribbon Crunch", "I order it with extra caramel and extra crunch", "I've never been to Starbucks"], lieIndex: 2 },
+  { id: "tt26", statements: ["I love the Vanilla Bean Frappuccino with caramel syrup", "My mom worked at Bank of America in Grand Central", "I discovered Starbucks in college"], lieIndex: 2 },
+  { id: "tt27", statements: ["I fell in love with Vanilla Bean Frappuccino as a little girl", "My mom introduced me to Starbucks", "I prefer coffee over frappuccinos"], lieIndex: 2 },
+  // Fashion rounds
+  { id: "tt28", statements: ["I love 80s and 90s fashion", "I grew up in the late 90s", "I think modern fashion is the best"], lieIndex: 2 },
+  { id: "tt29", statements: ["I grew up in the early 2000s", "The 80s aesthetic inspires me", "I only like fashion from the 2020s"], lieIndex: 2 },
+  { id: "tt30", statements: ["I love fashion from the 80s and 90s", "I'm spontaneous and like trying new things", "I hate vintage fashion"], lieIndex: 2 },
 ]
 
 // ============ MAIN COMPONENT ============
@@ -714,7 +744,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         </div>
 
         {/* Game Selection */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
           <button
             onClick={() => startPersonaGame()}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-violet-950/80 to-pink-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
@@ -767,49 +797,29 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </button>
 
           <button
-            onClick={() => updateState({ gameMode: "mind" })}
-            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-pink-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
-          >
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
-              <style>{`
-                @keyframes hourglassDrop { 0% { transform: translateY(-10px); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
-                .hg-drop { animation: hourglassDrop 1.5s infinite linear; }
-              `}</style>
-              <rect width="100" height="100" rx="20" fill="#9d174d"/>
-              <path d="M35 25 Q50 50 35 75 H65 Q50 50 65 25 Z" fill="none" stroke="white" strokeWidth="3"/>
-              <path d="M38 28 Q50 45 62 28 Z" fill="#f472b6"/>
-              <path d="M42 65 Q50 58 58 65 L62 72 H38 Z" fill="#fce7f3"/>
-              <circle className="hg-drop" cx="50" cy="48" r="2" fill="#fce7f3"/>
-              <path d="M32 25 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
-              <path d="M32 75 H68" stroke="white" strokeWidth="5" strokeLinecap="round"/>
-            </svg>
-            <div className="text-center">
-              <p className="text-pink-300 font-bold text-sm md:text-lg">Mind Puzzles</p>
-              <p className="text-pink-400/50 text-xs md:text-sm">Trivia & riddles</p>
-            </div>
-          </button>
-
-          <button
             onClick={() => updateState({ gameMode: "logic" })}
-            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-fuchsia-950/80 to-pink-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-amber-950/80 to-orange-900/50 rounded-2xl border border-amber-500/30 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all active:scale-[0.98] relative overflow-hidden"
           >
+            <div className="absolute top-2 right-2 px-2 py-0.5 bg-amber-500 rounded-full">
+              <span className="text-[10px] font-bold text-amber-950">CHARITY&apos;S FAVE</span>
+            </div>
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 md:w-16 md:h-16">
               <style>{`
-                @keyframes gridPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 10px #f472b6); } }
-                @keyframes gridPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #a855f7); } 50% { filter: drop-shadow(0 0 10px #a855f7); } }
+                @keyframes gridPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f59e0b); } 50% { filter: drop-shadow(0 0 10px #f59e0b); } }
+                @keyframes gridPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #fbbf24); } 50% { filter: drop-shadow(0 0 10px #fbbf24); } }
                 .grid-line1 { animation: gridPulse1 2s infinite ease-in-out; }
                 .grid-line2 { animation: gridPulse2 2s infinite ease-in-out 0.5s; }
               `}</style>
-              <rect width="100" height="100" rx="20" fill="#020617"/>
+              <rect width="100" height="100" rx="20" fill="#451a03"/>
               <g strokeWidth="4" fill="none" strokeLinecap="round">
-                <path d="M20 30 H80" stroke="#f472b6" className="grid-line1"/>
-                <path d="M30 50 H70" stroke="#a855f7" className="grid-line2"/>
-                <path d="M40 70 H60" stroke="#06b6d4" className="grid-line1"/>
+                <path d="M20 30 H80" stroke="#f59e0b" className="grid-line1"/>
+                <path d="M30 50 H70" stroke="#fbbf24" className="grid-line2"/>
+                <path d="M40 70 H60" stroke="#fcd34d" className="grid-line1"/>
               </g>
             </svg>
             <div className="text-center">
-              <p className="text-pink-300 font-bold text-sm md:text-lg">Logic Grids</p>
-              <p className="text-pink-400/50 text-xs md:text-sm">Deduction</p>
+              <p className="text-amber-300 font-bold text-sm md:text-lg">Logic Grids</p>
+              <p className="text-amber-400/50 text-xs md:text-sm">Play my favorite!</p>
             </div>
           </button>
         </div>
@@ -836,12 +846,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                   <p>Find the lie! Two statements are true, one is false. Can you spot which one?</p>
                 </div>
                 <div>
-                  <p className="text-pink-300 font-semibold">Mind Puzzles</p>
-                  <p>Choose a category and solve trivia, riddles, and pattern puzzles. Build streaks for bonus points!</p>
-                </div>
-                <div>
-                  <p className="text-pink-300 font-semibold">Logic Grids</p>
-                  <p>Use clues to match items. Click cells to mark X (not a match) or O (confirmed match).</p>
+                  <p className="text-amber-300 font-semibold">Logic Grids (Charity&apos;s Favorite!)</p>
+                  <p>Use clues to match items. Click cells to mark X (not a match) or O (confirmed match). This is Charity&apos;s favorite brain game!</p>
                 </div>
               </div>
               <button
