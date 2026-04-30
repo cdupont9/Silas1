@@ -393,7 +393,7 @@ const connectionsPuzzles: ConnectionsPuzzle[] = [
   {
     id: "cp7",
     categories: [
-      { name: "Metamorphosis Album", items: ["So Yesterday Song", "Come Clean Track", "Why Not Single", "Anywhere But Here"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
+      { name: "Hilary Duff Metamorphosis", items: ["So Yesterday Song", "Come Clean Track", "Why Not Single", "Anywhere But Here"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
       { name: "1997 Cinderella", items: ["Whitney Houston Star", "Brandy Lead", "VHS Format", "Rogers Hammerstein"], color: "from-green-500 to-emerald-600", difficulty: 2 },
       { name: "Work Environment", items: ["Quiet Space", "Balance Life", "Career Growth", "Make Impact"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
       { name: "Mom Memories", items: ["Chicago Drive", "Bank of America", "Starbucks Find", "Grand Central"], color: "from-purple-500 to-violet-600", difficulty: 4 },
