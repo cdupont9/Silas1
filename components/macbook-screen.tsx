@@ -984,13 +984,13 @@ const messageText = mobileInput.trim()
 
             {/* Messages Notification */}
             <div className="mt-6 mx-6 w-[calc(100%-48px)] bg-white/20 backdrop-blur-2xl rounded-2xl p-4 border border-white/10">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl overflow-hidden">
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0">
                   <img src={MEMOJI_URL} alt="Charity" className="w-full h-full object-cover" />
                 </div>
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/70 text-xs">{mobileConversations.find(c => c.id === 'welcome')?.messages?.slice(-1)[0]?.text || 'Welcome to my portfolio on my iPhone!'}</p>
+                  <p className="text-white/80 text-xs leading-relaxed">I&apos;m a UX designer passionate about creating meaningful digital experiences. Please message me in Messages, happy to respond!</p>
                 </div>
               </div>
             </div>
