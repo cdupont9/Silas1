@@ -576,7 +576,6 @@ export function MacBookScreen() {
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facetune_05-10-2025-08-52-01-QaKLBArAwKX819Wed7HtYbzdlq4UK1.jpg" },
     { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV" },
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1207.JPG-Wv7RabMUc5nFqjUZD3HiibNmpVMM90.jpeg" },
-    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov" },
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5380-slsfm6sbzMLaACQBWI4xxdUiuTOvHd.jpg" },
   ]
   const [currentTime, setCurrentTime] = useState("")
