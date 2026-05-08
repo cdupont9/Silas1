@@ -556,8 +556,7 @@ export function MacBookScreen() {
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_0222.MOV",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV",
-    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov",
-    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov"
+    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov"
   ]
   
   // Combined media for desktop Photos app (mixed photos and videos)
@@ -579,7 +578,6 @@ export function MacBookScreen() {
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_1207.JPG-Wv7RabMUc5nFqjUZD3HiibNmpVMM90.jpeg" },
     { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov" },
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_5380-slsfm6sbzMLaACQBWI4xxdUiuTOvHd.jpg" },
-    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov" },
   ]
   const [currentTime, setCurrentTime] = useState("")
   const [loginTime, setLoginTime] = useState("")
