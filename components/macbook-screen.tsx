@@ -1420,11 +1420,13 @@ const messageText = mobileInput.trim()
                             msg.text.split('\n').map((line, idx) => {
                               if (line.startsWith('BUTTON:')) {
                                 const parts = line.split(':')
+                                const projectId = parts[1]
                                 const buttonText = parts[2]
                                 return (
                                   <button
                                     key={idx}
-                                    className="block mt-2 px-3 py-1.5 bg-[#0b84fe] text-white rounded-lg text-sm"
+                                    onClick={() => openCaseStudy(projectId)}
+                                    className="block mt-2 px-3 py-1.5 bg-[#0b84fe] text-white rounded-lg text-sm hover:bg-[#0a75e0] transition-colors"
                                   >
                                     {buttonText}
                                   </button>
@@ -1433,7 +1435,27 @@ const messageText = mobileInput.trim()
                               return <p key={idx}>{line}</p>
                             })
                           ) : msg.text.startsWith('LINK:') ? (
-                            msg.text.split(':').slice(2).join(':').replace(/(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)/gi, '$1')
+                            (() => {
+                              const parts = msg.text.split(':')
+                              const projectId = parts[1]
+                              const displayText = parts.slice(2).join(':')
+                              const linkMatch = displayText.match(/(.*)(click here|check it out here|here if you'd like|view the case study here|You can view the case study here)(.*)/i)
+                              if (linkMatch) {
+                                return (
+                                  <>
+                                    {linkMatch[1]}
+                                    <button
+                                      onClick={() => openCaseStudy(projectId)}
+                                      className="text-blue-500 underline"
+                                    >
+                                      {linkMatch[2]}
+                                    </button>
+                                    {linkMatch[3]}
+                                  </>
+                                )
+                              }
+                              return displayText
+                            })()
                           ) : msg.text}
                         </div>
                       )}

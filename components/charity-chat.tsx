@@ -975,7 +975,7 @@ export const getCharityResponse = (userMessage: string, conversationHistory: Cha
 
   // Sports
   if (normalized.match(/(sport|team|football|basketball|baseball|soccer)/)) {
-    return "I do like Tennis.  I designed Teammate which is a dating app for sports fans! You can view the case study here."
+    return "I do like Tennis! I also designed Teammate, a dating app for sports fans.\nBUTTON:teammate:View Teammate Case Study"
   }
 
   // Travel - vague single word
@@ -1078,7 +1078,7 @@ export const getCharityResponse = (userMessage: string, conversationHistory: Cha
 
   // Navigate
   if (normalized.match(/(macbook|navigate|explore|around|click|folder|desktop|what can i|where should)/)) {
-    return "Check out the case study folders in the dock, or explore Photos, Notes, and other apps!"
+    return "Check out my case studies, or explore Photos, Notes, and other apps!\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas"
   }
 
   // Thank you
@@ -1241,12 +1241,15 @@ export const getCharityResponse = (userMessage: string, conversationHistory: Cha
     ])
   }
 
-  // Default - warm and diplomatic with emoji
-  return pick([
-    maybeAddEmoji("Hmm I'm not sure about that one - but feel free to ask me about my work, background, or projects!", EMOJI_HAPPY),
-    "Ooh that's a new one! Feel free to ask me about my case studies or background " + pick(EMOJI_HAPPY),
-    maybeAddEmoji("Not sure I have an answer for that, but I'd love to chat about my work or experience!", EMOJI_HAPPY),
-  ])
+  // Default - warm, conversational, and always offer something useful
+  // Include case study buttons so there's always an action available
+  const fallbackResponses = [
+    maybeAddEmoji("Hmm interesting question! Want to check out my case studies instead?", EMOJI_HAPPY) + "\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas",
+    "Ooh that's a new one! Here's what I can tell you about " + pick(EMOJI_HAPPY) + "\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas",
+    maybeAddEmoji("I'd love to chat more about that! In the meantime, check out my work:", EMOJI_HAPPY) + "\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas",
+    maybeAddEmoji("Good question! Feel free to ask me about my background, or take a look at my projects:", EMOJI_HAPPY) + "\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas",
+  ]
+  return pick(fallbackResponses)
 }
 
 const getCurrentTime = () => {
