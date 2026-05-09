@@ -799,7 +799,9 @@ const messageText = mobileInput.trim()
   
   await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
 
-    const response = getCharityResponse(userMessage.text)
+    // Pass full conversation history for context-aware responses
+    const currentMessages = [...chatMessages, userMessage]
+    const response = getCharityResponse(userMessage.text, currentMessages)
 
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
@@ -1390,15 +1392,18 @@ const messageText = mobileInput.trim()
                       {msg.text.startsWith('GIF:') ? (
                         <img 
                           src={
-                            msg.text === 'GIF:shocked' 
-                              ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
-                              : msg.text === 'GIF:disappointed'
-                              ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
-                              : msg.text === 'GIF:sideye'
-                              ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
-                              : msg.text === 'GIF:confused'
-                              ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
-                              : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
+                            // Support both old GIF names and new full URLs
+                            msg.text.startsWith('GIF:http')
+                              ? msg.text.replace('GIF:', '')
+                              : msg.text === 'GIF:shocked' 
+                                ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
+                                : msg.text === 'GIF:disappointed'
+                                  ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                                  : msg.text === 'GIF:sideye'
+                                    ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
+                                    : msg.text === 'GIF:confused'
+                                      ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
+                                      : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
                           }
                           alt="Reaction"
                           className="w-24 h-auto rounded-lg"

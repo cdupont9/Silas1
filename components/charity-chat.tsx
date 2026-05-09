@@ -24,6 +24,67 @@ const pick = (options: string[]) => options[Math.floor(Math.random() * options.l
 // Helper to capitalize first letter of response
 const cap = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
+// Emoji sets for natural conversation
+const EMOJI_HAPPY = ['😊', '🙂', '☺️', '😄']
+const EMOJI_EXCITED = ['✨', '💫', '🔥', '💖', '🎉']
+const EMOJI_WARM = ['💕', '💗', '🤗', '💙']
+const EMOJI_WAVE = ['👋', '✌️']
+const EMOJI_THANKS = ['🙏', '💕', '✨']
+const EMOJI_LAUGH = ['😂', '😆', '🤣']
+
+// GIF URLs for positive interactions
+const CHARITY_GIFS = {
+  celebrate: 'https://media.giphy.com/media/26u4cqiYI30juCOGY/giphy.gif',
+  heart: 'https://media.giphy.com/media/3oEjHWXddcCOGZNmFO/giphy.gif', 
+  wave: 'https://media.giphy.com/media/ASd0Ukj0y3qMM/giphy.gif',
+  laugh: 'https://media.giphy.com/media/10JhviFuU2gWD6/giphy.gif',
+  thinking: 'https://media.giphy.com/media/a5viI92PAF89q/giphy.gif',
+  thanks: 'https://media.giphy.com/media/3oz8xIsloV7zOmt81G/giphy.gif',
+}
+
+// Helper to add emoji naturally (not always, feels more human)
+const maybeAddEmoji = (text: string, emojiSet: string[], chance: number = 0.6): string => {
+  if (Math.random() < chance) {
+    return `${text} ${pick(emojiSet)}`
+  }
+  return text
+}
+
+// Context analysis helpers
+const analyzeConversationContext = (history: ChatMessage[]) => {
+  const userMessages = history.filter(m => m.role === 'user').map(m => m.text.toLowerCase())
+  const lastFewUserMessages = userMessages.slice(-5)
+  
+  return {
+    // Check if user said they'd come back
+    promisedToReturn: userMessages.some(t => 
+      t.match(/i'll (be back|come back|return|brb|gtg|gotta go|talk later|chat later|message you later)/i)
+    ),
+    // Check message count since promise
+    messagesSincePromise: (() => {
+      const promiseIndex = userMessages.findIndex(t => 
+        t.match(/i'll (be back|come back|return|brb|gtg|gotta go|talk later|chat later|message you later)/i)
+      )
+      return promiseIndex >= 0 ? userMessages.length - promiseIndex - 1 : -1
+    })(),
+    // Detect repeated similar questions
+    isRepeatingTopic: lastFewUserMessages.length >= 2 && 
+      lastFewUserMessages.slice(-2).every(m => m.match(/(work|job|project|case study)/i)),
+    // Detect if conversation is long
+    isLongConversation: history.length > 10,
+    // Check mood from recent messages
+    recentMood: lastFewUserMessages.some(m => 
+      m.match(/(thank|love|amazing|awesome|great|cool|nice)/i)
+    ) ? 'positive' : 'neutral',
+    // Track topics discussed
+    topicsDiscussed: {
+      work: userMessages.some(m => m.match(/(work|google|job|ux|design)/i)),
+      personal: userMessages.some(m => m.match(/(family|mom|dog|hunter|hobby|food)/i)),
+      caseStudies: userMessages.some(m => m.match(/(case study|project|teammate|meetly|silas)/i)),
+    }
+  }
+}
+
 // Check if message deserves auto heart reaction from Charity
 export const shouldAutoHeart = (msg: string): boolean => {
   const normalized = msg.toLowerCase().trim()
@@ -44,10 +105,25 @@ export const shouldAutoHeart = (msg: string): boolean => {
   )
 }
 
-export const getCharityResponse = (userMessage: string): string => {
+export const getCharityResponse = (userMessage: string, conversationHistory: ChatMessage[] = []): string => {
   // Normalize: lowercase, trim, remove extra letters (hiiiii -> hi, youuuu -> you)
   const msg = userMessage.toLowerCase().trim()
   const normalized = msg.replace(/(.)\1{2,}/g, '$1$1') // reduce repeated chars to max 2
+  
+  // Analyze conversation context
+  const context = analyzeConversationContext(conversationHistory)
+  
+  // Check for follow-up on "I'll be back" type promises
+  if (context.promisedToReturn && context.messagesSincePromise >= 3 && context.messagesSincePromise <= 5) {
+    // Only trigger once, and only if this seems like a return
+    if (normalized.match(/^(hi|hey|hello|back|i'm back|im back)[\s!.]*$/i)) {
+      return pick([
+        maybeAddEmoji("Hey, you're back!", EMOJI_WAVE),
+        maybeAddEmoji("Welcome back!", EMOJI_HAPPY),
+        "Oh hey! You made it back " + pick(EMOJI_HAPPY),
+      ])
+    }
+  }
 
   // ============================================
   // EMOJI REACTIONS
@@ -55,22 +131,36 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Positive emoji reactions
   if (normalized.match(/^[\s]*[❤️💕💗💖💜🥰😍🤗👏🙌💯🔥✨⭐️💫🌟👍🤩😊😁]+[\s]*$/)) {
-    return pick(["Thank you!", "Appreciate that!", ":)"])
+    return pick([
+      maybeAddEmoji("Thank you!", EMOJI_WARM),
+      maybeAddEmoji("Appreciate that!", EMOJI_HAPPY),
+      "Aww " + pick(EMOJI_WARM),
+      maybeAddEmoji("You're sweet!", EMOJI_HAPPY),
+    ])
   }
 
   // Sad/crying emoji reactions
   if (normalized.match(/^[\s]*[😢😭😿💔🥺😞😔]+[\s]*$/)) {
-    return pick(["Hope you're okay!", "Is everything alright?", "Hope things get better"])
+    return pick([
+      maybeAddEmoji("Hope you're okay!", EMOJI_WARM),
+      "Is everything alright? 💙",
+      maybeAddEmoji("Hope things get better", EMOJI_WARM),
+      "Sending good vibes 💕"
+    ])
   }
 
   // Laughing emoji reactions
   if (normalized.match(/^[\s]*[😂🤣😆😹]+[\s]*$/)) {
-    return pick(["Glad that made you laugh!", "That's funny!", ":)"])
+    return pick([
+      maybeAddEmoji("Glad that made you laugh!", EMOJI_LAUGH),
+      "Haha " + pick(EMOJI_HAPPY),
+      maybeAddEmoji("That's funny!", EMOJI_LAUGH),
+    ])
   }
 
   // Thinking/confused emoji
   if (normalized.match(/^[\s]*[🤔🧐😕❓]+[\s]*$/)) {
-    return "Feel free to ask me anything! I'm happy to clarify"
+    return maybeAddEmoji("Feel free to ask me anything! I'm happy to clarify", EMOJI_HAPPY)
   }
 
   // ============================================
@@ -131,17 +221,32 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Greetings
   if (normalized.match(/^(hi+|hey+|hello+|sup|yo+|howdy|wassup|wasup|whaddup|what's good|whats good|ayy+|ayo+|hiya)[\s!.?]*$/i)) {
-    return pick(["Hey!", "Hi there!", "Hello!", "Hi!"])
+    return pick([
+      "Hey! " + pick(EMOJI_WAVE),
+      maybeAddEmoji("Hi there!", EMOJI_HAPPY),
+      "Hello! " + pick(EMOJI_WAVE),
+      maybeAddEmoji("Hi!", EMOJI_HAPPY),
+      "Hey hey " + pick(EMOJI_WAVE),
+    ])
   }
 
   // How are you
   if (normalized.match(/^(how are you+|how's it going|how you doing|how u doing|how you doin|what's up|whats up|wassup|wyd|what you doing|whatchu doing|how's everything|hows everything|how are ya|how ya doing|how u)[\s!?.]*$/i)) {
-    return pick(["Doing well! How about you?", "I'm great, thanks for asking!", "Doing good, thanks! And you?"])
+    return pick([
+      maybeAddEmoji("Doing well! How about you?", EMOJI_HAPPY),
+      maybeAddEmoji("I'm great, thanks for asking!", EMOJI_HAPPY),
+      "Doing good, thanks! And you? " + pick(EMOJI_HAPPY),
+      maybeAddEmoji("Pretty good! What's up?", EMOJI_HAPPY),
+    ])
   }
 
   // What's good / what's poppin
   if (normalized.match(/^(what'?s good|whats good|what'?s poppin|whats poppin|what'?s crackin|whats crackin)[\s!?.]*$/i)) {
-    return pick(["Not much! How are you?", "Doing well, thanks! And you?", "All good here, how about you?"])
+    return pick([
+      maybeAddEmoji("Not much! How are you?", EMOJI_HAPPY),
+      maybeAddEmoji("Doing well, thanks! And you?", EMOJI_HAPPY),
+      "All good here, how about you? " + pick(EMOJI_HAPPY),
+    ])
   }
 
   // ============================================
@@ -978,47 +1083,103 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Thank you
   if (normalized.match(/(thank|thanks|appreciate|preciate|thx|ty\b)/)) {
-    return pick(["Of course!", "You're welcome!", "Anytime!", "No problem!"])
+    return pick([
+      maybeAddEmoji("Of course!", EMOJI_HAPPY),
+      maybeAddEmoji("You're welcome!", EMOJI_WARM),
+      "Anytime! " + pick(EMOJI_HAPPY),
+      maybeAddEmoji("No problem!", EMOJI_HAPPY),
+      "Happy to help " + pick(EMOJI_WARM),
+    ])
   }
 
-  // Bye
+  // Bye - track if they say they'll be back
   if (normalized.match(/(bye|goodbye|see you|take care|later|peace|deuces|gotta go|ima head out|imma head out)/)) {
-    return pick(["Take care!", "Bye!", "See ya!", "Later!"])
+    return pick([
+      "Take care! " + pick(EMOJI_WAVE),
+      maybeAddEmoji("Bye!", EMOJI_WAVE),
+      "See ya! " + pick(EMOJI_WAVE),
+      maybeAddEmoji("Later!", EMOJI_HAPPY),
+      "Come back anytime " + pick(EMOJI_WAVE),
+    ])
+  }
+
+  // I'll be back / brb type messages
+  if (normalized.match(/(i'll be back|be back|brb|gtg|gotta go|talk later|chat later|message you later|ttyl)/)) {
+    return pick([
+      "Sounds good, talk soon! " + pick(EMOJI_WAVE),
+      maybeAddEmoji("No rush, I'll be here!", EMOJI_HAPPY),
+      "See you when you get back " + pick(EMOJI_WAVE),
+      maybeAddEmoji("Take your time!", EMOJI_HAPPY),
+    ])
   }
 
   // Nice to meet you
   if (normalized.match(/(nice to meet|pleasure|good to meet)/)) {
-    return pick(["Nice to meet you too!", "Likewise!", "Same here!"])
+    return pick([
+      maybeAddEmoji("Nice to meet you too!", EMOJI_HAPPY),
+      "Likewise! " + pick(EMOJI_HAPPY),
+      maybeAddEmoji("Same here!", EMOJI_WARM),
+    ])
   }
 
   // Cool / awesome / nice responses
   if (normalized.match(/^(cool|awesome|nice|great|wow|amazing|interesting|dope|fire|lit|sick|tight|bet)[\s!.]*$/i)) {
-    return pick(["Thanks!", "Appreciate it!", "Thank you!"])
+    return pick([
+      maybeAddEmoji("Thanks!", EMOJI_HAPPY),
+      maybeAddEmoji("Appreciate it!", EMOJI_WARM),
+      "Thank you! " + pick(EMOJI_HAPPY),
+    ])
   }
 
   // Ok / okay / got it
   if (normalized.match(/^(ok|okay|k|kk|got it|i see|makes sense|word|copy|heard)[\s!.]*$/i)) {
-    return pick(["Let me know if you have any other questions!", "Sounds good!", "Great!"])
+    return pick([
+      maybeAddEmoji("Let me know if you have any other questions!", EMOJI_HAPPY),
+      "Sounds good! " + pick(EMOJI_HAPPY),
+      maybeAddEmoji("Great!", EMOJI_HAPPY),
+    ])
   }
 
   // That's cool/dope etc
   if (normalized.match(/^that'?s (cool|dope|fire|lit|sick|awesome|amazing)[\s!.]*$/i)) {
-    return pick(["Thanks!", "Appreciate that!", "Thank you! Let me know if you wanna know more about anything"])
+    return pick([
+      maybeAddEmoji("Thanks!", EMOJI_HAPPY),
+      maybeAddEmoji("Appreciate that!", EMOJI_WARM),
+      "Thank you! Let me know if you wanna know more " + pick(EMOJI_HAPPY),
+    ])
   }
 
   // Appearance compliments - beautiful, pretty, queen
   if (normalized.match(/(beautiful|pretty|gorgeous|stunning|queen|you look good|looking good)/)) {
-    return pick(["Thank you!", "You are so kind", "Thanks so much!", "Thanks!", ":)"])
+    return pick([
+      "Thank you! " + pick(EMOJI_WARM),
+      maybeAddEmoji("You are so kind", EMOJI_HAPPY),
+      maybeAddEmoji("Thanks so much!", EMOJI_WARM),
+      "Aww thanks! " + pick(EMOJI_HAPPY),
+    ])
   }
 
-  // General compliments
+  // General compliments - sometimes send a GIF
   if (normalized.match(/(love your|great question|amazing|you're awesome|you're incredible|inspiring|so cool|really cool|that's amazing|impressed)/)) {
-    return pick(["Thank you so much!", "That means a lot, thank you!", "That's so kind, thanks!"])
+    // 30% chance to send a thank you GIF
+    if (Math.random() < 0.3) {
+      return "GIF:" + CHARITY_GIFS.thanks
+    }
+    return pick([
+      "Thank you so much! " + pick(EMOJI_WARM),
+      maybeAddEmoji("That means a lot, thank you!", EMOJI_WARM),
+      "That's so kind, thanks! " + pick(EMOJI_HAPPY),
+    ])
   }
 
   // Sorry / apologies - show empathy
   if (normalized.match(/^(sorry|i'?m sorry|my bad|my apologies|apologies)[\s!.]*$/i) || normalized.match(/(sorry to hear|sorry about that|sorry for)/)) {
-    return pick(["That's okay!", "It's okay", "No worries at all", "It's all good"])
+    return pick([
+      maybeAddEmoji("That's okay!", EMOJI_HAPPY),
+      "It's okay " + pick(EMOJI_WARM),
+      maybeAddEmoji("No worries at all", EMOJI_HAPPY),
+      "It's all good " + pick(EMOJI_HAPPY),
+    ])
   }
 
   // Highly offensive/vulgar words - respond with professional reaction gif only, no text
@@ -1052,19 +1213,39 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Lol / haha responses
   if (normalized.match(/^(lol|lmao|haha|hehe|rofl|dead|dying)[\s!.]*$/i)) {
-    return pick(["That's funny!", "Glad I could make you laugh!"])
+    return pick([
+      maybeAddEmoji("That's funny!", EMOJI_LAUGH),
+      "Haha " + pick(EMOJI_LAUGH),
+      maybeAddEmoji("Glad I could make you laugh!", EMOJI_HAPPY),
+    ])
   }
 
   // I like that / love that
   if (normalized.match(/^i (like|love) that[\s!.]*$/i)) {
-    return pick(["Thanks!", "Glad you like it!", "Appreciate it!"])
+    return pick([
+      maybeAddEmoji("Thanks!", EMOJI_HAPPY),
+      "Glad you like it! " + pick(EMOJI_HAPPY),
+      maybeAddEmoji("Appreciate it!", EMOJI_WARM),
+    ])
   }
 
-  // Default - warm and diplomatic
+  // Excited/happy messages - sometimes send a celebration GIF
+  if (normalized.match(/(so excited|can't wait|yay|woohoo|let's go|amazing news|great news|congrats|celebrate)/)) {
+    if (Math.random() < 0.4) {
+      return "GIF:" + CHARITY_GIFS.celebrate
+    }
+    return pick([
+      "That's awesome! " + pick(EMOJI_EXCITED),
+      maybeAddEmoji("Love that energy!", EMOJI_EXCITED),
+      "Yay! " + pick(EMOJI_EXCITED),
+    ])
+  }
+
+  // Default - warm and diplomatic with emoji
   return pick([
-    "Hmm I'm not sure about that one - but feel free to ask me about my work, background, or projects!",
-    "Ooh that's a new one! Feel free to ask me about my case studies or background",
-    "Not sure I have an answer for that, but I'd love to chat about my work or experience!"
+    maybeAddEmoji("Hmm I'm not sure about that one - but feel free to ask me about my work, background, or projects!", EMOJI_HAPPY),
+    "Ooh that's a new one! Feel free to ask me about my case studies or background " + pick(EMOJI_HAPPY),
+    maybeAddEmoji("Not sure I have an answer for that, but I'd love to chat about my work or experience!", EMOJI_HAPPY),
   ])
 }
 
@@ -1113,7 +1294,9 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
 
     await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
 
-    const response = getCharityResponse(userMessage.text)
+    // Pass full conversation history for context-aware responses
+    const currentMessages = [...messages, userMessage]
+    const response = getCharityResponse(userMessage.text, currentMessages)
 
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
@@ -1161,15 +1344,18 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                 {message.text.startsWith('GIF:') ? (
                   <img
                     src={
-                      message.text === 'GIF:shocked'
-                        ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
-                        : message.text === 'GIF:disappointed'
-                          ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
-                          : message.text === 'GIF:sideye'
-                            ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
-                            : message.text === 'GIF:confused'
-                              ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
-                              : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
+                      // Support both old GIF names and new full URLs
+                      message.text.startsWith('GIF:http')
+                        ? message.text.replace('GIF:', '')
+                        : message.text === 'GIF:shocked'
+                          ? "https://media.giphy.com/media/l3q2K5jinAlChoCLS/giphy.gif"
+                          : message.text === 'GIF:disappointed'
+                            ? "https://media.giphy.com/media/3o7TKwmnDgQb5jemjK/giphy.gif"
+                            : message.text === 'GIF:sideye'
+                              ? "https://media.giphy.com/media/AAsj7jdrHjtp6/giphy.gif"
+                              : message.text === 'GIF:confused'
+                                ? "https://media.giphy.com/media/WRQBXSCnEFJIuxktnw/giphy.gif"
+                                : "https://media.giphy.com/media/QU4ewgcmdcsObx9CG7/giphy.gif"
                     }
                     alt="Reaction"
                     className="w-32 h-auto rounded-lg"
