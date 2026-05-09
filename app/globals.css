@@ -157,10 +157,32 @@
 }
 
 @keyframes memoji-wink {
-  0%, 100% { transform: scaleY(1); }
-  45% { transform: scaleY(1); }
-  50% { transform: scaleY(0.95); }
-  55% { transform: scaleY(1); }
+  0%, 100% { 
+    transform: scaleY(1) scaleX(1); 
+    transform-origin: center center;
+  }
+  /* Build up to wink */
+  42% { 
+    transform: scaleY(1) scaleX(1); 
+  }
+  /* Quick wink - squish on right side to simulate right eye closing */
+  46% { 
+    transform: scaleY(0.97) scaleX(0.98) skewX(-2deg); 
+    transform-origin: left center;
+  }
+  50% { 
+    transform: scaleY(0.94) scaleX(0.96) skewX(-3deg); 
+    transform-origin: left center;
+  }
+  54% { 
+    transform: scaleY(0.97) scaleX(0.98) skewX(-2deg); 
+    transform-origin: left center;
+  }
+  /* Return to normal */
+  58% { 
+    transform: scaleY(1) scaleX(1) skewX(0deg); 
+    transform-origin: center center;
+  }
 }
 
 @keyframes memoji-pulse {
@@ -201,8 +223,8 @@
 }
 
 .animate-memoji-wink {
-  animation: memoji-wink 2s ease-in-out infinite;
-  animation-delay: 2s;
+  animation: memoji-wink 3s ease-in-out infinite;
+  animation-delay: 1s;
 }
 
 /* Window minimize animation - macOS genie effect style */
