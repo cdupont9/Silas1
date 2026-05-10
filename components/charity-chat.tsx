@@ -37,9 +37,9 @@ export async function getAIResponse(
     return await res.json()
   } catch (error) {
     console.error('[v0] AI response error:', error)
-    // Fallback to a friendly response
+    // Professional fallback response
     return {
-      response: "Hey! Sorry, got distracted for a sec. What's up?",
+      response: "Thank you for reaching out! Feel free to ask me about my work or explore my case studies.",
       caseStudyToShow: null
     }
   }
