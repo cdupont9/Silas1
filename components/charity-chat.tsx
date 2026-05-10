@@ -18,6 +18,33 @@ interface CharityChatProps {
 
 const REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
 
+// AI-powered response function
+export async function getAIResponse(
+  message: string, 
+  conversationHistory: ChatMessage[]
+): Promise<{ response: string; caseStudyToShow: string | null }> {
+  try {
+    const res = await fetch('/api/charity-chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message, conversationHistory })
+    })
+    
+    if (!res.ok) {
+      throw new Error('API request failed')
+    }
+    
+    return await res.json()
+  } catch (error) {
+    console.error('[v0] AI response error:', error)
+    // Fallback to a friendly response
+    return {
+      response: "Hey! Sorry, got distracted for a sec. What's up?",
+      caseStudyToShow: null
+    }
+  }
+}
+
 // Helper to pick random response
 const pick = (options: string[]) => options[Math.floor(Math.random() * options.length)]
 
@@ -1297,14 +1324,20 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
 
     await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
 
-    // Pass full conversation history for context-aware responses
+    // Use AI for intelligent, contextual responses
     const currentMessages = [...messages, userMessage]
-    const response = getCharityResponse(userMessage.text, currentMessages)
+    const { response, caseStudyToShow } = await getAIResponse(userMessage.text, currentMessages)
+
+    // Convert case study hint to button format
+    let finalResponse = response
+    if (caseStudyToShow) {
+      finalResponse = response + `\nBUTTON:${caseStudyToShow}:View ${caseStudyToShow.charAt(0).toUpperCase() + caseStudyToShow.slice(1)} Case Study`
+    }
 
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
       role: 'assistant',
-      text: response,
+      text: finalResponse,
       time: getCurrentTime(),
     }
 

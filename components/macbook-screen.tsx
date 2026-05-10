@@ -17,7 +17,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
-import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
+import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart, getAIResponse } from "@/components/charity-chat"
 
 interface WindowState {
   isOpen: boolean
@@ -799,14 +799,20 @@ const messageText = mobileInput.trim()
   
   await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
 
-    // Pass full conversation history for context-aware responses
+    // Use AI for intelligent, contextual responses
     const currentMessages = [...chatMessages, userMessage]
-    const response = getCharityResponse(userMessage.text, currentMessages)
+    const { response, caseStudyToShow } = await getAIResponse(userMessage.text, currentMessages)
+
+    // Convert case study hint to button format
+    let finalResponse = response
+    if (caseStudyToShow) {
+      finalResponse = response + `\nBUTTON:${caseStudyToShow}:View ${caseStudyToShow.charAt(0).toUpperCase() + caseStudyToShow.slice(1)} Case Study`
+    }
 
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
       role: 'assistant',
-      text: response,
+      text: finalResponse,
       time: getCurrentTime(),
     }
 
