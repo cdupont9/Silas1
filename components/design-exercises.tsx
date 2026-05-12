@@ -1,18 +1,17 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronLeft, Pencil, Lightbulb, Layout, Palette, HelpCircle } from "lucide-react"
+import { ChevronLeft, ChevronRight, Lightbulb, Target, Users, Layers, Sparkles, ArrowRight } from "lucide-react"
 
 // ============ DESIGN EXERCISES STATE ============
 export interface DesignExercisesState {
-  currentExercise: string | null
-  completedExercises: string[]
-  // Add more state as needed when content is added
+  currentProject: string | null
+  currentSection: number
 }
 
 export const initialDesignExercisesState: DesignExercisesState = {
-  currentExercise: null,
-  completedExercises: [],
+  currentProject: null,
+  currentSection: 0,
 }
 
 interface DesignExercisesProps {
@@ -20,8 +19,91 @@ interface DesignExercisesProps {
   onGameStateChange?: (state: DesignExercisesState) => void
 }
 
+// ============ DESIGN CHALLENGE DATA ============
+interface DesignChallenge {
+  id: string
+  title: string
+  subtitle: string
+  category: string
+  color: string
+  icon: string
+  overview: string
+  sections: {
+    title: string
+    icon: typeof Lightbulb
+    content: string[]
+  }[]
+  mockups?: string[] // URLs or descriptions of mockup images
+}
+
+const designChallenges: DesignChallenge[] = [
+  {
+    id: "habit-breaker",
+    title: "Habit Breaker",
+    subtitle: "Breaking Bad Habits App",
+    category: "Mobile App Design",
+    color: "from-red-600 to-orange-600",
+    icon: "🔥",
+    overview: "A mobile app designed to help users identify, track, and break their bad habits through behavioral psychology techniques and positive reinforcement.",
+    sections: [
+      {
+        title: "The Challenge",
+        icon: Target,
+        content: [
+          "Design an app that helps people break bad habits without feeling like punishment",
+          "Make habit tracking engaging rather than tedious",
+          "Create a supportive experience that celebrates small wins",
+          "Address the psychological aspects of habit formation"
+        ]
+      },
+      {
+        title: "My Thinking Process",
+        icon: Lightbulb,
+        content: [
+          "I started by researching behavioral psychology - specifically how habits form and what triggers them",
+          "I realized most habit apps focus on building good habits, not breaking bad ones - there's a gap in the market",
+          "Breaking habits requires understanding triggers, so I designed a 'trigger journal' feature",
+          "I wanted to avoid shame-based motivation - instead focusing on compassion and progress"
+        ]
+      },
+      {
+        title: "User Research Insights",
+        icon: Users,
+        content: [
+          "Users often feel ashamed tracking bad habits - needed a judgment-free zone",
+          "People want to understand WHY they do things, not just track WHAT they do",
+          "Small streaks (even 1-3 days) feel like big wins and motivate continued effort",
+          "Community support helps but needs to be anonymous to reduce stigma"
+        ]
+      },
+      {
+        title: "Design Decisions",
+        icon: Layers,
+        content: [
+          "Warm, encouraging color palette - oranges and soft reds instead of harsh warning colors",
+          "Celebration animations for every milestone, no matter how small",
+          "Trigger tracking with time, location, and emotion tags",
+          "Anonymous community stories for inspiration without judgment",
+          "'Slip-up' recovery flow that treats setbacks as learning opportunities"
+        ]
+      },
+      {
+        title: "Key Features",
+        icon: Sparkles,
+        content: [
+          "Habit Loop Analyzer - identifies trigger → routine → reward patterns",
+          "Replacement Suggester - recommends healthier alternatives",
+          "Progress Visualization - shows brain rewiring over time",
+          "Support Circle - anonymous community of people with similar goals",
+          "Compassion Mode - gentle reminders without guilt trips"
+        ]
+      }
+    ]
+  },
+  // Add more design challenges here as you complete them
+]
+
 export function DesignExercises({ gameState, onGameStateChange }: DesignExercisesProps) {
-  // Use provided state or local state
   const [localState, setLocalState] = useState<DesignExercisesState>(initialDesignExercisesState)
   const state = gameState || localState
   
@@ -34,107 +116,165 @@ export function DesignExercises({ gameState, onGameStateChange }: DesignExercise
     }
   }
 
-  const { currentExercise } = state
-
-  // Placeholder exercise categories - will be expanded with more content
-  const exerciseCategories = [
-    {
-      id: "wireframing",
-      title: "Wireframing",
-      description: "Practice creating low-fidelity layouts",
-      icon: Layout,
-      color: "from-blue-600 to-cyan-700",
-      comingSoon: true,
-    },
-    {
-      id: "color-theory",
-      title: "Color Theory",
-      description: "Learn about color relationships and palettes",
-      icon: Palette,
-      color: "from-purple-600 to-pink-700",
-      comingSoon: true,
-    },
-    {
-      id: "ux-writing",
-      title: "UX Writing",
-      description: "Craft clear and effective microcopy",
-      icon: Pencil,
-      color: "from-amber-600 to-orange-700",
-      comingSoon: true,
-    },
-    {
-      id: "design-thinking",
-      title: "Design Thinking",
-      description: "Problem-solving exercises and methods",
-      icon: Lightbulb,
-      color: "from-green-600 to-emerald-700",
-      comingSoon: true,
-    },
-  ]
+  const { currentProject, currentSection } = state
+  const activeProject = designChallenges.find(p => p.id === currentProject)
 
   const backToMenu = () => {
-    updateState({ currentExercise: null })
+    updateState({ currentProject: null, currentSection: 0 })
   }
 
-  // Main Menu
+  const goToSection = (index: number) => {
+    updateState({ currentSection: index })
+  }
+
+  const nextSection = () => {
+    if (activeProject && currentSection < activeProject.sections.length - 1) {
+      updateState({ currentSection: currentSection + 1 })
+    }
+  }
+
+  const prevSection = () => {
+    if (currentSection > 0) {
+      updateState({ currentSection: currentSection - 1 })
+    }
+  }
+
+  // ============ PROJECT DETAIL VIEW ============
+  if (activeProject) {
+    const section = activeProject.sections[currentSection]
+    const SectionIcon = section.icon
+
+    return (
+      <div className="flex flex-col gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
+        {/* Header with Back Button */}
+        <div className="flex items-center justify-between">
+          <button onClick={backToMenu} className="flex items-center gap-1 text-purple-400 text-sm hover:text-purple-300">
+            <ChevronLeft className="w-5 h-5" /> All Projects
+          </button>
+          <span className="text-purple-400/60 text-xs">{activeProject.category}</span>
+        </div>
+
+        {/* Project Title */}
+        <div className="text-center space-y-1">
+          <span className="text-4xl">{activeProject.icon}</span>
+          <h2 className="text-2xl font-bold text-purple-100">{activeProject.title}</h2>
+          <p className="text-purple-300/70 text-sm">{activeProject.subtitle}</p>
+        </div>
+
+        {/* Section Navigation Dots */}
+        <div className="flex justify-center gap-2">
+          {activeProject.sections.map((s, idx) => (
+            <button
+              key={idx}
+              onClick={() => goToSection(idx)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                idx === currentSection 
+                  ? 'bg-purple-400 w-6' 
+                  : 'bg-purple-600/40 hover:bg-purple-500/60'
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Current Section */}
+        <div className="bg-purple-950/50 rounded-2xl border border-purple-500/20 p-4 md:p-6 space-y-4">
+          {/* Section Header */}
+          <div className="flex items-center gap-3">
+            <div className={`p-2 rounded-xl bg-gradient-to-r ${activeProject.color}`}>
+              <SectionIcon className="w-5 h-5 text-white" />
+            </div>
+            <h3 className="text-lg font-bold text-purple-200">{section.title}</h3>
+          </div>
+
+          {/* Section Content */}
+          <ul className="space-y-3">
+            {section.content.map((item, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <ArrowRight className="w-4 h-4 text-purple-400 flex-shrink-0 mt-1" />
+                <p className="text-purple-200/80 text-sm leading-relaxed">{item}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Navigation Arrows */}
+        <div className="flex justify-between items-center">
+          <button
+            onClick={prevSection}
+            disabled={currentSection === 0}
+            className={`flex items-center gap-1 px-4 py-2 rounded-xl transition-all ${
+              currentSection === 0
+                ? 'text-purple-600/40 cursor-not-allowed'
+                : 'text-purple-400 hover:bg-purple-900/40'
+            }`}
+          >
+            <ChevronLeft className="w-4 h-4" /> Previous
+          </button>
+          
+          <span className="text-purple-400/60 text-sm">
+            {currentSection + 1} / {activeProject.sections.length}
+          </span>
+          
+          <button
+            onClick={nextSection}
+            disabled={currentSection === activeProject.sections.length - 1}
+            className={`flex items-center gap-1 px-4 py-2 rounded-xl transition-all ${
+              currentSection === activeProject.sections.length - 1
+                ? 'text-purple-600/40 cursor-not-allowed'
+                : 'text-purple-400 hover:bg-purple-900/40'
+            }`}
+          >
+            Next <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // ============ MAIN MENU - PROJECT LIST ============
   return (
     <div className="flex flex-col items-center gap-6 p-4 md:p-6 w-full max-w-2xl mx-auto">
       {/* Header */}
       <div className="text-center space-y-2">
         <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400 bg-clip-text text-transparent">
-          Design Exercises
+          Design Challenges
         </h2>
         <p className="text-purple-300/70 text-sm md:text-base">
-          Sharpen your design skills with interactive challenges
+          Explore my design thinking process and solutions
         </p>
       </div>
 
-      {/* Exercise Categories Grid */}
-      <div className="grid grid-cols-2 gap-3 md:gap-4 w-full">
-        {exerciseCategories.map((category) => {
-          const IconComponent = category.icon
-          return (
-            <button
-              key={category.id}
-              disabled={category.comingSoon}
-              className={`relative flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-purple-950/80 to-pink-900/50 rounded-2xl border border-purple-500/30 transition-all ${
-                category.comingSoon 
-                  ? 'opacity-60 cursor-not-allowed' 
-                  : 'hover:border-purple-400/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] active:scale-[0.98]'
-              }`}
-            >
-              {/* Coming Soon Badge */}
-              {category.comingSoon && (
-                <div className="absolute top-2 right-2 px-2 py-0.5 bg-purple-500/30 rounded-full">
-                  <span className="text-[10px] text-purple-300 font-medium">Coming Soon</span>
-                </div>
-              )}
-              
-              {/* Icon */}
-              <div className={`p-3 rounded-xl bg-gradient-to-r ${category.color}`}>
-                <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-white" />
-              </div>
-              
-              <div className="text-center">
-                <p className="text-purple-300 font-bold text-sm md:text-lg">{category.title}</p>
-                <p className="text-purple-400/50 text-xs md:text-sm">{category.description}</p>
-              </div>
-            </button>
-          )
-        })}
+      {/* Project Cards */}
+      <div className="w-full space-y-4">
+        {designChallenges.map((project) => (
+          <button
+            key={project.id}
+            onClick={() => updateState({ currentProject: project.id, currentSection: 0 })}
+            className="w-full flex items-center gap-4 p-4 bg-gradient-to-br from-purple-950/80 to-pink-900/50 rounded-2xl border border-purple-500/30 hover:border-purple-400/50 hover:shadow-[0_0_30px_rgba(168,85,247,0.3)] transition-all active:scale-[0.99] text-left"
+          >
+            {/* Project Icon */}
+            <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${project.color} flex items-center justify-center text-3xl flex-shrink-0`}>
+              {project.icon}
+            </div>
+            
+            {/* Project Info */}
+            <div className="flex-1 min-w-0">
+              <span className="text-purple-400/60 text-xs uppercase tracking-wide">{project.category}</span>
+              <h3 className="text-purple-100 font-bold text-lg truncate">{project.title}</h3>
+              <p className="text-purple-300/60 text-sm truncate">{project.subtitle}</p>
+            </div>
+            
+            {/* Arrow */}
+            <ChevronRight className="w-5 h-5 text-purple-400/60 flex-shrink-0" />
+          </button>
+        ))}
       </div>
 
-      {/* Info Section */}
-      <div className="w-full p-4 bg-purple-950/40 rounded-xl border border-purple-500/20">
-        <div className="flex items-start gap-3">
-          <HelpCircle className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="text-purple-300 font-medium text-sm">More exercises coming soon!</p>
-            <p className="text-purple-400/60 text-xs mt-1">
-              I&apos;m working on interactive design challenges to help you practice UX/UI skills. 
-              Check back soon for wireframing exercises, color palette builders, and more!
-            </p>
-          </div>
+      {/* Coming Soon Placeholder */}
+      <div className="w-full p-4 bg-purple-950/30 rounded-xl border border-dashed border-purple-500/20">
+        <div className="flex items-center justify-center gap-2 text-purple-400/50">
+          <Sparkles className="w-4 h-4" />
+          <span className="text-sm">More design challenges coming soon...</span>
         </div>
       </div>
     </div>
