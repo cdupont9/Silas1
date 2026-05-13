@@ -314,134 +314,94 @@ const categoryInfo = {
   behavior: { label: "Behaviors", color: "from-purple-600 to-purple-800", borderColor: "border-purple-500", bgColor: "bg-purple-950/50" },
 }
 
-// ============ CONNECTIONS PUZZLE (like NYT Connections) ============
-// Group 16 items into 4 categories of 4 items each
-interface ConnectionsCategory {
-  name: string
-  items: string[]
-  color: string // Tailwind gradient classes
-  difficulty: 1 | 2 | 3 | 4 // 1 = easiest (yellow), 4 = hardest (purple)
-}
+// ============ UNO QUIZ GAME ============
+// Match cards by color (category) or play the right fact!
+type UnoColor = "red" | "blue" | "green" | "yellow"
 
-interface ConnectionsPuzzle {
+interface UnoCard {
   id: string
-  categories: ConnectionsCategory[]
+  color: UnoColor
+  fact: string
+  isCorrect: boolean // Is this the right answer for the current prompt?
 }
 
-const connectionsPuzzles: ConnectionsPuzzle[] = [
-  // PUZZLE 1: Tricky - "Candy" could be food, "Only Hope" sounds like goal, "Saved" sounds religious
-  {
-    id: "cp1",
-    categories: [
-      { name: "Mandy Moore Songs", items: ["Candy", "Only Hope", "Cry", "Saved"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Places Visited", items: ["Paris", "South Africa", "Spain", "Italy"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Starbucks Order", items: ["Extra Caramel", "Extra Crunch", "Vanilla Bean", "Ribbon Topping"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Childhood Dreams", items: ["Breakfast Business", "Ballet Dancer", "Cook", "Teacher"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 2: Tricky - "Fly" could be travel, "Come Clean" sounds like cleaning
-  {
-    id: "cp2",
-    categories: [
-      { name: "Hilary Duff Songs", items: ["So Yesterday", "Come Clean", "Why Not", "Fly"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Road Trip Details", items: ["No Stops", "Straight Through", "With Mom", "Snack Run"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Bucket List Items", items: ["Greece", "Bus Travel", "Conference Speaker", "Leadership Role"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Cinderella Memories", items: ["Broom Dancing", "Little Corner Song", "Whitney Houston", "Brandy"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 3: Tricky - Food vs locations vs movies
-  {
-    id: "cp3",
-    categories: [
-      { name: "Fave Fried Chicken", items: ["Hot Honey Chicken", "Buttermilk Chicken", "Honey Mustard Dip", "Westfield NJ"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "VHS Collection", items: ["Cinderella Movie", "Lizzie McGuire Film", "Walk to Remember", "Princess Diaries DVD"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Favorite Drinks", items: ["Apple Juice", "Ginger Ale", "Caramel Ribbon Crunch", "Vanilla Frapp"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Homeschool Era", items: ["Grandmother", "Cousin Classmates", "4th Grade", "Chicago Days"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 4: Tricky - UX terms vs personality traits vs food
-  {
-    id: "cp4",
-    categories: [
-      { name: "Favorite Movies", items: ["Walk to Remember", "Lizzie McGuire", "Brandy Cinderella", "Princess Diaries"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Work Needs", items: ["Peace and Quiet", "Work-Life Balance", "Meaningful Impact", "Creative Freedom"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Chinese Takeout", items: ["Sweet Sour Shrimp", "White Rice", "Egg Roll", "Fortune Cookie"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Personality Traits", items: ["Empathetic", "Detail-Oriented", "Spontaneous", "Patient"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 5: Tricky - All sound nostalgic
-  {
-    id: "cp5",
-    categories: [
-      { name: "Disney Channel Era", items: ["Lizzie Show", "Hilary Duff", "Early 2000s", "VHS Tapes"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Roller Coaster", items: ["Front Row", "Big Drops", "Loops", "Screaming"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Work Pain Points", items: ["Scope Creep", "Vague Feedback", "Last Minute Changes", "Unclear Requirements"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Cinderella Dancing", items: ["Broom Partner", "Own Little Corner", "Pretend Princess", "Mom Watching"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 6: Tricky - Fashion vs travel vs movies
-  {
-    id: "cp6",
-    categories: [
-      { name: "Fashion Love", items: ["80s Style", "90s Aesthetic", "Vintage Vibes", "Retro Looks"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Never Done Yet", items: ["Visit Greece", "Greyhound Bus", "TED Talk", "See Mars"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Walk to Remember Movie", items: ["Mandy Moore Star", "Only Hope Song", "Sad Ending", "Romance Genre"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Grandma's School", items: ["Home Education", "Chicago House", "Multiple Kids", "Until 4th Grade"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 7: Super tricky - Similar sounding items across categories
-  {
-    id: "cp7",
-    categories: [
-      { name: "Hilary Duff Metamorphosis", items: ["So Yesterday Song", "Come Clean Track", "Why Not Single", "Anywhere But Here"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "1997 Cinderella", items: ["Whitney Houston Star", "Brandy Lead", "VHS Format", "Rogers Hammerstein"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Work Environment", items: ["Quiet Space", "Balance Life", "Career Growth", "Make Impact"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Mom Memories", items: ["Chicago Drive", "Bank of America", "Starbucks Find", "Grand Central"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 8: Tricky - People vs places vs abstract
-  {
-    id: "cp8",
-    categories: [
-      { name: "Cinderella Cast", items: ["Brandy Norwood", "Whitney Singer", "Whoopi Goldberg", "Bernadette Peters"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Future Goals", items: ["Senior Designer", "Conference Stage", "Greece Trip", "Bus Adventure"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Google Job", items: ["UX Role", "AI Focus", "Meaningful Work", "Team Collaboration"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Teacher Background", items: ["4th Grade Class", "Empathy Skills", "Patience Virtue", "Help Users Learn"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 9: Mix of similar items
-  {
-    id: "cp9",
-    categories: [
-      { name: "Drink Ingredients", items: ["Lemonade", "Ginger Ale", "Apple Juice", "Caramel Syrup"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Kid Activities", items: ["Ballet Class", "Horseback Riding", "Cooking Lessons", "Breakfast Selling"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Columbia Era", items: ["New Jersey Move", "Design School", "Career Change", "From Teaching"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Lizzie McGuire", items: ["Hilary Star", "Disney Channel", "VHS Owned", "2000s Show"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
-  // PUZZLE 10: All food-adjacent but different meanings
-  {
-    id: "cp10",
-    categories: [
-      { name: "Starbucks Items", items: ["Ribbon Crunch Drink", "Frappuccino Blend", "Caramel Drizzle", "Whipped Cream"], color: "from-yellow-500 to-amber-600", difficulty: 1 },
-      { name: "Fave Fried Chicken", items: ["Hot Honey Flavor", "Westfield Location", "Buttermilk Breading", "Honey on Side"], color: "from-green-500 to-emerald-600", difficulty: 2 },
-      { name: "Chinese Order", items: ["Sweet Sour Sauce", "Shrimp Entree", "Fortune Inside", "Rice Bowl"], color: "from-blue-500 to-cyan-600", difficulty: 3 },
-      { name: "Flavor Combos", items: ["Lemonade Ginger", "Caramel Vanilla", "Honey Mustard Dip", "Sweet Sour Mix"], color: "from-purple-500 to-violet-600", difficulty: 4 },
-    ]
-  },
+interface UnoRound {
+  id: string
+  prompt: string // The question or prompt
+  correctFact: string
+  correctColor: UnoColor
+  category: string
+}
+
+const unoRounds: UnoRound[] = [
+  // Music (Red cards)
+  { id: "uno1", prompt: "Favorite childhood artist?", correctFact: "Hilary Duff", correctColor: "red", category: "Music" },
+  { id: "uno2", prompt: "Album I still listen to while driving?", correctFact: "Metamorphosis", correctColor: "red", category: "Music" },
+  { id: "uno3", prompt: "Favorite Hilary Duff song?", correctFact: "So Yesterday", correctColor: "red", category: "Music" },
+  { id: "uno4", prompt: "Other favorite artist from childhood?", correctFact: "Mandy Moore", correctColor: "red", category: "Music" },
+  { id: "uno5", prompt: "Favorite song from A Walk to Remember?", correctFact: "Only Hope", correctColor: "red", category: "Music" },
+  // Food (Yellow cards)
+  { id: "uno6", prompt: "Favorite juice?", correctFact: "Apple Juice", correctColor: "yellow", category: "Food" },
+  { id: "uno7", prompt: "Drink combo I love?", correctFact: "Lemonade + Ginger Ale", correctColor: "yellow", category: "Food" },
+  { id: "uno8", prompt: "Favorite fried chicken spot?", correctFact: "Broadway Chicken", correctColor: "yellow", category: "Food" },
+  { id: "uno9", prompt: "How do I like my chicken?", correctFact: "Hot Honey + Buttermilk", correctColor: "yellow", category: "Food" },
+  { id: "uno10", prompt: "Favorite Starbucks drink?", correctFact: "Caramel Ribbon Crunch", correctColor: "yellow", category: "Food" },
+  // Travel/Background (Blue cards)
+  { id: "uno11", prompt: "Where did I move from?", correctFact: "Chicago", correctColor: "blue", category: "Background" },
+  { id: "uno12", prompt: "Until what grade was I homeschooled?", correctFact: "4th Grade", correctColor: "blue", category: "Background" },
+  { id: "uno13", prompt: "Who homeschooled me?", correctFact: "Grandmother", correctColor: "blue", category: "Background" },
+  { id: "uno14", prompt: "Bucket list destination?", correctFact: "Greece", correctColor: "blue", category: "Background" },
+  { id: "uno15", prompt: "Country I've visited?", correctFact: "South Africa", correctColor: "blue", category: "Background" },
+  // Movies/Disney (Green cards)
+  { id: "uno16", prompt: "Favorite Disney character?", correctFact: "Cinderella", correctColor: "green", category: "Movies" },
+  { id: "uno17", prompt: "Favorite Cinderella movie version?", correctFact: "Brandy + Whitney", correctColor: "green", category: "Movies" },
+  { id: "uno18", prompt: "Movie that makes me cry?", correctFact: "A Walk to Remember", correctColor: "green", category: "Movies" },
+  { id: "uno19", prompt: "TV show I was obsessed with?", correctFact: "Lizzie McGuire", correctColor: "green", category: "Movies" },
+  { id: "uno20", prompt: "What format do I still own Cinderella on?", correctFact: "VHS", correctColor: "green", category: "Movies" },
 ]
 
-// Seeded shuffle function for stable randomization per puzzle
-const seededShuffle = (array: string[], seed: string): string[] => {
-  const shuffled = [...array]
-  let seedNum = seed.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    seedNum = (seedNum * 9301 + 49297) % 233280
-    const j = Math.floor((seedNum / 233280) * (i + 1))
-    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
-  }
-  return shuffled
+// Wrong answers for UNO cards (distractors)
+const unoDistractors: Record<UnoColor, string[]> = {
+  red: ["Taylor Swift", "Dignity Album", "Beat of My Heart", "Christina Aguilera", "With Love", "Britney Spears"],
+  yellow: ["Orange Juice", "Sprite + Lemonade", "Popeyes", "Nashville Hot", "Mocha Frappuccino", "BBQ Sauce"],
+  blue: ["Los Angeles", "6th Grade", "Private Tutor", "Japan", "Australia", "Hoboken"],
+  green: ["Belle", "Animated 1950", "The Notebook", "Hannah Montana", "DVD", "Streaming"],
 }
+
+const unoColorStyles: Record<UnoColor, { bg: string; border: string; text: string }> = {
+  red: { bg: "bg-red-600", border: "border-red-400", text: "text-red-100" },
+  blue: { bg: "bg-blue-600", border: "border-blue-400", text: "text-blue-100" },
+  green: { bg: "bg-green-600", border: "border-green-400", text: "text-green-100" },
+  yellow: { bg: "bg-yellow-500", border: "border-yellow-300", text: "text-yellow-900" },
+}
+
+// ============ TIC-TAC-TOE QUIZ GAME ============
+// Answer questions correctly to place your X!
+interface TicTacToeQuestion {
+  id: string
+  question: string
+  options: string[]
+  correctIndex: number
+  category: string
+}
+
+const ticTacToeQuestions: TicTacToeQuestion[] = [
+  { id: "ttt1", question: "My favorite Disney character?", options: ["Cinderella", "Belle", "Ariel", "Mulan"], correctIndex: 0, category: "Disney" },
+  { id: "ttt2", question: "Childhood artist I love?", options: ["Hilary Duff", "Britney Spears", "Christina Aguilera", "Jessica Simpson"], correctIndex: 0, category: "Music" },
+  { id: "ttt3", question: "My favorite juice?", options: ["Apple", "Orange", "Grape", "Cranberry"], correctIndex: 0, category: "Food" },
+  { id: "ttt4", question: "City I moved from?", options: ["Chicago", "Los Angeles", "Miami", "Houston"], correctIndex: 0, category: "Background" },
+  { id: "ttt5", question: "Until what grade was I homeschooled?", options: ["4th", "6th", "2nd", "8th"], correctIndex: 0, category: "Background" },
+  { id: "ttt6", question: "Movie that makes me cry?", options: ["A Walk to Remember", "The Notebook", "Titanic", "P.S. I Love You"], correctIndex: 0, category: "Movies" },
+  { id: "ttt7", question: "My go-to Starbucks order?", options: ["Caramel Ribbon Crunch", "Mocha Frappuccino", "Chai Latte", "Pink Drink"], correctIndex: 0, category: "Food" },
+  { id: "ttt8", question: "Bucket list destination?", options: ["Greece", "Japan", "Australia", "Iceland"], correctIndex: 0, category: "Travel" },
+  { id: "ttt9", question: "Who homeschooled me?", options: ["Grandmother", "Mother", "Private Tutor", "Aunt"], correctIndex: 0, category: "Background" },
+  { id: "ttt10", question: "Show I was obsessed with?", options: ["Lizzie McGuire", "Hannah Montana", "That's So Raven", "The Suite Life"], correctIndex: 0, category: "TV" },
+  { id: "ttt11", question: "Format I own Cinderella on?", options: ["VHS", "DVD", "Blu-ray", "Digital"], correctIndex: 0, category: "Movies" },
+  { id: "ttt12", question: "My favorite fried chicken spot?", options: ["Broadway Chicken", "Popeyes", "Chick-fil-A", "KFC"], correctIndex: 0, category: "Food" },
+  { id: "ttt13", question: "Country I've traveled to?", options: ["South Africa", "Australia", "Brazil", "Thailand"], correctIndex: 0, category: "Travel" },
+  { id: "ttt14", question: "Hilary Duff album I love?", options: ["Metamorphosis", "Dignity", "Breathe In. Breathe Out.", "Most Wanted"], correctIndex: 0, category: "Music" },
+  { id: "ttt15", question: "What Cinderella version is my fave?", options: ["Brandy & Whitney", "Animated 1950", "Lily James", "Drew Barrymore"], correctIndex: 0, category: "Movies" },
+]
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
 interface TwoTruthsRound {
@@ -521,13 +481,21 @@ export interface BrainGamesState {
   showPersonaResult: boolean
   personaStreak: number
   personaCardsAnswered: string[]
-  // Connections puzzle state (group items into categories)
-  currentConnectionsPuzzle: ConnectionsPuzzle | null
-  connectionsSelected: string[] // Currently selected items (max 4)
-  connectionsSolved: number[] // Indices of solved categories (0-3)
-  connectionsMistakes: number // Number of wrong guesses (max 4)
-  connectionsComplete: boolean
-  connectionsPuzzlesPlayed: string[]
+  // UNO quiz game state
+  currentUnoRound: UnoRound | null
+  unoHand: UnoCard[]
+  unoSelectedCard: UnoCard | null
+  showUnoResult: boolean
+  unoScore: number
+  unoRoundsPlayed: string[]
+  // Tic-Tac-Toe game state
+  ticTacToeBoard: (string | null)[]
+  ticTacToeCurrentQuestion: TicTacToeQuestion | null
+  ticTacToeSelectedCell: number | null
+  ticTacToePlayerTurn: boolean
+  ticTacToeGameOver: boolean
+  ticTacToeWinner: string | null
+  ticTacToeQuestionsUsed: string[]
   // Two Truths game state
   currentTruthsRound: TwoTruthsRound | null
   selectedTruthsAnswer: number | null
@@ -557,13 +525,21 @@ export const initialBrainGamesState: BrainGamesState = {
   showPersonaResult: false,
   personaStreak: 0,
   personaCardsAnswered: [],
-  // Connections puzzle state
-  currentConnectionsPuzzle: null,
-  connectionsSelected: [],
-  connectionsSolved: [],
-  connectionsMistakes: 0,
-  connectionsComplete: false,
-  connectionsPuzzlesPlayed: [],
+  // UNO quiz game state
+  currentUnoRound: null,
+  unoHand: [],
+  unoSelectedCard: null,
+  showUnoResult: false,
+  unoScore: 0,
+  unoRoundsPlayed: [],
+  // Tic-Tac-Toe game state
+  ticTacToeBoard: Array(9).fill(null),
+  ticTacToeCurrentQuestion: null,
+  ticTacToeSelectedCell: null,
+  ticTacToePlayerTurn: true,
+  ticTacToeGameOver: false,
+  ticTacToeWinner: null,
+  ticTacToeQuestionsUsed: [],
   // Two Truths game state
   currentTruthsRound: null,
   selectedTruthsAnswer: null,
@@ -610,12 +586,19 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
   const currentPersonaCard = localState.currentPersonaCard || null
   const selectedCategory = localState.selectedCategory || null
   const personaCardsAnswered = localState.personaCardsAnswered || []
-  const currentConnectionsPuzzle = localState.currentConnectionsPuzzle || null
-  const connectionsSelected = localState.connectionsSelected || []
-  const connectionsSolved = localState.connectionsSolved || []
-  const connectionsMistakes = localState.connectionsMistakes || 0
-  const connectionsComplete = localState.connectionsComplete || false
-  const connectionsPuzzlesPlayed = localState.connectionsPuzzlesPlayed || []
+  const currentUnoRound = localState.currentUnoRound || null
+  const unoHand = localState.unoHand || []
+  const unoSelectedCard = localState.unoSelectedCard || null
+  const showUnoResult = localState.showUnoResult || false
+  const unoScore = localState.unoScore || 0
+  const unoRoundsPlayed = localState.unoRoundsPlayed || []
+  const ticTacToeBoard = localState.ticTacToeBoard || Array(9).fill(null)
+  const ticTacToeCurrentQuestion = localState.ticTacToeCurrentQuestion || null
+  const ticTacToeSelectedCell = localState.ticTacToeSelectedCell
+  const ticTacToePlayerTurn = localState.ticTacToePlayerTurn !== false
+  const ticTacToeGameOver = localState.ticTacToeGameOver || false
+  const ticTacToeWinner = localState.ticTacToeWinner || null
+  const ticTacToeQuestionsUsed = localState.ticTacToeQuestionsUsed || []
   const truthsRoundsPlayed = localState.truthsRoundsPlayed || []
   
   // Get current logic puzzle from ID
@@ -812,94 +795,199 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     })
   }
 
-  // Connections puzzle functions (GROUP ITEMS INTO CATEGORIES)
-  const getRandomConnectionsPuzzle = (): ConnectionsPuzzle => {
-    const unplayed = connectionsPuzzles.filter(p => !connectionsPuzzlesPlayed.includes(p.id))
+  // UNO Quiz Game Functions
+  const generateUnoHand = (round: UnoRound): UnoCard[] => {
+    const colors: UnoColor[] = ["red", "blue", "green", "yellow"]
+    const hand: UnoCard[] = []
+    
+    // Add the correct card
+    hand.push({
+      id: `correct-${round.id}`,
+      color: round.correctColor,
+      fact: round.correctFact,
+      isCorrect: true
+    })
+    
+    // Add 3 distractor cards (different colors with wrong facts)
+    const otherColors = colors.filter(c => c !== round.correctColor)
+    otherColors.forEach(color => {
+      const distractors = unoDistractors[color]
+      const randomFact = distractors[Math.floor(Math.random() * distractors.length)]
+      hand.push({
+        id: `${color}-${round.id}`,
+        color,
+        fact: randomFact,
+        isCorrect: false
+      })
+    })
+    
+    // Shuffle the hand
+    return hand.sort(() => Math.random() - 0.5)
+  }
+
+  const getRandomUnoRound = (): UnoRound => {
+    const unplayed = unoRounds.filter(r => !unoRoundsPlayed.includes(r.id))
     if (unplayed.length === 0) {
-      return connectionsPuzzles[Math.floor(Math.random() * connectionsPuzzles.length)]
+      return unoRounds[Math.floor(Math.random() * unoRounds.length)]
     }
     return unplayed[Math.floor(Math.random() * unplayed.length)]
   }
 
-  const startConnectionsGame = () => {
-    const puzzle = getRandomConnectionsPuzzle()
+  const startUnoGame = () => {
+    const round = getRandomUnoRound()
+    const hand = generateUnoHand(round)
     updateState({
-      gameMode: "trivia", // reusing trivia mode for connections
-      currentConnectionsPuzzle: puzzle,
-      connectionsSelected: [],
-      connectionsSolved: [],
-      connectionsMistakes: 0,
-      connectionsComplete: false
+      gameMode: "uno",
+      currentUnoRound: round,
+      unoHand: hand,
+      unoSelectedCard: null,
+      showUnoResult: false
     })
   }
 
-  const handleConnectionsItemClick = (item: string) => {
-    if (connectionsComplete || connectionsMistakes >= 4) return
+  const handleUnoCardSelect = (card: UnoCard) => {
+    if (showUnoResult) return
     
-    // Check if item is already in a solved category
-    const solvedItems = connectionsSolved.flatMap(idx => 
-      currentConnectionsPuzzle?.categories[idx].items || []
-    )
-    if (solvedItems.includes(item)) return
-    
-    // Toggle selection
-    if (connectionsSelected.includes(item)) {
-      updateState({ connectionsSelected: connectionsSelected.filter(i => i !== item) })
-    } else if (connectionsSelected.length < 4) {
-      updateState({ connectionsSelected: [...connectionsSelected, item] })
-    }
-  }
-
-  const submitConnectionsGuess = () => {
-    if (connectionsSelected.length !== 4 || !currentConnectionsPuzzle) return
-    
-    // Check if selected items match any unsolved category
-    const unsolvedCategories = currentConnectionsPuzzle.categories
-      .map((cat, idx) => ({ cat, idx }))
-      .filter(({ idx }) => !connectionsSolved.includes(idx))
-    
-    const matchedCategory = unsolvedCategories.find(({ cat }) => 
-      cat.items.every(item => connectionsSelected.includes(item))
-    )
-    
-    if (matchedCategory) {
-      const newSolved = [...connectionsSolved, matchedCategory.idx]
-      const isComplete = newSolved.length === 4
-      const newScore = totalScore + (isComplete ? 4 : 1)
-      
+    if (card.isCorrect) {
+      const newScore = totalScore + 2
       updateState({
-        connectionsSolved: newSolved,
-        connectionsSelected: [],
-        connectionsComplete: isComplete,
+        unoSelectedCard: card,
+        showUnoResult: true,
+        unoScore: unoScore + 1,
         totalScore: newScore,
-        connectionsPuzzlesPlayed: isComplete 
-          ? [...connectionsPuzzlesPlayed, currentConnectionsPuzzle.id]
-          : connectionsPuzzlesPlayed
+        unoRoundsPlayed: [...unoRoundsPlayed, currentUnoRound?.id || '']
       })
       onScoreChange?.(newScore)
     } else {
-      // Wrong guess
-      const newMistakes = connectionsMistakes + 1
       updateState({
-        connectionsMistakes: newMistakes,
-        connectionsSelected: [],
-        connectionsComplete: newMistakes >= 4,
-        connectionsPuzzlesPlayed: newMistakes >= 4 
-          ? [...connectionsPuzzlesPlayed, currentConnectionsPuzzle.id]
-          : connectionsPuzzlesPlayed
+        unoSelectedCard: card,
+        showUnoResult: true,
+        unoRoundsPlayed: [...unoRoundsPlayed, currentUnoRound?.id || '']
       })
     }
   }
 
-  const nextConnectionsPuzzle = () => {
-    const puzzle = getRandomConnectionsPuzzle()
+  const nextUnoRound = () => {
+    const round = getRandomUnoRound()
+    const hand = generateUnoHand(round)
     updateState({
-      currentConnectionsPuzzle: puzzle,
-      connectionsSelected: [],
-      connectionsSolved: [],
-      connectionsMistakes: 0,
-      connectionsComplete: false
+      currentUnoRound: round,
+      unoHand: hand,
+      unoSelectedCard: null,
+      showUnoResult: false
     })
+  }
+
+  // Tic-Tac-Toe Game Functions
+  const getRandomTicTacToeQuestion = (): TicTacToeQuestion => {
+    const unused = ticTacToeQuestions.filter(q => !ticTacToeQuestionsUsed.includes(q.id))
+    if (unused.length === 0) {
+      return ticTacToeQuestions[Math.floor(Math.random() * ticTacToeQuestions.length)]
+    }
+    return unused[Math.floor(Math.random() * unused.length)]
+  }
+
+  const shuffleOptions = (question: TicTacToeQuestion): TicTacToeQuestion => {
+    const correctAnswer = question.options[question.correctIndex]
+    const shuffled = [...question.options].sort(() => Math.random() - 0.5)
+    return {
+      ...question,
+      options: shuffled,
+      correctIndex: shuffled.indexOf(correctAnswer)
+    }
+  }
+
+  const startTicTacToeGame = () => {
+    updateState({
+      gameMode: "tictactoe",
+      ticTacToeBoard: Array(9).fill(null),
+      ticTacToeCurrentQuestion: null,
+      ticTacToeSelectedCell: null,
+      ticTacToePlayerTurn: true,
+      ticTacToeGameOver: false,
+      ticTacToeWinner: null,
+      ticTacToeQuestionsUsed: []
+    })
+  }
+
+  const handleTicTacToeCellClick = (index: number) => {
+    if (ticTacToeBoard[index] || ticTacToeGameOver || ticTacToeCurrentQuestion) return
+    
+    const question = shuffleOptions(getRandomTicTacToeQuestion())
+    updateState({
+      ticTacToeSelectedCell: index,
+      ticTacToeCurrentQuestion: question,
+      ticTacToeQuestionsUsed: [...ticTacToeQuestionsUsed, question.id]
+    })
+  }
+
+  const checkWinner = (board: (string | null)[]): string | null => {
+    const lines = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // cols
+      [0, 4, 8], [2, 4, 6] // diagonals
+    ]
+    for (const [a, b, c] of lines) {
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return board[a]
+      }
+    }
+    return null
+  }
+
+  const handleTicTacToeAnswer = (answerIndex: number) => {
+    if (!ticTacToeCurrentQuestion || ticTacToeSelectedCell === null) return
+    
+    const isCorrect = answerIndex === ticTacToeCurrentQuestion.correctIndex
+    const newBoard = [...ticTacToeBoard]
+    
+    if (isCorrect) {
+      newBoard[ticTacToeSelectedCell] = "X"
+      const winner = checkWinner(newBoard)
+      const isFull = newBoard.every(cell => cell !== null)
+      
+      if (winner || isFull) {
+        const newScore = winner === "X" ? totalScore + 5 : totalScore
+        updateState({
+          ticTacToeBoard: newBoard,
+          ticTacToeCurrentQuestion: null,
+          ticTacToeSelectedCell: null,
+          ticTacToeGameOver: true,
+          ticTacToeWinner: winner,
+          totalScore: newScore
+        })
+        if (winner === "X") onScoreChange?.(newScore)
+      } else {
+        // Computer's turn
+        const emptyCells = newBoard.map((cell, i) => cell === null ? i : -1).filter(i => i !== -1)
+        const computerMove = emptyCells[Math.floor(Math.random() * emptyCells.length)]
+        newBoard[computerMove] = "O"
+        
+        const winnerAfterComputer = checkWinner(newBoard)
+        const isFullAfterComputer = newBoard.every(cell => cell !== null)
+        
+        updateState({
+          ticTacToeBoard: newBoard,
+          ticTacToeCurrentQuestion: null,
+          ticTacToeSelectedCell: null,
+          ticTacToeGameOver: winnerAfterComputer !== null || isFullAfterComputer,
+          ticTacToeWinner: winnerAfterComputer
+        })
+      }
+    } else {
+      // Wrong answer - computer gets the cell
+      newBoard[ticTacToeSelectedCell] = "O"
+      const winner = checkWinner(newBoard)
+      const isFull = newBoard.every(cell => cell !== null)
+      
+      updateState({
+        ticTacToeBoard: newBoard,
+        ticTacToeCurrentQuestion: null,
+        ticTacToeSelectedCell: null,
+        ticTacToeGameOver: winner !== null || isFull,
+        ticTacToeWinner: winner
+      })
+    }
   }
 
   // Two Truths game functions
@@ -1001,35 +1089,25 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             </div>
           </button>
 
-          {/* Connections Puzzle - Group items into categories */}
+          {/* UNO Quiz Game */}
           <button
-            onClick={() => startConnectionsGame()}
-            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-pink-950/80 to-rose-900/50 rounded-2xl border border-pink-500/30 hover:border-pink-400/50 hover:shadow-[0_0_30px_rgba(236,72,153,0.3)] transition-all active:scale-[0.98]"
+            onClick={() => startUnoGame()}
+            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-red-950/80 to-orange-900/50 rounded-2xl border border-red-500/30 hover:border-red-400/50 hover:shadow-[0_0_30px_rgba(239,68,68,0.3)] transition-all active:scale-[0.98]"
           >
-            {/* Connections grid icon */}
+            {/* UNO cards icon */}
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
-              <rect width="100" height="100" rx="20" fill="#831843"/>
-              {/* 4x4 grid of items */}
-              <rect x="12" y="12" width="18" height="18" rx="3" fill="#eab308"/>
-              <rect x="33" y="12" width="18" height="18" rx="3" fill="#eab308"/>
-              <rect x="54" y="12" width="18" height="18" rx="3" fill="#22c55e"/>
-              <rect x="75" y="12" width="18" height="18" rx="3" fill="#22c55e"/>
-              <rect x="12" y="33" width="18" height="18" rx="3" fill="#3b82f6"/>
-              <rect x="33" y="33" width="18" height="18" rx="3" fill="#eab308"/>
-              <rect x="54" y="33" width="18" height="18" rx="3" fill="#a855f7"/>
-              <rect x="75" y="33" width="18" height="18" rx="3" fill="#3b82f6"/>
-              <rect x="12" y="54" width="18" height="18" rx="3" fill="#a855f7"/>
-              <rect x="33" y="54" width="18" height="18" rx="3" fill="#22c55e"/>
-              <rect x="54" y="54" width="18" height="18" rx="3" fill="#3b82f6"/>
-              <rect x="75" y="54" width="18" height="18" rx="3" fill="#a855f7"/>
-              <rect x="12" y="75" width="18" height="18" rx="3" fill="#22c55e"/>
-              <rect x="33" y="75" width="18" height="18" rx="3" fill="#3b82f6"/>
-              <rect x="54" y="75" width="18" height="18" rx="3" fill="#eab308"/>
-              <rect x="75" y="75" width="18" height="18" rx="3" fill="#a855f7"/>
+              <rect width="100" height="100" rx="20" fill="#450a0a"/>
+              {/* Stacked UNO cards */}
+              <rect x="15" y="20" width="30" height="45" rx="4" fill="#ef4444" transform="rotate(-15 30 42)"/>
+              <rect x="28" y="18" width="30" height="45" rx="4" fill="#eab308" transform="rotate(-5 43 40)"/>
+              <rect x="40" y="20" width="30" height="45" rx="4" fill="#22c55e" transform="rotate(5 55 42)"/>
+              <rect x="50" y="22" width="30" height="45" rx="4" fill="#3b82f6" transform="rotate(15 65 44)"/>
+              {/* UNO text */}
+              <text x="50" y="82" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">UNO</text>
             </svg>
             <div className="text-center">
-              <p className="text-pink-300 font-bold text-sm md:text-lg">Connections</p>
-              <p className="text-pink-400/50 text-xs md:text-sm">Group the items!</p>
+              <p className="text-red-300 font-bold text-sm md:text-lg">UNO Quiz</p>
+              <p className="text-red-400/50 text-xs md:text-sm">Play the right card!</p>
             </div>
           </button>
 
@@ -1061,31 +1139,29 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             </div>
           </button>
 
-          {/* Logic Grids - Charity's Favorite */}
+          {/* Tic-Tac-Toe Quiz */}
           <button
-            onClick={() => updateState({ gameMode: "logic" })}
+            onClick={() => startTicTacToeGame()}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-amber-950/80 to-orange-900/50 rounded-2xl border border-amber-500/30 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all active:scale-[0.98] relative overflow-hidden"
           >
-            <div className="absolute top-2 right-2 px-2 py-0.5 bg-amber-500 rounded-full">
-              <span className="text-[10px] font-bold text-amber-950">MY FAVE</span>
-            </div>
+            {/* Tic-Tac-Toe grid icon */}
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
-              <style>{`
-                @keyframes gridPulse1 { 0%, 100% { filter: drop-shadow(0 0 2px #f59e0b); } 50% { filter: drop-shadow(0 0 10px #f59e0b); } }
-                @keyframes gridPulse2 { 0%, 100% { filter: drop-shadow(0 0 2px #fbbf24); } 50% { filter: drop-shadow(0 0 10px #fbbf24); } }
-                .grid-line1 { animation: gridPulse1 2s infinite ease-in-out; }
-                .grid-line2 { animation: gridPulse2 2s infinite ease-in-out 0.5s; }
-              `}</style>
               <rect width="100" height="100" rx="20" fill="#451a03"/>
-              <g strokeWidth="4" fill="none" strokeLinecap="round">
-                <path d="M20 30 H80" stroke="#f59e0b" className="grid-line1"/>
-                <path d="M30 50 H70" stroke="#fbbf24" className="grid-line2"/>
-                <path d="M40 70 H60" stroke="#fcd34d" className="grid-line1"/>
-              </g>
+              {/* Grid lines */}
+              <line x1="38" y1="20" x2="38" y2="80" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round"/>
+              <line x1="62" y1="20" x2="62" y2="80" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round"/>
+              <line x1="20" y1="38" x2="80" y2="38" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round"/>
+              <line x1="20" y1="62" x2="80" y2="62" stroke="#f59e0b" strokeWidth="4" strokeLinecap="round"/>
+              {/* X */}
+              <path d="M24 24 L34 34 M34 24 L24 34" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
+              {/* O */}
+              <circle cx="74" cy="29" r="7" stroke="#fcd34d" strokeWidth="3" fill="none"/>
+              {/* X */}
+              <path d="M66 66 L82 82 M82 66 L66 82" stroke="#fbbf24" strokeWidth="3" strokeLinecap="round"/>
             </svg>
             <div className="text-center">
-              <p className="text-amber-300 font-bold text-sm md:text-lg">Logic Grids</p>
-              <p className="text-amber-400/50 text-xs md:text-sm">Play my favorite!</p>
+              <p className="text-amber-300 font-bold text-sm md:text-lg">Tic-Tac-Toe</p>
+              <p className="text-amber-400/50 text-xs md:text-sm">Answer to place X!</p>
             </div>
           </button>
         </div>
@@ -1108,8 +1184,12 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                   <p>Sort statements about Charity into categories: Needs, Pain Points, Goals, or Behaviors.</p>
                 </div>
                 <div>
-                  <p className="text-pink-300 font-semibold">Connections</p>
-                  <p>Find 4 groups of 4 items that belong together. Select 4 items and submit your guess!</p>
+                  <p className="text-red-300 font-semibold">UNO Quiz</p>
+                  <p>Play the right card! Match the prompt with the correct fact about Charity. Pick the right colored card!</p>
+                </div>
+                <div>
+                  <p className="text-amber-300 font-semibold">Tic-Tac-Toe</p>
+                  <p>Answer trivia questions to place your X on the board. Beat the computer to win!</p>
                 </div>
                 <div>
                   <p className="text-emerald-300 font-semibold">Two Truths & a Lie</p>
@@ -1377,149 +1457,174 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     )
   }
 
-  // Connections Puzzle (Group 16 items into 4 categories of 4)
-  if (gameMode === "trivia" && currentConnectionsPuzzle) {
-    // Get ALL items shuffled once using puzzle ID as seed (stable order)
-    const allItems = currentConnectionsPuzzle.categories.flatMap(cat => cat.items)
-    const shuffledAllItems = seededShuffle(allItems, currentConnectionsPuzzle.id)
-    
-    // Get solved items
-    const solvedItems = connectionsSolved.flatMap(idx => 
-      currentConnectionsPuzzle.categories[idx].items
-    )
-    
-    // Filter out solved items but keep the shuffled order
-    const displayItems = shuffledAllItems.filter(item => !solvedItems.includes(item))
-
+  // UNO Quiz Game
+  if (gameMode === "uno" && currentUnoRound) {
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
         <div className="w-full flex items-center justify-between">
-          <button onClick={backToMenu} className="flex items-center gap-1 text-pink-400 text-sm hover:text-pink-300">
+          <button onClick={backToMenu} className="flex items-center gap-1 text-red-400 text-sm hover:text-red-300">
             <ChevronLeft className="w-5 h-5" /> Back
           </button>
           <div className="flex items-center gap-4">
-            <span className="text-pink-400/60 text-sm">Mistakes: {connectionsMistakes}/4</span>
-            <span className="text-pink-400 text-sm font-semibold">Score: {totalScore}</span>
+            <span className="text-red-400/60 text-sm">Cards Won: {unoScore}</span>
+            <span className="text-red-400 text-sm font-semibold">Score: {totalScore}</span>
           </div>
         </div>
 
-        {/* Instructions */}
-        <p className="text-pink-200 text-center text-sm">
-          Find 4 groups of 4 items that belong together
-        </p>
+        {/* Category Badge */}
+        <div className="px-4 py-2 rounded-full bg-gradient-to-r from-red-600 to-orange-600 text-white text-sm font-medium">
+          {currentUnoRound.category}
+        </div>
 
-        {/* Solved Categories (shown at top) */}
-        {connectionsSolved.length > 0 && (
-          <div className="w-full space-y-2">
-            {connectionsSolved
-              .sort((a, b) => currentConnectionsPuzzle.categories[a].difficulty - currentConnectionsPuzzle.categories[b].difficulty)
-              .map(idx => {
-                const cat = currentConnectionsPuzzle.categories[idx]
-                return (
-                  <div 
-                    key={idx}
-                    className={`w-full p-3 rounded-xl bg-gradient-to-r ${cat.color} text-white text-center`}
-                  >
-                    <p className="font-bold text-sm">{cat.name}</p>
-                    <p className="text-xs opacity-80">{cat.items.join(", ")}</p>
-                  </div>
-                )
-              })}
-          </div>
-        )}
+        {/* Question Prompt */}
+        <div className="w-full p-4 bg-gradient-to-r from-red-950/60 to-orange-950/40 rounded-xl border border-red-500/30 text-center">
+          <p className="text-red-200 text-lg md:text-xl font-medium">{currentUnoRound.prompt}</p>
+        </div>
 
-        {/* Item Grid */}
-        {!connectionsComplete && (
-          <div className="grid grid-cols-4 gap-2 w-full">
-            {displayItems.map((item) => {
-              const isSelected = connectionsSelected.includes(item)
+        {/* UNO Cards Hand */}
+        <div className="w-full">
+          <p className="text-red-300/60 text-sm text-center mb-3">Pick a card:</p>
+          <div className="grid grid-cols-2 gap-3">
+            {unoHand.map((card) => {
+              const styles = unoColorStyles[card.color]
+              const isSelected = unoSelectedCard?.id === card.id
+              const isCorrect = card.isCorrect
+              const showResult = showUnoResult
+              
               return (
                 <button
-                  key={item}
-                  onClick={() => handleConnectionsItemClick(item)}
-                  className={`p-2 md:p-3 rounded-lg text-xs md:text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98] ${
-                    isSelected
-                      ? 'bg-pink-500 text-white border-2 border-pink-300 shadow-[0_0_15px_rgba(236,72,153,0.4)]'
-                      : 'bg-pink-900/40 text-pink-100 border border-pink-500/30 hover:border-pink-400/50'
+                  key={card.id}
+                  onClick={() => handleUnoCardSelect(card)}
+                  disabled={showUnoResult}
+                  className={`relative p-4 rounded-xl border-2 transition-all hover:scale-[1.02] active:scale-[0.98] ${
+                    showResult
+                      ? isCorrect
+                        ? 'bg-green-600 border-green-400 shadow-[0_0_20px_rgba(34,197,94,0.4)]'
+                        : isSelected
+                          ? 'bg-red-800 border-red-500 opacity-60'
+                          : `${styles.bg} ${styles.border} opacity-40`
+                      : `${styles.bg} ${styles.border} hover:shadow-[0_0_15px_rgba(255,255,255,0.2)]`
                   }`}
                 >
-                  {item}
+                  {/* UNO card design */}
+                  <div className="absolute top-1 left-2 text-white/60 text-xs font-bold uppercase">{card.color}</div>
+                  <div className="absolute top-1 right-2 w-4 h-4 rounded-full bg-white/20" />
+                  <p className={`text-center font-semibold text-sm md:text-base mt-3 ${showResult && isCorrect ? 'text-white' : styles.text}`}>
+                    {card.fact}
+                  </p>
+                  {showResult && isCorrect && (
+                    <div className="mt-2 flex justify-center">
+                      <CheckCircle className="w-6 h-6 text-white" />
+                    </div>
+                  )}
+                  {showResult && isSelected && !isCorrect && (
+                    <div className="mt-2 flex justify-center">
+                      <XCircle className="w-6 h-6 text-red-300" />
+                    </div>
+                  )}
                 </button>
               )
             })}
           </div>
-        )}
+        </div>
 
-        {/* Last Try Warning */}
-        {!connectionsComplete && connectionsMistakes === 3 && (
-          <div className="w-full p-3 bg-amber-900/40 border border-amber-500/50 rounded-xl text-center">
-            <p className="text-amber-300 font-semibold text-sm">
-              You have one more try before I show you the answer!
-            </p>
-          </div>
-        )}
-
-        {/* Selection Counter & Submit */}
-        {!connectionsComplete && (
-          <div className="w-full flex items-center justify-between">
-            <span className="text-pink-400/60 text-sm">
-              {connectionsSelected.length}/4 selected
-            </span>
-            <button
-              onClick={submitConnectionsGuess}
-              disabled={connectionsSelected.length !== 4}
-              className={`px-6 py-2 rounded-xl font-semibold transition-all ${
-                connectionsSelected.length === 4
-                  ? 'bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white'
-                  : 'bg-pink-900/30 text-pink-400/50 cursor-not-allowed'
-              }`}
-            >
-              Submit
-            </button>
-          </div>
-        )}
-
-        {/* Game Over */}
-        {connectionsComplete && (
-          <div className="w-full space-y-4">
-            <div className={`text-center ${connectionsSolved.length === 4 ? 'text-green-400' : 'text-red-400'}`}>
+        {/* Result & Next */}
+        {showUnoResult && (
+          <div className="w-full space-y-4 mt-2">
+            <div className={`text-center ${unoSelectedCard?.isCorrect ? 'text-green-400' : 'text-red-400'}`}>
               <p className="text-xl font-bold">
-                {connectionsSolved.length === 4 ? 'You got them all!' : 'Wrong! Here are the answers:'}
+                {unoSelectedCard?.isCorrect ? 'UNO! Correct!' : 'Wrong card!'}
               </p>
-              {connectionsSolved.length === 4 && (
-                <p className="text-sm mt-1 opacity-70">
-                  {connectionsSolved.length}/4 categories found
-                </p>
-              )}
             </div>
-            
-            {/* Show remaining categories if game over from mistakes */}
-            {connectionsMistakes >= 4 && connectionsSolved.length < 4 && (
-              <div className="space-y-2">
-                {currentConnectionsPuzzle.categories
-                  .filter((_, idx) => !connectionsSolved.includes(idx))
-                  .map((cat, idx) => (
-                    <div key={idx} className={`w-full p-2 rounded-lg bg-gradient-to-r ${cat.color} text-white text-center opacity-70`}>
-                      <p className="font-bold text-xs">{cat.name}</p>
-                      <p className="text-[10px] opacity-80">{cat.items.join(", ")}</p>
-                    </div>
-                  ))}
-              </div>
-            )}
-            
             <button
-              onClick={nextConnectionsPuzzle}
-              className="w-full py-3 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+              onClick={nextUnoRound}
+              className="w-full py-3 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-500 hover:to-orange-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
             >
-              Try Another Puzzle <RefreshCw className="w-4 h-4" />
+              Next Round <RefreshCw className="w-4 h-4" />
             </button>
           </div>
         )}
 
         {/* Progress */}
-        <div className="text-center text-pink-400/60 text-sm">
-          {connectionsPuzzlesPlayed.length} of {connectionsPuzzles.length} puzzles played
+        <div className="text-center text-red-400/60 text-sm">
+          {unoRoundsPlayed.length} of {unoRounds.length} rounds played
         </div>
+      </div>
+    )
+  }
+
+  // Tic-Tac-Toe Quiz Game
+  if (gameMode === "tictactoe") {
+    return (
+      <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
+        <div className="w-full flex items-center justify-between">
+          <button onClick={backToMenu} className="flex items-center gap-1 text-amber-400 text-sm hover:text-amber-300">
+            <ChevronLeft className="w-5 h-5" /> Back
+          </button>
+          <span className="text-amber-400 text-sm font-semibold">Score: {totalScore}</span>
+        </div>
+
+        {/* Instructions */}
+        <p className="text-amber-200 text-center text-sm">
+          {ticTacToeCurrentQuestion ? "Answer correctly to place your X!" : "Tap a cell to play!"}
+        </p>
+
+        {/* Tic-Tac-Toe Board */}
+        <div className="grid grid-cols-3 gap-2 w-full max-w-[280px] aspect-square">
+          {ticTacToeBoard.map((cell, index) => (
+            <button
+              key={index}
+              onClick={() => handleTicTacToeCellClick(index)}
+              disabled={cell !== null || ticTacToeGameOver || ticTacToeCurrentQuestion !== null}
+              className={`aspect-square rounded-xl border-2 transition-all flex items-center justify-center text-4xl font-bold ${
+                cell === "X"
+                  ? 'bg-amber-600 border-amber-400 text-white'
+                  : cell === "O"
+                    ? 'bg-red-600 border-red-400 text-white'
+                    : ticTacToeSelectedCell === index
+                      ? 'bg-amber-500/50 border-amber-400 animate-pulse'
+                      : 'bg-amber-900/30 border-amber-500/30 hover:border-amber-400/50 hover:bg-amber-800/40'
+              }`}
+            >
+              {cell}
+            </button>
+          ))}
+        </div>
+
+        {/* Question Modal */}
+        {ticTacToeCurrentQuestion && (
+          <div className="w-full p-4 bg-gradient-to-r from-amber-950/80 to-orange-950/60 rounded-xl border border-amber-500/40">
+            <p className="text-amber-200 text-center font-medium mb-4">{ticTacToeCurrentQuestion.question}</p>
+            <div className="grid grid-cols-2 gap-2">
+              {ticTacToeCurrentQuestion.options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleTicTacToeAnswer(index)}
+                  className="p-3 bg-amber-800/50 hover:bg-amber-700/60 rounded-lg border border-amber-500/30 text-amber-100 text-sm font-medium transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Game Over */}
+        {ticTacToeGameOver && (
+          <div className="w-full space-y-4">
+            <div className={`text-center ${ticTacToeWinner === "X" ? 'text-green-400' : ticTacToeWinner === "O" ? 'text-red-400' : 'text-amber-400'}`}>
+              <p className="text-xl font-bold">
+                {ticTacToeWinner === "X" ? 'You Win! +5 points!' : ticTacToeWinner === "O" ? 'Computer Wins!' : "It's a Tie!"}
+              </p>
+            </div>
+            <button
+              onClick={startTicTacToeGame}
+              className="w-full py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+            >
+              Play Again <RefreshCw className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
     )
   }
