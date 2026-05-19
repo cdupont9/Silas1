@@ -315,58 +315,51 @@ const categoryInfo = {
 }
 
 // ============ UNO QUIZ GAME ============
-// Match cards by color (category) or play the right fact!
+// Match the correct answer - each question has sensible wrong answers!
 type UnoColor = "red" | "blue" | "green" | "yellow"
 
 interface UnoCard {
   id: string
   color: UnoColor
   fact: string
-  isCorrect: boolean // Is this the right answer for the current prompt?
+  isCorrect: boolean
 }
 
 interface UnoRound {
   id: string
-  prompt: string // The question or prompt
+  prompt: string
   correctFact: string
   correctColor: UnoColor
   category: string
+  distractors: string[] // Wrong answers that make sense for THIS question
 }
 
 const unoRounds: UnoRound[] = [
   // Music (Red cards)
-  { id: "uno1", prompt: "Favorite childhood artist?", correctFact: "Hilary Duff", correctColor: "red", category: "Music" },
-  { id: "uno2", prompt: "Album I still listen to while driving?", correctFact: "Metamorphosis", correctColor: "red", category: "Music" },
-  { id: "uno3", prompt: "Favorite Hilary Duff song?", correctFact: "So Yesterday", correctColor: "red", category: "Music" },
-  { id: "uno4", prompt: "Other favorite artist from childhood?", correctFact: "Mandy Moore", correctColor: "red", category: "Music" },
-  { id: "uno5", prompt: "Favorite song from A Walk to Remember?", correctFact: "Only Hope", correctColor: "red", category: "Music" },
+  { id: "uno1", prompt: "Favorite childhood artist?", correctFact: "Hilary Duff", correctColor: "red", category: "Music", distractors: ["Britney Spears", "Christina Aguilera", "Jessica Simpson"] },
+  { id: "uno2", prompt: "Album I still listen to while driving?", correctFact: "Metamorphosis", correctColor: "red", category: "Music", distractors: ["Dignity", "Most Wanted", "Breathe In Breathe Out"] },
+  { id: "uno3", prompt: "Favorite Hilary Duff song?", correctFact: "So Yesterday", correctColor: "red", category: "Music", distractors: ["Come Clean", "Why Not", "Beat of My Heart"] },
+  { id: "uno4", prompt: "Other favorite artist from childhood?", correctFact: "Mandy Moore", correctColor: "red", category: "Music", distractors: ["Ashlee Simpson", "Lindsay Lohan", "JoJo"] },
+  { id: "uno5", prompt: "Favorite song from A Walk to Remember?", correctFact: "Only Hope", correctColor: "red", category: "Music", distractors: ["Cry", "Someday We'll Know", "It's Gonna Be Love"] },
   // Food (Yellow cards)
-  { id: "uno6", prompt: "Favorite juice?", correctFact: "Apple Juice", correctColor: "yellow", category: "Food" },
-  { id: "uno7", prompt: "Drink combo I love?", correctFact: "Lemonade + Ginger Ale", correctColor: "yellow", category: "Food" },
-  { id: "uno8", prompt: "Favorite fried chicken spot?", correctFact: "Broadway Chicken", correctColor: "yellow", category: "Food" },
-  { id: "uno9", prompt: "How do I like my chicken?", correctFact: "Hot Honey + Buttermilk", correctColor: "yellow", category: "Food" },
-  { id: "uno10", prompt: "Favorite Starbucks drink?", correctFact: "Caramel Ribbon Crunch", correctColor: "yellow", category: "Food" },
+  { id: "uno6", prompt: "Favorite juice?", correctFact: "Apple Juice", correctColor: "yellow", category: "Food", distractors: ["Orange Juice", "Grape Juice", "Cranberry Juice"] },
+  { id: "uno7", prompt: "Drink combo I love?", correctFact: "Lemonade + Ginger Ale", correctColor: "yellow", category: "Food", distractors: ["Sprite + Lemonade", "Coke + Lemonade", "Iced Tea + Lemonade"] },
+  { id: "uno8", prompt: "Favorite fried chicken spot?", correctFact: "Broadway Chicken", correctColor: "yellow", category: "Food", distractors: ["Popeyes", "Chick-fil-A", "KFC"] },
+  { id: "uno9", prompt: "How do I like my chicken?", correctFact: "Hot Honey + Buttermilk", correctColor: "yellow", category: "Food", distractors: ["Nashville Hot", "Original Recipe", "BBQ Glazed"] },
+  { id: "uno10", prompt: "Favorite Starbucks drink?", correctFact: "Caramel Ribbon Crunch", correctColor: "yellow", category: "Food", distractors: ["Mocha Frappuccino", "Chai Latte", "Pink Drink"] },
   // Travel/Background (Blue cards)
-  { id: "uno11", prompt: "Where did I move from?", correctFact: "Chicago", correctColor: "blue", category: "Background" },
-  { id: "uno12", prompt: "Until what grade was I homeschooled?", correctFact: "4th Grade", correctColor: "blue", category: "Background" },
-  { id: "uno13", prompt: "Who homeschooled me?", correctFact: "Grandmother", correctColor: "blue", category: "Background" },
-  { id: "uno14", prompt: "Bucket list destination?", correctFact: "Greece", correctColor: "blue", category: "Background" },
-  { id: "uno15", prompt: "Country I've visited?", correctFact: "South Africa", correctColor: "blue", category: "Background" },
+  { id: "uno11", prompt: "Where did I move from?", correctFact: "Chicago", correctColor: "blue", category: "Background", distractors: ["Los Angeles", "Miami", "Houston"] },
+  { id: "uno12", prompt: "Until what grade was I homeschooled?", correctFact: "4th Grade", correctColor: "blue", category: "Background", distractors: ["6th Grade", "2nd Grade", "8th Grade"] },
+  { id: "uno13", prompt: "Who homeschooled me?", correctFact: "Grandmother", correctColor: "blue", category: "Background", distractors: ["Mother", "Private Tutor", "Aunt"] },
+  { id: "uno14", prompt: "Bucket list destination?", correctFact: "Greece", correctColor: "blue", category: "Background", distractors: ["Japan", "Australia", "Iceland"] },
+  { id: "uno15", prompt: "Country I've visited?", correctFact: "South Africa", correctColor: "blue", category: "Background", distractors: ["Australia", "Brazil", "Thailand"] },
   // Movies/Disney (Green cards)
-  { id: "uno16", prompt: "Favorite Disney character?", correctFact: "Cinderella", correctColor: "green", category: "Movies" },
-  { id: "uno17", prompt: "Favorite Cinderella movie version?", correctFact: "Brandy + Whitney", correctColor: "green", category: "Movies" },
-  { id: "uno18", prompt: "Movie that makes me cry?", correctFact: "A Walk to Remember", correctColor: "green", category: "Movies" },
-  { id: "uno19", prompt: "TV show I was obsessed with?", correctFact: "Lizzie McGuire", correctColor: "green", category: "Movies" },
-  { id: "uno20", prompt: "What format do I still own Cinderella on?", correctFact: "VHS", correctColor: "green", category: "Movies" },
+  { id: "uno16", prompt: "Favorite Disney character?", correctFact: "Cinderella", correctColor: "green", category: "Movies", distractors: ["Belle", "Ariel", "Mulan"] },
+  { id: "uno17", prompt: "Favorite Cinderella movie version?", correctFact: "Brandy + Whitney", correctColor: "green", category: "Movies", distractors: ["Animated 1950", "Lily James Live Action", "Drew Barrymore Ever After"] },
+  { id: "uno18", prompt: "Movie that makes me cry?", correctFact: "A Walk to Remember", correctColor: "green", category: "Movies", distractors: ["The Notebook", "Titanic", "P.S. I Love You"] },
+  { id: "uno19", prompt: "TV show I was obsessed with?", correctFact: "Lizzie McGuire", correctColor: "green", category: "Movies", distractors: ["Hannah Montana", "That's So Raven", "The Suite Life"] },
+  { id: "uno20", prompt: "What format do I still own Cinderella on?", correctFact: "VHS", correctColor: "green", category: "Movies", distractors: ["DVD", "Blu-ray", "Digital Download"] },
 ]
-
-// Wrong answers for UNO cards (distractors)
-const unoDistractors: Record<UnoColor, string[]> = {
-  red: ["Taylor Swift", "Dignity Album", "Beat of My Heart", "Christina Aguilera", "With Love", "Britney Spears"],
-  yellow: ["Orange Juice", "Sprite + Lemonade", "Popeyes", "Nashville Hot", "Mocha Frappuccino", "BBQ Sauce"],
-  blue: ["Los Angeles", "6th Grade", "Private Tutor", "Japan", "Australia", "Hoboken"],
-  green: ["Belle", "Animated 1950", "The Notebook", "Hannah Montana", "DVD", "Streaming"],
-}
 
 const unoColorStyles: Record<UnoColor, { bg: string; border: string; text: string }> = {
   red: { bg: "bg-red-600", border: "border-red-400", text: "text-red-100" },
@@ -808,15 +801,13 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
       isCorrect: true
     })
     
-    // Add 3 distractor cards (different colors with wrong facts)
+    // Add 3 distractor cards using the question-specific distractors
     const otherColors = colors.filter(c => c !== round.correctColor)
-    otherColors.forEach(color => {
-      const distractors = unoDistractors[color]
-      const randomFact = distractors[Math.floor(Math.random() * distractors.length)]
+    round.distractors.forEach((distractor, index) => {
       hand.push({
-        id: `${color}-${round.id}`,
-        color,
-        fact: randomFact,
+        id: `distractor-${index}-${round.id}`,
+        color: otherColors[index % otherColors.length],
+        fact: distractor,
         isCorrect: false
       })
     })
