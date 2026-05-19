@@ -1267,29 +1267,19 @@ const messageText = mobileInput.trim()
   onClick={() => setMobileScreen('braingames')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
-                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(255,215,0,0.4)]">
-                    <style>{`
-                      @keyframes mobileGoldPulse { 0%, 100% { stroke: #FFD700; filter: drop-shadow(0 0 2px #FFD700) drop-shadow(0 0 8px #B8860B); } 50% { stroke: #FFFACD; filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 15px #FFD700); } }
-                      @keyframes mobileGoldDots { 0%, 100% { fill: #FFD700; opacity: 1; } 50% { fill: #FFFACD; opacity: 0.7; } }
-                      @keyframes mobileDiceFloat { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-5px) rotate(10deg); } }
-                      .mobile-dice-3d { animation: mobileDiceFloat 4s ease-in-out infinite; transform-origin: center; }
-                      .mobile-neon-gold { animation: mobileGoldPulse 2s infinite ease-in-out; }
-                      .mobile-gold-dots { animation: mobileGoldDots 2s infinite ease-in-out; }
-                    `}</style>
-                    <rect width="100" height="100" rx="20" fill="#1a1a2e"/>
-                    <g className="mobile-dice-3d">
-                      <path d="M50 20 L80 35 L50 50 L20 35 Z" fill="#000" className="mobile-neon-gold" strokeWidth="2"/>
-                      <path d="M20 35 L50 50 V80 L20 65 Z" fill="#000" className="mobile-neon-gold" strokeWidth="2"/>
-                      <path d="M80 35 L50 50 V80 L80 65 Z" fill="#000" className="mobile-neon-gold" strokeWidth="2"/>
-                      <g className="mobile-gold-dots">
-                        <circle cx="50" cy="35" r="4"/>
-                        <circle cx="32" cy="48" r="3"/>
-                        <circle cx="42" cy="65" r="3"/>
-                        <circle cx="62" cy="48" r="3"/>
-                        <circle cx="68" cy="58" r="3"/>
-                        <circle cx="74" cy="68" r="3"/>
-                      </g>
-                    </g>
+                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
+                    <rect width="100" height="100" rx="20" fill="#831843"/>
+                    {/* Tic-Tac-Toe grid */}
+                    <line x1="38" y1="20" x2="38" y2="80" stroke="#ec4899" strokeWidth="4" strokeLinecap="round"/>
+                    <line x1="62" y1="20" x2="62" y2="80" stroke="#ec4899" strokeWidth="4" strokeLinecap="round"/>
+                    <line x1="20" y1="38" x2="80" y2="38" stroke="#ec4899" strokeWidth="4" strokeLinecap="round"/>
+                    <line x1="20" y1="62" x2="80" y2="62" stroke="#ec4899" strokeWidth="4" strokeLinecap="round"/>
+                    {/* X */}
+                    <path d="M24 24 L34 34 M34 24 L24 34" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
+                    {/* O */}
+                    <circle cx="74" cy="29" r="7" stroke="#f9a8d4" strokeWidth="3" fill="none"/>
+                    {/* X */}
+                    <path d="M66 66 L82 82 M82 66 L66 82" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
                   </svg>
                   <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
@@ -3047,24 +3037,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <img src={MEMOJI_URL} alt="Charity's Memoji" className="w-full h-full object-cover animate-memoji-wink" />
             </div>
             <h1 className="text-white text-2xl font-medium mt-2 mb-4">Charity{"'"}s Portfolio</h1>
-            <form onSubmit={handleLogin} className="relative">
-              <div className="relative">
-                <input
-                  type="text"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleLogin(e); } }}
-                  placeholder="Enter"
-                  className="w-64 h-10 bg-white/20 backdrop-blur-xl rounded-full px-5 pr-10 text-white placeholder-white/50 text-sm border border-white/30 focus:border-white/50 focus:outline-none focus:ring-0 transition-colors"
-                  autoFocus
-                />
-                <button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 bg-white/30 rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
-                  <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </form>
+            <button 
+              onClick={handleLogin}
+              className="w-48 h-10 bg-white/20 backdrop-blur-xl rounded-full text-white text-sm font-medium border border-white/30 hover:bg-white/30 hover:border-white/50 transition-colors"
+            >
+              Enter
+            </button>
             <p className="text-white/40 text-xs mt-3">No password needed to access</p>
           </div>
         </div>
