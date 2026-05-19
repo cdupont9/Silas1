@@ -8,7 +8,6 @@ import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { TicTacToeGame, TicTacToeState, initialTicTacToeState } from "./tictactoe-game"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
-import { DesignExercises, DesignExercisesState, initialDesignExercisesState } from "./design-exercises"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -278,11 +277,6 @@ export function MacBookScreen() {
   const [braingamesPosition, setBraingamesPosition] = useState({ x: 180, y: 80 })
   const [braingamesScore, setBraingamesScore] = useState(0)
   const [braingamesGameState, setBraingamesGameState] = useState<BrainGamesState>(initialBrainGamesState)
-  
-  // Design Exercises state
-  const [designExercisesWindow, setDesignExercisesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [designExercisesPosition, setDesignExercisesPosition] = useState({ x: 220, y: 100 })
-  const [designExercisesState, setDesignExercisesState] = useState<DesignExercisesState>(initialDesignExercisesState)
   
   const [mounted, setMounted] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
@@ -795,7 +789,6 @@ export function MacBookScreen() {
       case 'notes': setNotesPosition({ x: newX, y: newY }); break
       case 'tictactoe': setTictactoePosition({ x: newX, y: newY }); break
 case 'braingames': setBraingamesPosition({ x: newX, y: newY }); break
-  case 'designexercises': setDesignExercisesPosition({ x: newX, y: newY }); break
   }
   }
   
@@ -1346,34 +1339,6 @@ const messageText = mobileInput.trim()
                     </g>
                   </svg>
                   <span className="text-white text-[11px] mt-1">Brain</span>
-                </button>
-                
-                {/* Design Exercises */}
-                <button
-                  onClick={() => setMobileScreen('designexercises')}
-                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
-                >
-                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(168,85,247,0.4)]">
-                    <defs>
-                      <linearGradient id="mobileDesignGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#9333ea"/>
-                        <stop offset="100%" stopColor="#db2777"/>
-                      </linearGradient>
-                    </defs>
-                    <rect width="100" height="100" rx="22" fill="url(#mobileDesignGrad)"/>
-                    {/* Pencil */}
-                    <path d="M30 70 L45 25 L55 25 L70 70 Z" fill="white" opacity="0.9"/>
-                    <path d="M45 25 L50 15 L55 25 Z" fill="#fbbf24"/>
-                    <rect x="43" y="60" width="14" height="8" fill="#f472b6"/>
-                    {/* Ruler marks */}
-                    <line x1="25" y1="80" x2="75" y2="80" stroke="white" strokeWidth="2" opacity="0.6"/>
-                    <line x1="30" y1="78" x2="30" y2="82" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-                    <line x1="40" y1="76" x2="40" y2="84" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-                    <line x1="50" y1="78" x2="50" y2="82" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-                    <line x1="60" y1="76" x2="60" y2="84" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-                    <line x1="70" y1="78" x2="70" y2="82" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-                  </svg>
-                  <span className="text-white text-[11px] mt-1">Design</span>
                 </button>
               </div>
             </div>
@@ -3135,49 +3100,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       )
     }
 
-    // Mobile Design Exercises
-    if (mobileScreen === "designexercises") {
-      return (
-        <div className="h-screen w-full bg-gradient-to-b from-purple-950 to-black flex flex-col overflow-hidden">
-          {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-50">
-            <div className="text-white text-sm font-medium" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
-            <div className="flex items-center gap-2">
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="flex items-center">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-                </div>
-                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-              </div>
-            </div>
-          </div>
-
-          {/* Header with Back Button */}
-          <div className="pt-14 px-4 flex items-center justify-between">
-            <button
-              onClick={() => setMobileScreen('home')}
-              className="p-2 -ml-2 text-purple-400"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <h1 className="text-purple-400 text-xl font-bold drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">DESIGN EXERCISES</h1>
-            <div className="w-10" /> {/* Spacer for centering */}
-          </div>
-
-          {/* Content Area - Full Screen */}
-          <div className="flex-1 overflow-auto scrollbar-none">
-            <DesignExercises gameState={designExercisesState} onGameStateChange={setDesignExercisesState} />
-          </div>
-
-          {/* Home Indicator */}
-          <div className="pb-2 flex justify-center">
-            <div className="w-36 h-1 bg-purple-400/40 rounded-full" />
-          </div>
-        </div>
-      )
-    }
-
     }
   // ==================== END MOBILE EXPERIENCE ====================
 
@@ -4924,41 +4846,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* Design Exercises Window */}
-        {designExercisesWindow.isOpen && !designExercisesWindow.isMinimized && (
-          <div
-            className={`absolute ${focusedWindow === 'designexercises' ? 'z-40' : 'z-20'}`}
-            onClick={() => focusWindow('designexercises')}
-            style={{ left: designExercisesPosition.x, top: designExercisesPosition.y }}
-          >
-            <div className="bg-gradient-to-b from-purple-950 to-black rounded-xl shadow-2xl overflow-hidden border border-purple-500/30 shadow-[0_0_30px_rgba(168,85,247,0.2)]">
-              {/* Title Bar */}
-              <div
-                onMouseDown={(e) => { focusWindow('designexercises'); handleMouseDown('designexercises', e); }}
-                className="h-[52px] bg-gradient-to-b from-purple-900/50 to-purple-950 flex items-center px-4 gap-4 border-b border-purple-500/20 cursor-grab active:cursor-grabbing"
-              >
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setDesignExercisesWindow({ isOpen: false, isMinimized: false })}
-                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
-                  />
-                  <button
-                    onClick={() => setDesignExercisesWindow({ ...designExercisesWindow, isMinimized: true })}
-                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
-                  />
-                  <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
-                </div>
-                <span className="flex-1 text-center text-sm font-bold text-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">DESIGN EXERCISES</span>
-              </div>
-
-              {/* Content Area */}
-              <div className="max-h-[500px] overflow-auto scrollbar-none">
-                <DesignExercises gameState={designExercisesState} onGameStateChange={setDesignExercisesState} />
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Backgrounds Finder Window */}
         {backgroundsFolder.isOpen && !backgroundsFolder.isMinimized && (
           <div
@@ -5827,33 +5714,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
 label="Brain Games"
   onClick={() => { setBraingamesWindow({ isOpen: true, isMinimized: false }); focusWindow('braingames'); }}
-  />
-  
-  <DockIcon
-  icon={
-  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12">
-  <defs>
-  <linearGradient id="designGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-  <stop offset="0%" stopColor="#9333ea"/>
-  <stop offset="100%" stopColor="#db2777"/>
-  </linearGradient>
-  </defs>
-  <rect width="100" height="100" rx="22" fill="url(#designGrad)"/>
-  {/* Pencil */}
-  <path d="M30 70 L45 25 L55 25 L70 70 Z" fill="white" opacity="0.9"/>
-  <path d="M45 25 L50 15 L55 25 Z" fill="#fbbf24"/>
-  <rect x="43" y="60" width="14" height="8" fill="#f472b6"/>
-  {/* Ruler marks */}
-  <line x1="25" y1="80" x2="75" y2="80" stroke="white" strokeWidth="2" opacity="0.6"/>
-  <line x1="30" y1="78" x2="30" y2="82" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-  <line x1="40" y1="76" x2="40" y2="84" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-  <line x1="50" y1="78" x2="50" y2="82" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-  <line x1="60" y1="76" x2="60" y2="84" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-  <line x1="70" y1="78" x2="70" y2="82" stroke="white" strokeWidth="1.5" opacity="0.6"/>
-  </svg>
-  }
-  label="Design Exercises"
-  onClick={() => { setDesignExercisesWindow({ isOpen: true, isMinimized: false }); focusWindow('designexercises'); }}
   />
   
   <DockIcon
