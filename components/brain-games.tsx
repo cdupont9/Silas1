@@ -370,6 +370,7 @@ const unoColorStyles: Record<UnoColor, { bg: string; border: string; text: strin
 
 // ============ TIC-TAC-TOE QUIZ GAME ============
 // Answer questions correctly to place your X!
+// These questions are DIFFERENT from UNO - focus on work, personality, and less common facts
 interface TicTacToeQuestion {
   id: string
   question: string
@@ -379,73 +380,81 @@ interface TicTacToeQuestion {
 }
 
 const ticTacToeQuestions: TicTacToeQuestion[] = [
-  { id: "ttt1", question: "My favorite Disney character?", options: ["Cinderella", "Belle", "Ariel", "Mulan"], correctIndex: 0, category: "Disney" },
-  { id: "ttt2", question: "Childhood artist I love?", options: ["Hilary Duff", "Britney Spears", "Christina Aguilera", "Jessica Simpson"], correctIndex: 0, category: "Music" },
-  { id: "ttt3", question: "My favorite juice?", options: ["Apple", "Orange", "Grape", "Cranberry"], correctIndex: 0, category: "Food" },
-  { id: "ttt4", question: "City I moved from?", options: ["Chicago", "Los Angeles", "Miami", "Houston"], correctIndex: 0, category: "Background" },
-  { id: "ttt5", question: "Until what grade was I homeschooled?", options: ["4th", "6th", "2nd", "8th"], correctIndex: 0, category: "Background" },
-  { id: "ttt6", question: "Movie that makes me cry?", options: ["A Walk to Remember", "The Notebook", "Titanic", "P.S. I Love You"], correctIndex: 0, category: "Movies" },
-  { id: "ttt7", question: "My go-to Starbucks order?", options: ["Caramel Ribbon Crunch", "Mocha Frappuccino", "Chai Latte", "Pink Drink"], correctIndex: 0, category: "Food" },
-  { id: "ttt8", question: "Bucket list destination?", options: ["Greece", "Japan", "Australia", "Iceland"], correctIndex: 0, category: "Travel" },
-  { id: "ttt9", question: "Who homeschooled me?", options: ["Grandmother", "Mother", "Private Tutor", "Aunt"], correctIndex: 0, category: "Background" },
-  { id: "ttt10", question: "Show I was obsessed with?", options: ["Lizzie McGuire", "Hannah Montana", "That's So Raven", "The Suite Life"], correctIndex: 0, category: "TV" },
-  { id: "ttt11", question: "Format I own Cinderella on?", options: ["VHS", "DVD", "Blu-ray", "Digital"], correctIndex: 0, category: "Movies" },
-  { id: "ttt12", question: "My favorite fried chicken spot?", options: ["Broadway Chicken", "Popeyes", "Chick-fil-A", "KFC"], correctIndex: 0, category: "Food" },
-  { id: "ttt13", question: "Country I've traveled to?", options: ["South Africa", "Australia", "Brazil", "Thailand"], correctIndex: 0, category: "Travel" },
-  { id: "ttt14", question: "Hilary Duff album I love?", options: ["Metamorphosis", "Dignity", "Breathe In. Breathe Out.", "Most Wanted"], correctIndex: 0, category: "Music" },
-  { id: "ttt15", question: "What Cinderella version is my fave?", options: ["Brandy & Whitney", "Animated 1950", "Lily James", "Drew Barrymore"], correctIndex: 0, category: "Movies" },
+  // Work & Career (not in UNO)
+  { id: "ttt1", question: "What was my previous career before UX?", options: ["4th Grade Teacher", "Nurse", "Accountant", "Marketing Manager"], correctIndex: 0, category: "Career" },
+  { id: "ttt2", question: "Where do I currently work?", options: ["Google", "Apple", "Microsoft", "Meta"], correctIndex: 0, category: "Career" },
+  { id: "ttt3", question: "What type of design do I focus on?", options: ["AI-driven experiences", "Print design", "Game design", "Industrial design"], correctIndex: 0, category: "Career" },
+  { id: "ttt4", question: "Where did I study design?", options: ["Columbia University", "NYU", "Parsons", "Pratt"], correctIndex: 0, category: "Education" },
+  // Personality traits (not in UNO)
+  { id: "ttt5", question: "Which trait best describes me?", options: ["Empathetic", "Impatient", "Stubborn", "Reserved"], correctIndex: 0, category: "Personality" },
+  { id: "ttt6", question: "What do I value in work?", options: ["Work-life balance", "Long hours", "Competition", "Working alone"], correctIndex: 0, category: "Values" },
+  { id: "ttt7", question: "Am I spontaneous or predictable?", options: ["Spontaneous", "Very predictable", "Indecisive", "Rigid"], correctIndex: 0, category: "Personality" },
+  { id: "ttt8", question: "What frustrates me at work?", options: ["Scope creep", "Collaboration", "Creativity", "Learning new tools"], correctIndex: 0, category: "Work" },
+  // Hobbies & Activities (not in UNO)
+  { id: "ttt9", question: "Where do I like to sit on roller coasters?", options: ["Front row", "Back row", "Middle", "I don't ride them"], correctIndex: 0, category: "Hobbies" },
+  { id: "ttt10", question: "What activity did I enjoy as a child?", options: ["Horseback riding", "Soccer", "Swimming", "Tennis"], correctIndex: 0, category: "Hobbies" },
+  { id: "ttt11", question: "What type of books do I enjoy?", options: ["Romance novels", "Horror", "Textbooks", "Sci-fi"], correctIndex: 0, category: "Hobbies" },
+  { id: "ttt12", question: "What do I appreciate?", options: ["Peace and quiet", "Loud parties", "Crowded spaces", "Constant noise"], correctIndex: 0, category: "Personality" },
+  // Childhood business & unique facts (not in UNO)
+  { id: "ttt13", question: "What business did I run as a kid?", options: ["Breakfast business", "Lemonade stand", "Dog walking", "Lawn mowing"], correctIndex: 0, category: "Childhood" },
+  { id: "ttt14", question: "How did we drive from Chicago to NJ?", options: ["Straight through, no stops", "5 hotel stops", "By plane", "By train"], correctIndex: 0, category: "Background" },
+  { id: "ttt15", question: "What fashion eras do I love?", options: ["80s and 90s", "60s and 70s", "2010s", "Modern only"], correctIndex: 0, category: "Fashion" },
 ]
 
 // ============ TWO TRUTHS AND A LIE SECTION ============
+// Each round has 2 truths and 1 believable lie - lies should sound plausible!
 interface TwoTruthsRound {
   id: string
   statements: string[]
   lieIndex: number
-  category: string // Added category for consistency
+  category: string
 }
 
 const twoTruthsRounds: TwoTruthsRound[] = [
-  // Childhood & Background (same category per round)
-  { id: "tt1", category: "childhood", statements: ["I was homeschooled until 4th grade", "My grandmother homeschooled me, my cousin, and other kids", "I was homeschooled by a private tutor in our basement"], lieIndex: 2 },
-  { id: "tt2", category: "childhood", statements: ["I used to want to be a ballet dancer", "I used to want to be a cook", "I used to want to be a professional singer"], lieIndex: 2 },
-  { id: "tt3", category: "childhood", statements: ["I had a breakfast business when homeschooled", "I ran a lemonade stand every summer", "My grandmother taught me entrepreneurship early"], lieIndex: 1 },
-  { id: "tt4", category: "moving", statements: ["My mother and I drove from Chicago to New Jersey", "We drove straight through with no hotel stops", "We stopped at 5 different hotels along the way"], lieIndex: 2 },
-  { id: "tt5", category: "moving", statements: ["I moved from Chicago to New Jersey", "We ate lots of snacks on our road trip", "I moved from Los Angeles to New Jersey"], lieIndex: 2 },
-  // Hobbies (same category per round)
-  { id: "tt6", category: "hobbies", statements: ["I love riding in the front of roller coasters", "I enjoy horseback riding but haven't done it since I was little", "I've been skydiving twice"], lieIndex: 2 },
-  { id: "tt7", category: "hobbies", statements: ["I enjoy rollerskating", "I love visiting museums and historical sites", "I'm a professional ice skater"], lieIndex: 2 },
-  { id: "tt8", category: "hobbies", statements: ["I love reading romance novels", "I value peace and quiet", "I hate trying new things"], lieIndex: 2 },
-  // Hilary Duff (same category per round)
-  { id: "tt9", category: "hilary", statements: ["Hilary Duff is my favorite childhood artist", "I still own the VHS of the Lizzie McGuire movie", "I've met Hilary Duff in person three times"], lieIndex: 2 },
-  { id: "tt10", category: "hilary", statements: ["I was obsessed with Lizzie McGuire", "I still love Hilary Duff to this day", "I watched every episode of Hannah Montana before Lizzie McGuire"], lieIndex: 2 },
-  { id: "tt11", category: "hilary", statements: ["'So Yesterday' is one of my favorite songs", "'Come Clean' is on my driving playlist", "I've never listened to the Metamorphosis album"], lieIndex: 2 },
-  { id: "tt12", category: "hilary", statements: ["I still listen to Metamorphosis while driving", "'Why Not' is one of my favorites", "I think Hilary Duff's music is overrated"], lieIndex: 2 },
-  // Mandy Moore (same category per round)
-  { id: "tt13", category: "mandy", statements: ["I love Mandy Moore's song 'Only Hope'", "'Cry' by Mandy Moore is a favorite", "I've never heard any Mandy Moore songs"], lieIndex: 2 },
-  { id: "tt14", category: "mandy", statements: ["'Candy' by Mandy Moore is one of my favorites", "I love 'A Walk to Remember' even though the ending makes me cry", "I think Mandy Moore is a terrible actress"], lieIndex: 2 },
-  // Food & Drinks (same category per round)
-  { id: "tt15", category: "drinks", statements: ["My favorite drink is lemonade mixed with ginger ale", "I prefer apple juice over orange juice", "I prefer orange juice over apple juice"], lieIndex: 2 },
-  { id: "tt16", category: "food", statements: ["My favorite takeout is Broadway Hot and Honey Chicken", "I love buttermilk battered chicken", "I prefer grilled chicken over fried chicken"], lieIndex: 2 },
-  { id: "tt17", category: "food", statements: ["I get honey mustard and honey on the side", "My favorite chicken place is in Westfield", "I've never been to Broadway Chicken"], lieIndex: 2 },
-  { id: "tt18", category: "food", statements: ["My go-to Chinese order is sweet and sour shrimp", "I always order General Tso's chicken at Chinese restaurants", "I love Chinese takeout"], lieIndex: 1 },
-  // Starbucks (same category per round)
-  { id: "tt19", category: "starbucks", statements: ["My favorite Starbucks drink is Caramel Ribbon Crunch", "I order it with extra caramel and extra crunch", "I've never been to Starbucks"], lieIndex: 2 },
-  { id: "tt20", category: "starbucks", statements: ["I love Vanilla Bean Frappuccino with caramel syrup", "I fell in love with it as a little girl", "I discovered Starbucks in college"], lieIndex: 2 },
-  { id: "tt21", category: "starbucks", statements: ["My mom worked at Bank of America in Grand Central", "That's where I first tried Starbucks", "I prefer hot coffee over frappuccinos"], lieIndex: 2 },
-  // Travel (same category per round)
-  { id: "tt22", category: "travel", statements: ["I've been to Spain, Paris, and Italy", "I've visited South Africa", "I've taken a Greyhound bus across the country"], lieIndex: 2 },
-  { id: "tt23", category: "travel", statements: ["I've never taken a Greyhound bus", "Bus travel is on my bucket list", "I've already done a cross-country bus trip"], lieIndex: 2 },
-  { id: "tt24", category: "travel", statements: ["I've visited Ireland", "I've been to UK territory", "I've traveled to Australia"], lieIndex: 2 },
-  // Fashion & Personality (same category per round)
-  { id: "tt25", category: "fashion", statements: ["I love 80s and 90s fashion", "I grew up in the late 90s and early 2000s", "I think vintage fashion is ugly"], lieIndex: 2 },
-  { id: "tt26", category: "personality", statements: ["I consider myself spontaneous", "I like trying things that are different", "I'm very predictable and hate change"], lieIndex: 2 },
-  // Disney & Movies (same category per round)
-  { id: "tt27", category: "disney", statements: ["Cinderella is my favorite Disney character", "My favorite Cinderella is the one with Brandy and Whitney Houston", "My favorite Cinderella is the animated 1950 version"], lieIndex: 2 },
-  { id: "tt28", category: "disney", statements: ["I still own the Brandy Cinderella movie on VHS", "As a kid I would dance with a broom singing 'In My Own Little Corner'", "I've never watched Cinderella"], lieIndex: 2 },
-  { id: "tt29", category: "disney", statements: ["My mom told me I used to dance with a broom to Cinderella songs", "I loved pretending to be Cinderella as a little girl", "I thought Cinderella was boring as a child"], lieIndex: 2 },
-  // Goals (same category per round)
-  { id: "tt30", category: "goals", statements: ["I dream of traveling to Greece", "I want to speak at design conferences", "I've already given a TED talk"], lieIndex: 2 },
-  { id: "tt31", category: "goals", statements: ["Work-life balance is important to me", "I want to grow into senior leadership roles", "I only care about salary, not impact"], lieIndex: 2 },
+  // Childhood & Homeschool - lies are similar homeschool experiences
+  { id: "tt1", category: "childhood", statements: ["I was homeschooled until 4th grade", "My grandmother homeschooled me and my cousin", "I was homeschooled until 6th grade"], lieIndex: 2 },
+  { id: "tt2", category: "childhood", statements: ["I had a breakfast business as a kid", "My grandmother encouraged my entrepreneurship", "I sold cookies door-to-door for two years"], lieIndex: 2 },
+  { id: "tt3", category: "childhood", statements: ["I wanted to be a ballet dancer", "I also dreamed of being a cook", "I trained in ballet for 8 years"], lieIndex: 2 },
+  
+  // Moving from Chicago - lies are similar moving experiences  
+  { id: "tt4", category: "moving", statements: ["I moved from Chicago to New Jersey", "My mom and I drove straight through with no hotel stops", "We took a week-long road trip with many stops"], lieIndex: 2 },
+  { id: "tt5", category: "moving", statements: ["We ate lots of snacks on our road trip", "My mom drove us to New Jersey", "We flew from Chicago to Newark"], lieIndex: 2 },
+  
+  // Disney/Cinderella - lies are similar Disney experiences
+  { id: "tt6", category: "disney", statements: ["Cinderella is my favorite Disney character", "I love the Brandy & Whitney Houston version", "Belle from Beauty and the Beast is my favorite"], lieIndex: 2 },
+  { id: "tt7", category: "disney", statements: ["I still own Cinderella on VHS", "I danced with a broom to 'In My Own Little Corner'", "I have the Cinderella soundtrack on vinyl"], lieIndex: 2 },
+  { id: "tt8", category: "disney", statements: ["My mom said I pretended to be Cinderella", "I loved singing Cinderella songs as a kid", "I dressed as Belle for Halloween every year"], lieIndex: 2 },
+  
+  // Hilary Duff/Music - lies are similar music preferences
+  { id: "tt9", category: "music", statements: ["Hilary Duff is my favorite childhood artist", "I was obsessed with Lizzie McGuire", "Britney Spears was my absolute favorite"], lieIndex: 2 },
+  { id: "tt10", category: "music", statements: ["I still listen to Metamorphosis while driving", "'So Yesterday' is one of my favorite songs", "I prefer Hilary Duff's acting over her music"], lieIndex: 2 },
+  { id: "tt11", category: "music", statements: ["I love Mandy Moore's song 'Only Hope'", "A Walk to Remember makes me cry", "I think The Notebook is a better movie"], lieIndex: 2 },
+  
+  // Food & Drinks - lies are similar food preferences
+  { id: "tt12", category: "drinks", statements: ["I love lemonade mixed with ginger ale", "I prefer apple juice over orange juice", "I prefer cranberry juice over apple juice"], lieIndex: 2 },
+  { id: "tt13", category: "food", statements: ["Broadway Chicken is my favorite fried chicken", "I love hot honey buttermilk chicken", "I prefer grilled chicken over fried"], lieIndex: 2 },
+  { id: "tt14", category: "food", statements: ["My Chinese order is sweet and sour shrimp", "I love Chinese takeout", "I always get General Tso's chicken"], lieIndex: 2 },
+  
+  // Starbucks - lies are similar coffee preferences
+  { id: "tt15", category: "starbucks", statements: ["Caramel Ribbon Crunch is my go-to", "I order it with extra caramel and crunch", "I prefer hot lattes over frappuccinos"], lieIndex: 2 },
+  { id: "tt16", category: "starbucks", statements: ["I discovered Starbucks as a little girl", "My mom worked near Grand Central", "I started drinking Starbucks in college"], lieIndex: 2 },
+  
+  // Travel - lies are similar travel experiences
+  { id: "tt17", category: "travel", statements: ["I've been to Spain, Paris, and Italy", "I've visited South Africa", "I've backpacked through Asia"], lieIndex: 2 },
+  { id: "tt18", category: "travel", statements: ["Greece is on my bucket list", "I dream of traveling more", "I've already been to Greece twice"], lieIndex: 2 },
+  { id: "tt19", category: "travel", statements: ["Bus travel is on my bucket list", "I've never taken a Greyhound bus", "I've done a cross-country bus trip"], lieIndex: 2 },
+  
+  // Hobbies - lies are similar hobby experiences
+  { id: "tt20", category: "hobbies", statements: ["I love the front row of roller coasters", "I enjoyed horseback riding as a kid", "I go horseback riding every month"], lieIndex: 2 },
+  { id: "tt21", category: "hobbies", statements: ["I value peace and quiet", "I love reading romance novels", "I prefer action movies over romance"], lieIndex: 2 },
+  { id: "tt22", category: "hobbies", statements: ["I'm spontaneous and try new things", "I love visiting museums", "I'm very predictable and routine-based"], lieIndex: 2 },
+  
+  // Fashion - lies are similar fashion preferences
+  { id: "tt23", category: "fashion", statements: ["I love 80s and 90s fashion", "I grew up in the late 90s/early 2000s", "I only wear modern minimalist styles"], lieIndex: 2 },
+  
+  // Career/Goals - lies are similar career aspirations
+  { id: "tt24", category: "goals", statements: ["I want to speak at design conferences", "Work-life balance matters to me", "I've already given multiple keynotes"], lieIndex: 2 },
+  { id: "tt25", category: "goals", statements: ["I want to grow into senior leadership", "I value making meaningful impact", "I prefer individual work over leadership"], lieIndex: 2 },
 ]
 
 // ============ MAIN COMPONENT ============
