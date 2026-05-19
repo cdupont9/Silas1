@@ -6,7 +6,6 @@
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
-import { TicTacToeGame, TicTacToeState, initialTicTacToeState } from "./tictactoe-game"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -233,7 +232,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "tictactoe" | "braingames"
+type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "braingames"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -265,12 +264,6 @@ export function MacBookScreen() {
   const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
   const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
-  
-  // Tic-Tac-Toe game state
-  const [tictactoeWindow, setTictactoeWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [tictactoePosition, setTictactoePosition] = useState({ x: 150, y: 60 })
-  const [tictactoeScore, setTictactoeScore] = useState(0)
-  const [tictactoeGameState, setTictactoeGameState] = useState<TicTacToeState>(initialTicTacToeState)
   
   // Brain Games state
   const [braingamesWindow, setBraingamesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
@@ -760,9 +753,8 @@ export function MacBookScreen() {
       case 'caseStudies': position = caseStudiesPosition; break
       case 'backgrounds': position = backgroundsPosition; break
       case 'messages': position = messagesPosition; break
-      case 'notes': position = notesPosition; break
-      case 'tictactoe': position = tictactoePosition; break
-      case 'braingames': position = braingamesPosition; break
+case 'notes': position = notesPosition; break
+  case 'braingames': position = braingamesPosition; break
       default: position = { x: 0, y: 0 }
     }
 
@@ -786,9 +778,8 @@ export function MacBookScreen() {
       case 'caseStudies': setCaseStudiesPosition({ x: newX, y: newY }); break
       case 'backgrounds': setBackgroundsPosition({ x: newX, y: newY }); break
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
-      case 'notes': setNotesPosition({ x: newX, y: newY }); break
-      case 'tictactoe': setTictactoePosition({ x: newX, y: newY }); break
-case 'braingames': setBraingamesPosition({ x: newX, y: newY }); break
+case 'notes': setNotesPosition({ x: newX, y: newY }); break
+  case 'braingames': setBraingamesPosition({ x: newX, y: newY }); break
   }
   }
   
@@ -1268,50 +1259,12 @@ const messageText = mobileInput.trim()
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
                   <img src={MEMOJI_URL} alt="About" className="w-[60px] h-[60px] rounded-[14px] shadow-lg object-cover" />
-                  <span className="text-white text-[11px] mt-1">About</span>
-                </button>
-                
-                {/* Tic-Tac-Toe */}
-                <button
-                  onClick={() => setMobileScreen('tictactoe')}
-                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
-                >
-                  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-                    <style>{`
-                      @keyframes mTttMove1 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, 0); } 66% { transform: translate(24px, 24px); } }
-                      @keyframes mTttMove2 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-24px, 24px); } 66% { transform: translate(0, 24px); } }
-                      @keyframes mTttMove3 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(0, -24px); } 66% { transform: translate(-24px, -24px); } }
-                      @keyframes mTttMove4 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, -24px); } 66% { transform: translate(24px, 0); } }
-                      @keyframes mTttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 6px #ec4899); } }
-                      .m-ttt-piece1 { animation: mTttMove1 4s infinite ease-in-out, mTttGlow 2s infinite; }
-                      .m-ttt-piece2 { animation: mTttMove2 4s infinite ease-in-out 0.5s, mTttGlow 2s infinite 0.5s; }
-                      .m-ttt-piece3 { animation: mTttMove3 4s infinite ease-in-out 1s, mTttGlow 2s infinite 1s; }
-                      .m-ttt-piece4 { animation: mTttMove4 4s infinite ease-in-out 1.5s, mTttGlow 2s infinite 1.5s; }
-                    `}</style>
-                    <rect width="100" height="100" rx="20" fill="#831843"/>
-                    <g>
-                      <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                      <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                      <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                      <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                    </g>
-                    <g className="m-ttt-piece1" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
-                      <line x1="24" y1="24" x2="32" y2="32"/>
-                      <line x1="32" y1="24" x2="24" y2="32"/>
-                    </g>
-                    <circle className="m-ttt-piece2" cx="50" cy="28" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
-                    <g className="m-ttt-piece3" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
-                      <line x1="68" y1="68" x2="76" y2="76"/>
-                      <line x1="76" y1="68" x2="68" y2="76"/>
-                    </g>
-                    <circle className="m-ttt-piece4" cx="28" cy="50" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
-                  </svg>
-                  <span className="text-white text-[11px] mt-1">Tic-Tac-Toe</span>
-                </button>
-                
-                {/* Brain Games */}
-                <button
-                  onClick={() => setMobileScreen('braingames')}
+<span className="text-white text-[11px] mt-1">About</span>
+  </button>
+  
+  {/* Brain Games */}
+  <button
+  onClick={() => setMobileScreen('braingames')}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
                   <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px] rounded-[14px] shadow-lg shadow-[0_0_15px_rgba(255,215,0,0.4)]">
@@ -3009,49 +2962,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             
             {/* Home Indicator */}
             <div className="mt-6 mx-auto w-36 h-1 bg-white/40 rounded-full" />
-          </div>
-        </div>
-      )
-    }
-
-    // Mobile Tic-Tac-Toe Game
-    if (mobileScreen === "tictactoe") {
-      return (
-        <div className="h-screen w-full bg-gradient-to-b from-pink-950 to-black flex flex-col overflow-hidden">
-          {/* Status Bar */}
-          <div className="absolute top-0 left-0 right-0 h-12 flex items-center justify-between px-6 z-50">
-            <div className="text-white text-sm font-medium" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
-            <div className="flex items-center gap-2">
-              <Wifi className="w-4 h-4 text-white" />
-              <div className="flex items-center">
-                <div className="w-[25px] h-[12px] border-[1.5px] border-white rounded-[3px] relative overflow-hidden">
-                  <div className="absolute inset-[1px] bg-white rounded-[1px]" style={{ width: '80%' }} />
-                </div>
-                <div className="w-[1.5px] h-[5px] bg-white rounded-r-sm ml-[1px]" />
-              </div>
-            </div>
-          </div>
-
-          {/* Header with Back Button */}
-          <div className="pt-14 px-4 flex items-center justify-between">
-            <button
-              onClick={() => setMobileScreen('home')}
-              className="p-2 -ml-2 text-pink-400"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <h1 className="text-pink-400 text-xl font-bold">TIC-TAC-TOE</h1>
-            <span className="text-pink-400 font-bold text-sm">Wins: {tictactoeScore}</span>
-          </div>
-
-          {/* Game Area - Full Screen */}
-          <div className="flex-1 flex items-center justify-center overflow-auto">
-            <TicTacToeGame onScoreChange={setTictactoeScore} gameState={tictactoeGameState} onGameStateChange={setTictactoeGameState} />
-          </div>
-
-          {/* Home Indicator */}
-          <div className="pb-2 flex justify-center">
-            <div className="w-36 h-1 bg-pink-400/40 rounded-full" />
           </div>
         </div>
       )
@@ -4776,40 +4686,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* Tic-Tac-Toe Game Window */}
-        {tictactoeWindow.isOpen && !tictactoeWindow.isMinimized && (
-          <div
-            className={`absolute ${focusedWindow === 'tictactoe' ? 'z-40' : 'z-20'}`}
-            onClick={() => focusWindow('tictactoe')}
-            style={{ left: tictactoePosition.x, top: tictactoePosition.y }}
-          >
-            <div className="bg-gradient-to-b from-pink-950 to-black rounded-xl shadow-2xl overflow-hidden border border-pink-500/30">
-              {/* Title Bar */}
-              <div
-                onMouseDown={(e) => { focusWindow('tictactoe'); handleMouseDown('tictactoe', e); }}
-                className="h-[52px] bg-gradient-to-b from-pink-900/50 to-pink-950 flex items-center px-4 gap-4 border-b border-pink-500/20 cursor-grab active:cursor-grabbing"
-              >
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setTictactoeWindow({ isOpen: false, isMinimized: false })}
-                    className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
-                  />
-                  <button
-                    onClick={() => setTictactoeWindow({ ...tictactoeWindow, isMinimized: true })}
-                    className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
-                  />
-                  <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
-                </div>
-                <span className="flex-1 text-center text-sm font-bold text-pink-400">TIC-TAC-TOE</span>
-                <span className="text-pink-400 font-bold text-sm">Wins: {tictactoeScore}</span>
-              </div>
-
-              {/* Game Area */}
-              <TicTacToeGame onScoreChange={setTictactoeScore} gameState={tictactoeGameState} onGameStateChange={setTictactoeGameState} />
-            </div>
-          </div>
-        )}
-
         {/* Brain Games Window */}
         {braingamesWindow.isOpen && !braingamesWindow.isMinimized && (
           <div
@@ -5656,43 +5532,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Safari"
           onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: null }); setFocusedWindow('safari'); }}
-        />
-
-        <DockIcon
-          icon={
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
-              <style>{`
-                @keyframes tttMove1 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, 0); } 66% { transform: translate(24px, 24px); } }
-                @keyframes tttMove2 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(-24px, 24px); } 66% { transform: translate(0, 24px); } }
-                @keyframes tttMove3 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(0, -24px); } 66% { transform: translate(-24px, -24px); } }
-                @keyframes tttMove4 { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(24px, -24px); } 66% { transform: translate(24px, 0); } }
-                @keyframes tttGlow { 0%, 100% { filter: drop-shadow(0 0 2px #f472b6); } 50% { filter: drop-shadow(0 0 6px #ec4899); } }
-                .ttt-piece1 { animation: tttMove1 4s infinite ease-in-out, tttGlow 2s infinite; }
-                .ttt-piece2 { animation: tttMove2 4s infinite ease-in-out 0.5s, tttGlow 2s infinite 0.5s; }
-                .ttt-piece3 { animation: tttMove3 4s infinite ease-in-out 1s, tttGlow 2s infinite 1s; }
-                .ttt-piece4 { animation: tttMove4 4s infinite ease-in-out 1.5s, tttGlow 2s infinite 1.5s; }
-              `}</style>
-              <rect width="100" height="100" rx="20" fill="#831843"/>
-              <g>
-                <line x1="38" y1="20" x2="38" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                <line x1="62" y1="20" x2="62" y2="80" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                <line x1="20" y1="38" x2="80" y2="38" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-                <line x1="20" y1="62" x2="80" y2="62" stroke="#f9a8d4" strokeWidth="3" strokeLinecap="round"/>
-              </g>
-              <g className="ttt-piece1" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
-                <line x1="24" y1="24" x2="32" y2="32"/>
-                <line x1="32" y1="24" x2="24" y2="32"/>
-              </g>
-              <circle className="ttt-piece2" cx="50" cy="28" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
-              <g className="ttt-piece3" stroke="#f472b6" strokeWidth="3" strokeLinecap="round">
-                <line x1="68" y1="68" x2="76" y2="76"/>
-                <line x1="76" y1="68" x2="68" y2="76"/>
-              </g>
-              <circle className="ttt-piece4" cx="28" cy="50" r="5" fill="none" stroke="#fb7185" strokeWidth="3"/>
-            </svg>
-          }
-          label="Tic-Tac-Toe"
-          onClick={() => { setTictactoeWindow({ isOpen: true, isMinimized: false }); focusWindow('tictactoe'); }}
         />
 
         <DockIcon
