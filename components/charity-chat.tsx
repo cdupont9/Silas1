@@ -512,6 +512,26 @@ export const getCharityResponse = (userMessage: string): string => {
     return "I value integrity, humility, compassion, and purpose. These are shaped by my faith and influence how I treat people and approach my work"
   }
 
+  // Why include faith in portfolio
+  if (normalized.match(/why.*(include|put|add|mention).*(faith|christian|belief|religion).*(portfolio|website|site)|faith.*(portfolio|website)|portfolio.*(faith|belief)/i)) {
+    return "Because it's genuinely part of who I am. I wanted my portfolio to reflect not just my skills as a designer, but also some of the values and perspectives that shape how I approach creativity, collaboration, and people"
+  }
+
+  // What values does faith bring to design
+  if (normalized.match(/values.*(faith|belief).*(bring|design|work)|faith.*(values|bring).*(design|process|work)|how.*(faith|belief).*(influence|shape).*(design|process)/i)) {
+    return "Empathy, stewardship, humility, and care for people are big ones for me. I try to design in a way that's intentional and considerate of different users and experiences"
+  }
+
+  // Can you separate personal beliefs from user needs / work
+  if (normalized.match(/separate.*(personal|belief|faith|feeling|thought).*(user|work|goal|job|need)|personal.*(bias|belief).*(affect|impact)|keep.*(faith|belief).*(separate|out)/i)) {
+    return "Absolutely. My role as a designer is to understand user needs and create effective experiences for the audience I'm designing for. My personal values help shape how I treat people professionally, but good UX requires designing thoughtfully for diverse users"
+  }
+
+  // How do you handle disagreements on teams
+  if (normalized.match(/handle.*(disagreement|conflict|different opinion)|disagreement.*(team|work)|conflict.*(team|colleague|coworker)|when.*(disagree|conflict)/i)) {
+    return "I try to approach disagreement with humility and collaboration. I value listening first, understanding different perspectives, and focusing on solving the problem rather than proving a point"
+  }
+
   // What are you looking for
   if (normalized.match(/looking for|want in.*(role|job)|ideal.*(role|position|opportunity)/i)) {
     return "Opportunities to grow, work on challenging systems, and continue developing my skills in UX and AI."
