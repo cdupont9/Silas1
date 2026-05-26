@@ -462,9 +462,24 @@ export const getCharityResponse = (userMessage: string): string => {
   // FAITH & VALUES
   // ============================================
 
-  // What do you believe / what is your faith
-  if (normalized.match(/what do you believe|what'?s your faith|your faith|are you religious|religion|do you believe in god/i)) {
+  // What do you believe / what is your faith / believe in
+  if (normalized.match(/what do you believe|what'?s your faith|your faith|are you religious|religion|do you believe in god|believe in\??$/i)) {
     return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
+  }
+
+  // Do you believe in the Bible
+  if (normalized.match(/believe.*(bible|scripture)|bible.*(true|real|believe)/i)) {
+    return "Yes, I believe in the Bible"
+  }
+
+  // Do you believe in Jesus / Jesus Christ
+  if (normalized.match(/believe.*(jesus|christ)|jesus.*(lord|savior)|who is jesus/i)) {
+    return "Yes, I believe in Jesus Christ. My faith in Him is central to my life"
+  }
+
+  // Deeper conversation about faith / tell me more / what does it mean
+  if (normalized.match(/deeper.*(faith|conversation|spiritual)|tell me more.*(faith|christian|believe|god)|what does.*(mean|look like).*(you|faith)|more about.*(faith|belief)|being a christian|faith.*central|spiritual.*life/i)) {
+    return "My faith in Jesus Christ is central to my life. It gives me purpose, direction, and shapes the way I try to love and serve people"
   }
 
   // How important is your faith
@@ -472,19 +487,29 @@ export const getCharityResponse = (userMessage: string): string => {
     return "My faith is important to me and influences the way I think about empathy, stewardship, and designing experiences that genuinely help people"
   }
 
-  // Tell me more about that / what does that mean to you
-  if (normalized.match(/tell me more.*(faith|christian|believe)|what does.*(mean|look like)|more about.*(faith|belief)|being a christian/i)) {
-    return "For me, being a Christian means I try to live with integrity, humility, compassion and purpose. My faith influences how I treat people, how I approach my work, and how I think about serving others through design"
-  }
-
   // How does faith influence your work / design
-  if (normalized.match(/faith.*(influence|affect|impact).*(work|design)|how does.*(faith|belief).*(show|appear)|faith.*(work|job)/i)) {
+  if (normalized.match(/faith.*(influence|affect|impact).*(work|design|life)|how does.*(faith|belief).*(show|appear)|faith.*(work|job)/i)) {
     return "I believe people matter deeply, and that impacts the way I design experiences. I want my work to be thoughtful, ethical, accessible, and genuinely helpful"
   }
 
   // Christian / are you Christian
   if (normalized.match(/^(christian|are you christian|are you a christian)\??$/i)) {
     return "Yes, I'm a Christian"
+  }
+
+  // Why do you believe / why are you Christian
+  if (normalized.match(/why.*(believe|christian|faith)|what made you.*(believe|christian)/i)) {
+    return "For me, being a Christian means I try to live with integrity, humility, compassion and purpose. My faith influences how I treat people, how I approach my work, and how I think about serving others through design"
+  }
+
+  // Church / do you go to church
+  if (normalized.match(/church|worship|pray|prayer/i)) {
+    return "Yes, my faith is an active part of my life"
+  }
+
+  // Values / what do you value
+  if (normalized.match(/what.*(values|value)|core values|guiding principles/i)) {
+    return "I value integrity, humility, compassion, and purpose. These are shaped by my faith and influence how I treat people and approach my work"
   }
 
   // What are you looking for
