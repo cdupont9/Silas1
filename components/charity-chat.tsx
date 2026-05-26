@@ -459,11 +459,26 @@ export const getCharityResponse = (userMessage: string): string => {
   }
 
   // ============================================
-  // FAITH & VALUES
+  // FAITH & VALUES (with clarification for ambiguous questions)
   // ============================================
 
-  // What do you believe / what is your faith / believe in
-  if (normalized.match(/what do you believe|what'?s your faith|your faith|are you religious|religion|do you believe in god|believe in\??$/i)) {
+  // AMBIGUOUS: "What do you believe?" - needs clarification (no clear faith/UX indicator)
+  if (normalized.match(/^what do you believe\??$|^what do you believe in\??$/i)) {
+    return "Great question! Are you asking about my faith from a religious standpoint, or what I believe in as a UX designer?"
+  }
+
+  // CLARIFICATION: They want to know about UX beliefs specifically
+  if (normalized.match(/believe.*(ux|design|designer)|ux.*(believe|philosophy)|design.*(believe|philosophy|principles)|as a (ux )?designer/i)) {
+    return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. I believe good design solves real problems and that collaboration leads to better outcomes than working in silos"
+  }
+
+  // CLARIFICATION: They want to know about faith/religion specifically
+  if (normalized.match(/faith|religious|religion|spiritual|god|christian|christ|bible|church/i) && normalized.match(/believe|what|tell|about/i)) {
+    // More specific faith questions handled below
+  }
+
+  // Explicitly asking about faith / religion / Christian beliefs
+  if (normalized.match(/what'?s your faith|your faith|are you religious|religion|do you believe in god|faith.*standpoint|religious.*standpoint|believe.*god/i)) {
     return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
   }
 
@@ -478,7 +493,7 @@ export const getCharityResponse = (userMessage: string): string => {
   }
 
   // Deeper conversation about faith / tell me more / what does it mean
-  if (normalized.match(/deeper.*(faith|conversation|spiritual)|tell me more.*(faith|christian|believe|god)|what does.*(mean|look like).*(you|faith)|more about.*(faith|belief)|being a christian|faith.*central|spiritual.*life/i)) {
+  if (normalized.match(/deeper.*(faith|conversation|spiritual)|tell me more.*(faith|christian|god)|more about.*(faith|belief|christian)|being a christian|faith.*central|spiritual.*life/i)) {
     return "My faith in Jesus Christ is central to my life. It gives me purpose, direction, and shapes the way I try to love and serve people"
   }
 
@@ -487,8 +502,8 @@ export const getCharityResponse = (userMessage: string): string => {
     return "My faith is important to me and influences the way I think about empathy, stewardship, and designing experiences that genuinely help people"
   }
 
-  // How does faith influence your work / design
-  if (normalized.match(/faith.*(influence|affect|impact).*(work|design|life)|how does.*(faith|belief).*(show|appear)|faith.*(work|job)/i)) {
+  // How does faith influence/fit into your work / design
+  if (normalized.match(/faith.*(influence|affect|impact|fit).*(work|design|life)|how does.*(faith|belief).*(show|appear|fit)|faith.*(work|job)|how.*(faith|christian).*(fit|relate).*(design|ux|work)/i)) {
     return "I believe people matter deeply, and that impacts the way I design experiences. I want my work to be thoughtful, ethical, accessible, and genuinely helpful"
   }
 
@@ -498,7 +513,7 @@ export const getCharityResponse = (userMessage: string): string => {
   }
 
   // Why do you believe / why are you Christian
-  if (normalized.match(/why.*(believe|christian|faith)|what made you.*(believe|christian)/i)) {
+  if (normalized.match(/why.*(christian|faith)|what made you.*(believe|christian)/i)) {
     return "For me, being a Christian means I try to live with integrity, humility, compassion and purpose. My faith influences how I treat people, how I approach my work, and how I think about serving others through design"
   }
 
@@ -518,7 +533,7 @@ export const getCharityResponse = (userMessage: string): string => {
   }
 
   // What values does faith bring to design
-  if (normalized.match(/values.*(faith|belief).*(bring|design|work)|faith.*(values|bring).*(design|process|work)|how.*(faith|belief).*(influence|shape).*(design|process)/i)) {
+  if (normalized.match(/values.*(faith|belief).*(bring|design|work)|faith.*(values|bring).*(design|process|work)/i)) {
     return "Empathy, stewardship, humility, and care for people are big ones for me. I try to design in a way that's intentional and considerate of different users and experiences"
   }
 
@@ -530,6 +545,20 @@ export const getCharityResponse = (userMessage: string): string => {
   // How do you handle disagreements on teams
   if (normalized.match(/handle.*(disagreement|conflict|different opinion)|disagreement.*(team|work)|conflict.*(team|colleague|coworker)|when.*(disagree|conflict)/i)) {
     return "I try to approach disagreement with humility and collaboration. I value listening first, understanding different perspectives, and focusing on solving the problem rather than proving a point"
+  }
+
+  // ============================================
+  // UX DESIGN PHILOSOPHY (separate from faith)
+  // ============================================
+
+  // UX philosophy / design philosophy
+  if (normalized.match(/ux philosophy|design philosophy|approach to (ux|design)|how do you approach (ux|design)/i)) {
+    return "I believe in putting users first, designing with empathy, and creating experiences that are accessible and genuinely helpful. I focus on understanding real problems before jumping to solutions, and I value collaboration throughout the process"
+  }
+
+  // What makes good UX / good design
+  if (normalized.match(/what makes.*(good|great).*(ux|design)|good (ux|design) mean/i)) {
+    return "Good UX solves real problems for real people. It's intuitive, accessible, and considerate of diverse users and contexts. It comes from deeply understanding user needs and iterating based on feedback"
   }
 
   // What are you looking for
