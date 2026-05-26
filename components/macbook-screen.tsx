@@ -569,7 +569,6 @@ export function MacBookScreen() {
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/1248d3d2-9378-4a55-8436-27859afc42b0.MP4",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/48012242-743F-4BD3-9D46-776EFC06129D.MP4",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4",
-    "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_0222.MOV",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C126AEAA-DDF9-48FD-938D-C8989BDBAF0B.mov",
     "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/ips-C6779F66-5629-4CE0-969B-0EEB2B616A19.mov"
@@ -587,7 +586,6 @@ export function MacBookScreen() {
     { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/C90C5DE4-6859-48AA-9428-88FA087CE9C5.MP4" },
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/2e2f3d08-d3fe-45db-a7a2-b93ecc0bea49.JPG-cSfHYSFu1O8pB2zkZPiM3QYrCRLWGO.jpeg" },
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_0402-B6ik9cU5RksRk7f02Hsd1qgBPFD9Yi.jpg" },
-    { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_0222.MOV" },
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_8746%20%281%29-ykl4qPdci0vLiSAJwAbpTJlqY79eHb.jpg" },
     { type: 'photo', url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Facetune_05-10-2025-08-52-01-QaKLBArAwKX819Wed7HtYbzdlq4UK1.jpg" },
     { type: 'video', url: "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_3724.MOV" },
