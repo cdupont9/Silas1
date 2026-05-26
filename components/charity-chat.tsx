@@ -467,6 +467,16 @@ export const getCharityResponse = (userMessage: string): string => {
     return "Great question! Are you asking about my faith from a religious standpoint, or what I believe in as a UX designer?"
   }
 
+  // AMBIGUOUS: Single word "faith" or "god" - needs clarification
+  if (normalized.match(/^faith\??$|^god\??$/i)) {
+    return "What would you like to know? Are you asking about my faith or beliefs?"
+  }
+
+  // AMBIGUOUS: Just "believe" or "beliefs"
+  if (normalized.match(/^believe\??$|^beliefs\??$/i)) {
+    return "What specifically would you like to know about my beliefs?"
+  }
+
   // CLARIFICATION: They want to know about UX beliefs specifically
   if (normalized.match(/believe.*(ux|design|designer)|ux.*(believe|philosophy)|design.*(believe|philosophy|principles)|as a (ux )?designer/i)) {
     return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. I believe good design solves real problems and that collaboration leads to better outcomes than working in silos"
@@ -517,10 +527,53 @@ export const getCharityResponse = (userMessage: string): string => {
     return "For me, being a Christian means I try to live with integrity, humility, compassion and purpose. My faith influences how I treat people, how I approach my work, and how I think about serving others through design"
   }
 
-  // Church / do you go to church
-  if (normalized.match(/church|worship|pray|prayer/i)) {
+  // ============================================
+  // CHURCH DETAILS
+  // ============================================
+
+  // Do you go to church
+  if (normalized.match(/^(do you )?(go to |attend )?(a )?church\??$|^church\??$/i)) {
+    return "Yes, I attend Beth Israel in Wayne, New Jersey"
+  }
+
+  // Where do you go to church / what church
+  if (normalized.match(/where.*(go|attend).*(church|worship)|what church|which church|your church/i)) {
+    return "I attend Beth Israel in Wayne, New Jersey"
+  }
+
+  // Beth Israel
+  if (normalized.match(/beth israel/i)) {
+    return "Beth Israel is a Messianic Jewish congregation in Wayne, New Jersey. It's led by Rabbi Jonathan Cahn"
+  }
+
+  // Who is the pastor / rabbi / leader
+  if (normalized.match(/who.*(pastor|rabbi|leader|minister)|pastor.*(name|there)|rabbi.*(name|there)/i)) {
+    return "The rabbi is Jonathan Cahn"
+  }
+
+  // Jonathan Cahn - who is he
+  if (normalized.match(/who is jonathan cahn|jonathan cahn|tell me about.*(jonathan|cahn|rabbi)/i)) {
+    return "Jonathan Cahn is the rabbi at Beth Israel. He's also a Messianic Jewish author and speaker known for his teachings and books"
+  }
+
+  // What kind of church / type of church
+  if (normalized.match(/what (kind|type).*(church|congregation)|kind of church|type of church/i)) {
+    return "It's a Messianic Jewish congregation"
+  }
+
+  // What is Messianic Jewish / what does that mean
+  if (normalized.match(/what.*(messianic|messianic jewish)|messianic.*(mean|is)|explain messianic/i)) {
+    return "A Messianic Jewish congregation is a community that embraces both Jewish heritage and faith in Jesus (Yeshua) as the Messiah. It blends Jewish traditions, culture, and biblical roots with belief in Jesus Christ"
+  }
+
+  // General church/worship/prayer questions
+  if (normalized.match(/worship|pray|prayer/i)) {
     return "Yes, my faith is an active part of my life"
   }
+
+  // ============================================
+  // VALUES
+  // ============================================
 
   // Values / what do you value
   if (normalized.match(/what.*(values|value)|core values|guiding principles/i)) {
