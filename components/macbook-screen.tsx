@@ -3032,9 +3032,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <div className="text-white/70 text-lg mt-2" suppressHydrationWarning>{currentTime.split("  ")[0]}</div>
             </div>
           )}
-          <div className="flex flex-col items-center mt-16">
-            <div className="w-32 h-32 rounded-full overflow-hidden bg-white/10 backdrop-blur-xl border-4 border-white/20 shadow-2xl mb-4 animate-memoji-wave">
-              <img src={MEMOJI_URL} alt="Charity's Memoji" className="w-full h-full object-cover animate-memoji-wink" />
+<div className="flex flex-col items-center mt-16">
+  <div className="w-32 h-32 rounded-full overflow-hidden bg-white/10 backdrop-blur-xl border-4 border-white/20 shadow-2xl mb-4">
+  <img src={MEMOJI_URL} alt="Charity's Memoji" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-white text-2xl font-medium mt-2 mb-4">Charity{"'"}s Portfolio</h1>
             <button 
