@@ -47,7 +47,48 @@ export const shouldAutoHeart = (msg: string): boolean => {
 export const getCharityResponse = (userMessage: string, conversationHistory?: ChatMessage[]): string => {
   // Normalize: lowercase, trim, remove extra letters (hiiiii -> hi, youuuu -> you)
   const msg = userMessage.toLowerCase().trim()
-  const normalized = msg.replace(/(.)\1{2,}/g, '$1$1') // reduce repeated chars to max 2
+  let normalized = msg.replace(/(.)\1{2,}/g, '$1$1') // reduce repeated chars to max 2
+
+  // ============================================
+  // MISSPELLING CORRECTIONS
+  // ============================================
+  // Common misspellings mapped to correct words
+  const misspellings: Record<string, string> = {
+    // believe variations
+    'beleive': 'believe', 'belive': 'believe', 'beleave': 'believe', 'beleve': 'believe',
+    'beileve': 'believe', 'believie': 'believe', 'bleieve': 'believe', 'beileive': 'believe',
+    // jesus variations
+    'jeses': 'jesus', 'jesues': 'jesus', 'jeusus': 'jesus', 'jessus': 'jesus',
+    'jeasus': 'jesus', 'jesuss': 'jesus', 'jezus': 'jesus', 'jeus': 'jesus',
+    // christian variations
+    'christain': 'christian', 'chrisitan': 'christian', 'christan': 'christian',
+    'christion': 'christian', 'chistian': 'christian', 'cristian': 'christian',
+    // faith variations
+    'fath': 'faith', 'faiht': 'faith', 'fatih': 'faith', 'faih': 'faith',
+    // church variations
+    'chruch': 'church', 'chuch': 'church', 'churhc': 'church', 'curch': 'church',
+    // bible variations
+    'bibel': 'bible', 'bilbe': 'bible', 'bibe': 'bible', 'bibl': 'bible',
+    // god variations
+    'gdo': 'god', 'godd': 'god',
+    // religious variations
+    'religous': 'religious', 'religios': 'religious', 'reigious': 'religious',
+    // messianic variations
+    'mesianic': 'messianic', 'messanic': 'messianic', 'messinic': 'messianic',
+    // jonathan cahn variations
+    'johnathan': 'jonathan', 'jonathon': 'jonathan', 'jonathen': 'jonathan',
+    'con': 'cahn', 'kahn': 'cahn', 'kan': 'cahn',
+    // design/ux variations
+    'desgin': 'design', 'desgn': 'design', 'deisgn': 'design',
+    'expereince': 'experience', 'experiance': 'experience', 'expreience': 'experience',
+    // portfolio variations
+    'porfolio': 'portfolio', 'portfoilo': 'portfolio', 'portfolo': 'portfolio',
+  }
+  
+  // Apply misspelling corrections
+  for (const [misspelled, correct] of Object.entries(misspellings)) {
+    normalized = normalized.replace(new RegExp(misspelled, 'gi'), correct)
+  }
 
   // Analyze conversation context to understand what topic we've been discussing
   const getConversationContext = (): 'ux' | 'faith' | 'general' | null => {
@@ -570,9 +611,9 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
     return "Yes, I'm a Christian"
   }
 
-  // Why do you believe / why are you Christian
-  if (normalized.match(/why.*(christian|faith)|what made you.*(believe|christian)/i)) {
-    return "For me, being a Christian means I try to live with integrity, humility, compassion and purpose. My faith influences how I treat people, how I approach my work, and how I think about serving others through design"
+  // Why do you believe in Jesus specifically
+  if (normalized.match(/why.*(believe|faith).*(jesus|christ|god)|why.*jesus|why.*christian|what made you.*(believe|christian)|how.*come.*(believe|christian)/i)) {
+    return "Christianity provides what I find to be the most coherent explanation of reality - not just spiritually, but philosophically, morally, and existentially. Questions about consciousness, morality, human dignity, meaning, and our longing for transcendence all point me toward something beyond materialism. When I examined the historical claims surrounding Jesus - His life, death, and resurrection - Christianity became compelling in a way other worldviews did not. It uniquely addresses the human condition: our capacity for beauty and cruelty, our longing for meaning, and our desire for redemption. I find that Christianity explains both the greatness and brokenness of humanity with unusual depth"
   }
 
   // ============================================
