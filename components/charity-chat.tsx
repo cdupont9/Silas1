@@ -458,6 +458,35 @@ export const getCharityResponse = (userMessage: string): string => {
     return "Stability is my primary motivator. A stable foundation allows for clarity, focus, and sustained growth. From that position, I am better able to perform effectively and develop professionally."
   }
 
+  // ============================================
+  // FAITH & VALUES
+  // ============================================
+
+  // What do you believe / what is your faith
+  if (normalized.match(/what do you believe|what'?s your faith|your faith|are you religious|religion|do you believe in god/i)) {
+    return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
+  }
+
+  // How important is your faith
+  if (normalized.match(/how important.*(faith|religion|god)|faith.*(important|matter)|role.*(faith|religion)/i)) {
+    return "My faith is important to me and influences the way I think about empathy, stewardship, and designing experiences that genuinely help people"
+  }
+
+  // Tell me more about that / what does that mean to you
+  if (normalized.match(/tell me more.*(faith|christian|believe)|what does.*(mean|look like)|more about.*(faith|belief)|being a christian/i)) {
+    return "For me, being a Christian means I try to live with integrity, humility, compassion and purpose. My faith influences how I treat people, how I approach my work, and how I think about serving others through design"
+  }
+
+  // How does faith influence your work / design
+  if (normalized.match(/faith.*(influence|affect|impact).*(work|design)|how does.*(faith|belief).*(show|appear)|faith.*(work|job)/i)) {
+    return "I believe people matter deeply, and that impacts the way I design experiences. I want my work to be thoughtful, ethical, accessible, and genuinely helpful"
+  }
+
+  // Christian / are you Christian
+  if (normalized.match(/^(christian|are you christian|are you a christian)\??$/i)) {
+    return "Yes, I'm a Christian"
+  }
+
   // What are you looking for
   if (normalized.match(/looking for|want in.*(role|job)|ideal.*(role|position|opportunity)/i)) {
     return "Opportunities to grow, work on challenging systems, and continue developing my skills in UX and AI."
