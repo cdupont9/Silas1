@@ -44,10 +44,32 @@ export const shouldAutoHeart = (msg: string): boolean => {
   )
 }
 
-export const getCharityResponse = (userMessage: string): string => {
+export const getCharityResponse = (userMessage: string, conversationHistory?: ChatMessage[]): string => {
   // Normalize: lowercase, trim, remove extra letters (hiiiii -> hi, youuuu -> you)
   const msg = userMessage.toLowerCase().trim()
   const normalized = msg.replace(/(.)\1{2,}/g, '$1$1') // reduce repeated chars to max 2
+
+  // Analyze conversation context to understand what topic we've been discussing
+  const getConversationContext = (): 'ux' | 'faith' | 'general' | null => {
+    if (!conversationHistory || conversationHistory.length < 2) return null
+    
+    // Look at last 6 messages for context
+    const recentMessages = conversationHistory.slice(-6).map(m => m.text.toLowerCase()).join(' ')
+    
+    // Check if we've been talking about faith/religion
+    const faithKeywords = /(faith|christian|church|god|jesus|bible|religious|belief|believe|messianic|beth israel|jonathan cahn|pray|worship|spiritual)/i
+    const uxKeywords = /(ux|design|designer|user experience|portfolio|project|case study|google|figma|prototype|wireframe|research|usability)/i
+    
+    const hasFaithContext = faithKeywords.test(recentMessages)
+    const hasUxContext = uxKeywords.test(recentMessages)
+    
+    if (hasFaithContext && !hasUxContext) return 'faith'
+    if (hasUxContext && !hasFaithContext) return 'ux'
+    if (hasFaithContext && hasUxContext) return 'general' // mixed context
+    return null
+  }
+  
+  const context = getConversationContext()
 
   // ============================================
   // EMOJI REACTIONS
@@ -79,7 +101,7 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // Work (vague)
   if (normalized.match(/^work[\s!?.]*$/i)) {
-    return "What would you like to know about my work? I'm a UX Designer at Google"
+    return "What would you like to know about my work? Currently I'm a UX Designer at Google focused on AI assistant experiences"
   }
 
   // School (vague)
@@ -189,7 +211,12 @@ export const getCharityResponse = (userMessage: string): string => {
 
   // About/Tell me about yourself
   if (normalized.match(/(tell me about yourself|about you|introduce yourself|who is charity|who you|tell me bout you)/)) {
-    return "I'm a UX Designer focused on AI-assisted experiences where clarity and trust really matter - I design systems that help people navigate complex workflows with confidence"
+    return "Currently I'm focused on AI assistant experiences at Google. I design systems that help people navigate complex workflows with clarity and confidence"
+  }
+
+  // Tell me about your UX work specifically
+  if (normalized.match(/tell me about your (ux|design|work)|your ux work|about your work|what do you do/i)) {
+    return "Currently I'm focused on AI assistant experiences. I design systems that help people navigate complex workflows with clarity and confidence. I really care about making technology feel approachable and trustworthy"
   }
 
   // Current role details
@@ -462,9 +489,15 @@ export const getCharityResponse = (userMessage: string): string => {
   // FAITH & VALUES (with clarification for ambiguous questions)
   // ============================================
 
-  // AMBIGUOUS: "What do you believe?" - needs clarification (no clear faith/UX indicator)
+  // AMBIGUOUS: "What do you believe?" - use context to determine response
   if (normalized.match(/^what do you believe\??$|^what do you believe in\??$/i)) {
-    return "Great question! Are you asking about my faith from a religious standpoint, or what I believe in as a UX designer?"
+    if (context === 'ux') {
+      return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful"
+    } else if (context === 'faith') {
+      return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
+    } else {
+      return "Are you asking about my faith from a religious standpoint, or what I believe in as a UX designer?"
+    }
   }
 
   // AMBIGUOUS: Single word "faith" or "god" - needs clarification
@@ -477,9 +510,24 @@ export const getCharityResponse = (userMessage: string): string => {
     return "What specifically would you like to know about my beliefs?"
   }
 
+  // YES response - check context to determine what they're saying yes to
+  if (normalized.match(/^(yes|yeah|yep|yup|sure|ok|okay)\??\.?!?$/i)) {
+    if (context === 'ux') {
+      return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. Good design solves real problems and collaboration leads to better outcomes"
+    } else if (context === 'faith') {
+      return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
+    }
+    // If no clear context, let it fall through to generic yes handling below
+  }
+
   // CLARIFICATION: They want to know about UX beliefs specifically
-  if (normalized.match(/believe.*(ux|design|designer)|ux.*(believe|philosophy)|design.*(believe|philosophy|principles)|as a (ux )?designer/i)) {
-    return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. I believe good design solves real problems and that collaboration leads to better outcomes than working in silos"
+  if (normalized.match(/believe.*(ux|design|designer)|ux.*(believe|philosophy)|design.*(believe|philosophy|principles)|as a (ux )?designer|what about ux|ux designer/i)) {
+    return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. Good design solves real problems and collaboration leads to better outcomes"
+  }
+
+  // Religious standpoint explicitly mentioned
+  if (normalized.match(/religious standpoint|faith standpoint|from a religious|about your faith|spiritual/i)) {
+    return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
   }
 
   // CLARIFICATION: They want to know about faith/religion specifically
@@ -1269,7 +1317,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
 
     await new Promise(resolve => setTimeout(resolve, 600 + Math.random() * 400))
 
-    const response = getCharityResponse(userMessage.text)
+    const response = getCharityResponse(userMessage.text, messages)
 
     const assistantMessage: ChatMessage = {
       id: `assistant-${Date.now()}`,
