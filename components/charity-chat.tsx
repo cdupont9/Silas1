@@ -228,7 +228,7 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
 
   // Age - specific questions
   if (normalized.match(/(how old|your age|what's your age|whats your age)/)) {
-    return pick(["I'm 30!", "30", "I'm 30 years old"])
+    return pick(["I'm 31!", "31", "I'm 31 years old"])
   }
 
   // Birthday
