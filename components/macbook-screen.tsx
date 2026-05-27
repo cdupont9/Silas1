@@ -104,12 +104,7 @@ const messageContacts = [
     lastMessage: 'Welcome to my portfolio on my MacBook!',
     time: 'now',
     unread: true,
-    messages: [
-      { from: 'charity', text: "Hey! Welcome to my portfolio on my MacBook!", time: '10:30 AM' },
-      { from: 'charity', text: "Feel free to explore around - check out my Projects folder on the desktop or click on any of my case studies below.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Feel free to message me here and talk to me in iMessages. Happy to respond!", time: '10:31 AM' },
-      { from: 'charity', text: "Hey there, how are you?", time: '10:32 AM' },
-    ]
+    messages: []
   },
   {
     id: 'teammate',
@@ -631,14 +626,17 @@ export function MacBookScreen() {
     return () => clearInterval(interval)
   }, [])
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault()
-    setScreenState("loading")
-    setTimeout(() => {
-      setScreenState("desktop")
-      // Open Messages window on login
-      setMessagesWindow({ isOpen: true, isMinimized: false })
-    }, 2500)
+const handleLogin = (e: React.FormEvent) => {
+  e.preventDefault()
+  setScreenState("loading")
+  setTimeout(() => {
+  setScreenState("desktop")
+  // Open Messages window after 1 second delay with welcome message for hiring managers
+  setTimeout(() => {
+    setMessagesWindow({ isOpen: true, isMinimized: false })
+    setFocusedWindow('messages')
+  }, 1000)
+  }, 2500)
   }
 
   const handleLogout = () => {

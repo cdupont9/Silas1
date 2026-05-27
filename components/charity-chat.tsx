@@ -1321,11 +1321,79 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const [showReactions, setShowReactions] = useState<string | null>(null)
+  const [showQuickReplies, setShowQuickReplies] = useState(true)
+  const [hasShownWelcome, setHasShownWelcome] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // Show welcome message on mount if no messages exist
+  useEffect(() => {
+    if (messages.length === 0 && !hasShownWelcome) {
+      setHasShownWelcome(true)
+      const welcomeMessage: ChatMessage = {
+        id: `welcome-${Date.now()}`,
+        role: 'assistant',
+        text: "Hi there! Thanks for stopping by. I'm Charity's AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!",
+        time: getCurrentTime(),
+      }
+      setMessages([welcomeMessage])
+    }
+  }, [messages.length, hasShownWelcome, setMessages])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
+
+  // Quick reply handlers
+  const handleQuickReply = async (action: 'project' | 'resume' | 'techstack') => {
+    setShowQuickReplies(false)
+    
+    let userText = ''
+    let responseText = ''
+    
+    switch (action) {
+      case 'project':
+        userText = 'Show me your top project'
+        responseText = "My top project is Silas - an AI Lifestyle Assistant I designed. It integrates with your calendar, finances, and daily routines to provide proactive, personalized support. Let me open that case study for you!"
+        break
+      case 'resume':
+        userText = 'Open your resume'
+        responseText = "Opening my resume for you now! You can also download it directly from the Safari window that will open."
+        break
+      case 'techstack':
+        userText = 'What tech stack do you use?'
+        responseText = "My design toolkit includes Figma for UI/UX design and prototyping, Adobe Creative Suite for visual assets, and I'm experienced with design systems. For research, I use tools like Maze, UserTesting, and Optimal Workshop. I also understand front-end basics (HTML, CSS, React) which helps me collaborate effectively with developers!"
+        break
+    }
+    
+    const userMessage: ChatMessage = {
+      id: `user-${Date.now()}`,
+      role: 'user',
+      text: userText,
+      time: getCurrentTime(),
+    }
+    
+    setMessages(prev => [...prev, userMessage])
+    setIsTyping(true)
+    
+    await new Promise(resolve => setTimeout(resolve, 800))
+    
+    const assistantMessage: ChatMessage = {
+      id: `assistant-${Date.now()}`,
+      role: 'assistant',
+      text: responseText,
+      time: getCurrentTime(),
+    }
+    
+    setMessages(prev => [...prev, assistantMessage])
+    setIsTyping(false)
+    
+    // Trigger the action after showing the response
+    if (action === 'project' && openCaseStudy) {
+      setTimeout(() => openCaseStudy('silas'), 500)
+    } else if (action === 'resume') {
+      setTimeout(() => window.open('/Charity_Dupont_Resume.pdf', '_blank'), 500)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -1510,6 +1578,30 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
             </div>
           </div>
         ))}
+
+        {/* Quick Reply Pills for Hiring Managers */}
+        {showQuickReplies && messages.length === 1 && !isTyping && (
+          <div className="flex flex-col gap-2 mt-4 mb-2">
+            <button
+              onClick={() => handleQuickReply('project')}
+              className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            >
+              <span>🚀</span> Show Top Project
+            </button>
+            <button
+              onClick={() => handleQuickReply('resume')}
+              className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl text-sm font-medium hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            >
+              <span>📄</span> Open Resume
+            </button>
+            <button
+              onClick={() => handleQuickReply('techstack')}
+              className="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl text-sm font-medium hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+            >
+              <span>🛠️</span> See Tech Stack
+            </button>
+          </div>
+        )}
 
         {isTyping && (
           <div className="flex flex-col">
