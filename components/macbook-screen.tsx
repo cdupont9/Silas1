@@ -525,19 +525,7 @@ export function MacBookScreen() {
     {
       id: 'welcome-1',
       role: 'assistant',
-      text: "Hey! Welcome to my portfolio on my MacBook",
-      time: getCurrentTime(),
-    },
-    {
-      id: 'welcome-2',
-      role: 'assistant',
-      text: "Feel free to explore - check out my case studies in the dock below or click around!",
-      time: getCurrentTime(),
-    },
-    {
-      id: 'welcome-3',
-      role: 'assistant',
-      text: "I'm a UX Designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
+      text: "Hi there! Thanks for stopping by. I'm Charity's AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!",
       time: getCurrentTime(),
     },
   ])
