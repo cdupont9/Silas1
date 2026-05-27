@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, Send } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -249,6 +249,7 @@ export function MacBookScreen() {
   // Track multiple open case study windows
   const [openCaseStudies, setOpenCaseStudies] = useState<{ [key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } } }>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -263,6 +264,7 @@ export function MacBookScreen() {
   // Brain Games state
   const [braingamesWindow, setBraingamesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [braingamesPosition, setBraingamesPosition] = useState({ x: 180, y: 80 })
+  const [aiAssistantPosition, setAiAssistantPosition] = useState({ x: 400, y: 100 })
   const [braingamesScore, setBraingamesScore] = useState(0)
   const [braingamesGameState, setBraingamesGameState] = useState<BrainGamesState>(initialBrainGamesState)
   
@@ -525,10 +527,33 @@ export function MacBookScreen() {
     {
       id: 'welcome-1',
       role: 'assistant',
+      text: "Hey! Welcome to my portfolio on my MacBook",
+      time: getCurrentTime(),
+    },
+    {
+      id: 'welcome-2',
+      role: 'assistant',
+      text: "Feel free to explore - check out my case studies in the dock below or click around!",
+      time: getCurrentTime(),
+    },
+    {
+      id: 'welcome-3',
+      role: 'assistant',
+      text: "I'm a UX Designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
+      time: getCurrentTime(),
+    },
+  ])
+  
+  // AI Assistant messages state - separate from regular chat
+  const [aiAssistantMessages, setAiAssistantMessages] = useState<ChatMessage[]>([
+    {
+      id: 'ai-welcome-1',
+      role: 'assistant',
       text: "Hi there! Thanks for stopping by. I'm Charity's AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!",
       time: getCurrentTime(),
     },
   ])
+  const [showAiQuickReplies, setShowAiQuickReplies] = useState(true)
 
 
 
@@ -619,10 +644,10 @@ const handleLogin = (e: React.FormEvent) => {
   setScreenState("loading")
   setTimeout(() => {
   setScreenState("desktop")
-  // Open Messages window after 1 second delay with welcome message for hiring managers
+  // Open AI Assistant window after 1 second delay for hiring managers
   setTimeout(() => {
-    setMessagesWindow({ isOpen: true, isMinimized: false })
-    setFocusedWindow('messages')
+    setAiAssistantWindow({ isOpen: true, isMinimized: false })
+    setFocusedWindow('aiAssistant')
   }, 1000)
   }, 2500)
   }
@@ -736,8 +761,9 @@ const handleLogin = (e: React.FormEvent) => {
       case 'backgrounds': position = backgroundsPosition; break
       case 'messages': position = messagesPosition; break
 case 'notes': position = notesPosition; break
-  case 'braingames': position = braingamesPosition; break
-      default: position = { x: 0, y: 0 }
+case 'braingames': position = braingamesPosition; break
+  case 'aiAssistant': position = aiAssistantPosition; break
+  default: position = { x: 0, y: 0 }
     }
 
     dragOffset.current = {
@@ -762,6 +788,7 @@ case 'notes': position = notesPosition; break
       case 'messages': setMessagesPosition({ x: newX, y: newY }); break
 case 'notes': setNotesPosition({ x: newX, y: newY }); break
   case 'braingames': setBraingamesPosition({ x: newX, y: newY }); break
+  case 'aiAssistant': setAiAssistantPosition({ x: newX, y: newY }); break
   }
   }
   
@@ -5024,6 +5051,129 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* AI Assistant Window */}
+        {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
+          <div
+            className={`absolute w-[400px] h-[500px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/20 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
+            style={{ left: aiAssistantPosition.x, top: aiAssistantPosition.y, transformOrigin: 'bottom center' }}
+            onClick={() => focusWindow('aiAssistant')}
+          >
+            {/* Header */}
+            <div
+              onMouseDown={(e) => { focusWindow('aiAssistant'); handleMouseDown('aiAssistant', e); }}
+              className="h-14 bg-gradient-to-r from-purple-600/80 to-blue-600/80 flex items-center px-4 gap-3 cursor-grab active:cursor-grabbing"
+            >
+              <div className="flex gap-2">
+                <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
+                <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: true })} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
+                <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
+              </div>
+              <div className="flex items-center gap-2 flex-1">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center">
+                  <span className="text-white text-sm">AI</span>
+                </div>
+                <div>
+                  <p className="text-white text-[13px] font-semibold">Charity&apos;s AI Assistant</p>
+                  <p className="text-white/60 text-[10px]">Online</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Messages Area */}
+            <div className="flex-1 overflow-auto p-4 space-y-3">
+              {aiAssistantMessages.map((message) => (
+                <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-white/10 text-white'}`}>
+                    <p className="text-[13px] leading-relaxed">{message.text}</p>
+                    <p className={`text-[10px] mt-1 ${message.role === 'user' ? 'text-white/60' : 'text-white/40'}`}>{message.time}</p>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Quick Reply Pills */}
+              {showAiQuickReplies && aiAssistantMessages.length === 1 && (
+                <div className="flex flex-col gap-2 mt-4">
+                  <button
+                    onClick={() => {
+                      setShowAiQuickReplies(false);
+                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: 'Show me your top project', time: getCurrentTime() };
+                      setAiAssistantMessages(prev => [...prev, userMsg]);
+                      setTimeout(() => {
+                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: "My top project is Silas - an AI Lifestyle Assistant I designed. It integrates with your calendar, finances, and daily routines to provide proactive, personalized support. Let me open that case study for you!", time: getCurrentTime() };
+                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
+                        setTimeout(() => openCaseStudy('silas'), 500);
+                      }, 800);
+                    }}
+                    className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span>🚀</span> Show Top Project
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowAiQuickReplies(false);
+                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: 'Open your resume', time: getCurrentTime() };
+                      setAiAssistantMessages(prev => [...prev, userMsg]);
+                      setTimeout(() => {
+                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: "Opening my resume for you now! You can also download it directly from the Safari window.", time: getCurrentTime() };
+                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
+                        setTimeout(() => {
+                          setSafariWindow({ isOpen: true, isMinimized: false, project: null });
+                          setFocusedWindow('safari');
+                        }, 500);
+                      }, 800);
+                    }}
+                    className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl text-sm font-medium hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span>📄</span> Open Resume
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowAiQuickReplies(false);
+                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: 'What tech stack do you use?', time: getCurrentTime() };
+                      setAiAssistantMessages(prev => [...prev, userMsg]);
+                      setTimeout(() => {
+                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: "My design toolkit includes Figma for UI/UX design and prototyping, Adobe Creative Suite for visual assets, and I'm experienced with design systems. For research, I use tools like Maze, UserTesting, and Optimal Workshop. I also understand front-end basics (HTML, CSS, React) which helps me collaborate effectively with developers!", time: getCurrentTime() };
+                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
+                      }, 800);
+                    }}
+                    className="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl text-sm font-medium hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <span>🛠️</span> See Tech Stack
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Input Area */}
+            <div className="p-3 border-t border-white/10">
+              <div className="bg-white/10 rounded-full px-4 py-2 flex items-center gap-2">
+                <input 
+                  type="text" 
+                  placeholder="Ask me anything about Charity..." 
+                  className="flex-1 bg-transparent text-[13px] text-white outline-none placeholder-white/40" 
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
+                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: e.currentTarget.value, time: getCurrentTime() };
+                      setAiAssistantMessages(prev => [...prev, userMsg]);
+                      setShowAiQuickReplies(false);
+                      const input = e.currentTarget.value;
+                      e.currentTarget.value = '';
+                      setTimeout(() => {
+                        const response = getCharityResponse(input, aiAssistantMessages);
+                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: response, time: getCurrentTime() };
+                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
+                      }, 800);
+                    }
+                  }}
+                />
+                <button className="text-white/60 hover:text-white transition-colors">
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
