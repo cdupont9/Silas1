@@ -5210,7 +5210,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
                     </p>
                   </div>
-                ) : (
+                ) : desktopSelectedNote === 'techstack' ? (
                   /* Tech Stack */
                   <div className="text-black">
                     <h1 className="text-3xl font-bold mb-6">My UX Tech Stack</h1>
@@ -5318,7 +5318,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       </div>
                     </div>
                   </div>
-                )}
+                ) : null}
               </div>
             </div>
           </div>
