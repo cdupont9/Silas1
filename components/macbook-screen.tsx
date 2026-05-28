@@ -5090,8 +5090,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <button
                   onClick={() => {
                     setSafariWindow({ isOpen: true, isMinimized: false, project: null });
-                    setSafariUrl(RESUME_PDF_URL);
-                    setSafariInputUrl(RESUME_PDF_URL);
+                    setSafariUrl('resume');
+                    setSafariInputUrl('charitydupont.com/resume');
                     setFocusedWindow('safari');
                   }}
                   className="w-full px-4 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl text-sm font-semibold hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
@@ -5454,6 +5454,129 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                                 </tr>
                               </tbody>
                             </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : safariUrl === RESUME_PDF_URL || safariUrl === 'resume' ? (
+                /* Resume Viewer Page */
+                <div className="w-full min-h-full bg-[#f8f9fa]">
+                  {/* Header */}
+                  <div className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-10">
+                    <div className="max-w-[800px] mx-auto flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-white" />
+                        </div>
+                        <div>
+                          <h1 className="text-lg font-semibold text-gray-900">Charity Dupont - Resume</h1>
+                          <p className="text-xs text-gray-500">UX Designer at Google</p>
+                        </div>
+                      </div>
+                      <a
+                        href={RESUME_PDF_URL}
+                        download="Charity_Dupont_Resume.pdf"
+                        className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download PDF
+                      </a>
+                    </div>
+                  </div>
+                  
+                  {/* Resume Content */}
+                  <div className="max-w-[800px] mx-auto p-6">
+                    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+                      {/* Name and Contact */}
+                      <div className="text-center border-b border-gray-200 pb-6 mb-6">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">CHARITY DUPONT</h1>
+                        <p className="text-lg text-blue-600 font-medium mb-3">UX Designer</p>
+                        <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
+                          <span>New York/New Jersey</span>
+                          <span>|</span>
+                          <a href="mailto:hello@charitydupont.com" className="text-blue-600 hover:underline">hello@charitydupont.com</a>
+                          <span>|</span>
+                          <a href="https://linkedin.com/in/charitydupont" className="text-blue-600 hover:underline">LinkedIn</a>
+                          <span>|</span>
+                          <a href="https://charitydupont.com" className="text-blue-600 hover:underline">Portfolio</a>
+                        </div>
+                      </div>
+                      
+                      {/* Summary */}
+                      <div className="mb-6">
+                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">PROFESSIONAL SUMMARY</h2>
+                        <p className="text-sm text-gray-700 leading-relaxed">
+                          UX Designer with a background in education and a passion for creating intuitive, human-centered digital experiences. Currently at Google, designing AI-powered user experiences that help people navigate complex systems with clarity and confidence. Skilled in user research, prototyping, and design systems.
+                        </p>
+                      </div>
+                      
+                      {/* Experience */}
+                      <div className="mb-6">
+                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">EXPERIENCE</h2>
+                        
+                        <div className="mb-4">
+                          <div className="flex justify-between items-start mb-1">
+                            <h3 className="font-semibold text-gray-900">UX Designer</h3>
+                            <span className="text-sm text-gray-500">2023 - Present</span>
+                          </div>
+                          <p className="text-blue-600 text-sm mb-2">Google</p>
+                          <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
+                            <li>Design AI-powered user experiences for Google products</li>
+                            <li>Conduct user research and usability testing to inform design decisions</li>
+                            <li>Collaborate with cross-functional teams including engineers and product managers</li>
+                            <li>Create and maintain design systems for consistency across products</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="mb-4">
+                          <div className="flex justify-between items-start mb-1">
+                            <h3 className="font-semibold text-gray-900">4th Grade Teacher</h3>
+                            <span className="text-sm text-gray-500">2018 - 2023</span>
+                          </div>
+                          <p className="text-blue-600 text-sm mb-2">Elementary Education</p>
+                          <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
+                            <li>Developed curriculum and learning materials for diverse student populations</li>
+                            <li>Applied understanding of cognitive development to create engaging lessons</li>
+                            <li>Built strong communication skills working with students, parents, and staff</li>
+                          </ul>
+                        </div>
+                      </div>
+                      
+                      {/* Education */}
+                      <div className="mb-6">
+                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">EDUCATION</h2>
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="font-semibold text-gray-900">UX/UI Design Certificate</h3>
+                            <p className="text-blue-600 text-sm">Columbia University</p>
+                          </div>
+                          <span className="text-sm text-gray-500">2023</span>
+                        </div>
+                      </div>
+                      
+                      {/* Skills */}
+                      <div>
+                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">SKILLS</h2>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Design Tools</h3>
+                            <p className="text-sm text-gray-700">Figma, Adobe Creative Suite, Sketch, InVision, Framer</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Research Methods</h3>
+                            <p className="text-sm text-gray-700">User Interviews, Usability Testing, A/B Testing, Surveys</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Technical Skills</h3>
+                            <p className="text-sm text-gray-700">HTML, CSS, Basic React, Design Systems, Prototyping</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Soft Skills</h3>
+                            <p className="text-sm text-gray-700">Communication, Collaboration, Problem Solving, Empathy</p>
                           </div>
                         </div>
                       </div>
