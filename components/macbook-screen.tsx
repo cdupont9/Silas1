@@ -5471,13 +5471,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <FileText className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                          <h1 className="text-lg font-semibold text-gray-900">Charity Dupont - Resume</h1>
-                          <p className="text-xs text-gray-500">UX Designer at Google</p>
+                          <h1 className="text-lg font-semibold text-gray-900">Charity DuPont - Resume</h1>
+                          <p className="text-xs text-gray-500">UX Designer at Google DeepMind</p>
                         </div>
                       </div>
                       <a
                         href={RESUME_PDF_URL}
-                        download="Charity_Dupont_Resume.pdf"
+                        download="Charity_DuPont_Resume.pdf"
                         className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -5491,92 +5491,109 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {/* Resume Content */}
                   <div className="max-w-[800px] mx-auto p-6">
                     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-                      {/* Name and Contact */}
-                      <div className="text-center border-b border-gray-200 pb-6 mb-6">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">CHARITY DUPONT</h1>
-                        <p className="text-lg text-blue-600 font-medium mb-3">UX Designer</p>
-                        <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
-                          <span>New York/New Jersey</span>
-                          <span>|</span>
-                          <a href="mailto:hello@charitydupont.com" className="text-blue-600 hover:underline">hello@charitydupont.com</a>
-                          <span>|</span>
-                          <a href="https://linkedin.com/in/charitydupont" className="text-blue-600 hover:underline">LinkedIn</a>
-                          <span>|</span>
-                          <a href="https://charitydupont.com" className="text-blue-600 hover:underline">Portfolio</a>
+                      {/* Two Column Layout */}
+                      <div className="flex gap-8">
+                        {/* Left Column - Main Content */}
+                        <div className="flex-1">
+                          {/* Name and Title */}
+                          <div className="mb-6">
+                            <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | UX Designer</h1>
+                            <p className="text-sm text-gray-700 leading-relaxed">
+                              UX/UI Designer at Google DeepMind specializing in High-Fidelity Prototyping for agentic AI experiences. I am a professional &quot;chameleon&quot; who bridges complex AI research with intuitive human experiences, driven by a philosophy of rapid innovation that respects the user&apos;s mental models.
+                            </p>
+                          </div>
+                          
+                          {/* Experience */}
+                          <div className="mb-6">
+                            <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-4">Experience</h2>
+                            
+                            <div className="mb-5">
+                              <div className="flex justify-between items-start mb-1">
+                                <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | UX Designer</h3>
+                              </div>
+                              <p className="text-sm text-gray-500 mb-2">Feb 2025 - PRESENT</p>
+                              <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
+                                <li>Designed agent-assisted experiences for Google Meet (GVC), enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</li>
+                                <li>Executed rapid prototyping workflows using AI Studio (vibe coding) to validate product concepts and technical feasibility.</li>
+                                <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership for further development, including voice input/output interactions to create a more natural, assistant-like user experience.</li>
+                                <li>Partnered with engineering to test and refine interaction patterns within Gemini, ensuring scalable and consistent UX across evolving model capabilities.</li>
+                                <li>Conducted research to uncover friction in agent workflows, turning behavioral insights into actionable product improvements.</li>
+                              </ul>
+                            </div>
+                            
+                            <div className="mb-5">
+                              <div className="flex justify-between items-start mb-1">
+                                <h3 className="font-semibold text-gray-900">Project Bespoke</h3>
+                              </div>
+                              <p className="text-sm text-gray-500 mb-2">Jul 2016 - Aug 2017</p>
+                              <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
+                                <li>Contributed to agent features launched in the Gemini app through ecosystem research and product direction.</li>
+                                <li>Conducted competitive research on AI capabilities to inform product strategy and feature design</li>
+                              </ul>
+                            </div>
+                            
+                            <div className="mb-5">
+                              <div className="flex justify-between items-start mb-1">
+                                <h3 className="font-semibold text-gray-900">Metuchen Christian Acad. | 4th Grade Teacher</h3>
+                              </div>
+                              <p className="text-sm text-gray-500 mb-2">Jul 2016 - Aug 2017</p>
+                              <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
+                                <li>Developed inclusive lesson plans for diverse learning styles, resulting in measurable student progress.</li>
+                                <li>Fostered a collaborative, engaging classroom environment, encouraging participation and a love of learning.</li>
+                                <li>Maintained strong communication with parents and colleagues to support student development.</li>
+                                <li>Applied structured thinking, empathy, and adaptability—skills directly transferable to human-centered AI design</li>
+                              </ul>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                      
-                      {/* Summary */}
-                      <div className="mb-6">
-                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">PROFESSIONAL SUMMARY</h2>
-                        <p className="text-sm text-gray-700 leading-relaxed">
-                          UX Designer with a background in education and a passion for creating intuitive, human-centered digital experiences. Currently at Google, designing AI-powered user experiences that help people navigate complex systems with clarity and confidence. Skilled in user research, prototyping, and design systems.
-                        </p>
-                      </div>
-                      
-                      {/* Experience */}
-                      <div className="mb-6">
-                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">EXPERIENCE</h2>
                         
-                        <div className="mb-4">
-                          <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold text-gray-900">UX Designer</h3>
-                            <span className="text-sm text-gray-500">2023 - Present</span>
+                        {/* Right Column - Contact, Education, Skills */}
+                        <div className="w-[240px] flex-shrink-0">
+                          {/* Contact */}
+                          <div className="mb-6">
+                            <div className="space-y-2 text-sm">
+                              <a href="https://charitydupont.com" className="text-blue-600 hover:underline block">charitydupont.com</a>
+                              <a href="mailto:hello@charitydupont.com" className="text-blue-600 hover:underline block">hello@charitydupont.com</a>
+                              <p className="text-gray-700">(908) 801-0347</p>
+                            </div>
                           </div>
-                          <p className="text-blue-600 text-sm mb-2">Google</p>
-                          <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
-                            <li>Design AI-powered user experiences for Google products</li>
-                            <li>Conduct user research and usability testing to inform design decisions</li>
-                            <li>Collaborate with cross-functional teams including engineers and product managers</li>
-                            <li>Create and maintain design systems for consistency across products</li>
-                          </ul>
-                        </div>
-                        
-                        <div className="mb-4">
-                          <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold text-gray-900">4th Grade Teacher</h3>
-                            <span className="text-sm text-gray-500">2018 - 2023</span>
+                          
+                          {/* Education */}
+                          <div className="mb-6">
+                            <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Education</h2>
+                            
+                            <div className="mb-3">
+                              <h3 className="font-semibold text-gray-900 text-sm">New Jersey City University</h3>
+                              <p className="text-xs text-gray-500">2015 - 2018</p>
+                              <p className="text-sm text-gray-700">Bachelor of Arts Psychology</p>
+                            </div>
+                            
+                            <div className="mb-3">
+                              <h3 className="font-semibold text-gray-900 text-sm">Columbia University</h3>
+                              <p className="text-xs text-gray-500">2024 - 2024</p>
+                              <p className="text-sm text-gray-700">UX/UI Bootcamp Certificate</p>
+                            </div>
+                            
+                            <div className="mb-3">
+                              <h3 className="font-semibold text-gray-900 text-sm">Coursera</h3>
+                              <p className="text-xs text-gray-500">2015 - 2016</p>
+                              <p className="text-sm text-gray-700">Google UX Professional Certificate</p>
+                            </div>
                           </div>
-                          <p className="text-blue-600 text-sm mb-2">Elementary Education</p>
-                          <ul className="text-sm text-gray-700 space-y-1 list-disc list-inside">
-                            <li>Developed curriculum and learning materials for diverse student populations</li>
-                            <li>Applied understanding of cognitive development to create engaging lessons</li>
-                            <li>Built strong communication skills working with students, parents, and staff</li>
-                          </ul>
-                        </div>
-                      </div>
-                      
-                      {/* Education */}
-                      <div className="mb-6">
-                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">EDUCATION</h2>
-                        <div className="flex justify-between items-start">
+                          
+                          {/* Skills & Languages */}
                           <div>
-                            <h3 className="font-semibold text-gray-900">UX/UI Design Certificate</h3>
-                            <p className="text-blue-600 text-sm">Columbia University</p>
-                          </div>
-                          <span className="text-sm text-gray-500">2023</span>
-                        </div>
-                      </div>
-                      
-                      {/* Skills */}
-                      <div>
-                        <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">SKILLS</h2>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div>
-                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Design Tools</h3>
-                            <p className="text-sm text-gray-700">Figma, Adobe Creative Suite, Sketch, InVision, Framer</p>
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Research Methods</h3>
-                            <p className="text-sm text-gray-700">User Interviews, Usability Testing, A/B Testing, Surveys</p>
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Technical Skills</h3>
-                            <p className="text-sm text-gray-700">HTML, CSS, Basic React, Design Systems, Prototyping</p>
-                          </div>
-                          <div>
-                            <h3 className="font-semibold text-gray-900 text-sm mb-2">Soft Skills</h3>
-                            <p className="text-sm text-gray-700">Communication, Collaboration, Problem Solving, Empathy</p>
+                            <h2 className="text-lg font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Skills & Languages</h2>
+                            
+                            <div className="mb-3">
+                              <h3 className="font-semibold text-gray-900 text-sm mb-1">Design Tools</h3>
+                              <p className="text-xs text-gray-700 leading-relaxed">Figma, Sketch, Adobe Creative Clouds, Principle, InVision, Zeplin, HTML/CSS, JavaScript, Jira, Data visualization, User research, Affinity diagram, User flow, Journey mapping, Wire-framing</p>
+                            </div>
+                            
+                            <div>
+                              <h3 className="font-semibold text-gray-900 text-sm mb-1">Skills</h3>
+                              <p className="text-xs text-gray-700 leading-relaxed">Vibe Coding (AI Studio, Vercel, and Jetski), Real-Time Prototyping, GitHub, Figma, Agentic UX, Behavioral Synthesis, Strategic Research, User Research, Usability Testing, Journey Mapping, Personas, Storyboarding, Affinity Diagrams, Information Architecture</p>
+                            </div>
                           </div>
                         </div>
                       </div>
