@@ -251,7 +251,7 @@ export function MacBookScreen() {
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about'>('experience')
+  const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
   const [mobileConversations, setMobileConversations] = useState(mobileMessageContacts)
   const [desktopConversations, setDesktopConversations] = useState(messageContacts)
@@ -5101,7 +5101,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <button
                   onClick={() => {
                     setNotesWindow({ isOpen: true, isMinimized: false });
-                    setDesktopSelectedNote('experience');
+                    setDesktopSelectedNote('techstack');
                     setFocusedWindow('notes');
                   }}
                   className="w-full px-4 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl text-sm font-semibold hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
@@ -5152,10 +5152,17 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </button>
                 <button
                   onClick={() => setDesktopSelectedNote('about')}
-                  className={`w-full text-left p-3 rounded-lg transition-colors ${desktopSelectedNote === 'about' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
+                  className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${desktopSelectedNote === 'about' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
                 >
                   <p className="font-semibold text-sm text-black">About</p>
                   <p className="text-xs text-black/50">05/25/1995 {"I'm"} Charity...</p>
+                </button>
+                <button
+                  onClick={() => setDesktopSelectedNote('techstack')}
+                  className={`w-full text-left p-3 rounded-lg transition-colors ${desktopSelectedNote === 'techstack' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
+                >
+                  <p className="font-semibold text-sm text-black">Tech Stack</p>
+                  <p className="text-xs text-black/50">Tools <span className="text-amber-600">& Skills</span></p>
                 </button>
               </div>
             </div>
@@ -5164,7 +5171,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <div className="flex-1 flex flex-col">
               <div className="p-4 border-b border-black/5 text-right">
                 <p className="text-xs text-black/40">
-                  {desktopSelectedNote === 'experience' ? 'February 1, 2025 at 11:48AM' : 'May 25, 1995 at 11:35 AM'}
+                  {desktopSelectedNote === 'experience' ? 'February 1, 2025 at 11:48AM' : desktopSelectedNote === 'about' ? 'May 25, 1995 at 11:35 AM' : 'Updated 2025'}
                 </p>
               </div>
               <div className="flex-1 p-6 overflow-y-auto">
@@ -5202,6 +5209,114 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     <p className="text-black/80">
                       {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
                     </p>
+                  </div>
+                ) : (
+                  /* Tech Stack */
+                  <div className="text-black">
+                    <h1 className="text-3xl font-bold mb-6">My UX Tech Stack</h1>
+                    
+                    {/* Design Tools */}
+                    <div className="mb-8">
+                      <h2 className="text-lg font-bold text-amber-600 mb-4 flex items-center gap-2">
+                        <span className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center text-amber-600">
+                          <Layers className="w-4 h-4" />
+                        </span>
+                        Design Tools
+                      </h2>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Figma</p>
+                          <p className="text-xs text-black/60">UI Design & Prototyping</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Sketch</p>
+                          <p className="text-xs text-black/60">UI Design</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Adobe Creative Cloud</p>
+                          <p className="text-xs text-black/60">Photoshop, Illustrator, XD</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Principle</p>
+                          <p className="text-xs text-black/60">Animation & Interaction</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">InVision</p>
+                          <p className="text-xs text-black/60">Prototyping & Collaboration</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Zeplin</p>
+                          <p className="text-xs text-black/60">Design Handoff</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Prototyping & Dev */}
+                    <div className="mb-8">
+                      <h2 className="text-lg font-bold text-blue-600 mb-4 flex items-center gap-2">
+                        <span className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
+                          <FileText className="w-4 h-4" />
+                        </span>
+                        Prototyping & Development
+                      </h2>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Vibe Coding</p>
+                          <p className="text-xs text-black/60">AI Studio, Vercel, Jetski</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">HTML/CSS</p>
+                          <p className="text-xs text-black/60">Front-end Basics</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">JavaScript</p>
+                          <p className="text-xs text-black/60">Interaction Logic</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">GitHub</p>
+                          <p className="text-xs text-black/60">Version Control</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Research & Strategy */}
+                    <div className="mb-8">
+                      <h2 className="text-lg font-bold text-green-600 mb-4 flex items-center gap-2">
+                        <span className="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center text-green-600">
+                          <Search className="w-4 h-4" />
+                        </span>
+                        Research & Strategy
+                      </h2>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">User Research</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Usability Testing</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Journey Mapping</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Personas</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Storyboarding</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Affinity Diagrams</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Information Architecture</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Wire-framing</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">User Flow</span>
+                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Data Visualization</span>
+                      </div>
+                    </div>
+                    
+                    {/* Specialized Skills */}
+                    <div>
+                      <h2 className="text-lg font-bold text-purple-600 mb-4 flex items-center gap-2">
+                        <span className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600">
+                          <BookOpen className="w-4 h-4" />
+                        </span>
+                        Specialized in AI/UX
+                      </h2>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Agentic UX</span>
+                        <span className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Behavioral Synthesis</span>
+                        <span className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Real-Time Prototyping</span>
+                        <span className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Strategic Research</span>
+                        <span className="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">High-Fidelity Prototyping</span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
