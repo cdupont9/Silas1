@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, Send } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -543,17 +543,6 @@ export function MacBookScreen() {
       time: getCurrentTime(),
     },
   ])
-  
-  // AI Assistant messages state - separate from regular chat
-  const [aiAssistantMessages, setAiAssistantMessages] = useState<ChatMessage[]>([
-    {
-      id: 'ai-welcome-1',
-      role: 'assistant',
-      text: "Hi there! Thanks for stopping by. I'm Charity's AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!",
-      time: getCurrentTime(),
-    },
-  ])
-  const [showAiQuickReplies, setShowAiQuickReplies] = useState(true)
 
 
 
@@ -644,11 +633,9 @@ const handleLogin = (e: React.FormEvent) => {
   setScreenState("loading")
   setTimeout(() => {
   setScreenState("desktop")
-  // Open AI Assistant window after 1 second delay for hiring managers
-  setTimeout(() => {
-    setAiAssistantWindow({ isOpen: true, isMinimized: false })
-    setFocusedWindow('aiAssistant')
-  }, 1000)
+  // Open AI Assistant window immediately when desktop loads
+  setAiAssistantWindow({ isOpen: true, isMinimized: false })
+  setFocusedWindow('aiAssistant')
   }, 2500)
   }
 
@@ -5057,7 +5044,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* AI Assistant Window */}
         {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
           <div
-            className={`absolute w-[400px] h-[500px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/20 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
+            className={`absolute w-[400px] h-[420px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/20 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
             style={{ left: aiAssistantPosition.x, top: aiAssistantPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('aiAssistant')}
           >
@@ -5082,95 +5069,54 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
 
-            {/* Messages Area */}
-            <div className="flex-1 overflow-auto p-4 space-y-3">
-              {aiAssistantMessages.map((message) => (
-                <div key={message.id} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${message.role === 'user' ? 'bg-blue-500 text-white' : 'bg-white/10 text-white'}`}>
-                    <p className="text-[13px] leading-relaxed">{message.text}</p>
-                    <p className={`text-[10px] mt-1 ${message.role === 'user' ? 'text-white/60' : 'text-white/40'}`}>{message.time}</p>
-                  </div>
-                </div>
-              ))}
+            {/* Content Area */}
+            <div className="flex-1 overflow-auto p-4 flex flex-col">
+              {/* Welcome Message */}
+              <div className="bg-white/10 text-white rounded-2xl px-4 py-3 mb-4">
+                <p className="text-[13px] leading-relaxed">Hi there! Thanks for stopping by. I&apos;m Charity&apos;s AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!</p>
+              </div>
               
-              {/* Quick Reply Pills */}
-              {showAiQuickReplies && aiAssistantMessages.length === 1 && (
-                <div className="flex flex-col gap-2 mt-4">
-                  <button
-                    onClick={() => {
-                      setShowAiQuickReplies(false);
-                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: 'Show me your top project', time: getCurrentTime() };
-                      setAiAssistantMessages(prev => [...prev, userMsg]);
-                      setTimeout(() => {
-                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: "My top project is Silas - an AI Lifestyle Assistant I designed. It integrates with your calendar, finances, and daily routines to provide proactive, personalized support. Let me open that case study for you!", time: getCurrentTime() };
-                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
-                        setTimeout(() => openCaseStudy('silas'), 500);
-                      }, 800);
-                    }}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl text-sm font-medium hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                  >
-                    <span>🚀</span> Show Top Project
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowAiQuickReplies(false);
-                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: 'Open your resume', time: getCurrentTime() };
-                      setAiAssistantMessages(prev => [...prev, userMsg]);
-                      setTimeout(() => {
-                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: "Opening my resume for you now! You can also download it directly from the Safari window.", time: getCurrentTime() };
-                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
-                        setTimeout(() => {
-                          setSafariWindow({ isOpen: true, isMinimized: false, project: null });
-                          setFocusedWindow('safari');
-                        }, 500);
-                      }, 800);
-                    }}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl text-sm font-medium hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                  >
-                    <span>📄</span> Open Resume
-                  </button>
-                  <button
-                    onClick={() => {
-                      setShowAiQuickReplies(false);
-                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: 'What tech stack do you use?', time: getCurrentTime() };
-                      setAiAssistantMessages(prev => [...prev, userMsg]);
-                      setTimeout(() => {
-                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: "My design toolkit includes Figma for UI/UX design and prototyping, Adobe Creative Suite for visual assets, and I'm experienced with design systems. For research, I use tools like Maze, UserTesting, and Optimal Workshop. I also understand front-end basics (HTML, CSS, React) which helps me collaborate effectively with developers!", time: getCurrentTime() };
-                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
-                      }, 800);
-                    }}
-                    className="w-full px-4 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl text-sm font-medium hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                  >
-                    <span>🛠️</span> See Tech Stack
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Input Area */}
-            <div className="p-3 border-t border-white/10">
-              <div className="bg-white/10 rounded-full px-4 py-2 flex items-center gap-2">
-                <input 
-                  type="text" 
-                  placeholder="Ask me anything about Charity..." 
-                  className="flex-1 bg-transparent text-[13px] text-white outline-none placeholder-white/40" 
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
-                      const userMsg: ChatMessage = { id: `user-${Date.now()}`, role: 'user', text: e.currentTarget.value, time: getCurrentTime() };
-                      setAiAssistantMessages(prev => [...prev, userMsg]);
-                      setShowAiQuickReplies(false);
-                      const input = e.currentTarget.value;
-                      e.currentTarget.value = '';
-                      setTimeout(() => {
-                        const response = getCharityResponse(input, aiAssistantMessages);
-                        const assistantMsg: ChatMessage = { id: `assistant-${Date.now()}`, role: 'assistant', text: response, time: getCurrentTime() };
-                        setAiAssistantMessages(prev => [...prev, assistantMsg]);
-                      }, 800);
-                    }
+              {/* Quick Action Buttons - Always Visible */}
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => {
+                    openCaseStudy('silas');
+                    setAiAssistantWindow({ isOpen: false, isMinimized: false });
                   }}
-                />
-                <button className="text-white/60 hover:text-white transition-colors">
-                  <Send className="w-4 h-4" />
+                  className="w-full px-4 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl text-sm font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  Show Top Project
+                </button>
+                <button
+                  onClick={() => {
+                    setSafariWindow({ isOpen: true, isMinimized: false, project: null });
+                    setSafariUrl(RESUME_PDF_URL);
+                    setSafariInputUrl(RESUME_PDF_URL);
+                    setFocusedWindow('safari');
+                  }}
+                  className="w-full px-4 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl text-sm font-semibold hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  Open Resume
+                </button>
+                <button
+                  onClick={() => {
+                    setNotesWindow({ isOpen: true, isMinimized: false });
+                    setDesktopSelectedNote('experience');
+                    setFocusedWindow('notes');
+                  }}
+                  className="w-full px-4 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl text-sm font-semibold hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  See Tech Stack
+                </button>
+                <button
+                  onClick={() => {
+                    setMessagesWindow({ isOpen: true, isMinimized: false });
+                    setFocusedWindow('messages');
+                    setAiAssistantWindow({ isOpen: false, isMinimized: false });
+                  }}
+                  className="w-full px-4 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl text-sm font-semibold hover:from-gray-700 hover:to-gray-800 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                >
+                  Chat with Charity
                 </button>
               </div>
             </div>
