@@ -5193,7 +5193,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       <p className="text-black/80 mt-2">Certificate in Coursera Google UX Design (Online) 2025</p>
                     </div>
                   </div>
-                ) : (
+                ) : desktopSelectedNote === 'about' ? (
                   <div className="text-black">
                     <h1 className="text-3xl font-bold mb-6">About</h1>
                     <p className="mb-4">I am Charity Dupont.</p>
