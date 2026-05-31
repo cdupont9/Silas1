@@ -164,8 +164,8 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 // Full photo for About window
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
-// Resume PDF URL (served locally to avoid cross-origin blocking)
-const RESUME_PDF_URL = "/Charity_Dupont_Resume.pdf"
+// Resume PDF URL
+const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/142f06af-535e-4252-921e-ea757e432b75-Charity%20DuPont%20Resume%20%20May%202026.pdf.pdf"
 
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
@@ -2212,7 +2212,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </a>
                 <a 
                   href={RESUME_PDF_URL}
-                  download="Charity_Dupont_Resume.pdf"
+                  download="Charity_DuPont_Resume_May_2026.pdf"
                   className="px-4 py-3 flex items-center gap-3 active:bg-gray-50 w-full text-left"
                 >
                   <div className="w-8 h-8 bg-[#34c759] rounded-lg flex items-center justify-center">
@@ -4928,7 +4928,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </a>
                   <a
                     href={RESUME_PDF_URL}
-                    download="Charity_Dupont_Resume.pdf"
+                    download="Charity_DuPont_Resume_May_2026.pdf"
                     className="flex-1 px-3 py-2 bg-black/10 text-black/70 text-xs font-medium rounded-lg hover:bg-black/20 transition-colors flex items-center justify-center gap-2"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -5592,7 +5592,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       </div>
                       <a
                         href={RESUME_PDF_URL}
-                        download="Charity_DuPont_Resume.pdf"
+                        download="Charity_DuPont_Resume_May_2026.pdf"
                         className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -5614,7 +5614,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <div className="mb-6">
                             <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | UX Designer</h1>
                             <p className="text-sm text-gray-700 leading-relaxed">
-                              UX/UI Designer at Google DeepMind specializing in High-Fidelity Prototyping for agentic AI experiences. I am a professional &quot;chameleon&quot; who bridges complex AI research with intuitive human experiences, driven by a philosophy of rapid innovation that respects the user&apos;s mental models.
+                              UX/UI Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
                             </p>
                           </div>
                           
@@ -5628,22 +5628,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                               </div>
                               <p className="text-sm text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                               <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
-                                <li>Designed agent-assisted experiences for Google Meet (GVC), enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</li>
-                                <li>Executed rapid prototyping workflows using AI Studio (vibe coding) to validate product concepts and technical feasibility.</li>
+                                <li>Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</li>
                                 <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership for further development, including voice input/output interactions to create a more natural, assistant-like user experience.</li>
-                                <li>Partnered with engineering to test and refine interaction patterns within Gemini, ensuring scalable and consistent UX across evolving model capabilities.</li>
-                                <li>Conducted research to uncover friction in agent workflows, turning behavioral insights into actionable product improvements.</li>
-                              </ul>
-                            </div>
-                            
-                            <div className="mb-5">
-                              <div className="flex justify-between items-start mb-1">
-                                <h3 className="font-semibold text-gray-900">Project Bespoke</h3>
-                              </div>
-                              <p className="text-sm text-gray-500 mb-2">Jul 2016 - Aug 2017</p>
-                              <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
-                                <li>Contributed to agent features launched in the Gemini app through ecosystem research and product direction.</li>
-                                <li>Conducted competitive research on AI capabilities to inform product strategy and feature design</li>
+                                <li>Executed agentic coding workflows using Artificial Intelligence Studio to validate product concepts and technical feasibility.</li>
+                                <li>Leveraged agentic coding with engineering to test and refine interaction patterns, ensuring scalable and consistent UX across evolving model capabilities.</li>
+                                <li>Uncovered friction in agent workflows through research, turning behavioral insights into actionable product improvements.</li>
+                                <li>Conducted competitive research on AI capabilities to inform product strategy and feature design.</li>
                               </ul>
                             </div>
                             
@@ -5702,12 +5692,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             
                             <div className="mb-3">
                               <h3 className="font-semibold text-gray-900 text-sm mb-1">Design Tools</h3>
-                              <p className="text-xs text-gray-700 leading-relaxed">Figma, Sketch, Adobe Creative Clouds, Principle, InVision, Zeplin, HTML/CSS, JavaScript, Jira, Data visualization, User research, Affinity diagram, User flow, Journey mapping, Wire-framing</p>
+                              <p className="text-xs text-gray-700 leading-relaxed">Agentic Design, Figma, Sketch, Adobe Creative Clouds, InVision, HTML/CSS, JavaScript, Jira, Data visualization, User research, Affinity diagram, User flow, Journey mapping, Wire-framing</p>
                             </div>
                             
                             <div>
                               <h3 className="font-semibold text-gray-900 text-sm mb-1">Skills</h3>
-                              <p className="text-xs text-gray-700 leading-relaxed">Vibe Coding (AI Studio, Vercel, and Jetski), Real-Time Prototyping, GitHub, Figma, Agentic UX, Behavioral Synthesis, Strategic Research, User Research, Usability Testing, Journey Mapping, Personas, Storyboarding, Affinity Diagrams, Information Architecture</p>
+                              <p className="text-xs text-gray-700 leading-relaxed">Agentic Coding (Antigravity), GitHub, Figma, Vercel, Agentic UX, Behavioral Synthesis, Strategic Research, User Research, Usability Testing, Journey Mapping, Personas, Storyboarding, Affinity Diagrams, Information Architecture</p>
                             </div>
                           </div>
                         </div>
