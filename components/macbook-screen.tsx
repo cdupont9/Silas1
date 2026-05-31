@@ -294,6 +294,9 @@ export function MacBookScreen() {
   // Leaving portfolio popup state
   const [showLeavingPopup, setShowLeavingPopup] = useState<string | null>(null)
   
+  // Mobile resume browser state
+  const [showMobileResumeBrowser, setShowMobileResumeBrowser] = useState(false)
+  
   // Mobile reaction picker state
   const [showMobileReactions, setShowMobileReactions] = useState<string | null>(null)
   const MOBILE_REACTIONS = ['❤️', '👍', '👎', '😂', '❗', '❓', '😢', '😍']
@@ -2195,10 +2198,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">RESUME</p>
                 </div>
-                <a 
-                  href={RESUME_PDF_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <button 
+                  onClick={() => setShowMobileResumeBrowser(true)}
                   className="px-4 py-3 flex items-center gap-3 border-b border-gray-100 active:bg-gray-50 w-full text-left"
                 >
                   <div className="w-8 h-8 bg-[#007aff] rounded-lg flex items-center justify-center">
@@ -2209,13 +2210,149 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <p className="text-[15px] text-[#007aff]">View Resume</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
-                </a>
+                </button>
                 
               </div>
             </div>
           </div>
 
+
           
+          {/* Mobile Safari Resume Browser */}
+          {showMobileResumeBrowser && (
+            <div className="fixed inset-0 z-[250] bg-white flex flex-col">
+              {/* Safari Header */}
+              <div className="bg-[#f8f8f8] border-b border-gray-200 pt-12 pb-2 px-4">
+                <div className="flex items-center justify-between mb-2">
+                  <button 
+                    onClick={() => setShowMobileResumeBrowser(false)}
+                    className="text-[#007aff] text-[17px]"
+                  >
+                    Done
+                  </button>
+                  <div className="flex-1 mx-4">
+                    <div className="bg-[#e8e8ed] rounded-lg py-2 px-3 text-center">
+                      <p className="text-[13px] text-gray-600">charitydupont.com/resume</p>
+                    </div>
+                  </div>
+                  <div className="w-12" />
+                </div>
+              </div>
+              
+              {/* Resume Content */}
+              <div className="flex-1 overflow-auto bg-[#f8f9fa]">
+                <div className="p-4">
+                  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5">
+                    {/* Name and Title */}
+                    <div className="mb-5 pb-4 border-b border-gray-100">
+                      <h1 className="text-xl font-bold text-gray-900 mb-1">Charity DuPont</h1>
+                      <p className="text-blue-600 font-medium text-sm mb-2">UX Designer</p>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        UX/UI Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
+                      </p>
+                    </div>
+                    
+                    {/* Contact */}
+                    <div className="mb-5 pb-4 border-b border-gray-100">
+                      <div className="flex flex-wrap gap-2 text-xs">
+                        <a href="https://charitydupont.com" className="text-blue-600">charitydupont.com</a>
+                        <span className="text-gray-400">|</span>
+                        <a href="mailto:hello@charitydupont.com" className="text-blue-600">hello@charitydupont.com</a>
+                        <span className="text-gray-400">|</span>
+                        <span className="text-gray-600">(908) 801-0347</span>
+                      </div>
+                    </div>
+                    
+                    {/* Experience */}
+                    <div className="mb-5">
+                      <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Experience</h2>
+                      
+                      <div className="mb-4">
+                        <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | UX Designer</h3>
+                        <p className="text-xs text-gray-500 mb-2">Feb 2025 - Present</p>
+                        <ul className="text-xs text-gray-700 space-y-1.5 list-disc list-outside ml-4">
+                          <li>Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions.</li>
+                          <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership.</li>
+                          <li>Executed agentic coding workflows using Artificial Intelligence Studio to validate product concepts and technical feasibility.</li>
+                          <li>Leveraged agentic coding with engineering to test and refine interaction patterns.</li>
+                          <li>Uncovered friction in agent workflows through research, turning behavioral insights into actionable product improvements.</li>
+                          <li>Conducted competitive research on AI capabilities to inform product strategy and feature design.</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="mb-4">
+                        <h3 className="font-semibold text-gray-900 text-sm">Metuchen Christian Acad. | 4th Grade Teacher</h3>
+                        <p className="text-xs text-gray-500 mb-2">Aug 2022 - Feb 2025</p>
+                        <ul className="text-xs text-gray-700 space-y-1.5 list-disc list-outside ml-4">
+                          <li>Developed inclusive lesson plans for diverse learning styles, resulting in measurable student progress.</li>
+                          <li>Fostered a collaborative, engaging classroom environment, encouraging participation and a love of learning.</li>
+                          <li>Maintained strong communication with parents and colleagues to support student development.</li>
+                          <li>Applied structured thinking, empathy, and adaptability—skills directly transferable to human-centered AI design.</li>
+                        </ul>
+                      </div>
+                    </div>
+                    
+                    {/* Education */}
+                    <div className="mb-5">
+                      <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Education</h2>
+                      
+                      <div className="space-y-2">
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-xs">New Jersey City University</h3>
+                          <p className="text-xs text-gray-600">Bachelor of Arts Psychology - 2015 - 2018</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-xs">Columbia University</h3>
+                          <p className="text-xs text-gray-600">UX/UI Bootcamp Certificate - 2024</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-xs">Coursera</h3>
+                          <p className="text-xs text-gray-600">Google UX Professional Certificate - 2015 - 2016</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Skills */}
+                    <div>
+                      <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Skills</h2>
+                      
+                      <div className="space-y-2">
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-xs mb-1">Design Tools</h3>
+                          <p className="text-xs text-gray-600">Agentic Design, Figma, Sketch, Adobe Creative Clouds, InVision, HTML/CSS, JavaScript, Jira</p>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-xs mb-1">Skills</h3>
+                          <p className="text-xs text-gray-600">Agentic Coding (Antigravity), GitHub, Vercel, Agentic UX, Behavioral Synthesis, Strategic Research, User Research, Usability Testing, Journey Mapping, Personas</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Safari Bottom Bar */}
+              <div className="bg-[#f8f8f8] border-t border-gray-200 py-2 px-4 pb-8">
+                <div className="flex items-center justify-around">
+                  <button className="p-2 text-[#007aff]">
+                    <ChevronLeft className="w-6 h-6 opacity-30" />
+                  </button>
+                  <button className="p-2 text-[#007aff]">
+                    <ChevronRight className="w-6 h-6 opacity-30" />
+                  </button>
+                  <button className="p-2 text-[#007aff]">
+                    <Share className="w-5 h-5" />
+                  </button>
+                  <button className="p-2 text-[#007aff]">
+                    <BookOpen className="w-5 h-5" />
+                  </button>
+                  <button className="p-2 text-[#007aff]">
+                    <Grid3X3 className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Home Indicator */}
           <div className="bg-[#f2f2f7] py-2">
