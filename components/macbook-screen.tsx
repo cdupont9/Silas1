@@ -2210,19 +2210,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <p className="text-[15px] text-[#007aff]">View Resume</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
                 </a>
-                <a 
-                  href={RESUME_PDF_URL}
-                  download="Charity_DuPont_Resume_May_2026.pdf"
-                  className="px-4 py-3 flex items-center gap-3 active:bg-gray-50 w-full text-left"
-                >
-                  <div className="w-8 h-8 bg-[#34c759] rounded-lg flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                  </div>
-                  <p className="text-[15px] text-[#007aff]">Download Resume</p>
-                  <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
-                </a>
+                
               </div>
             </div>
           </div>
@@ -4926,16 +4914,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     </svg>
                     View Resume
                   </a>
-                  <a
-                    href={RESUME_PDF_URL}
-                    download="Charity_DuPont_Resume_May_2026.pdf"
-                    className="flex-1 px-3 py-2 bg-black/10 text-black/70 text-xs font-medium rounded-lg hover:bg-black/20 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    Download
-                  </a>
+                  
                 </div>
               </div>
             </div>
@@ -5590,16 +5569,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <p className="text-xs text-gray-500">UX Designer at Google DeepMind</p>
                         </div>
                       </div>
-                      <a
-                        href={RESUME_PDF_URL}
-                        download="Charity_DuPont_Resume_May_2026.pdf"
-                        className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        Download PDF
-                      </a>
+                      
                     </div>
                   </div>
                   
@@ -5641,7 +5611,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                               <div className="flex justify-between items-start mb-1">
                                 <h3 className="font-semibold text-gray-900">Metuchen Christian Acad. | 4th Grade Teacher</h3>
                               </div>
-                              <p className="text-sm text-gray-500 mb-2">Jul 2016 - Aug 2017</p>
+                              <p className="text-sm text-gray-500 mb-2">Aug 2022 - Feb 2025</p>
                               <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
                                 <li>Developed inclusive lesson plans for diverse learning styles, resulting in measurable student progress.</li>
                                 <li>Fostered a collaborative, engaging classroom environment, encouraging participation and a love of learning.</li>
