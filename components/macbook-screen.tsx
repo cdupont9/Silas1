@@ -2283,8 +2283,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       <div className="mb-4">
                         <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | UX Designer</h3>
                         <p className="text-xs text-gray-500 mb-2">Feb 2025 - PRESENT</p>
+                        <p className="text-xs text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
                         <ul className="text-xs text-gray-700 space-y-1.5 list-disc list-outside ml-4">
-                          <li>Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</li>
                           <li>Executed rapid prototyping workflows using AI Studio (agentic coding) to validate product concepts and technical feasibility.</li>
                           <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership for further development, including voice input/output interactions to create a more natural, assistant-like user experience.</li>
                           <li>Partnered with engineering to test and refine interaction patterns using agentic coding, ensuring scalable and consistent UX across evolving model capabilities.</li>
@@ -5765,8 +5765,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                                 <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | UX Designer</h3>
                               </div>
                               <p className="text-sm text-gray-500 mb-2">Feb 2025 - PRESENT</p>
+                              <p className="text-sm text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
                               <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
-                                <li>Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</li>
                                 <li>Executed rapid prototyping workflows using AI Studio (agentic coding) to validate product concepts and technical feasibility.</li>
                                 <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership for further development, including voice input/output interactions to create a more natural, assistant-like user experience.</li>
                                 <li>Partnered with engineering to test and refine interaction patterns using agentic coding, ensuring scalable and consistent UX across evolving model capabilities.</li>
