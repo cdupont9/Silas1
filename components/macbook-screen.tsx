@@ -2320,7 +2320,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </div>
                         <div>
                           <h3 className="font-semibold text-gray-900 text-xs">Coursera</h3>
-                          <p className="text-xs text-gray-600">Google UX Professional Certificate - 2015 - 2016</p>
+                          <p className="text-xs text-gray-600">Google UX Professional Certificate - 2025 - 2026</p>
                         </div>
                       </div>
                     </div>
@@ -5805,7 +5805,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             
                             <div className="mb-3">
                               <h3 className="font-semibold text-gray-900 text-sm">Coursera</h3>
-                              <p className="text-xs text-gray-500">2015 - 2016</p>
+                              <p className="text-xs text-gray-500">2025 - 2026</p>
                               <p className="text-sm text-gray-700">Google UX Professional Certificate</p>
                             </div>
                           </div>
