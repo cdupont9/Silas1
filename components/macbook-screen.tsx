@@ -165,7 +165,7 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
 // Resume PDF URL
-const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/f58511b1-9a5b-441d-b230-a0da06cbf151-Charity%20DuPont%20-May%202026%20.pdf"
+const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/222ae9bd-abc9-40f6-887f-1215096ab32a-Charity%20DuPont%20-May%202026%20.pdf"
 
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
