@@ -5361,58 +5361,45 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </span>
                         Design Tools
                       </h2>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">Figma</p>
-                          <p className="text-xs text-black/60">UI Design & Prototyping</p>
-                        </div>
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">Sketch</p>
-                          <p className="text-xs text-black/60">UI Design</p>
-                        </div>
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">Adobe Creative Cloud</p>
-                          <p className="text-xs text-black/60">Photoshop, Illustrator, XD</p>
-                        </div>
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">Principle</p>
-                          <p className="text-xs text-black/60">Animation & Interaction</p>
-                        </div>
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">InVision</p>
-                          <p className="text-xs text-black/60">Prototyping & Collaboration</p>
-                        </div>
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">Zeplin</p>
-                          <p className="text-xs text-black/60">Design Handoff</p>
-                        </div>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Agentic Design</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Figma</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Sketch</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Adobe Creative Cloud</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Principle</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">InVision</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Zeplin</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">HTML/CSS</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">JavaScript</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Jira</span>
+                        <span className="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">Data Visualization</span>
                       </div>
                     </div>
                     
-                    {/* Prototyping & Dev */}
+                    {/* Agentic Coding */}
                     <div className="mb-8">
                       <h2 className="text-lg font-bold text-blue-600 mb-4 flex items-center gap-2">
                         <span className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
                           <FileText className="w-4 h-4" />
                         </span>
-                        Prototyping & Development
+                        Agentic Coding
                       </h2>
                       <div className="grid grid-cols-2 gap-3">
                         <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">Vibe Coding</p>
-                          <p className="text-xs text-black/60">AI Studio, Vercel, Jetski</p>
-                        </div>
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">HTML/CSS</p>
-                          <p className="text-xs text-black/60">Front-end Basics</p>
-                        </div>
-                        <div className="p-3 bg-black/5 rounded-lg">
-                          <p className="font-semibold text-sm">JavaScript</p>
-                          <p className="text-xs text-black/60">Interaction Logic</p>
+                          <p className="font-semibold text-sm">Antigravity</p>
+                          <p className="text-xs text-black/60">AI-Powered Development</p>
                         </div>
                         <div className="p-3 bg-black/5 rounded-lg">
                           <p className="font-semibold text-sm">GitHub</p>
                           <p className="text-xs text-black/60">Version Control</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Figma</p>
+                          <p className="text-xs text-black/60">Design to Code</p>
+                        </div>
+                        <div className="p-3 bg-black/5 rounded-lg">
+                          <p className="font-semibold text-sm">Vercel</p>
+                          <p className="text-xs text-black/60">Deployment & Hosting</p>
                         </div>
                       </div>
                     </div>
@@ -5435,11 +5422,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Information Architecture</span>
                         <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Wire-framing</span>
                         <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">User Flow</span>
-                        <span className="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">Data Visualization</span>
                       </div>
                     </div>
                     
-                    {/* Specialized Skills */}
+                    {/* Specialized in AI/UX */}
                     <div>
                       <h2 className="text-lg font-bold text-purple-600 mb-4 flex items-center gap-2">
                         <span className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center text-purple-600">
