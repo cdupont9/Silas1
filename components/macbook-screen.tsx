@@ -165,7 +165,7 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
 // Resume PDF URL
-const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/142f06af-535e-4252-921e-ea757e432b75-Charity%20DuPont%20Resume%20%20May%202026.pdf.pdf"
+const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/f58511b1-9a5b-441d-b230-a0da06cbf151-Charity%20DuPont%20-May%202026%20.pdf"
 
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
@@ -2211,6 +2211,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <p className="text-[15px] text-[#007aff]">View Resume</p>
                   <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
                 </button>
+                <a 
+                  href={RESUME_PDF_URL}
+                  download="Charity_DuPont_Resume_May_2026.pdf"
+                  className="px-4 py-3 flex items-center gap-3 active:bg-gray-50 w-full text-left"
+                >
+                  <div className="w-8 h-8 bg-[#34c759] rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                  </div>
+                  <p className="text-[15px] text-[#007aff]">Download Resume</p>
+                  <ChevronRight className="w-5 h-5 text-gray-300 ml-auto" />
+                </a>
                 
               </div>
             </div>
@@ -2269,13 +2282,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       
                       <div className="mb-4">
                         <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | UX Designer</h3>
-                        <p className="text-xs text-gray-500 mb-2">Feb 2025 - Present</p>
+                        <p className="text-xs text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                         <ul className="text-xs text-gray-700 space-y-1.5 list-disc list-outside ml-4">
-                          <li>Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions.</li>
-                          <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership.</li>
-                          <li>Executed agentic coding workflows using Artificial Intelligence Studio to validate product concepts and technical feasibility.</li>
-                          <li>Leveraged agentic coding with engineering to test and refine interaction patterns.</li>
-                          <li>Uncovered friction in agent workflows through research, turning behavioral insights into actionable product improvements.</li>
+                          <li>Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</li>
+                          <li>Executed rapid prototyping workflows using AI Studio (agentic coding) to validate product concepts and technical feasibility.</li>
+                          <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership for further development, including voice input/output interactions to create a more natural, assistant-like user experience.</li>
+                          <li>Partnered with engineering to test and refine interaction patterns using agentic coding, ensuring scalable and consistent UX across evolving model capabilities.</li>
+                          <li>Conducted research to uncover friction in agent workflows, turning behavioral insights into actionable product improvements.</li>
                           <li>Conducted competitive research on AI capabilities to inform product strategy and feature design.</li>
                         </ul>
                       </div>
@@ -2314,16 +2327,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     
                     {/* Skills */}
                     <div>
-                      <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Skills</h2>
+                      <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Skills & Languages</h2>
                       
                       <div className="space-y-2">
                         <div>
                           <h3 className="font-semibold text-gray-900 text-xs mb-1">Design Tools</h3>
-                          <p className="text-xs text-gray-600">Agentic Design, Figma, Sketch, Adobe Creative Clouds, InVision, HTML/CSS, JavaScript, Jira</p>
+                          <p className="text-xs text-gray-600">Agentic Design, Figma, Sketch, Adobe Creative Clouds, Principle, InVision, Zeplin, HTML/CSS, JavaScript, Jira, Data visualization, User research, Affinity diagram, User flow, Journey mapping, Wire-framing</p>
                         </div>
                         <div>
                           <h3 className="font-semibold text-gray-900 text-xs mb-1">Skills</h3>
-                          <p className="text-xs text-gray-600">Agentic Coding (Antigravity), GitHub, Vercel, Agentic UX, Behavioral Synthesis, Strategic Research, User Research, Usability Testing, Journey Mapping, Personas</p>
+                          <p className="text-xs text-gray-600">Agentic Coding (Antigravity), GitHub, Figma, Vercel, Agentic UX, Behavioral Synthesis, Strategic Research, User Research, Usability Testing, Journey Mapping, Personas, Storyboarding, Affinity Diagrams, Information Architecture</p>
                         </div>
                       </div>
                     </div>
@@ -5051,7 +5064,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     </svg>
                     View Resume
                   </a>
-                  
+                  <a
+                    href={RESUME_PDF_URL}
+                    download="Charity_DuPont_Resume_May_2026.pdf"
+                    className="flex-1 px-3 py-2 bg-black/10 text-black/70 text-xs font-medium rounded-lg hover:bg-black/20 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download
+                  </a>
                 </div>
               </div>
             </div>
@@ -5706,7 +5728,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           <p className="text-xs text-gray-500">UX Designer at Google DeepMind</p>
                         </div>
                       </div>
-                      
+                      <a
+                        href={RESUME_PDF_URL}
+                        download="Charity_DuPont_Resume_May_2026.pdf"
+                        className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        Download PDF
+                      </a>
                     </div>
                   </div>
                   
@@ -5736,10 +5767,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                               <p className="text-sm text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                               <ul className="text-sm text-gray-700 space-y-2 list-disc list-outside ml-4">
                                 <li>Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</li>
+                                <li>Executed rapid prototyping workflows using AI Studio (agentic coding) to validate product concepts and technical feasibility.</li>
                                 <li>Built and evaluated a proof-of-concept autonomous agent, defining interaction logic and delivering a working prototype approved by Director-level leadership for further development, including voice input/output interactions to create a more natural, assistant-like user experience.</li>
-                                <li>Executed agentic coding workflows using Artificial Intelligence Studio to validate product concepts and technical feasibility.</li>
-                                <li>Leveraged agentic coding with engineering to test and refine interaction patterns, ensuring scalable and consistent UX across evolving model capabilities.</li>
-                                <li>Uncovered friction in agent workflows through research, turning behavioral insights into actionable product improvements.</li>
+                                <li>Partnered with engineering to test and refine interaction patterns using agentic coding, ensuring scalable and consistent UX across evolving model capabilities.</li>
+                                <li>Conducted research to uncover friction in agent workflows, turning behavioral insights into actionable product improvements.</li>
                                 <li>Conducted competitive research on AI capabilities to inform product strategy and feature design.</li>
                               </ul>
                             </div>
@@ -5799,7 +5830,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             
                             <div className="mb-3">
                               <h3 className="font-semibold text-gray-900 text-sm mb-1">Design Tools</h3>
-                              <p className="text-xs text-gray-700 leading-relaxed">Agentic Design, Figma, Sketch, Adobe Creative Clouds, InVision, HTML/CSS, JavaScript, Jira, Data visualization, User research, Affinity diagram, User flow, Journey mapping, Wire-framing</p>
+                              <p className="text-xs text-gray-700 leading-relaxed">Agentic Design, Figma, Sketch, Adobe Creative Clouds, Principle, InVision, Zeplin, HTML/CSS, JavaScript, Jira, Data visualization, User research, Affinity diagram, User flow, Journey mapping, Wire-framing</p>
                             </div>
                             
                             <div>
