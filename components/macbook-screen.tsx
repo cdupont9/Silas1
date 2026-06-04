@@ -5182,12 +5182,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* AI Assistant Window - Front and Center */}
         {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
           <div
-            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 animate-in zoom-in-95 fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
+            className={`absolute w-[400px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 animate-in zoom-in-95 fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
+            style={{ left: aiAssistantPosition.x, top: aiAssistantPosition.y }}
             onClick={() => focusWindow('aiAssistant')}
           >
-            {/* Header */}
+            {/* Header - Draggable */}
             <div
-              className="h-14 bg-gradient-to-r from-purple-600/80 to-blue-600/80 flex items-center px-4 gap-3 rounded-t-xl"
+              onMouseDown={(e) => { focusWindow('aiAssistant'); handleMouseDown('aiAssistant', e); }}
+              className="h-14 bg-gradient-to-r from-purple-600/80 to-blue-600/80 flex items-center px-4 gap-3 rounded-t-xl cursor-grab active:cursor-grabbing"
             >
               <div className="flex gap-2">
                 <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
