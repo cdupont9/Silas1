@@ -5179,10 +5179,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* AI Assistant Window - Pinned to Right Side */}
+        {/* AI Assistant Window - Front and Center */}
         {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
           <div
-            className={`absolute right-4 top-16 bottom-16 w-[360px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 animate-in slide-in-from-right fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 animate-in zoom-in-95 fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
             onClick={() => focusWindow('aiAssistant')}
           >
             {/* Header */}
