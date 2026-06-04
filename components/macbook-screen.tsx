@@ -5179,17 +5179,15 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* AI Assistant Window */}
+        {/* AI Assistant Window - Pinned to Right Side */}
         {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
           <div
-            className={`absolute w-[400px] h-[420px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/20 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
-            style={{ left: aiAssistantPosition.x, top: aiAssistantPosition.y, transformOrigin: 'bottom center' }}
+            className={`absolute right-4 top-16 bottom-16 w-[360px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 animate-in slide-in-from-right fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
             onClick={() => focusWindow('aiAssistant')}
           >
             {/* Header */}
             <div
-              onMouseDown={(e) => { focusWindow('aiAssistant'); handleMouseDown('aiAssistant', e); }}
-              className="h-14 bg-gradient-to-r from-purple-600/80 to-blue-600/80 flex items-center px-4 gap-3 cursor-grab active:cursor-grabbing"
+              className="h-14 bg-gradient-to-r from-purple-600/80 to-blue-600/80 flex items-center px-4 gap-3 rounded-t-xl"
             >
               <div className="flex gap-2">
                 <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
@@ -5207,8 +5205,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
 
-            {/* Content Area */}
-            <div className="flex-1 overflow-auto p-4 flex flex-col">
+            {/* Content Area - No Scrollbar */}
+            <div className="flex-1 p-4 flex flex-col overflow-hidden">
               {/* Welcome Message */}
               <div className="bg-white/10 text-white rounded-2xl px-4 py-3 mb-4">
                 <p className="text-[13px] leading-relaxed">Hi there! Thanks for stopping by. I&apos;m Charity&apos;s AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!</p>
@@ -5259,6 +5257,19 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
           </div>
+        )}
+
+        {/* AI Assistant Orb - Shows when AI Assistant is closed */}
+        {!aiAssistantWindow.isOpen && (
+          <button
+            onClick={() => setAiAssistantWindow({ isOpen: true, isMinimized: false })}
+            className="absolute left-4 bottom-20 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center z-50 animate-in fade-in zoom-in duration-300"
+          >
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center">
+              <span className="text-white text-sm font-bold">AI</span>
+            </div>
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse" />
+          </button>
         )}
 
         {/* Notes Window */}
