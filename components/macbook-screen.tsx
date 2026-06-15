@@ -263,7 +263,7 @@ export function MacBookScreen() {
   
   // Brain Games state
   const [braingamesWindow, setBraingamesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [braingamesPosition, setBraingamesPosition] = useState({ x: 180, y: 80 })
+  const [braingamesPosition, setBraingamesPosition] = useState({ x: 200, y: 48 })
   const [aiAssistantPosition, setAiAssistantPosition] = useState({ x: 400, y: 100 })
   const [braingamesScore, setBraingamesScore] = useState(0)
   const [braingamesGameState, setBraingamesGameState] = useState<BrainGamesState>(initialBrainGamesState)
@@ -4805,20 +4805,22 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             onClick={() => focusWindow('braingames')}
             style={{ left: braingamesPosition.x, top: braingamesPosition.y }}
           >
-            <div className="bg-gradient-to-b from-pink-950 to-black rounded-xl shadow-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.2)]">
+            <div className="w-[760px] max-w-[92vw] bg-gradient-to-b from-pink-950 to-black rounded-xl shadow-2xl overflow-hidden border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.2)] flex flex-col">
               {/* Title Bar */}
               <div
                 onMouseDown={(e) => { focusWindow('braingames'); handleMouseDown('braingames', e); }}
-                className="h-[52px] bg-gradient-to-b from-pink-900/50 to-pink-950 flex items-center px-4 gap-4 border-b border-pink-500/20 cursor-grab active:cursor-grabbing"
+                className="h-[52px] shrink-0 bg-gradient-to-b from-pink-900/50 to-pink-950 flex items-center px-4 gap-4 border-b border-pink-500/20 cursor-grab active:cursor-grabbing"
               >
                 <div className="flex gap-2">
                   <button
                     onClick={() => setBraingamesWindow({ isOpen: false, isMinimized: false })}
                     className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors"
+                    aria-label="Close Brain Games"
                   />
                   <button
                     onClick={() => setBraingamesWindow({ ...braingamesWindow, isMinimized: true })}
                     className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors"
+                    aria-label="Minimize Brain Games"
                   />
                   <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors" />
                 </div>
@@ -4827,7 +4829,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
 
               {/* Game Area */}
-              <div className="max-h-[500px] overflow-auto scrollbar-none">
+              <div className="h-[78vh] max-h-[760px] overflow-auto scrollbar-none flex flex-col justify-center">
                 <BrainGames onScoreChange={setBraingamesScore} gameState={braingamesGameState} onGameStateChange={setBraingamesGameState} />
               </div>
             </div>
