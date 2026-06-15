@@ -458,7 +458,7 @@ const twoTruthsRounds: TwoTruthsRound[] = [
 ]
 
 // ============ MAIN COMPONENT ============
-type GameMode = "menu" | "mind" | "logic" | "persona" | "truths" | "trivia"
+type GameMode = "menu" | "mind" | "logic" | "persona" | "truths" | "trivia" | "uno" | "tictactoe"
 type MindScreen = "category" | "puzzle"
 type LogicScreen = "select" | "puzzle"
 
@@ -498,6 +498,10 @@ export interface BrainGamesState {
   ticTacToeGameOver: boolean
   ticTacToeWinner: string | null
   ticTacToeQuestionsUsed: string[]
+  ticTacToeOpponent: "human" | "charity" | null
+  ticTacToeAwaitingPlacement: boolean
+  ticTacToeAnswerFeedback: { correct: boolean; correctAnswer: string } | null
+  ticTacToeHumanTurn: "X" | "O"
   // Two Truths game state
   currentTruthsRound: TwoTruthsRound | null
   selectedTruthsAnswer: number | null
@@ -542,6 +546,10 @@ export const initialBrainGamesState: BrainGamesState = {
   ticTacToeGameOver: false,
   ticTacToeWinner: null,
   ticTacToeQuestionsUsed: [],
+  ticTacToeOpponent: null,
+  ticTacToeAwaitingPlacement: false,
+  ticTacToeAnswerFeedback: null,
+  ticTacToeHumanTurn: "X",
   // Two Truths game state
   currentTruthsRound: null,
   selectedTruthsAnswer: null,
@@ -601,6 +609,10 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
   const ticTacToeGameOver = localState.ticTacToeGameOver || false
   const ticTacToeWinner = localState.ticTacToeWinner || null
   const ticTacToeQuestionsUsed = localState.ticTacToeQuestionsUsed || []
+  const ticTacToeOpponent = localState.ticTacToeOpponent || null
+  const ticTacToeAwaitingPlacement = localState.ticTacToeAwaitingPlacement || false
+  const ticTacToeAnswerFeedback = localState.ticTacToeAnswerFeedback || null
+  const ticTacToeHumanTurn = localState.ticTacToeHumanTurn || "X"
   const truthsRoundsPlayed = localState.truthsRoundsPlayed || []
   
   // Get current logic puzzle from ID
@@ -897,30 +909,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     }
   }
 
-  const startTicTacToeGame = () => {
-    updateState({
-      gameMode: "tictactoe",
-      ticTacToeBoard: Array(9).fill(null),
-      ticTacToeCurrentQuestion: null,
-      ticTacToeSelectedCell: null,
-      ticTacToePlayerTurn: true,
-      ticTacToeGameOver: false,
-      ticTacToeWinner: null,
-      ticTacToeQuestionsUsed: []
-    })
-  }
-
-  const handleTicTacToeCellClick = (index: number) => {
-    if (ticTacToeBoard[index] || ticTacToeGameOver || ticTacToeCurrentQuestion) return
-    
-    const question = shuffleOptions(getRandomTicTacToeQuestion())
-    updateState({
-      ticTacToeSelectedCell: index,
-      ticTacToeCurrentQuestion: question,
-      ticTacToeQuestionsUsed: [...ticTacToeQuestionsUsed, question.id]
-    })
-  }
-
   const checkWinner = (board: (string | null)[]): string | null => {
     const lines = [
       [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
@@ -935,58 +923,156 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     return null
   }
 
+  // Open the Tic-Tac-Toe opponent selection screen
+  const openTicTacToe = () => {
+    updateState({
+      gameMode: "tictactoe",
+      ticTacToeOpponent: null,
+      ticTacToeBoard: Array(9).fill(null),
+      ticTacToeCurrentQuestion: null,
+      ticTacToeGameOver: false,
+      ticTacToeWinner: null,
+      ticTacToeAwaitingPlacement: false,
+      ticTacToeAnswerFeedback: null,
+      ticTacToeHumanTurn: "X",
+      ticTacToeQuestionsUsed: []
+    })
+  }
+
+  const startTicTacToeGame = (opponent: "human" | "charity" = ticTacToeOpponent || "charity") => {
+    const firstQuestion = opponent === "charity"
+      ? shuffleOptions(ticTacToeQuestions[Math.floor(Math.random() * ticTacToeQuestions.length)])
+      : null
+    updateState({
+      gameMode: "tictactoe",
+      ticTacToeOpponent: opponent,
+      ticTacToeBoard: Array(9).fill(null),
+      ticTacToeCurrentQuestion: firstQuestion,
+      ticTacToeSelectedCell: null,
+      ticTacToeGameOver: false,
+      ticTacToeWinner: null,
+      ticTacToeQuestionsUsed: firstQuestion ? [firstQuestion.id] : [],
+      ticTacToeAwaitingPlacement: false,
+      ticTacToeAnswerFeedback: null,
+      ticTacToeHumanTurn: "X"
+    })
+  }
+
+  // Charity mode: answer a trivia question to earn the right to place an X anywhere
   const handleTicTacToeAnswer = (answerIndex: number) => {
-    if (!ticTacToeCurrentQuestion || ticTacToeSelectedCell === null) return
-    
+    if (!ticTacToeCurrentQuestion) return
+    const correctAnswer = ticTacToeCurrentQuestion.options[ticTacToeCurrentQuestion.correctIndex]
     const isCorrect = answerIndex === ticTacToeCurrentQuestion.correctIndex
-    const newBoard = [...ticTacToeBoard]
-    
+
     if (isCorrect) {
-      newBoard[ticTacToeSelectedCell] = "X"
-      const winner = checkWinner(newBoard)
-      const isFull = newBoard.every(cell => cell !== null)
-      
-      if (winner || isFull) {
-        const newScore = winner === "X" ? totalScore + 5 : totalScore
-        updateState({
-          ticTacToeBoard: newBoard,
-          ticTacToeCurrentQuestion: null,
-          ticTacToeSelectedCell: null,
-          ticTacToeGameOver: true,
-          ticTacToeWinner: winner,
-          totalScore: newScore
-        })
-        if (winner === "X") onScoreChange?.(newScore)
-      } else {
-        // Computer's turn
-        const emptyCells = newBoard.map((cell, i) => cell === null ? i : -1).filter(i => i !== -1)
-        const computerMove = emptyCells[Math.floor(Math.random() * emptyCells.length)]
-        newBoard[computerMove] = "O"
-        
-        const winnerAfterComputer = checkWinner(newBoard)
-        const isFullAfterComputer = newBoard.every(cell => cell !== null)
-        
-        updateState({
-          ticTacToeBoard: newBoard,
-          ticTacToeCurrentQuestion: null,
-          ticTacToeSelectedCell: null,
-          ticTacToeGameOver: winnerAfterComputer !== null || isFullAfterComputer,
-          ticTacToeWinner: winnerAfterComputer
-        })
-      }
+      updateState({
+        ticTacToeAwaitingPlacement: true,
+        ticTacToeCurrentQuestion: null,
+        ticTacToeAnswerFeedback: { correct: true, correctAnswer }
+      })
     } else {
-      // Wrong answer - computer gets the cell
-      newBoard[ticTacToeSelectedCell] = "O"
-      const winner = checkWinner(newBoard)
-      const isFull = newBoard.every(cell => cell !== null)
-      
+      updateState({
+        ticTacToeCurrentQuestion: null,
+        ticTacToeAnswerFeedback: { correct: false, correctAnswer }
+      })
+    }
+  }
+
+  // Charity mode: after a wrong answer, Charity (computer) takes a turn, then a new question appears
+  const continueAfterWrong = () => {
+    const newBoard = [...ticTacToeBoard]
+    const emptyCells = newBoard.map((cell, i) => cell === null ? i : -1).filter(i => i !== -1)
+    if (emptyCells.length > 0) {
+      const move = emptyCells[Math.floor(Math.random() * emptyCells.length)]
+      newBoard[move] = "O"
+    }
+    const winner = checkWinner(newBoard)
+    const isFull = newBoard.every(cell => cell !== null)
+    if (winner || isFull) {
       updateState({
         ticTacToeBoard: newBoard,
-        ticTacToeCurrentQuestion: null,
-        ticTacToeSelectedCell: null,
-        ticTacToeGameOver: winner !== null || isFull,
-        ticTacToeWinner: winner
+        ticTacToeGameOver: true,
+        ticTacToeWinner: winner,
+        ticTacToeAnswerFeedback: null,
+        ticTacToeCurrentQuestion: null
       })
+    } else {
+      const nextQ = shuffleOptions(getRandomTicTacToeQuestion())
+      updateState({
+        ticTacToeBoard: newBoard,
+        ticTacToeAnswerFeedback: null,
+        ticTacToeCurrentQuestion: nextQ,
+        ticTacToeQuestionsUsed: [...ticTacToeQuestionsUsed, nextQ.id]
+      })
+    }
+  }
+
+  // Charity mode: place X anywhere after answering correctly
+  const handleCharityPlaceX = (index: number) => {
+    if (!ticTacToeAwaitingPlacement || ticTacToeBoard[index] || ticTacToeGameOver) return
+    const newBoard = [...ticTacToeBoard]
+    newBoard[index] = "X"
+    const winner = checkWinner(newBoard)
+    const isFull = newBoard.every(cell => cell !== null)
+    if (winner || isFull) {
+      const newScore = winner === "X" ? totalScore + 5 : totalScore
+      updateState({
+        ticTacToeBoard: newBoard,
+        ticTacToeAwaitingPlacement: false,
+        ticTacToeAnswerFeedback: null,
+        ticTacToeGameOver: true,
+        ticTacToeWinner: winner,
+        totalScore: newScore
+      })
+      if (winner === "X") onScoreChange?.(newScore)
+      return
+    }
+    // Charity's turn
+    const emptyCells = newBoard.map((cell, i) => cell === null ? i : -1).filter(i => i !== -1)
+    const move = emptyCells[Math.floor(Math.random() * emptyCells.length)]
+    newBoard[move] = "O"
+    const winner2 = checkWinner(newBoard)
+    const isFull2 = newBoard.every(cell => cell !== null)
+    if (winner2 || isFull2) {
+      updateState({
+        ticTacToeBoard: newBoard,
+        ticTacToeAwaitingPlacement: false,
+        ticTacToeAnswerFeedback: null,
+        ticTacToeGameOver: true,
+        ticTacToeWinner: winner2
+      })
+    } else {
+      const nextQ = shuffleOptions(getRandomTicTacToeQuestion())
+      updateState({
+        ticTacToeBoard: newBoard,
+        ticTacToeAwaitingPlacement: false,
+        ticTacToeAnswerFeedback: null,
+        ticTacToeCurrentQuestion: nextQ,
+        ticTacToeQuestionsUsed: [...ticTacToeQuestionsUsed, nextQ.id]
+      })
+    }
+  }
+
+  // Human vs Human mode: simple turn-based placement
+  const handleHumanPlaceX = (index: number) => {
+    if (ticTacToeBoard[index] || ticTacToeGameOver) return
+    const newBoard = [...ticTacToeBoard]
+    newBoard[index] = ticTacToeHumanTurn
+    const winner = checkWinner(newBoard)
+    const isFull = newBoard.every(cell => cell !== null)
+    updateState({
+      ticTacToeBoard: newBoard,
+      ticTacToeGameOver: winner !== null || isFull,
+      ticTacToeWinner: winner,
+      ticTacToeHumanTurn: ticTacToeHumanTurn === "X" ? "O" : "X"
+    })
+  }
+
+  const handleTicTacToeCellClick = (index: number) => {
+    if (ticTacToeOpponent === "human") {
+      handleHumanPlaceX(index)
+    } else if (ticTacToeOpponent === "charity") {
+      handleCharityPlaceX(index)
     }
   }
 
@@ -1001,9 +1087,18 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
   const startTruthsGame = () => {
     const round = getRandomTruthsRound()
+    // Shuffle the statements so the lie isn't always in the same position
+    const lieStatement = round.statements[round.lieIndex]
+    const shuffledStatements = [...round.statements]
+    for (let i = shuffledStatements.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffledStatements[i], shuffledStatements[j]] = [shuffledStatements[j], shuffledStatements[i]]
+    }
+    const newLieIndex = shuffledStatements.indexOf(lieStatement)
+    const shuffledRound = { ...round, statements: shuffledStatements, lieIndex: newLieIndex }
     updateState({
       gameMode: "truths",
-      currentTruthsRound: round,
+      currentTruthsRound: shuffledRound,
       selectedTruthsAnswer: null,
       showTruthsResult: false
     })
@@ -1035,8 +1130,17 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
   const nextTruthsRound = () => {
     const round = getRandomTruthsRound()
+    // Shuffle the statements so the lie isn't always in the same position
+    const lieStatement = round.statements[round.lieIndex]
+    const shuffledStatements = [...round.statements]
+    for (let i = shuffledStatements.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffledStatements[i], shuffledStatements[j]] = [shuffledStatements[j], shuffledStatements[i]]
+    }
+    const newLieIndex = shuffledStatements.indexOf(lieStatement)
+    const shuffledRound = { ...round, statements: shuffledStatements, lieIndex: newLieIndex }
     updateState({
-      currentTruthsRound: round,
+      currentTruthsRound: shuffledRound,
       selectedTruthsAnswer: null,
       showTruthsResult: false
     })
@@ -1141,7 +1245,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
           {/* Tic-Tac-Toe Quiz */}
           <button
-            onClick={() => startTicTacToeGame()}
+            onClick={() => openTicTacToe()}
             className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-amber-950/80 to-orange-900/50 rounded-2xl border border-amber-500/30 hover:border-amber-400/50 hover:shadow-[0_0_30px_rgba(245,158,11,0.3)] transition-all active:scale-[0.98] relative overflow-hidden"
           >
             {/* Tic-Tac-Toe grid icon */}
@@ -1555,10 +1659,56 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
   // Tic-Tac-Toe Quiz Game
   if (gameMode === "tictactoe") {
+    // Opponent selection screen
+    if (!ticTacToeOpponent) {
+      return (
+        <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
+          <div className="w-full flex items-center justify-between">
+            <button onClick={backToMenu} className="flex items-center gap-1 text-amber-400 text-sm hover:text-amber-300">
+              <ChevronLeft className="w-5 h-5" /> Back
+            </button>
+            <span className="text-amber-400 text-sm font-semibold">Score: {totalScore}</span>
+          </div>
+
+          <h2 className="text-amber-100 text-xl font-bold text-center mt-2">Tic-Tac-Toe</h2>
+          <p className="text-amber-200/70 text-center text-sm mb-2">Who would you like to play against?</p>
+
+          <button
+            onClick={() => startTicTacToeGame("charity")}
+            className="w-full p-5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 rounded-2xl text-white font-bold text-lg transition-all active:scale-[0.98] shadow-lg"
+          >
+            Play vs. Charity
+            <span className="block text-amber-100/80 text-xs font-normal mt-1">Answer trivia about Charity to earn each move</span>
+          </button>
+
+          <button
+            onClick={() => startTicTacToeGame("human")}
+            className="w-full p-5 bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 rounded-2xl text-white font-bold text-lg transition-all active:scale-[0.98] shadow-lg"
+          >
+            Play vs. a Friend
+            <span className="block text-slate-300/80 text-xs font-normal mt-1">Classic two-player tic-tac-toe</span>
+          </button>
+
+          <a
+            href="https://www.charitydupont.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 text-amber-300 text-sm underline underline-offset-4 hover:text-amber-200"
+          >
+            Learn more about Charity
+          </a>
+        </div>
+      )
+    }
+
+    const isCharityMode = ticTacToeOpponent === "charity"
+    const boardDisabled = ticTacToeGameOver ||
+      (isCharityMode && (!ticTacToeAwaitingPlacement || ticTacToeCurrentQuestion !== null || ticTacToeAnswerFeedback !== null))
+
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
         <div className="w-full flex items-center justify-between">
-          <button onClick={backToMenu} className="flex items-center gap-1 text-amber-400 text-sm hover:text-amber-300">
+          <button onClick={openTicTacToe} className="flex items-center gap-1 text-amber-400 text-sm hover:text-amber-300">
             <ChevronLeft className="w-5 h-5" /> Back
           </button>
           <span className="text-amber-400 text-sm font-semibold">Score: {totalScore}</span>
@@ -1566,7 +1716,13 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
         {/* Instructions */}
         <p className="text-amber-200 text-center text-sm">
-          {ticTacToeCurrentQuestion ? "Answer correctly to place your X!" : "Tap a cell to play!"}
+          {isCharityMode
+            ? (ticTacToeAwaitingPlacement
+                ? "Correct! Place your X in any open square."
+                : ticTacToeCurrentQuestion
+                  ? "Answer the question to earn your move!"
+                  : "Playing vs. Charity")
+            : `${ticTacToeHumanTurn}'s turn`}
         </p>
 
         {/* Tic-Tac-Toe Board */}
@@ -1575,14 +1731,14 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             <button
               key={index}
               onClick={() => handleTicTacToeCellClick(index)}
-              disabled={cell !== null || ticTacToeGameOver || ticTacToeCurrentQuestion !== null}
+              disabled={cell !== null || boardDisabled}
               className={`aspect-square rounded-xl border-2 transition-all flex items-center justify-center text-4xl font-bold ${
                 cell === "X"
                   ? 'bg-amber-600 border-amber-400 text-white'
                   : cell === "O"
                     ? 'bg-red-600 border-red-400 text-white'
-                    : ticTacToeSelectedCell === index
-                      ? 'bg-amber-500/50 border-amber-400 animate-pulse'
+                    : ticTacToeAwaitingPlacement
+                      ? 'bg-amber-900/30 border-amber-400/60 hover:border-amber-300 hover:bg-amber-700/50 animate-pulse'
                       : 'bg-amber-900/30 border-amber-500/30 hover:border-amber-400/50 hover:bg-amber-800/40'
               }`}
             >
@@ -1591,8 +1747,8 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           ))}
         </div>
 
-        {/* Question Modal */}
-        {ticTacToeCurrentQuestion && (
+        {/* Question Modal (Charity mode) */}
+        {isCharityMode && ticTacToeCurrentQuestion && !ticTacToeGameOver && (
           <div className="w-full p-4 bg-gradient-to-r from-amber-950/80 to-orange-950/60 rounded-xl border border-amber-500/40">
             <p className="text-amber-200 text-center font-medium mb-4">{ticTacToeCurrentQuestion.question}</p>
             <div className="grid grid-cols-2 gap-2">
@@ -1609,21 +1765,55 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </div>
         )}
 
+        {/* Wrong answer feedback (Charity mode) - shows the correct answer */}
+        {isCharityMode && ticTacToeAnswerFeedback && !ticTacToeAnswerFeedback.correct && !ticTacToeGameOver && (
+          <div className="w-full p-4 bg-red-950/50 rounded-xl border border-red-500/40 text-center space-y-3">
+            <p className="text-red-300 font-semibold">Not quite!</p>
+            <p className="text-amber-100 text-sm">The correct answer was: <span className="font-bold">{ticTacToeAnswerFeedback.correctAnswer}</span></p>
+            <button
+              onClick={continueAfterWrong}
+              className="w-full py-2.5 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 rounded-xl text-white font-semibold transition-all"
+            >
+              Continue (Charity&apos;s turn)
+            </button>
+          </div>
+        )}
+
         {/* Game Over */}
         {ticTacToeGameOver && (
           <div className="w-full space-y-4">
             <div className={`text-center ${ticTacToeWinner === "X" ? 'text-green-400' : ticTacToeWinner === "O" ? 'text-red-400' : 'text-amber-400'}`}>
               <p className="text-xl font-bold">
-                {ticTacToeWinner === "X" ? 'You Win! +5 points!' : ticTacToeWinner === "O" ? 'Computer Wins!' : "It's a Tie!"}
+                {isCharityMode
+                  ? (ticTacToeWinner === "X" ? 'You Win! +5 points!' : ticTacToeWinner === "O" ? 'Charity Wins!' : "It's a Tie!")
+                  : (ticTacToeWinner === "X" ? 'X Wins!' : ticTacToeWinner === "O" ? 'O Wins!' : "It's a Tie!")}
               </p>
             </div>
             <button
-              onClick={startTicTacToeGame}
+              onClick={() => startTicTacToeGame(ticTacToeOpponent)}
               className="w-full py-3 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
             >
               Play Again <RefreshCw className="w-4 h-4" />
             </button>
+            <button
+              onClick={openTicTacToe}
+              className="w-full py-2.5 bg-amber-900/40 hover:bg-amber-800/50 rounded-xl text-amber-200 font-medium transition-all"
+            >
+              Change Opponent
+            </button>
           </div>
+        )}
+
+        {/* Learn more about Charity (Charity mode) */}
+        {isCharityMode && !ticTacToeGameOver && (
+          <a
+            href="https://www.charitydupont.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1 text-amber-300 text-sm underline underline-offset-4 hover:text-amber-200"
+          >
+            Learn more about Charity
+          </a>
         )}
       </div>
     )
