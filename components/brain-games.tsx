@@ -1169,52 +1169,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
 
         {/* Game Selection */}
         <div className="grid grid-cols-2 gap-4 w-full mt-4">
-          {/* User Persona - Card Sorting Game */}
-          <button
-            onClick={() => startPersonaGame()}
-            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-violet-950/80 to-indigo-900/50 rounded-2xl border border-violet-500/30 hover:border-violet-400/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] transition-all active:scale-[0.98]"
-          >
-            {/* Card sorting icon */}
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
-              <rect width="100" height="100" rx="20" fill="#1e1b4b"/>
-              {/* Stacked cards */}
-              <rect x="20" y="25" width="35" height="50" rx="4" fill="#8b5cf6" transform="rotate(-8 37 50)"/>
-              <rect x="30" y="22" width="35" height="50" rx="4" fill="#a78bfa" transform="rotate(0 47 47)"/>
-              <rect x="40" y="25" width="35" height="50" rx="4" fill="#c4b5fd" transform="rotate(8 57 50)"/>
-              {/* Category buckets */}
-              <rect x="15" y="78" width="16" height="8" rx="2" fill="#3b82f6"/>
-              <rect x="34" y="78" width="16" height="8" rx="2" fill="#ef4444"/>
-              <rect x="53" y="78" width="16" height="8" rx="2" fill="#22c55e"/>
-              <rect x="72" y="78" width="16" height="8" rx="2" fill="#a855f7"/>
-            </svg>
-            <div className="text-center">
-              <p className="text-violet-300 font-bold text-sm md:text-lg">User Persona</p>
-              <p className="text-violet-400/50 text-xs md:text-sm">Sort the Cards</p>
-            </div>
-          </button>
-
-          {/* UNO Quiz Game */}
-          <button
-            onClick={() => startUnoGame()}
-            className="flex flex-col items-center gap-3 p-4 md:p-6 bg-gradient-to-br from-red-950/80 to-orange-900/50 rounded-2xl border border-red-500/30 hover:border-red-400/50 hover:shadow-[0_0_30px_rgba(239,68,68,0.3)] transition-all active:scale-[0.98]"
-          >
-            {/* UNO cards icon */}
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14 md:w-16 md:h-16">
-              <rect width="100" height="100" rx="20" fill="#450a0a"/>
-              {/* Stacked UNO cards */}
-              <rect x="15" y="20" width="30" height="45" rx="4" fill="#ef4444" transform="rotate(-15 30 42)"/>
-              <rect x="28" y="18" width="30" height="45" rx="4" fill="#eab308" transform="rotate(-5 43 40)"/>
-              <rect x="40" y="20" width="30" height="45" rx="4" fill="#22c55e" transform="rotate(5 55 42)"/>
-              <rect x="50" y="22" width="30" height="45" rx="4" fill="#3b82f6" transform="rotate(15 65 44)"/>
-              {/* UNO text */}
-              <text x="50" y="82" textAnchor="middle" fill="white" fontSize="14" fontWeight="bold">UNO</text>
-            </svg>
-            <div className="text-center">
-              <p className="text-red-300 font-bold text-sm md:text-lg">UNO Quiz</p>
-              <p className="text-red-400/50 text-xs md:text-sm">Play the right card!</p>
-            </div>
-          </button>
-
           {/* Two Truths and a Lie */}
           <button
             onClick={() => startTruthsGame()}
@@ -1283,14 +1237,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
             <div className="bg-gradient-to-b from-pink-950 to-black rounded-2xl p-6 max-w-md w-full border border-pink-500/30 shadow-[0_0_30px_rgba(236,72,153,0.3)]">
               <h3 className="text-pink-400 font-bold text-lg mb-4">Brain Games</h3>
               <div className="space-y-4 text-pink-300/80 text-sm">
-                <div>
-                  <p className="text-violet-300 font-semibold">User Persona (Card Sort)</p>
-                  <p>Sort statements about Charity into categories: Needs, Pain Points, Goals, or Behaviors.</p>
-                </div>
-                <div>
-                  <p className="text-red-300 font-semibold">UNO Quiz</p>
-                  <p>Play the right card! Match the prompt with the correct fact about Charity. Pick the right colored card!</p>
-                </div>
                 <div>
                   <p className="text-amber-300 font-semibold">Tic-Tac-Toe</p>
                   <p>Answer trivia questions to place your X on the board. Beat the computer to win!</p>
