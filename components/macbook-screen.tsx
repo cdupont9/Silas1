@@ -1048,6 +1048,12 @@ const messageText = mobileInput.trim()
                   onPlay={() => setWelcomeVideoPlaying(true)}
                   onPause={() => setWelcomeVideoPlaying(false)}
                   onEnded={handleWelcomeContinue}
+                  onLoadedMetadata={(e) => {
+                    const tracks = e.currentTarget.textTracks
+                    for (let i = 0; i < tracks.length; i++) {
+                      tracks[i].mode = "disabled"
+                    }
+                  }}
                   className="w-full h-full object-cover bg-black scale-110"
                 />
               </div>
