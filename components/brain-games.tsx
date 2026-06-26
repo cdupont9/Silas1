@@ -566,9 +566,8 @@ interface BrainGamesProps {
   onGameStateChange?: (state: BrainGamesState) => void
 }
 
-// Reward video shown after completing every Two Truths and a Lie round.
-// TODO: Replace this placeholder with the real video of Charity's grandmother's home (upload to Blob storage and paste the URL here).
-const GRANDMA_HOME_VIDEO_URL = ""
+// Reward video shown after winning Two Truths and a Lie: a 6-minute clip of Charity's grandmother's home.
+const GRANDMA_HOME_VIDEO_URL = "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_8044.MOV"
 
 // Number of correct answers (out of 25 rounds) required to unlock the Core Memory reward video.
 const TRUTHS_WIN_THRESHOLD = 20
