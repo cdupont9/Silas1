@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle, Play } from "lucide-react"
+import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle, Play, Trophy, Lock } from "lucide-react"
 
 // ============ MIND PUZZLES SECTION ============
 type PuzzleCategory = "sequence" | "pattern" | "logic" | "math" | "word"
@@ -508,6 +508,7 @@ export interface BrainGamesState {
   showTruthsResult: boolean
   truthsStreak: number
   truthsRoundsPlayed: string[]
+  truthsCorrect: number
 }
 
 export const initialBrainGamesState: BrainGamesState = {
@@ -555,7 +556,8 @@ export const initialBrainGamesState: BrainGamesState = {
   selectedTruthsAnswer: null,
   showTruthsResult: false,
   truthsStreak: 0,
-  truthsRoundsPlayed: []
+  truthsRoundsPlayed: [],
+  truthsCorrect: 0
 }
 
 interface BrainGamesProps {
@@ -568,10 +570,14 @@ interface BrainGamesProps {
 // TODO: Replace this placeholder with the real video of Charity's grandmother's home (upload to Blob storage and paste the URL here).
 const GRANDMA_HOME_VIDEO_URL = ""
 
+// Number of correct answers (out of 25 rounds) required to unlock the Core Memory reward video.
+const TRUTHS_WIN_THRESHOLD = 20
+
 export function BrainGames({ onScoreChange, gameState, onGameStateChange }: BrainGamesProps) {
   const [localState, setLocalState] = useState<BrainGamesState>(gameState || initialBrainGamesState)
   const [showInstructions, setShowInstructions] = useState(false)
   const [showReward, setShowReward] = useState(false)
+  const [showTruthsGoal, setShowTruthsGoal] = useState(false)
   
   // Sync with external state
   useEffect(() => {
@@ -619,6 +625,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
   const ticTacToeAnswerFeedback = localState.ticTacToeAnswerFeedback || null
   const ticTacToeHumanTurn = localState.ticTacToeHumanTurn || "X"
   const truthsRoundsPlayed = localState.truthsRoundsPlayed || []
+  const truthsCorrect = localState.truthsCorrect || 0
   
   // Get current logic puzzle from ID
   const currentLogicPuzzle = currentLogicPuzzleId 
@@ -1105,7 +1112,10 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
       gameMode: "truths",
       currentTruthsRound: shuffledRound,
       selectedTruthsAnswer: null,
-      showTruthsResult: false
+      showTruthsResult: false,
+      truthsRoundsPlayed: [],
+      truthsCorrect: 0,
+      truthsStreak: 0
     })
   }
 
@@ -1120,6 +1130,7 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         showTruthsResult: true,
         truthsStreak: truthsStreak + 1,
         totalScore: newScore,
+        truthsCorrect: truthsCorrect + 1,
         truthsRoundsPlayed: [...truthsRoundsPlayed, currentTruthsRound?.id || '']
       })
       onScoreChange?.(newScore)
@@ -1778,9 +1789,19 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           <button onClick={backToMenu} className="flex items-center gap-1 text-emerald-400 text-sm hover:text-emerald-300">
             <ChevronLeft className="w-5 h-5" /> Back
           </button>
-          <div className="flex items-center gap-4">
-            <span className="text-emerald-400/60 text-sm">Streak: {truthsStreak}</span>
-            <span className="text-emerald-400 text-sm font-semibold">Score: {totalScore}</span>
+          <div className="flex items-center gap-3 md:gap-4">
+            <span className="text-emerald-400/70 text-sm font-semibold">{truthsCorrect}/{twoTruthsRounds.length} correct</span>
+            {/* Prize / reward goal */}
+            <button
+              onClick={() => setShowTruthsGoal(true)}
+              className="relative w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center shadow-[0_0_18px_rgba(245,158,11,0.5)] hover:scale-105 transition-transform"
+              aria-label="View reward goal"
+            >
+              <Trophy className="w-5 h-5 text-white" />
+              {truthsCorrect >= TRUTHS_WIN_THRESHOLD && (
+                <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 border-2 border-emerald-950" />
+              )}
+            </button>
           </div>
         </div>
 
@@ -1854,12 +1875,31 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                 </p>
               </div>
               {truthsRoundsPlayed.length >= twoTruthsRounds.length ? (
-                <button
-                  onClick={() => setShowReward(true)}
-                  className="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(245,158,11,0.4)]"
-                >
-                  You won! Watch your reward <Play className="w-4 h-4 fill-white" />
-                </button>
+                truthsCorrect >= TRUTHS_WIN_THRESHOLD ? (
+                  <div className="space-y-3">
+                    <p className="text-center text-emerald-300 font-semibold">
+                      You scored {truthsCorrect}/{twoTruthsRounds.length} — you unlocked the Core Memory!
+                    </p>
+                    <button
+                      onClick={() => setShowReward(true)}
+                      className="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(245,158,11,0.4)]"
+                    >
+                      Watch your reward <Play className="w-4 h-4 fill-white" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <p className="text-center text-amber-300 font-semibold text-balance">
+                      You scored {truthsCorrect}/{twoTruthsRounds.length}. You need {TRUTHS_WIN_THRESHOLD}/{twoTruthsRounds.length} to unlock the Core Memory video.
+                    </p>
+                    <button
+                      onClick={startTruthsGame}
+                      className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+                    >
+                      Try again <RefreshCw className="w-4 h-4" />
+                    </button>
+                  </div>
+                )
               ) : (
                 <button
                   onClick={nextTruthsRound}
@@ -1877,6 +1917,39 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           {truthsRoundsPlayed.length} of {twoTruthsRounds.length} rounds played
         </div>
 
+        {/* Reward goal overlay */}
+        {showTruthsGoal && (
+          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+            <div className="relative w-full max-w-md bg-gradient-to-b from-zinc-900 to-black rounded-2xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.3)] animate-in zoom-in-95 duration-300 p-6 text-center">
+              <button
+                onClick={() => setShowTruthsGoal(false)}
+                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                aria-label="Close"
+              >
+                <XCircle className="w-5 h-5" />
+              </button>
+              <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center shadow-[0_0_25px_rgba(245,158,11,0.5)] mb-4">
+                {truthsCorrect >= TRUTHS_WIN_THRESHOLD ? <Trophy className="w-8 h-8 text-white" /> : <Lock className="w-8 h-8 text-white" />}
+              </div>
+              <h3 className="text-amber-300 font-bold text-xl text-balance">
+                Score {TRUTHS_WIN_THRESHOLD}/{twoTruthsRounds.length} to unlock this Core Memory
+              </h3>
+              <p className="text-amber-200/70 text-sm mt-2 text-pretty">
+                Find the lie in at least {TRUTHS_WIN_THRESHOLD} of the {twoTruthsRounds.length} rounds and you&apos;ll unlock a 6-minute clip of my grandmother&apos;s home — where I spent most of my childhood growing up with my cousins.
+              </p>
+              <p className="text-emerald-300 font-semibold mt-4">
+                So far: {truthsCorrect}/{twoTruthsRounds.length} correct
+              </p>
+              <button
+                onClick={() => setShowTruthsGoal(false)}
+                className="mt-5 w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white font-semibold transition-all"
+              >
+                Keep playing
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Reward video overlay */}
         {showReward && (
           <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-in fade-in duration-300">
@@ -1884,8 +1957,10 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               {/* Header */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                 <div>
-                  <h3 className="text-amber-300 font-bold text-lg text-balance">You completed every round!</h3>
-                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">A peek at my grandmother&apos;s home, where I spent so much time as a kid with my cousins.</p>
+                  <h3 className="text-amber-300 font-bold text-lg text-balance flex items-center gap-2">
+                    <Trophy className="w-5 h-5" /> Core Memory unlocked!
+                  </h3>
+                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">A 6-minute clip of my grandmother&apos;s home — where I spent most of my childhood growing up with my cousins.</p>
                 </div>
                 <button
                   onClick={() => setShowReward(false)}
