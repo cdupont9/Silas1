@@ -7462,392 +7462,325 @@ function MeetlyCaseStudy() {
 
 // Teammate Case Study Component
 function TeammateCaseStudy() {
+  const sections = [
+    { id: "tm-overview", label: "Overview" },
+    { id: "tm-research", label: "Research" },
+    { id: "tm-persona", label: "Persona" },
+    { id: "tm-process", label: "Process" },
+    { id: "tm-solution", label: "Solution" },
+  ]
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" })
+  }
+
   return (
-    <div className="bg-white text-black">
-      {/* Hero Section with GIF */}
-      <div className="relative min-h-[60vh] flex items-center justify-center bg-white overflow-hidden pt-16 pb-12">
-        <div className="relative z-10 flex flex-col md:flex-row items-center justify-center gap-12 px-8 max-w-5xl mx-auto">
-          {/* App Preview */}
-          <div className="w-56 flex-shrink-0">
-            <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Teammate App Preview" className="w-full h-auto block drop-shadow-2xl" />
+    <div className="bg-white text-[#1a1413] font-sans">
+      {/* Sticky site nav */}
+      <nav className="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-black/10">
+        <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between gap-4">
+          <button onClick={() => scrollTo("tm-top")} className="flex items-center gap-2.5 shrink-0">
+            <span className="w-7 h-7 rounded-lg overflow-hidden">
+              <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
+            </span>
+            <span className="font-bold tracking-tight text-[#1a1413]">Teammate</span>
+          </button>
+          <div className="hidden md:flex items-center gap-7 text-sm">
+            {sections.map((s) => (
+              <button key={s.id} onClick={() => scrollTo(s.id)} className="text-black/60 hover:text-[#D85A5A] transition-colors font-medium">
+                {s.label}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => scrollTo("tm-solution")}
+            className="shrink-0 px-4 py-2 rounded-full bg-[#D85A5A] text-white text-sm font-semibold hover:bg-[#c44a4a] transition-colors"
+          >
+            View screens
+          </button>
+        </div>
+      </nav>
+
+      {/* Hero */}
+      <header id="tm-top" className="relative bg-[#1a1413] text-white overflow-hidden scroll-mt-14">
+        <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(60% 60% at 75% 30%, #D85A5A 0%, transparent 70%)" }} />
+        <div className="relative max-w-6xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-xs font-medium uppercase tracking-wider text-white/80 mb-6">
+              UX Case Study
+            </span>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-4 text-balance">Teammate</h1>
+            <p className="text-2xl md:text-3xl font-semibold text-[#f0a3a3] mb-5">&ldquo;Don&apos;t Play Alone&rdquo;</p>
+            <p className="text-base md:text-lg text-white/70 leading-relaxed max-w-lg text-pretty mb-8">
+              A sports-first dating app that connects fans, plans dates around shared sports interests, and uses public sports events as safe, genuine first-date venues.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <button onClick={() => scrollTo("tm-solution")} className="px-5 py-2.5 rounded-full bg-[#D85A5A] text-white font-semibold hover:bg-[#c44a4a] transition-colors">
+                See the final screens
+              </button>
+              <button onClick={() => scrollTo("tm-research")} className="px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-semibold hover:bg-white/15 transition-colors">
+                Read the research
+              </button>
+            </div>
+          </div>
+          <div className="flex justify-center md:justify-end">
+            <div className="w-56 md:w-64">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Teammate app splash screen" className="w-full h-auto block drop-shadow-2xl rounded-3xl" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Stats band */}
+      <div className="bg-[#1a1413] text-white border-t border-white/10">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 border-x border-white/10">
+          {[
+            { k: "Role", v: "Product Designer" },
+            { k: "Year", v: "2024" },
+            { k: "Timeline", v: "One month" },
+            { k: "Type", v: "UX Case Study" },
+          ].map((item, i) => (
+            <div key={item.k} className={`px-6 py-7 ${i > 1 ? "border-t md:border-t-0 border-white/10" : ""}`}>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[#f0a3a3] mb-2">{item.k}</p>
+              <p className="text-white/90 font-medium">{item.v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Overview / Competition */}
+      <section id="tm-overview" className="bg-white py-20 md:py-24 scroll-mt-14">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[#D85A5A] mb-3">The landscape</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-balance">Great dating apps exist — none are built for sports fans.</h2>
+          <p className="text-black/60 text-lg leading-relaxed max-w-2xl mb-12 text-pretty">
+            We audited the market leaders to find the gap Teammate could own.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { name: "Bumble", color: "text-yellow-600", logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/classic-bumble-logo-editable-and-for-tech-branding-and-creative-design-free-png-GQUpsWRD0QoLNqhIzdRe2J51TYAH7o.webp", contain: false, pro: "Inclusive, user-friendly, women initiate.", con: "High competition, conversation fatigue." },
+              { name: "Tinder", color: "text-red-500", logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tinder-app-logo-tinder-app-logo-transparent-tinder-app-icon-transparent-free-free-png-PDRTDpNBdjoBo1j4DFXEHy6P36zP0Y.webp", contain: false, pro: "Global reach, massive user base, simple interface.", con: "Reputation for casual dating, shallow connections." },
+              { name: "Hinge", color: "text-black", logo: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hinge-white-logo-icon-clean-with-transparent-background-for-ui-use-free-png-x8G86pfW3DS0MPdgJKfUAix4t3nz4e.webp", contain: true, pro: "Quality over quantity, detailed profiles.", con: "Slower matching, limited visibility for new users." },
+            ].map((c) => (
+              <div key={c.name} className="bg-neutral-50 rounded-2xl p-7 border border-black/5 hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className={`w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center ${c.contain ? "bg-neutral-900" : ""}`}>
+                    <img src={c.logo || "/placeholder.svg"} alt={c.name} className={c.contain ? "w-7 h-7 object-contain" : "w-full h-full object-cover"} />
+                  </div>
+                  <h3 className={`text-xl font-bold ${c.color}`}>{c.name}</h3>
+                </div>
+                <div className="mb-4">
+                  <p className="text-xs font-semibold text-green-600 uppercase tracking-wide mb-1">Pros</p>
+                  <p className="text-black/70 text-sm leading-relaxed">{c.pro}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-red-500 uppercase tracking-wide mb-1">Cons</p>
+                  <p className="text-black/70 text-sm leading-relaxed">{c.con}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Research */}
+      <section id="tm-research" className="bg-neutral-50 py-20 md:py-24 scroll-mt-14">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[#D85A5A] mb-3">User research</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-balance">What 5 interviewees taught us.</h2>
+          <p className="text-black/60 text-lg leading-relaxed max-w-2xl mb-12 text-pretty">
+            Five participants aged 26&ndash;45+ surfaced three insights that shaped every design decision.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "The Character Proxy", accent: "text-[#D85A5A]", bg: "bg-rose-50", border: "border-rose-100", obs: "Users seek partners with a sports background because they associate it with positive qualities like \u201Cteamwork and determination.\u201D", imp: "Profiles prioritize \u201CSports Background\u201D to signal these character traits early." },
+              { title: "The \u201CNewbie\u201D Opportunity", accent: "text-orange-600", bg: "bg-orange-50", border: "border-orange-100", obs: "Users are \u201Copen to trying new sports,\u201D especially if guided by an enthusiastic partner.", imp: "The app shouldn\u2019t just match experts; it should facilitate \u201Clearning\u201D dates between die-hards and newbies." },
+              { title: "Safety & Depth", accent: "text-green-600", bg: "bg-green-50", border: "border-green-100", obs: "Users find current dating apps \u201Clacking in depth and safety.\u201D", imp: "We organize dates in \u201Csecure public venues such as sports events\u201D to alleviate safety concerns." },
+            ].map((r) => (
+              <div key={r.title} className={`${r.bg} rounded-2xl p-7 border ${r.border}`}>
+                <h3 className={`text-lg font-bold mb-5 ${r.accent}`}>{r.title}</h3>
+                <p className="text-xs font-semibold text-black/40 uppercase tracking-wide mb-1">Observation</p>
+                <p className="text-black/70 text-sm leading-relaxed mb-4">{r.obs}</p>
+                <p className="text-xs font-semibold text-black/40 uppercase tracking-wide mb-1">Design implication</p>
+                <p className="text-black/80 text-sm leading-relaxed font-medium">{r.imp}</p>
+              </div>
+            ))}
           </div>
 
-          {/* Hero Text */}
-          <div className="text-center md:text-left">
-            <div className="w-16 h-16 mb-6 rounded-2xl overflow-hidden mx-auto md:mx-0">
-              <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
-            </div>
-            <h1 className="text-5xl md:text-6xl font-bold mb-4 text-[#D85A5A]">
-              Teammate
-            </h1>
-            <p className="text-2xl text-black/80 font-medium mb-4">{"\""}Don{"'"}t Play Alone{"\""}</p>
-            <p className="text-lg text-black/60 leading-relaxed max-w-xl">
-              Sports fans face challenges on regular dating apps. Our app connects them with like-minded individuals, assists in organizing dates based on mutual sports interests, and offers secure public venues such as sports events for fostering genuine relationships.
+          <div className="mt-10 bg-[#1a1413] text-white rounded-2xl p-8 md:p-10">
+            <p className="text-lg md:text-xl leading-relaxed text-pretty">
+              <span className="text-[#f0a3a3]">The insight:</span> while competitors focus on static personality traits, no app solves the dynamic scheduling conflicts sports fans face. Teammate makes the <span className="font-semibold">Game Schedule</span> the catalyst for connection.
             </p>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Project Info */}
-      <div className="bg-white py-12">
-        <div className="max-w-4xl mx-auto px-8">
-          <div className="grid grid-cols-4 gap-8 text-center">
-            <div>
-              <h3 className="text-xs font-semibold text-black/40 uppercase tracking-wider mb-2">Role</h3>
-              <p className="text-black/80 text-sm">Product Designer</p>
-            </div>
-            <div>
-              <h3 className="text-xs font-semibold text-black/40 uppercase tracking-wider mb-2">Year</h3>
-              <p className="text-black/80 text-sm">2024</p>
-            </div>
-            <div>
-              <h3 className="text-xs font-semibold text-black/40 uppercase tracking-wider mb-2">Timeline</h3>
-              <p className="text-black/80 text-sm">One month</p>
-            </div>
-            <div>
-              <h3 className="text-xs font-semibold text-black/40 uppercase tracking-wider mb-2">Type</h3>
-              <p className="text-black/80 text-sm">UX Case Study</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Persona */}
+      <section id="tm-persona" className="bg-white py-20 md:py-24 scroll-mt-14">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[#D85A5A] mb-3">Who we designed for</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-10 text-balance">Meet Hunter.</h2>
 
-      {/* The Competition */}
-      <div className="bg-neutral-50 py-20">
-        <div className="max-w-4xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-12 text-center text-black">The Competition</h2>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl overflow-hidden">
-                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/classic-bumble-logo-editable-and-for-tech-branding-and-creative-design-free-png-GQUpsWRD0QoLNqhIzdRe2J51TYAH7o.webp" alt="Bumble" className="w-full h-full object-cover" />
+          <div className="bg-neutral-50 rounded-3xl border border-black/5 overflow-hidden">
+            <div className="flex flex-col md:flex-row">
+              {/* Photo */}
+              <div className="md:w-72 shrink-0 bg-[#1a1413] p-8 flex flex-col items-center text-center">
+                <div className="relative inline-block mb-5">
+                  <div className="w-48 h-56 rounded-2xl overflow-hidden">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5596c2979c96a2539e3168b8a3ac2bdfc26c3f84-mA8gGyFSaJVUWN1jUAVKb37z4yDtHr.png" alt="Hunter Fielding" className="w-full h-full object-cover" />
+                  </div>
+                  <div className="absolute -bottom-3 -right-3 w-16 h-16 bg-[#001A57] rounded-xl flex items-center justify-center">
+                    <div className="text-center">
+                      <span className="text-white text-xl font-bold">D</span>
+                      <p className="text-white text-[6px] uppercase tracking-wider">Football</p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="text-xl font-semibold text-yellow-600">Bumble</h3>
+                <h3 className="text-xl font-bold text-white">Hunter Fielding</h3>
+                <p className="text-white/60 text-sm mt-2">36 &middot; Durham, NC</p>
+                <p className="text-white/50 text-xs mt-1 leading-relaxed">Director of design marketing, Duke University football athletics</p>
               </div>
-              <div className="mb-4">
-                <p className="text-sm text-green-600 mb-1">Pros:</p>
-                <p className="text-black/70 text-sm">Inclusive, user-friendly, women initiate.</p>
-              </div>
-              <div>
-                <p className="text-sm text-red-600 mb-1">Cons:</p>
-                <p className="text-black/70 text-sm">High competition, conversation fatigue.</p>
-              </div>
-            </div>
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl overflow-hidden">
-                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tinder-app-logo-tinder-app-logo-transparent-tinder-app-icon-transparent-free-free-png-PDRTDpNBdjoBo1j4DFXEHy6P36zP0Y.webp" alt="Tinder" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="text-xl font-semibold text-red-500">Tinder</h3>
-              </div>
-              <div className="mb-4">
-                <p className="text-sm text-green-600 mb-1">Pros:</p>
-                <p className="text-black/70 text-sm">Global reach, massive user base, simple interface.</p>
-              </div>
-              <div>
-                <p className="text-sm text-red-600 mb-1">Cons:</p>
-                <p className="text-black/70 text-sm">Reputation for casual dating, shallow connections.</p>
-              </div>
-            </div>
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl overflow-hidden bg-white flex items-center justify-center">
-                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hinge-white-logo-icon-clean-with-transparent-background-for-ui-use-free-png-x8G86pfW3DS0MPdgJKfUAix4t3nz4e.webp" alt="Hinge" className="w-8 h-8 object-contain" />
-                </div>
-                <h3 className="text-xl font-semibold text-black">Hinge</h3>
-              </div>
-              <div className="mb-4">
-                <p className="text-sm text-green-600 mb-1">Pros:</p>
-                <p className="text-black/70 text-sm">Quality over quantity, detailed profiles.</p>
-              </div>
-              <div>
-                <p className="text-sm text-red-600 mb-1">Cons:</p>
-                <p className="text-black/70 text-sm">Slower matching, limited visibility for new users.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* User Persona */}
-      <div className="bg-white py-20">
-        <div className="max-w-5xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-12 text-center text-black">User Persona</h2>
-
-          <p className="text-2xl text-black/80 italic text-center mb-12 max-w-3xl mx-auto">
-            {"\""}Dating would be so much better if I could find someone who shares my love for sports.{"\""}
-          </p>
-
-          <div className="flex flex-col md:flex-row gap-12 items-start">
-            {/* Photo and Info */}
-            <div className="flex-shrink-0 text-center">
-              <div className="relative inline-block mb-4">
-                <div className="w-64 h-72 rounded-lg overflow-hidden border-4 border-white">
-                  <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/5596c2979c96a2539e3168b8a3ac2bdfc26c3f84-mA8gGyFSaJVUWN1jUAVKb37z4yDtHr.png" alt="Hunter Fielding" className="w-full h-full object-cover" />
-                </div>
-                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-[#001A57] rounded-lg flex items-center justify-center">
-                  <div className="text-center">
-                    <span className="text-white text-2xl font-bold">D</span>
-                    <p className="text-white text-[6px] uppercase tracking-wider">Football</p>
+              {/* Goals + pain points */}
+              <div className="flex-1 p-8">
+                <p className="text-black/70 mb-6 leading-relaxed italic">
+                  &ldquo;Dating would be so much better if I could find someone who shares my love for sports.&rdquo;
+                </p>
+                <p className="text-black/80 mb-8 leading-relaxed text-sm">
+                  Hunter is passionate about college football and supporting his local teams. His career is fulfilling, but he wants a partner who shares the excitement of game day.
+                </p>
+                <div className="grid sm:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-sm font-bold text-[#D85A5A] uppercase tracking-wide mb-4">Goals &amp; Needs</h4>
+                    <ul className="space-y-2.5 text-black/70 text-sm">
+                      {["Connect with others who share his passion for sports.", "Attend games and events with a like-minded partner.", "Find fellow sports enthusiasts, especially Duke fans.", "Use a convenient platform built for sports fans.", "Keep first dates engaging and centered on shared interests."].map((g) => (
+                        <li key={g} className="flex gap-2.5"><span className="text-[#D85A5A] mt-0.5">&#10003;</span><span>{g}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-black/50 uppercase tracking-wide mb-4">Pain Points</h4>
+                    <ul className="space-y-2.5 text-black/70 text-sm">
+                      {["Hard to find people who share his sports passion on traditional apps.", "A demanding job limits time to meet new people.", "Challenging to plan dates around his sports interests.", "Frustrated by connections that don\u2019t get his enthusiasm."].map((p) => (
+                        <li key={p} className="flex gap-2.5"><span className="text-black/30 mt-0.5">&times;</span><span>{p}</span></li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
-              <h3 className="text-2xl font-bold text-black mt-6">Hunter Fielding</h3>
-              <p className="text-black/60 text-sm mt-2">Age / 36</p>
-              <p className="text-black/60 text-sm">Occupation / Director of design marketing</p>
-              <p className="text-black/60 text-sm">for Duke University football athletics</p>
-              <p className="text-black/60 text-sm">Location / Durham, NC</p>
             </div>
+          </div>
+        </div>
+      </section>
 
-            {/* Goals and Pain Points */}
-            <div className="flex-1">
-              <p className="text-black/80 mb-8 leading-relaxed">
-                Hunter is a successful marketing professional at Duke University. He is passionate about college football and supporting his local teams. While his career is fulfilling, he seeks a partner who shares his love for sports and the excitement of game day.
-              </p>
+      {/* Process */}
+      <section id="tm-process" className="bg-neutral-50 py-20 md:py-24 scroll-mt-14">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[#D85A5A] mb-3">From idea to interface</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-balance">Ideation &amp; refinement.</h2>
+          <p className="text-black/60 text-lg leading-relaxed max-w-2xl mb-12 text-pretty">
+            We used the &ldquo;I Like, I Wish, What If&rdquo; method to brainstorm, then refined with usability testing.
+          </p>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="text-lg font-bold text-black mb-4">Goals & Needs</h4>
-                  <ul className="space-y-3 text-black/70 text-sm">
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Easily connect with others who share his passion for sports.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Attend games and events with a like-minded partner.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Connect with fellow sports enthusiasts, especially Duke fans.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Use a convenient platform that facilitates connections with fellow sports fans.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Ensure first dates are engaging and centered around shared interests.</span>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-black mb-4">Hesitation & Pain Points</h4>
-                  <ul className="space-y-3 text-black/70 text-sm">
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Struggles to find people who share his passion for sports on traditional dating apps.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Pressed for time due to a demanding job, limiting opportunities to meet new people.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Finds it challenging to plan dates that align with his sports interests.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span className="text-black">{"•"}</span>
-                      <span>Feels frustrated with the lack of connections that understand his enthusiasm for sports.</span>
-                    </li>
-                  </ul>
-                </div>
+          <div className="grid md:grid-cols-3 gap-6 mb-14">
+            {[
+              { tag: "What If", color: "text-blue-600", text: "Profiles lead with \u201CSports Background\u201D so users can read teamwork and determination at a glance." },
+              { tag: "I Wish", color: "text-yellow-600", text: "The app facilitates \u201Clearning\u201D dates between die-hards and newbies, not just expert-to-expert matches." },
+              { tag: "The Pivot", color: "text-green-600", text: "Dates happen in secure public venues like sports events to put safety first." },
+            ].map((c) => (
+              <div key={c.tag} className="bg-white rounded-2xl p-7 border border-black/5">
+                <h3 className={`text-lg font-bold mb-3 ${c.color}`}>{c.tag}</h3>
+                <p className="text-black/70 text-sm leading-relaxed">{c.text}</p>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* User Research */}
-      <div className="bg-white py-20">
-        <div className="max-w-4xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-4 text-center text-black">User Research</h2>
-          <p className="text-black/60 text-center mb-16">5 Interviewees (Aged 26-45+) | 3 Key Insight Cards</p>
-
-          <div className="space-y-6">
-            <div className="bg-rose-50 rounded-2xl p-8 border border-rose-100">
-              <h3 className="text-xl font-semibold text-[#D85A5A] mb-4">The Character Proxy</h3>
-              <p className="text-black/60 text-sm mb-2">Observation:</p>
-              <p className="text-black/70 mb-4">Users seek partners with a sports background because they associate it with positive qualities like {"\""}teamwork and determination.{"\""}</p>
-              <p className="text-black/60 text-sm mb-2">Design Implication:</p>
-              <p className="text-black/70">Profiles prioritize {"\""}Sports Background{"\""} to signal these character traits early.</p>
-            </div>
-
-            <div className="bg-orange-50 rounded-2xl p-8 border border-orange-100">
-              <h3 className="text-xl font-semibold text-orange-600 mb-4">The {"\""}Newbie{"\""} Opportunity</h3>
-              <p className="text-black/60 text-sm mb-2">Observation:</p>
-              <p className="text-black/70 mb-4">Users are {"\""}open to trying new sports,{"\""} especially if guided by an enthusiastic partner.</p>
-              <p className="text-black/60 text-sm mb-2">Design Implication:</p>
-              <p className="text-black/70">The app shouldn{"'"}t just match experts; it should facilitate {"\""}learning{"\""} dates between die-hards and newbies.</p>
-            </div>
-
-            <div className="bg-green-50 rounded-2xl p-8 border border-green-100">
-              <h3 className="text-xl font-semibold text-green-600 mb-4">Safety & Depth</h3>
-              <p className="text-black/60 text-sm mb-2">Observation:</p>
-              <p className="text-black/70 mb-4">Users find current dating apps {"\""}lacking in depth and safety.{"\""}</p>
-              <p className="text-black/60 text-sm mb-2">Design Implication:</p>
-              <p className="text-black/70">We focused on organizing dates in {"\""}secure public venues such as sports events{"\""} to alleviate safety concerns.</p>
-            </div>
+            ))}
           </div>
 
-          <div className="mt-12 bg-neutral-100 rounded-2xl p-8 border border-black/5 text-center">
-            <p className="text-black/80 text-lg italic leading-relaxed">
-              {"\""}While competitors focus on static personality traits, no current app solves the dynamic scheduling conflicts sports fans face. Teammate fills this gap by making the {"'"}Game Schedule{"'"} the catalyst for the connection.{"\""}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Ideation and Process */}
-      <div className="bg-neutral-50 py-20">
-        <div className="max-w-4xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-4 text-center text-black">Ideation and Process</h2>
-          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">
-            We used the {"'"}I Like, I Wish, What If{"'"} method to brainstorm solutions.
-          </p>
-
-          <div className="space-y-6">
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <h3 className="text-lg font-semibold text-blue-600 mb-3">What If</h3>
-              <p className="text-black/70">Users seek partners with a sports background because they associate it with positive qualities like {"\""}teamwork and determination.{"\""} Profiles prioritize {"\""}Sports Background{"\""} to signal these character traits early.</p>
-            </div>
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <h3 className="text-lg font-semibold text-yellow-600 mb-3">I Wish</h3>
-              <p className="text-black/70">Users are {"\""}open to trying new sports,{"\""} especially if guided by an enthusiastic partner. The app should facilitate {"\""}learning{"\""} dates between die-hards and newbies.</p>
-            </div>
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <h3 className="text-lg font-semibold text-green-600 mb-3">The Pivot</h3>
-              <p className="text-black/70">Users find current dating apps {"\""}lacking in depth and safety.{"\""} We focused on organizing dates in {"\""}secure public venues such as sports events{"\""} to alleviate safety concerns.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Refining the Experience */}
-      <div className="bg-white py-20">
-        <div className="max-w-4xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-4 text-center text-black">Refining the Experience</h2>
-          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">
-            Would users successfully discover and plan sports events with a match?
-          </p>
-
+          <h3 className="text-xl font-bold mb-2">Refining the experience</h3>
+          <p className="text-black/60 mb-6 text-sm max-w-2xl">Usability testing asked: would users successfully discover and plan sports events with a match? Three fixes followed.</p>
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <h3 className="text-lg font-semibold text-[#D85A5A] mb-3">Visual Clarity</h3>
-              <p className="text-black/70 text-sm">Users were confused by the color coding of the Heart vs. X buttons, so we refined the contrast.</p>
-            </div>
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <h3 className="text-lg font-semibold text-[#D85A5A] mb-3">Onboarding</h3>
-              <p className="text-black/70 text-sm">Users wanted to skip the {"\""}upload image{"\""} step if they weren{"'"}t ready, so we added flexibility.</p>
-            </div>
-            <div className="bg-white rounded-2xl p-8 border border-black/5">
-              <h3 className="text-lg font-semibold text-[#D85A5A] mb-3">Interaction</h3>
-              <p className="text-black/70 text-sm">The {"\""}dictation button{"\""} was hard to find, so we improved the input field layout.</p>
-            </div>
+            {[
+              { t: "Visual Clarity", d: "Users were confused by the color coding of the Heart vs. X buttons, so we refined the contrast." },
+              { t: "Onboarding", d: "Users wanted to skip the \u201Cupload image\u201D step if they weren\u2019t ready, so we added flexibility." },
+              { t: "Interaction", d: "The dictation button was hard to find, so we improved the input field layout." },
+            ].map((c) => (
+              <div key={c.t} className="bg-white rounded-2xl p-7 border border-black/5">
+                <h4 className="text-base font-bold text-[#D85A5A] mb-2">{c.t}</h4>
+                <p className="text-black/70 text-sm leading-relaxed">{c.d}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Final Solution - High Fidelity Mockups */}
-      <div className="bg-white py-20">
-        <div className="max-w-6xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-4 text-center text-black">Final Solution</h2>
-          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">
-            High-fidelity screens showcasing the complete Teammate experience.
+      {/* Solution */}
+      <section id="tm-solution" className="bg-white py-20 md:py-24 scroll-mt-14">
+        <div className="max-w-6xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[#D85A5A] mb-3 text-center">The final product</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-center text-balance">The complete Teammate experience.</h2>
+          <p className="text-black/60 text-lg leading-relaxed max-w-2xl mx-auto mb-16 text-center text-pretty">
+            Nine high-fidelity screens, from first launch to a confirmed game-day date.
           </p>
 
-          {/* All Screens - 3x3 Grid */}
-          <div className="grid grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png" alt="Splash Screen" className="w-full h-auto" />
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12 max-w-4xl mx-auto">
+            {[
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%205-CrKpENIJ1QkNGw5Ph7xHp3T8f3pYSc.png", alt: "Splash Screen", label: "Splash" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png", alt: "Home Events", label: "Home" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png", alt: "Potential Matches", label: "Matches" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png", alt: "Matched Screen", label: "Matched" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png", alt: "Messages List", label: "Messages" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png", alt: "Chat Conversation", label: "Chat" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png", alt: "Schedule a Date", label: "Schedule" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png", alt: "Ticket Purchase", label: "Purchase" },
+              { src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png", alt: "Confirmation", label: "Confirmation" },
+            ].map((s) => (
+              <div key={s.label} className="group text-center">
+                <div className="mb-3 rounded-2xl overflow-hidden transition-transform group-hover:-translate-y-1">
+                  <img src={s.src || "/placeholder.svg"} alt={s.alt} className="w-full h-auto" />
+                </div>
+                <p className="text-xs text-black/50 uppercase tracking-wider font-semibold">{s.label}</p>
               </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Splash</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2012-icLvnxmHlb92OGRKo9D0O1WHZdvArb.png" alt="Home Events" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Home</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2021-RrPHoCUYlabu00xhzKPVEwBgjLsBSR.png" alt="Potential Matches" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Matches</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2022-qH8EpKsSi9iyAmMV7ok2Rv6nsbllzI.png" alt="Matched Screen" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Matched</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2015-rFXMnhU5fddwskSbSnrkNYmoUM0o3O.png" alt="Messages List" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Messages</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2027-F0qbCMbalUtdrcyRX4qUp5FDVEmk3a.png" alt="Chat Conversation" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Chat</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-qoDUhBfWLpQ7CPJGik2sl9WOvsmhr0.png" alt="Schedule a Date" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Schedule</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2024-tHJPUnwvCOwQMV11nvzXN6J61JF2eH.png" alt="Ticket Purchase" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Purchase</p>
-            </div>
-            <div className="text-center">
-              <div className="mb-3">
-                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2026-XPpU77QCL4TMfc1SYvQdSGJNuSfdNP.png" alt="Confirmation" className="w-full h-auto" />
-              </div>
-              <p className="text-xs text-black/50 uppercase tracking-wider font-medium">Confirmation</p>
-            </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Future Ideas */}
-      <div className="bg-neutral-50 py-20">
-        <div className="max-w-4xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-4 text-center text-black">Future Ideas</h2>
-          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">
-            With limited time and unlimited imagination, we had a lot of ideas that had to be shelved to implement in the future.
+      <section className="bg-[#1a1413] text-white py-20 md:py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm font-semibold uppercase tracking-wider text-[#f0a3a3] mb-3">What&apos;s next</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-balance">Future ideas.</h2>
+          <p className="text-white/60 text-lg leading-relaxed max-w-2xl mb-12 text-pretty">
+            With limited time and unlimited imagination, a few favorites were shelved for a future release.
           </p>
-
           <div className="grid md:grid-cols-3 gap-6">
-            <div className="bg-[#D85A5A] rounded-2xl p-8 text-center text-white">
-              <h3 className="text-lg font-semibold mb-3">Virtual Viewing</h3>
-              <p className="text-white/90 text-sm">Implementing a live stream option to watch games together virtually.</p>
-            </div>
-            <div className="bg-[#D85A5A] rounded-2xl p-8 text-center text-white">
-              <h3 className="text-lg font-semibold mb-3">Community</h3>
-              <p className="text-white/90 text-sm">Expanding beyond dating to find platonic friends and local fanbases.</p>
-            </div>
-            <div className="bg-[#D85A5A] rounded-2xl p-8 text-center text-white">
-              <h3 className="text-lg font-semibold mb-3">Dynamic UI</h3>
-              <p className="text-white/90 text-sm">Changing the display colors to represent the fanbase the user is currently swiping on.</p>
-            </div>
+            {[
+              { t: "Virtual Viewing", d: "A live-stream option to watch games together, virtually." },
+              { t: "Community", d: "Expanding beyond dating to platonic friends and local fanbases." },
+              { t: "Dynamic UI", d: "Display colors that shift to represent the fanbase you\u2019re currently swiping on." },
+            ].map((c) => (
+              <div key={c.t} className="rounded-2xl p-7 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                <h3 className="text-lg font-bold mb-3 text-[#f0a3a3]">{c.t}</h3>
+                <p className="text-white/70 text-sm leading-relaxed">{c.d}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Footer */}
-      <div className="py-12 border-t border-black/10 bg-white">
-        <div className="max-w-4xl mx-auto px-8 text-center">
-          <p className="text-black/40 text-sm">2026 Charity Dupont</p>
+      <footer className="py-10 border-t border-black/10 bg-white">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <span className="w-6 h-6 rounded-md overflow-hidden">
+              <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
+            </span>
+            <span className="font-bold text-sm">Teammate</span>
+          </div>
+          <p className="text-black/40 text-sm">&copy; 2026 Charity Dupont</p>
         </div>
-      </div>
+      </footer>
     </div>
   )
 }
