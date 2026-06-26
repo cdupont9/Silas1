@@ -1254,10 +1254,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                   <p className="text-emerald-300 font-semibold">Two Truths & a Lie</p>
                   <p>Find the lie! Two statements are true, one is false. Can you spot which one?</p>
                 </div>
-                <div>
-                  <p className="text-amber-300 font-semibold">Logic Grids (My Favorite!)</p>
-                  <p>Use clues to match items. Click cells to mark X (not a match) or O (confirmed match).</p>
-                </div>
               </div>
               <button
                 onClick={() => setShowInstructions(false)}
