@@ -1047,7 +1047,7 @@ const messageText = mobileInput.trim()
                   onPlay={() => setWelcomeVideoPlaying(true)}
                   onPause={() => setWelcomeVideoPlaying(false)}
                   onEnded={handleWelcomeContinue}
-                  className="w-full h-full object-cover bg-black"
+                  className="w-full h-full object-cover bg-black scale-110"
                 />
               </div>
             </div>
