@@ -1388,10 +1388,10 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
   }
 
   return (
-    <div className="flex-1 flex flex-col bg-white min-h-0">
+    <div className="flex-1 flex flex-col bg-[#fffaf0] min-h-0">
       {/* Chat Header */}
-      <div className="h-12 bg-gradient-to-b from-[#f8f8f8] to-[#f0f0f0] border-b border-black/5 flex items-center justify-center px-4 shrink-0">
-        <span className="text-[13px] font-medium text-black/80">Charity</span>
+      <div className="h-12 bg-gradient-to-b from-[#fff3d6] to-[#ffe9b8] border-b border-amber-900/10 flex items-center justify-center px-4 shrink-0">
+        <span className="text-[13px] font-semibold text-amber-900/80">Charity</span>
       </div>
 
       {/* Messages Area */}
@@ -1402,7 +1402,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
               className={`max-w-[75%] ${message.role === 'assistant' ? 'self-start' : 'self-end'} relative`}
               onDoubleClick={() => handleDoubleClick(message.id, message.role)}
             >
-              <div className={`rounded-2xl px-4 py-2 cursor-pointer ${message.role === 'assistant' ? 'bg-[#e9e9eb] text-black' : 'bg-blue-500 text-white'}`}>
+              <div className={`rounded-2xl px-4 py-2 cursor-pointer ${message.role === 'assistant' ? 'bg-[#fbeccb] text-amber-950' : 'bg-gradient-to-b from-[#f5a623] to-[#e8920c] text-white'}`}>
                 {message.text.startsWith('GIF:') ? (
                   <img
                     src={
@@ -1435,7 +1435,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                                   <button
                                     key={idx}
                                     onClick={() => openCaseStudy && openCaseStudy(projectId)}
-                                    className="block mt-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                                    className="block mt-2 px-4 py-2 bg-gradient-to-b from-[#f5a623] to-[#e8920c] text-white rounded-lg hover:brightness-110 transition-all text-sm"
                                   >
                                     {buttonText}
                                   </button>
@@ -1458,7 +1458,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                               {linkMatch[1]}
                               <button
                                 onClick={() => openCaseStudy(projectId)}
-                                className="text-blue-600 underline hover:text-blue-800"
+                                className="text-amber-700 font-semibold underline hover:text-amber-900"
                               >
                                 {linkMatch[2]}
                               </button>
@@ -1504,7 +1504,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
                 </div>
               )}
 
-              <span className={`text-[10px] text-black/40 mt-1 ${message.role === 'assistant' ? 'text-left' : 'text-right'} block ${message.reaction ? 'mt-3' : 'mt-1'}`}>
+              <span className={`text-[10px] text-amber-900/40 mt-1 ${message.role === 'assistant' ? 'text-left' : 'text-right'} block ${message.reaction ? 'mt-3' : 'mt-1'}`}>
                 {message.time}
               </span>
             </div>
@@ -1514,11 +1514,11 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
         {isTyping && (
           <div className="flex flex-col">
             <div className="max-w-[75%] self-start">
-              <div className="rounded-2xl px-4 py-3 bg-[#e9e9eb]">
+              <div className="rounded-2xl px-4 py-3 bg-[#fbeccb]">
                 <div className="flex gap-1.5 items-center">
-                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-[bounce_1s_ease-in-out_infinite]" />
-                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-[bounce_1s_ease-in-out_infinite_0.2s]" />
-                  <span className="w-2 h-2 rounded-full bg-gray-400 animate-[bounce_1s_ease-in-out_infinite_0.4s]" />
+                  <span className="w-2 h-2 rounded-full bg-amber-500/70 animate-[bounce_1s_ease-in-out_infinite]" />
+                  <span className="w-2 h-2 rounded-full bg-amber-500/70 animate-[bounce_1s_ease-in-out_infinite_0.2s]" />
+                  <span className="w-2 h-2 rounded-full bg-amber-500/70 animate-[bounce_1s_ease-in-out_infinite_0.4s]" />
                 </div>
               </div>
             </div>
@@ -1529,12 +1529,12 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleSubmit} className="p-3 border-t border-black/5 shrink-0">
-        <div className="bg-[#f5f5f7] rounded-full px-4 py-2 flex items-center gap-2">
+      <form onSubmit={handleSubmit} className="p-3 border-t border-amber-900/10 shrink-0">
+        <div className="bg-white border border-amber-900/10 rounded-full px-4 py-2 flex items-center gap-2">
           <input
             type="text"
             placeholder="Message"
-            className="flex-1 bg-transparent text-[13px] outline-none placeholder-black/40 text-black"
+            className="flex-1 bg-transparent text-[13px] outline-none placeholder-amber-900/30 text-amber-950"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isTyping}
@@ -1542,7 +1542,7 @@ export function CharityChat({ openCaseStudy, messages, setMessages }: CharityCha
           <button
             type="submit"
             disabled={!input.trim() || isTyping}
-            className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600 transition-colors"
+            className="w-6 h-6 rounded-full bg-gradient-to-b from-[#f5a623] to-[#e8920c] flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:brightness-110 transition-all"
           >
             <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M12 5l7 7-7 7" />
