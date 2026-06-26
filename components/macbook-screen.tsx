@@ -971,30 +971,31 @@ const messageText = mobileInput.trim()
   // ==================== WELCOME VIDEO (FINAL CUT PRO FRAME) ====================
   if (showWelcomeVideo) {
     return (
-      <div className="h-screen w-full bg-[#161617] flex flex-col overflow-hidden select-none">
+      <div className="h-screen w-full bg-black flex flex-col overflow-hidden select-none p-3 sm:p-0">
+       <div className="flex-1 min-h-0 flex flex-col bg-[#161617] overflow-hidden rounded-2xl sm:rounded-none ring-1 ring-white/10 sm:ring-0 shadow-2xl sm:shadow-none">
         {/* Menu Bar */}
-        <div className="h-9 shrink-0 bg-gradient-to-b from-[#3a3a3c] to-[#2c2c2e] border-b border-black/50 flex items-center px-3 gap-3">
-          <div className="flex gap-2">
+        <div className="h-11 sm:h-9 shrink-0 bg-gradient-to-b from-[#3a3a3c] to-[#2c2c2e] border-b border-black/50 flex items-center px-3 gap-2 sm:gap-3">
+          <div className="flex gap-2 shrink-0">
             <button onClick={handleWelcomeContinue} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors" aria-label="Close and enter portfolio" />
             <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
             <span className="w-3 h-3 rounded-full bg-[#28c840]" />
           </div>
-          <span className="text-white/90 text-[13px] font-semibold ml-1">Final Cut Pro</span>
+          <span className="text-white/90 text-[13px] font-semibold ml-1 truncate">Final Cut Pro</span>
           <div className="hidden md:flex items-center gap-4 text-white/60 text-[12px] ml-2">
             <span>File</span><span>Edit</span><span>Trim</span><span>Mark</span><span>Clip</span><span>Modify</span><span>View</span><span>Window</span><span>Help</span>
           </div>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex items-center gap-2 shrink-0">
             <button
               onClick={handleWelcomeContinue}
-              className="px-3 py-1 rounded-md bg-white/10 text-white/90 text-[12px] font-semibold hover:bg-white/20 transition-all flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-md bg-white/10 text-white/90 text-[12px] font-semibold hover:bg-white/20 transition-all"
             >
               Skip
             </button>
             <button
               onClick={handleWelcomeContinue}
-              className="px-3 py-1 rounded-md bg-gradient-to-b from-[#0a84ff] to-[#0066cc] text-white text-[12px] font-semibold hover:brightness-110 transition-all flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-md bg-gradient-to-b from-[#0a84ff] to-[#0066cc] text-white text-[12px] font-semibold hover:brightness-110 transition-all flex items-center gap-1 whitespace-nowrap"
             >
-              Enter Portfolio
+              Enter
               <ChevronRight className="w-3.5 h-3.5" />
             </button>
           </div>
@@ -1123,6 +1124,7 @@ const messageText = mobileInput.trim()
             </div>
           </div>
         </div>
+       </div>
       </div>
     )
   }
