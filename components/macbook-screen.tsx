@@ -5400,14 +5400,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* AI Assistant Window - Front and Center */}
         {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
           <div
-            className={`absolute w-[400px] bg-gradient-to-b from-[#1a1a2e] to-[#16213e] backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 animate-in zoom-in-95 fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
+            className={`absolute w-[400px] bg-[#fffaf0] backdrop-blur-xl rounded-xl shadow-2xl border border-amber-900/15 animate-in zoom-in-95 fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
             style={{ left: aiAssistantPosition.x, top: aiAssistantPosition.y }}
             onClick={() => focusWindow('aiAssistant')}
           >
             {/* Header - Draggable */}
             <div
               onMouseDown={(e) => { focusWindow('aiAssistant'); handleMouseDown('aiAssistant', e); }}
-              className="h-14 bg-gradient-to-r from-purple-600/80 to-blue-600/80 flex items-center px-4 gap-3 rounded-t-xl cursor-grab active:cursor-grabbing"
+              className="h-14 bg-gradient-to-r from-[#f5a623] to-[#e8920c] flex items-center px-4 gap-3 rounded-t-xl cursor-grab active:cursor-grabbing"
             >
               <div className="flex gap-2">
                 <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
@@ -5415,12 +5415,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
               </div>
               <div className="flex items-center gap-2 flex-1">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center">
-                  <span className="text-white text-sm">AI</span>
+                <div className="w-8 h-8 rounded-full bg-white/30 border border-white/40 flex items-center justify-center">
+                  <span className="text-white text-sm font-semibold">AI</span>
                 </div>
                 <div>
                   <p className="text-white text-[13px] font-semibold">Charity&apos;s AI Assistant</p>
-                  <p className="text-white/60 text-[10px]">Online</p>
+                  <p className="text-white/80 text-[10px]">Online</p>
                 </div>
               </div>
             </div>
@@ -5428,7 +5428,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             {/* Content Area - No Scrollbar */}
             <div className="flex-1 p-4 flex flex-col overflow-hidden">
               {/* Welcome Message */}
-              <div className="bg-white/10 text-white rounded-2xl px-4 py-3 mb-4">
+              <div className="bg-[#fbeccb] text-amber-950 rounded-2xl px-4 py-3 mb-4">
                 <p className="text-[13px] leading-relaxed">Hi there! Thanks for stopping by. I&apos;m Charity&apos;s AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!</p>
               </div>
               
@@ -5439,7 +5439,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     openCaseStudy('silas');
                     setAiAssistantWindow({ isOpen: false, isMinimized: false });
                   }}
-                  className="w-full px-4 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-2xl text-sm font-semibold hover:from-blue-600 hover:to-blue-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  className="w-full px-4 py-4 bg-gradient-to-b from-[#f5a623] to-[#e8920c] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                 >
                   Show Top Project
                 </button>
@@ -5450,7 +5450,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     setSafariInputUrl('charitydupont.com/resume');
                     setFocusedWindow('safari');
                   }}
-                  className="w-full px-4 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-2xl text-sm font-semibold hover:from-purple-600 hover:to-purple-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  className="w-full px-4 py-4 bg-gradient-to-b from-[#f0b429] to-[#d89611] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                 >
                   Open Resume
                 </button>
@@ -5460,7 +5460,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     setDesktopSelectedNote('techstack');
                     setFocusedWindow('notes');
                   }}
-                  className="w-full px-4 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl text-sm font-semibold hover:from-green-600 hover:to-green-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  className="w-full px-4 py-4 bg-gradient-to-b from-[#e8920c] to-[#c2740a] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                 >
                   See Tech Stack
                 </button>
@@ -5470,7 +5470,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     setFocusedWindow('messages');
                     setAiAssistantWindow({ isOpen: false, isMinimized: false });
                   }}
-                  className="w-full px-4 py-4 bg-gradient-to-r from-gray-600 to-gray-700 text-white rounded-2xl text-sm font-semibold hover:from-gray-700 hover:to-gray-800 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                  className="w-full px-4 py-4 bg-white border-2 border-[#e8920c] text-[#b3700a] rounded-2xl text-sm font-semibold hover:bg-[#fff3d6] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
                 >
                   Chat with Charity
                 </button>
@@ -5483,9 +5483,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {!aiAssistantWindow.isOpen && (
           <button
             onClick={() => setAiAssistantWindow({ isOpen: true, isMinimized: false })}
-            className="absolute left-4 bottom-20 w-14 h-14 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center z-50 animate-in fade-in zoom-in duration-300"
+            className="absolute left-4 bottom-20 w-14 h-14 rounded-full bg-gradient-to-br from-[#f5a623] to-[#e8920c] shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center z-50 animate-in fade-in zoom-in duration-300"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-blue-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-white/25 border border-white/40 flex items-center justify-center">
               <span className="text-white text-sm font-bold">AI</span>
             </div>
             <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse" />
