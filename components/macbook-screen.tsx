@@ -301,15 +301,17 @@ export function MacBookScreen() {
     disableTracks()
     v.textTracks.addEventListener?.("addtrack", disableTracks)
     v.textTracks.addEventListener?.("change", disableTracks)
-    // Poll for the first few seconds to catch tracks that attach after playback starts (iOS).
+    // Poll to catch tracks that attach after playback starts (iOS). On mobile,
+    // keep polling for the whole video so iOS Safari can't re-enable captions later.
+    const isMobile = typeof window !== "undefined" && window.innerWidth < 768
     const interval = setInterval(disableTracks, 500)
-    const stop = setTimeout(() => clearInterval(interval), 6000)
+    const stop = isMobile ? null : setTimeout(() => clearInterval(interval), 6000)
 
     return () => {
       v.textTracks.removeEventListener?.("addtrack", disableTracks)
       v.textTracks.removeEventListener?.("change", disableTracks)
       clearInterval(interval)
-      clearTimeout(stop)
+      if (stop) clearTimeout(stop)
     }
   }, [showWelcomeVideo])
   
