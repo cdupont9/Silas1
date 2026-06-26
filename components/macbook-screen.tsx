@@ -1569,12 +1569,14 @@ const messageText = mobileInput.trim()
                       conv.id === c.id ? { ...conv, unread: false } : conv
                     ));
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-3 active:bg-[#1c1c1e]"
+                  className="w-full flex items-center gap-2.5 pl-2 pr-4 py-2.5 active:bg-[#1c1c1e]"
                 >
-                  {/* Unread indicator */}
-                  {c.unread && (
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#007AFF] flex-shrink-0 absolute left-2" />
-                  )}
+                  {/* Unread indicator gutter */}
+                  <div className="w-3 flex-shrink-0 flex items-center justify-center">
+                    {c.unread && (
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#0a84ff]" />
+                    )}
+                  </div>
                   <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-600 flex-shrink-0">
                     {c.avatar ? (
                       <img src={c.avatar} alt={c.name} className="w-full h-full object-cover" />
