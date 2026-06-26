@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle, Play, Trophy, Lock } from "lucide-react"
+import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle, Trophy, Lock } from "lucide-react"
 
 // ============ MIND PUZZLES SECTION ============
 type PuzzleCategory = "sequence" | "pattern" | "logic" | "math" | "word"
@@ -563,10 +563,7 @@ interface BrainGamesProps {
   onGameStateChange?: (state: BrainGamesState) => void
 }
 
-// Reward video shown after winning Two Truths and a Lie: a 6-minute clip of Charity's grandmother's home.
-const GRANDMA_HOME_VIDEO_URL = "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_8044.MOV"
-
-// Number of correct answers (out of 20 rounds) required to unlock the Core Memory reward video.
+  // Number of correct answers (out of 20 rounds) required to unlock the reward.
 const TRUTHS_WIN_THRESHOLD = 16
 
 export function BrainGames({ onScoreChange, gameState, onGameStateChange }: BrainGamesProps) {
@@ -1867,19 +1864,19 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                 truthsCorrect >= TRUTHS_WIN_THRESHOLD ? (
                   <div className="space-y-3">
                     <p className="text-center text-emerald-300 font-semibold">
-                      You got {truthsCorrect}/{twoTruthsRounds.length} right — you&apos;ve earned a Core Memory.
+                      You got {truthsCorrect}/{twoTruthsRounds.length} right — you&apos;ve earned the reward.
                     </p>
                     <button
                       onClick={() => setShowReward(true)}
                       className="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(245,158,11,0.4)]"
                     >
-                      Open your Core Memory <Play className="w-4 h-4 fill-white" />
+                      Claim your reward <Trophy className="w-4 h-4" />
                     </button>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     <p className="text-center text-amber-300 font-semibold text-balance">
-                      So close — you got {truthsCorrect}/{twoTruthsRounds.length}. Get at least {TRUTHS_WIN_THRESHOLD} right and the Core Memory is yours.
+                      So close — you got {truthsCorrect}/{twoTruthsRounds.length}. Get at least {TRUTHS_WIN_THRESHOLD} right and the reward is yours.
                     </p>
                     <button
                       onClick={startTruthsGame}
@@ -1921,10 +1918,10 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                 {truthsCorrect >= TRUTHS_WIN_THRESHOLD ? <Trophy className="w-8 h-8 text-white" /> : <Lock className="w-8 h-8 text-white" />}
               </div>
               <h3 className="text-amber-300 font-bold text-xl text-balance">
-                Get {TRUTHS_WIN_THRESHOLD} of {twoTruthsRounds.length} right to unlock a Core Memory
+                Get {TRUTHS_WIN_THRESHOLD} of {twoTruthsRounds.length} right to unlock the reward
               </h3>
               <p className="text-amber-200/70 text-sm mt-2 text-pretty">
-                Spot the lie in at least {TRUTHS_WIN_THRESHOLD} of the {twoTruthsRounds.length} rounds and I&apos;ll let you into one of my favorite places: my grandmother&apos;s home, where so much of my childhood happened alongside my cousins.
+                Spot the lie in at least {TRUTHS_WIN_THRESHOLD} of the {twoTruthsRounds.length} rounds to unlock a special reward.
               </p>
               <p className="text-emerald-300 font-semibold mt-4">
                 So far: {truthsCorrect}/{twoTruthsRounds.length} correct
@@ -1947,41 +1944,28 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                 <div>
                   <h3 className="text-amber-300 font-bold text-lg text-balance flex items-center gap-2">
-                    <Trophy className="w-5 h-5" /> A Core Memory, just for you
+                    <Trophy className="w-5 h-5" /> You earned the reward!
                   </h3>
-                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">Thanks for playing along. This is my grandmother&apos;s home, where so much of my childhood happened alongside my cousins.</p>
+                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">Thanks for playing along.</p>
                 </div>
                 <button
                   onClick={() => setShowReward(false)}
                   className="w-8 h-8 shrink-0 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-                  aria-label="Close reward video"
+                  aria-label="Close reward"
                 >
                   <XCircle className="w-5 h-5" />
                 </button>
               </div>
 
-              {/* Video */}
+              {/* Reward placeholder */}
               <div className="bg-black flex items-center justify-center">
-                {GRANDMA_HOME_VIDEO_URL ? (
-                  <video
-                    src={GRANDMA_HOME_VIDEO_URL}
-                    controls
-                    autoPlay
-                    playsInline
-                    controlsList="nodownload noplaybackrate"
-                    disablePictureInPicture
-                    onContextMenu={(e) => e.preventDefault()}
-                    className="w-full max-h-[60vh] object-contain bg-black"
-                  />
-                ) : (
-                  <div className="w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
-                    <div className="w-14 h-14 rounded-full bg-amber-500/20 flex items-center justify-center">
-                      <Play className="w-7 h-7 text-amber-300 fill-amber-300 ml-0.5" />
-                    </div>
-                    <p className="text-amber-200 font-semibold">Your reward video goes here</p>
-                    <p className="text-amber-200/50 text-sm max-w-sm text-pretty">Upload the home video to Blob storage and add its URL to unlock playback.</p>
+                <div className="w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center shadow-[0_0_25px_rgba(245,158,11,0.5)]">
+                    <Trophy className="w-8 h-8 text-white" />
                   </div>
-                )}
+                  <p className="text-amber-200 font-semibold text-lg">A reward is on the way</p>
+                  <p className="text-amber-200/50 text-sm max-w-sm text-pretty">You beat the challenge! A special reward is coming soon &mdash; check back later.</p>
+                </div>
               </div>
 
               {/* Footer */}
