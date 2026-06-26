@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle } from "lucide-react"
+import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle, Play } from "lucide-react"
 
 // ============ MIND PUZZLES SECTION ============
 type PuzzleCategory = "sequence" | "pattern" | "logic" | "math" | "word"
@@ -564,9 +564,14 @@ interface BrainGamesProps {
   onGameStateChange?: (state: BrainGamesState) => void
 }
 
+// Reward video shown after completing every Two Truths and a Lie round.
+// TODO: Replace this placeholder with the real video of Charity's grandmother's home (upload to Blob storage and paste the URL here).
+const GRANDMA_HOME_VIDEO_URL = ""
+
 export function BrainGames({ onScoreChange, gameState, onGameStateChange }: BrainGamesProps) {
   const [localState, setLocalState] = useState<BrainGamesState>(gameState || initialBrainGamesState)
   const [showInstructions, setShowInstructions] = useState(false)
+  const [showReward, setShowReward] = useState(false)
   
   // Sync with external state
   useEffect(() => {
@@ -1846,12 +1851,21 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                   The lie was: &ldquo;{currentTruthsRound.statements[currentTruthsRound.lieIndex]}&rdquo;
                 </p>
               </div>
-              <button
-                onClick={nextTruthsRound}
-                className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
-              >
-                Next Round <RefreshCw className="w-4 h-4" />
-              </button>
+              {truthsRoundsPlayed.length >= twoTruthsRounds.length ? (
+                <button
+                  onClick={() => setShowReward(true)}
+                  className="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(245,158,11,0.4)]"
+                >
+                  You won! Watch your reward <Play className="w-4 h-4 fill-white" />
+                </button>
+              ) : (
+                <button
+                  onClick={nextTruthsRound}
+                  className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+                >
+                  Next Round <RefreshCw className="w-4 h-4" />
+                </button>
+              )}
             </div>
           )}
         </div>
@@ -1860,6 +1874,59 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         <div className="text-center text-emerald-400/60 text-sm">
           {truthsRoundsPlayed.length} of {twoTruthsRounds.length} rounds played
         </div>
+
+        {/* Reward video overlay */}
+        {showReward && (
+          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+            <div className="relative w-full max-w-2xl bg-gradient-to-b from-zinc-900 to-black rounded-2xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.3)] animate-in zoom-in-95 duration-300">
+              {/* Header */}
+              <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+                <div>
+                  <h3 className="text-amber-300 font-bold text-lg text-balance">You completed every round!</h3>
+                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">A peek at my grandmother&apos;s home, where I spent so much time as a kid with my cousins.</p>
+                </div>
+                <button
+                  onClick={() => setShowReward(false)}
+                  className="w-8 h-8 shrink-0 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+                  aria-label="Close reward video"
+                >
+                  <XCircle className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Video */}
+              <div className="bg-black flex items-center justify-center">
+                {GRANDMA_HOME_VIDEO_URL ? (
+                  <video
+                    src={GRANDMA_HOME_VIDEO_URL}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full max-h-[60vh] object-contain bg-black"
+                  />
+                ) : (
+                  <div className="w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
+                    <div className="w-14 h-14 rounded-full bg-amber-500/20 flex items-center justify-center">
+                      <Play className="w-7 h-7 text-amber-300 fill-amber-300 ml-0.5" />
+                    </div>
+                    <p className="text-amber-200 font-semibold">Your reward video goes here</p>
+                    <p className="text-amber-200/50 text-sm max-w-sm text-pretty">Upload the home video to Blob storage and add its URL to unlock playback.</p>
+                  </div>
+                )}
+              </div>
+
+              {/* Footer */}
+              <div className="px-5 py-4 border-t border-white/10 flex justify-end">
+                <button
+                  onClick={() => { setShowReward(false); backToMenu(); }}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white font-semibold transition-all"
+                >
+                  Back to Games
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     )
   }
