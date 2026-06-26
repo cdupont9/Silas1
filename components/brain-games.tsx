@@ -1165,9 +1165,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
     return (
       <div className="flex flex-col items-center gap-4 p-4 md:p-6 w-full max-w-2xl mx-auto">
         <div className="text-center mt-2">
-          <h2 className="text-pink-400 font-bold text-2xl md:text-3xl tracking-wide drop-shadow-[0_0_10px_rgba(236,72,153,0.5)]">
-            BRAIN GAMES
-          </h2>
           <p className="text-pink-300/60 text-sm mt-1">Challenge your mind</p>
         </div>
 
