@@ -1800,7 +1800,9 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               </div>
             </div>
             <h3 className="text-emerald-200 font-bold text-xl">Two Truths & a Lie</h3>
-            <p className="text-emerald-400/60 text-sm mt-1">Which statement about Charity is FALSE?</p>
+            <p className="text-emerald-300/80 text-sm mt-2">
+              Two of these are true. <span className="font-bold text-red-400">Tap the LIE</span> — the one statement about Charity that is <span className="font-bold text-red-400">FALSE</span>.
+            </p>
           </div>
 
           {/* Statements */}
