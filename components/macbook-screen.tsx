@@ -282,6 +282,36 @@ export function MacBookScreen() {
     const ff = String(Math.floor((v.currentTime % 1) * 24)).padStart(2, "0")
     setWelcomeVideoTime(`${hh}:${mm}:${ss}:${ff}`)
   }
+
+  // Keep captions/subtitles off for the welcome video. iOS Safari loads in-band
+  // text tracks late and can re-enable them from system accessibility settings,
+  // so a single disable pass isn't enough — we re-disable on track events and poll briefly.
+  useEffect(() => {
+    if (!showWelcomeVideo) return
+    const v = welcomeVideoRef.current
+    if (!v) return
+
+    const disableTracks = () => {
+      const tracks = v.textTracks
+      for (let i = 0; i < tracks.length; i++) {
+        tracks[i].mode = "disabled"
+      }
+    }
+
+    disableTracks()
+    v.textTracks.addEventListener?.("addtrack", disableTracks)
+    v.textTracks.addEventListener?.("change", disableTracks)
+    // Poll for the first few seconds to catch tracks that attach after playback starts (iOS).
+    const interval = setInterval(disableTracks, 500)
+    const stop = setTimeout(() => clearInterval(interval), 6000)
+
+    return () => {
+      v.textTracks.removeEventListener?.("addtrack", disableTracks)
+      v.textTracks.removeEventListener?.("change", disableTracks)
+      clearInterval(interval)
+      clearTimeout(stop)
+    }
+  }, [showWelcomeVideo])
   
   // Netflix experience state
   const [netflixModal, setNetflixModal] = useState<{ type: 'project' | 'about' | 'gallery' | null, data?: string | number }>({ type: null })
