@@ -971,9 +971,20 @@ const messageText = mobileInput.trim()
   // ==================== WELCOME VIDEO (FINAL CUT PRO FRAME) ====================
   if (showWelcomeVideo) {
     return (
-      <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-sm p-3 sm:p-6 select-none animate-in fade-in duration-300">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 select-none animate-in fade-in duration-300 overflow-hidden">
+        {/* Desktop background video (moving sunflower) */}
+        {selectedBackground.type === 'video' ? (
+          <video key={`welcome-bg-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+            <source src={selectedBackground.url} type="video/mp4" />
+          </video>
+        ) : (
+          <img key={`welcome-bg-${selectedBackground.id}`} src={selectedBackground.url} alt="Background" className="absolute inset-0 w-full h-full object-cover" />
+        )}
+        {/* Darkening + blur scrim over the wallpaper */}
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+
         {/* Final Cut Pro Window (overlay, not full screen) */}
-        <div className="w-full max-w-3xl bg-[#161617] rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/15 flex flex-col animate-in zoom-in-95 duration-300">
+        <div className="relative z-10 w-full max-w-3xl bg-[#161617] rounded-xl overflow-hidden shadow-2xl ring-1 ring-white/15 flex flex-col animate-in zoom-in-95 duration-300">
           {/* Menu Bar / Title Bar */}
           <div className="h-9 shrink-0 bg-gradient-to-b from-[#3a3a3c] to-[#2c2c2e] border-b border-black/50 flex items-center px-3 gap-3">
             <div className="flex gap-2">
