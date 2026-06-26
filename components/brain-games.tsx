@@ -410,51 +410,48 @@ interface TwoTruthsRound {
   category: string
 }
 
+// 20 rounds, each covering a distinct fact so no two rounds quiz the same thing.
+// lieIndex is varied here, and statements are reshuffled again at runtime.
 const twoTruthsRounds: TwoTruthsRound[] = [
-  // Childhood & Homeschool - lies are similar homeschool experiences
+  // Childhood & homeschool
   { id: "tt1", category: "childhood", statements: ["I was homeschooled until 4th grade", "My grandmother homeschooled me and my cousin", "I was homeschooled until 6th grade"], lieIndex: 2 },
-  { id: "tt2", category: "childhood", statements: ["I had a breakfast business as a kid", "My grandmother encouraged my entrepreneurship", "I sold cookies door-to-door for two years"], lieIndex: 2 },
-  { id: "tt3", category: "childhood", statements: ["I wanted to be a ballet dancer", "I also dreamed of being a cook", "I trained in ballet for 8 years"], lieIndex: 2 },
-  
-  // Moving from Chicago - lies are similar moving experiences  
-  { id: "tt4", category: "moving", statements: ["I moved from Chicago to New Jersey", "My mom and I drove straight through with no hotel stops", "We took a week-long road trip with many stops"], lieIndex: 2 },
-  { id: "tt5", category: "moving", statements: ["We ate lots of snacks on our road trip", "My mom drove us to New Jersey", "We flew from Chicago to Newark"], lieIndex: 2 },
-  
-  // Disney/Cinderella - lies are similar Disney experiences
-  { id: "tt6", category: "disney", statements: ["Cinderella is my favorite Disney character", "I love the Brandy & Whitney Houston version", "Belle from Beauty and the Beast is my favorite"], lieIndex: 2 },
-  { id: "tt7", category: "disney", statements: ["I still own Cinderella on VHS", "I danced with a broom to 'In My Own Little Corner'", "I have the Cinderella soundtrack on vinyl"], lieIndex: 2 },
-  { id: "tt8", category: "disney", statements: ["My mom said I pretended to be Cinderella", "I loved singing Cinderella songs as a kid", "I dressed as Belle for Halloween every year"], lieIndex: 2 },
-  
-  // Hilary Duff/Music - lies are similar music preferences
-  { id: "tt9", category: "music", statements: ["Hilary Duff is my favorite childhood artist", "I was obsessed with Lizzie McGuire", "Britney Spears was my absolute favorite"], lieIndex: 2 },
-  { id: "tt10", category: "music", statements: ["I still listen to Metamorphosis while driving", "'So Yesterday' is one of my favorite songs", "I prefer Hilary Duff's acting over her music"], lieIndex: 2 },
-  { id: "tt11", category: "music", statements: ["I love Mandy Moore's song 'Only Hope'", "A Walk to Remember makes me cry", "I think The Notebook is a better movie"], lieIndex: 2 },
-  
-  // Food & Drinks - lies are similar food preferences
-  { id: "tt12", category: "drinks", statements: ["I love lemonade mixed with ginger ale", "I prefer apple juice over orange juice", "I prefer cranberry juice over apple juice"], lieIndex: 2 },
-  { id: "tt13", category: "food", statements: ["Broadway Chicken is my favorite fried chicken", "I love hot honey buttermilk chicken", "I prefer grilled chicken over fried"], lieIndex: 2 },
-  { id: "tt14", category: "food", statements: ["My Chinese order is sweet and sour shrimp", "I love Chinese takeout", "I always get General Tso's chicken"], lieIndex: 2 },
-  
-  // Starbucks - lies are similar coffee preferences
-  { id: "tt15", category: "starbucks", statements: ["Caramel Ribbon Crunch is my go-to", "I order it with extra caramel and crunch", "I prefer hot lattes over frappuccinos"], lieIndex: 2 },
-  { id: "tt16", category: "starbucks", statements: ["I discovered Starbucks as a little girl", "My mom worked near Grand Central", "I started drinking Starbucks in college"], lieIndex: 2 },
-  
-  // Travel - lies are similar travel experiences
-  { id: "tt17", category: "travel", statements: ["I've been to Spain, Paris, and Italy", "I've visited South Africa", "I've backpacked through Asia"], lieIndex: 2 },
-  { id: "tt18", category: "travel", statements: ["Greece is on my bucket list", "I dream of traveling more", "I've already been to Greece twice"], lieIndex: 2 },
-  { id: "tt19", category: "travel", statements: ["Bus travel is on my bucket list", "I've never taken a Greyhound bus", "I've done a cross-country bus trip"], lieIndex: 2 },
-  
-  // Hobbies - lies are similar hobby experiences
-  { id: "tt20", category: "hobbies", statements: ["I love the front row of roller coasters", "I enjoyed horseback riding as a kid", "I go horseback riding every month"], lieIndex: 2 },
-  { id: "tt21", category: "hobbies", statements: ["I value peace and quiet", "I love reading romance novels", "I prefer action movies over romance"], lieIndex: 2 },
-  { id: "tt22", category: "hobbies", statements: ["I'm spontaneous and try new things", "I love visiting museums", "I'm very predictable and routine-based"], lieIndex: 2 },
-  
-  // Fashion - lies are similar fashion preferences
-  { id: "tt23", category: "fashion", statements: ["I love 80s and 90s fashion", "I grew up in the late 90s/early 2000s", "I only wear modern minimalist styles"], lieIndex: 2 },
-  
-  // Career/Goals - lies are similar career aspirations
-  { id: "tt24", category: "goals", statements: ["I want to speak at design conferences", "Work-life balance matters to me", "I've already given multiple keynotes"], lieIndex: 2 },
-  { id: "tt25", category: "goals", statements: ["I want to grow into senior leadership", "I value making meaningful impact", "I prefer individual work over leadership"], lieIndex: 2 },
+  { id: "tt2", category: "childhood", statements: ["I sold cookies door-to-door for two years", "I had a breakfast business as a kid", "My grandmother encouraged my entrepreneurship"], lieIndex: 0 },
+  { id: "tt3", category: "childhood", statements: ["I trained in ballet for 8 years", "I wanted to be a ballet dancer", "I also dreamed of being a cook"], lieIndex: 0 },
+
+  // Moving from Chicago
+  { id: "tt4", category: "moving", statements: ["I moved from Chicago to New Jersey", "We took a week-long road trip with many stops", "My mom and I drove straight through with no hotel stops"], lieIndex: 1 },
+
+  // Disney / Cinderella
+  { id: "tt5", category: "disney", statements: ["Belle from Beauty and the Beast is my favorite", "Cinderella is my favorite Disney character", "I love the Brandy & Whitney Houston version"], lieIndex: 0 },
+  { id: "tt6", category: "disney", statements: ["I still own Cinderella on VHS", "I have the Cinderella soundtrack on vinyl", "I danced with a broom to 'In My Own Little Corner'"], lieIndex: 1 },
+
+  // Music
+  { id: "tt7", category: "music", statements: ["Hilary Duff is my favorite childhood artist", "Britney Spears was my absolute favorite", "I was obsessed with Lizzie McGuire"], lieIndex: 1 },
+  { id: "tt8", category: "music", statements: ["I prefer Hilary Duff's acting over her music", "I still listen to Metamorphosis while driving", "'So Yesterday' is one of my favorite songs"], lieIndex: 0 },
+  { id: "tt9", category: "music", statements: ["I love Mandy Moore's song 'Only Hope'", "A Walk to Remember makes me cry", "I think The Notebook is a better movie"], lieIndex: 2 },
+
+  // Food & drinks
+  { id: "tt10", category: "drinks", statements: ["I love lemonade mixed with ginger ale", "I prefer apple juice over orange juice", "I prefer cranberry juice over apple juice"], lieIndex: 2 },
+  { id: "tt11", category: "food", statements: ["Broadway Chicken is my favorite fried chicken", "I prefer grilled chicken over fried", "I love hot honey buttermilk chicken"], lieIndex: 1 },
+  { id: "tt12", category: "food", statements: ["I always get General Tso's chicken", "My Chinese order is sweet and sour shrimp", "I love Chinese takeout"], lieIndex: 0 },
+
+  // Starbucks
+  { id: "tt13", category: "starbucks", statements: ["I prefer hot lattes over frappuccinos", "Caramel Ribbon Crunch is my go-to", "I order it with extra caramel and crunch"], lieIndex: 0 },
+  { id: "tt14", category: "starbucks", statements: ["I discovered Starbucks as a little girl", "I started drinking Starbucks in college", "My mom worked near Grand Central"], lieIndex: 1 },
+
+  // Travel
+  { id: "tt15", category: "travel", statements: ["I've backpacked through Asia", "I've been to Spain, Paris, and Italy", "I've visited South Africa"], lieIndex: 0 },
+  { id: "tt16", category: "travel", statements: ["Greece is on my bucket list", "I've already been to Greece twice", "I dream of traveling more"], lieIndex: 1 },
+
+  // Hobbies & personality
+  { id: "tt17", category: "hobbies", statements: ["I love the front row of roller coasters", "I enjoyed horseback riding as a kid", "I go horseback riding every month"], lieIndex: 2 },
+  { id: "tt18", category: "hobbies", statements: ["I value peace and quiet", "I prefer action movies over romance", "I love reading romance novels"], lieIndex: 1 },
+
+  // Fashion
+  { id: "tt19", category: "fashion", statements: ["I only wear modern minimalist styles", "I love 80s and 90s fashion", "I grew up in the late 90s/early 2000s"], lieIndex: 0 },
+
+  // Career & goals
+  { id: "tt20", category: "goals", statements: ["I want to speak at design conferences", "Work-life balance matters to me", "I've already given multiple keynotes"], lieIndex: 2 },
 ]
 
 // ============ MAIN COMPONENT ============
@@ -569,8 +566,8 @@ interface BrainGamesProps {
 // Reward video shown after winning Two Truths and a Lie: a 6-minute clip of Charity's grandmother's home.
 const GRANDMA_HOME_VIDEO_URL = "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/IMG_8044.MOV"
 
-// Number of correct answers (out of 25 rounds) required to unlock the Core Memory reward video.
-const TRUTHS_WIN_THRESHOLD = 20
+// Number of correct answers (out of 20 rounds) required to unlock the Core Memory reward video.
+const TRUTHS_WIN_THRESHOLD = 16
 
 export function BrainGames({ onScoreChange, gameState, onGameStateChange }: BrainGamesProps) {
   const [localState, setLocalState] = useState<BrainGamesState>(gameState || initialBrainGamesState)
@@ -1877,19 +1874,19 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                 truthsCorrect >= TRUTHS_WIN_THRESHOLD ? (
                   <div className="space-y-3">
                     <p className="text-center text-emerald-300 font-semibold">
-                      You scored {truthsCorrect}/{twoTruthsRounds.length} — you unlocked the Core Memory!
+                      You got {truthsCorrect}/{twoTruthsRounds.length} right — you&apos;ve earned a Core Memory.
                     </p>
                     <button
                       onClick={() => setShowReward(true)}
                       className="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(245,158,11,0.4)]"
                     >
-                      Watch your reward <Play className="w-4 h-4 fill-white" />
+                      Open your Core Memory <Play className="w-4 h-4 fill-white" />
                     </button>
                   </div>
                 ) : (
                   <div className="space-y-3">
                     <p className="text-center text-amber-300 font-semibold text-balance">
-                      You scored {truthsCorrect}/{twoTruthsRounds.length}. You need {TRUTHS_WIN_THRESHOLD}/{twoTruthsRounds.length} to unlock the Core Memory video.
+                      So close — you got {truthsCorrect}/{twoTruthsRounds.length}. Get at least {TRUTHS_WIN_THRESHOLD} right and the Core Memory is yours.
                     </p>
                     <button
                       onClick={startTruthsGame}
@@ -1931,10 +1928,10 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                 {truthsCorrect >= TRUTHS_WIN_THRESHOLD ? <Trophy className="w-8 h-8 text-white" /> : <Lock className="w-8 h-8 text-white" />}
               </div>
               <h3 className="text-amber-300 font-bold text-xl text-balance">
-                Score {TRUTHS_WIN_THRESHOLD}/{twoTruthsRounds.length} to unlock this Core Memory
+                Get {TRUTHS_WIN_THRESHOLD} of {twoTruthsRounds.length} right to unlock a Core Memory
               </h3>
               <p className="text-amber-200/70 text-sm mt-2 text-pretty">
-                Find the lie in at least {TRUTHS_WIN_THRESHOLD} of the {twoTruthsRounds.length} rounds and you&apos;ll unlock a 6-minute clip of my grandmother&apos;s home — where I spent most of my childhood growing up with my cousins.
+                Spot the lie in at least {TRUTHS_WIN_THRESHOLD} of the {twoTruthsRounds.length} rounds and I&apos;ll let you into one of my favorite places: my grandmother&apos;s home, where so much of my childhood happened alongside my cousins.
               </p>
               <p className="text-emerald-300 font-semibold mt-4">
                 So far: {truthsCorrect}/{twoTruthsRounds.length} correct
@@ -1957,9 +1954,9 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
               <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
                 <div>
                   <h3 className="text-amber-300 font-bold text-lg text-balance flex items-center gap-2">
-                    <Trophy className="w-5 h-5" /> Core Memory unlocked!
+                    <Trophy className="w-5 h-5" /> A Core Memory, just for you
                   </h3>
-                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">A 6-minute clip of my grandmother&apos;s home — where I spent most of my childhood growing up with my cousins.</p>
+                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">Thanks for playing along. This is my grandmother&apos;s home, where so much of my childhood happened alongside my cousins.</p>
                 </div>
                 <button
                   onClick={() => setShowReward(false)}
@@ -1978,6 +1975,9 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                     controls
                     autoPlay
                     playsInline
+                    controlsList="nodownload noplaybackrate"
+                    disablePictureInPicture
+                    onContextMenu={(e) => e.preventDefault()}
                     className="w-full max-h-[60vh] object-contain bg-black"
                   />
                 ) : (
