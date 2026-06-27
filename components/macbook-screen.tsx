@@ -316,8 +316,6 @@ export function MacBookScreen() {
   
   // Netflix experience state
   const [netflixModal, setNetflixModal] = useState<{ type: 'project' | 'about' | 'gallery' | null, data?: string | number }>({ type: null })
-  const [netflixEmail, setNetflixEmail] = useState("")
-  const [netflixPassword, setNetflixPassword] = useState("")
   const [showConversationList, setShowConversationList] = useState(true)
   const [selectedNote, setSelectedNote] = useState<number | null>(null)
   const [viewingPhoto, setViewingPhoto] = useState<number | null>(null)
@@ -3479,61 +3477,35 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </button>
         </div>
 
-        {/* Sign in card */}
-        <div className="relative z-10 flex items-center justify-center px-4 pt-6 pb-16">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault()
-              setScreenState("netflixComingSoon")
-            }}
-            className="w-full max-w-md bg-black/75 rounded-md px-8 py-12 md:px-14 md:py-14"
-          >
-            <h2 className="text-white text-3xl font-bold mb-7">Sign In</h2>
-            <div className="flex flex-col gap-4">
-              <input
-                type="email"
-                required
-                value={netflixEmail}
-                onChange={(e) => setNetflixEmail(e.target.value)}
-                placeholder="Email or phone number"
-                className="w-full bg-[#333] text-white text-sm rounded px-4 py-4 placeholder:text-gray-400 outline-none focus:bg-[#454545] transition-colors"
-              />
-              <input
-                type="password"
-                required
-                value={netflixPassword}
-                onChange={(e) => setNetflixPassword(e.target.value)}
-                placeholder="Password"
-                className="w-full bg-[#333] text-white text-sm rounded px-4 py-4 placeholder:text-gray-400 outline-none focus:bg-[#454545] transition-colors"
-              />
+        {/* Profile picker */}
+        <div className="relative z-10 flex flex-col items-center justify-center px-4 pt-10 pb-16 min-h-[calc(100%-72px)] -mt-6">
+          <h2 className="text-white text-3xl md:text-5xl font-medium mb-10 md:mb-14 text-center">
+            Who&apos;s watching?
+          </h2>
+          <div className="flex flex-wrap items-start justify-center gap-6 md:gap-10">
+            {[
+              { name: "Charity", color: "bg-red-600" },
+              { name: "Family", color: "bg-sky-600" },
+              { name: "Guest", color: "bg-amber-500" },
+            ].map((profile) => (
               <button
-                type="submit"
-                className="w-full bg-red-600 text-white font-semibold rounded py-3 mt-2 hover:bg-red-700 transition-colors"
+                key={profile.name}
+                onClick={() => setScreenState("netflixComingSoon")}
+                className="group flex flex-col items-center gap-3"
               >
-                Sign In
+                <div
+                  className={`w-24 h-24 md:w-36 md:h-36 rounded-md ${profile.color} flex items-center justify-center ring-0 group-hover:ring-2 ring-white transition-all`}
+                >
+                  <span className="text-white text-4xl md:text-6xl font-semibold">
+                    {profile.name.charAt(0)}
+                  </span>
+                </div>
+                <span className="text-gray-400 text-base md:text-lg group-hover:text-white transition-colors">
+                  {profile.name}
+                </span>
               </button>
-              <div className="flex items-center justify-between text-sm text-gray-400 mt-1">
-                <label className="flex items-center gap-2 cursor-pointer select-none">
-                  <input type="checkbox" className="accent-gray-500" defaultChecked />
-                  Remember me
-                </label>
-                <span className="hover:underline cursor-pointer">Need help?</span>
-              </div>
-            </div>
-            <p className="text-gray-500 text-sm mt-10">
-              New to DupontFlix?{" "}
-              <button
-                type="submit"
-                className="text-white hover:underline"
-              >
-                Sign up now
-              </button>
-              .
-            </p>
-            <p className="text-gray-500 text-xs mt-4 leading-relaxed">
-              This is a portfolio experience inspired by the Netflix UI. Any details work &mdash; just sign in to continue.
-            </p>
-          </form>
+            ))}
+          </div>
         </div>
       </div>
     )
