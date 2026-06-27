@@ -1168,7 +1168,10 @@ const messageText = mobileInput.trim()
   }
 
   // ==================== MOBILE IPHONE EXPERIENCE ====================
-  if (isMobile) {
+  // When the DupontFlix experience is active, fall through to the shared
+  // (responsive) Netflix screens below instead of the iPhone home screen.
+  const isNetflixState = screenState === "netflix" || screenState === "netflixLoading" || screenState === "netflixComingSoon"
+  if (isMobile && !isNetflixState) {
     // iPhone Lock Screen
     if (mobileScreen === "lock") {
       return (
@@ -1486,7 +1489,18 @@ const messageText = mobileInput.trim()
                   </div>
                   <span className="text-white text-[11px] mt-1">Safari</span>
                 </button>
-                
+
+                {/* DupontFlix */}
+                <button
+                  onClick={() => { setScreenState("netflixLoading"); setTimeout(() => setScreenState("netflix"), 1800); }}
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-black flex items-center justify-center">
+                    <span className="text-red-600 font-bold text-3xl leading-none font-[family-name:var(--font-bebas-neue)]">D</span>
+                  </div>
+                  <span className="text-white text-[11px] mt-1">DupontFlix</span>
+                </button>
+
                 {/* Camera */}
                 <button
                   onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
@@ -3484,21 +3498,21 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </h2>
           <div className="flex flex-wrap items-start justify-center gap-6 md:gap-10">
             {[
-              { name: "Charity", color: "bg-red-600" },
-              { name: "Family", color: "bg-sky-600" },
-              { name: "Guest", color: "bg-amber-500" },
+              { name: "Charity", image: CHARITY_PHOTO_URL },
+              { name: "Family", image: "/images/profile-family.png" },
+              { name: "Guest", image: "/images/profile-guest.png" },
             ].map((profile) => (
               <button
                 key={profile.name}
                 onClick={() => setScreenState("netflixComingSoon")}
                 className="group flex flex-col items-center gap-3"
               >
-                <div
-                  className={`w-24 h-24 md:w-36 md:h-36 rounded-md ${profile.color} flex items-center justify-center ring-0 group-hover:ring-2 ring-white transition-all`}
-                >
-                  <span className="text-white text-4xl md:text-6xl font-semibold">
-                    {profile.name.charAt(0)}
-                  </span>
+                <div className="w-24 h-24 md:w-36 md:h-36 rounded-md overflow-hidden ring-0 group-hover:ring-4 ring-white transition-all">
+                  <img
+                    src={profile.image || "/placeholder.svg"}
+                    alt={`${profile.name} profile`}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <span className="text-gray-400 text-base md:text-lg group-hover:text-white transition-colors">
                   {profile.name}
