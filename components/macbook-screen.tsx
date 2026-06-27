@@ -19,7 +19,6 @@ import {
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
-import { LiveAvatar } from "@/components/live-avatar"
 
 interface WindowState {
   isOpen: boolean
@@ -173,7 +172,7 @@ const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/S
 const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png"
 const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
-type ScreenState = "login" | "loading" | "desktop" | "netflix" | "netflixLoading"
+type ScreenState = "login" | "loading" | "desktop" | "netflix" | "netflixLoading" | "netflixComingSoon"
 
 // Case study content for each project
 const caseStudies = {
@@ -1169,7 +1168,10 @@ const messageText = mobileInput.trim()
   }
 
   // ==================== MOBILE IPHONE EXPERIENCE ====================
-  if (isMobile) {
+  // When the DupontFlix experience is active, fall through to the shared
+  // (responsive) Netflix screens below instead of the iPhone home screen.
+  const isNetflixState = screenState === "netflix" || screenState === "netflixLoading" || screenState === "netflixComingSoon"
+  if (isMobile && !isNetflixState) {
     // iPhone Lock Screen
     if (mobileScreen === "lock") {
       return (
@@ -1487,7 +1489,18 @@ const messageText = mobileInput.trim()
                   </div>
                   <span className="text-white text-[11px] mt-1">Safari</span>
                 </button>
-                
+
+                {/* DupontFlix */}
+                <button
+                  onClick={() => { setScreenState("netflixLoading"); setTimeout(() => setScreenState("netflix"), 1800); }}
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-black flex items-center justify-center">
+                    <span className="text-red-600 font-bold text-3xl leading-none font-[family-name:var(--font-bebas-neue)]">D</span>
+                  </div>
+                  <span className="text-white text-[11px] mt-1">DupontFlix</span>
+                </button>
+
                 {/* Camera */}
                 <button
                   onClick={() => { startCamera('environment'); setMobileScreen('camera'); }}
@@ -3450,8 +3463,115 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
     )
   }
 
-  // Netflix Experience Screen
+  // DupontFlix Sign In Screen (Netflix desktop style)
   if (screenState === "netflix") {
+    return (
+      <div className="h-screen w-full relative overflow-hidden bg-black">
+        {/* Background */}
+        <img
+          src="/images/dupontflix-bg.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
+
+        {/* Top bar */}
+        <div className="relative z-10 flex items-center justify-between px-6 md:px-12 py-5">
+          <h1 className="text-3xl font-bold tracking-tight font-[family-name:var(--font-bebas-neue)]">
+            <span className="text-red-600">DUPONT</span>
+            <span className="text-white ml-1">FLIX</span>
+          </h1>
+          <button
+            onClick={() => setScreenState("desktop")}
+            className="text-white/80 text-sm font-medium hover:text-white transition-colors"
+          >
+            Exit to MacBook
+          </button>
+        </div>
+
+        {/* Profile picker */}
+        <div className="relative z-10 flex flex-col items-center justify-center px-4 pt-10 pb-16 min-h-[calc(100%-72px)] -mt-6">
+          <h2 className="text-white text-3xl md:text-5xl font-medium mb-10 md:mb-14 text-center">
+            Who&apos;s watching?
+          </h2>
+          <div className="flex flex-wrap items-start justify-center gap-6 md:gap-10">
+            {[
+              { name: "Charity", image: CHARITY_PHOTO_URL },
+            ].map((profile) => (
+              <button
+                key={profile.name}
+                onClick={() => setScreenState("netflixComingSoon")}
+                className="group flex flex-col items-center gap-3"
+              >
+                <div className="w-24 h-24 md:w-36 md:h-36 rounded-md overflow-hidden ring-0 group-hover:ring-4 ring-white transition-all">
+                  <img
+                    src={profile.image || "/placeholder.svg"}
+                    alt={`${profile.name} profile`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="text-gray-400 text-base md:text-lg group-hover:text-white transition-colors">
+                  {profile.name}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // DupontFlix Coming Soon Screen
+  if (screenState === "netflixComingSoon") {
+    return (
+      <div className="h-screen w-full relative overflow-hidden bg-black">
+        {/* Blurred background */}
+        <img
+          src="/images/dupontflix-bg.png"
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover scale-110 blur-2xl"
+        />
+        <div className="absolute inset-0 bg-black/70" />
+
+        {/* Top bar */}
+        <div className="relative z-10 flex items-center justify-between px-6 md:px-12 py-5">
+          <h1 className="text-3xl font-bold tracking-tight font-[family-name:var(--font-bebas-neue)]">
+            <span className="text-red-600">DUPONT</span>
+            <span className="text-white ml-1">FLIX</span>
+          </h1>
+          <button
+            onClick={() => setScreenState("netflix")}
+            className="text-white/80 text-sm font-medium hover:text-white transition-colors"
+          >
+            Sign Out
+          </button>
+        </div>
+
+        {/* Coming soon content */}
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 h-[calc(100%-72px)] -mt-10">
+          <span className="text-red-500 text-sm font-semibold uppercase tracking-[0.3em] mb-5">DupontFlix Originals</span>
+          <h2 className="text-white text-5xl md:text-7xl font-bold tracking-tight mb-6 text-balance">Coming Soon</h2>
+          <p className="text-gray-300 max-w-xl text-base md:text-lg leading-relaxed text-pretty">
+            There&apos;s more of Charity on the way &mdash; personal stories, new projects, and
+            behind-the-scenes moments you won&apos;t find anywhere else. This space is being
+            curated, so check back soon.
+          </p>
+          <button
+            onClick={() => setScreenState("desktop")}
+            className="mt-10 bg-white text-black font-semibold rounded px-8 py-3 hover:bg-gray-200 transition-colors"
+          >
+            Back to MacBook
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Legacy DupontFlix portfolio experience (retained but not currently shown)
+  if (false) {
     return (
       <div className="h-screen w-full bg-[#141414] overflow-y-auto scrollbar-none">
         {/* Netflix Header */}
@@ -5460,9 +5580,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
             {/* Content Area */}
             <div className="flex-1 p-4 flex flex-col overflow-y-auto max-h-[70vh]">
-              {/* Live talking avatar */}
-              <LiveAvatar />
-
               {/* Welcome Message */}
               <div className="bg-[#fbeccb] text-amber-950 rounded-2xl px-4 py-3 mb-4">
                 <p className="text-[13px] leading-relaxed">Hi there! Thanks for stopping by. I&apos;m Charity&apos;s AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!</p>
@@ -6224,6 +6341,16 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Safari"
           onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: null }); setFocusedWindow('safari'); }}
+        />
+
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-black flex items-center justify-center">
+              <span className="text-red-600 font-bold text-2xl leading-none font-[family-name:var(--font-bebas-neue)]">D</span>
+            </div>
+          }
+          label="DupontFlix"
+          onClick={() => { setScreenState("netflixLoading"); setTimeout(() => setScreenState("netflix"), 1800); }}
         />
 
         <DockIcon
