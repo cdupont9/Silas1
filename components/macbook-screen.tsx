@@ -19,7 +19,6 @@ import {
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
-import { LiveAvatar } from "@/components/live-avatar"
 
 interface WindowState {
   isOpen: boolean
@@ -5460,9 +5459,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
             {/* Content Area */}
             <div className="flex-1 p-4 flex flex-col overflow-y-auto max-h-[70vh]">
-              {/* Live talking avatar */}
-              <LiveAvatar />
-
               {/* Welcome Message */}
               <div className="bg-[#fbeccb] text-amber-950 rounded-2xl px-4 py-3 mb-4">
                 <p className="text-[13px] leading-relaxed">Hi there! Thanks for stopping by. I&apos;m Charity&apos;s AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!</p>
