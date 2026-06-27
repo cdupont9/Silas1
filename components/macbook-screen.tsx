@@ -3499,8 +3499,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div className="flex flex-wrap items-start justify-center gap-6 md:gap-10">
             {[
               { name: "Charity", image: CHARITY_PHOTO_URL },
-              { name: "Family", image: "/images/profile-family.png" },
-              { name: "Guest", image: "/images/profile-guest.png" },
             ].map((profile) => (
               <button
                 key={profile.name}
