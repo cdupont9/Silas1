@@ -4893,7 +4893,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     if ('background'.includes(query) || 'wallpaper'.includes(query)) {
                       results.push({
                         label: 'Change Background',
-                        action: () => { setHelpSearchQuery(''); setShowBackgroundPicker(true) },
+                        action: () => { setHelpSearchQuery(''); setBackgroundsFolder({ isOpen: true, isMinimized: false }); focusWindow('backgrounds') },
                         icon: <ImageIcon className="w-4 h-4" />
                       })
                     }
