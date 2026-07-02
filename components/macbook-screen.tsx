@@ -1158,12 +1158,33 @@ const messageText = mobileInput.trim()
               </div>
             </div>
 
-            {/* Case Studies Section */}
+            {/* Featured Case Study - Silas */}
             <div className="mx-4 mt-6">
               <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
                 <Folder className="w-5 h-5" />
-                Case Studies
+                Featured Case Study
               </h2>
+              <button
+                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
+                className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
+              >
+                <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-gray-900">Silas</h3>
+                  <p className="text-gray-500 text-sm">The Integrated AI Companion</p>
+                  <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+
+            {/* Bootcamp Case Studies Section */}
+            <div className="mx-4 mt-6">
+              <h2 className="text-white text-lg font-semibold mb-1 flex items-center gap-2">
+                <Folder className="w-5 h-5" />
+                Bootcamp Case Studies
+              </h2>
+              <p className="text-white/60 text-xs mb-3">Independent projects from my Columbia University UX/UI Bootcamp.</p>
               <div className="space-y-3">
                 {/* Teammate */}
                 <button
@@ -1188,20 +1209,6 @@ const messageText = mobileInput.trim()
                   <div className="flex-1 text-left">
                     <h3 className="font-bold text-gray-900">Meetly</h3>
                     <p className="text-gray-500 text-sm">Social Coordination App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
-
-                {/* Silas */}
-                <button
-                  onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Silas</h3>
-                    <p className="text-gray-500 text-sm">AI Companion</p>
                     <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
                   </div>
                   <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -4562,7 +4569,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <DropdownMenuSeparator className="bg-black/10" />
               <DropdownMenuItem onClick={() => setCaseStudiesFolder({ isOpen: true, isMinimized: false })} className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 <Folder className="w-4 h-4 mr-2 opacity-70" />
-                Case Studies
+                Bootcamp Case Studies
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -4801,7 +4808,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
           </div>
-          
+
+          {/* Bootcamp Case Studies desktop folder */}
+          <button
+            onClick={() => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
+            className="flex flex-col items-center gap-1.5 w-28 group"
+          >
+            <div className="w-20 h-16 group-hover:scale-110 transition-transform">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt="Bootcamp Case Studies folder" className="w-full h-auto drop-shadow-lg" />
+            </div>
+            <span className="text-[12px] text-white font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Bootcamp Case Studies</span>
+          </button>
+
           </div>
 
         {/* macOS Photos App Window */}
@@ -5074,7 +5092,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
-                <span className="flex-1 text-center text-sm font-medium text-black/80">Case Studies</span>
+                <span className="flex-1 text-center text-sm font-medium text-black/80">Bootcamp Case Studies</span>
                 <div className="flex items-center gap-2">
                   <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -5090,7 +5108,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2 px-2 py-1.5 rounded-md bg-blue-500/15 text-blue-600">
                       <Folder className="w-4 h-4" />
-                      <span className="text-[13px] font-medium">Case Studies</span>
+                      <span className="text-[13px] font-medium">Bootcamp Case Studies</span>
                     </div>
                     <button
                       onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
@@ -5121,8 +5139,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
                 {/* Main content - Case Study folders */}
                 <div className="flex-1 p-6 bg-white overflow-y-auto">
+                  <p className="text-[12px] text-gray-500 mb-4 leading-relaxed">Independent projects from my Columbia University UX/UI Bootcamp.</p>
                   <div className="grid grid-cols-3 gap-6">
-                    {Object.entries(caseStudies).map(([key, project]) => (
+                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas').map(([key, project]) => (
                       <button
                         key={key}
                         onDoubleClick={() => openCaseStudy(key)}
@@ -5320,8 +5339,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* AI Assistant Window - Front and Center */}
         {/* Silas Spotlight - primary call to action on the desktop */}
         {showSilasSpotlight && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none">
-            <div className="flex flex-col items-center pointer-events-auto animate-in fade-in zoom-in duration-500">
+          <div
+            className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/10"
+            onClick={() => setShowSilasSpotlight(false)}
+          >
+            <div
+              className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
                 className="relative group"
