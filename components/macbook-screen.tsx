@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -243,8 +243,7 @@ export function MacBookScreen() {
       setScreenState("loading")
       setTimeout(() => {
         setScreenState("desktop")
-        setAiAssistantWindow({ isOpen: true, isMinimized: false })
-        setFocusedWindow('aiAssistant')
+        setShowSilasSpotlight(true)
       }, 2500)
     }
   }
@@ -264,6 +263,7 @@ export function MacBookScreen() {
   const [openCaseStudies, setOpenCaseStudies] = useState<{ [key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } } }>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [showSilasSpotlight, setShowSilasSpotlight] = useState(false)
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -273,7 +273,7 @@ export function MacBookScreen() {
   const [photoViewerOpen, setPhotoViewerOpen] = useState(false)
   const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
-  const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
+  const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
   
   // Brain Games state
   const [braingamesWindow, setBraingamesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
@@ -650,9 +650,8 @@ const handleLogin = (e: React.FormEvent) => {
   setScreenState("loading")
   setTimeout(() => {
   setScreenState("desktop")
-  // Open AI Assistant window immediately when desktop loads
-  setAiAssistantWindow({ isOpen: true, isMinimized: false })
-  setFocusedWindow('aiAssistant')
+  // Spotlight the Silas case study as the primary call to action
+  setShowSilasSpotlight(true)
   }, 2500)
   }
 
@@ -5319,98 +5318,37 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
         {/* AI Assistant Window - Front and Center */}
-        {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
-          <div
-            className={`absolute w-[400px] bg-[#fffaf0] backdrop-blur-xl rounded-xl shadow-2xl border border-amber-900/15 animate-in zoom-in-95 fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
-            style={{ left: aiAssistantPosition.x, top: aiAssistantPosition.y }}
-            onClick={() => focusWindow('aiAssistant')}
-          >
-            {/* Header - Draggable */}
-            <div
-              onMouseDown={(e) => { focusWindow('aiAssistant'); handleMouseDown('aiAssistant', e); }}
-              className="h-14 bg-gradient-to-r from-[#f5a623] to-[#e8920c] flex items-center px-4 gap-3 rounded-t-xl cursor-grab active:cursor-grabbing"
-            >
-              <div className="flex gap-2">
-                <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: true })} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
-                <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
-              </div>
-              <div className="flex items-center gap-2 flex-1">
-                <div className="w-8 h-8 rounded-full bg-white/30 border border-white/40 flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold">AI</span>
+        {/* Silas Spotlight - primary call to action on the desktop */}
+        {showSilasSpotlight && (
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none">
+            <div className="flex flex-col items-center pointer-events-auto animate-in fade-in zoom-in duration-500">
+              <button
+                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
+                className="relative group"
+                aria-label="Open the Silas case study"
+              >
+                {/* Pulsing highlight rings */}
+                <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
+                <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
+                <div className="relative w-32 h-32 rounded-[28px] overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-200">
+                  <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
                 </div>
-                <div>
-                  <p className="text-white text-[13px] font-semibold">Charity&apos;s AI Assistant</p>
-                  <p className="text-white/80 text-[10px]">Online</p>
-                </div>
-              </div>
-            </div>
+              </button>
 
-            {/* Content Area */}
-            <div className="flex-1 p-4 flex flex-col overflow-y-auto max-h-[70vh]">
-              {/* Welcome Message */}
-              <div className="bg-[#fbeccb] text-amber-950 rounded-2xl px-4 py-3 mb-4">
-                <p className="text-[13px] leading-relaxed">Hi there! Thanks for stopping by. I&apos;m Charity&apos;s AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!</p>
-              </div>
-              
-              {/* Quick Action Buttons - Always Visible */}
-              <div className="flex flex-col gap-3">
-                <button
-                  onClick={() => {
-                    openCaseStudy('silas');
-                    setAiAssistantWindow({ isOpen: false, isMinimized: false });
-                  }}
-                  className="w-full px-4 py-4 bg-gradient-to-b from-[#f5a623] to-[#e8920c] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  Show Top Project
-                </button>
-                <button
-                  onClick={() => {
-                    setSafariWindow({ isOpen: true, isMinimized: false, project: null });
-                    setSafariUrl('resume');
-                    setSafariInputUrl('charitydupont.com/resume');
-                    setFocusedWindow('safari');
-                  }}
-                  className="w-full px-4 py-4 bg-gradient-to-b from-[#f0b429] to-[#d89611] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  Open Resume
-                </button>
-                <button
-                  onClick={() => {
-                    setNotesWindow({ isOpen: true, isMinimized: false });
-                    setDesktopSelectedNote('techstack');
-                    setFocusedWindow('notes');
-                  }}
-                  className="w-full px-4 py-4 bg-gradient-to-b from-[#e8920c] to-[#c2740a] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  See Tech Stack
-                </button>
-                <button
-                  onClick={() => {
-                    setMessagesWindow({ isOpen: true, isMinimized: false });
-                    setFocusedWindow('messages');
-                    setAiAssistantWindow({ isOpen: false, isMinimized: false });
-                  }}
-                  className="w-full px-4 py-4 bg-white border-2 border-[#e8920c] text-[#b3700a] rounded-2xl text-sm font-semibold hover:bg-[#fff3d6] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  Chat with Charity
-                </button>
-              </div>
+              <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Silas</h2>
+              <p className="text-white/80 text-sm mt-1 drop-shadow">The Integrated AI Companion</p>
+
+              {/* Arrow + Click here */}
+              <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
+              <button
+                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
+                className="mt-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold shadow-xl hover:bg-white/90 transition-colors flex items-center gap-2"
+              >
+                <MousePointerClick className="w-4 h-4" />
+                Click here
+              </button>
             </div>
           </div>
-        )}
-
-        {/* AI Assistant Orb - Shows when AI Assistant is closed */}
-        {!aiAssistantWindow.isOpen && (
-          <button
-            onClick={() => setAiAssistantWindow({ isOpen: true, isMinimized: false })}
-            className="absolute left-4 bottom-20 w-14 h-14 rounded-full bg-gradient-to-br from-[#f5a623] to-[#e8920c] shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center z-50 animate-in fade-in zoom-in duration-300"
-          >
-            <div className="w-10 h-10 rounded-full bg-white/25 border border-white/40 flex items-center justify-center">
-              <span className="text-white text-sm font-bold">AI</span>
-            </div>
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse" />
-          </button>
         )}
 
         {/* Notes Window */}
