@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, Pause } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -235,85 +235,19 @@ export function MacBookScreen() {
   const [mobileScreen, setMobileScreen] = useState<MobileScreenState>("lock")
   const [mobileCaseStudy, setMobileCaseStudy] = useState<string | null>(null)
 
-  // Welcome video (Final Cut Pro frame) shown after clicking Enter
-  const [showWelcomeVideo, setShowWelcomeVideo] = useState(false)
-  const [welcomeVideoPlaying, setWelcomeVideoPlaying] = useState(true)
-  const [welcomeVideoMuted, setWelcomeVideoMuted] = useState(false)
-  const [welcomeVideoProgress, setWelcomeVideoProgress] = useState(0)
-  const [welcomeVideoTime, setWelcomeVideoTime] = useState("00:00:00:00")
-  const welcomeVideoRef = useRef<HTMLVideoElement>(null)
-  const WELCOME_VIDEO_URL = "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/Untitled%20video.mp4"
-
+  // Entering the portfolio (Enter button) — goes straight to the desktop/home
   const handleWelcomeContinue = () => {
-    setShowWelcomeVideo(false)
     if (isMobile) {
       setMobileScreen("home")
     } else {
       setScreenState("loading")
       setTimeout(() => {
         setScreenState("desktop")
-        setAiAssistantWindow({ isOpen: true, isMinimized: false })
-        setFocusedWindow('aiAssistant')
+        setShowSilasSpotlight(true)
       }, 2500)
     }
   }
 
-  const toggleWelcomeVideoPlay = () => {
-    const v = welcomeVideoRef.current
-    if (!v) return
-    if (v.paused) {
-      v.play().catch(() => {})
-      setWelcomeVideoPlaying(true)
-    } else {
-      v.pause()
-      setWelcomeVideoPlaying(false)
-    }
-  }
-
-  const handleWelcomeTimeUpdate = () => {
-    const v = welcomeVideoRef.current
-    if (!v || !v.duration) return
-    setWelcomeVideoProgress((v.currentTime / v.duration) * 100)
-    const total = Math.floor(v.currentTime)
-    const hh = String(Math.floor(total / 3600)).padStart(2, "0")
-    const mm = String(Math.floor((total % 3600) / 60)).padStart(2, "0")
-    const ss = String(total % 60).padStart(2, "0")
-    const ff = String(Math.floor((v.currentTime % 1) * 24)).padStart(2, "0")
-    setWelcomeVideoTime(`${hh}:${mm}:${ss}:${ff}`)
-  }
-
-  // Keep captions/subtitles off for the welcome video. iOS Safari loads in-band
-  // text tracks late and can re-enable them from system accessibility settings,
-  // so a single disable pass isn't enough — we re-disable on track events and poll briefly.
-  useEffect(() => {
-    if (!showWelcomeVideo) return
-    const v = welcomeVideoRef.current
-    if (!v) return
-
-    const disableTracks = () => {
-      const tracks = v.textTracks
-      for (let i = 0; i < tracks.length; i++) {
-        tracks[i].mode = "disabled"
-      }
-    }
-
-    disableTracks()
-    v.textTracks.addEventListener?.("addtrack", disableTracks)
-    v.textTracks.addEventListener?.("change", disableTracks)
-    // Poll to catch tracks that attach after playback starts (iOS). On mobile,
-    // keep polling for the whole video so iOS Safari can't re-enable captions later.
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768
-    const interval = setInterval(disableTracks, 500)
-    const stop = isMobile ? null : setTimeout(() => clearInterval(interval), 6000)
-
-    return () => {
-      v.textTracks.removeEventListener?.("addtrack", disableTracks)
-      v.textTracks.removeEventListener?.("change", disableTracks)
-      clearInterval(interval)
-      if (stop) clearTimeout(stop)
-    }
-  }, [showWelcomeVideo])
-  
   // Netflix experience state
   const [netflixModal, setNetflixModal] = useState<{ type: 'project' | 'about' | 'gallery' | null, data?: string | number }>({ type: null })
   const [showConversationList, setShowConversationList] = useState(true)
@@ -329,6 +263,7 @@ export function MacBookScreen() {
   const [openCaseStudies, setOpenCaseStudies] = useState<{ [key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } } }>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
+  const [showSilasSpotlight, setShowSilasSpotlight] = useState(false)
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -338,7 +273,7 @@ export function MacBookScreen() {
   const [photoViewerOpen, setPhotoViewerOpen] = useState(false)
   const [photosWindow, setPhotosWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null)
-  const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: true, isMinimized: false })
+  const [caseStudiesFolder, setCaseStudiesFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
   
   // Brain Games state
   const [braingamesWindow, setBraingamesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
@@ -715,9 +650,8 @@ const handleLogin = (e: React.FormEvent) => {
   setScreenState("loading")
   setTimeout(() => {
   setScreenState("desktop")
-  // Open AI Assistant window immediately when desktop loads
-  setAiAssistantWindow({ isOpen: true, isMinimized: false })
-  setFocusedWindow('aiAssistant')
+  // Spotlight the Silas case study as the primary call to action
+  setShowSilasSpotlight(true)
   }, 2500)
   }
 
@@ -1000,173 +934,6 @@ const messageText = mobileInput.trim()
     }, 400)
   }
 
-  // ==================== WELCOME VIDEO (FINAL CUT PRO FRAME) ====================
-  if (showWelcomeVideo) {
-    return (
-      <div className="h-screen w-full bg-black flex flex-col overflow-hidden select-none p-3 sm:p-0">
-       <div className="flex-1 min-h-0 flex flex-col bg-[#161617] overflow-hidden rounded-2xl sm:rounded-none ring-1 ring-white/10 sm:ring-0 shadow-2xl sm:shadow-none">
-        {/* Menu Bar */}
-        <div className="h-11 sm:h-9 shrink-0 bg-gradient-to-b from-[#3a3a3c] to-[#2c2c2e] border-b border-black/50 flex items-center px-3 gap-2 sm:gap-3">
-          <div className="flex gap-2 shrink-0">
-            <button onClick={handleWelcomeContinue} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors" aria-label="Close and enter portfolio" />
-            <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-            <span className="w-3 h-3 rounded-full bg-[#28c840]" />
-          </div>
-          <span className="text-white/90 text-[13px] font-semibold ml-1 truncate">Final Cut Pro</span>
-          <div className="hidden md:flex items-center gap-4 text-white/60 text-[12px] ml-2">
-            <span>File</span><span>Edit</span><span>Trim</span><span>Mark</span><span>Clip</span><span>Modify</span><span>View</span><span>Window</span><span>Help</span>
-          </div>
-          <div className="ml-auto flex items-center gap-2 shrink-0">
-            <button
-              onClick={handleWelcomeContinue}
-              className="px-3 py-1.5 rounded-md bg-white/10 text-white/90 text-[12px] font-semibold hover:bg-white/20 transition-all"
-            >
-              Skip
-            </button>
-            <button
-              onClick={handleWelcomeContinue}
-              className="px-3 py-1.5 rounded-md bg-gradient-to-b from-[#0a84ff] to-[#0066cc] text-white text-[12px] font-semibold hover:brightness-110 transition-all flex items-center gap-1 whitespace-nowrap"
-            >
-              Enter
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Main Workspace */}
-        <div className="flex-1 flex min-h-0">
-          {/* Left Browser Panel */}
-          <div className="hidden lg:flex w-56 shrink-0 bg-[#1c1c1e] border-r border-black/50 flex-col">
-            <div className="h-8 flex items-center px-3 border-b border-black/40">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Libraries</span>
-            </div>
-            <div className="p-2 space-y-1 text-[12px]">
-              <div className="flex items-center gap-2 px-2 py-1.5 rounded bg-[#0a84ff]/20 text-white">
-                <div className="w-3.5 h-3.5 rounded-sm bg-[#0a84ff]" />
-                Charity&apos;s Portfolio
-              </div>
-              <div className="flex items-center gap-2 px-2 py-1.5 rounded text-white/60 pl-5">
-                <div className="w-3 h-3 rounded-sm bg-amber-500/70" />
-                Welcome Event
-              </div>
-            </div>
-            <div className="h-8 flex items-center px-3 border-y border-black/40 mt-1">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Browser</span>
-            </div>
-            <div className="p-2 grid grid-cols-2 gap-2">
-              {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="aspect-video rounded bg-[#2c2c2e] border border-white/10 overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-600/30 to-pink-600/20" />
-                  {i === 0 && <div className="absolute bottom-0.5 left-0.5 right-0.5 h-1 bg-[#0a84ff] rounded-full" />}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Center Viewer */}
-          <div className="flex-1 flex flex-col min-w-0 bg-[#161617]">
-            <div className="h-8 flex items-center justify-center border-b border-black/40">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Viewer</span>
-            </div>
-            <div className="flex-1 flex items-center justify-center p-2 md:p-3 min-h-0">
-              <div className="relative w-full h-full max-w-5xl bg-black rounded-md overflow-hidden shadow-2xl ring-1 ring-white/10">
-                <video
-                  ref={welcomeVideoRef}
-                  src={WELCOME_VIDEO_URL}
-                  autoPlay
-                  playsInline
-                  muted={welcomeVideoMuted}
-                  onTimeUpdate={handleWelcomeTimeUpdate}
-                  onPlay={() => setWelcomeVideoPlaying(true)}
-                  onPause={() => setWelcomeVideoPlaying(false)}
-                  onEnded={handleWelcomeContinue}
-                  onLoadedMetadata={(e) => {
-                    const tracks = e.currentTarget.textTracks
-                    for (let i = 0; i < tracks.length; i++) {
-                      tracks[i].mode = "disabled"
-                    }
-                  }}
-                  className="w-full h-full object-cover bg-black scale-110"
-                />
-              </div>
-            </div>
-            {/* Transport Controls */}
-            <div className="h-12 shrink-0 bg-[#1c1c1e] border-t border-black/50 flex items-center px-4 gap-3">
-              <span className="text-white/80 text-[12px] font-mono tabular-nums hidden sm:block">{welcomeVideoTime}</span>
-              <div className="flex items-center gap-2 mx-auto">
-                <button onClick={toggleWelcomeVideoPlay} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors" aria-label={welcomeVideoPlaying ? "Pause" : "Play"}>
-                  {welcomeVideoPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white ml-0.5" />}
-                </button>
-              </div>
-              <button
-                onClick={() => {
-                  const v = welcomeVideoRef.current
-                  const next = !welcomeVideoMuted
-                  setWelcomeVideoMuted(next)
-                  if (v) v.muted = next
-                }}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-                aria-label={welcomeVideoMuted ? "Unmute" : "Mute"}
-              >
-                {welcomeVideoMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Right Inspector */}
-          <div className="hidden lg:flex w-60 shrink-0 bg-[#1c1c1e] border-l border-black/50 flex-col">
-            <div className="h-8 flex items-center px-3 border-b border-black/40">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Inspector</span>
-            </div>
-            <div className="p-3 space-y-3 text-[12px] text-white/70">
-              <div>
-                <p className="text-white font-semibold mb-0.5">Welcome.mp4</p>
-                <p className="text-white/40 text-[11px]">Compound Clip</p>
-              </div>
-              <div className="space-y-2 pt-2 border-t border-white/10">
-                <div className="flex justify-between"><span>Format</span><span className="text-white/90">1080p HD</span></div>
-                <div className="flex justify-between"><span>Frame Rate</span><span className="text-white/90">24 fps</span></div>
-                <div className="flex justify-between"><span>Codec</span><span className="text-white/90">H.264</span></div>
-                <div className="flex justify-between"><span>Author</span><span className="text-white/90">Charity DuPont</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Timeline */}
-        <div className="h-28 md:h-32 shrink-0 bg-[#1c1c1e] border-t border-black/50 flex flex-col">
-          <div className="h-6 flex items-center px-3 border-b border-black/40 gap-3">
-            <span className="text-white/60 text-[11px] font-mono tabular-nums">{welcomeVideoTime}</span>
-            <span className="text-white/40 text-[11px]">Timeline · Welcome</span>
-          </div>
-          {/* Ruler */}
-          <div className="h-4 relative border-b border-black/30 bg-[#161617]">
-            {[...Array(13)].map((_, i) => (
-              <div key={i} className="absolute top-0 bottom-0 border-l border-white/10" style={{ left: `${(i / 12) * 100}%` }} />
-            ))}
-            <div className="absolute top-0 bottom-[-9999px] w-px bg-[#0a84ff] z-10" style={{ left: `${welcomeVideoProgress}%` }}>
-              <div className="w-2.5 h-2.5 -ml-[5px] rotate-45 bg-[#0a84ff]" />
-            </div>
-          </div>
-          {/* Tracks */}
-          <div className="flex-1 relative px-0 py-2">
-            {/* Video track clip */}
-            <div className="mx-0 h-12 relative rounded-md overflow-hidden border border-[#0a84ff]/50">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600/40 via-pink-600/30 to-amber-600/40" />
-              <div className="absolute inset-0 flex items-center px-3 gap-2">
-                <Play className="w-3.5 h-3.5 text-white/80 fill-white/80" />
-                <span className="text-white/90 text-[11px] font-medium truncate">Welcome.mp4</span>
-              </div>
-              {/* progress overlay */}
-              <div className="absolute top-0 bottom-0 bg-black/30" style={{ left: `${welcomeVideoProgress}%`, right: 0 }} />
-            </div>
-          </div>
-        </div>
-       </div>
-      </div>
-    )
-  }
-
   // ==================== MOBILE IPHONE EXPERIENCE ====================
   // When the DupontFlix experience is active, fall through to the shared
   // (responsive) Netflix screens below instead of the iPhone home screen.
@@ -1241,8 +1008,8 @@ const messageText = mobileInput.trim()
             
             {/* Enter Button */}
             <button
-              onClick={() => { setWelcomeVideoPlaying(true); setShowWelcomeVideo(true); }}
-              onTouchEnd={(e) => { e.preventDefault(); setWelcomeVideoPlaying(true); setShowWelcomeVideo(true); }}
+              onClick={handleWelcomeContinue}
+              onTouchEnd={(e) => { e.preventDefault(); handleWelcomeContinue(); }}
               className="mt-6 px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
             >
               Enter
@@ -1391,12 +1158,33 @@ const messageText = mobileInput.trim()
               </div>
             </div>
 
-            {/* Case Studies Section */}
+            {/* Featured Case Study - Silas */}
             <div className="mx-4 mt-6">
               <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
                 <Folder className="w-5 h-5" />
-                Case Studies
+                Featured Case Study
               </h2>
+              <button
+                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
+                className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
+              >
+                <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-gray-900">Silas</h3>
+                  <p className="text-gray-500 text-sm">The Integrated AI Companion</p>
+                  <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </button>
+            </div>
+
+            {/* Bootcamp Case Studies Section */}
+            <div className="mx-4 mt-6">
+              <h2 className="text-white text-lg font-semibold mb-1 flex items-center gap-2">
+                <Folder className="w-5 h-5" />
+                Bootcamp Case Studies
+              </h2>
+              <p className="text-white/60 text-xs mb-3">Independent projects from my Columbia University UX/UI Bootcamp.</p>
               <div className="space-y-3">
                 {/* Teammate */}
                 <button
@@ -1421,20 +1209,6 @@ const messageText = mobileInput.trim()
                   <div className="flex-1 text-left">
                     <h3 className="font-bold text-gray-900">Meetly</h3>
                     <p className="text-gray-500 text-sm">Social Coordination App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
-
-                {/* Silas */}
-                <button
-                  onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Silas</h3>
-                    <p className="text-gray-500 text-sm">AI Companion</p>
                     <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
                   </div>
                   <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -3434,7 +3208,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
             <h1 className="text-white text-2xl font-medium mt-2 mb-4">Charity{"'"}s Portfolio</h1>
             <button 
-              onClick={() => { setWelcomeVideoPlaying(true); setShowWelcomeVideo(true); }}
+              onClick={handleWelcomeContinue}
               className="w-48 h-10 bg-white/20 backdrop-blur-xl rounded-full text-white text-sm font-medium border border-white/30 hover:bg-white/30 hover:border-white/50 transition-colors"
             >
               Enter
@@ -4793,9 +4567,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 About
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-black/10" />
-              <DropdownMenuItem onClick={() => setCaseStudiesFolder({ isOpen: true, isMinimized: false })} className="cursor-pointer focus:bg-blue-500 focus:text-white">
+              <DropdownMenuItem onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 <Folder className="w-4 h-4 mr-2 opacity-70" />
-                Case Studies
+                Bootcamp Case Studies
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -5034,7 +4808,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               </div>
             </div>
           </div>
-          
+
+          {/* Bootcamp Case Studies desktop folder */}
+          <button
+            onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
+            className="flex flex-col items-center gap-1.5 w-28 group"
+          >
+            <div className="w-20 h-16 group-hover:scale-110 transition-transform">
+              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt="Bootcamp Case Studies folder" className="w-full h-auto drop-shadow-lg" />
+            </div>
+            <span className="text-[12px] text-white font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Bootcamp Case Studies</span>
+          </button>
+
           </div>
 
         {/* macOS Photos App Window */}
@@ -5307,7 +5092,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
-                <span className="flex-1 text-center text-sm font-medium text-black/80">Case Studies</span>
+                <span className="flex-1 text-center text-sm font-medium text-black/80">Bootcamp Case Studies</span>
                 <div className="flex items-center gap-2">
                   <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -5323,7 +5108,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="space-y-0.5">
                     <div className="flex items-center gap-2 px-2 py-1.5 rounded-md bg-blue-500/15 text-blue-600">
                       <Folder className="w-4 h-4" />
-                      <span className="text-[13px] font-medium">Case Studies</span>
+                      <span className="text-[13px] font-medium">Bootcamp Case Studies</span>
                     </div>
                     <button
                       onClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
@@ -5354,11 +5139,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
                 {/* Main content - Case Study folders */}
                 <div className="flex-1 p-6 bg-white overflow-y-auto">
+                  <p className="text-[12px] text-gray-500 mb-4 leading-relaxed">Independent projects from my Columbia University UX/UI Bootcamp.</p>
                   <div className="grid grid-cols-3 gap-6">
-                    {Object.entries(caseStudies).map(([key, project]) => (
+                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas').map(([key, project]) => (
                       <button
                         key={key}
-                        onDoubleClick={() => openCaseStudy(key)}
+                        onClick={(e) => { e.stopPropagation(); openCaseStudy(key); }}
                         className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
                       >
                         <div className="w-20 h-16 group-hover:scale-110 transition-transform">
@@ -5551,98 +5337,37 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
         {/* AI Assistant Window - Front and Center */}
-        {aiAssistantWindow.isOpen && !aiAssistantWindow.isMinimized && (
-          <div
-            className={`absolute w-[400px] bg-[#fffaf0] backdrop-blur-xl rounded-xl shadow-2xl border border-amber-900/15 animate-in zoom-in-95 fade-in duration-300 flex flex-col ${focusedWindow === 'aiAssistant' ? 'z-40' : 'z-20'}`}
-            style={{ left: aiAssistantPosition.x, top: aiAssistantPosition.y }}
-            onClick={() => focusWindow('aiAssistant')}
-          >
-            {/* Header - Draggable */}
-            <div
-              onMouseDown={(e) => { focusWindow('aiAssistant'); handleMouseDown('aiAssistant', e); }}
-              className="h-14 bg-gradient-to-r from-[#f5a623] to-[#e8920c] flex items-center px-4 gap-3 rounded-t-xl cursor-grab active:cursor-grabbing"
-            >
-              <div className="flex gap-2">
-                <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: false })} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors shadow-sm" />
-                <button onClick={() => setAiAssistantWindow({ isOpen: false, isMinimized: true })} className="w-3 h-3 rounded-full bg-[#febc2e] hover:bg-[#f5a623] transition-colors shadow-sm" />
-                <button className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#1fb32e] transition-colors shadow-sm" />
-              </div>
-              <div className="flex items-center gap-2 flex-1">
-                <div className="w-8 h-8 rounded-full bg-white/30 border border-white/40 flex items-center justify-center">
-                  <span className="text-white text-sm font-semibold">AI</span>
+        {/* Silas Spotlight - primary call to action on the desktop */}
+        {showSilasSpotlight && (
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none">
+            <div className="flex flex-col items-center animate-in fade-in zoom-in duration-500 pointer-events-auto">
+              <button
+                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
+                className="relative group"
+                aria-label="Open the Silas case study"
+              >
+                {/* Pulsing highlight rings */}
+                <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
+                <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
+                <div className="relative w-32 h-32 rounded-[28px] overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-200">
+                  <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
                 </div>
-                <div>
-                  <p className="text-white text-[13px] font-semibold">Charity&apos;s AI Assistant</p>
-                  <p className="text-white/80 text-[10px]">Online</p>
-                </div>
-              </div>
-            </div>
+              </button>
 
-            {/* Content Area */}
-            <div className="flex-1 p-4 flex flex-col overflow-y-auto max-h-[70vh]">
-              {/* Welcome Message */}
-              <div className="bg-[#fbeccb] text-amber-950 rounded-2xl px-4 py-3 mb-4">
-                <p className="text-[13px] leading-relaxed">Hi there! Thanks for stopping by. I&apos;m Charity&apos;s AI assistant. To make this quick for you, click any of the options below to instantly review her qualifications!</p>
-              </div>
-              
-              {/* Quick Action Buttons - Always Visible */}
-              <div className="flex flex-col gap-3">
-                <button
-                  onClick={() => {
-                    openCaseStudy('silas');
-                    setAiAssistantWindow({ isOpen: false, isMinimized: false });
-                  }}
-                  className="w-full px-4 py-4 bg-gradient-to-b from-[#f5a623] to-[#e8920c] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  Show Top Project
-                </button>
-                <button
-                  onClick={() => {
-                    setSafariWindow({ isOpen: true, isMinimized: false, project: null });
-                    setSafariUrl('resume');
-                    setSafariInputUrl('charitydupont.com/resume');
-                    setFocusedWindow('safari');
-                  }}
-                  className="w-full px-4 py-4 bg-gradient-to-b from-[#f0b429] to-[#d89611] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  Open Resume
-                </button>
-                <button
-                  onClick={() => {
-                    setNotesWindow({ isOpen: true, isMinimized: false });
-                    setDesktopSelectedNote('techstack');
-                    setFocusedWindow('notes');
-                  }}
-                  className="w-full px-4 py-4 bg-gradient-to-b from-[#e8920c] to-[#c2740a] text-white rounded-2xl text-sm font-semibold hover:brightness-110 transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  See Tech Stack
-                </button>
-                <button
-                  onClick={() => {
-                    setMessagesWindow({ isOpen: true, isMinimized: false });
-                    setFocusedWindow('messages');
-                    setAiAssistantWindow({ isOpen: false, isMinimized: false });
-                  }}
-                  className="w-full px-4 py-4 bg-white border-2 border-[#e8920c] text-[#b3700a] rounded-2xl text-sm font-semibold hover:bg-[#fff3d6] transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
-                >
-                  Chat with Charity
-                </button>
-              </div>
+              <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Silas</h2>
+              <p className="text-white/80 text-sm mt-1 drop-shadow">The Integrated AI Companion</p>
+
+              {/* Arrow + Click here */}
+              <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
+              <button
+                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
+                className="mt-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold shadow-xl hover:bg-white/90 transition-colors flex items-center gap-2"
+              >
+                <MousePointerClick className="w-4 h-4" />
+                Click here
+              </button>
             </div>
           </div>
-        )}
-
-        {/* AI Assistant Orb - Shows when AI Assistant is closed */}
-        {!aiAssistantWindow.isOpen && (
-          <button
-            onClick={() => setAiAssistantWindow({ isOpen: true, isMinimized: false })}
-            className="absolute left-4 bottom-20 w-14 h-14 rounded-full bg-gradient-to-br from-[#f5a623] to-[#e8920c] shadow-lg hover:shadow-xl transition-all hover:scale-110 flex items-center justify-center z-50 animate-in fade-in zoom-in duration-300"
-          >
-            <div className="w-10 h-10 rounded-full bg-white/25 border border-white/40 flex items-center justify-center">
-              <span className="text-white text-sm font-bold">AI</span>
-            </div>
-            <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse" />
-          </button>
         )}
 
         {/* Notes Window */}
@@ -6375,26 +6100,6 @@ label="Brain Games"
   />
   
   <DockIcon
-  icon={
-  <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
-  <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
-  </div>
-          }
-          label="Teammate"
-          onClick={() => openCaseStudy('teammate')}
-        />
-
-        <DockIcon
-          icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
-              <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
-            </div>
-          }
-          label="Meetly"
-          onClick={() => openCaseStudy('meetly')}
-        />
-
-        <DockIcon
           icon={
             <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
               <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
