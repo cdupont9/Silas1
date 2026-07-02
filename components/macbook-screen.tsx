@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, Pause } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -235,17 +235,8 @@ export function MacBookScreen() {
   const [mobileScreen, setMobileScreen] = useState<MobileScreenState>("lock")
   const [mobileCaseStudy, setMobileCaseStudy] = useState<string | null>(null)
 
-  // Welcome video (Final Cut Pro frame) shown after clicking Enter
-  const [showWelcomeVideo, setShowWelcomeVideo] = useState(false)
-  const [welcomeVideoPlaying, setWelcomeVideoPlaying] = useState(true)
-  const [welcomeVideoMuted, setWelcomeVideoMuted] = useState(false)
-  const [welcomeVideoProgress, setWelcomeVideoProgress] = useState(0)
-  const [welcomeVideoTime, setWelcomeVideoTime] = useState("00:00:00:00")
-  const welcomeVideoRef = useRef<HTMLVideoElement>(null)
-  const WELCOME_VIDEO_URL = "https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/Untitled%20video.mp4"
-
+  // Entering the portfolio (Enter button) — goes straight to the desktop/home
   const handleWelcomeContinue = () => {
-    setShowWelcomeVideo(false)
     if (isMobile) {
       setMobileScreen("home")
     } else {
@@ -258,62 +249,6 @@ export function MacBookScreen() {
     }
   }
 
-  const toggleWelcomeVideoPlay = () => {
-    const v = welcomeVideoRef.current
-    if (!v) return
-    if (v.paused) {
-      v.play().catch(() => {})
-      setWelcomeVideoPlaying(true)
-    } else {
-      v.pause()
-      setWelcomeVideoPlaying(false)
-    }
-  }
-
-  const handleWelcomeTimeUpdate = () => {
-    const v = welcomeVideoRef.current
-    if (!v || !v.duration) return
-    setWelcomeVideoProgress((v.currentTime / v.duration) * 100)
-    const total = Math.floor(v.currentTime)
-    const hh = String(Math.floor(total / 3600)).padStart(2, "0")
-    const mm = String(Math.floor((total % 3600) / 60)).padStart(2, "0")
-    const ss = String(total % 60).padStart(2, "0")
-    const ff = String(Math.floor((v.currentTime % 1) * 24)).padStart(2, "0")
-    setWelcomeVideoTime(`${hh}:${mm}:${ss}:${ff}`)
-  }
-
-  // Keep captions/subtitles off for the welcome video. iOS Safari loads in-band
-  // text tracks late and can re-enable them from system accessibility settings,
-  // so a single disable pass isn't enough — we re-disable on track events and poll briefly.
-  useEffect(() => {
-    if (!showWelcomeVideo) return
-    const v = welcomeVideoRef.current
-    if (!v) return
-
-    const disableTracks = () => {
-      const tracks = v.textTracks
-      for (let i = 0; i < tracks.length; i++) {
-        tracks[i].mode = "disabled"
-      }
-    }
-
-    disableTracks()
-    v.textTracks.addEventListener?.("addtrack", disableTracks)
-    v.textTracks.addEventListener?.("change", disableTracks)
-    // Poll to catch tracks that attach after playback starts (iOS). On mobile,
-    // keep polling for the whole video so iOS Safari can't re-enable captions later.
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768
-    const interval = setInterval(disableTracks, 500)
-    const stop = isMobile ? null : setTimeout(() => clearInterval(interval), 6000)
-
-    return () => {
-      v.textTracks.removeEventListener?.("addtrack", disableTracks)
-      v.textTracks.removeEventListener?.("change", disableTracks)
-      clearInterval(interval)
-      if (stop) clearTimeout(stop)
-    }
-  }, [showWelcomeVideo])
-  
   // Netflix experience state
   const [netflixModal, setNetflixModal] = useState<{ type: 'project' | 'about' | 'gallery' | null, data?: string | number }>({ type: null })
   const [showConversationList, setShowConversationList] = useState(true)
@@ -1000,173 +935,6 @@ const messageText = mobileInput.trim()
     }, 400)
   }
 
-  // ==================== WELCOME VIDEO (FINAL CUT PRO FRAME) ====================
-  if (showWelcomeVideo) {
-    return (
-      <div className="h-screen w-full bg-black flex flex-col overflow-hidden select-none p-3 sm:p-0">
-       <div className="flex-1 min-h-0 flex flex-col bg-[#161617] overflow-hidden rounded-2xl sm:rounded-none ring-1 ring-white/10 sm:ring-0 shadow-2xl sm:shadow-none">
-        {/* Menu Bar */}
-        <div className="h-11 sm:h-9 shrink-0 bg-gradient-to-b from-[#3a3a3c] to-[#2c2c2e] border-b border-black/50 flex items-center px-3 gap-2 sm:gap-3">
-          <div className="flex gap-2 shrink-0">
-            <button onClick={handleWelcomeContinue} className="w-3 h-3 rounded-full bg-[#ff5f57] hover:bg-[#ff4136] transition-colors" aria-label="Close and enter portfolio" />
-            <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-            <span className="w-3 h-3 rounded-full bg-[#28c840]" />
-          </div>
-          <span className="text-white/90 text-[13px] font-semibold ml-1 truncate">Final Cut Pro</span>
-          <div className="hidden md:flex items-center gap-4 text-white/60 text-[12px] ml-2">
-            <span>File</span><span>Edit</span><span>Trim</span><span>Mark</span><span>Clip</span><span>Modify</span><span>View</span><span>Window</span><span>Help</span>
-          </div>
-          <div className="ml-auto flex items-center gap-2 shrink-0">
-            <button
-              onClick={handleWelcomeContinue}
-              className="px-3 py-1.5 rounded-md bg-white/10 text-white/90 text-[12px] font-semibold hover:bg-white/20 transition-all"
-            >
-              Skip
-            </button>
-            <button
-              onClick={handleWelcomeContinue}
-              className="px-3 py-1.5 rounded-md bg-gradient-to-b from-[#0a84ff] to-[#0066cc] text-white text-[12px] font-semibold hover:brightness-110 transition-all flex items-center gap-1 whitespace-nowrap"
-            >
-              Enter
-              <ChevronRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Main Workspace */}
-        <div className="flex-1 flex min-h-0">
-          {/* Left Browser Panel */}
-          <div className="hidden lg:flex w-56 shrink-0 bg-[#1c1c1e] border-r border-black/50 flex-col">
-            <div className="h-8 flex items-center px-3 border-b border-black/40">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Libraries</span>
-            </div>
-            <div className="p-2 space-y-1 text-[12px]">
-              <div className="flex items-center gap-2 px-2 py-1.5 rounded bg-[#0a84ff]/20 text-white">
-                <div className="w-3.5 h-3.5 rounded-sm bg-[#0a84ff]" />
-                Charity&apos;s Portfolio
-              </div>
-              <div className="flex items-center gap-2 px-2 py-1.5 rounded text-white/60 pl-5">
-                <div className="w-3 h-3 rounded-sm bg-amber-500/70" />
-                Welcome Event
-              </div>
-            </div>
-            <div className="h-8 flex items-center px-3 border-y border-black/40 mt-1">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Browser</span>
-            </div>
-            <div className="p-2 grid grid-cols-2 gap-2">
-              {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="aspect-video rounded bg-[#2c2c2e] border border-white/10 overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-600/30 to-pink-600/20" />
-                  {i === 0 && <div className="absolute bottom-0.5 left-0.5 right-0.5 h-1 bg-[#0a84ff] rounded-full" />}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Center Viewer */}
-          <div className="flex-1 flex flex-col min-w-0 bg-[#161617]">
-            <div className="h-8 flex items-center justify-center border-b border-black/40">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Viewer</span>
-            </div>
-            <div className="flex-1 flex items-center justify-center p-2 md:p-3 min-h-0">
-              <div className="relative w-full h-full max-w-5xl bg-black rounded-md overflow-hidden shadow-2xl ring-1 ring-white/10">
-                <video
-                  ref={welcomeVideoRef}
-                  src={WELCOME_VIDEO_URL}
-                  autoPlay
-                  playsInline
-                  muted={welcomeVideoMuted}
-                  onTimeUpdate={handleWelcomeTimeUpdate}
-                  onPlay={() => setWelcomeVideoPlaying(true)}
-                  onPause={() => setWelcomeVideoPlaying(false)}
-                  onEnded={handleWelcomeContinue}
-                  onLoadedMetadata={(e) => {
-                    const tracks = e.currentTarget.textTracks
-                    for (let i = 0; i < tracks.length; i++) {
-                      tracks[i].mode = "disabled"
-                    }
-                  }}
-                  className="w-full h-full object-cover bg-black scale-110"
-                />
-              </div>
-            </div>
-            {/* Transport Controls */}
-            <div className="h-12 shrink-0 bg-[#1c1c1e] border-t border-black/50 flex items-center px-4 gap-3">
-              <span className="text-white/80 text-[12px] font-mono tabular-nums hidden sm:block">{welcomeVideoTime}</span>
-              <div className="flex items-center gap-2 mx-auto">
-                <button onClick={toggleWelcomeVideoPlay} className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors" aria-label={welcomeVideoPlaying ? "Pause" : "Play"}>
-                  {welcomeVideoPlaying ? <Pause className="w-4 h-4 fill-white" /> : <Play className="w-4 h-4 fill-white ml-0.5" />}
-                </button>
-              </div>
-              <button
-                onClick={() => {
-                  const v = welcomeVideoRef.current
-                  const next = !welcomeVideoMuted
-                  setWelcomeVideoMuted(next)
-                  if (v) v.muted = next
-                }}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-                aria-label={welcomeVideoMuted ? "Unmute" : "Mute"}
-              >
-                {welcomeVideoMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Right Inspector */}
-          <div className="hidden lg:flex w-60 shrink-0 bg-[#1c1c1e] border-l border-black/50 flex-col">
-            <div className="h-8 flex items-center px-3 border-b border-black/40">
-              <span className="text-white/70 text-[11px] font-semibold uppercase tracking-wide">Inspector</span>
-            </div>
-            <div className="p-3 space-y-3 text-[12px] text-white/70">
-              <div>
-                <p className="text-white font-semibold mb-0.5">Welcome.mp4</p>
-                <p className="text-white/40 text-[11px]">Compound Clip</p>
-              </div>
-              <div className="space-y-2 pt-2 border-t border-white/10">
-                <div className="flex justify-between"><span>Format</span><span className="text-white/90">1080p HD</span></div>
-                <div className="flex justify-between"><span>Frame Rate</span><span className="text-white/90">24 fps</span></div>
-                <div className="flex justify-between"><span>Codec</span><span className="text-white/90">H.264</span></div>
-                <div className="flex justify-between"><span>Author</span><span className="text-white/90">Charity DuPont</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Timeline */}
-        <div className="h-28 md:h-32 shrink-0 bg-[#1c1c1e] border-t border-black/50 flex flex-col">
-          <div className="h-6 flex items-center px-3 border-b border-black/40 gap-3">
-            <span className="text-white/60 text-[11px] font-mono tabular-nums">{welcomeVideoTime}</span>
-            <span className="text-white/40 text-[11px]">Timeline · Welcome</span>
-          </div>
-          {/* Ruler */}
-          <div className="h-4 relative border-b border-black/30 bg-[#161617]">
-            {[...Array(13)].map((_, i) => (
-              <div key={i} className="absolute top-0 bottom-0 border-l border-white/10" style={{ left: `${(i / 12) * 100}%` }} />
-            ))}
-            <div className="absolute top-0 bottom-[-9999px] w-px bg-[#0a84ff] z-10" style={{ left: `${welcomeVideoProgress}%` }}>
-              <div className="w-2.5 h-2.5 -ml-[5px] rotate-45 bg-[#0a84ff]" />
-            </div>
-          </div>
-          {/* Tracks */}
-          <div className="flex-1 relative px-0 py-2">
-            {/* Video track clip */}
-            <div className="mx-0 h-12 relative rounded-md overflow-hidden border border-[#0a84ff]/50">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600/40 via-pink-600/30 to-amber-600/40" />
-              <div className="absolute inset-0 flex items-center px-3 gap-2">
-                <Play className="w-3.5 h-3.5 text-white/80 fill-white/80" />
-                <span className="text-white/90 text-[11px] font-medium truncate">Welcome.mp4</span>
-              </div>
-              {/* progress overlay */}
-              <div className="absolute top-0 bottom-0 bg-black/30" style={{ left: `${welcomeVideoProgress}%`, right: 0 }} />
-            </div>
-          </div>
-        </div>
-       </div>
-      </div>
-    )
-  }
-
   // ==================== MOBILE IPHONE EXPERIENCE ====================
   // When the DupontFlix experience is active, fall through to the shared
   // (responsive) Netflix screens below instead of the iPhone home screen.
@@ -1241,8 +1009,8 @@ const messageText = mobileInput.trim()
             
             {/* Enter Button */}
             <button
-              onClick={() => { setWelcomeVideoPlaying(true); setShowWelcomeVideo(true); }}
-              onTouchEnd={(e) => { e.preventDefault(); setWelcomeVideoPlaying(true); setShowWelcomeVideo(true); }}
+              onClick={handleWelcomeContinue}
+              onTouchEnd={(e) => { e.preventDefault(); handleWelcomeContinue(); }}
               className="mt-6 px-14 py-3.5 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 text-white font-semibold text-lg active:bg-white/30 transition-colors cursor-pointer touch-manipulation"
             >
               Enter
@@ -3434,7 +3202,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
             <h1 className="text-white text-2xl font-medium mt-2 mb-4">Charity{"'"}s Portfolio</h1>
             <button 
-              onClick={() => { setWelcomeVideoPlaying(true); setShowWelcomeVideo(true); }}
+              onClick={handleWelcomeContinue}
               className="w-48 h-10 bg-white/20 backdrop-blur-xl rounded-full text-white text-sm font-medium border border-white/30 hover:bg-white/30 hover:border-white/50 transition-colors"
             >
               Enter
