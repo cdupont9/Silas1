@@ -4567,7 +4567,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 About
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-black/10" />
-              <DropdownMenuItem onClick={() => setCaseStudiesFolder({ isOpen: true, isMinimized: false })} className="cursor-pointer focus:bg-blue-500 focus:text-white">
+              <DropdownMenuItem onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 <Folder className="w-4 h-4 mr-2 opacity-70" />
                 Bootcamp Case Studies
               </DropdownMenuItem>
@@ -4811,7 +4811,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
           {/* Bootcamp Case Studies desktop folder */}
           <button
-            onClick={() => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
+            onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
             className="flex flex-col items-center gap-1.5 w-28 group"
           >
             <div className="w-20 h-16 group-hover:scale-110 transition-transform">
@@ -5144,7 +5144,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     {Object.entries(caseStudies).filter(([key]) => key !== 'silas').map(([key, project]) => (
                       <button
                         key={key}
-                        onDoubleClick={() => openCaseStudy(key)}
+                        onClick={(e) => { e.stopPropagation(); openCaseStudy(key); }}
                         className="flex flex-col items-center gap-3 p-4 rounded-lg hover:bg-blue-500/10 transition-colors group"
                       >
                         <div className="w-20 h-16 group-hover:scale-110 transition-transform">
@@ -5339,14 +5339,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* AI Assistant Window - Front and Center */}
         {/* Silas Spotlight - primary call to action on the desktop */}
         {showSilasSpotlight && (
-          <div
-            className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/10"
-            onClick={() => setShowSilasSpotlight(false)}
-          >
-            <div
-              className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
-              onClick={(e) => e.stopPropagation()}
-            >
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none">
+            <div className="flex flex-col items-center animate-in fade-in zoom-in duration-500 pointer-events-auto">
               <button
                 onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
                 className="relative group"
@@ -6106,26 +6100,6 @@ label="Brain Games"
   />
   
   <DockIcon
-  icon={
-  <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
-  <img src={TEAMMATE_ICON} alt="Teammate" className="w-full h-full object-cover" />
-  </div>
-          }
-          label="Teammate"
-          onClick={() => openCaseStudy('teammate')}
-        />
-
-        <DockIcon
-          icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
-              <img src={MEETLY_ICON} alt="Meetly" className="w-full h-full object-cover" />
-            </div>
-          }
-          label="Meetly"
-          onClick={() => openCaseStudy('meetly')}
-        />
-
-        <DockIcon
           icon={
             <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
               <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
