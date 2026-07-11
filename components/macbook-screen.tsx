@@ -171,6 +171,10 @@ const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/222ae9bd-abc9-40f6-8
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
 const MEETLY_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png"
 const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
+const LUNA_ICON = "/luna-orb-icon.png"
+
+// Password required to unlock the Luna 2.0 case study
+const LUNA_PASSWORD = "Luna2.0AI"
 
 type ScreenState = "login" | "loading" | "desktop" | "netflix" | "netflixLoading" | "netflixComingSoon"
 
@@ -223,6 +227,23 @@ const caseStudies = {
     icon: SILAS_ICON,
     screenshot: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png",
     isFullCaseStudy: true
+  },
+  luna: {
+    title: "Luna 2.0",
+    subtitle: "The Meet Companion",
+    hero: "An AI presence that participates in the room.",
+    overview: "Luna 2.0 is a vision for an intuitive, interactive AI presence in live meetings. Rather than a standard scripted agent, Luna operates as an evolving companion that joins Google Meet calls, listens, reasons, and speaks aloud in real time.",
+    role: "AIUX - Vision & Product Strategy",
+    timeline: "A Build Journey (2026)",
+    tools: ["Vertex AI", "Gemini 2.5 Flash", "Node.js", "Browser Extension", "Agentic Coding"],
+    challenge: "Getting an agent into a live Google Meet is a unique challenge. Standard agents feel scripted and reactive. The goal was to understand the underlying infrastructure and move from a basic agent to a sophisticated, participant-focused companion with a visible presence and a natural voice.",
+    solution: "The architecture was split across a browser extension (captures captions and chat), a local Node.js relay server (manages events), and a Python + Vertex AI backend (powers reasoning and natural-language responses spoken aloud). A responsive orb makes Luna's listen, think, and speak states visible in the room.",
+    results: ["Live meeting participation", "Listen, think & speak orb", "Low-latency Vertex AI voice", "Six shipped build phases"],
+    color: "from-teal-500 to-emerald-600",
+    icon: LUNA_ICON,
+    screenshot: "/luna-orb-icon.png",
+    isFullCaseStudy: true,
+    locked: true
   }
 }
 
@@ -256,6 +277,8 @@ export function MacBookScreen() {
   const [viewingVideo, setViewingVideo] = useState<number | null>(null)
   const [viewingMediaIndex, setViewingMediaIndex] = useState<number | null>(null)
   const [password, setPassword] = useState("")
+  // Luna 2.0 case study is password protected. Once unlocked it stays unlocked for the session.
+  const [lunaUnlocked, setLunaUnlocked] = useState(false)
   const [aboutWindow, setAboutWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [projectsFolder, setProjectsFolder] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [safariWindow, setSafariWindow] = useState<SafariWindowState>({ isOpen: false, isMinimized: false, project: null })
@@ -1773,6 +1796,31 @@ const messageText = mobileInput.trim()
     if (mobileScreen === "caseStudy" && mobileCaseStudy) {
       const study = caseStudies[mobileCaseStudy as keyof typeof caseStudies]
 
+      // Luna 2.0 is password protected on mobile too
+      if (mobileCaseStudy === 'luna' && !lunaUnlocked) {
+        return (
+          <div className="h-screen w-full bg-[#050810] flex flex-col overflow-hidden">
+            {/* Status Bar */}
+            <div className="h-12 flex items-center justify-between px-6 pt-2">
+              <span className="text-white text-sm font-medium">{loginTime}</span>
+              <div className="flex items-center gap-1">
+                <Wifi className="w-4 h-4 text-white" />
+              </div>
+            </div>
+            {/* Header */}
+            <div className="px-4 py-3 flex items-center">
+              <button onClick={() => setMobileScreen('home')} className="text-teal-300 text-sm flex items-center gap-1">
+                <ChevronLeft className="w-5 h-5" />
+                Home
+              </button>
+            </div>
+            <div className="flex-1 flex items-center justify-center">
+              <LunaLockScreen onUnlock={() => setLunaUnlocked(true)} />
+            </div>
+          </div>
+        )
+      }
+
       return (
         <div className="h-screen w-full bg-white flex flex-col overflow-hidden">
           {/* Status Bar */}
@@ -2183,7 +2231,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">PROJECTS</p>
                 </div>
-                {['teammate', 'meetly', 'silas'].map((key) => {
+                {['teammate', 'meetly', 'silas', 'luna'].map((key) => {
                   const study = caseStudies[key as keyof typeof caseStudies]
                   return (
                     <button
@@ -2195,7 +2243,10 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <img src={study.icon} alt={study.title} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1 text-left">
-                        <p className="text-[15px] text-black font-medium">{study.title}</p>
+                        <p className="text-[15px] text-black font-medium flex items-center gap-1.5">
+                          {study.title}
+                          {key === 'luna' && <Lock className="w-3 h-3 text-gray-400" />}
+                        </p>
                         <p className="text-[13px] text-gray-500">{study.subtitle}</p>
                       </div>
                       <ChevronRight className="w-5 h-5 text-gray-300" />
@@ -5141,7 +5192,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="flex-1 p-6 bg-white overflow-y-auto">
                   <p className="text-[12px] text-gray-500 mb-4 leading-relaxed">Independent projects from my Columbia University UX/UI Bootcamp.</p>
                   <div className="grid grid-cols-3 gap-6">
-                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas').map(([key, project]) => (
+                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas' && key !== 'luna').map(([key, project]) => (
                       <button
                         key={key}
                         onClick={(e) => { e.stopPropagation(); openCaseStudy(key); }}
@@ -6011,6 +6062,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               onMinimize={() => minimizeCaseStudy(projectId)}
               isFocused={focusedWindow === `safari-${projectId}`}
               onFocus={() => setFocusedWindow(`safari-${projectId}`)}
+              lunaUnlocked={lunaUnlocked}
+              onUnlockLuna={() => setLunaUnlocked(true)}
             />
           )
         ))}
@@ -6107,6 +6160,19 @@ label="Brain Games"
           }
           label="Silas"
           onClick={() => openCaseStudy('silas')}
+        />
+
+        <DockIcon
+          icon={
+            <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src={LUNA_ICON || "/placeholder.svg"} alt="Luna 2.0" className="w-full h-full object-cover" />
+              <div className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-black/70 flex items-center justify-center">
+                <Lock className="w-2.5 h-2.5 text-teal-300" />
+              </div>
+            </div>
+          }
+          label="Luna 2.0"
+          onClick={() => openCaseStudy('luna')}
         />
 
         {/* Minimized Windows Section */}
@@ -6309,9 +6375,11 @@ interface SafariCaseStudyProps {
   onMinimize: () => void
   isFocused: boolean
   onFocus: () => void
+  lunaUnlocked: boolean
+  onUnlockLuna: () => void
 }
 
-function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: SafariCaseStudyProps) {
+function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus, lunaUnlocked, onUnlockLuna }: SafariCaseStudyProps) {
   const study = caseStudies[project as keyof typeof caseStudies]
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 })
   const [windowPosition, setWindowPosition] = useState({ x: 8, y: 28 })
@@ -6385,6 +6453,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   const isSilas = project === 'silas'
   const isMeetly = project === 'meetly'
   const isTeammate = project === 'teammate'
+  const isLuna = project === 'luna'
 
   return (
     <div
@@ -6435,7 +6504,13 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
       {/* Page Content */}
       <div className="flex-1 overflow-y-auto bg-[#0a0a0a]">
-        {isSilas ? (
+        {isLuna ? (
+          lunaUnlocked ? (
+            <LunaCaseStudy />
+          ) : (
+            <LunaLockScreen onUnlock={onUnlockLuna} />
+          )
+        ) : isSilas ? (
           <SilasCaseStudy />
         ) : isMeetly ? (
           <MeetlyCaseStudy />
@@ -6507,6 +6582,319 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
         )}
       </div>
 
+    </div>
+  )
+}
+
+// Luna 2.0 password gate
+function LunaLockScreen({ onUnlock }: { onUnlock: () => void }) {
+  const [value, setValue] = useState("")
+  const [error, setError] = useState(false)
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (value.trim() === LUNA_PASSWORD) {
+      setError(false)
+      onUnlock()
+    } else {
+      setError(true)
+    }
+  }
+
+  return (
+    <div className="min-h-full w-full bg-[#050810] flex items-center justify-center px-6 py-16">
+      <div className="w-full max-w-sm text-center">
+        {/* Orb */}
+        <div className="relative mx-auto mb-8 w-28 h-28">
+          <div className="absolute inset-0 rounded-full bg-teal-400/30 blur-2xl animate-pulse" />
+          <div className="relative w-28 h-28 rounded-full overflow-hidden shadow-[0_0_40px_rgba(45,212,191,0.5)] border border-teal-300/30">
+            <img src={LUNA_ICON || "/placeholder.svg"} alt="Luna orb" className="w-full h-full object-cover" />
+          </div>
+        </div>
+
+        <div className="inline-flex items-center gap-2 mb-3">
+          <Lock className="w-3.5 h-3.5 text-teal-300" />
+          <span className="text-teal-300 text-xs font-semibold uppercase tracking-[0.2em]">Protected Case Study</span>
+        </div>
+        <h1 className="text-white text-2xl font-bold mb-2">Luna 2.0</h1>
+        <p className="text-white/50 text-sm mb-8 leading-relaxed">
+          This case study is password protected. Enter the password to explore the full build journey.
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <input
+            type="password"
+            value={value}
+            autoFocus
+            onChange={(e) => { setValue(e.target.value); setError(false) }}
+            placeholder="Enter password"
+            className={`w-full text-center bg-white/5 border ${error ? "border-red-400" : "border-white/15"} rounded-xl px-4 py-3 text-white placeholder-white/30 outline-none focus:border-teal-400/70 transition-colors`}
+          />
+          {error && (
+            <p className="text-red-400 text-xs">Incorrect password. Please try again.</p>
+          )}
+          <button
+            type="submit"
+            className="w-full bg-teal-500 hover:bg-teal-400 text-[#050810] font-semibold rounded-xl px-4 py-3 transition-colors"
+          >
+            Unlock Case Study
+          </button>
+        </form>
+
+        <p className="text-white/25 text-[11px] mt-6">Reach out to Charity for access.</p>
+      </div>
+    </div>
+  )
+}
+
+// Full Luna 2.0 Case Study Component
+function LunaCaseStudy() {
+  const phases = [
+    { n: 1, title: "Base platform & auto-join", wanted: "A hub that joins Meet from my calendar automatically.", built: "A robust Node/Express server infrastructure, a centralized dashboard, and automated scheduling workflows." },
+    { n: 2, title: "Guest join + interruption", wanted: "Streamlined meeting access for guests and a responsive, natural participant interaction model.", built: "A direct guest connection protocol and dynamic interruption handling for a smooth, attentive experience." },
+    { n: 3, title: "Headless + sidebar", wanted: "Efficient background performance and organized meeting management.", built: "Optimized audio filtering, cross-origin communication protocols, and a dedicated agenda panel for clarity." },
+    { n: 4, title: "Rapid connectivity", wanted: "Versatile, link-based meeting access.", built: "A streamlined connectivity portal with robust bridge protocols for stable, flexible integration across meeting environments." },
+    { n: 5, title: "Vertex AI brain", wanted: "Fluid, open-ended conversational intelligence.", built: "Integrated the Gemini 2.5 Flash model via Vertex AI to process meeting context and deliver low-latency, natural responses." },
+    { n: 6, title: "Voice optimization", wanted: "Consistent and reliable live voice interaction.", built: "Iterative refinements to ensure stable, high-quality audio transmission throughout the session." },
+  ]
+
+  const states = [
+    { label: "Listening", desc: "Solid orb - she's in the room, taking it in.", color: "text-teal-300", ring: "shadow-[0_0_40px_rgba(45,212,191,0.5)]" },
+    { label: "Thinking", desc: "Pixels scatter as she reasons over what was said.", color: "text-sky-300", ring: "shadow-[0_0_40px_rgba(56,189,248,0.5)]" },
+    { label: "Speaking", desc: "Glows green as she answers out loud.", color: "text-emerald-300", ring: "shadow-[0_0_40px_rgba(52,211,153,0.6)]" },
+  ]
+
+  const adaptations = [
+    { title: "Authentication & Accessibility", struggle: "Streamlining entry workflows for efficiency.", fix: "Implemented an optimized guest-access protocol, prioritizing rapid availability." },
+    { title: "Interface Consistency", struggle: "Maintaining stable data observation during frequent UI updates.", fix: "Transitioned from dynamic class selectors to semantic DOM attributes (e.g. ARIA labels) for consistent element tracking." },
+    { title: "Data Processing Logic", struggle: "Edge cases where standard validation checks misinterpreted empty data objects.", fix: "Enhanced logic with explicit length verification to ensure precise data capture." },
+    { title: "Infinite captions loop", struggle: "Control logic hit state-sync issues with the interface toggle, causing activation loops.", fix: "Read the button's tooltip label instead (\u201CTurn on / off captions\u201D)." },
+    { title: "Cross-Origin Audio", struggle: "Aligning audio retrieval with background process standards.", fix: "A standardized message-passing architecture for compliant, secure audio delivery." },
+    { title: "Background process leaks", struggle: "Unscheduled terminations left residual background processes.", fix: "An automated lifecycle routine that cleans up on session completion for consistent stability." },
+  ]
+
+  return (
+    <div className="bg-white text-black">
+      {/* Hero Section */}
+      <div className="relative py-20 px-8 bg-gradient-to-b from-[#050810] to-[#0d1524] text-center">
+        <div className="relative mx-auto mb-8 w-28 h-28">
+          <div className="absolute inset-0 rounded-full bg-teal-400/30 blur-2xl animate-pulse" />
+          <div className="relative w-28 h-28 rounded-full overflow-hidden shadow-[0_0_40px_rgba(45,212,191,0.5)] border border-teal-300/30">
+            <img src={LUNA_ICON || "/placeholder.svg"} alt="Luna orb" className="w-full h-full object-cover" />
+          </div>
+        </div>
+        <p className="text-teal-300 text-xs font-semibold uppercase tracking-[0.25em] mb-4">A Build Journey</p>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">Luna 2.0 &mdash; The Meet Companion</h1>
+        <p className="text-lg text-white/70 leading-relaxed max-w-3xl mx-auto">
+          A vision for an intuitive, interactive AI presence in live meetings. Luna 2.0 operates as an evolving companion that participates in the room &mdash; she listens, reasons, and speaks aloud inside the call.
+        </p>
+        <div className="mt-8">
+          <a
+            href="/luna-2.0-deck.pdf"
+            download
+            className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-[#050810] font-semibold rounded-full px-6 py-3 transition-colors"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download the deck (PDF)
+          </a>
+        </div>
+      </div>
+
+      {/* Project Info */}
+      <div className="max-w-4xl mx-auto px-8 py-12 border-b border-black/10">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
+            <p className="text-black font-medium">AIUX &mdash; Vision &amp; Strategy</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Build</h3>
+            <p className="text-black font-medium">Agentic Coding (JetSki)</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Platform</h3>
+            <p className="text-black font-medium">Live Google Meet</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Stack</h3>
+            <p className="text-black font-medium">Vertex AI &middot; Node.js</p>
+          </div>
+        </div>
+      </div>
+
+      {/* The Spark */}
+      <div className="max-w-4xl mx-auto px-8 py-12">
+        <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-4">Where it started</h3>
+        <p className="text-black/80 leading-relaxed text-lg mb-6">
+          I began by exploring the potential of AI agents in live environments. Inspired by an early prototype from a colleague, I identified an opportunity to enhance the interaction model &mdash; moving from a standard agent to a more sophisticated, participant-focused companion.
+        </p>
+        <blockquote className="border-l-4 border-teal-400 pl-6 py-2 text-xl italic text-black/80">
+          &ldquo;If he could put an agent inside a call, I wanted to know how. And I wanted to explore and see if there was potential to do more.&rdquo;
+        </blockquote>
+      </div>
+
+      {/* Vision */}
+      <div className="bg-neutral-50 py-20">
+        <div className="max-w-4xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-4 text-center text-black">Project Vision</h2>
+          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">To elevate the standard of AI participation in real-time collaboration.</p>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { t: "Seamless Integration", d: "A companion that joins meetings effortlessly." },
+              { t: "Visual Presence", d: "A dynamic, responsive orb that keeps the AI an approachable presence in the room." },
+              { t: "Conversational Voice", d: "Engaging, open-ended dialogue that moves beyond scripted interactions." },
+            ].map((v, i) => (
+              <div key={i} className="bg-white rounded-2xl p-8 border border-black/5 shadow-sm">
+                <div className="text-teal-600 text-2xl font-bold mb-3">{i + 1}</div>
+                <h3 className="text-lg font-semibold text-black mb-2">{v.t}</h3>
+                <p className="text-black/70 text-sm leading-relaxed">{v.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* My vision, their engineering */}
+      <div className="max-w-4xl mx-auto px-8 py-20">
+        <h2 className="text-3xl font-bold mb-4 text-center text-black">My vision, JetSki&apos;s engineering</h2>
+        <p className="text-black/60 text-center mb-12 max-w-2xl mx-auto">
+          I led the vision and product strategy, keeping a clear line between the two sides of the build: what I wanted, and how it got solved.
+        </p>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-white rounded-2xl p-8 border border-black/5 shadow-sm">
+            <h3 className="text-lg font-semibold text-teal-600 mb-4">What I brought</h3>
+            <ul className="space-y-2 text-black/70 text-sm">
+              <li>The vision for what Luna should be</li>
+              <li>Product judgment on how she should behave</li>
+              <li>The decisions on what to build next</li>
+              <li>Knowing when &ldquo;good enough&rdquo; wasn&apos;t</li>
+            </ul>
+          </div>
+          <div className="bg-white rounded-2xl p-8 border border-black/5 shadow-sm">
+            <h3 className="text-lg font-semibold text-teal-600 mb-4">What JetSki brought</h3>
+            <ul className="space-y-2 text-black/70 text-sm">
+              <li>The architecture</li>
+              <li>The code, end to end</li>
+              <li>The debugging through every roadblock</li>
+              <li>Platform integration strategy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Architecture split */}
+      <div className="bg-[#050810] py-20">
+        <div className="max-w-4xl mx-auto px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4 text-white">Why Luna had to be split</h2>
+          <p className="text-white/60 mb-14 max-w-2xl mx-auto">
+            To optimize performance, tasks were distributed across a client-side extension, a lightweight middleware, and backend services for a responsive in-browser experience.
+          </p>
+          <div className="grid md:grid-cols-3 gap-4 text-left">
+            {[
+              { t: "Browser Extension", d: "Optimized for capturing captions and chat data." },
+              { t: "Local Node.js Server", d: "Efficiently manages event relay." },
+              { t: "Python \u00B7 Vertex AI", d: "Powers reasoning and natural-language response." },
+            ].map((c, i) => (
+              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <h3 className="text-teal-300 font-semibold mb-2">{c.t}</h3>
+                <p className="text-white/60 text-sm">{c.d}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-white/40 text-sm mt-8">response &rarr; spoken aloud in the call</p>
+        </div>
+      </div>
+
+      {/* Three states */}
+      <div className="py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-4 text-center text-black">Luna, in three states</h2>
+          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">Listen &rarr; think &rarr; speak &mdash; the split loop, made visible.</p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {states.map((s, i) => (
+              <div key={i} className="text-center">
+                <div className={`relative mx-auto mb-6 w-24 h-24 rounded-full overflow-hidden ${s.ring} border border-black/5`}>
+                  <img src={LUNA_ICON || "/placeholder.svg"} alt={s.label} className="w-full h-full object-cover" />
+                </div>
+                <h3 className={`text-lg font-semibold mb-2 ${s.color}`}>{s.label}</h3>
+                <p className="text-black/60 text-sm">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Six phases */}
+      <div className="bg-neutral-50 py-20">
+        <div className="max-w-4xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-4 text-center text-black">Six phases, build by build</h2>
+          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">Every phase told the same way: what I needed &rarr; what we built.</p>
+          <div className="space-y-6">
+            {phases.map((p) => (
+              <div key={p.n} className="bg-white rounded-2xl p-8 border border-black/5 shadow-sm flex gap-6">
+                <div className="shrink-0 w-10 h-10 rounded-full bg-teal-500 text-white flex items-center justify-center font-bold">{p.n}</div>
+                <div>
+                  <h3 className="text-xl font-semibold text-black mb-3">{p.title}</h3>
+                  <p className="text-black/70 text-sm leading-relaxed mb-2"><span className="font-semibold text-teal-600">I wanted</span> &nbsp;{p.wanted}</p>
+                  <p className="text-black/70 text-sm leading-relaxed"><span className="font-semibold text-teal-600">We built</span> &nbsp;{p.built}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Adaptations */}
+      <div className="py-20 bg-white">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-4 text-center text-black">Navigating platform evolution</h2>
+          <p className="text-black/60 text-center mb-16 max-w-2xl mx-auto">Live platforms shift constantly. Each struggle became a fix that hardened the build.</p>
+          <div className="grid md:grid-cols-2 gap-6">
+            {adaptations.map((a, i) => (
+              <div key={i} className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
+                <h3 className="text-black font-semibold mb-3">{a.title}</h3>
+                <p className="text-black/60 text-sm mb-2"><span className="font-semibold text-red-500">Struggle</span> &nbsp;{a.struggle}</p>
+                <p className="text-black/60 text-sm"><span className="font-semibold text-emerald-600">Fix</span> &nbsp;{a.fix}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* What it taught / Next */}
+      <div className="bg-[#050810] py-20">
+        <div className="max-w-4xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-4 text-center text-white">Where Luna goes next</h2>
+          <p className="text-white/60 text-center mb-14 max-w-2xl mx-auto">
+            The original goal still drives it &mdash; make Luna do more inside the call.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            {[
+              { t: "From reactive to participant", d: "Agenda management, real-time summaries, and proactive follow-up insights." },
+              { t: "Tougher against change", d: "Hardening observer logic to stay consistent as platform interfaces evolve." },
+              { t: "A presence with personality", d: "Tuning visual and vocal cues into an approachable, recognizable companion." },
+              { t: "Broader accessibility", d: "Flexible, multi-environment access beyond localized hardware setups." },
+            ].map((n, i) => (
+              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                <h3 className="text-teal-300 font-semibold mb-2">{n.t}</h3>
+                <p className="text-white/60 text-sm">{n.d}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-white/70 text-center text-lg italic mt-14 max-w-2xl mx-auto">
+            &ldquo;True progress is achieved not through simple replication, but through the persistent pursuit of more seamless, valuable human-AI collaboration.&rdquo;
+          </p>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="py-12 border-t border-black/10 bg-white">
+        <div className="max-w-4xl mx-auto px-8 text-center">
+          <p className="text-black/40 text-sm">Charity Dupont &middot; AIUX &middot; 2026</p>
+        </div>
+      </div>
     </div>
   )
 }
