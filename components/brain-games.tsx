@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle, Trophy, Lock } from "lucide-react"
+import { ChevronLeft, HelpCircle, RefreshCw, CheckCircle, XCircle } from "lucide-react"
 
 // ============ MIND PUZZLES SECTION ============
 type PuzzleCategory = "sequence" | "pattern" | "logic" | "math" | "word"
@@ -563,14 +563,9 @@ interface BrainGamesProps {
   onGameStateChange?: (state: BrainGamesState) => void
 }
 
-  // Number of correct answers (out of 20 rounds) required to unlock the reward.
-const TRUTHS_WIN_THRESHOLD = 16
-
 export function BrainGames({ onScoreChange, gameState, onGameStateChange }: BrainGamesProps) {
   const [localState, setLocalState] = useState<BrainGamesState>(gameState || initialBrainGamesState)
   const [showInstructions, setShowInstructions] = useState(false)
-  const [showReward, setShowReward] = useState(false)
-  const [showTruthsGoal, setShowTruthsGoal] = useState(false)
   
   // Sync with external state
   useEffect(() => {
@@ -1777,17 +1772,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
           </button>
           <div className="flex items-center gap-3 md:gap-4">
             <span className="text-emerald-400/70 text-sm font-semibold">{truthsCorrect}/{twoTruthsRounds.length} correct</span>
-            {/* Prize / reward goal */}
-            <button
-              onClick={() => setShowTruthsGoal(true)}
-              className="relative w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center shadow-[0_0_18px_rgba(245,158,11,0.5)] hover:scale-105 transition-transform"
-              aria-label="View reward goal"
-            >
-              <Trophy className="w-5 h-5 text-white" />
-              {truthsCorrect >= TRUTHS_WIN_THRESHOLD && (
-                <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-emerald-400 border-2 border-emerald-950" />
-              )}
-            </button>
           </div>
         </div>
 
@@ -1861,31 +1845,17 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
                 </p>
               </div>
               {truthsRoundsPlayed.length >= twoTruthsRounds.length ? (
-                truthsCorrect >= TRUTHS_WIN_THRESHOLD ? (
-                  <div className="space-y-3">
-                    <p className="text-center text-emerald-300 font-semibold">
-                      You got {truthsCorrect}/{twoTruthsRounds.length} right — you&apos;ve earned the reward.
-                    </p>
-                    <button
-                      onClick={() => setShowReward(true)}
-                      className="w-full py-3 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all shadow-[0_0_25px_rgba(245,158,11,0.4)]"
-                    >
-                      Claim your reward <Trophy className="w-4 h-4" />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    <p className="text-center text-amber-300 font-semibold text-balance">
-                      So close — you got {truthsCorrect}/{twoTruthsRounds.length}. Get at least {TRUTHS_WIN_THRESHOLD} right and the reward is yours.
-                    </p>
-                    <button
-                      onClick={startTruthsGame}
-                      className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
-                    >
-                      Try again <RefreshCw className="w-4 h-4" />
-                    </button>
-                  </div>
-                )
+                <div className="space-y-3">
+                  <p className="text-center text-emerald-300 font-semibold text-balance">
+                    You got {truthsCorrect}/{twoTruthsRounds.length} right. Thanks for playing!
+                  </p>
+                  <button
+                    onClick={startTruthsGame}
+                    className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 rounded-xl text-white font-semibold flex items-center justify-center gap-2 transition-all"
+                  >
+                    Play again <RefreshCw className="w-4 h-4" />
+                  </button>
+                </div>
               ) : (
                 <button
                   onClick={nextTruthsRound}
@@ -1902,84 +1872,6 @@ export function BrainGames({ onScoreChange, gameState, onGameStateChange }: Brai
         <div className="text-center text-emerald-400/60 text-sm">
           {truthsRoundsPlayed.length} of {twoTruthsRounds.length} rounds played
         </div>
-
-        {/* Reward goal overlay */}
-        {showTruthsGoal && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-            <div className="relative w-full max-w-md bg-gradient-to-b from-zinc-900 to-black rounded-2xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.3)] animate-in zoom-in-95 duration-300 p-6 text-center">
-              <button
-                onClick={() => setShowTruthsGoal(false)}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-                aria-label="Close"
-              >
-                <XCircle className="w-5 h-5" />
-              </button>
-              <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center shadow-[0_0_25px_rgba(245,158,11,0.5)] mb-4">
-                {truthsCorrect >= TRUTHS_WIN_THRESHOLD ? <Trophy className="w-8 h-8 text-white" /> : <Lock className="w-8 h-8 text-white" />}
-              </div>
-              <h3 className="text-amber-300 font-bold text-xl text-balance">
-                Get {TRUTHS_WIN_THRESHOLD} of {twoTruthsRounds.length} right to unlock the reward
-              </h3>
-              <p className="text-amber-200/70 text-sm mt-2 text-pretty">
-                Spot the lie in at least {TRUTHS_WIN_THRESHOLD} of the {twoTruthsRounds.length} rounds to unlock a special reward.
-              </p>
-              <p className="text-emerald-300 font-semibold mt-4">
-                So far: {truthsCorrect}/{twoTruthsRounds.length} correct
-              </p>
-              <button
-                onClick={() => setShowTruthsGoal(false)}
-                className="mt-5 w-full py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white font-semibold transition-all"
-              >
-                Keep playing
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Reward video overlay */}
-        {showReward && (
-          <div className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-            <div className="relative w-full max-w-2xl bg-gradient-to-b from-zinc-900 to-black rounded-2xl overflow-hidden border border-amber-500/30 shadow-[0_0_40px_rgba(245,158,11,0.3)] animate-in zoom-in-95 duration-300">
-              {/* Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
-                <div>
-                  <h3 className="text-amber-300 font-bold text-lg text-balance flex items-center gap-2">
-                    <Trophy className="w-5 h-5" /> You earned the reward!
-                  </h3>
-                  <p className="text-amber-200/60 text-sm mt-0.5 text-pretty">Thanks for playing along.</p>
-                </div>
-                <button
-                  onClick={() => setShowReward(false)}
-                  className="w-8 h-8 shrink-0 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
-                  aria-label="Close reward"
-                >
-                  <XCircle className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Reward placeholder */}
-              <div className="bg-black flex items-center justify-center">
-                <div className="w-full aspect-video flex flex-col items-center justify-center gap-3 text-center px-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center shadow-[0_0_25px_rgba(245,158,11,0.5)]">
-                    <Trophy className="w-8 h-8 text-white" />
-                  </div>
-                  <p className="text-amber-200 font-semibold text-lg">A reward is on the way</p>
-                  <p className="text-amber-200/50 text-sm max-w-sm text-pretty">You beat the challenge! A special reward is coming soon &mdash; check back later.</p>
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="px-5 py-4 border-t border-white/10 flex justify-end">
-                <button
-                  onClick={() => { setShowReward(false); backToMenu(); }}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 text-white font-semibold transition-all"
-                >
-                  Back to Games
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     )
   }

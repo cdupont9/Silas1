@@ -5327,8 +5327,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* AI Assistant Window - Front and Center */}
         {/* Silas Spotlight - primary call to action on the desktop */}
         {showSilasSpotlight && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none">
-            <div className="flex flex-col items-center animate-in fade-in zoom-in duration-500 pointer-events-auto">
+          <div
+            className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
+            onClick={() => setShowSilasSpotlight(false)}
+          >
+            <div
+              className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
                 className="relative group"
@@ -5353,6 +5359,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               >
                 <MousePointerClick className="w-4 h-4" />
                 Click here
+              </button>
+              <button
+                onClick={() => setShowSilasSpotlight(false)}
+                className="mt-3 text-white/70 text-xs hover:text-white transition-colors underline underline-offset-2"
+              >
+                or explore the desktop on your own
               </button>
             </div>
           </div>
