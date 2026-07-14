@@ -6316,6 +6316,7 @@ label="Brain Games"
                 <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
+              <p className="mt-1 text-sm text-gray-500">AI companion</p>
               <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
                 Upcoming
               </span>
