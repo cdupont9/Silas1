@@ -19,6 +19,7 @@ import {
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
+import { WeatherWidget } from "@/components/weather-widget"
 
 interface WindowState {
   isOpen: boolean
@@ -4756,47 +4757,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           </div>
 
-          {/* Weather Widget */}
-          <div className="bg-gradient-to-br from-[#4a90d9] to-[#2c5aa0] rounded-2xl p-5 shadow-lg w-72">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-white/80 text-sm font-medium">Plainfield</p>
-                <p className="text-white text-5xl font-light mt-1">46°</p>
-                <p className="text-white/70 text-xs mt-2">Partly Cloudy</p>
-                <p className="text-white/60 text-xs">H:72° L:33°</p>
-              </div>
-              <div className="text-5xl mt-2">&#9925;</div>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/20">
-              <div className="flex justify-between text-xs text-white/80">
-                <div className="text-center">
-                  <p>Wed</p>
-                  <p className="text-lg my-1">&#9925;</p>
-                  <p>56°</p>
-                </div>
-                <div className="text-center">
-                  <p>Thu</p>
-                  <p className="text-lg my-1">&#9728;</p>
-                  <p>72°</p>
-                </div>
-                <div className="text-center">
-                  <p>Fri</p>
-                  <p className="text-lg my-1">&#9925;</p>
-                  <p>65°</p>
-                </div>
-                <div className="text-center">
-                  <p>Sat</p>
-                  <p className="text-lg my-1">&#9728;</p>
-                  <p>42°</p>
-                </div>
-                <div className="text-center">
-                  <p>Sun</p>
-                  <p className="text-lg my-1">&#9925;</p>
-                  <p>53°</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Weather Widget - real-time via Open-Meteo */}
+          <WeatherWidget />
 
           {/* Bootcamp Case Studies desktop folder */}
           <button
