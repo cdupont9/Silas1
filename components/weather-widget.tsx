@@ -49,7 +49,7 @@ function dayLabel(iso: string, index: number) {
 
 type GeoResult = { id: number; name: string; latitude: number; longitude: number; admin1?: string; country_code?: string }
 
-export function WeatherWidget() {
+export function WeatherWidget({ className = "w-72" }: { className?: string }) {
   const [location, setLocation] = useState<WeatherLocation>(DEFAULT_LOCATION)
   const [editing, setEditing] = useState(false)
   const [query, setQuery] = useState("")
@@ -128,7 +128,7 @@ export function WeatherWidget() {
   const todayLow = daily ? Math.round(daily.temperature_2m_min?.[0]) : null
 
   return (
-    <div className="relative bg-gradient-to-br from-[#4a90d9] to-[#2c5aa0] rounded-2xl p-5 shadow-lg w-72 text-white">
+    <div className={`relative bg-gradient-to-br from-[#4a90d9] to-[#2c5aa0] rounded-2xl p-5 shadow-lg text-white ${className}`}>
       {editing ? (
         <div className="animate-in fade-in duration-150">
           <div className="flex items-center justify-between mb-3">

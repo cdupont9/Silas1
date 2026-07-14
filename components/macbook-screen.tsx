@@ -1148,16 +1148,9 @@ const messageText = mobileInput.trim()
               </div>
             </div>
 
-            {/* Weather Widget */}
-            <div className="mx-4 mt-4 bg-gradient-to-br from-[#4a90d9] to-[#2c5aa0] rounded-2xl p-4 shadow-xl">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-white/80 text-xs font-medium">Plainfield, NJ</p>
-                  <p className="text-white text-4xl font-light mt-1">46°</p>
-                  <p className="text-white/70 text-xs mt-1">Warmer tomorrow, high of 72°</p>
-                </div>
-                <div className="text-6xl">&#9925;</div>
-              </div>
+            {/* Weather Widget - real-time via Open-Meteo */}
+            <div className="mx-4 mt-4">
+              <WeatherWidget className="w-full" />
             </div>
 
             {/* Featured Case Study - Silas */}
@@ -1318,10 +1311,63 @@ const messageText = mobileInput.trim()
                   </svg>
                   <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
+
+                {/* Luna */}
+                <button
+                  onClick={() => setShowLunaPopup(true)}
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
+                    <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)] animate-pulse">
+                      <div className="absolute top-1.5 left-2 w-2.5 h-2.5 rounded-full bg-white/60 blur-[2px]" />
+                    </div>
+                  </div>
+                  <span className="text-white text-[11px] mt-1">Luna</span>
+                </button>
               </div>
             </div>
 
           </div>
+
+          {/* Luna - upcoming popup */}
+          {showLunaPopup && (
+            <div
+              className="absolute inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-6 animate-in fade-in duration-200"
+              onClick={() => setShowLunaPopup(false)}
+            >
+              <div
+                className="relative w-full max-w-[300px] bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setShowLunaPopup(false)}
+                  className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 transition-colors"
+                  aria-label="Close"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+                <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
+                  <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_28px_rgba(168,85,247,0.85)] mb-4 animate-pulse">
+                    <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
+                  <p className="mt-1 text-sm text-gray-500">AI companion</p>
+                  <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
+                    Upcoming
+                  </span>
+                  <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
+                    Luna is coming soon. Please message me for details.
+                  </p>
+                  <a
+                    href="mailto:hello@charitydupont.com"
+                    className="mt-4 text-sm font-medium text-blue-600 hover:underline"
+                  >
+                    hello@charitydupont.com
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )
     }
