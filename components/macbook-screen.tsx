@@ -4727,18 +4727,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       {/* Desktop - Clean Simple Layout */}
       <div className="absolute inset-0 top-[25px] bottom-[80px] overflow-hidden p-6 flex gap-5">
 
-        {/* Sunflowers Photo - Left Side */}
-        <div
-          className="w-72 h-full bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:scale-[1.01] transition-transform"
-          onDoubleClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
-        >
-          <img
-            src={personalPhotos[0]}
-            alt="Sunflowers at Sunrise"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
         {/* Center Content - Twitter Post and Weather Widget */}
         <div className="flex-1 flex flex-col gap-4 items-start">
           {/* Twitter/X Post */}
@@ -5161,12 +5149,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
       </div>
 
-      {/* Windows Container */}
-      <div className="absolute inset-0 top-[25px]">
+      {/* Windows Container - pointer-events-none so empty areas don't block the desktop; each window re-enables pointer events */}
+      <div className="absolute inset-0 top-[25px] pointer-events-none">
         {/* About Window */}
         {aboutWindow.isOpen && !aboutWindow.isMinimized && (
           <div
-            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'} ${aboutWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'} ${aboutWindow.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: aboutPosition.x, top: aboutPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('about')}
           >
@@ -5240,7 +5228,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Messages Window */}
         {messagesWindow.isOpen && !messagesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: messagesPosition.x, top: messagesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('messages')}
           >
@@ -5373,7 +5361,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Notes Window */}
         {notesWindow.isOpen && !notesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: notesPosition.x, top: notesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('notes')}
           >
@@ -5560,7 +5548,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Projects Folder Window */}
         {projectsFolder.isOpen && !projectsFolder.isMinimized && (
           <div
-            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: projectsPosition.x, top: projectsPosition.y, transformOrigin: 'bottom center' }}
           >
             <div
@@ -5607,7 +5595,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Safari Browser Window */}
         {safariWindow.isOpen && !safariWindow.isMinimized && (
           <div
-            className={`absolute w-[900px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 ${focusedWindow === 'safari' ? 'z-40' : 'z-20'}`}
+            className={`pointer-events-auto absolute w-[900px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 ${focusedWindow === 'safari' ? 'z-40' : 'z-20'}`}
             style={{ left: safariPosition.x, top: safariPosition.y }}
             onClick={() => setFocusedWindow('safari')}
           >
@@ -6389,7 +6377,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   return (
     <div
       ref={windowRef}
-      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isDragging ? 'select-none cursor-grabbing' : ''} transition-all duration-200`}
+      className={`pointer-events-auto absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isDragging ? 'select-none cursor-grabbing' : ''} transition-all duration-200`}
       style={{
         left: windowPosition.x,
         top: windowPosition.y,
