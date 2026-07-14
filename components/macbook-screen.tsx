@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick, Moon } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -6112,8 +6112,10 @@ label="Brain Games"
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-indigo-500 to-slate-800 flex items-center justify-center">
-              <Moon className="w-6 h-6 text-white" strokeWidth={2} />
+            <div className="w-12 h-12 flex items-center justify-center">
+              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_16px_rgba(168,85,247,0.9)] animate-pulse">
+                <div className="absolute top-1.5 left-2 w-3 h-3 rounded-full bg-white/60 blur-[2px]" />
+              </div>
             </div>
           }
           label="Luna"
@@ -6310,11 +6312,11 @@ label="Brain Games"
               <X className="w-4 h-4" />
             </button>
             <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-slate-800 flex items-center justify-center shadow-lg mb-4">
-                <Moon className="w-8 h-8 text-white" strokeWidth={2} />
+              <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_28px_rgba(168,85,247,0.85)] mb-4 animate-pulse">
+                <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
               </div>
               <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
-              <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-indigo-600 bg-indigo-50 rounded-full px-3 py-1">
+              <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
                 Upcoming
               </span>
               <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
