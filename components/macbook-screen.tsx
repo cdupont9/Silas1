@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick, Moon } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -264,6 +264,7 @@ export function MacBookScreen() {
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [showSilasSpotlight, setShowSilasSpotlight] = useState(false)
+  const [showLunaPopup, setShowLunaPopup] = useState(false)
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -6109,6 +6110,16 @@ label="Brain Games"
           onClick={() => openCaseStudy('silas')}
         />
 
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-gradient-to-br from-indigo-500 to-slate-800 flex items-center justify-center">
+              <Moon className="w-6 h-6 text-white" strokeWidth={2} />
+            </div>
+          }
+          label="Luna"
+          onClick={() => setShowLunaPopup(true)}
+        />
+
         {/* Minimized Windows Section */}
         {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
           <>
@@ -6280,6 +6291,45 @@ label="Brain Games"
           </>
         )}
       </div>
+
+      {/* Luna - upcoming popup */}
+      {showLunaPopup && (
+        <div
+          className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setShowLunaPopup(false)}
+        >
+          <div
+            className="relative w-[340px] bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowLunaPopup(false)}
+              className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-slate-800 flex items-center justify-center shadow-lg mb-4">
+                <Moon className="w-8 h-8 text-white" strokeWidth={2} />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
+              <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-indigo-600 bg-indigo-50 rounded-full px-3 py-1">
+                Upcoming
+              </span>
+              <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
+                Luna is coming soon. Please message me for details.
+              </p>
+              <a
+                href="mailto:hello@charitydupont.com"
+                className="mt-4 text-sm font-medium text-blue-600 hover:underline"
+              >
+                hello@charitydupont.com
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
