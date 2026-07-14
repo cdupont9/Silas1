@@ -19,6 +19,7 @@ import {
   DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
+import { WeatherWidget } from "@/components/weather-widget"
 
 interface WindowState {
   isOpen: boolean
@@ -264,6 +265,7 @@ export function MacBookScreen() {
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [showSilasSpotlight, setShowSilasSpotlight] = useState(false)
+  const [showLunaPopup, setShowLunaPopup] = useState(false)
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -4727,18 +4729,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       {/* Desktop - Clean Simple Layout */}
       <div className="absolute inset-0 top-[25px] bottom-[80px] overflow-hidden p-6 flex gap-5">
 
-        {/* Sunflowers Photo - Left Side */}
-        <div
-          className="w-72 h-full bg-white rounded-2xl overflow-hidden shadow-lg cursor-pointer hover:scale-[1.01] transition-transform"
-          onDoubleClick={() => { setPhotosWindow({ isOpen: true, isMinimized: false }); focusWindow('photos'); }}
-        >
-          <img
-            src={personalPhotos[0]}
-            alt="Sunflowers at Sunrise"
-            className="w-full h-full object-cover"
-          />
-        </div>
-
         {/* Center Content - Twitter Post and Weather Widget */}
         <div className="flex-1 flex flex-col gap-4 items-start">
           {/* Twitter/X Post */}
@@ -4767,47 +4757,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           </div>
 
-          {/* Weather Widget */}
-          <div className="bg-gradient-to-br from-[#4a90d9] to-[#2c5aa0] rounded-2xl p-5 shadow-lg w-72">
-            <div className="flex items-start justify-between">
-              <div>
-                <p className="text-white/80 text-sm font-medium">Plainfield</p>
-                <p className="text-white text-5xl font-light mt-1">46°</p>
-                <p className="text-white/70 text-xs mt-2">Partly Cloudy</p>
-                <p className="text-white/60 text-xs">H:72° L:33°</p>
-              </div>
-              <div className="text-5xl mt-2">&#9925;</div>
-            </div>
-            <div className="mt-4 pt-3 border-t border-white/20">
-              <div className="flex justify-between text-xs text-white/80">
-                <div className="text-center">
-                  <p>Wed</p>
-                  <p className="text-lg my-1">&#9925;</p>
-                  <p>56°</p>
-                </div>
-                <div className="text-center">
-                  <p>Thu</p>
-                  <p className="text-lg my-1">&#9728;</p>
-                  <p>72°</p>
-                </div>
-                <div className="text-center">
-                  <p>Fri</p>
-                  <p className="text-lg my-1">&#9925;</p>
-                  <p>65°</p>
-                </div>
-                <div className="text-center">
-                  <p>Sat</p>
-                  <p className="text-lg my-1">&#9728;</p>
-                  <p>42°</p>
-                </div>
-                <div className="text-center">
-                  <p>Sun</p>
-                  <p className="text-lg my-1">&#9925;</p>
-                  <p>53°</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* Weather Widget - real-time via Open-Meteo */}
+          <WeatherWidget />
 
           {/* Bootcamp Case Studies desktop folder */}
           <button
@@ -5161,12 +5112,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
       </div>
 
-      {/* Windows Container */}
-      <div className="absolute inset-0 top-[25px]">
+      {/* Windows Container - pointer-events-none so empty areas don't block the desktop; each window re-enables pointer events */}
+      <div className="absolute inset-0 top-[25px] pointer-events-none">
         {/* About Window */}
         {aboutWindow.isOpen && !aboutWindow.isMinimized && (
           <div
-            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'} ${aboutWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${focusedWindow === 'about' ? 'z-40' : 'z-20'} ${aboutWindow.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: aboutPosition.x, top: aboutPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('about')}
           >
@@ -5240,7 +5191,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Messages Window */}
         {messagesWindow.isOpen && !messagesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[700px] h-[480px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'messages' ? 'z-40' : 'z-20'} ${messagesWindow.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: messagesPosition.x, top: messagesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('messages')}
           >
@@ -5339,8 +5290,14 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* AI Assistant Window - Front and Center */}
         {/* Silas Spotlight - primary call to action on the desktop */}
         {showSilasSpotlight && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-none">
-            <div className="flex flex-col items-center animate-in fade-in zoom-in duration-500 pointer-events-auto">
+          <div
+            className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
+            onClick={() => setShowSilasSpotlight(false)}
+          >
+            <div
+              className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
                 onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
                 className="relative group"
@@ -5366,6 +5323,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <MousePointerClick className="w-4 h-4" />
                 Click here
               </button>
+              <button
+                onClick={() => setShowSilasSpotlight(false)}
+                className="mt-3 text-white/70 text-xs hover:text-white transition-colors underline underline-offset-2"
+              >
+                or explore the desktop on your own
+              </button>
             </div>
           </div>
         )}
@@ -5373,7 +5336,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Notes Window */}
         {notesWindow.isOpen && !notesWindow.isMinimized && (
           <div
-            className={`absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[700px] h-[500px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 flex ${focusedWindow === 'notes' ? 'z-40' : 'z-20'} ${notesWindow.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: notesPosition.x, top: notesPosition.y, transformOrigin: 'bottom center' }}
             onClick={() => focusWindow('notes')}
           >
@@ -5560,7 +5523,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Projects Folder Window */}
         {projectsFolder.isOpen && !projectsFolder.isMinimized && (
           <div
-            className={`absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
+            className={`pointer-events-auto absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: projectsPosition.x, top: projectsPosition.y, transformOrigin: 'bottom center' }}
           >
             <div
@@ -5607,7 +5570,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         {/* Safari Browser Window */}
         {safariWindow.isOpen && !safariWindow.isMinimized && (
           <div
-            className={`absolute w-[900px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 ${focusedWindow === 'safari' ? 'z-40' : 'z-20'}`}
+            className={`pointer-events-auto absolute w-[900px] h-[600px] bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 ${focusedWindow === 'safari' ? 'z-40' : 'z-20'}`}
             style={{ left: safariPosition.x, top: safariPosition.y }}
             onClick={() => setFocusedWindow('safari')}
           >
@@ -6109,6 +6072,18 @@ label="Brain Games"
           onClick={() => openCaseStudy('silas')}
         />
 
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 flex items-center justify-center">
+              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_16px_rgba(168,85,247,0.9)] animate-pulse">
+                <div className="absolute top-1.5 left-2 w-3 h-3 rounded-full bg-white/60 blur-[2px]" />
+              </div>
+            </div>
+          }
+          label="Luna"
+          onClick={() => setShowLunaPopup(true)}
+        />
+
         {/* Minimized Windows Section */}
         {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
           <>
@@ -6280,6 +6255,46 @@ label="Brain Games"
           </>
         )}
       </div>
+
+      {/* Luna - upcoming popup */}
+      {showLunaPopup && (
+        <div
+          className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setShowLunaPopup(false)}
+        >
+          <div
+            className="relative w-[340px] bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowLunaPopup(false)}
+              className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
+              <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_28px_rgba(168,85,247,0.85)] mb-4 animate-pulse">
+                <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
+              <p className="mt-1 text-sm text-gray-500">AI companion</p>
+              <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
+                Upcoming
+              </span>
+              <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
+                Luna is coming soon. Please message me for details.
+              </p>
+              <a
+                href="mailto:hello@charitydupont.com"
+                className="mt-4 text-sm font-medium text-blue-600 hover:underline"
+              >
+                hello@charitydupont.com
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
@@ -6389,7 +6404,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   return (
     <div
       ref={windowRef}
-      className={`absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isDragging ? 'select-none cursor-grabbing' : ''} transition-all duration-200`}
+      className={`pointer-events-auto absolute bg-white rounded-xl shadow-2xl overflow-hidden border border-black/10 animate-in zoom-in-95 fade-in duration-200 flex flex-col ${isFocused ? 'z-40' : 'z-20'} ${isDragging ? 'select-none cursor-grabbing' : ''} transition-all duration-200`}
       style={{
         left: windowPosition.x,
         top: windowPosition.y,
