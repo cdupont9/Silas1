@@ -2211,6 +2211,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <p className="text-[15px] text-black leading-relaxed">
                     Passionate UX/UI designer creating meaningful digital experiences. I combine user research, visual design, and prototyping to deliver solutions users love.
                   </p>
+                  <p className="text-[15px] text-black leading-relaxed mt-3">
+                    My work focuses on designing and prototyping proof-of-concept experiences rather than shipping production features. Much of what I do is driven by emerging AI research, exploring new interaction patterns and translating them into user-centered concepts.
+                  </p>
                 </div>
               </div>
 
@@ -5461,6 +5464,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     </p>
                     <p className="mb-4 text-black/80 leading-relaxed">
                       I am a dedicated and passionate UX/UI designer, leveraging my unique background and commitment to continuous learning to drive meaningful and impactful user experiences.
+                    </p>
+                    <p className="mb-4 text-black/80 leading-relaxed">
+                      My work focuses on designing and prototyping proof-of-concept experiences rather than shipping production features. Much of what I do is driven by emerging AI research, exploring new interaction patterns and translating them into user-centered concepts.
                     </p>
                     <p className="text-black/80">
                       {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
