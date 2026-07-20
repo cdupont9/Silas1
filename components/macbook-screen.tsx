@@ -148,6 +148,9 @@ const messageContacts = [
   }
 ]
 
+// localStorage key used to remember a visitor's session across refreshes
+const SESSION_STORAGE_KEY = 'charity-portfolio-session-v1'
+
 // Background options - videos (moving) and images (static)
 const BACKGROUND_OPTIONS = [
   // Moving / animated video backgrounds
@@ -293,6 +296,7 @@ export function MacBookScreen() {
   const [braingamesGameState, setBraingamesGameState] = useState<BrainGamesState>(initialBrainGamesState)
   
   const [mounted, setMounted] = useState(false)
+  const [hydrated, setHydrated] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
 
   // Background state
@@ -655,6 +659,146 @@ export function MacBookScreen() {
     return () => clearInterval(interval)
   }, [])
 
+  // Restore the visitor's session (wallpaper, open windows, messages, game, case study, etc.)
+  // from a previous visit so a refresh keeps everything how they left it.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(SESSION_STORAGE_KEY)
+      if (raw) {
+        const s = JSON.parse(raw)
+        if (s.screenState) setScreenState(s.screenState)
+        if (s.mobileScreen) setMobileScreen(s.mobileScreen)
+        if ('mobileCaseStudy' in s) setMobileCaseStudy(s.mobileCaseStudy)
+        if (s.backgroundId) {
+          const bg = BACKGROUND_OPTIONS.find((b) => b.id === s.backgroundId)
+          if (bg) setSelectedBackground(bg)
+        }
+        if (Array.isArray(s.chatMessages)) setChatMessages(s.chatMessages)
+        if (Array.isArray(s.desktopConversations)) setDesktopConversations(s.desktopConversations)
+        if (Array.isArray(s.mobileConversations)) setMobileConversations(s.mobileConversations)
+        if (s.selectedContact) setSelectedContact(s.selectedContact)
+        if (s.desktopSelectedNote) setDesktopSelectedNote(s.desktopSelectedNote)
+        if (typeof s.braingamesScore === 'number') setBraingamesScore(s.braingamesScore)
+        if (s.braingamesGameState) setBraingamesGameState(s.braingamesGameState)
+        if (s.aboutWindow) setAboutWindow(s.aboutWindow)
+        if (s.projectsFolder) setProjectsFolder(s.projectsFolder)
+        if (s.safariWindow) setSafariWindow(s.safariWindow)
+        if (typeof s.safariUrl === 'string') setSafariUrl(s.safariUrl)
+        if (s.messagesWindow) setMessagesWindow(s.messagesWindow)
+        if (s.notesWindow) setNotesWindow(s.notesWindow)
+        if (s.photosWindow) setPhotosWindow(s.photosWindow)
+        if (s.caseStudiesFolder) setCaseStudiesFolder(s.caseStudiesFolder)
+        if (s.braingamesWindow) setBraingamesWindow(s.braingamesWindow)
+        if (s.backgroundsFolder) setBackgroundsFolder(s.backgroundsFolder)
+        if (s.aiAssistantWindow) setAiAssistantWindow(s.aiAssistantWindow)
+        if (s.openCaseStudies) setOpenCaseStudies(s.openCaseStudies)
+        if (s.focusedWindow) setFocusedWindow(s.focusedWindow)
+        if (s.positions) {
+          const p = s.positions
+          if (p.braingames) setBraingamesPosition(p.braingames)
+          if (p.backgrounds) setBackgroundsPosition(p.backgrounds)
+          if (p.safari) setSafariPosition(p.safari)
+          if (p.aiAssistant) setAiAssistantPosition(p.aiAssistant)
+          if (p.about) setAboutPosition(p.about)
+          if (p.photos) setPhotosPosition(p.photos)
+          if (p.caseStudies) setCaseStudiesPosition(p.caseStudies)
+          if (p.messages) setMessagesPosition(p.messages)
+          if (p.notes) setNotesPosition(p.notes)
+          if (p.projects) setProjectsPosition(p.projects)
+        }
+      }
+    } catch {
+      // Ignore corrupt/unavailable storage and fall back to defaults.
+    }
+    setHydrated(true)
+  }, [])
+
+  // Persist the session whenever any tracked piece of state changes (only after
+  // the initial restore, so we never overwrite the saved session with defaults).
+  useEffect(() => {
+    if (!hydrated) return
+    try {
+      const snapshot = {
+        // Never persist the transient "loading" boot animation.
+        screenState: screenState === 'loading' ? 'desktop' : screenState,
+        mobileScreen,
+        mobileCaseStudy,
+        backgroundId: selectedBackground?.id,
+        chatMessages,
+        desktopConversations,
+        mobileConversations,
+        selectedContact,
+        desktopSelectedNote,
+        braingamesScore,
+        braingamesGameState,
+        aboutWindow,
+        projectsFolder,
+        safariWindow,
+        safariUrl,
+        messagesWindow,
+        notesWindow,
+        photosWindow,
+        caseStudiesFolder,
+        braingamesWindow,
+        backgroundsFolder,
+        aiAssistantWindow,
+        openCaseStudies,
+        focusedWindow,
+        positions: {
+          braingames: braingamesPosition,
+          backgrounds: backgroundsPosition,
+          safari: safariPosition,
+          aiAssistant: aiAssistantPosition,
+          about: aboutPosition,
+          photos: photosPosition,
+          caseStudies: caseStudiesPosition,
+          messages: messagesPosition,
+          notes: notesPosition,
+          projects: projectsPosition,
+        },
+      }
+      localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(snapshot))
+    } catch {
+      // Storage may be full or unavailable; ignore.
+    }
+  }, [
+    hydrated,
+    screenState,
+    mobileScreen,
+    mobileCaseStudy,
+    selectedBackground,
+    chatMessages,
+    desktopConversations,
+    mobileConversations,
+    selectedContact,
+    desktopSelectedNote,
+    braingamesScore,
+    braingamesGameState,
+    aboutWindow,
+    projectsFolder,
+    safariWindow,
+    safariUrl,
+    messagesWindow,
+    notesWindow,
+    photosWindow,
+    caseStudiesFolder,
+    braingamesWindow,
+    backgroundsFolder,
+    aiAssistantWindow,
+    openCaseStudies,
+    focusedWindow,
+    braingamesPosition,
+    backgroundsPosition,
+    safariPosition,
+    aiAssistantPosition,
+    aboutPosition,
+    photosPosition,
+    caseStudiesPosition,
+    messagesPosition,
+    notesPosition,
+    projectsPosition,
+  ])
+
 const handleLogin = (e: React.FormEvent) => {
   e.preventDefault()
   setScreenState("loading")
@@ -671,6 +815,16 @@ const handleLogin = (e: React.FormEvent) => {
     setProjectsFolder({ isOpen: false, isMinimized: false })
     setSafariWindow({ isOpen: false, isMinimized: false, project: null })
     setMessagesWindow({ isOpen: false, isMinimized: false })
+  }
+
+  // Restart wipes the saved session and reloads the site back to its original state.
+  const handleRestart = () => {
+    try {
+      localStorage.removeItem(SESSION_STORAGE_KEY)
+    } catch {
+      // ignore
+    }
+    window.location.reload()
   }
   
   // Flashlight toggle using device torch
@@ -4605,7 +4759,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <DropdownMenuItem className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 Sleep
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-blue-500 focus:text-white">
+              <DropdownMenuItem onClick={handleRestart} className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 Restart...
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout} className="cursor-pointer focus:bg-blue-500 focus:text-white">
