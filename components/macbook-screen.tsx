@@ -148,9 +148,17 @@ const messageContacts = [
   }
 ]
 
-// Background options - videos and images
+// Background options - videos (moving) and images (static)
 const BACKGROUND_OPTIONS = [
+  // Moving / animated video backgrounds
   { id: 'sunflower', type: 'video', url: 'https://videos.pexels.com/video-files/5150392/5150392-hd_1920_1080_30fps.mp4', preview: 'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Sunflower' },
+  { id: 'earth', type: 'video', url: 'https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4', preview: 'https://images.pexels.com/videos/3129957/pictures/preview-0.jpg', name: 'Digital Earth' },
+  { id: 'circuit', type: 'video', url: 'https://videos.pexels.com/video-files/2792370/2792370-hd_1920_1080_30fps.mp4', preview: 'https://images.pexels.com/videos/2792370/pictures/preview-0.jpg', name: 'Circuit' },
+  { id: 'particles', type: 'video', url: 'https://videos.pexels.com/video-files/3141210/3141210-hd_1920_1080_25fps.mp4', preview: 'https://images.pexels.com/videos/3141210/pictures/preview-0.jpg', name: 'Particles' },
+  { id: 'city', type: 'video', url: 'https://videos.pexels.com/video-files/3121459/3121459-uhd_2560_1440_24fps.mp4', preview: 'https://images.pexels.com/videos/3121459/pictures/preview-0.jpg', name: 'City' },
+  { id: 'coast', type: 'video', url: 'https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4', preview: 'https://images.pexels.com/videos/2169880/pictures/preview-0.jpg', name: 'Coastline' },
+  { id: 'waterfall', type: 'video', url: 'https://videos.pexels.com/video-files/6981411/6981411-hd_1920_1080_25fps.mp4', preview: 'https://images.pexels.com/videos/6981411/pictures/preview-0.jpg', name: 'Waterfall' },
+  // Static image backgrounds
   { id: 'mountains', type: 'image', url: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Mountains' },
   { id: 'sunset', type: 'image', url: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=300', name: 'Sunset' },
   { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Aurora' },
@@ -5044,12 +5052,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           : 'hover:bg-black/5'
                         }`}
                     >
-                      <div className="w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
+                      <div className="relative w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
                         <img
                           src={bg.preview}
                           alt={bg.name}
                           className="w-full h-full object-cover"
                         />
+                        {bg.type === 'video' && (
+                          <span className="absolute bottom-1 right-1 flex items-center gap-0.5 bg-black/60 text-white text-[8px] font-semibold px-1 py-0.5 rounded-full backdrop-blur-sm">
+                            <span className="w-1 h-1 rounded-full bg-red-400 animate-pulse" />
+                            LIVE
+                          </span>
+                        )}
                       </div>
                       <span className={`text-[11px] text-center leading-tight font-medium ${selectedBackground.id === bg.id ? 'text-blue-600' : 'text-gray-700'
                         }`}>{bg.name}</span>
