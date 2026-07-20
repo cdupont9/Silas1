@@ -148,9 +148,20 @@ const messageContacts = [
   }
 ]
 
-// Background options - videos and images
+// localStorage key used to remember a visitor's session across refreshes
+const SESSION_STORAGE_KEY = 'charity-portfolio-session-v1'
+
+// Background options - videos (moving) and images (static)
 const BACKGROUND_OPTIONS = [
+  // Moving / animated video backgrounds
   { id: 'sunflower', type: 'video', url: 'https://videos.pexels.com/video-files/5150392/5150392-hd_1920_1080_30fps.mp4', preview: 'https://images.pexels.com/photos/1366630/pexels-photo-1366630.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Sunflower' },
+  { id: 'earth', type: 'video', url: 'https://videos.pexels.com/video-files/3129957/3129957-hd_1920_1080_25fps.mp4', preview: 'https://images.pexels.com/videos/3129957/pictures/preview-0.jpg', name: 'Digital Earth' },
+  { id: 'circuit', type: 'video', url: 'https://videos.pexels.com/video-files/2792370/2792370-hd_1920_1080_30fps.mp4', preview: 'https://images.pexels.com/videos/2792370/pictures/preview-0.jpg', name: 'Circuit' },
+  { id: 'particles', type: 'video', url: 'https://videos.pexels.com/video-files/3141210/3141210-hd_1920_1080_25fps.mp4', preview: 'https://images.pexels.com/videos/3141210/pictures/preview-0.jpg', name: 'Particles' },
+  { id: 'city', type: 'video', url: 'https://videos.pexels.com/video-files/3121459/3121459-uhd_2560_1440_24fps.mp4', preview: 'https://images.pexels.com/videos/3121459/pictures/preview-0.jpg', name: 'City' },
+  { id: 'coast', type: 'video', url: 'https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_30fps.mp4', preview: 'https://images.pexels.com/videos/2169880/pictures/preview-0.jpg', name: 'Coastline' },
+  { id: 'waterfall', type: 'video', url: 'https://videos.pexels.com/video-files/6981411/6981411-hd_1920_1080_25fps.mp4', preview: 'https://images.pexels.com/videos/6981411/pictures/preview-0.jpg', name: 'Waterfall' },
+  // Static image backgrounds
   { id: 'mountains', type: 'image', url: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Mountains' },
   { id: 'sunset', type: 'image', url: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=300', name: 'Sunset' },
   { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Aurora' },
@@ -285,6 +296,7 @@ export function MacBookScreen() {
   const [braingamesGameState, setBraingamesGameState] = useState<BrainGamesState>(initialBrainGamesState)
   
   const [mounted, setMounted] = useState(false)
+  const [hydrated, setHydrated] = useState(false)
   const [focusedWindow, setFocusedWindow] = useState<string>('caseStudies') // Track which window is on top
 
   // Background state
@@ -647,6 +659,146 @@ export function MacBookScreen() {
     return () => clearInterval(interval)
   }, [])
 
+  // Restore the visitor's session (wallpaper, open windows, messages, game, case study, etc.)
+  // from a previous visit so a refresh keeps everything how they left it.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(SESSION_STORAGE_KEY)
+      if (raw) {
+        const s = JSON.parse(raw)
+        if (s.screenState) setScreenState(s.screenState)
+        if (s.mobileScreen) setMobileScreen(s.mobileScreen)
+        if ('mobileCaseStudy' in s) setMobileCaseStudy(s.mobileCaseStudy)
+        if (s.backgroundId) {
+          const bg = BACKGROUND_OPTIONS.find((b) => b.id === s.backgroundId)
+          if (bg) setSelectedBackground(bg)
+        }
+        if (Array.isArray(s.chatMessages)) setChatMessages(s.chatMessages)
+        if (Array.isArray(s.desktopConversations)) setDesktopConversations(s.desktopConversations)
+        if (Array.isArray(s.mobileConversations)) setMobileConversations(s.mobileConversations)
+        if (s.selectedContact) setSelectedContact(s.selectedContact)
+        if (s.desktopSelectedNote) setDesktopSelectedNote(s.desktopSelectedNote)
+        if (typeof s.braingamesScore === 'number') setBraingamesScore(s.braingamesScore)
+        if (s.braingamesGameState) setBraingamesGameState(s.braingamesGameState)
+        if (s.aboutWindow) setAboutWindow(s.aboutWindow)
+        if (s.projectsFolder) setProjectsFolder(s.projectsFolder)
+        if (s.safariWindow) setSafariWindow(s.safariWindow)
+        if (typeof s.safariUrl === 'string') setSafariUrl(s.safariUrl)
+        if (s.messagesWindow) setMessagesWindow(s.messagesWindow)
+        if (s.notesWindow) setNotesWindow(s.notesWindow)
+        if (s.photosWindow) setPhotosWindow(s.photosWindow)
+        if (s.caseStudiesFolder) setCaseStudiesFolder(s.caseStudiesFolder)
+        if (s.braingamesWindow) setBraingamesWindow(s.braingamesWindow)
+        if (s.backgroundsFolder) setBackgroundsFolder(s.backgroundsFolder)
+        if (s.aiAssistantWindow) setAiAssistantWindow(s.aiAssistantWindow)
+        if (s.openCaseStudies) setOpenCaseStudies(s.openCaseStudies)
+        if (s.focusedWindow) setFocusedWindow(s.focusedWindow)
+        if (s.positions) {
+          const p = s.positions
+          if (p.braingames) setBraingamesPosition(p.braingames)
+          if (p.backgrounds) setBackgroundsPosition(p.backgrounds)
+          if (p.safari) setSafariPosition(p.safari)
+          if (p.aiAssistant) setAiAssistantPosition(p.aiAssistant)
+          if (p.about) setAboutPosition(p.about)
+          if (p.photos) setPhotosPosition(p.photos)
+          if (p.caseStudies) setCaseStudiesPosition(p.caseStudies)
+          if (p.messages) setMessagesPosition(p.messages)
+          if (p.notes) setNotesPosition(p.notes)
+          if (p.projects) setProjectsPosition(p.projects)
+        }
+      }
+    } catch {
+      // Ignore corrupt/unavailable storage and fall back to defaults.
+    }
+    setHydrated(true)
+  }, [])
+
+  // Persist the session whenever any tracked piece of state changes (only after
+  // the initial restore, so we never overwrite the saved session with defaults).
+  useEffect(() => {
+    if (!hydrated) return
+    try {
+      const snapshot = {
+        // Never persist the transient "loading" boot animation.
+        screenState: screenState === 'loading' ? 'desktop' : screenState,
+        mobileScreen,
+        mobileCaseStudy,
+        backgroundId: selectedBackground?.id,
+        chatMessages,
+        desktopConversations,
+        mobileConversations,
+        selectedContact,
+        desktopSelectedNote,
+        braingamesScore,
+        braingamesGameState,
+        aboutWindow,
+        projectsFolder,
+        safariWindow,
+        safariUrl,
+        messagesWindow,
+        notesWindow,
+        photosWindow,
+        caseStudiesFolder,
+        braingamesWindow,
+        backgroundsFolder,
+        aiAssistantWindow,
+        openCaseStudies,
+        focusedWindow,
+        positions: {
+          braingames: braingamesPosition,
+          backgrounds: backgroundsPosition,
+          safari: safariPosition,
+          aiAssistant: aiAssistantPosition,
+          about: aboutPosition,
+          photos: photosPosition,
+          caseStudies: caseStudiesPosition,
+          messages: messagesPosition,
+          notes: notesPosition,
+          projects: projectsPosition,
+        },
+      }
+      localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(snapshot))
+    } catch {
+      // Storage may be full or unavailable; ignore.
+    }
+  }, [
+    hydrated,
+    screenState,
+    mobileScreen,
+    mobileCaseStudy,
+    selectedBackground,
+    chatMessages,
+    desktopConversations,
+    mobileConversations,
+    selectedContact,
+    desktopSelectedNote,
+    braingamesScore,
+    braingamesGameState,
+    aboutWindow,
+    projectsFolder,
+    safariWindow,
+    safariUrl,
+    messagesWindow,
+    notesWindow,
+    photosWindow,
+    caseStudiesFolder,
+    braingamesWindow,
+    backgroundsFolder,
+    aiAssistantWindow,
+    openCaseStudies,
+    focusedWindow,
+    braingamesPosition,
+    backgroundsPosition,
+    safariPosition,
+    aiAssistantPosition,
+    aboutPosition,
+    photosPosition,
+    caseStudiesPosition,
+    messagesPosition,
+    notesPosition,
+    projectsPosition,
+  ])
+
 const handleLogin = (e: React.FormEvent) => {
   e.preventDefault()
   setScreenState("loading")
@@ -663,6 +815,16 @@ const handleLogin = (e: React.FormEvent) => {
     setProjectsFolder({ isOpen: false, isMinimized: false })
     setSafariWindow({ isOpen: false, isMinimized: false, project: null })
     setMessagesWindow({ isOpen: false, isMinimized: false })
+  }
+
+  // Restart wipes the saved session and reloads the site back to its original state.
+  const handleRestart = () => {
+    try {
+      localStorage.removeItem(SESSION_STORAGE_KEY)
+    } catch {
+      // ignore
+    }
+    window.location.reload()
   }
   
   // Flashlight toggle using device torch
@@ -4597,7 +4759,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <DropdownMenuItem className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 Sleep
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer focus:bg-blue-500 focus:text-white">
+              <DropdownMenuItem onClick={handleRestart} className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 Restart...
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout} className="cursor-pointer focus:bg-blue-500 focus:text-white">
@@ -5044,12 +5206,18 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           : 'hover:bg-black/5'
                         }`}
                     >
-                      <div className="w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
+                      <div className="relative w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
                         <img
                           src={bg.preview}
                           alt={bg.name}
                           className="w-full h-full object-cover"
                         />
+                        {bg.type === 'video' && (
+                          <span className="absolute bottom-1 right-1 flex items-center gap-0.5 bg-black/60 text-white text-[8px] font-semibold px-1 py-0.5 rounded-full backdrop-blur-sm">
+                            <span className="w-1 h-1 rounded-full bg-red-400 animate-pulse" />
+                            LIVE
+                          </span>
+                        )}
                       </div>
                       <span className={`text-[11px] text-center leading-tight font-medium ${selectedBackground.id === bg.id ? 'text-blue-600' : 'text-gray-700'
                         }`}>{bg.name}</span>
