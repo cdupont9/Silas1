@@ -6952,15 +6952,19 @@ function LunaCaseStudy() {
           <p className="text-black/60 text-center mb-14 max-w-2xl mx-auto">
             Every AI has invisible states, but most systems hide them. Luna makes those states visible through behavior, not shape.
           </p>
-          <div className="mb-8">
-            <img src="/images/luna/states.png" alt="Luna's three states shown as orbs: a soft purple Listening orb, a brighter purple Reasoning orb with shimmering particles, and a glowing teal Speaking orb." className="w-full h-auto" />
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
             {states.map((s) => (
               <div key={s.name} className="flex flex-col items-center text-center">
-                <h3 className="text-xl font-semibold text-black mb-1">{s.name}</h3>
-                <p className="text-sm font-medium mb-3" style={{ color: s.color }}>{s.caption}</p>
-                <p className="text-black/60 text-sm leading-relaxed">{s.description}</p>
+                <div className="mb-6 flex h-40 w-full items-center justify-center">
+                  <img
+                    src={`/images/luna/state-${s.name.toLowerCase()}.png`}
+                    alt={`${s.name} state orb`}
+                    className="h-36 w-36 object-contain"
+                  />
+                </div>
+                <h3 className="mb-1 text-xl font-semibold text-black">{s.name}</h3>
+                <p className="mb-3 text-sm font-medium" style={{ color: s.color }}>{s.caption}</p>
+                <p className="text-sm leading-relaxed text-black/60">{s.description}</p>
               </div>
             ))}
           </div>
