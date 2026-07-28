@@ -228,7 +228,7 @@ const caseStudies = {
     role: "End-to-End Product Designer",
     timeline: "3-Day Sprint",
     tools: ["Google Chrome", "Python", "JavaScript"],
-    challenge: "How do you make an AI participant feel present without becoming distracting? Meeting agents could perform tasks but lacked an interaction model for presence, state, and intent, with no research docs, no user interviews, and no design system to build on in only 3 days.",
+    challenge: "How do you make an AI participant feel present without becoming distracting? Meeting agents could perform tasks but lacked an interaction model for presence, state, and intent. There were no research documents, user interviews, existing product patterns, or design system to build from.",
     solution: "Rather than styling an interface, I defined an interaction space. Luna is a purple orb that breathes, glows, and changes state, exposing an agent's Listening, Reasoning, and Speaking states through color and motion, integrated directly inside a real Google Meet call via a Chrome extension and local bridge.",
     results: ["Made invisible AI states legible", "Presence without distraction", "Trust through anticipation", "Working in-call prototype"],
     color: "from-purple-500 to-indigo-700",
@@ -6734,16 +6734,8 @@ function LunaCaseStudy() {
     <div className="bg-white text-black">
       {/* Hero Section */}
       <div className="relative py-24 px-8 bg-gradient-to-b from-[#0f0a1f] via-[#160f2e] to-[#1a1030] text-white overflow-hidden">
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div
-            className="w-[420px] h-[420px] rounded-full blur-3xl opacity-40"
-            style={{ background: "radial-gradient(circle, rgba(139,92,246,0.9) 0%, rgba(76,29,149,0.3) 60%, transparent 75%)" }}
-          />
-        </div>
         <div className="relative max-w-4xl mx-auto text-center">
-          <div className="w-28 h-28 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl ring-2 ring-purple-400/40">
-            <img src="/images/luna/hero-orb.png" alt="Luna orb" className="w-full h-full object-cover" />
-          </div>
+          <img src="/images/luna/hero-orb.png" alt="Luna's primary listening orb" className="w-36 h-36 mx-auto mb-8 object-contain drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]" />
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Luna</h1>
           <p className="text-xl text-purple-100/90 mb-3">An AI meeting companion you can read.</p>
           <p className="text-lg text-white/60 leading-relaxed max-w-2xl mx-auto italic">
@@ -6787,17 +6779,15 @@ function LunaCaseStudy() {
           </div>
           <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
             <h3 className="text-sm font-semibold text-purple-600 mb-2">The Constraints</h3>
-            <p className="text-black/70 text-sm leading-relaxed">3 days to a leadership demo. No research docs, no user interviews, no design system.</p>
+            <p className="text-black/70 text-sm leading-relaxed">No research documents, user interviews, existing product patterns, or design system to build from.</p>
           </div>
         </div>
         <p className="text-lg text-black/80 leading-relaxed mb-8">
           There was nothing to iterate on: no product, no research, and no system. I wasn&rsquo;t styling an interface, I was defining an interaction space.
         </p>
         <figure>
-          <div className="aspect-video overflow-hidden rounded-2xl bg-[#111] shadow-lg ring-1 ring-black/10">
-            <img src="/images/luna/meet-finn.png" alt="A Google Meet grid with three visible participants and one blank tile labeled Finn. The AI agent is in the call but completely invisible." className="h-full w-full scale-[1.03] object-cover" />
-          </div>
-          <figcaption className="px-1 pt-3 text-xs text-black/50">Finn is in the call, but invisible. There is no sign it is listening, reasoning, or about to speak.</figcaption>
+          <img src="/images/luna/meet-finn.png" alt="A Google Meet grid with three visible participants and one blank tile labeled Finn. The AI agent is in the call but completely invisible." className="block h-auto w-full" />
+          <figcaption className="pt-3 text-xs text-black/50">Finn is in the call, but invisible. There is no sign it is listening, reasoning, or about to speak.</figcaption>
         </figure>
       </div>
 
