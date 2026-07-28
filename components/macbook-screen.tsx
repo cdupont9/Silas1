@@ -178,6 +178,8 @@ const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.c
 
 const ABOUT_BIO = "Charity Dupont is an American UX designer known for specializing in AI-native interaction design and rapid agentic AI development and coding. Her work centers on designing and prototyping proof-of-concept experiences that translate emerging AI research into intuitive, human-centered interactions that help teams explore what’s next."
 
+const ABOUT_NOTES_BIO = `${ABOUT_BIO}\n\nBefore moving into UX design, Charity was an educator who taught fourth grade. Her classroom experience shaped how she approaches complex ideas, human behavior, and the design of experiences that feel clear and intuitive.\n\nOriginally from Chicago, Illinois, Charity now lives in New Jersey.`
+
 // Resume PDF URL
 const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/222ae9bd-abc9-40f6-887f-1215096ab32a-Charity%20DuPont%20-May%202026%20.pdf"
 
@@ -2094,7 +2096,7 @@ const messageText = mobileInput.trim()
           preview: "American UX designer specializing in AI-native interaction design...",
           date: "Today",
           hasImages: false,
-          content: ABOUT_BIO
+          content: ABOUT_NOTES_BIO
         },
         {
           id: 2,
@@ -5574,9 +5576,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 ) : desktopSelectedNote === 'about' ? (
                   <div className="text-black">
                     <h1 className="text-3xl font-bold mb-6">About</h1>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      {ABOUT_BIO}
-                    </p>
+                    {ABOUT_NOTES_BIO.split("\n\n").map((paragraph) => (
+                      <p key={paragraph} className="mb-4 text-black/80 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
                     <p className="text-black/80">
                       {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
                     </p>
