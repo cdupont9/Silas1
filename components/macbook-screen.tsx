@@ -176,6 +176,8 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 // Full photo for About window
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
+const ABOUT_BIO = "Charity Dupont is an American UX designer known for specializing in AI-native interaction design and rapid agentic AI development and coding. Her work centers on designing and prototyping proof-of-concept experiences that translate emerging AI research into intuitive, human-centered interactions that help teams explore what’s next."
+
 // Resume PDF URL
 const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/222ae9bd-abc9-40f6-887f-1215096ab32a-Charity%20DuPont%20-May%202026%20.pdf"
 
@@ -1436,16 +1438,6 @@ const messageText = mobileInput.trim()
                   <span className="text-white text-[11px] mt-1">Safari</span>
                 </button>
 
-                {/* DupontFlix */}
-                <button
-                  onClick={() => { setScreenState("netflixLoading"); setTimeout(() => setScreenState("netflix"), 1800); }}
-                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
-                >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-black flex items-center justify-center">
-                    <span className="text-red-600 font-bold text-3xl leading-none font-[family-name:var(--font-bebas-neue)]">D</span>
-                  </div>
-                  <span className="text-white text-[11px] mt-1">DupontFlix</span>
-                </button>
 
                 {/* Camera */}
                 <button
@@ -2098,22 +2090,11 @@ const messageText = mobileInput.trim()
       const notesData = [
         {
           id: 1,
-          title: "About My Work",
-          preview: "I'm a UX/UI designer passionate about creating meaningful digital experiences...",
+          title: "About Me",
+          preview: "American UX designer specializing in AI-native interaction design...",
           date: "Today",
           hasImages: false,
-          content: `I'm a UX/UI designer passionate about creating meaningful digital experiences that solve real problems.
-
-My approach combines user research, visual design, and prototyping to deliver solutions that users love.
-
-Key Skills:
-• User Research & Testing
-• Wireframing & Prototyping
-• Visual & Interaction Design
-• Design Systems
-• Figma & Design Tools
-
-Currently focused on mobile app design and AI-powered experiences.`
+          content: ABOUT_BIO
         },
         {
           id: 2,
@@ -2347,10 +2328,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
                 <div className="px-4 py-3">
                   <p className="text-[15px] text-black leading-relaxed">
-                    Passionate UX/UI designer creating meaningful digital experiences. I combine user research, visual design, and prototyping to deliver solutions users love.
-                  </p>
-                  <p className="text-[15px] text-black leading-relaxed mt-3">
-                    My work focuses on designing and prototyping proof-of-concept experiences rather than shipping production features. Much of what I do is driven by emerging AI research, exploring new interaction patterns and translating them into user-centered concepts.
+                    {ABOUT_BIO}
                   </p>
                 </div>
               </div>
@@ -5345,10 +5323,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                 </div>
               </div>
-              <div className="mt-4 bg-neutral-100 rounded-xl p-4 text-xs text-black/80 leading-relaxed">
-                <p className="mb-2">{"I'm"} Charity Dupont, a UX Designer based in New York/NJ.</p>
-                <p>I spent my early career as a 4th-grade teacher before bringing my passion for human cognition to tech via Columbia {"University's"} UX/UI program. Today, {"I'm"} a UX Designer at Google, where I use rapid prototyping and user psychology to help people navigate the complexities of generative AI.</p>
-              </div>
+          <div className="mt-4 bg-neutral-100 rounded-xl p-4 text-xs text-black/80 leading-relaxed">
+            <p>{ABOUT_BIO}</p>
+          </div>
               {/* Resume Section */}
               <div className="mt-4 bg-neutral-100 rounded-xl p-4">
                 <p className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-3">Resume</p>
@@ -5597,18 +5574,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 ) : desktopSelectedNote === 'about' ? (
                   <div className="text-black">
                     <h1 className="text-3xl font-bold mb-6">About</h1>
-                    <p className="mb-4">I am Charity Dupont.</p>
                     <p className="mb-4 text-black/80 leading-relaxed">
-                      As a UX/UI Designer in this dynamic field, I am on an exciting journey of discovery and innovation. My professional foundation is strengthened by a unique perspective, drawn from a background in education, which provides a deep understanding of how people learn and interact with information, a critical element for designing world-class products. My foundational skills were developed at the Columbia University Bootcamp, where I became proficient in using design tools and methodologies to create intuitive and engaging user experiences.
-                    </p>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      I excel at empathizing with users, understanding their needs and pain points, and my approach is rigorously user-centered, ensuring that my designs are not only aesthetically pleasing but also highly functional. I value feedback and iteration, constantly seeking ways to improve my work. Furthermore, my experience as a teacher has honed my ability to communicate complex ideas clearly and effectively, a crucial skill for collaborating with stakeholders and cross-functional teams.
-                    </p>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      I am a dedicated and passionate UX/UI designer, leveraging my unique background and commitment to continuous learning to drive meaningful and impactful user experiences.
-                    </p>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      My work focuses on designing and prototyping proof-of-concept experiences rather than shipping production features. Much of what I do is driven by emerging AI research, exploring new interaction patterns and translating them into user-centered concepts.
+                      {ABOUT_BIO}
                     </p>
                     <p className="text-black/80">
                       {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
@@ -6223,16 +6190,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           }
           label="Safari"
           onClick={() => { setSafariWindow({ isOpen: true, isMinimized: false, project: null }); setFocusedWindow('safari'); }}
-        />
-
-        <DockIcon
-          icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-black flex items-center justify-center">
-              <span className="text-red-600 font-bold text-2xl leading-none font-[family-name:var(--font-bebas-neue)]">D</span>
-            </div>
-          }
-          label="DupontFlix"
-          onClick={() => { setScreenState("netflixLoading"); setTimeout(() => setScreenState("netflix"), 1800); }}
         />
 
         <DockIcon
