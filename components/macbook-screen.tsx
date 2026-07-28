@@ -232,8 +232,8 @@ const caseStudies = {
     solution: "Rather than styling an interface, I defined an interaction space. Luna is a purple orb that breathes, glows, and changes state, exposing an agent's Listening, Reasoning, and Speaking states through color and motion, integrated directly inside a real Google Meet call via a Chrome extension and local bridge.",
     results: ["Made invisible AI states legible", "Presence without distraction", "Trust through anticipation", "Working in-call prototype"],
     color: "from-purple-500 to-indigo-700",
-    icon: "/images/luna-orb.png",
-    screenshot: "/images/luna-orb.png",
+    icon: "/images/luna/hero-orb.png",
+    screenshot: "/images/luna/hero-orb.png",
     isFullCaseStudy: true
   },
   silas: {
@@ -6706,9 +6706,9 @@ function LunaCaseStudy() {
     {
       name: "Speaking",
       caption: "\u201cit\u2019s talking\u201d",
-      color: "#22c55e",
-      glow: "rgba(34,197,94,0.6)",
-      description: "Green \u2014 the \u2018live\u2019 cue we already trust from mic and record lights.",
+      color: "#14b8a6",
+      glow: "rgba(20,184,166,0.6)",
+      description: "Teal \u2014 the \u2018live\u2019 cue we already trust from mic and record lights.",
     },
   ]
 
@@ -6742,7 +6742,7 @@ function LunaCaseStudy() {
         </div>
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="w-28 h-28 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl ring-2 ring-purple-400/40">
-            <img src="/images/luna-orb.png" alt="Luna orb" className="w-full h-full object-cover" />
+            <img src="/images/luna/hero-orb.png" alt="Luna orb" className="w-full h-full object-cover" />
           </div>
           <p className="text-purple-300/80 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Case Study 01</p>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Luna</h1>
@@ -6795,9 +6795,13 @@ function LunaCaseStudy() {
             <p className="text-black/70 text-sm leading-relaxed">3 days to a leadership demo. No research docs, no user interviews, no design system.</p>
           </div>
         </div>
-        <p className="text-lg text-black/80 leading-relaxed">
+        <p className="text-lg text-black/80 leading-relaxed mb-8">
           Nothing to iterate on: no product, no research, no system. I wasn&rsquo;t styling an interface &mdash; I was defining an interaction space.
         </p>
+        <figure className="rounded-2xl overflow-hidden border border-black/10 shadow-lg bg-[#111]">
+          <img src="/images/luna/meet-finn.png" alt="A Google Meet grid with three visible participants and one blank tile labeled Finn — the AI agent is in the call but completely invisible." className="w-full h-auto" />
+          <figcaption className="text-xs text-black/50 px-4 py-3 border-t border-black/5 bg-white">Finn &mdash; in the call, but invisible. No sign it was listening, reasoning, or about to speak.</figcaption>
+        </figure>
       </div>
 
       {/* 02 Designing Trust */}
@@ -6855,11 +6859,17 @@ function LunaCaseStudy() {
           <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Prototype → Pivot</p>
           <h2 className="text-3xl font-bold mb-4 text-black">v1 shipped in hours &mdash; and taught the biggest lesson</h2>
           <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white rounded-2xl p-6 border border-red-100 shadow-sm">
+            <div className="bg-white rounded-2xl p-4 border border-red-100 shadow-sm">
+              <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
+                <img src="/images/luna/pivot-beside.png" alt="Prototype v1: a standalone window sitting beside Google Meet with a You tile and a separate Luna 3.0 companion orb." className="w-full h-auto" />
+              </div>
               <p className="text-red-500 font-semibold mb-2">✕ Beside the meeting</p>
               <p className="text-black/70 text-sm leading-relaxed">Pretending to be Google Meet. It worked technically and failed experientially.</p>
             </div>
-            <div className="bg-white rounded-2xl p-6 border border-green-100 shadow-sm">
+            <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
+              <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
+                <img src="/images/luna/pivot-inside.png" alt="Prototype v2: Luna 2.0 appears as a purple orb tile directly inside a real Google Meet call alongside the human participants." className="w-full h-auto" />
+              </div>
               <p className="text-green-600 font-semibold mb-2">✓ Inside the meeting</p>
               <p className="text-black/70 text-sm leading-relaxed">The one people are already having. The failure <span className="font-semibold">was</span> the insight.</p>
             </div>
@@ -6918,21 +6928,28 @@ function LunaCaseStudy() {
           <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
             The loop in practice &mdash; voice in, code out. Talking beats typing: voice kept me in design mode and made every iteration faster.
           </p>
-          <div className="flex flex-col md:flex-row items-stretch gap-4 mb-8">
-            <div className="flex-1 bg-white rounded-xl p-6 border border-black/5 shadow-sm text-center">
-              <p className="text-black font-medium text-sm">Voice in, code out</p>
+          <div className="grid md:grid-cols-3 gap-4 mb-8 items-stretch">
+            <figure className="flex flex-col">
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-[#1a1a1a] aspect-[4/3]">
+                <img src="/images/luna/code.png" alt="An AI coding assistant transcript describing low-latency and deduplication fixes it implemented for Luna inside the Google Meet call." className="w-full h-full object-cover object-top" />
+              </div>
+              <figcaption className="text-black font-medium text-sm mt-3">Voice in, code out</figcaption>
               <p className="text-black/60 text-xs mt-1">talking beats typing</p>
-            </div>
-            <div className="flex items-center justify-center text-purple-400 font-bold">→</div>
-            <div className="flex-1 bg-white rounded-xl p-6 border border-black/5 shadow-sm text-center">
-              <p className="text-black font-medium text-sm">The Quick Portal</p>
+            </figure>
+            <figure className="flex flex-col">
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-[#0d0a1a] aspect-[4/3] flex items-center justify-center">
+                <img src="/images/luna/portal.png" alt="The Quick Portal: a dark panel with a Deploy Luna button and a field to paste any active Google Meet link." className="h-full w-auto object-contain" />
+              </div>
+              <figcaption className="text-black font-medium text-sm mt-3">The Quick Portal</figcaption>
               <p className="text-black/60 text-xs mt-1">one click to deploy</p>
-            </div>
-            <div className="flex items-center justify-center text-purple-400 font-bold">→</div>
-            <div className="flex-1 bg-white rounded-xl p-6 border border-black/5 shadow-sm text-center">
-              <p className="text-black font-medium text-sm">Luna joins the real Meet call</p>
+            </figure>
+            <figure className="flex flex-col">
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-black aspect-[4/3]">
+                <img src="/images/luna/pivot-inside.png" alt="Luna joins a real Google Meet call as an orb tile beside the human participants." className="w-full h-full object-cover" />
+              </div>
+              <figcaption className="text-black font-medium text-sm mt-3">Luna joins the real Meet call</figcaption>
               <p className="text-black/60 text-xs mt-1">not a simulation</p>
-            </div>
+            </figure>
           </div>
           <p className="text-sm text-black/60 leading-relaxed">
             <span className="font-semibold text-black/80">Roles worn:</span> Designer · Creative Director · Systems Thinker · Product Owner · Prompt Architect · QA Tester · Iteration Lead. Hundreds of micro-decisions &mdash; every one was a design call.
@@ -6948,15 +6965,12 @@ function LunaCaseStudy() {
           <p className="text-black/60 text-center mb-14 max-w-2xl mx-auto">
             Every AI has invisible states. Most AI hides them. Luna exposes them &mdash; that&rsquo;s the innovation. Differentiated by behavior, not shape.
           </p>
+          <div className="rounded-3xl overflow-hidden bg-white shadow-xl ring-1 ring-black/5 mb-8">
+            <img src="/images/luna/states.png" alt="Luna's three states shown as orbs: a soft purple Listening orb, a brighter purple Reasoning orb with shimmering particles, and a glowing teal Speaking orb." className="w-full h-auto" />
+          </div>
           <div className="grid md:grid-cols-3 gap-8">
             {states.map((s) => (
               <div key={s.name} className="flex flex-col items-center text-center">
-                <div className="h-40 flex items-center justify-center mb-6">
-                  <div
-                    className="w-24 h-24 rounded-full animate-pulse"
-                    style={{ background: `radial-gradient(circle at 35% 30%, #ffffff 0%, ${s.color} 45%, ${s.color} 100%)`, boxShadow: `0 0 60px 12px ${s.glow}` }}
-                  />
-                </div>
                 <h3 className="text-xl font-semibold text-black mb-1">{s.name}</h3>
                 <p className="text-sm font-medium mb-3" style={{ color: s.color }}>{s.caption}</p>
                 <p className="text-black/60 text-sm leading-relaxed">{s.description}</p>
