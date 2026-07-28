@@ -6753,6 +6753,31 @@ function LunaCaseStudy() {
         </div>
       </div>
 
+      {/* Live Demo */}
+      <div className="bg-[#0a0a0a] py-16 border-b border-white/5">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3 text-center">See It Live</p>
+          <h2 className="text-3xl font-bold mb-3 text-white text-center text-balance">Luna, inside a real Google Meet call</h2>
+          <p className="text-white/60 text-center mb-8 max-w-2xl mx-auto leading-relaxed">
+            The working prototype: Luna joins the call as an orb, listens, and shifts state as she speaks &mdash; you can read exactly what she&rsquo;s doing without a single caption.
+          </p>
+          <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black">
+            <video
+              src="/videos/luna-demo.mp4"
+              poster="/images/luna/demo-poster.png"
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-auto"
+              aria-label="Screen recording of Luna 3.0 running live in a Google Meet call, changing state as she listens and speaks."
+            />
+          </div>
+          <p className="text-white/40 text-xs text-center mt-3">Unmute to hear the live conversation between Luna and Charity.</p>
+        </div>
+      </div>
+
       {/* Project Info */}
       <div className="max-w-4xl mx-auto px-8 py-12 border-b border-black/10">
         <div className="grid md:grid-cols-4 gap-8">
