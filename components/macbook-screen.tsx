@@ -1340,9 +1340,7 @@ const messageText = mobileInput.trim()
                 onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
                 className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
               >
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-[#0f0a1f] shadow">
-                  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-14 w-14 object-contain" />
-                </div>
+                <img src="/images/luna/hero-orb.png" alt="Luna" className="h-16 w-16 object-contain drop-shadow-[0_0_12px_rgba(139,92,246,0.5)]" />
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-gray-900">Luna</h3>
                   <p className="text-gray-500 text-sm">Body language, without a body</p>
@@ -5501,9 +5499,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   {/* Pulsing highlight rings */}
   <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
   <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
-  <div className="relative flex h-32 w-32 items-center justify-center rounded-[28px] bg-[#0f0a1f] shadow-2xl transition-transform duration-200 group-hover:scale-105">
-  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-28 w-28 object-contain" />
-  </div>
+  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-32 w-32 object-contain drop-shadow-[0_0_24px_rgba(139,92,246,0.65)] transition-transform duration-200 group-hover:scale-105" />
   </button>
   
   <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Luna</h2>
