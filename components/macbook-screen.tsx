@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, Check, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -6863,14 +6863,14 @@ function LunaCaseStudy() {
               <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
                 <img src="/images/luna/pivot-beside.png" alt="Prototype v1: a standalone window sitting beside Google Meet with a You tile and a separate Luna 3.0 companion orb." className="w-full h-auto" />
               </div>
-              <p className="text-red-500 font-semibold mb-2">✕ Beside the meeting</p>
+              <p className="text-red-500 font-semibold mb-2 flex items-center gap-2"><X className="w-4 h-4" /> Beside the meeting</p>
               <p className="text-black/70 text-sm leading-relaxed">Pretending to be Google Meet. It worked technically and failed experientially.</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
               <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
                 <img src="/images/luna/pivot-inside.png" alt="Prototype v2: Luna 2.0 appears as a purple orb tile directly inside a real Google Meet call alongside the human participants." className="w-full h-auto" />
               </div>
-              <p className="text-green-600 font-semibold mb-2">✓ Inside the meeting</p>
+              <p className="text-green-600 font-semibold mb-2 flex items-center gap-2"><Check className="w-4 h-4" /> Inside the meeting</p>
               <p className="text-black/70 text-sm leading-relaxed">The one people are already having. The failure <span className="font-semibold">was</span> the insight.</p>
             </div>
           </div>
