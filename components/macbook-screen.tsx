@@ -220,6 +220,22 @@ const caseStudies = {
     screenshot: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png",
     isFullCaseStudy: true
   },
+  luna: {
+    title: "Luna",
+    subtitle: "An AI Meeting Companion You Can Read",
+    hero: "Body language, without a body.",
+    overview: "Luna is an AI meeting companion that makes an agent's invisible states visible. An engineer's agent could already join calls and act, but with captions off it just started talking, with no sign it was listening, reasoning, or about to speak. Luna restores the missing nonverbal cues through motion, color, and animation.",
+    role: "Product Vision · AI UX · Design Direction",
+    timeline: "3-day sprint (ongoing)",
+    tools: ["Interaction Design", "Agentic Coding", "Chrome Extension", "Python", "Prompt Architecture"],
+    challenge: "How do you make an AI participant feel present without becoming distracting? Meeting agents could perform tasks but lacked an interaction model for presence, state, and intent, with no research docs, no user interviews, and no design system to build on in only 3 days.",
+    solution: "Rather than styling an interface, I defined an interaction space. Luna is a purple orb that breathes, glows, and changes state, exposing an agent's Listening, Reasoning, and Speaking states through color and motion, integrated directly inside a real Google Meet call via a Chrome extension and local bridge.",
+    results: ["Made invisible AI states legible", "Presence without distraction", "Trust through anticipation", "Working in-call prototype"],
+    color: "from-purple-500 to-indigo-700",
+    icon: "/images/luna-orb.png",
+    screenshot: "/images/luna-orb.png",
+    isFullCaseStudy: true
+  },
   silas: {
     title: "Silas",
     subtitle: "The Integrated AI Companion",
@@ -276,7 +292,6 @@ export function MacBookScreen() {
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [showSilasSpotlight, setShowSilasSpotlight] = useState(false)
-  const [showLunaPopup, setShowLunaPopup] = useState(false)
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -1476,7 +1491,7 @@ const messageText = mobileInput.trim()
 
                 {/* Luna */}
                 <button
-                  onClick={() => setShowLunaPopup(true)}
+                  onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
                   <div className="w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
@@ -1491,45 +1506,6 @@ const messageText = mobileInput.trim()
 
           </div>
 
-          {/* Luna - upcoming popup */}
-          {showLunaPopup && (
-            <div
-              className="absolute inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-6 animate-in fade-in duration-200"
-              onClick={() => setShowLunaPopup(false)}
-            >
-              <div
-                className="relative w-full max-w-[300px] bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={() => setShowLunaPopup(false)}
-                  className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 transition-colors"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-                <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
-                  <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_28px_rgba(168,85,247,0.85)] mb-4 animate-pulse">
-                    <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
-                  <p className="mt-1 text-sm text-gray-500">AI companion</p>
-                  <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
-                    Upcoming
-                  </span>
-                  <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
-                    Luna is coming soon. Please message me for details.
-                  </p>
-                  <a
-                    href="mailto:hello@charitydupont.com"
-                    className="mt-4 text-sm font-medium text-blue-600 hover:underline"
-                  >
-                    hello@charitydupont.com
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       )
     }
@@ -5309,7 +5285,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="flex-1 p-6 bg-white overflow-y-auto">
                   <p className="text-[12px] text-gray-500 mb-4 leading-relaxed">Independent projects from my Columbia University UX/UI Bootcamp.</p>
                   <div className="grid grid-cols-3 gap-6">
-                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas').map(([key, project]) => (
+                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas' && key !== 'luna').map(([key, project]) => (
                       <button
                         key={key}
                         onClick={(e) => { e.stopPropagation(); openCaseStudy(key); }}
@@ -6301,7 +6277,7 @@ label="Brain Games"
             </div>
           }
           label="Luna"
-          onClick={() => setShowLunaPopup(true)}
+          onClick={() => openCaseStudy('luna')}
         />
 
         {/* Minimized Windows Section */}
@@ -6476,45 +6452,6 @@ label="Brain Games"
         )}
       </div>
 
-      {/* Luna - upcoming popup */}
-      {showLunaPopup && (
-        <div
-          className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setShowLunaPopup(false)}
-        >
-          <div
-            className="relative w-[340px] bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowLunaPopup(false)}
-              className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 transition-colors"
-              aria-label="Close"
-            >
-              <X className="w-4 h-4" />
-            </button>
-            <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
-              <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_28px_rgba(168,85,247,0.85)] mb-4 animate-pulse">
-                <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
-              <p className="mt-1 text-sm text-gray-500">AI companion</p>
-              <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
-                Upcoming
-              </span>
-              <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
-                Luna is coming soon. Please message me for details.
-              </p>
-              <a
-                href="mailto:hello@charitydupont.com"
-                className="mt-4 text-sm font-medium text-blue-600 hover:underline"
-              >
-                hello@charitydupont.com
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -6618,6 +6555,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
   // Check which full case study to render
   const isSilas = project === 'silas'
+  const isLuna = project === 'luna'
   const isMeetly = project === 'meetly'
   const isTeammate = project === 'teammate'
 
@@ -6672,6 +6610,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
       <div className="flex-1 overflow-y-auto bg-[#0a0a0a]">
         {isSilas ? (
           <SilasCaseStudy />
+        ) : isLuna ? (
+          <LunaCaseStudy />
         ) : isMeetly ? (
           <MeetlyCaseStudy />
         ) : isTeammate ? (
@@ -6747,6 +6687,320 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 }
 
 // Full Silas Case Study Component
+function LunaCaseStudy() {
+  const states = [
+    {
+      name: "Listening",
+      caption: "\u201cI\u2019m being heard\u201d",
+      color: "#a78bfa",
+      glow: "rgba(167,139,250,0.55)",
+      description: "Soft purple, calm and ambient. Slow motion so attention never feels like surveillance.",
+    },
+    {
+      name: "Reasoning",
+      caption: "\u201cit\u2019s thinking\u201d",
+      color: "#7c3aed",
+      glow: "rgba(124,58,237,0.7)",
+      description: "Brighter purple with shimmering particles \u2014 thinking made visible, replacing dead air.",
+    },
+    {
+      name: "Speaking",
+      caption: "\u201cit\u2019s talking\u201d",
+      color: "#22c55e",
+      glow: "rgba(34,197,94,0.6)",
+      description: "Green \u2014 the \u2018live\u2019 cue we already trust from mic and record lights.",
+    },
+  ]
+
+  const questions = [
+    "Where should Luna live?",
+    "How should people discover her?",
+    "What should she look like?",
+    "When should she appear \u2014 and when disappear?",
+    "How should people know she\u2019s listening?",
+    "How should people know she\u2019s reasoning?",
+    "How should people know she\u2019s about to speak?",
+    "How can AI communicate without distracting?",
+  ]
+
+  const takeaways = [
+    "Designing for AI means designing behavior, not just interfaces.",
+    "Agentic coding requires understanding system architecture, even as a designer.",
+    "It works best when problems are decomposed into small, testable increments.",
+    "Trust comes from making an AI\u2019s internal state legible to users.",
+  ]
+
+  return (
+    <div className="bg-white text-black">
+      {/* Hero Section */}
+      <div className="relative py-24 px-8 bg-gradient-to-b from-[#0f0a1f] via-[#160f2e] to-[#1a1030] text-white overflow-hidden">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div
+            className="w-[420px] h-[420px] rounded-full blur-3xl opacity-40"
+            style={{ background: "radial-gradient(circle, rgba(139,92,246,0.9) 0%, rgba(76,29,149,0.3) 60%, transparent 75%)" }}
+          />
+        </div>
+        <div className="relative max-w-4xl mx-auto text-center">
+          <div className="w-28 h-28 mx-auto mb-8 rounded-full overflow-hidden shadow-2xl ring-2 ring-purple-400/40">
+            <img src="/images/luna-orb.png" alt="Luna orb" className="w-full h-full object-cover" />
+          </div>
+          <p className="text-purple-300/80 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Case Study 01</p>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">Luna</h1>
+          <p className="text-xl text-purple-100/90 mb-3">An AI meeting companion you can read.</p>
+          <p className="text-lg text-white/60 leading-relaxed max-w-2xl mx-auto italic">
+            &ldquo;Body language, without a body.&rdquo;
+          </p>
+        </div>
+      </div>
+
+      {/* Project Info */}
+      <div className="max-w-4xl mx-auto px-8 py-12 border-b border-black/10">
+        <div className="grid md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
+            <p className="text-black font-medium">Product Vision · AI UX · Design Direction</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Build</h3>
+            <p className="text-black font-medium">3-day sprint · ongoing</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Stack</h3>
+            <p className="text-black font-medium">Chrome ↔ local bridge ↔ Python</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Type</h3>
+            <p className="text-black font-medium">AI Interaction Design</p>
+          </div>
+        </div>
+      </div>
+
+      {/* 01 The Spark */}
+      <div className="max-w-4xl mx-auto px-8 py-16">
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">01 · The Spark</p>
+        <h2 className="text-3xl font-bold mb-6 text-black text-balance">
+          How do you make an AI participant feel present without becoming distracting?
+        </h2>
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
+            <h3 className="text-sm font-semibold text-purple-600 mb-2">The Pain</h3>
+            <p className="text-black/70 text-sm leading-relaxed">An engineer&rsquo;s agent could join calls and act, but with captions off it just started talking. No sign it was listening, reasoning, or about to speak.</p>
+          </div>
+          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
+            <h3 className="text-sm font-semibold text-purple-600 mb-2">The Opportunity</h3>
+            <p className="text-black/70 text-sm leading-relaxed">Meeting agents could already perform tasks, but lacked an interaction model for presence, state, and intent.</p>
+          </div>
+          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
+            <h3 className="text-sm font-semibold text-purple-600 mb-2">The Constraints</h3>
+            <p className="text-black/70 text-sm leading-relaxed">3 days to a leadership demo. No research docs, no user interviews, no design system.</p>
+          </div>
+        </div>
+        <p className="text-lg text-black/80 leading-relaxed">
+          Nothing to iterate on: no product, no research, no system. I wasn&rsquo;t styling an interface &mdash; I was defining an interaction space.
+        </p>
+      </div>
+
+      {/* 02 Designing Trust */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">02 · Designing Trust</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Not &ldquo;how should it look?&rdquo; &mdash; how should an AI feel?</h2>
+          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
+            Humans constantly signal state: eye contact, a breath in before speaking, leaning forward, a smile. The agent before Luna did none of it &mdash; it just started talking, with no transition and no anticipation. I wasn&rsquo;t designing a chatbot. I was designing trust.
+          </p>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-sm">
+              <h3 className="text-sm font-semibold text-black mb-3">Humans signal state</h3>
+              <ul className="text-black/70 text-sm leading-relaxed space-y-1">
+                <li>Eye contact</li>
+                <li>A breath in before speaking</li>
+                <li>Leaning forward · a smile</li>
+                <li>Glancing around · pauses</li>
+              </ul>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-sm">
+              <h3 className="text-sm font-semibold text-black mb-3">The agent before Luna</h3>
+              <ul className="text-black/70 text-sm leading-relaxed space-y-1">
+                <li>Suddenly interrupts</li>
+                <li>Raises a hand from nowhere</li>
+                <li>Just starts talking</li>
+                <li>No transition · no anticipation</li>
+              </ul>
+            </div>
+          </div>
+          <p className="text-lg text-black/80 leading-relaxed mt-8">
+            Signaled intent lowers cognitive load. Luna restores the missing nonverbal cues through motion, color, and animation &mdash; a breath before speaking.
+          </p>
+        </div>
+      </div>
+
+      {/* 03 The Questions */}
+      <div className="max-w-4xl mx-auto px-8 py-16">
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">03 · The Questions</p>
+        <h2 className="text-3xl font-bold mb-4 text-black">Experience questions came first</h2>
+        <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">Before building anything, the question was not &ldquo;how do I code this?&rdquo; I asked how Luna should <span className="font-semibold">feel</span> before deciding how she&rsquo;d look. Feel first, pixels later.</p>
+        <div className="grid md:grid-cols-2 gap-4">
+          {questions.map((q, i) => (
+            <div key={i} className="flex items-start gap-4 bg-neutral-50 rounded-xl p-5 border border-black/5">
+              <span className="text-purple-600 font-bold text-lg shrink-0">{String(i + 1).padStart(2, "0")}</span>
+              <p className="text-black/80 text-sm leading-relaxed">{q}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 04 Prototype to Pivot */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Prototype → Pivot</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">v1 shipped in hours &mdash; and taught the biggest lesson</h2>
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-2xl p-6 border border-red-100 shadow-sm">
+              <p className="text-red-500 font-semibold mb-2">✕ Beside the meeting</p>
+              <p className="text-black/70 text-sm leading-relaxed">Pretending to be Google Meet. It worked technically and failed experientially.</p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border border-green-100 shadow-sm">
+              <p className="text-green-600 font-semibold mb-2">✓ Inside the meeting</p>
+              <p className="text-black/70 text-sm leading-relaxed">The one people are already having. The failure <span className="font-semibold">was</span> the insight.</p>
+            </div>
+          </div>
+          <p className="text-lg text-black/80 leading-relaxed mb-8">
+            Reframe: &ldquo;How do I bridge an AI experience into an existing product?&rdquo; This is a systems problem, not an interface problem.
+          </p>
+          <div className="bg-gradient-to-br from-[#1a1030] to-[#2a1a4a] rounded-2xl p-8 text-white">
+            <h3 className="text-lg font-semibold mb-3 text-purple-200">Why an orb?</h3>
+            <p className="text-white/70 text-sm leading-relaxed">
+              Presence without a face gives a calm form that can breathe, glow, and change state. Body language, without a body.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* 05 The Bridge */}
+      <div className="max-w-4xl mx-auto px-8 py-16">
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">05 · The Bridge</p>
+        <h2 className="text-3xl font-bold mb-4 text-black">Learning enough engineering (not becoming one)</h2>
+        <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
+          Luna lives locally, Google Meet lives inside Chrome &mdash; different environments. How can they communicate? The goal: a Chrome extension so Luna joins real meetings, not a simulation.
+        </p>
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
+            <p className="text-xs font-bold text-purple-600 mb-2">JS</p>
+            <p className="text-black font-medium text-sm mb-1">Chrome + Google Meet</p>
+            <p className="text-black/60 text-xs">JavaScript controls the browser</p>
+          </div>
+          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
+            <p className="text-xs font-bold text-purple-600 mb-2">⇄</p>
+            <p className="text-black font-medium text-sm mb-1">Local bridge</p>
+            <p className="text-black/60 text-xs">relays events both ways</p>
+          </div>
+          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
+            <p className="text-xs font-bold text-purple-600 mb-2">Py</p>
+            <p className="text-black font-medium text-sm mb-1">Python + local AI</p>
+            <p className="text-black/60 text-xs">processing &amp; reasoning</p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {["JavaScript", "Python", "Browser extensions", "Local servers", "APIs", "Messaging"].map((t) => (
+            <span key={t} className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-medium rounded-full border border-purple-100">{t}</span>
+          ))}
+        </div>
+        <p className="text-lg text-black/80 leading-relaxed">
+          I didn&rsquo;t learn Python to code. I learned the system so the experience could exist &mdash; through YouTube deep-dives, quick chats with our engineers, and self-directed research.
+        </p>
+      </div>
+
+      {/* 06 Directing the Agent */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">06 · Directing the Agent</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Design intent becomes specific</h2>
+          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
+            The loop in practice &mdash; voice in, code out. Talking beats typing: voice kept me in design mode and made every iteration faster.
+          </p>
+          <div className="flex flex-col md:flex-row items-stretch gap-4 mb-8">
+            <div className="flex-1 bg-white rounded-xl p-6 border border-black/5 shadow-sm text-center">
+              <p className="text-black font-medium text-sm">Voice in, code out</p>
+              <p className="text-black/60 text-xs mt-1">talking beats typing</p>
+            </div>
+            <div className="flex items-center justify-center text-purple-400 font-bold">→</div>
+            <div className="flex-1 bg-white rounded-xl p-6 border border-black/5 shadow-sm text-center">
+              <p className="text-black font-medium text-sm">The Quick Portal</p>
+              <p className="text-black/60 text-xs mt-1">one click to deploy</p>
+            </div>
+            <div className="flex items-center justify-center text-purple-400 font-bold">→</div>
+            <div className="flex-1 bg-white rounded-xl p-6 border border-black/5 shadow-sm text-center">
+              <p className="text-black font-medium text-sm">Luna joins the real Meet call</p>
+              <p className="text-black/60 text-xs mt-1">not a simulation</p>
+            </div>
+          </div>
+          <p className="text-sm text-black/60 leading-relaxed">
+            <span className="font-semibold text-black/80">Roles worn:</span> Designer · Creative Director · Systems Thinker · Product Owner · Prompt Architect · QA Tester · Iteration Lead. Hundreds of micro-decisions &mdash; every one was a design call.
+          </p>
+        </div>
+      </div>
+
+      {/* 07 States & Color */}
+      <div className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
+          <h2 className="text-3xl font-bold mb-4 text-center text-black">Making invisible states visible</h2>
+          <p className="text-black/60 text-center mb-14 max-w-2xl mx-auto">
+            Every AI has invisible states. Most AI hides them. Luna exposes them &mdash; that&rsquo;s the innovation. Differentiated by behavior, not shape.
+          </p>
+          <div className="grid md:grid-cols-3 gap-8">
+            {states.map((s) => (
+              <div key={s.name} className="flex flex-col items-center text-center">
+                <div className="h-40 flex items-center justify-center mb-6">
+                  <div
+                    className="w-24 h-24 rounded-full animate-pulse"
+                    style={{ background: `radial-gradient(circle at 35% 30%, #ffffff 0%, ${s.color} 45%, ${s.color} 100%)`, boxShadow: `0 0 60px 12px ${s.glow}` }}
+                  />
+                </div>
+                <h3 className="text-xl font-semibold text-black mb-1">{s.name}</h3>
+                <p className="text-sm font-medium mb-3" style={{ color: s.color }}>{s.caption}</p>
+                <p className="text-black/60 text-sm leading-relaxed">{s.description}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-sm text-black/60 leading-relaxed text-center mt-12 max-w-2xl mx-auto">
+            <span className="font-semibold text-black/80">Trained expectations I leveraged:</span> ChatGPT Voice · Gemini Live · Siri · Alexa. Luna reads instantly because it borrows cues people already trust.
+          </p>
+        </div>
+      </div>
+
+      {/* 08 Trust & Reflection */}
+      <div className="bg-gradient-to-br from-[#0f0a1f] to-[#1a1030] py-16 text-white">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3">08 · Trust &amp; Reflection</p>
+          <h2 className="text-3xl font-bold mb-6">What I actually built</h2>
+          <p className="text-white/70 leading-relaxed mb-10 max-w-2xl">
+            I transformed an invisible AI system into an experience people could understand, anticipate, and trust &mdash; through clear behavioral cues, visual states, and seamless integration into a real meeting environment. Not &ldquo;I used AI to build Luna&rdquo; &mdash; I led the design of an AI meeting companion: its behavior, visual language, interaction model, and technical direction.
+          </p>
+          <div className="grid md:grid-cols-2 gap-4 mb-10">
+            {takeaways.map((t, i) => (
+              <div key={i} className="flex items-start gap-4 bg-white/5 rounded-xl p-5 border border-white/10">
+                <span className="text-purple-300 font-bold shrink-0">{i + 1}</span>
+                <p className="text-white/80 text-sm leading-relaxed">{t}</p>
+              </div>
+            ))}
+          </div>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+              <h3 className="text-sm font-semibold text-purple-200 mb-2">Why this matters</h3>
+              <p className="text-white/70 text-sm leading-relaxed">Ambiguous problem → interaction framework → working model. That&rsquo;s the job.</p>
+            </div>
+            <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+              <h3 className="text-sm font-semibold text-purple-200 mb-2">Still exploring</h3>
+              <p className="text-white/70 text-sm leading-relaxed">3D character &amp; richer motion · hand-raise turn-taking · sharper state animations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function SilasCaseStudy() {
   return (
     <div className="bg-white text-black">
