@@ -271,7 +271,7 @@ export function MacBookScreen() {
       setScreenState("loading")
       setTimeout(() => {
         setScreenState("desktop")
-        setShowSilasSpotlight(true)
+        setShowLunaSpotlight(true)
       }, 2500)
     }
   }
@@ -291,7 +291,7 @@ export function MacBookScreen() {
   const [openCaseStudies, setOpenCaseStudies] = useState<{ [key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } } }>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [showSilasSpotlight, setShowSilasSpotlight] = useState(false)
+  const [showLunaSpotlight, setShowLunaSpotlight] = useState(false)
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -819,8 +819,8 @@ const handleLogin = (e: React.FormEvent) => {
   setScreenState("loading")
   setTimeout(() => {
   setScreenState("desktop")
-  // Spotlight the Silas case study as the primary call to action
-  setShowSilasSpotlight(true)
+  // Spotlight the Luna case study as the primary call to action
+  setShowLunaSpotlight(true)
   }, 2500)
   }
 
@@ -1330,20 +1330,22 @@ const messageText = mobileInput.trim()
               <WeatherWidget className="w-full" />
             </div>
 
-            {/* Featured Case Study - Silas */}
+            {/* Featured Case Study - Luna */}
             <div className="mx-4 mt-6">
               <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
                 <Folder className="w-5 h-5" />
                 Featured Case Study
               </h2>
               <button
-                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
+                onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
                 className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
               >
-                <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-[#0f0a1f] shadow">
+                  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-14 w-14 object-contain" />
+                </div>
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-gray-900">Silas</h3>
-                  <p className="text-gray-500 text-sm">The Integrated AI Companion</p>
+                  <h3 className="font-bold text-gray-900">Luna</h3>
+                  <p className="text-gray-500 text-sm">Body language, without a body</p>
                   <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -4756,7 +4758,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 About
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-black/10" />
-              <DropdownMenuItem onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
+              <DropdownMenuItem onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 <Folder className="w-4 h-4 mr-2 opacity-70" />
                 Bootcamp Case Studies
               </DropdownMenuItem>
@@ -4949,7 +4951,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
           {/* Bootcamp Case Studies desktop folder */}
           <button
-            onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
+            onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
             className="flex flex-col items-center gap-1.5 w-28 group"
           >
             <div className="w-20 h-16 group-hover:scale-110 transition-transform">
@@ -5480,44 +5482,44 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* AI Assistant Window - Front and Center */}
-        {/* Silas Spotlight - primary call to action on the desktop */}
-        {showSilasSpotlight && (
-          <div
-            className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
-            onClick={() => setShowSilasSpotlight(false)}
-          >
-            <div
-              className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
-                className="relative group"
-                aria-label="Open the Silas case study"
-              >
-                {/* Pulsing highlight rings */}
-                <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
-                <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
-                <div className="relative w-32 h-32 rounded-[28px] overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-200">
-                  <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
-                </div>
-              </button>
-
-              <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Silas</h2>
-              <p className="text-white/80 text-sm mt-1 drop-shadow">The Integrated AI Companion</p>
-
-              {/* Arrow + Click here */}
-              <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
-              <button
-                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
+  {/* AI Assistant Window - Front and Center */}
+  {/* Luna Spotlight - primary call to action on the desktop */}
+  {showLunaSpotlight && (
+  <div
+  className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
+  onClick={() => setShowLunaSpotlight(false)}
+  >
+  <div
+  className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
+  onClick={(e) => e.stopPropagation()}
+  >
+  <button
+  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
+  className="relative group"
+  aria-label="Open the Luna case study"
+  >
+  {/* Pulsing highlight rings */}
+  <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
+  <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
+  <div className="relative flex h-32 w-32 items-center justify-center rounded-[28px] bg-[#0f0a1f] shadow-2xl transition-transform duration-200 group-hover:scale-105">
+  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-28 w-28 object-contain" />
+  </div>
+  </button>
+  
+  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Luna</h2>
+  <p className="text-white/80 text-sm mt-1 drop-shadow">Body language, without a body</p>
+  
+  {/* Arrow + Click here */}
+  <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
+  <button
+  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
                 className="mt-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold shadow-xl hover:bg-white/90 transition-colors flex items-center gap-2"
               >
                 <MousePointerClick className="w-4 h-4" />
                 Click here
               </button>
               <button
-                onClick={() => setShowSilasSpotlight(false)}
+                onClick={() => setShowLunaSpotlight(false)}
                 className="mt-3 text-white/70 text-xs hover:text-white transition-colors underline underline-offset-2"
               >
                 or explore the desktop on your own
