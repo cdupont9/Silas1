@@ -1981,6 +1981,10 @@ const messageText = mobileInput.trim()
 
           {/* Case Study Content */}
           <div className="flex-1 overflow-y-auto">
+            {mobileCaseStudy === "luna" ? (
+              <LunaCaseStudy />
+            ) : (
+              <>
             {/* View on Desktop Banner */}
             <div className="bg-gray-900 px-4 py-3 flex items-center justify-center gap-2">
               <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -2077,6 +2081,8 @@ const messageText = mobileInput.trim()
                 </p>
               </div>
             </div>
+              </>
+            )}
           </div>
 
           {/* Home Indicator */}
@@ -6647,29 +6653,6 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
 // Full Silas Case Study Component
 function LunaCaseStudy() {
-  return (
-    <section className="flex h-full min-h-[680px] flex-col bg-neutral-100" aria-label="Luna case study">
-      <div className="flex items-center justify-between gap-4 border-b border-black/10 bg-white px-4 py-3 sm:px-6">
-        <div>
-          <p className="text-sm font-semibold text-black">Luna Case Study</p>
-          <p className="text-xs text-black/60">Charity Dupont · UX Designer &amp; Researcher</p>
-        </div>
-        <a
-          href="/luna-case-study.pdf"
-          download
-          className="shrink-0 rounded-full border border-black/15 px-3 py-2 text-xs font-medium text-black transition-colors hover:bg-neutral-100"
-        >
-          Download PDF
-        </a>
-      </div>
-      <iframe
-        src="/luna-case-study.pdf#page=4&view=FitH&toolbar=0&navpanes=0"
-        title="Luna case study by Charity Dupont"
-        className="min-h-0 flex-1 border-0 bg-neutral-200"
-      />
-    </section>
-  )
-
   const states = [
     {
       name: "Listening",
@@ -6730,15 +6713,15 @@ function LunaCaseStudy() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
-            <p className="text-black font-medium">End-to-End Product Designer</p>
+            <p className="text-black font-medium">UX Designer &amp; Researcher</p>
           </div>
           <div>
-            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Build</h3>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Length</h3>
             <p className="text-black font-medium">3-Day Sprint</p>
           </div>
           <div>
-            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Stack</h3>
-            <p className="text-black font-medium">Google Chrome, Python, JavaScript</p>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Type</h3>
+            <p className="text-black font-medium">End-to-End Product</p>
           </div>
         </div>
       </div>
