@@ -228,13 +228,13 @@ const caseStudies = {
     title: "Luna",
     subtitle: "An AI Meeting Companion You Can Read",
     hero: "Body language, without a body.",
-    overview: "Luna is an AI meeting companion that makes an agent's invisible states visible. The agent could already join calls and act, but it could begin speaking with no visible indication that it was listening, reasoning, or preparing to respond. Luna restores these missing nonverbal cues through motion, color, and animation.",
+    overview: "Luna is an interaction model for making AI behavior understandable, predictable, and trustworthy. It translates invisible states into human-readable signals through motion, color, timing, and animation.",
     role: "End-to-End Product Designer",
     timeline: "3-Day Sprint",
     tools: ["Google Chrome", "Python", "JavaScript"],
-    challenge: "How do you make an AI participant feel present without becoming distracting? Meeting agents could perform tasks but lacked an interaction model for presence, state, and intent. There were no research documents, user interviews, existing product patterns, or design system to build from.",
-    solution: "Rather than styling an interface, I defined an interaction space. Luna is a purple orb that breathes, glows, and changes state, exposing an agent's Listening, Reasoning, and Speaking states through color and motion, integrated directly inside a real Google Meet call via a Chrome extension and local bridge.",
-    results: ["Made invisible AI states legible", "Presence without distraction", "Trust through anticipation", "Working in-call prototype"],
+    challenge: "Meeting assistants can already transcribe, answer questions, and take action, but they rarely communicate when they are listening, reasoning, or preparing to respond. With no research documents, user interviews, existing product patterns, or design system to build from, the challenge was to define an interaction model for presence, state, and intent.",
+    solution: "I designed a behavioral framework around Persistent Presence, Progressive Disclosure, Legible State, and Predictable Agency. Luna exposes Listening, Reasoning, and Speaking through color and motion, then integrates that behavior directly into Google Meet through a Chrome extension and local bridge.",
+    results: ["Made invisible AI states legible", "Connected behavior to product architecture", "Signaled intent before action", "Validated a working in-call prototype"],
     color: "from-purple-500 to-indigo-700",
     icon: "/images/luna/hero-orb.png",
     screenshot: "/images/luna/hero-orb.png",
@@ -6671,23 +6671,22 @@ function LunaCaseStudy() {
     },
   ]
 
-  const questions = [
-    "Where should Luna live?",
-    "How should people discover her?",
-    "What should she look like?",
-    "When should she appear \u2014 and when disappear?",
-    "How should people know she\u2019s listening?",
-    "How should people know she\u2019s reasoning?",
-    "How should people know she\u2019s about to speak?",
-    "How can AI communicate without distracting?",
+  const principles = [
+    { question: "Where should Luna live?", principle: "Persistent Presence" },
+    { question: "When should Luna appear?", principle: "Progressive Disclosure" },
+    { question: "How should Luna communicate?", principle: "Legible State" },
+    { question: "How should Luna respond?", principle: "Predictable Agency" },
   ]
 
   const takeaways = [
-    "Designing for AI means designing behavior, not just interfaces.",
-    "Agentic coding requires understanding system architecture, even as a designer.",
-    "It works best when problems are decomposed into small, testable increments.",
-    "Trust comes from making an AI\u2019s internal state legible to users.",
+    "Designing AI means designing behavior.",
+    "Behavior is part of the product architecture.",
+    "Trust depends on legibility.",
+    "Interaction precedes intelligence.",
+    "The strongest AI experiences communicate intent before action.",
   ]
+
+
 
   return (
     <div className="bg-white text-black">
@@ -6696,7 +6695,7 @@ function LunaCaseStudy() {
         <div className="relative max-w-4xl mx-auto text-center">
           <img src="/images/luna/hero-orb.png" alt="Luna's primary listening orb" className="w-36 h-36 mx-auto mb-8 object-contain drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]" />
           <h1 className="text-5xl md:text-6xl font-bold mb-6">Luna</h1>
-          <p className="text-xl text-purple-100/90 mb-3">An AI meeting companion you can read.</p>
+          <p className="text-xl text-purple-100/90 mb-3">Designing behavior for agentic AI.</p>
           <p className="text-lg text-white/60 leading-relaxed max-w-2xl mx-auto italic">
             &ldquo;Body language, without a body.&rdquo;
           </p>
@@ -6721,28 +6720,31 @@ function LunaCaseStudy() {
         </div>
       </div>
 
-      {/* 01 The Spark */}
+      {/* The Agentic Gap */}
       <div className="max-w-4xl mx-auto px-8 py-16">
-        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">01 · The Spark</p>
-        <h2 className="text-3xl font-bold mb-6 text-black text-balance">
-          How do you make an AI participant feel present without becoming distracting?
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">The Agentic Gap</p>
+        <h2 className="text-3xl font-bold mb-5 text-black text-balance">
+          Intelligent systems can act. They still struggle to communicate behavior.
         </h2>
+        <p className="text-lg text-black/70 leading-relaxed mb-8 max-w-3xl">
+          Meeting assistants such as Zoom AI Companion and Microsoft 365 Copilot can join calls, transcribe conversations, answer questions, and take action. What they do not communicate clearly is when they are listening, reasoning, or preparing to respond.
+        </p>
         <div className="grid md:grid-cols-3 gap-6 mb-8">
           <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
-            <h3 className="text-sm font-semibold text-purple-600 mb-2">The Pain</h3>
-            <p className="text-black/70 text-sm leading-relaxed">An engineer&rsquo;s agent could join calls and act, but with captions off it just started talking. No sign it was listening, reasoning, or about to speak.</p>
+            <h3 className="text-sm font-semibold text-black mb-2">Existing assistants</h3>
+            <p className="text-black/70 text-sm leading-relaxed">Capable, but behaviorally invisible.</p>
           </div>
           <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
-            <h3 className="text-sm font-semibold text-purple-600 mb-2">The Opportunity</h3>
-            <p className="text-black/70 text-sm leading-relaxed">Meeting agents could already perform tasks, but lacked an interaction model for presence, state, and intent.</p>
+            <h3 className="text-sm font-semibold text-black mb-2">The uncertainty</h3>
+            <p className="text-black/70 text-sm leading-relaxed">Users cannot tell what the system is doing or what it will do next.</p>
           </div>
-          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
-            <h3 className="text-sm font-semibold text-purple-600 mb-2">The Constraints</h3>
-            <p className="text-black/70 text-sm leading-relaxed">No research documents, user interviews, existing product patterns, or design system to build from.</p>
+          <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
+            <h3 className="text-sm font-semibold text-purple-700 mb-2">Luna</h3>
+            <p className="text-black/70 text-sm leading-relaxed">Present, legible, and designed to signal intent before action.</p>
           </div>
         </div>
         <p className="text-lg text-black/80 leading-relaxed mb-8">
-          There was nothing to iterate on: no product, no research, and no system. I wasn&rsquo;t styling an interface, I was defining an interaction space.
+          Without visible cues for presence, state, and intent, intelligent systems remain difficult to understand and difficult to trust.
         </p>
         <figure>
           <img src="/images/luna/meet-finn.png" alt="A Google Meet grid with three visible participants and one blank tile labeled Finn. The AI agent is in the call but completely invisible." className="block h-auto w-full" />
@@ -6753,19 +6755,19 @@ function LunaCaseStudy() {
       {/* 02 Designing Trust */}
       <div className="bg-neutral-50 py-16">
         <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">02 · Designing Trust</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">Not &ldquo;how should it look?&rdquo; but how should an AI feel?</h2>
-          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
-            Humans constantly signal state through eye contact, a breath before speaking, leaning forward, or smiling. The agent before Luna did none of this. It simply started talking, with no transition or anticipation. I wasn&rsquo;t designing a chatbot. I was designing trust.
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">01 · The Spark</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">From capability to presence</h2>
+          <p className="text-black/70 leading-relaxed mb-8 max-w-3xl">
+            Existing assistants had intelligence, but they lacked interaction behavior. With no research documents, user interviews, existing product patterns, or design system to build from, I designed a behavioral framework that translated invisible AI state into understandable human signals through motion, color, timing, and animation.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-sm">
               <h3 className="text-sm font-semibold text-black mb-3">Humans signal state</h3>
               <ul className="text-black/70 text-sm leading-relaxed space-y-1">
                 <li>Eye contact</li>
-                <li>A breath in before speaking</li>
-                <li>Leaning forward · a smile</li>
-                <li>Glancing around · pauses</li>
+                <li>Breathing before speaking</li>
+                <li>Pauses that signal thought</li>
+                <li>Movement that signals intent</li>
               </ul>
             </div>
             <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-sm">
@@ -6784,18 +6786,32 @@ function LunaCaseStudy() {
         </div>
       </div>
 
-      {/* 03 The Questions */}
+      {/* 02 Designing Trust */}
       <div className="max-w-4xl mx-auto px-8 py-16">
-        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">03 · The Questions</p>
-        <h2 className="text-3xl font-bold mb-4 text-black">Experience questions came first</h2>
-        <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">Before building anything, the question was not &ldquo;how do I code this?&rdquo; I asked how Luna should <span className="font-semibold">feel</span> before deciding how she&rsquo;d look. Feel first, pixels later.</p>
-        <div className="grid md:grid-cols-2 gap-4">
-          {questions.map((q, i) => (
-            <div key={i} className="flex items-start gap-4 bg-neutral-50 rounded-xl p-5 border border-black/5">
-              <span className="text-purple-600 font-bold text-lg shrink-0">{String(i + 1).padStart(2, "0")}</span>
-              <p className="text-black/80 text-sm leading-relaxed">{q}</p>
-            </div>
-          ))}
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">02 · Designing Trust</p>
+        <h2 className="text-3xl font-bold mb-4 text-black">Designing nonverbal communication</h2>
+        <p className="text-black/70 leading-relaxed mb-8 max-w-3xl">Humans signal intent before speaking through eye contact, breathing, pauses, and movement. Luna applies that same principle to AI. Signaled intent lowers cognitive load and gives people time to understand what is happening before the system acts.</p>
+        <div className="rounded-2xl bg-[#171026] p-8 text-white">
+          <p className="text-sm font-semibold text-purple-200 mb-3">The design intervention</p>
+          <p className="text-xl leading-relaxed text-balance">I wasn&rsquo;t designing another interface. I was designing the presence of an AI teammate.</p>
+        </div>
+      </div>
+
+      {/* 03 Architectural Principles */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">03 · The Questions</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Architectural principles</h2>
+          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">Before building, I translated experience questions into principles that could guide both behavior and implementation.</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {principles.map((item, i) => (
+              <div key={item.principle} className="bg-white rounded-xl p-5 border border-black/5">
+                <span className="text-purple-600 font-bold text-sm">{String(i + 1).padStart(2, "0")}</span>
+                <p className="mt-3 text-black/60 text-sm">{item.question}</p>
+                <p className="mt-1 text-black font-semibold">{item.principle}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -6803,25 +6819,25 @@ function LunaCaseStudy() {
       <div className="bg-neutral-50 py-16">
         <div className="max-w-4xl mx-auto px-8">
           <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Prototype → Pivot</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">V1 shipped in hours and taught the biggest lesson</h2>
+          <h2 className="text-3xl font-bold mb-4 text-black">From prototype to product</h2>
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-white rounded-2xl p-4 border border-red-100 shadow-sm">
               <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
                 <img src="/images/luna/pivot-beside.png" alt="Prototype v1: a standalone window sitting beside Google Meet with a You tile and a separate Luna 3.0 companion orb." className="w-full h-auto" />
               </div>
               <p className="text-red-500 font-semibold mb-2 flex items-center gap-2"><X className="w-4 h-4" /> Beside the meeting</p>
-              <p className="text-black/70 text-sm leading-relaxed">Pretending to be Google Meet. It worked technically and failed experientially.</p>
+              <p className="text-black/70 text-sm leading-relaxed">Luna initially lived inside a dedicated video-call interface. It proved the behavior, but created another destination for people to manage.</p>
             </div>
             <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
               <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
                 <img src="/images/luna/pivot-inside.png" alt="Prototype v2: Luna 2.0 appears as a purple orb tile directly inside a real Google Meet call alongside the human participants." className="w-full h-auto" />
               </div>
               <p className="text-green-600 font-semibold mb-2 flex items-center gap-2"><Check className="w-4 h-4" /> Inside the meeting</p>
-              <p className="text-black/70 text-sm leading-relaxed">The one people are already having. The failure <span className="font-semibold">was</span> the insight.</p>
+              <p className="text-black/70 text-sm leading-relaxed">Moving the interaction into Google Meet made Luna part of the conversation instead of another application.</p>
             </div>
           </div>
           <p className="text-lg text-black/80 leading-relaxed mb-8">
-            Reframe: &ldquo;How do I bridge an AI experience into an existing product?&rdquo; This is a systems problem, not an interface problem.
+            The interaction model was never meant to compete with the meeting. It was meant to become part of it. That insight shifted Luna from a standalone concept into an integrated meeting companion.
           </p>
           <div className="bg-gradient-to-br from-[#1a1030] to-[#2a1a4a] rounded-2xl p-8 text-white">
             <h3 className="text-lg font-semibold mb-3 text-purple-200">Why an orb?</h3>
@@ -6835,7 +6851,7 @@ function LunaCaseStudy() {
       {/* 05 The Bridge */}
       <div className="max-w-4xl mx-auto px-8 py-16">
         <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">05 · The Bridge</p>
-        <h2 className="text-3xl font-bold mb-4 text-black">Learning enough engineering (not becoming one)</h2>
+          <h2 className="text-3xl font-bold mb-4 text-black">Building the technical bridge</h2>
         <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
           Luna lives locally, while Google Meet lives inside Chrome. The challenge was getting these different environments to communicate. The goal was a Chrome extension that lets Luna join real meetings, not a simulation.
         </p>
@@ -6862,7 +6878,7 @@ function LunaCaseStudy() {
           ))}
         </div>
         <p className="text-lg text-black/80 leading-relaxed">
-          I didn&rsquo;t learn Python to become an engineer. I learned the system so the experience could exist, using YouTube deep dives, quick conversations with our engineers, and self-directed research.
+          To make informed product decisions, I taught myself the fundamentals through documentation, engineering conversations, experimentation, and rapid prototyping. I learned enough engineering to lead the product, not to become an engineer.
         </p>
       </div>
 
@@ -6870,9 +6886,9 @@ function LunaCaseStudy() {
       <div className="bg-neutral-50 py-16">
         <div className="max-w-4xl mx-auto px-8">
           <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">06 · Directing the Agent</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">Design intent becomes specific</h2>
+          <h2 className="text-3xl font-bold mb-4 text-black">Directing the system</h2>
           <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
-            The loop in practice was voice in, code out. Talking kept me in design mode and made every iteration faster.
+            Natural language became a design medium. I directed AI to rapidly prototype, validate, and refine interaction behavior through one-click deployment and live validation.
           </p>
           <div className="grid md:grid-cols-3 gap-4 mb-8 items-stretch">
             <figure className="flex flex-col">
@@ -6898,7 +6914,7 @@ function LunaCaseStudy() {
             </figure>
           </div>
           <p className="text-sm text-black/60 leading-relaxed">
-            <span className="font-semibold text-black/80">What end-to-end design required:</span> creative direction, systems thinking, product decisions, prompt architecture, QA, and iteration. Hundreds of micro-decisions shaped the final experience.
+            <span className="font-semibold text-black/80">The working loop:</span> idea, build one thing, test, observe, refine, repeat. Hundreds of micro-decisions shaped the final experience.
           </p>
         </div>
       </div>
@@ -6962,9 +6978,9 @@ function LunaCaseStudy() {
       <div className="bg-gradient-to-br from-[#0f0a1f] to-[#1a1030] py-16 text-white">
         <div className="max-w-4xl mx-auto px-8">
           <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3">08 · Trust &amp; Reflection</p>
-          <h2 className="text-3xl font-bold mb-6">What I actually built</h2>
+          <h2 className="text-3xl font-bold mb-6">Design principles I learned</h2>
           <p className="text-white/70 leading-relaxed mb-10 max-w-2xl">
-            I transformed an invisible AI system into an experience people could understand, anticipate, and trust through clear behavioral cues, visual states, and seamless integration into a real meeting environment. I led the end-to-end design of Luna, including its behavior, visual language, interaction model, and technical direction.
+            Luna explores how behavioral design can transform an intelligent system into a trusted collaborator. The work connected interaction behavior, product architecture, and technical execution into one legible system.
           </p>
           <div className="grid md:grid-cols-2 gap-4 mb-10">
             {takeaways.map((t, i) => (
