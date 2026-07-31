@@ -6647,6 +6647,29 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
 // Full Silas Case Study Component
 function LunaCaseStudy() {
+  return (
+    <section className="flex h-full min-h-[680px] flex-col bg-neutral-100" aria-label="Luna case study">
+      <div className="flex items-center justify-between gap-4 border-b border-black/10 bg-white px-4 py-3 sm:px-6">
+        <div>
+          <p className="text-sm font-semibold text-black">Luna Case Study</p>
+          <p className="text-xs text-black/60">Charity Dupont · UX Designer &amp; Researcher</p>
+        </div>
+        <a
+          href="/luna-case-study.pdf"
+          download
+          className="shrink-0 rounded-full border border-black/15 px-3 py-2 text-xs font-medium text-black transition-colors hover:bg-neutral-100"
+        >
+          Download PDF
+        </a>
+      </div>
+      <iframe
+        src="/luna-case-study.pdf#page=4&view=FitH&toolbar=0&navpanes=0"
+        title="Luna case study by Charity Dupont"
+        className="min-h-0 flex-1 border-0 bg-neutral-200"
+      />
+    </section>
+  )
+
   const states = [
     {
       name: "Listening",
