@@ -165,6 +165,9 @@ const BACKGROUND_OPTIONS = [
   { id: 'mountains', type: 'image', url: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Mountains' },
   { id: 'sunset', type: 'image', url: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=300', name: 'Sunset' },
   { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Aurora' },
+  // Retro wallpapers — selecting one of these transforms the whole experience into an early-2000s Windows OS
+  { id: 'xp-bliss', type: 'image', url: '/images/retro/xp-bliss.png', preview: '/images/retro/xp-bliss.png', name: 'Windows XP', retro: 'xp' as const },
+  { id: 'win2000-teal', type: 'image', url: '/images/retro/win2000-teal.png', preview: '/images/retro/win2000-teal.png', name: 'Windows 2000', retro: 'win2000' as const },
 ]
 
 // Audio URL - Neo Soul Jazz Lo-fi Mix
