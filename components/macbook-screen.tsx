@@ -52,7 +52,7 @@ const mobileMessageContacts = [
     messages: [
       { from: 'charity', text: "Hey! Welcome to my portfolio on my iPhone!", time: '10:30 AM' },
       { from: 'charity', text: "Feel free to check out my case studies! Tap on any one of my case studies and explore.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
+      { from: 'charity', text: "I'm an agentic UX designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
     ]
   },
   {
@@ -180,7 +180,7 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 // Full photo for About window
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
-const ABOUT_BIO = "Charity Dupont is an American UX designer known for specializing in AI-native interaction design and rapid agentic AI development and coding. Her work centers on designing and prototyping proof-of-concept experiences that translate emerging AI research into intuitive, human-centered interactions that help teams explore what’s next."
+const ABOUT_BIO = "Charity Dupont is an American agentic UX designer known for specializing in AI-native interaction design and rapid agentic AI development and coding. Her work centers on designing and prototyping proof-of-concept experiences that translate emerging AI research into intuitive, human-centered interactions that help teams explore what’s next."
 
 const ABOUT_NOTES_BIO = `${ABOUT_BIO}\n\nBefore moving into UX design, Charity was an educator who taught fourth grade. Her classroom experience shaped how she approaches complex ideas, human behavior, and the design of experiences that feel clear and intuitive.\n\nOriginally from Chicago, Illinois, Charity now lives in New Jersey.`
 
@@ -201,7 +201,7 @@ const caseStudies = {
     subtitle: "Sports Dating App",
     hero: "Don't Play Alone",
     overview: "Sports fans often struggle to find partners who understand their lifestyle. Traditional dating apps ignore the 'logistics of fandom,' leading to mismatched expectations and arguments over weekend schedules.",
-    role: "Product Designer",
+    role: "Agentic UX Designer",
     timeline: "3 Weeks (2024)",
     tools: ["Figma", "Adobe Photoshop", "User Research", "Competitive Analysis"],
     challenge: "While competitors focus on static personality traits, no current app solves the dynamic scheduling conflicts sports fans face. Users find current dating apps lacking in depth and safety.",
@@ -217,7 +217,7 @@ const caseStudies = {
     subtitle: "Social Group Coordination App",
     hero: "Coordinate meetups effortlessly",
     overview: "A mobile application to help friends and social groups better coordinate their meetups and share schedules effortlessly. Users face significant hassle and frustration when trying to schedule meetups.",
-    role: "Co-Product Designer",
+    role: "Co-Agentic UX Designer",
     timeline: "May 2024",
     tools: ["Figma", "User Research", "Prototyping", "Usability Testing"],
     challenge: "Juggling busy schedules and conflicting availabilities often leads to headache, missed opportunities, and social disappointment. There is a complete absence of a dedicated app specifically designed for social coordination with friends.",
@@ -233,7 +233,7 @@ const caseStudies = {
     subtitle: "Designing Behavior for Agentic AI",
     hero: "Designing Behavior for Agentic AI",
     overview: "Luna is an interaction model for making AI behavior understandable, predictable, and trustworthy. It translates invisible states into human-readable signals through motion, color, timing, and animation.",
-    role: "End-to-End Product Designer",
+    role: "End-to-End Agentic UX Designer",
     timeline: "3-Day Sprint",
     tools: ["Google Chrome", "Python", "JavaScript"],
     challenge: "Meeting assistants can already transcribe, answer questions, and take action, but they rarely communicate when they are listening, reasoning, or preparing to respond. With no research documents, user interviews, existing product patterns, or design system to build from, the challenge was to define an interaction model for presence, state, and intent.",
@@ -249,7 +249,7 @@ const caseStudies = {
     subtitle: "The Integrated AI Companion",
     hero: "Less thinking. More living.",
     overview: "Silas is an Integrated AI Companion that bridges the gap between fragmented digital data and physical-world needs. It integrates across existing apps and turns passive data into executable intelligence.",
-    role: "Product Designer",
+    role: "Agentic UX Designer",
     timeline: "Anticipatory Project",
     tools: ["Figma", "Prototyping", "UX Research", "Anticipatory Design"],
     challenge: "Users live across 20+ reactive apps where calendar data is passive, banking records don't enable smart reordering, memory is disconnected from context, and messages do not automatically become tasks.",
@@ -593,7 +593,7 @@ export function MacBookScreen() {
     {
       id: 'welcome-3',
       role: 'assistant',
-      text: "I'm a UX Designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
+      text: "I'm an agentic UX designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
       time: getCurrentTime(),
     },
   ])
@@ -1212,7 +1212,7 @@ const messageText = mobileInput.trim()
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/80 text-xs leading-relaxed">I&apos;m a UX designer passionate about creating meaningful digital experiences. Please message me in Messages, happy to respond!</p>
+                  <p className="text-white/80 text-xs leading-relaxed">I&apos;m an agentic UX designer passionate about creating meaningful digital experiences. Please message me in Messages, happy to respond!</p>
                 </div>
               </div>
             </div>
@@ -1346,7 +1346,7 @@ const messageText = mobileInput.trim()
                 <img src={MEMOJI_URL} alt="Charity" className="w-20 h-20 rounded-2xl object-cover shadow-lg" />
                 <div className="flex-1">
                   <h1 className="text-xl font-bold text-gray-900">Charity Dupont</h1>
-                  <p className="text-gray-500 text-sm">UX/UI Designer</p>
+                  <p className="text-gray-500 text-sm">Agentic UX Designer</p>
                   <button
                     onClick={() => setMobileScreen('about')}
                     className="mt-2 px-4 py-1.5 bg-black text-white text-xs font-medium rounded-full"
@@ -2222,7 +2222,7 @@ const messageText = mobileInput.trim()
         {
           id: 1,
           title: "About Me",
-          preview: "American UX designer specializing in AI-native interaction design...",
+          preview: "American agentic UX designer specializing in AI-native interaction design...",
           date: "Today",
           hasImages: false,
           content: ABOUT_NOTES_BIO
@@ -2448,7 +2448,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <img src={CHARITY_PHOTO_URL} alt="Charity" className="w-full h-full object-cover" />
               </div>
               <h1 className="text-[22px] font-bold text-black">Charity Dupont</h1>
-              <p className="text-[15px] text-gray-500 mt-1">Product Designer</p>
+              <p className="text-[15px] text-gray-500 mt-1">Agentic UX Designer</p>
             </div>
 
             {/* Info Cards */}
@@ -2593,9 +2593,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     {/* Name and Title */}
                     <div className="mb-5 pb-4 border-b border-gray-100">
                       <h1 className="text-xl font-bold text-gray-900 mb-1">Charity DuPont</h1>
-                      <p className="text-blue-600 font-medium text-sm mb-2">UX Designer</p>
+                      <p className="text-blue-600 font-medium text-sm mb-2">Agentic UX Designer</p>
                       <p className="text-xs text-gray-600 leading-relaxed">
-                        UX/UI Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
+                        Agentic UX Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
                       </p>
                     </div>
                     
@@ -2615,7 +2615,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Experience</h2>
                       
                       <div className="mb-4">
-                        <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | UX Designer</h3>
+                        <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | Agentic UX Designer</h3>
                         <p className="text-xs text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                         <p className="text-xs text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
                         <ul className="text-xs text-gray-700 space-y-1.5 list-disc list-outside ml-4">
@@ -3075,7 +3075,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <tbody>
                           <tr className="border-b border-gray-200">
                             <td className="py-1 font-semibold text-gray-700">Occupation</td>
-                            <td className="py-1 text-gray-800">UX Designer</td>
+                            <td className="py-1 text-gray-800">Agentic UX Designer</td>
                           </tr>
                           <tr className="border-b border-gray-200">
                             <td className="py-1 font-semibold text-gray-700">Employer</td>
@@ -3095,7 +3095,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   
                   <p className="text-sm text-gray-800 leading-relaxed mb-4">
-                    <b>Charity Dupont</b> is an American <span className="text-blue-600">UX/UI designer</span> and <span className="text-blue-600">AI experience designer</span> currently working at <span className="text-blue-600">Google</span>.
+                    <b>Charity Dupont</b> is an American <span className="text-blue-600">agentic UX designer</span> and <span className="text-blue-600">AI experience designer</span> currently working at <span className="text-blue-600">Google</span>.
                   </p>
                   
                   <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Early life</h2>
@@ -3105,7 +3105,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   
                   <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Career</h2>
                   <p className="text-sm text-gray-800 leading-relaxed mb-4">
-                    Through a connection at Columbia, Dupont joined Google as a UX designer focusing on AI-driven experiences.
+                    Through a connection at Columbia, Dupont joined Google as an agentic UX designer focusing on AI-driven experiences.
                   </p>
                 </div>
               </div>
@@ -3776,7 +3776,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <p className="text-white font-bold text-lg">Charity Dupont</p>
-                  <p className="text-gray-300 text-sm">UX/UI Designer at Google</p>
+                  <p className="text-gray-300 text-sm">Agentic UX Designer at Google</p>
                   <p className="text-gray-400 text-xs mt-1">Columbia University &bull; New York</p>
                 </div>
               </button>
@@ -4637,9 +4637,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         {/* Bio */}
                         <div className="text-center md:text-left">
                           <h1 className="text-5xl font-bold text-black mb-4">Charity Dupont</h1>
-                          <p className="text-2xl text-purple-600 font-medium mb-4">UX/UI Designer at Google</p>
+                          <p className="text-2xl text-purple-600 font-medium mb-4">Agentic UX Designer at Google</p>
                           <p className="text-black/70 leading-relaxed text-lg mb-6">
-                            Hey there! I&apos;m Charity, a passionate UX/UI designer currently working at Google. 
+                            Hey there! I&apos;m Charity, a passionate agentic UX designer currently working at Google. 
                             I specialize in creating intuitive, user-centered digital experiences that bridge the gap 
                             between complex functionality and beautiful design.
                           </p>
@@ -5474,7 +5474,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <div className="border-b border-black/10 pb-2">
                     <p className="text-xs font-semibold text-black/50 uppercase tracking-wider">Position</p>
-                    <p className="text-sm text-black/70 mt-0.5">UX Designer</p>
+                    <p className="text-sm text-black/70 mt-0.5">Agentic UX Designer</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-black/50 uppercase tracking-wider">Mail</p>
@@ -5685,7 +5685,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${desktopSelectedNote === 'experience' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
                 >
                   <p className="font-semibold text-sm text-black">Experience</p>
-                  <p className="text-xs text-black/50">02/01/2025 <span className="text-amber-600">UX Designer</span></p>
+                  <p className="text-xs text-black/50">02/01/2025 <span className="text-amber-600">Agentic UX Designer</span></p>
                 </button>
                 <button
                   onClick={() => setDesktopSelectedNote('about')}
@@ -5715,7 +5715,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 {desktopSelectedNote === 'experience' ? (
                   <div className="text-black">
                     <h1 className="text-3xl font-bold mb-6">Experience</h1>
-                    <p className="text-lg font-medium mb-4">UX/UI Designer Google LLC, New York Feb 2025 - Present</p>
+                    <p className="text-lg font-medium mb-4">Agentic UX Designer Google LLC, New York Feb 2025 - Present</p>
                     <ul className="list-disc list-outside ml-5 space-y-3 text-black/80">
                       <li>Translating user behavior and psychology into intuitive models, ensuring machine outputs align perfectly with human mental models.</li>
                       <li>Executing high-velocity workflows to bridge the gap between abstract design concepts and functional, testable system logic.</li>
@@ -6009,7 +6009,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       {/* Main Content */}
                       <div className="flex-1 text-sm text-gray-800 leading-relaxed">
                         <p className="mb-4">
-                          <b>Charity Dupont</b> is an American <a href="#" className="text-blue-600 hover:underline">UX/UI designer</a> and <a href="#" className="text-blue-600 hover:underline">AI experience designer</a> currently working at <a href="#" className="text-blue-600 hover:underline">Google</a>. She is known for her work in designing AI-powered user experiences and her focus on creating intuitive, human-centered digital products.
+                          <b>Charity Dupont</b> is an American <a href="#" className="text-blue-600 hover:underline">agentic UX designer</a> and <a href="#" className="text-blue-600 hover:underline">AI experience designer</a> currently working at <a href="#" className="text-blue-600 hover:underline">Google</a>. She is known for her work in designing AI-powered user experiences and her focus on creating intuitive, human-centered digital products.
                         </p>
                         
                         <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Early life and education</h2>
@@ -6022,7 +6022,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         
                         <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Career</h2>
                         <p className="mb-4">
-                          Through a connection with one of her professors at Columbia, Dupont was introduced to an opportunity at <a href="#" className="text-blue-600 hover:underline">Google</a>, where she currently works as a UX designer. Her work focuses on AI-driven user experiences, requiring her to design for systems with variable and unpredictable outputs.
+                          Through a connection with one of her professors at Columbia, Dupont was introduced to an opportunity at <a href="#" className="text-blue-600 hover:underline">Google</a>, where she currently works as an agentic UX designer. Her work focuses on AI-driven user experiences, requiring her to design for systems with variable and unpredictable outputs.
                         </p>
                         <p className="mb-4">
                           Dupont&apos;s approach to AI UX design emphasizes clarity, transparency, and user control. She has noted that designing for AI differs significantly from traditional UX because &quot;you are not designing a fixed path—you are designing systems that can change based on input.&quot;
@@ -6067,7 +6067,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                               <tbody>
                                 <tr className="border-b border-gray-200">
                                   <td className="py-1 font-semibold text-gray-700">Occupation</td>
-                                  <td className="py-1 text-gray-800">UX Designer</td>
+                                  <td className="py-1 text-gray-800">Agentic UX Designer</td>
                                 </tr>
                                 <tr className="border-b border-gray-200">
                                   <td className="py-1 font-semibold text-gray-700">Employer</td>
@@ -6105,7 +6105,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </div>
                         <div>
                           <h1 className="text-lg font-semibold text-gray-900">Charity DuPont - Resume</h1>
-                          <p className="text-xs text-gray-500">UX Designer at Google DeepMind</p>
+                          <p className="text-xs text-gray-500">Agentic UX Designer at Google DeepMind</p>
                         </div>
                       </div>
                       <a
@@ -6130,9 +6130,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <div className="flex-1">
                           {/* Name and Title */}
                           <div className="mb-6">
-                            <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | UX Designer</h1>
+                            <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | Agentic UX Designer</h1>
                             <p className="text-sm text-gray-700 leading-relaxed">
-                              UX/UI Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
+                              Agentic UX Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
                             </p>
                           </div>
                           
@@ -6142,7 +6142,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             
                             <div className="mb-5">
                               <div className="flex justify-between items-start mb-1">
-                                <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | UX Designer</h3>
+                                <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | Agentic UX Designer</h3>
                               </div>
                               <p className="text-sm text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                               <p className="text-sm text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
@@ -6865,7 +6865,7 @@ function LunaCaseStudy() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
-            <p className="text-black font-medium">UX Designer &amp; Researcher</p>
+            <p className="text-black font-medium">Agentic UX Designer &amp; Researcher</p>
           </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Length</h3>
@@ -7181,7 +7181,7 @@ function SilasCaseStudy() {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
-            <p className="text-black font-medium">Product Designer</p>
+            <p className="text-black font-medium">Agentic UX Designer</p>
           </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Year</h3>
@@ -7605,7 +7605,7 @@ function MeetlyCaseStudy() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
-            <p className="text-black font-medium">Co-Product Designer</p>
+            <p className="text-black font-medium">Co-Agentic UX Designer</p>
           </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Timeline</h3>
@@ -8049,7 +8049,7 @@ function TeammateCaseStudy() {
       <div className="bg-[#1a1413] text-white border-t border-white/10">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 border-x border-white/10">
           {[
-            { k: "Role", v: "Product Designer" },
+            { k: "Role", v: "Agentic UX Designer" },
             { k: "Year", v: "2024" },
             { k: "Timeline", v: "One month" },
             { k: "Type", v: "UX Case Study" },

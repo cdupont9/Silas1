@@ -142,7 +142,7 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
 
   // Work (vague)
   if (normalized.match(/^work[\s!?.]*$/i)) {
-    return "What would you like to know about my work? Currently I'm a UX Designer at Google focused on AI assistant experiences"
+    return "What would you like to know about my work? Currently I'm an Agentic UX Designer at Google focused on AI assistant experiences"
   }
 
   // School (vague)
@@ -242,7 +242,7 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
 
   // What do you do
   if (normalized.match(/^(what do you do|what you do|whatchu do|wyd for work|what do u do)\??$/i)) {
-    return pick(["I'm a UX Designer!", "UX Designer", "I design stuff! I'm a UX Designer"])
+    return pick(["I'm an Agentic UX Designer!", "Agentic UX Designer", "I design stuff! I'm an Agentic UX Designer"])
   }
 
   // Where do you work
@@ -533,11 +533,11 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
   // AMBIGUOUS: "What do you believe?" - use context to determine response
   if (normalized.match(/^what do you believe\??$|^what do you believe in\??$/i)) {
     if (context === 'ux') {
-      return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful"
+      return "As an agentic UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful"
     } else if (context === 'faith') {
       return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
     } else {
-      return "Are you asking about my faith from a religious standpoint, or what I believe in as a UX designer?"
+      return "Are you asking about my faith from a religious standpoint, or what I believe in as an agentic UX designer?"
     }
   }
 
@@ -554,7 +554,7 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
   // YES response - check context to determine what they're saying yes to
   if (normalized.match(/^(yes|yeah|yep|yup|sure|ok|okay)\??\.?!?$/i)) {
     if (context === 'ux') {
-      return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. Good design solves real problems and collaboration leads to better outcomes"
+      return "As an agentic UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. Good design solves real problems and collaboration leads to better outcomes"
     } else if (context === 'faith') {
       return "I'm a Christian. My faith shapes how I approach people, creativity, integrity, and service in my work"
     }
@@ -563,7 +563,7 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
 
   // CLARIFICATION: They want to know about UX beliefs specifically
   if (normalized.match(/believe.*(ux|design|designer)|ux.*(believe|philosophy)|design.*(believe|philosophy|principles)|as a (ux )?designer|what about ux|ux designer/i)) {
-    return "As a UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. Good design solves real problems and collaboration leads to better outcomes"
+    return "As an agentic UX designer, I believe in putting users first, designing with empathy, and creating experiences that are accessible, intuitive, and genuinely helpful. Good design solves real problems and collaboration leads to better outcomes"
   }
 
   // Religious standpoint explicitly mentioned
