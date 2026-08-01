@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
 import { WeatherWidget } from "@/components/weather-widget"
+import { WindowsRetroExperience } from "@/components/retro/windows-retro-experience"
 
 interface WindowState {
   isOpen: boolean
@@ -1118,6 +1119,30 @@ const messageText = mobileInput.trim()
         isMinimized: true
       }))
     }, 400)
+  }
+
+  // ==================== WINDOWS RETRO TAKEOVER ====================
+  // Selecting one of the retro wallpapers ("Windows XP" or "Windows 2000")
+  // replaces the ENTIRE Mac/iPhone experience with a period-accurate Windows
+  // desktop. All portfolio data is reused; nothing else is removed or changed.
+  // Exiting (or picking a modern wallpaper from Display Properties) returns here.
+  const retroEra = (selectedBackground as { retro?: "xp" | "win2000" }).retro
+  if (retroEra) {
+    return (
+      <WindowsRetroExperience
+        era={retroEra}
+        isMobile={isMobile}
+        wallpaperUrl={selectedBackground.url}
+        caseStudies={caseStudies}
+        aboutBody={ABOUT_NOTES_BIO}
+        charityPhoto={CHARITY_PHOTO_URL}
+        resumeUrl={RESUME_PDF_URL}
+        backgroundOptions={BACKGROUND_OPTIONS}
+        currentBackgroundId={selectedBackground.id}
+        onSelectBackground={(bg) => setSelectedBackground(bg)}
+        onExit={() => setSelectedBackground(BACKGROUND_OPTIONS[0])}
+      />
+    )
   }
 
   // ==================== MOBILE IPHONE EXPERIENCE ====================
