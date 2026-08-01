@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, Check, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, Check, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick, Palette, Sparkles } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -263,7 +263,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "braingames"
+  type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "braingames" | "wallpaper"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -1523,11 +1523,106 @@ const messageText = mobileInput.trim()
                   </div>
                   <span className="text-white text-[11px] mt-1">Luna</span>
                 </button>
+
+                {/* Wallpaper / Theme */}
+                <button
+                  onClick={() => setMobileScreen('wallpaper')}
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-[60px] h-[60px] rounded-[14px] bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                    <Palette className="w-8 h-8 text-white" />
+                  </div>
+                  <span className="text-white text-[11px] mt-1">Wallpaper</span>
+                </button>
               </div>
             </div>
 
           </div>
 
+        </div>
+      )
+    }
+
+    // Mobile Wallpaper / Theme Picker
+    if (mobileScreen === "wallpaper") {
+      return (
+        <div className="h-[100dvh] w-full relative overflow-hidden bg-[#f2f2f7]">
+          {/* Status Bar */}
+          <div className="h-[50px] flex items-center justify-between px-6 pt-3 bg-[#f2f2f7]">
+            <span className="text-black text-[15px] font-semibold">{loginTime}</span>
+            <div className="flex items-center gap-1">
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[7px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[9px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[11px] bg-black rounded-[1px]" />
+              </div>
+              <Wifi className="w-4 h-4 text-black" />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
+              </div>
+            </div>
+          </div>
+
+          {/* Header */}
+          <div className="px-4 pb-3 bg-[#f2f2f7]">
+            <button onClick={() => setMobileScreen('home')} className="text-[#007aff] flex items-center gap-1 mb-2">
+              <ChevronLeft className="w-6 h-6" />
+              <span className="text-[17px]">Home</span>
+            </button>
+            <h1 className="text-black text-[28px] font-bold px-1">Wallpaper</h1>
+            <p className="text-gray-500 text-[13px] px-1 mt-0.5">Tap a wallpaper to change your background.</p>
+          </div>
+
+          <div className="h-[calc(100dvh-150px)] overflow-y-auto scrollbar-none px-4 pb-8" style={{ WebkitOverflowScrolling: 'touch' }}>
+            {/* Retro Themes callout */}
+            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-4 mb-4 flex items-center gap-3">
+              <Sparkles className="w-7 h-7 text-white shrink-0" />
+              <p className="text-white text-[13px] leading-snug">
+                Pick a <span className="font-bold">Windows XP</span> or <span className="font-bold">Windows 2000</span> wallpaper to transform the whole site into a retro operating system.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {BACKGROUND_OPTIONS.map((bg) => {
+                const isRetro = Boolean((bg as { retro?: string }).retro)
+                const isActive = selectedBackground.id === bg.id
+                return (
+                  <button
+                    key={bg.id}
+                    onClick={() => { setSelectedBackground(bg); if (!isRetro) setMobileScreen('home') }}
+                    className={`relative rounded-2xl overflow-hidden shadow-sm border-2 transition-all active:scale-[0.98] ${isActive ? 'border-[#007aff]' : isRetro ? 'border-purple-400' : 'border-transparent'}`}
+                  >
+                    <div className="relative aspect-[3/4] w-full">
+                      <img src={bg.preview} alt={bg.name} className="w-full h-full object-cover" />
+                      {bg.type === 'video' && (
+                        <span className="absolute top-2 right-2 flex items-center gap-0.5 bg-black/60 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-full backdrop-blur-sm">
+                          <span className="w-1 h-1 rounded-full bg-red-400 animate-pulse" />
+                          LIVE
+                        </span>
+                      )}
+                      {isRetro && (
+                        <span className="absolute top-2 right-2 bg-purple-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+                          THEME
+                        </span>
+                      )}
+                      {isActive && (
+                        <span className="absolute top-2 left-2 bg-[#007aff] text-white rounded-full p-1">
+                          <Check className="w-3 h-3" />
+                        </span>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent px-2.5 py-2">
+                        <span className="text-white text-[12px] font-semibold">{bg.name}</span>
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
         </div>
       )
     }
@@ -4759,7 +4854,30 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <span className="font-semibold">Charity{"'"}s Portfolio</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-semibold">
+              Charity{"'"}s Portfolio
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[240px] shadow-2xl text-[13px]">
+              <DropdownMenuItem onClick={openAboutWindow} className="cursor-pointer focus:bg-blue-500 focus:text-white">
+                <User className="w-4 h-4 mr-2 opacity-70" />
+                About This Portfolio
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-black/10" />
+              <DropdownMenuItem
+                onClick={() => { setBackgroundsFolder({ isOpen: true, isMinimized: false }); focusWindow('backgrounds'); }}
+                className="cursor-pointer focus:bg-blue-500 focus:text-white"
+              >
+                <Palette className="w-4 h-4 mr-2 opacity-70" />
+                Change Wallpaper &amp; Theme...
+              </DropdownMenuItem>
+              <div className="px-2.5 pb-1.5 pt-0.5">
+                <p className="text-[11px] leading-tight text-gray-500">
+                  Tip: pick a <span className="font-semibold text-purple-600">Windows XP</span> or <span className="font-semibold text-purple-600">Windows 2000</span> wallpaper to switch into the retro OS theme.
+                </p>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               File
@@ -5196,7 +5314,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           : 'hover:bg-black/5'
                         }`}
                     >
-                      <div className="relative w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
+                      <div className={`relative w-20 h-14 rounded-md overflow-hidden border shadow-sm ${(bg as { retro?: string }).retro ? 'border-purple-400 ring-1 ring-purple-300' : 'border-black/10'}`}>
                         <img
                           src={bg.preview}
                           alt={bg.name}
@@ -5208,8 +5326,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             LIVE
                           </span>
                         )}
+                        {(bg as { retro?: string }).retro && (
+                          <span className="absolute bottom-1 right-1 flex items-center gap-0.5 bg-purple-600 text-white text-[8px] font-semibold px-1 py-0.5 rounded-full">
+                            THEME
+                          </span>
+                        )}
                       </div>
-                      <span className={`text-[11px] text-center leading-tight font-medium ${selectedBackground.id === bg.id ? 'text-blue-600' : 'text-gray-700'
+                      <span className={`text-[11px] text-center leading-tight font-medium ${selectedBackground.id === bg.id ? 'text-blue-600' : (bg as { retro?: string }).retro ? 'text-purple-600' : 'text-gray-700'
                         }`}>{bg.name}</span>
                     </button>
                   ))}
