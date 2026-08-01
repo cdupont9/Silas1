@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, Check, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -176,6 +176,10 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 // Full photo for About window
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
+const ABOUT_BIO = "Charity Dupont is an American UX designer known for specializing in AI-native interaction design and rapid agentic AI development and coding. Her work centers on designing and prototyping proof-of-concept experiences that translate emerging AI research into intuitive, human-centered interactions that help teams explore what’s next."
+
+const ABOUT_NOTES_BIO = `${ABOUT_BIO}\n\nBefore moving into UX design, Charity was an educator who taught fourth grade. Her classroom experience shaped how she approaches complex ideas, human behavior, and the design of experiences that feel clear and intuitive.\n\nOriginally from Chicago, Illinois, Charity now lives in New Jersey.`
+
 // Resume PDF URL
 const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/222ae9bd-abc9-40f6-887f-1215096ab32a-Charity%20DuPont%20-May%202026%20.pdf"
 
@@ -220,6 +224,22 @@ const caseStudies = {
     screenshot: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image%2023-YaC5eUy2iN2JImZekZb30iItst7UyL.png",
     isFullCaseStudy: true
   },
+  luna: {
+    title: "Luna",
+    subtitle: "Designing Behavior for Agentic AI",
+    hero: "Designing Behavior for Agentic AI",
+    overview: "Luna is an interaction model for making AI behavior understandable, predictable, and trustworthy. It translates invisible states into human-readable signals through motion, color, timing, and animation.",
+    role: "End-to-End Product Designer",
+    timeline: "3-Day Sprint",
+    tools: ["Google Chrome", "Python", "JavaScript"],
+    challenge: "Meeting assistants can already transcribe, answer questions, and take action, but they rarely communicate when they are listening, reasoning, or preparing to respond. With no research documents, user interviews, existing product patterns, or design system to build from, the challenge was to define an interaction model for presence, state, and intent.",
+    solution: "I designed a behavioral framework around Persistent Presence, Progressive Disclosure, Legible State, and Predictable Agency. Luna exposes Listening, Reasoning, and Speaking through color and motion, then integrates that behavior directly into Google Meet through a Chrome extension and local bridge.",
+    results: ["Made invisible AI states legible", "Connected behavior to product architecture", "Signaled intent before action", "Validated a working in-call prototype"],
+    color: "from-purple-500 to-indigo-700",
+    icon: "/images/luna/hero-orb.png",
+    screenshot: "/images/luna/hero-orb.png",
+    isFullCaseStudy: true
+  },
   silas: {
     title: "Silas",
     subtitle: "The Integrated AI Companion",
@@ -255,7 +275,7 @@ export function MacBookScreen() {
       setScreenState("loading")
       setTimeout(() => {
         setScreenState("desktop")
-        setShowSilasSpotlight(true)
+        setShowLunaSpotlight(true)
       }, 2500)
     }
   }
@@ -275,8 +295,7 @@ export function MacBookScreen() {
   const [openCaseStudies, setOpenCaseStudies] = useState<{ [key: string]: { isOpen: boolean, isMinimized: boolean, position: { x: number, y: number } } }>({})
   const [messagesWindow, setMessagesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [aiAssistantWindow, setAiAssistantWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
-  const [showSilasSpotlight, setShowSilasSpotlight] = useState(false)
-  const [showLunaPopup, setShowLunaPopup] = useState(false)
+  const [showLunaSpotlight, setShowLunaSpotlight] = useState(false)
   const [notesWindow, setNotesWindow] = useState<WindowState>({ isOpen: false, isMinimized: false })
   const [desktopSelectedNote, setDesktopSelectedNote] = useState<'experience' | 'about' | 'techstack'>('experience')
   const [selectedContact, setSelectedContact] = useState('welcome')
@@ -804,8 +823,8 @@ const handleLogin = (e: React.FormEvent) => {
   setScreenState("loading")
   setTimeout(() => {
   setScreenState("desktop")
-  // Spotlight the Silas case study as the primary call to action
-  setShowSilasSpotlight(true)
+  // Spotlight the Luna case study as the primary call to action
+  setShowLunaSpotlight(true)
   }, 2500)
   }
 
@@ -1315,20 +1334,20 @@ const messageText = mobileInput.trim()
               <WeatherWidget className="w-full" />
             </div>
 
-            {/* Featured Case Study - Silas */}
+            {/* Featured Case Study - Luna */}
             <div className="mx-4 mt-6">
               <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
                 <Folder className="w-5 h-5" />
                 Featured Case Study
               </h2>
               <button
-                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
+                onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
                 className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
               >
-                <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
+                <img src="/images/luna/hero-orb.png" alt="Luna" className="h-16 w-16 object-contain drop-shadow-[0_0_12px_rgba(139,92,246,0.5)]" />
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-gray-900">Silas</h3>
-                  <p className="text-gray-500 text-sm">The Integrated AI Companion</p>
+                  <h3 className="font-bold text-gray-900">Luna</h3>
+                  <p className="text-gray-500 text-sm">Designing Behavior for Agentic AI</p>
                   <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
@@ -1421,16 +1440,6 @@ const messageText = mobileInput.trim()
                   <span className="text-white text-[11px] mt-1">Safari</span>
                 </button>
 
-                {/* DupontFlix */}
-                <button
-                  onClick={() => { setScreenState("netflixLoading"); setTimeout(() => setScreenState("netflix"), 1800); }}
-                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
-                >
-                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg bg-black flex items-center justify-center">
-                    <span className="text-red-600 font-bold text-3xl leading-none font-[family-name:var(--font-bebas-neue)]">D</span>
-                  </div>
-                  <span className="text-white text-[11px] mt-1">DupontFlix</span>
-                </button>
 
                 {/* Camera */}
                 <button
@@ -1476,7 +1485,7 @@ const messageText = mobileInput.trim()
 
                 {/* Luna */}
                 <button
-                  onClick={() => setShowLunaPopup(true)}
+                  onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
                   className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
                 >
                   <div className="w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
@@ -1491,45 +1500,6 @@ const messageText = mobileInput.trim()
 
           </div>
 
-          {/* Luna - upcoming popup */}
-          {showLunaPopup && (
-            <div
-              className="absolute inset-0 z-[60] flex items-center justify-center bg-black/50 backdrop-blur-sm p-6 animate-in fade-in duration-200"
-              onClick={() => setShowLunaPopup(false)}
-            >
-              <div
-                className="relative w-full max-w-[300px] bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <button
-                  onClick={() => setShowLunaPopup(false)}
-                  className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 transition-colors"
-                  aria-label="Close"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-                <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
-                  <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_28px_rgba(168,85,247,0.85)] mb-4 animate-pulse">
-                    <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
-                  <p className="mt-1 text-sm text-gray-500">AI companion</p>
-                  <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
-                    Upcoming
-                  </span>
-                  <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
-                    Luna is coming soon. Please message me for details.
-                  </p>
-                  <a
-                    href="mailto:hello@charitydupont.com"
-                    className="mt-4 text-sm font-medium text-blue-600 hover:underline"
-                  >
-                    hello@charitydupont.com
-                  </a>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       )
     }
@@ -2011,6 +1981,10 @@ const messageText = mobileInput.trim()
 
           {/* Case Study Content */}
           <div className="flex-1 overflow-y-auto">
+            {mobileCaseStudy === "luna" ? (
+              <LunaCaseStudy />
+            ) : (
+              <>
             {/* View on Desktop Banner */}
             <div className="bg-gray-900 px-4 py-3 flex items-center justify-center gap-2">
               <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -2107,6 +2081,8 @@ const messageText = mobileInput.trim()
                 </p>
               </div>
             </div>
+              </>
+            )}
           </div>
 
           {/* Home Indicator */}
@@ -2122,22 +2098,11 @@ const messageText = mobileInput.trim()
       const notesData = [
         {
           id: 1,
-          title: "About My Work",
-          preview: "I'm a UX/UI designer passionate about creating meaningful digital experiences...",
+          title: "About Me",
+          preview: "American UX designer specializing in AI-native interaction design...",
           date: "Today",
           hasImages: false,
-          content: `I'm a UX/UI designer passionate about creating meaningful digital experiences that solve real problems.
-
-My approach combines user research, visual design, and prototyping to deliver solutions that users love.
-
-Key Skills:
-• User Research & Testing
-• Wireframing & Prototyping
-• Visual & Interaction Design
-• Design Systems
-• Figma & Design Tools
-
-Currently focused on mobile app design and AI-powered experiences.`
+          content: ABOUT_NOTES_BIO
         },
         {
           id: 2,
@@ -2371,10 +2336,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </div>
                 <div className="px-4 py-3">
                   <p className="text-[15px] text-black leading-relaxed">
-                    Passionate UX/UI designer creating meaningful digital experiences. I combine user research, visual design, and prototyping to deliver solutions users love.
-                  </p>
-                  <p className="text-[15px] text-black leading-relaxed mt-3">
-                    My work focuses on designing and prototyping proof-of-concept experiences rather than shipping production features. Much of what I do is driven by emerging AI research, exploring new interaction patterns and translating them into user-centered concepts.
+                    {ABOUT_BIO}
                   </p>
                 </div>
               </div>
@@ -4780,7 +4742,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 About
               </DropdownMenuItem>
               <DropdownMenuSeparator className="bg-black/10" />
-              <DropdownMenuItem onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
+              <DropdownMenuItem onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
                 <Folder className="w-4 h-4 mr-2 opacity-70" />
                 Bootcamp Case Studies
               </DropdownMenuItem>
@@ -4973,7 +4935,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
           {/* Bootcamp Case Studies desktop folder */}
           <button
-            onClick={() => { setShowSilasSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
+            onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
             className="flex flex-col items-center gap-1.5 w-28 group"
           >
             <div className="w-20 h-16 group-hover:scale-110 transition-transform">
@@ -5309,7 +5271,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="flex-1 p-6 bg-white overflow-y-auto">
                   <p className="text-[12px] text-gray-500 mb-4 leading-relaxed">Independent projects from my Columbia University UX/UI Bootcamp.</p>
                   <div className="grid grid-cols-3 gap-6">
-                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas').map(([key, project]) => (
+                    {Object.entries(caseStudies).filter(([key]) => key !== 'silas' && key !== 'luna').map(([key, project]) => (
                       <button
                         key={key}
                         onClick={(e) => { e.stopPropagation(); openCaseStudy(key); }}
@@ -5369,10 +5331,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                 </div>
               </div>
-              <div className="mt-4 bg-neutral-100 rounded-xl p-4 text-xs text-black/80 leading-relaxed">
-                <p className="mb-2">{"I'm"} Charity Dupont, a UX Designer based in New York/NJ.</p>
-                <p>I spent my early career as a 4th-grade teacher before bringing my passion for human cognition to tech via Columbia {"University's"} UX/UI program. Today, {"I'm"} a UX Designer at Google, where I use rapid prototyping and user psychology to help people navigate the complexities of generative AI.</p>
-              </div>
+          <div className="mt-4 bg-neutral-100 rounded-xl p-4 text-xs text-black/80 leading-relaxed">
+            <p>{ABOUT_BIO}</p>
+          </div>
               {/* Resume Section */}
               <div className="mt-4 bg-neutral-100 rounded-xl p-4">
                 <p className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-3">Resume</p>
@@ -5504,44 +5465,42 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* AI Assistant Window - Front and Center */}
-        {/* Silas Spotlight - primary call to action on the desktop */}
-        {showSilasSpotlight && (
-          <div
-            className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
-            onClick={() => setShowSilasSpotlight(false)}
-          >
-            <div
-              className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button
-                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
-                className="relative group"
-                aria-label="Open the Silas case study"
-              >
-                {/* Pulsing highlight rings */}
-                <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
-                <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
-                <div className="relative w-32 h-32 rounded-[28px] overflow-hidden shadow-2xl group-hover:scale-105 transition-transform duration-200">
-                  <img src={SILAS_ICON} alt="Silas" className="w-full h-full object-cover" />
-                </div>
-              </button>
-
-              <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Silas</h2>
-              <p className="text-white/80 text-sm mt-1 drop-shadow">The Integrated AI Companion</p>
-
-              {/* Arrow + Click here */}
-              <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
-              <button
-                onClick={() => { openCaseStudy('silas'); setShowSilasSpotlight(false); }}
+  {/* AI Assistant Window - Front and Center */}
+  {/* Luna Spotlight - primary call to action on the desktop */}
+  {showLunaSpotlight && (
+  <div
+  className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
+  onClick={() => setShowLunaSpotlight(false)}
+  >
+  <div
+  className="flex flex-col items-center animate-in fade-in zoom-in duration-500"
+  onClick={(e) => e.stopPropagation()}
+  >
+  <button
+  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
+  className="relative group"
+  aria-label="Open the Luna case study"
+  >
+  {/* Pulsing highlight rings */}
+  <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
+  <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
+  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-32 w-32 object-contain drop-shadow-[0_0_24px_rgba(139,92,246,0.65)] transition-transform duration-200 group-hover:scale-105" />
+  </button>
+  
+  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Luna</h2>
+  <p className="text-white/80 text-sm mt-1 drop-shadow">Designing Behavior for Agentic AI</p>
+  
+  {/* Arrow + Click here */}
+  <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
+  <button
+  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
                 className="mt-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold shadow-xl hover:bg-white/90 transition-colors flex items-center gap-2"
               >
                 <MousePointerClick className="w-4 h-4" />
                 Click here
               </button>
               <button
-                onClick={() => setShowSilasSpotlight(false)}
+                onClick={() => setShowLunaSpotlight(false)}
                 className="mt-3 text-white/70 text-xs hover:text-white transition-colors underline underline-offset-2"
               >
                 or explore the desktop on your own
@@ -5623,19 +5582,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 ) : desktopSelectedNote === 'about' ? (
                   <div className="text-black">
                     <h1 className="text-3xl font-bold mb-6">About</h1>
-                    <p className="mb-4">I am Charity Dupont.</p>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      As a UX/UI Designer in this dynamic field, I am on an exciting journey of discovery and innovation. My professional foundation is strengthened by a unique perspective, drawn from a background in education, which provides a deep understanding of how people learn and interact with information, a critical element for designing world-class products. My foundational skills were developed at the Columbia University Bootcamp, where I became proficient in using design tools and methodologies to create intuitive and engaging user experiences.
-                    </p>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      I excel at empathizing with users, understanding their needs and pain points, and my approach is rigorously user-centered, ensuring that my designs are not only aesthetically pleasing but also highly functional. I value feedback and iteration, constantly seeking ways to improve my work. Furthermore, my experience as a teacher has honed my ability to communicate complex ideas clearly and effectively, a crucial skill for collaborating with stakeholders and cross-functional teams.
-                    </p>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      I am a dedicated and passionate UX/UI designer, leveraging my unique background and commitment to continuous learning to drive meaningful and impactful user experiences.
-                    </p>
-                    <p className="mb-4 text-black/80 leading-relaxed">
-                      My work focuses on designing and prototyping proof-of-concept experiences rather than shipping production features. Much of what I do is driven by emerging AI research, exploring new interaction patterns and translating them into user-centered concepts.
-                    </p>
+                    {ABOUT_NOTES_BIO.split("\n\n").map((paragraph) => (
+                      <p key={paragraph} className="mb-4 text-black/80 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
                     <p className="text-black/80">
                       {"Let's"} connect: <a href="mailto:hello@charitydupont.com" className="text-blue-500 hover:underline">hello@charitydupont.com</a>
                     </p>
@@ -6253,16 +6204,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg bg-black flex items-center justify-center">
-              <span className="text-red-600 font-bold text-2xl leading-none font-[family-name:var(--font-bebas-neue)]">D</span>
-            </div>
-          }
-          label="DupontFlix"
-          onClick={() => { setScreenState("netflixLoading"); setTimeout(() => setScreenState("netflix"), 1800); }}
-        />
-
-        <DockIcon
-          icon={
             <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 rounded-xl shadow-lg shadow-[0_0_15px_rgba(236,72,153,0.4)]">
               <rect width="100" height="100" rx="20" fill="#831843"/>
               {/* Tic-Tac-Toe grid */}
@@ -6301,7 +6242,7 @@ label="Brain Games"
             </div>
           }
           label="Luna"
-          onClick={() => setShowLunaPopup(true)}
+          onClick={() => openCaseStudy('luna')}
         />
 
         {/* Minimized Windows Section */}
@@ -6476,45 +6417,6 @@ label="Brain Games"
         )}
       </div>
 
-      {/* Luna - upcoming popup */}
-      {showLunaPopup && (
-        <div
-          className="absolute inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setShowLunaPopup(false)}
-        >
-          <div
-            className="relative w-[340px] bg-white rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 fade-in duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setShowLunaPopup(false)}
-              className="absolute top-3 right-3 w-7 h-7 rounded-full bg-black/5 hover:bg-black/10 flex items-center justify-center text-gray-500 transition-colors"
-              aria-label="Close"
-            >
-              <X className="w-4 h-4" />
-            </button>
-            <div className="flex flex-col items-center text-center px-6 pt-8 pb-7">
-              <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_28px_rgba(168,85,247,0.85)] mb-4 animate-pulse">
-                <div className="absolute top-3 left-4 w-4 h-4 rounded-full bg-white/60 blur-[3px]" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900">Luna</h3>
-              <p className="mt-1 text-sm text-gray-500">AI companion</p>
-              <span className="mt-2 inline-block text-[11px] font-semibold tracking-wide uppercase text-purple-600 bg-purple-50 rounded-full px-3 py-1">
-                Upcoming
-              </span>
-              <p className="mt-4 text-sm text-gray-600 leading-relaxed text-pretty">
-                Luna is coming soon. Please message me for details.
-              </p>
-              <a
-                href="mailto:hello@charitydupont.com"
-                className="mt-4 text-sm font-medium text-blue-600 hover:underline"
-              >
-                hello@charitydupont.com
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -6618,6 +6520,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 
   // Check which full case study to render
   const isSilas = project === 'silas'
+  const isLuna = project === 'luna'
   const isMeetly = project === 'meetly'
   const isTeammate = project === 'teammate'
 
@@ -6672,6 +6575,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
       <div className="flex-1 overflow-y-auto bg-[#0a0a0a]">
         {isSilas ? (
           <SilasCaseStudy />
+        ) : isLuna ? (
+          <LunaCaseStudy />
         ) : isMeetly ? (
           <MeetlyCaseStudy />
         ) : isTeammate ? (
@@ -6747,6 +6652,361 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 }
 
 // Full Silas Case Study Component
+function LunaCaseStudy() {
+  const states = [
+    {
+      name: "Listening",
+      caption: "\u201cI\u2019m being heard\u201d",
+      color: "#a78bfa",
+      glow: "rgba(167,139,250,0.55)",
+      description: "Soft purple, calm and ambient. Slow motion so attention never feels like surveillance.",
+    },
+    {
+      name: "Reasoning",
+      caption: "\u201cit\u2019s thinking\u201d",
+      color: "#7c3aed",
+      glow: "rgba(124,58,237,0.7)",
+      description: "Brighter purple with shimmering particles \u2014 thinking made visible, replacing dead air.",
+    },
+    {
+      name: "Speaking",
+      caption: "\u201cit\u2019s talking\u201d",
+      color: "#22c55e",
+      glow: "rgba(34,197,94,0.6)",
+      description: "Green \u2014 the \u2018live\u2019 cue we already trust from mic and record lights.",
+    },
+  ]
+
+  const principles = [
+    { question: "Where should Luna live?", principle: "Persistent Presence" },
+    { question: "When should Luna appear?", principle: "Progressive Disclosure" },
+    { question: "How should Luna communicate?", principle: "Legible State" },
+    { question: "How should Luna respond?", principle: "Predictable Agency" },
+  ]
+
+  const takeaways = [
+    "Designing AI means designing behavior.",
+    "Behavior is part of the product architecture.",
+    "Trust depends on legibility.",
+    "Interaction precedes intelligence.",
+    "The strongest AI experiences communicate intent before action.",
+  ]
+
+
+
+  return (
+    <div className="bg-white text-black">
+      {/* Hero Section */}
+      <div className="relative py-24 px-8 bg-gradient-to-b from-[#0f0a1f] via-[#160f2e] to-[#1a1030] text-white overflow-hidden">
+        <div className="relative max-w-4xl mx-auto text-center">
+          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.3em] mb-6">Case Study 01</p>
+          <img src="/images/luna/hero-orb.png" alt="Luna's primary listening orb" className="w-36 h-36 mx-auto mb-8 object-contain drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]" />
+          <h1 className="text-5xl md:text-6xl font-bold mb-4">Luna</h1>
+          <p className="text-xl text-purple-100/90 mb-6">Designing Behavior for Agentic AI</p>
+          <p className="text-lg text-white/60 leading-relaxed max-w-2xl mx-auto">
+            An interaction model for making AI behavior understandable, predictable, and trustworthy.
+          </p>
+        </div>
+      </div>
+
+      {/* Project Info */}
+      <div className="max-w-4xl mx-auto px-8 py-12 border-b border-black/10">
+        <div className="grid md:grid-cols-3 gap-8">
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
+            <p className="text-black font-medium">UX Designer &amp; Researcher</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Length</h3>
+            <p className="text-black font-medium">3-Day Sprint</p>
+          </div>
+          <div>
+            <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Type</h3>
+            <p className="text-black font-medium">End-to-End Product</p>
+          </div>
+        </div>
+      </div>
+
+      {/* The Agentic Gap */}
+      <div className="max-w-4xl mx-auto px-8 py-16">
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">The Agentic Gap</p>
+        <h2 className="text-3xl font-bold mb-5 text-black text-balance">
+          What they don&rsquo;t communicate is behavior.
+        </h2>
+        <p className="text-lg text-black/70 leading-relaxed mb-8 max-w-3xl">
+          Today&rsquo;s meeting assistants, such as Zoom AI Companion and Microsoft 365 Copilot, can already join meetings, transcribe conversations, answer questions, and take action.
+        </p>
+        <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
+            <X className="w-5 h-5 text-red-500 mb-3" />
+            <h3 className="text-sm font-semibold text-black mb-2">Zoom AI Companion</h3>
+            <p className="text-black/70 text-sm leading-relaxed">Capable, but invisible.</p>
+          </div>
+          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
+            <X className="w-5 h-5 text-red-500 mb-3" />
+            <h3 className="text-sm font-semibold text-black mb-2">Microsoft 365 Copilot</h3>
+            <p className="text-black/70 text-sm leading-relaxed">Capable, but invisible.</p>
+          </div>
+          <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
+            <Check className="w-5 h-5 text-green-600 mb-3" />
+            <h3 className="text-sm font-semibold text-purple-700 mb-2">Luna</h3>
+            <p className="text-black/70 text-sm leading-relaxed">Present, and legible.</p>
+          </div>
+        </div>
+        <p className="text-lg text-black/80 leading-relaxed mb-4">
+          Users cannot tell when the AI is <span className="font-semibold">listening</span>, <span className="font-semibold">reasoning</span>, or <span className="font-semibold">preparing to respond</span>.
+        </p>
+        <p className="text-lg text-black/80 leading-relaxed">
+          Without visible cues for presence, state, and intent, intelligent systems remain difficult to understand and difficult to trust.
+        </p>
+      </div>
+
+      {/* 01 The Spark */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">01 · The Spark</p>
+          <h2 className="text-3xl font-bold mb-8 text-black">From capability to presence</h2>
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-sm">
+              <h3 className="text-sm font-semibold text-black mb-3">The Blind Spot</h3>
+              <p className="text-black/70 text-sm leading-relaxed">
+                Existing AI assistants have intelligence. They lack interaction behavior. Users experience uncertainty.
+              </p>
+            </div>
+            <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-sm">
+              <h3 className="text-sm font-semibold text-black mb-3">My Design Intervention</h3>
+              <p className="text-black/70 text-sm leading-relaxed mb-4">
+                I designed a behavioral framework that translates invisible AI state into understandable human signals.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {["Motion", "Color", "Timing", "Animation"].map((t) => (
+                  <span key={t} className="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded-full border border-purple-100">{t}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-[#171026] p-8 text-white">
+            <p className="text-xl leading-relaxed text-balance">I wasn&rsquo;t designing another interface. I was designing the presence of an AI teammate.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* 02 Designing Trust */}
+      <div className="max-w-4xl mx-auto px-8 py-16">
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">02 · Designing Trust</p>
+        <h2 className="text-3xl font-bold mb-6 text-black">Designing non-verbal communication</h2>
+        <p className="text-lg text-black/80 leading-relaxed mb-6 max-w-3xl">
+          Humans constantly signal intent before speaking. AI should do the same.
+        </p>
+        <div className="flex flex-wrap gap-2 mb-8">
+          {["Eye contact", "Breathing", "Pauses", "Movement"].map((t) => (
+            <span key={t} className="px-4 py-2 bg-neutral-100 text-black/80 text-sm font-medium rounded-full border border-black/5">{t}</span>
+          ))}
+        </div>
+        <p className="text-black/70 leading-relaxed max-w-3xl">
+          I designed behavioral cues that reduce uncertainty. Signaled intent lowers cognitive load. Luna restores the missing nonverbal cues through motion, color, and animation.
+        </p>
+      </div>
+
+      {/* 03 Architectural Principles */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">03 · The Questions</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Architectural principles</h2>
+          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">Each question becomes a principle.</p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {principles.map((item, i) => (
+              <div key={item.principle} className="bg-white rounded-xl p-5 border border-black/5">
+                <span className="text-purple-600 font-bold text-sm">{String(i + 1).padStart(2, "0")}</span>
+                <p className="mt-3 text-black/60 text-sm">{item.question}</p>
+                <p className="mt-1 text-black font-semibold">{item.principle}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* 04 Prototype to Pivot */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Prototype → Pivot</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">From prototype to product</h2>
+          <div className="grid md:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-2xl p-4 border border-red-100 shadow-sm">
+              <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
+                <img src="/images/luna/pivot-beside.png" alt="Prototype: a standalone hub sitting beside Google Meet with a You tile and a separate Luna companion orb." className="w-full h-auto" />
+              </div>
+              <p className="text-red-500 font-semibold mb-2 flex items-center gap-2"><X className="w-4 h-4" /> Prototype (Standalone Hub)</p>
+              <p className="text-black/70 text-sm leading-relaxed">Luna initially lived inside its own dedicated video call interface.</p>
+            </div>
+            <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
+              <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
+                <img src="/images/luna/pivot-inside.png" alt="Integrated experience: Luna appears as a purple orb tile directly inside a real Google Meet call alongside the human participants." className="w-full h-auto" />
+              </div>
+              <p className="text-green-600 font-semibold mb-2 flex items-center gap-2"><Check className="w-4 h-4" /> Integrated Experience</p>
+              <p className="text-black/70 text-sm leading-relaxed">The interaction model was moved directly into Google Meet, allowing Luna to become part of the conversation instead of another application.</p>
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-[#1a1030] to-[#2a1a4a] rounded-2xl p-8 text-white">
+            <h3 className="text-sm font-semibold mb-3 text-purple-200 uppercase tracking-wider">Design Insight</h3>
+            <p className="text-white/80 leading-relaxed">
+              The interaction model was never meant to compete with the meeting. It was meant to become part of it. That insight shifted Luna from a standalone concept into an integrated meeting companion.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* 05 The Bridge */}
+      <div className="max-w-4xl mx-auto px-8 py-16">
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">05 · The Bridge</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Building the technical bridge</h2>
+        <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
+          Luna runs locally while Google Meet runs inside Chrome. Understanding how those environments communicate was essential to designing a real meeting experience.
+        </p>
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
+            <p className="text-xs font-bold text-purple-600 mb-2">JS</p>
+            <p className="text-black font-medium text-sm mb-1">Chrome + Google Meet</p>
+            <p className="text-black/60 text-xs">JavaScript controls the browser</p>
+          </div>
+          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
+            <p className="text-xs font-bold text-purple-600 mb-2">⇄</p>
+            <p className="text-black font-medium text-sm mb-1">Local bridge</p>
+            <p className="text-black/60 text-xs">relays events both ways</p>
+          </div>
+          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
+            <p className="text-xs font-bold text-purple-600 mb-2">Py</p>
+            <p className="text-black font-medium text-sm mb-1">Python + local AI</p>
+            <p className="text-black/60 text-xs">processing &amp; reasoning</p>
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-2 mb-6">
+          {["JavaScript", "Python", "Chrome extensions", "Local servers", "APIs", "Messaging"].map((t) => (
+            <span key={t} className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-medium rounded-full border border-purple-100">{t}</span>
+          ))}
+        </div>
+        <p className="text-lg text-black/80 leading-relaxed">
+          To make informed product decisions, I taught myself the fundamentals through documentation, engineering conversations, experimentation, and rapid prototyping. I learned enough engineering to lead the product, not to become an engineer.
+        </p>
+      </div>
+
+      {/* 06 Directing the Agent */}
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">06 · Directing the Agent</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Directing the system</h2>
+          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
+            Natural language became a design medium. I directed AI to rapidly prototype, validate, and refine interaction behavior through one-click deployment and live validation.
+          </p>
+          <div className="grid md:grid-cols-3 gap-4 mb-8 items-stretch">
+            <figure className="flex flex-col">
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-[#1a1a1a] aspect-[4/3]">
+                <img src="/images/luna/code.png" alt="An AI coding assistant transcript describing low-latency and deduplication fixes it implemented for Luna inside the Google Meet call." className="w-full h-full object-cover object-top" />
+              </div>
+              <figcaption className="text-black font-medium text-sm mt-3">Voice in, code out</figcaption>
+              <p className="text-black/60 text-xs mt-1">talking beats typing</p>
+            </figure>
+            <figure className="flex flex-col">
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-[#0d0a1a] aspect-[4/3] flex items-center justify-center">
+                <img src="/images/luna/portal.png" alt="The Quick Portal: a dark panel with a Deploy Luna button and a field to paste any active Google Meet link." className="h-full w-auto object-contain" />
+              </div>
+              <figcaption className="text-black font-medium text-sm mt-3">The Quick Portal</figcaption>
+              <p className="text-black/60 text-xs mt-1">one click to deploy</p>
+            </figure>
+            <figure className="flex flex-col">
+              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-black aspect-[4/3]">
+                <img src="/images/luna/pivot-inside.png" alt="Luna joins a real Google Meet call as an orb tile beside the human participants." className="w-full h-full object-cover" />
+              </div>
+              <figcaption className="text-black font-medium text-sm mt-3">Luna joins the real Meet call</figcaption>
+              <p className="text-black/60 text-xs mt-1">not a simulation</p>
+            </figure>
+          </div>
+          <p className="text-sm text-black/60 leading-relaxed">
+            <span className="font-semibold text-black/80">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat.</span> Hundreds of micro-decisions &mdash; every one was a design call.
+          </p>
+        </div>
+      </div>
+
+      {/* 07 States & Color */}
+      <div className="py-16 bg-white">
+        <div className="max-w-5xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
+          <h2 className="text-3xl font-bold mb-4 text-center text-black">Making invisible states visible</h2>
+          <p className="text-black/60 text-center mb-14 max-w-2xl mx-auto">
+            Every AI has invisible states. Most AI hides them. Luna exposes them &mdash; that&rsquo;s the innovation.
+          </p>
+          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
+            {states.map((s) => (
+              <div key={s.name} className="flex flex-col items-center text-center">
+                <div className="mb-6 flex h-40 w-full items-center justify-center">
+                  <img
+                    src={`/images/luna/state-${s.name.toLowerCase()}.png`}
+                    alt={`${s.name} state orb`}
+                    className="h-36 w-36 object-contain"
+                  />
+                </div>
+                <h3 className="mb-1 text-xl font-semibold text-black">{s.name}</h3>
+                <p className="mb-3 text-sm font-medium" style={{ color: s.color }}>{s.caption}</p>
+                <p className="text-sm leading-relaxed text-black/60">{s.description}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-lg text-black/80 leading-relaxed text-center mt-12 max-w-2xl mx-auto font-medium">
+            Trust grows when internal state becomes externally visible.
+          </p>
+          <p className="text-sm text-black/50 leading-relaxed text-center mt-4 max-w-2xl mx-auto">
+            Borrowing cues people already trust: ChatGPT Voice · Gemini Live · Siri · Alexa.
+          </p>
+        </div>
+      </div>
+
+      {/* Live Demo */}
+      <div className="bg-[#0a0a0a] py-16 border-y border-white/5">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
+          <h2 className="text-3xl font-bold mb-3 text-white text-center text-balance">Luna, Live</h2>
+          <p className="text-white/60 text-center mb-8 max-w-2xl mx-auto leading-relaxed">
+            Live capture &mdash; listening, reasoning, and speaking states in motion during a real call.
+          </p>
+          <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black">
+            <video
+              src="/videos/luna-demo.mp4"
+              poster="/images/luna/demo-poster.png"
+              controls
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-auto"
+              aria-label="Screen recording of Luna 3.0 running live in a Google Meet call, changing state as she listens and speaks."
+            />
+          </div>
+          <p className="text-white/40 text-xs text-center mt-3">Unmute to hear the live conversation between Luna and Charity.</p>
+        </div>
+      </div>
+
+      {/* 08 Trust & Reflection */}
+      <div className="bg-gradient-to-br from-[#0f0a1f] to-[#1a1030] py-16 text-white">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3">08 · Trust &amp; Reflection</p>
+          <h2 className="text-3xl font-bold mb-8">Design principles I learned</h2>
+          <div className="space-y-3 mb-10">
+            {takeaways.map((t, i) => (
+              <div key={i} className="flex items-start gap-4 bg-white/5 rounded-xl p-5 border border-white/10">
+                <span className="text-purple-300 font-bold shrink-0">{i + 1}</span>
+                <p className="text-white/80 leading-relaxed">{t}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xl text-white/90 leading-relaxed max-w-3xl text-balance">
+            Luna explores how behavioral design can transform an intelligent system into a trusted collaborator.
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function SilasCaseStudy() {
   return (
     <div className="bg-white text-black">
