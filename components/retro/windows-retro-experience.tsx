@@ -25,7 +25,9 @@ import { Minesweeper } from "./apps/minesweeper"
 import { Paint } from "./apps/paint"
 import { Pinball } from "./apps/pinball"
 
-type AppId = "mycomputer" | "about" | "resume" | "aim" | "games" | "paint" | "minesweeper" | "pinball" | "display"
+type AppId = "luna" | "mycomputer" | "about" | "resume" | "aim" | "games" | "paint" | "minesweeper" | "pinball" | "display"
+
+const LUNA_ORB = "/images/luna/hero-orb.png"
 
 interface BackgroundOption {
   id: string
@@ -50,7 +52,19 @@ interface RetroProps {
   onExit: () => void
 }
 
+const LunaOrbIcon = ({ size = 16 }: { size?: number }) => (
+  <img
+    src={LUNA_ORB || "/placeholder.svg"}
+    alt=""
+    width={size}
+    height={size}
+    style={{ width: size, height: size, objectFit: "contain" }}
+    className="drop-shadow-[0_0_4px_rgba(139,92,246,0.7)]"
+  />
+)
+
 const APP_META: Record<AppId, { title: string; icon: (p: any) => React.ReactNode; w: number; h: number }> = {
+  luna: { title: "Luna — Featured Case Study", icon: (p) => <LunaOrbIcon {...p} />, w: 700, h: 520 },
   mycomputer: { title: "My Computer", icon: (p) => <MyComputerIcon {...p} />, w: 680, h: 480 },
   about: { title: "About Charity - Notepad", icon: (p) => <NotepadIcon {...p} />, w: 460, h: 420 },
   resume: { title: "Resume - Charity Dupont", icon: (p) => <DocIcon {...p} />, w: 620, h: 560 },
@@ -88,23 +102,36 @@ export function WindowsRetroExperience(props: RetroProps) {
   }, [])
 
   useEffect(() => {
-    const id = setTimeout(() => setBooting(false), 1700)
+    // Boot, then bring Luna front-and-center as the featured case study.
+    const id = setTimeout(() => {
+      setBooting(false)
+      openApp("luna", { center: true })
+    }, 1700)
     return () => clearTimeout(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const openApp = (id: AppId) => {
+  const openApp = (id: AppId, opts?: { center?: boolean }) => {
     setStartOpen(false)
     setWindows((prev) => {
       seq += 1
       const existing = prev[id]
-      const offset = Object.keys(prev).length * 26
+      const meta = APP_META[id]
+      let pos = existing?.pos
+      if (!pos) {
+        if (opts?.center && !isMobile && typeof window !== "undefined") {
+          pos = {
+            x: Math.max(16, Math.round((window.innerWidth - meta.w) / 2)),
+            y: Math.max(16, Math.round((window.innerHeight - 40 - meta.h) / 2)),
+          }
+        } else {
+          const offset = Object.keys(prev).length * 26
+          pos = { x: 90 + offset, y: 60 + offset }
+        }
+      }
       return {
         ...prev,
-        [id]: {
-          z: seq,
-          minimized: false,
-          pos: existing?.pos ?? { x: 90 + offset, y: 60 + offset },
-        },
+        [id]: { z: seq, minimized: false, pos },
       }
     })
   }
@@ -138,6 +165,8 @@ export function WindowsRetroExperience(props: RetroProps) {
 
   const renderAppBody = (id: AppId) => {
     switch (id) {
+      case "luna":
+        return <MyComputer era={era} caseStudies={caseStudies} initialOpenId="luna" />
       case "mycomputer":
         return <MyComputer era={era} caseStudies={caseStudies} />
       case "about":
@@ -162,7 +191,8 @@ export function WindowsRetroExperience(props: RetroProps) {
   }
 
   // Desktop icons
-  const desktopIcons: { id: AppId | "recycle"; label: string; icon: React.ReactNode }[] = [
+  const desktopIcons: { id: AppId | "recycle"; label: string; icon: React.ReactNode; featured?: boolean }[] = [
+    { id: "luna", label: "Luna \u2605 Case Study", icon: <LunaOrbIcon size={isMobile ? 44 : 40} />, featured: true },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={isMobile ? 40 : 32} /> },
     { id: "about", label: "About Me", icon: <NotepadIcon size={isMobile ? 40 : 32} /> },
     { id: "aim", label: "AOL IM", icon: <AimIcon size={isMobile ? 40 : 32} /> },
@@ -206,10 +236,26 @@ export function WindowsRetroExperience(props: RetroProps) {
               if (isMobile && di.id !== "recycle") openApp(di.id as AppId)
               e.stopPropagation()
             }}
-            className="flex flex-col items-center gap-1 w-[74px] p-1 rounded group"
+            className={`flex flex-col items-center gap-1 w-[74px] p-1 rounded group ${
+              di.featured ? "ring-2 ring-yellow-300/90 bg-[#0a3a8a]/25" : ""
+            }`}
           >
-            <span className="drop-shadow-[1px_1px_1px_rgba(0,0,0,0.5)]">{di.icon}</span>
-            <span className="text-[11px] text-white text-center leading-tight px-1 group-hover:bg-[#0a3a8a]/70 drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)]">
+            <span
+              className={
+                di.featured
+                  ? "drop-shadow-[0_0_8px_rgba(139,92,246,0.9)] animate-pulse"
+                  : "drop-shadow-[1px_1px_1px_rgba(0,0,0,0.5)]"
+              }
+            >
+              {di.icon}
+            </span>
+            <span
+              className={`text-[11px] text-center leading-tight px-1 drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)] ${
+                di.featured
+                  ? "text-yellow-200 font-bold bg-[#0a3a8a]/70"
+                  : "text-white group-hover:bg-[#0a3a8a]/70"
+              }`}
+            >
               {di.label}
             </span>
           </button>
@@ -363,7 +409,8 @@ function StartMenu({
   onClose: () => void
 }) {
   const t = RETRO_THEMES[era]
-  const items: { id: AppId; label: string; icon: React.ReactNode }[] = [
+  const items: { id: AppId; label: string; icon: React.ReactNode; featured?: boolean }[] = [
+    { id: "luna", label: "Luna \u2014 Featured Case Study", icon: <LunaOrbIcon size={22} />, featured: true },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={22} /> },
     { id: "about", label: "About Charity", icon: <NotepadIcon size={22} /> },
     { id: "aim", label: "AOL Instant Messenger", icon: <AimIcon size={22} /> },
@@ -397,7 +444,9 @@ function StartMenu({
                   onOpen(it.id)
                   onClose()
                 }}
-                className="w-full flex items-center gap-3 px-3 py-2 text-[13px] text-black hover:bg-[#2a6fdb] hover:text-white text-left"
+                className={`w-full flex items-center gap-3 px-3 py-2 text-[13px] text-left hover:bg-[#2a6fdb] hover:text-white ${
+                  it.featured ? "font-bold text-[#0a3aa0] bg-[#eef3ff]" : "text-black"
+                }`}
               >
                 <span className="shrink-0">{it.icon}</span>
                 {it.label}

@@ -22,13 +22,14 @@ interface CaseStudy {
 interface MyComputerProps {
   era: RetroEra
   caseStudies: Record<string, CaseStudy>
+  initialOpenId?: string | null
 }
 
 const ORDER = ["luna", "silas", "teammate", "meetly"]
 
-export function MyComputer({ era, caseStudies }: MyComputerProps) {
+export function MyComputer({ era, caseStudies, initialOpenId = null }: MyComputerProps) {
   const t = RETRO_THEMES[era]
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(initialOpenId)
   const cs = openId ? caseStudies[openId] : null
 
   return (
