@@ -6977,19 +6977,12 @@ function LunaCaseStudy() {
         </div>
       </div>
 
-      {/* 04 Prototype to Pivot */}
+      {/* 04 Integrated Experience */}
       <div className="bg-neutral-50 py-16">
         <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Prototype → Pivot</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">From prototype to product</h2>
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white rounded-2xl p-4 border border-red-100 shadow-sm">
-              <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
-                <img src="/images/luna/pivot-beside.png" alt="Prototype: a standalone hub sitting beside Google Meet with a You tile and a separate Luna companion orb." className="w-full h-auto" />
-              </div>
-              <p className="text-red-500 font-semibold mb-2 flex items-center gap-2"><X className="w-4 h-4" /> Prototype (Standalone Hub)</p>
-              <p className="text-black/70 text-sm leading-relaxed">Luna initially lived inside its own dedicated video call interface.</p>
-            </div>
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Integrated Experience</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Integrated experience</h2>
+          <div className="mb-8">
             <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
               <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
                 <img src="/images/luna/pivot-inside.png" alt="Integrated experience: Luna appears as a purple orb tile directly inside a real Google Meet call alongside the human participants." className="w-full h-auto" />
