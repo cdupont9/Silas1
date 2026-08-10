@@ -1141,6 +1141,8 @@ const messageText = mobileInput.trim()
         currentBackgroundId={selectedBackground.id}
         onSelectBackground={(bg) => setSelectedBackground(bg)}
         onExit={() => setSelectedBackground(BACKGROUND_OPTIONS[0])}
+        chatMessages={chatMessages}
+        setChatMessages={setChatMessages}
       />
     )
   }

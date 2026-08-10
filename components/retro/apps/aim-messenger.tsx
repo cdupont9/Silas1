@@ -3,10 +3,17 @@
 import { useEffect, useRef, useState } from "react"
 import { RETRO_THEMES, sunkenBevel, raisedBevel, type RetroEra } from "../retro-theme"
 import { AimIcon } from "../retro-icons"
+import {
+  getCharityResponse,
+  shouldAutoHeart,
+  type ChatMessage,
+} from "../../charity-chat"
 
 interface AimMessengerProps {
   era: RetroEra
   isMobile: boolean
+  messages: ChatMessage[]
+  setMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 }
 
 interface Buddy {

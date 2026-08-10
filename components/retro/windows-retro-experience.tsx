@@ -21,6 +21,7 @@ import { MyComputer } from "./apps/my-computer"
 import { Notepad } from "./apps/notepad"
 import { ResumeViewer } from "./apps/resume-viewer"
 import { AimMessenger } from "./apps/aim-messenger"
+import type { ChatMessage } from "../charity-chat"
 import { Minesweeper } from "./apps/minesweeper"
 import { Paint } from "./apps/paint"
 import { Pinball } from "./apps/pinball"
@@ -50,6 +51,8 @@ interface RetroProps {
   currentBackgroundId: string
   onSelectBackground: (bg: BackgroundOption) => void
   onExit: () => void
+  chatMessages: ChatMessage[]
+  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 }
 
 const LunaOrbIcon = ({ size = 16 }: { size?: number }) => (
@@ -174,7 +177,14 @@ export function WindowsRetroExperience(props: RetroProps) {
       case "resume":
         return <ResumeViewer era={era} url={resumeUrl} />
       case "aim":
-        return <AimMessenger era={era} isMobile={isMobile} />
+        return (
+          <AimMessenger
+            era={era}
+            isMobile={isMobile}
+            messages={props.chatMessages}
+            setMessages={props.setChatMessages}
+          />
+        )
       case "paint":
         return <Paint era={era} />
       case "minesweeper":
