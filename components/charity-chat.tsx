@@ -772,19 +772,14 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
   // CASE STUDIES & PROJECTS
   // ============================================
 
-  // Case study / case studies - list all with buttons
+  // Featured case study
   if (normalized.match(/casestud|case stud|projects?|portfolio/i)) {
-    return "Yes, please see my case studies here:\nBUTTON:teammate:Teammate\nBUTTON:meetly:Meetly\nBUTTON:silas:Silas"
+    return "Silas is my featured case study. Luna is currently coming soon.\nBUTTON:silas:View Silas"
   }
 
-  // Teammate
-  if (normalized.match(/teammates?/i)) {
-    return "Teammate is a case study I completed during my Columbia University Bootcamp. It's a dating app for sports fans that connects like-minded individuals based on their team preferences and allows them to purchase tickets together.\nBUTTON:teammate:View Case Study"
-  }
-
-  // Meetly
-  if (normalized.match(/meetly/i)) {
-    return "Meetly is a case study I completed during my Columbia University Bootcamp. It's a scheduling and meeting management platform I designed to help professionals coordinate their time more efficiently.\nBUTTON:meetly:View Case Study"
+  // Luna
+  if (normalized.match(/luna/i)) {
+    return "Luna is currently coming soon. In the meantime, Silas is the featured case study you can explore now.\nBUTTON:silas:View Silas"
   }
 
   // Silas

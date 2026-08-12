@@ -36,22 +36,20 @@ function autoReply(input: string, buddy: string): string {
   if (buddy === "SmarterChild") {
     if (q.includes("weather")) return "It's always sunny inside a CRT monitor :) Ask me about Charity's work!"
     if (q.includes("hi") || q.includes("hey") || q.includes("hello")) return "hiya! type 'help' to see what I can do."
-    if (q.includes("help")) return "Try asking about: Luna, Silas, Teammate, Meetly, resume, or contact."
+    if (q.includes("help")) return "Try asking about: Silas, Luna, resume, or contact."
     return "I'm just a lil bot. Try messaging CharityDzn for the real answers!"
   }
   // CharityDzn / default
-  if (q.includes("luna")) return "Luna is my interaction model for agentic AI — making an AI's listening, reasoning, and speaking states legible through motion + color. Open My Computer to read the full case study!"
-  if (q.includes("silas")) return "Silas is an integrated AI companion that turns passive data into executable intelligence. Less thinking, more living :)"
-  if (q.includes("teammate")) return "Teammate is a sports dating app — it schedules dates around live game events. Fun one!"
-  if (q.includes("meetly")) return "Meetly helps friend groups coordinate meetups with availability + voting. No more 20-text threads."
+  if (q.includes("luna")) return "Luna is coming soon. For now, open Silas — my featured case study — from the desktop or My Computer."
+  if (q.includes("silas")) return "Silas is my featured case study: an integrated AI companion that turns passive data into executable intelligence. Less thinking, more living :)"
   if (q.includes("resume") || q.includes("cv")) return "You can open my Resume right from the Start menu or the desktop. brb formatting it in Times New Roman ;)"
   if (q.includes("contact") || q.includes("email") || q.includes("hire")) return "I'd love to chat! Reach me through the Resume, or just keep IMing me here."
   if (q.includes("hi") || q.includes("hey") || q.includes("hello") || q.includes("sup")) return "hey!! thanks for stopping by my desktop :) what do you want to know about my work?"
   if (q.includes("bye") || q.includes("gtg") || q.includes("cya")) return "bye!! *door slam sound* don't be a stranger 🙂"
-  return "ooh good question — try asking me about Luna, Silas, Teammate, Meetly, or my resume!"
+  return "ooh good question — try asking me about Silas, Luna, or my resume!"
 }
 
-export function AimMessenger({ era, isMobile }: AimMessengerProps) {
+export function AimMessenger({ era, isMobile, messages, setMessages }: AimMessengerProps) {
   const t = RETRO_THEMES[era]
   const [view, setView] = useState<"signon" | "buddies" | "chat">("signon")
   const [screenName, setScreenName] = useState("guest2003")
@@ -81,6 +79,27 @@ export function AimMessenger({ era, isMobile }: AimMessengerProps) {
     const text = draft.trim()
     if (!text || !activeBuddy) return
     setDraft("")
+
+    if (activeBuddy === "CharityDzn") {
+      const now = new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+      const userMessage: ChatMessage = { id: `aim-user-${Date.now()}`, role: "user", text, time: now }
+      const reply = getCharityResponse(text, messages)
+      setMessages((prev) => [...prev, userMessage])
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: `aim-charity-${Date.now()}`,
+            role: "assistant",
+            text: reply,
+            time: new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }),
+            reaction: shouldAutoHeart(text) ? "❤️" : undefined,
+          },
+        ])
+      }, 700)
+      return
+    }
+
     setThreads((prev) => ({ ...prev, [activeBuddy]: [...(prev[activeBuddy] ?? []), { from: "me", text }] }))
     const reply = autoReply(text, activeBuddy)
     setTimeout(() => {
@@ -156,7 +175,14 @@ export function AimMessenger({ era, isMobile }: AimMessengerProps) {
   }
 
   // ---- Chat / IM window ----
-  const msgs = activeBuddy ? threads[activeBuddy] ?? [] : []
+  const msgs: Msg[] = activeBuddy === "CharityDzn"
+    ? messages.map((message) => ({
+        from: message.role === "user" ? "me" : "buddy",
+        text: message.text.replace(/\nBUTTON:[^\n]+/g, ""),
+      }))
+    : activeBuddy
+      ? threads[activeBuddy] ?? []
+      : []
   return (
     <div className="flex flex-col h-full bg-white text-black" style={{ fontFamily: t.fontFamily }}>
       <div className="px-2 py-1 text-[12px] font-bold flex items-center gap-2" style={{ background: yellow }}>

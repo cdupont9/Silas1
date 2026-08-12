@@ -56,32 +56,6 @@ const mobileMessageContacts = [
     ]
   },
   {
-    id: 'teammate',
-    name: 'Teammate Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png',
-    lastMessage: 'Sports dating app - "Don\'t Play Alone"',
-    time: '9:45 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Teammate - Sports Dating App", time: '9:40 AM' },
-      { from: 'project', text: "A dating app for sports fans that connects like-minded individuals based on their team preferences and game schedules.", time: '9:42 AM' },
-      { from: 'project', text: "Key features: Character-based matching, safe public venues at sports events, and sports-driven connections.", time: '9:45 AM' },
-    ]
-  },
-  {
-    id: 'meetly',
-    name: 'Meetly Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png',
-    lastMessage: 'Social coordination made easy',
-    time: '9:30 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Meetly - Social Group Coordination", time: '9:25 AM' },
-      { from: 'project', text: "Helps social groups coordinate meetups by combining the power of a calendar with the ease of a messaging app.", time: '9:28 AM' },
-      { from: 'project', text: "Eliminated coordination fatigue with voting screens and contextual chat for planning.", time: '9:30 AM' },
-    ]
-  },
-  {
     id: 'silas',
     name: 'Silas Project',
     avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg',
@@ -107,32 +81,6 @@ const messageContacts = [
     time: 'now',
     unread: true,
     messages: []
-  },
-  {
-    id: 'teammate',
-    name: 'Teammate Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png',
-    lastMessage: 'Sports dating app - "Don\'t Play Alone"',
-    time: '9:45 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Teammate - Sports Dating App", time: '9:40 AM' },
-      { from: 'project', text: "A dating app for sports fans that connects like-minded individuals based on their team preferences and game schedules.", time: '9:42 AM' },
-      { from: 'project', text: "Key features: Character-based matching, safe public venues at sports events, and sports-driven connections.", time: '9:45 AM' },
-    ]
-  },
-  {
-    id: 'meetly',
-    name: 'Meetly Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png',
-    lastMessage: 'Social coordination made easy',
-    time: '9:30 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Meetly - Social Group Coordination", time: '9:25 AM' },
-      { from: 'project', text: "Helps social groups coordinate meetups by combining the power of a calendar with the ease of a messaging app.", time: '9:28 AM' },
-      { from: 'project', text: "Eliminated coordination fatigue with voting screens and contextual chat for planning.", time: '9:30 AM' },
-    ]
   },
   {
     id: 'silas',
@@ -1487,18 +1435,16 @@ const messageText = mobileInput.trim()
                   <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
 
-                {/* Luna */}
-                <button
-                  onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
-                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
-                >
-                  <div className="w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
-                    <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)] animate-pulse">
+                {/* Luna — Coming Soon */}
+                <div className="flex flex-col items-center justify-center opacity-80" aria-label="Luna, coming soon">
+                  <div className="relative w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
+                    <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)]">
                       <div className="absolute top-1.5 left-2 w-2.5 h-2.5 rounded-full bg-white/60 blur-[2px]" />
                     </div>
+                    <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
                   </div>
                   <span className="text-white text-[11px] mt-1">Luna</span>
-                </button>
+                </div>
 
                 {/* Wallpaper / Theme */}
                 <button
@@ -2455,7 +2401,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">PROJECTS</p>
                 </div>
-                {['teammate', 'meetly', 'silas'].map((key) => {
+                {['silas'].map((key) => {
                   const study = caseStudies[key as keyof typeof caseStudies]
                   return (
                     <button
@@ -3717,7 +3663,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div>
             <h2 className="text-xl font-semibold text-white mb-4">My Case Studies</h2>
             <div className="flex gap-2 overflow-x-auto scrollbar-none pb-4" style={{ WebkitOverflowScrolling: 'touch' }}>
-              {Object.entries(caseStudies).map(([key, study]) => (
+              {Object.entries(caseStudies).filter(([key]) => key === 'silas').map(([key, study]) => (
                 <button
                   key={key}
                   onClick={() => setNetflixModal({ type: 'project', data: key })}
@@ -4906,20 +4852,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         icon: <MessageCircle className="w-4 h-4" />
                       })
                     }
-                    if ('teammate'.includes(query) || 'sports'.includes(query) || 'dating'.includes(query)) {
-                      results.push({
-                        label: 'Teammate - Sports Dating App',
-                        action: () => { openCaseStudy('teammate'); setHelpSearchQuery('') },
-                        icon: <Folder className="w-4 h-4" />
-                      })
-                    }
-                    if ('meetly'.includes(query) || 'scheduling'.includes(query) || 'meeting'.includes(query)) {
-                      results.push({
-                        label: 'Meetly - Scheduling Platform',
-                        action: () => { openCaseStudy('meetly'); setHelpSearchQuery('') },
-                        icon: <Folder className="w-4 h-4" />
-                      })
-                    }
                     if ('silas'.includes(query) || 'ai'.includes(query) || 'companion'.includes(query)) {
                       results.push({
                         label: 'Silas - AI Companion',
@@ -4929,8 +4861,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     }
                     if ('case study'.includes(query) || 'case studies'.includes(query) || 'projects'.includes(query) || 'portfolio'.includes(query)) {
                       results.push({
-                        label: 'Open Case Studies Folder',
-                        action: () => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
+                        label: 'Open Silas — Featured Case Study',
+                        action: () => { openCaseStudy('silas'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
@@ -5577,7 +5509,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
   {/* AI Assistant Window - Front and Center */}
-  {/* Luna Spotlight - primary call to action on the desktop */}
+  {/* Silas Spotlight - primary case study on the desktop */}
   {showLunaSpotlight && (
   <div
   className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
@@ -5588,23 +5520,23 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   onClick={(e) => e.stopPropagation()}
   >
   <button
-  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
+  onClick={() => { openCaseStudy('silas'); setShowLunaSpotlight(false); }}
   className="relative group"
-  aria-label="Open the Luna case study"
+  aria-label="Open the Silas case study"
   >
   {/* Pulsing highlight rings */}
-  <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
-  <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
-  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-32 w-32 object-contain drop-shadow-[0_0_24px_rgba(139,92,246,0.65)] transition-transform duration-200 group-hover:scale-105" />
+  <span className="absolute -inset-4 rounded-3xl ring-4 ring-white/70 animate-ping" />
+  <span className="absolute -inset-4 rounded-3xl ring-2 ring-white/90" />
+  <img src={SILAS_ICON} alt="Silas" className="h-32 w-32 rounded-3xl object-cover shadow-2xl transition-transform duration-200 group-hover:scale-105" />
   </button>
   
-  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Luna</h2>
-  <p className="text-white/80 text-sm mt-1 drop-shadow">Designing Behavior for Agentic AI</p>
+  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Silas</h2>
+  <p className="text-white/80 text-sm mt-1 drop-shadow">The Integrated AI Companion</p>
   
   {/* Arrow + Click here */}
   <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
   <button
-  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
+  onClick={() => { openCaseStudy('silas'); setShowLunaSpotlight(false); }}
                 className="mt-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold shadow-xl hover:bg-white/90 transition-colors flex items-center gap-2"
               >
                 <MousePointerClick className="w-4 h-4" />
@@ -6342,18 +6274,6 @@ label="Brain Games"
           }
           label="Silas"
           onClick={() => openCaseStudy('silas')}
-        />
-
-        <DockIcon
-          icon={
-            <div className="w-12 h-12 flex items-center justify-center">
-              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_16px_rgba(168,85,247,0.9)] animate-pulse">
-                <div className="absolute top-1.5 left-2 w-3 h-3 rounded-full bg-white/60 blur-[2px]" />
-              </div>
-            </div>
-          }
-          label="Luna"
-          onClick={() => openCaseStudy('luna')}
         />
 
         {/* Minimized Windows Section */}
