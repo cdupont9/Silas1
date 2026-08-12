@@ -3838,7 +3838,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <button
                           onClick={() => {
                             openCaseStudy(netflixModal.data as string)
-                            setNetflixModal({ type: null, data: null })
+                            setNetflixModal({ type: null })
                           }}
                           className="mt-6 bg-white hover:bg-white/90 text-black font-bold px-8 py-3 rounded-md flex items-center gap-2 transition-colors"
                         >
@@ -4660,8 +4660,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   <div className="flex-1 flex items-center justify-center p-4">
                     <div className="relative w-full max-w-5xl">
                       <img 
-                        src={personalPhotos[netflixModal.data]}
-                        alt={`Gallery ${netflixModal.data + 1}`}
+                        src={personalPhotos[netflixModal.data as number]}
+                        alt={`Gallery ${(netflixModal.data as number) + 1}`}
                         className="w-full h-auto max-h-[70vh] object-contain rounded-lg"
                       />
                       {/* Navigation Arrows */}
