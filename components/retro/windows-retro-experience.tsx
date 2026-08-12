@@ -26,9 +26,9 @@ import { Minesweeper } from "./apps/minesweeper"
 import { Paint } from "./apps/paint"
 import { Pinball } from "./apps/pinball"
 
-type AppId = "luna" | "mycomputer" | "about" | "resume" | "aim" | "games" | "paint" | "minesweeper" | "pinball" | "display"
+type AppId = "silas" | "mycomputer" | "about" | "resume" | "aim" | "games" | "paint" | "minesweeper" | "pinball" | "display"
 
-const LUNA_ORB = "/images/luna/hero-orb.png"
+const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
 interface BackgroundOption {
   id: string
@@ -55,19 +55,18 @@ interface RetroProps {
   setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 }
 
-const LunaOrbIcon = ({ size = 16 }: { size?: number }) => (
+const SilasIcon = ({ size = 16 }: { size?: number }) => (
   <img
-    src={LUNA_ORB || "/placeholder.svg"}
+    src={SILAS_ICON}
     alt=""
     width={size}
     height={size}
-    style={{ width: size, height: size, objectFit: "contain" }}
-    className="drop-shadow-[0_0_4px_rgba(139,92,246,0.7)]"
+    style={{ width: size, height: size, objectFit: "cover" }}
   />
 )
 
 const APP_META: Record<AppId, { title: string; icon: (p: any) => React.ReactNode; w: number; h: number }> = {
-  luna: { title: "Luna — Featured Case Study", icon: (p) => <LunaOrbIcon {...p} />, w: 700, h: 520 },
+  silas: { title: "Silas — Featured Case Study", icon: (p) => <SilasIcon {...p} />, w: 700, h: 520 },
   mycomputer: { title: "My Computer", icon: (p) => <MyComputerIcon {...p} />, w: 680, h: 480 },
   about: { title: "About Charity - Notepad", icon: (p) => <NotepadIcon {...p} />, w: 460, h: 420 },
   resume: { title: "Resume - Charity Dupont", icon: (p) => <DocIcon {...p} />, w: 620, h: 560 },
@@ -105,10 +104,10 @@ export function WindowsRetroExperience(props: RetroProps) {
   }, [])
 
   useEffect(() => {
-    // Boot, then bring Luna front-and-center as the featured case study.
+    // Boot, then bring Silas front-and-center as the featured case study.
     const id = setTimeout(() => {
       setBooting(false)
-      openApp("luna", { center: true })
+      openApp("silas", { center: true })
     }, 1700)
     return () => clearTimeout(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,8 +167,8 @@ export function WindowsRetroExperience(props: RetroProps) {
 
   const renderAppBody = (id: AppId) => {
     switch (id) {
-      case "luna":
-        return <MyComputer era={era} caseStudies={caseStudies} initialOpenId="luna" />
+      case "silas":
+        return <MyComputer era={era} caseStudies={caseStudies} initialOpenId="silas" />
       case "mycomputer":
         return <MyComputer era={era} caseStudies={caseStudies} />
       case "about":
@@ -202,7 +201,7 @@ export function WindowsRetroExperience(props: RetroProps) {
 
   // Desktop icons
   const desktopIcons: { id: AppId | "recycle"; label: string; icon: React.ReactNode; featured?: boolean }[] = [
-    { id: "luna", label: "Luna \u2605 Case Study", icon: <LunaOrbIcon size={isMobile ? 44 : 40} />, featured: true },
+    { id: "silas", label: "Silas \u2605 Case Study", icon: <SilasIcon size={isMobile ? 44 : 40} />, featured: true },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={isMobile ? 40 : 32} /> },
     { id: "about", label: "About Me", icon: <NotepadIcon size={isMobile ? 40 : 32} /> },
     { id: "aim", label: "AOL IM", icon: <AimIcon size={isMobile ? 40 : 32} /> },
@@ -420,7 +419,7 @@ function StartMenu({
 }) {
   const t = RETRO_THEMES[era]
   const items: { id: AppId; label: string; icon: React.ReactNode; featured?: boolean }[] = [
-    { id: "luna", label: "Luna \u2014 Featured Case Study", icon: <LunaOrbIcon size={22} />, featured: true },
+    { id: "silas", label: "Silas \u2014 Featured Case Study", icon: <SilasIcon size={22} />, featured: true },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={22} /> },
     { id: "about", label: "About Charity", icon: <NotepadIcon size={22} /> },
     { id: "aim", label: "AOL Instant Messenger", icon: <AimIcon size={22} /> },

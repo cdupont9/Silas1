@@ -1364,61 +1364,35 @@ const messageText = mobileInput.trim()
               <WeatherWidget className="w-full" />
             </div>
 
-            {/* Featured Case Study - Luna */}
+            {/* Featured Case Study - Silas */}
             <div className="mx-4 mt-6">
               <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
                 <Folder className="w-5 h-5" />
                 Featured Case Study
               </h2>
               <button
-                onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
+                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
                 className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
               >
-                <img src="/images/luna/hero-orb.png" alt="Luna" className="h-16 w-16 object-contain drop-shadow-[0_0_12px_rgba(139,92,246,0.5)]" />
+                <img src={SILAS_ICON} alt="Silas" className="h-16 w-16 rounded-xl object-cover shadow" />
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-gray-900">Luna</h3>
-                  <p className="text-gray-500 text-sm">Designing Behavior for Agentic AI</p>
+                  <h3 className="font-bold text-gray-900">Silas</h3>
+                  <p className="text-gray-500 text-sm">Integrated AI Companion</p>
                   <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
             </div>
 
-            {/* Bootcamp Case Studies Section */}
-            <div className="mx-4 mt-6">
-              <h2 className="text-white text-lg font-semibold mb-1 flex items-center gap-2">
-                <Folder className="w-5 h-5" />
-                Bootcamp Case Studies
-              </h2>
-              <p className="text-white/60 text-xs mb-3">Independent projects from my Columbia University UX/UI Bootcamp.</p>
-              <div className="space-y-3">
-                {/* Teammate */}
-                <button
-                  onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={TEAMMATE_ICON} alt="Teammate" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Teammate</h3>
-                    <p className="text-gray-500 text-sm">Sports Dating App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
-
-                {/* Meetly */}
-                <button
-                  onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={MEETLY_ICON} alt="Meetly" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Meetly</h3>
-                    <p className="text-gray-500 text-sm">Social Coordination App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
+            {/* Luna preview */}
+            <div className="mx-4 mt-3">
+              <div className="w-full bg-white/85 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg">
+                <img src="/images/luna/hero-orb.png" alt="Luna" className="h-14 w-14 object-contain opacity-80" />
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-gray-900">Luna</h3>
+                  <p className="text-gray-500 text-sm">Designing Behavior for Agentic AI</p>
+                </div>
+                <span className="rounded-full bg-purple-100 px-2.5 py-1 text-[11px] font-semibold text-purple-700">Coming Soon</span>
               </div>
             </div>
 
@@ -2232,17 +2206,15 @@ const messageText = mobileInput.trim()
         {
           id: 2,
           title: "Case Studies",
-          preview: "Teammate - Sports Dating App, Meetly - Group Coordination, Silas - AI Companion",
+          preview: "Silas - Integrated AI Companion, Luna - Coming Soon",
           date: "Yesterday",
           hasImages: true,
           images: [
-            { title: "Teammate", icon: TEAMMATE_ICON, key: "teammate" },
-            { title: "Meetly", icon: MEETLY_ICON, key: "meetly" },
             { title: "Silas", icon: SILAS_ICON, key: "silas" }
           ],
-          content: `My Featured Projects:
+          content: `Featured Project: Silas
 
-Tap on any project below to view the full case study.`
+Tap below to view the full case study. Luna is coming soon.`
         },
         {
           id: 3,
@@ -4889,11 +4861,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <User className="w-4 h-4 mr-2 opacity-70" />
                 About
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-black/10" />
-              <DropdownMenuItem onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
-                <Folder className="w-4 h-4 mr-2 opacity-70" />
-                Bootcamp Case Studies
-              </DropdownMenuItem>
+
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>
@@ -5081,16 +5049,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           {/* Weather Widget - real-time via Open-Meteo */}
           <WeatherWidget />
 
-          {/* Bootcamp Case Studies desktop folder */}
-          <button
-            onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
-            className="flex flex-col items-center gap-1.5 w-28 group"
-          >
-            <div className="w-20 h-16 group-hover:scale-110 transition-transform">
-              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt="Bootcamp Case Studies folder" className="w-full h-auto drop-shadow-lg" />
-            </div>
-            <span className="text-[12px] text-white font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Bootcamp Case Studies</span>
-          </button>
 
           </div>
 
@@ -5345,7 +5303,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
         {/* Case Studies Finder Window */}
-        {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
+        {false && caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
           <div
             className={`absolute w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
             onClick={() => focusWindow('caseStudies')}
@@ -5845,7 +5803,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
         {/* Projects Folder Window */}
-        {projectsFolder.isOpen && !projectsFolder.isMinimized && (
+        {false && projectsFolder.isOpen && !projectsFolder.isMinimized && (
           <div
             className={`pointer-events-auto absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: projectsPosition.x, top: projectsPosition.y, transformOrigin: 'bottom center' }}
