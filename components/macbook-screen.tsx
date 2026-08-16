@@ -5569,6 +5569,35 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               >
                 or explore the desktop on your own
               </button>
+
+              {/* Coming Soon case studies */}
+              <div className="mt-8 flex flex-col items-center gap-3">
+                <span className="text-white/60 text-[11px] uppercase tracking-[0.2em]">Coming Soon</span>
+                <div className="flex items-center gap-4">
+                  <div className="flex flex-col items-center gap-2 w-28" aria-label="Luna, coming soon">
+                    <div className="relative w-16 h-16 rounded-2xl bg-black flex items-center justify-center shadow-lg">
+                      <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_16px_rgba(168,85,247,0.9)]">
+                        <div className="absolute top-2 left-2.5 w-3 h-3 rounded-full bg-white/60 blur-[2px]" />
+                      </div>
+                      <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-white text-xs font-semibold">Luna</p>
+                      <p className="text-white/60 text-[10px]">Behavior for Agentic AI</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-col items-center gap-2 w-28" aria-label="Bank of Daniel, coming soon">
+                    <div className="relative w-16 h-16 rounded-2xl overflow-hidden shadow-lg">
+                      <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
+                      <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-white text-xs font-semibold">Bank of Daniel</p>
+                      <p className="text-white/60 text-[10px]">Stewardship &amp; Trust</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}

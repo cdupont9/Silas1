@@ -65,6 +65,25 @@ const SilasIcon = ({ size = 16 }: { size?: number }) => (
   />
 )
 
+const BANK_OF_DANIEL_ICON = "/images/bank-of-daniel/logo.png"
+
+const BankOfDanielIcon = ({ size = 16 }: { size?: number }) => (
+  <img
+    src={BANK_OF_DANIEL_ICON || "/placeholder.svg"}
+    alt=""
+    width={size}
+    height={size}
+    style={{ width: size, height: size, objectFit: "cover" }}
+  />
+)
+
+const LunaOrbIcon = ({ size = 16 }: { size?: number }) => (
+  <div
+    style={{ width: size, height: size }}
+    className="rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_8px_rgba(168,85,247,0.9)]"
+  />
+)
+
 const APP_META: Record<AppId, { title: string; icon: (p: any) => React.ReactNode; w: number; h: number }> = {
   silas: { title: "Silas — Featured Case Study", icon: (p) => <SilasIcon {...p} />, w: 700, h: 520 },
   mycomputer: { title: "My Computer", icon: (p) => <MyComputerIcon {...p} />, w: 680, h: 480 },
@@ -200,8 +219,10 @@ export function WindowsRetroExperience(props: RetroProps) {
   }
 
   // Desktop icons
-  const desktopIcons: { id: AppId | "recycle"; label: string; icon: React.ReactNode; featured?: boolean }[] = [
+  const desktopIcons: { id: AppId | "recycle" | "luna" | "bankofdaniel"; label: string; icon: React.ReactNode; featured?: boolean; comingSoon?: boolean }[] = [
     { id: "silas", label: "Silas \u2605 Case Study", icon: <SilasIcon size={isMobile ? 44 : 40} />, featured: true },
+    { id: "luna", label: "Luna", icon: <LunaOrbIcon size={isMobile ? 40 : 32} />, comingSoon: true },
+    { id: "bankofdaniel", label: "Bank of Daniel", icon: <BankOfDanielIcon size={isMobile ? 40 : 32} />, comingSoon: true },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={isMobile ? 40 : 32} /> },
     { id: "about", label: "About Me", icon: <NotepadIcon size={isMobile ? 40 : 32} /> },
     { id: "aim", label: "AOL IM", icon: <AimIcon size={isMobile ? 40 : 32} /> },
@@ -239,24 +260,30 @@ export function WindowsRetroExperience(props: RetroProps) {
         {desktopIcons.map((di) => (
           <button
             key={di.id}
-            onDoubleClick={() => di.id !== "recycle" && openApp(di.id as AppId)}
+            onDoubleClick={() => !di.comingSoon && di.id !== "recycle" && openApp(di.id as AppId)}
             onClick={(e) => {
               // On touch, single tap opens; on desktop single tap just selects (double opens).
-              if (isMobile && di.id !== "recycle") openApp(di.id as AppId)
+              if (isMobile && !di.comingSoon && di.id !== "recycle") openApp(di.id as AppId)
               e.stopPropagation()
             }}
+            aria-disabled={di.comingSoon}
             className={`flex flex-col items-center gap-1 w-[74px] p-1 rounded group ${
               di.featured ? "ring-2 ring-yellow-300/90 bg-[#0a3a8a]/25" : ""
-            }`}
+            } ${di.comingSoon ? "cursor-default" : ""}`}
           >
             <span
-              className={
+              className={`relative ${
                 di.featured
                   ? "drop-shadow-[0_0_8px_rgba(139,92,246,0.9)] animate-pulse"
                   : "drop-shadow-[1px_1px_1px_rgba(0,0,0,0.5)]"
-              }
+              } ${di.comingSoon ? "opacity-80" : ""}`}
             >
               {di.icon}
+              {di.comingSoon && (
+                <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1 py-0.5 text-[7px] font-bold text-white shadow">
+                  SOON
+                </span>
+              )}
             </span>
             <span
               className={`text-[11px] text-center leading-tight px-1 drop-shadow-[1px_1px_1px_rgba(0,0,0,0.8)] ${
