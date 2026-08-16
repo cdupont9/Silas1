@@ -1344,6 +1344,18 @@ const messageText = mobileInput.trim()
               </div>
             </div>
 
+            {/* Bank of Daniel preview */}
+            <div className="mx-4 mt-3">
+              <div className="w-full bg-white/85 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg">
+                <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="h-14 w-14 rounded-xl object-cover shadow opacity-90" />
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-gray-900">Bank of Daniel</h3>
+                  <p className="text-gray-500 text-sm">Stewardship and Trust</p>
+                </div>
+                <span className="rounded-full bg-purple-100 px-2.5 py-1 text-[11px] font-semibold text-purple-700">Coming Soon</span>
+              </div>
+            </div>
+
             {/* Quick Access - Icons Only */}
             <div className="mx-4 mt-6 mb-6">
               <h2 className="text-white text-lg font-semibold mb-3">Quick Access</h2>
@@ -1444,6 +1456,15 @@ const messageText = mobileInput.trim()
                     <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
                   </div>
                   <span className="text-white text-[11px] mt-1">Luna</span>
+                </div>
+
+                {/* Bank of Daniel — Coming Soon */}
+                <div className="flex flex-col items-center justify-center opacity-80" aria-label="Bank of Daniel, coming soon">
+                  <div className="relative w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
+                    <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+                  </div>
+                  <span className="text-white text-[11px] mt-1">B. of Daniel</span>
                 </div>
 
                 {/* Wallpaper / Theme */}
@@ -2152,7 +2173,7 @@ const messageText = mobileInput.trim()
         {
           id: 2,
           title: "Case Studies",
-          preview: "Silas - Integrated AI Companion, Luna - Coming Soon",
+          preview: "Silas - Integrated AI Companion, Luna & Bank of Daniel - Coming Soon",
           date: "Yesterday",
           hasImages: true,
           images: [
@@ -2160,7 +2181,7 @@ const messageText = mobileInput.trim()
           ],
           content: `Featured Project: Silas
 
-Tap below to view the full case study. Luna is coming soon.`
+Tap below to view the full case study. Luna and Bank of Daniel are coming soon.`
         },
         {
           id: 3,

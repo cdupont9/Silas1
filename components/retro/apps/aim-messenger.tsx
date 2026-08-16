@@ -41,6 +41,7 @@ function autoReply(input: string, buddy: string): string {
   }
   // CharityDzn / default
   if (q.includes("luna")) return "Luna is coming soon. For now, open Silas — my featured case study — from the desktop or My Computer."
+  if (q.includes("bank of daniel") || q.includes("daniel")) return "Bank of Daniel is coming soon. For now, open Silas — my featured case study — from the desktop or My Computer."
   if (q.includes("silas")) return "Silas is my featured case study: an integrated AI companion that turns passive data into executable intelligence. Less thinking, more living :)"
   if (q.includes("resume") || q.includes("cv")) return "You can open my Resume right from the Start menu or the desktop. brb formatting it in Times New Roman ;)"
   if (q.includes("contact") || q.includes("email") || q.includes("hire")) return "I'd love to chat! Reach me through the Resume, or just keep IMing me here."

@@ -774,9 +774,14 @@ export const getCharityResponse = (userMessage: string, conversationHistory?: Ch
 
   // Featured case study
   if (normalized.match(/casestud|case stud|projects?|portfolio/i)) {
-    return "Silas is my featured case study. Luna is currently coming soon.\nBUTTON:silas:View Silas"
+    return "Silas is my featured case study. Luna and Bank of Daniel are currently coming soon.\nBUTTON:silas:View Silas"
   }
 
+  // Bank of Daniel
+  if (normalized.match(/bank of daniel|bank daniel/i)) {
+    return "Bank of Daniel is currently coming soon. In the meantime, Silas is the featured case study you can explore now.\nBUTTON:silas:View Silas"
+  }
+  
   // Luna
   if (normalized.match(/luna/i)) {
     return "Luna is currently coming soon. In the meantime, Silas is the featured case study you can explore now.\nBUTTON:silas:View Silas"
