@@ -5587,9 +5587,11 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
               <span className="text-white text-[11px] font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Luna</span>
             </div>
             <div className="flex flex-col items-center gap-1.5 w-20" aria-label="Bank of Daniel, coming soon">
-              <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-lg">
-                <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
-                <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+              <div className="relative w-14 h-14 shadow-lg rounded-2xl">
+                <div className="w-full h-full rounded-2xl overflow-hidden">
+                  <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
+                </div>
+                <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow z-10">SOON</span>
               </div>
               <span className="text-white text-[11px] font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Bank of Daniel</span>
             </div>
