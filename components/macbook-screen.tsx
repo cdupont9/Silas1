@@ -5,7 +5,7 @@
 // showConversationList=164, selectedNote=165, viewingPhoto=166
 // NO useState inside if(mobileScreen) blocks - verified March 25, 2026
 import { useState, useEffect, useRef } from "react"
-import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, Check, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick } from "lucide-react"
+import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, Check, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, ArrowUp, MousePointerClick, Palette, Sparkles } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
 import { WeatherWidget } from "@/components/weather-widget"
+import { WindowsRetroExperience } from "@/components/retro/windows-retro-experience"
 
 interface WindowState {
   isOpen: boolean
@@ -51,33 +52,7 @@ const mobileMessageContacts = [
     messages: [
       { from: 'charity', text: "Hey! Welcome to my portfolio on my iPhone!", time: '10:30 AM' },
       { from: 'charity', text: "Feel free to check out my case studies! Tap on any one of my case studies and explore.", time: '10:30 AM' },
-      { from: 'charity', text: "I'm a UX/UI designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
-    ]
-  },
-  {
-    id: 'teammate',
-    name: 'Teammate Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png',
-    lastMessage: 'Sports dating app - "Don\'t Play Alone"',
-    time: '9:45 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Teammate - Sports Dating App", time: '9:40 AM' },
-      { from: 'project', text: "A dating app for sports fans that connects like-minded individuals based on their team preferences and game schedules.", time: '9:42 AM' },
-      { from: 'project', text: "Key features: Character-based matching, safe public venues at sports events, and sports-driven connections.", time: '9:45 AM' },
-    ]
-  },
-  {
-    id: 'meetly',
-    name: 'Meetly Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png',
-    lastMessage: 'Social coordination made easy',
-    time: '9:30 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Meetly - Social Group Coordination", time: '9:25 AM' },
-      { from: 'project', text: "Helps social groups coordinate meetups by combining the power of a calendar with the ease of a messaging app.", time: '9:28 AM' },
-      { from: 'project', text: "Eliminated coordination fatigue with voting screens and contextual chat for planning.", time: '9:30 AM' },
+      { from: 'charity', text: "I'm an agentic UX designer passionate about creating meaningful digital experiences. Enjoy!", time: '10:31 AM' },
     ]
   },
   {
@@ -106,32 +81,6 @@ const messageContacts = [
     time: 'now',
     unread: true,
     messages: []
-  },
-  {
-    id: 'teammate',
-    name: 'Teammate Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png',
-    lastMessage: 'Sports dating app - "Don\'t Play Alone"',
-    time: '9:45 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Teammate - Sports Dating App", time: '9:40 AM' },
-      { from: 'project', text: "A dating app for sports fans that connects like-minded individuals based on their team preferences and game schedules.", time: '9:42 AM' },
-      { from: 'project', text: "Key features: Character-based matching, safe public venues at sports events, and sports-driven connections.", time: '9:45 AM' },
-    ]
-  },
-  {
-    id: 'meetly',
-    name: 'Meetly Project',
-    avatar: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Frame%20%282%29-LUuEKdvoQBApg1puQoNvsyyFbBow2B.png',
-    lastMessage: 'Social coordination made easy',
-    time: '9:30 AM',
-    unread: false,
-    messages: [
-      { from: 'project', text: "Meetly - Social Group Coordination", time: '9:25 AM' },
-      { from: 'project', text: "Helps social groups coordinate meetups by combining the power of a calendar with the ease of a messaging app.", time: '9:28 AM' },
-      { from: 'project', text: "Eliminated coordination fatigue with voting screens and contextual chat for planning.", time: '9:30 AM' },
-    ]
   },
   {
     id: 'silas',
@@ -165,6 +114,9 @@ const BACKGROUND_OPTIONS = [
   { id: 'mountains', type: 'image', url: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1054218/pexels-photo-1054218.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Mountains' },
   { id: 'sunset', type: 'image', url: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/36717/amazing-animal-beautiful-beautifull.jpg?auto=compress&cs=tinysrgb&w=300', name: 'Sunset' },
   { id: 'aurora', type: 'image', url: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=1920', preview: 'https://images.pexels.com/photos/1933239/pexels-photo-1933239.jpeg?auto=compress&cs=tinysrgb&w=300', name: 'Aurora' },
+  // Retro wallpapers — selecting one of these transforms the whole experience into an early-2000s Windows OS
+  { id: 'xp-bliss', type: 'image', url: '/images/retro/xp-bliss.png', preview: '/images/retro/xp-bliss.png', name: 'Windows XP', retro: 'xp' as const },
+  { id: 'win2000-teal', type: 'image', url: '/images/retro/win2000-teal.png', preview: '/images/retro/win2000-teal.png', name: 'Windows 2000', retro: 'win2000' as const },
 ]
 
 // Audio URL - Neo Soul Jazz Lo-fi Mix
@@ -176,7 +128,7 @@ const MEMOJI_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Scre
 // Full photo for About window
 const CHARITY_PHOTO_URL = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Image%2Bof%2Bcharity-hI722zEcgf9H0VQnx7WpB16iAEEtIe.webp"
 
-const ABOUT_BIO = "Charity Dupont is an American UX designer known for specializing in AI-native interaction design and rapid agentic AI development and coding. Her work centers on designing and prototyping proof-of-concept experiences that translate emerging AI research into intuitive, human-centered interactions that help teams explore what’s next."
+const ABOUT_BIO = "Charity Dupont is an American agentic UX designer known for specializing in AI-native interaction design and rapid agentic AI development and coding. Her work centers on designing and prototyping proof-of-concept experiences that translate emerging AI research into intuitive, human-centered interactions that help teams explore what’s next."
 
 const ABOUT_NOTES_BIO = `${ABOUT_BIO}\n\nBefore moving into UX design, Charity was an educator who taught fourth grade. Her classroom experience shaped how she approaches complex ideas, human behavior, and the design of experiences that feel clear and intuitive.\n\nOriginally from Chicago, Illinois, Charity now lives in New Jersey.`
 
@@ -197,7 +149,7 @@ const caseStudies = {
     subtitle: "Sports Dating App",
     hero: "Don't Play Alone",
     overview: "Sports fans often struggle to find partners who understand their lifestyle. Traditional dating apps ignore the 'logistics of fandom,' leading to mismatched expectations and arguments over weekend schedules.",
-    role: "Product Designer",
+    role: "Agentic UX Designer",
     timeline: "3 Weeks (2024)",
     tools: ["Figma", "Adobe Photoshop", "User Research", "Competitive Analysis"],
     challenge: "While competitors focus on static personality traits, no current app solves the dynamic scheduling conflicts sports fans face. Users find current dating apps lacking in depth and safety.",
@@ -213,7 +165,7 @@ const caseStudies = {
     subtitle: "Social Group Coordination App",
     hero: "Coordinate meetups effortlessly",
     overview: "A mobile application to help friends and social groups better coordinate their meetups and share schedules effortlessly. Users face significant hassle and frustration when trying to schedule meetups.",
-    role: "Co-Product Designer",
+    role: "Co-Agentic UX Designer",
     timeline: "May 2024",
     tools: ["Figma", "User Research", "Prototyping", "Usability Testing"],
     challenge: "Juggling busy schedules and conflicting availabilities often leads to headache, missed opportunities, and social disappointment. There is a complete absence of a dedicated app specifically designed for social coordination with friends.",
@@ -229,7 +181,7 @@ const caseStudies = {
     subtitle: "Designing Behavior for Agentic AI",
     hero: "Designing Behavior for Agentic AI",
     overview: "Luna is an interaction model for making AI behavior understandable, predictable, and trustworthy. It translates invisible states into human-readable signals through motion, color, timing, and animation.",
-    role: "End-to-End Product Designer",
+    role: "End-to-End Agentic UX Designer",
     timeline: "3-Day Sprint",
     tools: ["Google Chrome", "Python", "JavaScript"],
     challenge: "Meeting assistants can already transcribe, answer questions, and take action, but they rarely communicate when they are listening, reasoning, or preparing to respond. With no research documents, user interviews, existing product patterns, or design system to build from, the challenge was to define an interaction model for presence, state, and intent.",
@@ -245,7 +197,7 @@ const caseStudies = {
     subtitle: "The Integrated AI Companion",
     hero: "Less thinking. More living.",
     overview: "Silas is an Integrated AI Companion that bridges the gap between fragmented digital data and physical-world needs. It integrates across existing apps and turns passive data into executable intelligence.",
-    role: "Product Designer",
+    role: "Agentic UX Designer",
     timeline: "Anticipatory Project",
     tools: ["Figma", "Prototyping", "UX Research", "Anticipatory Design"],
     challenge: "Users live across 20+ reactive apps where calendar data is passive, banking records don't enable smart reordering, memory is disconnected from context, and messages do not automatically become tasks.",
@@ -259,7 +211,7 @@ const caseStudies = {
 }
 
 // Mobile screen states
-type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "braingames"
+  type MobileScreenState = "lock" | "home" | "messages" | "caseStudy" | "notes" | "about" | "photos" | "safari" | "camera" | "braingames" | "wallpaper"
 
 export function MacBookScreen() {
   const isMobile = useIsMobile()
@@ -589,7 +541,7 @@ export function MacBookScreen() {
     {
       id: 'welcome-3',
       role: 'assistant',
-      text: "I'm a UX Designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
+      text: "I'm an agentic UX designer passionate about creating meaningful digital experiences - feel free to ask me anything!",
       time: getCurrentTime(),
     },
   ])
@@ -1117,6 +1069,32 @@ const messageText = mobileInput.trim()
     }, 400)
   }
 
+  // ==================== WINDOWS RETRO TAKEOVER ====================
+  // Selecting one of the retro wallpapers ("Windows XP" or "Windows 2000")
+  // replaces the ENTIRE Mac/iPhone experience with a period-accurate Windows
+  // desktop. All portfolio data is reused; nothing else is removed or changed.
+  // Exiting (or picking a modern wallpaper from Display Properties) returns here.
+  const retroEra = (selectedBackground as { retro?: "xp" | "win2000" }).retro
+  if (retroEra) {
+    return (
+      <WindowsRetroExperience
+        era={retroEra}
+        isMobile={isMobile}
+        wallpaperUrl={selectedBackground.url}
+        caseStudies={caseStudies}
+        aboutBody={ABOUT_NOTES_BIO}
+        charityPhoto={CHARITY_PHOTO_URL}
+        resumeUrl={RESUME_PDF_URL}
+        backgroundOptions={BACKGROUND_OPTIONS}
+        currentBackgroundId={selectedBackground.id}
+        onSelectBackground={(bg) => setSelectedBackground(bg)}
+        onExit={() => setSelectedBackground(BACKGROUND_OPTIONS[0])}
+        chatMessages={chatMessages}
+        setChatMessages={setChatMessages}
+      />
+    )
+  }
+
   // ==================== MOBILE IPHONE EXPERIENCE ====================
   // When the DupontFlix experience is active, fall through to the shared
   // (responsive) Netflix screens below instead of the iPhone home screen.
@@ -1184,7 +1162,7 @@ const messageText = mobileInput.trim()
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-white text-sm font-semibold">Messages</p>
-                  <p className="text-white/80 text-xs leading-relaxed">I&apos;m a UX designer passionate about creating meaningful digital experiences. Please message me in Messages, happy to respond!</p>
+                  <p className="text-white/80 text-xs leading-relaxed">I&apos;m an agentic UX designer passionate about creating meaningful digital experiences. Please message me in Messages, happy to respond!</p>
                 </div>
               </div>
             </div>
@@ -1318,7 +1296,7 @@ const messageText = mobileInput.trim()
                 <img src={MEMOJI_URL} alt="Charity" className="w-20 h-20 rounded-2xl object-cover shadow-lg" />
                 <div className="flex-1">
                   <h1 className="text-xl font-bold text-gray-900">Charity Dupont</h1>
-                  <p className="text-gray-500 text-sm">UX/UI Designer</p>
+                  <p className="text-gray-500 text-sm">Agentic UX Designer</p>
                   <button
                     onClick={() => setMobileScreen('about')}
                     className="mt-2 px-4 py-1.5 bg-black text-white text-xs font-medium rounded-full"
@@ -1334,61 +1312,47 @@ const messageText = mobileInput.trim()
               <WeatherWidget className="w-full" />
             </div>
 
-            {/* Featured Case Study - Luna */}
+            {/* Featured Case Study - Silas */}
             <div className="mx-4 mt-6">
               <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
                 <Folder className="w-5 h-5" />
                 Featured Case Study
               </h2>
               <button
-                onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
+                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
                 className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
               >
-                <img src="/images/luna/hero-orb.png" alt="Luna" className="h-16 w-16 object-contain drop-shadow-[0_0_12px_rgba(139,92,246,0.5)]" />
+                <img src={SILAS_ICON} alt="Silas" className="h-16 w-16 rounded-xl object-cover shadow" />
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-gray-900">Luna</h3>
-                  <p className="text-gray-500 text-sm">Designing Behavior for Agentic AI</p>
+                  <h3 className="font-bold text-gray-900">Silas</h3>
+                  <p className="text-gray-500 text-sm">Integrated AI Companion</p>
                   <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
             </div>
 
-            {/* Bootcamp Case Studies Section */}
-            <div className="mx-4 mt-6">
-              <h2 className="text-white text-lg font-semibold mb-1 flex items-center gap-2">
-                <Folder className="w-5 h-5" />
-                Bootcamp Case Studies
-              </h2>
-              <p className="text-white/60 text-xs mb-3">Independent projects from my Columbia University UX/UI Bootcamp.</p>
-              <div className="space-y-3">
-                {/* Teammate */}
-                <button
-                  onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={TEAMMATE_ICON} alt="Teammate" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Teammate</h3>
-                    <p className="text-gray-500 text-sm">Sports Dating App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
+            {/* Luna preview */}
+            <div className="mx-4 mt-3">
+              <div className="w-full bg-white/85 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg">
+                <img src="/images/luna/hero-orb.png" alt="Luna" className="h-14 w-14 object-contain opacity-80" />
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-gray-900">Luna</h3>
+                  <p className="text-gray-500 text-sm">Designing Behavior for Agentic AI</p>
+                </div>
+                <span className="rounded-full bg-purple-100 px-2.5 py-1 text-[11px] font-semibold text-purple-700">Coming Soon</span>
+              </div>
+            </div>
 
-                {/* Meetly */}
-                <button
-                  onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={MEETLY_ICON} alt="Meetly" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Meetly</h3>
-                    <p className="text-gray-500 text-sm">Social Coordination App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
+            {/* Bank of Daniel preview */}
+            <div className="mx-4 mt-3">
+              <div className="w-full bg-white/85 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg">
+                <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="h-14 w-14 rounded-xl object-contain shadow opacity-90 bg-[#3a1a63]" />
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-gray-900">Bank of Daniel</h3>
+                  <p className="text-gray-500 text-sm">Stewardship and Trust</p>
+                </div>
+                <span className="rounded-full bg-purple-100 px-2.5 py-1 text-[11px] font-semibold text-purple-700">Coming Soon</span>
               </div>
             </div>
 
@@ -1483,23 +1447,125 @@ const messageText = mobileInput.trim()
                   <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
 
-                {/* Luna */}
-                <button
-                  onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }}
-                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
-                >
-                  <div className="w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
-                    <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)] animate-pulse">
+                {/* Luna — Coming Soon */}
+                <div className="flex flex-col items-center justify-center opacity-80" aria-label="Luna, coming soon">
+                  <div className="relative w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
+                    <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)]">
                       <div className="absolute top-1.5 left-2 w-2.5 h-2.5 rounded-full bg-white/60 blur-[2px]" />
                     </div>
+                    <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
                   </div>
                   <span className="text-white text-[11px] mt-1">Luna</span>
+                </div>
+
+                {/* Bank of Daniel — Coming Soon */}
+                <div className="flex flex-col items-center justify-center opacity-80" aria-label="Bank of Daniel, coming soon">
+                  <div className="relative w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="w-full h-full object-contain bg-[#3a1a63]" />
+                    <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+                  </div>
+                  <span className="text-white text-[11px] mt-1">B. of Daniel</span>
+                </div>
+
+                {/* Wallpaper / Theme */}
+                <button
+                  onClick={() => setMobileScreen('wallpaper')}
+                  className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform"
+                >
+                  <div className="w-[60px] h-[60px] rounded-[14px] bg-gradient-to-br from-sky-400 via-indigo-500 to-purple-600 flex items-center justify-center shadow-lg">
+                    <Palette className="w-8 h-8 text-white" />
+                  </div>
+                  <span className="text-white text-[11px] mt-1">Wallpaper</span>
                 </button>
               </div>
             </div>
 
           </div>
 
+        </div>
+      )
+    }
+
+    // Mobile Wallpaper / Theme Picker
+    if (mobileScreen === "wallpaper") {
+      return (
+        <div className="h-[100dvh] w-full relative overflow-hidden bg-[#f2f2f7]">
+          {/* Status Bar */}
+          <div className="h-[50px] flex items-center justify-between px-6 pt-3 bg-[#f2f2f7]">
+            <span className="text-black text-[15px] font-semibold">{loginTime}</span>
+            <div className="flex items-center gap-1">
+              <div className="flex items-end gap-[2px] h-3">
+                <div className="w-[3px] h-[5px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[7px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[9px] bg-black rounded-[1px]" />
+                <div className="w-[3px] h-[11px] bg-black rounded-[1px]" />
+              </div>
+              <Wifi className="w-4 h-4 text-black" />
+              <div className="flex items-center">
+                <div className="w-[25px] h-[12px] border-[1.5px] border-black rounded-[3px] relative overflow-hidden">
+                  <div className="absolute inset-[1px] bg-black rounded-[1px]" style={{ width: '80%' }} />
+                </div>
+                <div className="w-[1.5px] h-[5px] bg-black rounded-r-sm ml-[1px]" />
+              </div>
+            </div>
+          </div>
+
+          {/* Header */}
+          <div className="px-4 pb-3 bg-[#f2f2f7]">
+            <button onClick={() => setMobileScreen('home')} className="text-[#007aff] flex items-center gap-1 mb-2">
+              <ChevronLeft className="w-6 h-6" />
+              <span className="text-[17px]">Home</span>
+            </button>
+            <h1 className="text-black text-[28px] font-bold px-1">Wallpaper</h1>
+            <p className="text-gray-500 text-[13px] px-1 mt-0.5">Tap a wallpaper to change your background.</p>
+          </div>
+
+          <div className="h-[calc(100dvh-150px)] overflow-y-auto scrollbar-none px-4 pb-8" style={{ WebkitOverflowScrolling: 'touch' }}>
+            {/* Retro Themes callout */}
+            <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-4 mb-4 flex items-center gap-3">
+              <Sparkles className="w-7 h-7 text-white shrink-0" />
+              <p className="text-white text-[13px] leading-snug">
+                Pick a <span className="font-bold">Windows XP</span> or <span className="font-bold">Windows 2000</span> wallpaper to transform the whole site into a retro operating system.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              {BACKGROUND_OPTIONS.map((bg) => {
+                const isRetro = Boolean((bg as { retro?: string }).retro)
+                const isActive = selectedBackground.id === bg.id
+                return (
+                  <button
+                    key={bg.id}
+                    onClick={() => { setSelectedBackground(bg); if (!isRetro) setMobileScreen('home') }}
+                    className={`relative rounded-2xl overflow-hidden shadow-sm border-2 transition-all active:scale-[0.98] ${isActive ? 'border-[#007aff]' : isRetro ? 'border-purple-400' : 'border-transparent'}`}
+                  >
+                    <div className="relative aspect-[3/4] w-full">
+                      <img src={bg.preview} alt={bg.name} className="w-full h-full object-cover" />
+                      {bg.type === 'video' && (
+                        <span className="absolute top-2 right-2 flex items-center gap-0.5 bg-black/60 text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-full backdrop-blur-sm">
+                          <span className="w-1 h-1 rounded-full bg-red-400 animate-pulse" />
+                          LIVE
+                        </span>
+                      )}
+                      {isRetro && (
+                        <span className="absolute top-2 right-2 bg-purple-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full">
+                          THEME
+                        </span>
+                      )}
+                      {isActive && (
+                        <span className="absolute top-2 left-2 bg-[#007aff] text-white rounded-full p-1">
+                          <Check className="w-3 h-3" />
+                        </span>
+                      )}
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent px-2.5 py-2">
+                        <span className="text-white text-[12px] font-semibold">{bg.name}</span>
+                      </div>
+                    </div>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
         </div>
       )
     }
@@ -2099,7 +2165,7 @@ const messageText = mobileInput.trim()
         {
           id: 1,
           title: "About Me",
-          preview: "American UX designer specializing in AI-native interaction design...",
+          preview: "American agentic UX designer specializing in AI-native interaction design...",
           date: "Today",
           hasImages: false,
           content: ABOUT_NOTES_BIO
@@ -2107,17 +2173,15 @@ const messageText = mobileInput.trim()
         {
           id: 2,
           title: "Case Studies",
-          preview: "Teammate - Sports Dating App, Meetly - Group Coordination, Silas - AI Companion",
+          preview: "Silas - Integrated AI Companion, Luna & Bank of Daniel - Coming Soon",
           date: "Yesterday",
           hasImages: true,
           images: [
-            { title: "Teammate", icon: TEAMMATE_ICON, key: "teammate" },
-            { title: "Meetly", icon: MEETLY_ICON, key: "meetly" },
             { title: "Silas", icon: SILAS_ICON, key: "silas" }
           ],
-          content: `My Featured Projects:
+          content: `Featured Project: Silas
 
-Tap on any project below to view the full case study.`
+Tap below to view the full case study. Luna and Bank of Daniel are coming soon.`
         },
         {
           id: 3,
@@ -2325,7 +2389,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <img src={CHARITY_PHOTO_URL} alt="Charity" className="w-full h-full object-cover" />
               </div>
               <h1 className="text-[22px] font-bold text-black">Charity Dupont</h1>
-              <p className="text-[15px] text-gray-500 mt-1">Product Designer</p>
+              <p className="text-[15px] text-gray-500 mt-1">Agentic UX Designer</p>
             </div>
 
             {/* Info Cards */}
@@ -2358,7 +2422,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">PROJECTS</p>
                 </div>
-                {['teammate', 'meetly', 'silas'].map((key) => {
+                {['silas'].map((key) => {
                   const study = caseStudies[key as keyof typeof caseStudies]
                   return (
                     <button
@@ -2470,9 +2534,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     {/* Name and Title */}
                     <div className="mb-5 pb-4 border-b border-gray-100">
                       <h1 className="text-xl font-bold text-gray-900 mb-1">Charity DuPont</h1>
-                      <p className="text-blue-600 font-medium text-sm mb-2">UX Designer</p>
+                      <p className="text-blue-600 font-medium text-sm mb-2">Agentic UX Designer</p>
                       <p className="text-xs text-gray-600 leading-relaxed">
-                        UX/UI Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
+                        Agentic UX Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
                       </p>
                     </div>
                     
@@ -2492,7 +2556,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Experience</h2>
                       
                       <div className="mb-4">
-                        <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | UX Designer</h3>
+                        <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | Agentic UX Designer</h3>
                         <p className="text-xs text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                         <p className="text-xs text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
                         <ul className="text-xs text-gray-700 space-y-1.5 list-disc list-outside ml-4">
@@ -2952,7 +3016,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <tbody>
                           <tr className="border-b border-gray-200">
                             <td className="py-1 font-semibold text-gray-700">Occupation</td>
-                            <td className="py-1 text-gray-800">UX Designer</td>
+                            <td className="py-1 text-gray-800">Agentic UX Designer</td>
                           </tr>
                           <tr className="border-b border-gray-200">
                             <td className="py-1 font-semibold text-gray-700">Employer</td>
@@ -2972,7 +3036,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   
                   <p className="text-sm text-gray-800 leading-relaxed mb-4">
-                    <b>Charity Dupont</b> is an American <span className="text-blue-600">UX/UI designer</span> and <span className="text-blue-600">AI experience designer</span> currently working at <span className="text-blue-600">Google</span>.
+                    <b>Charity Dupont</b> is an American <span className="text-blue-600">agentic UX designer</span> and <span className="text-blue-600">AI experience designer</span> currently working at <span className="text-blue-600">Google</span>.
                   </p>
                   
                   <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Early life</h2>
@@ -2982,7 +3046,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   
                   <h2 className="text-lg font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-4">Career</h2>
                   <p className="text-sm text-gray-800 leading-relaxed mb-4">
-                    Through a connection at Columbia, Dupont joined Google as a UX designer focusing on AI-driven experiences.
+                    Through a connection at Columbia, Dupont joined Google as an agentic UX designer focusing on AI-driven experiences.
                   </p>
                 </div>
               </div>
@@ -3620,7 +3684,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           <div>
             <h2 className="text-xl font-semibold text-white mb-4">My Case Studies</h2>
             <div className="flex gap-2 overflow-x-auto scrollbar-none pb-4" style={{ WebkitOverflowScrolling: 'touch' }}>
-              {Object.entries(caseStudies).map(([key, study]) => (
+              {Object.entries(caseStudies).filter(([key]) => key === 'silas').map(([key, study]) => (
                 <button
                   key={key}
                   onClick={() => setNetflixModal({ type: 'project', data: key })}
@@ -3653,7 +3717,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4">
                   <p className="text-white font-bold text-lg">Charity Dupont</p>
-                  <p className="text-gray-300 text-sm">UX/UI Designer at Google</p>
+                  <p className="text-gray-300 text-sm">Agentic UX Designer at Google</p>
                   <p className="text-gray-400 text-xs mt-1">Columbia University &bull; New York</p>
                 </div>
               </button>
@@ -4514,9 +4578,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         {/* Bio */}
                         <div className="text-center md:text-left">
                           <h1 className="text-5xl font-bold text-black mb-4">Charity Dupont</h1>
-                          <p className="text-2xl text-purple-600 font-medium mb-4">UX/UI Designer at Google</p>
+                          <p className="text-2xl text-purple-600 font-medium mb-4">Agentic UX Designer at Google</p>
                           <p className="text-black/70 leading-relaxed text-lg mb-6">
-                            Hey there! I&apos;m Charity, a passionate UX/UI designer currently working at Google. 
+                            Hey there! I&apos;m Charity, a passionate agentic UX designer currently working at Google. 
                             I specialize in creating intuitive, user-centered digital experiences that bridge the gap 
                             between complex functionality and beautiful design.
                           </p>
@@ -4731,7 +4795,30 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <span className="font-semibold">Charity{"'"}s Portfolio</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-semibold">
+              Charity{"'"}s Portfolio
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white/90 backdrop-blur-xl border-white/20 text-black min-w-[240px] shadow-2xl text-[13px]">
+              <DropdownMenuItem onClick={openAboutWindow} className="cursor-pointer focus:bg-blue-500 focus:text-white">
+                <User className="w-4 h-4 mr-2 opacity-70" />
+                About This Portfolio
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-black/10" />
+              <DropdownMenuItem
+                onClick={() => { setBackgroundsFolder({ isOpen: true, isMinimized: false }); focusWindow('backgrounds'); }}
+                className="cursor-pointer focus:bg-blue-500 focus:text-white"
+              >
+                <Palette className="w-4 h-4 mr-2 opacity-70" />
+                Change Wallpaper &amp; Theme...
+              </DropdownMenuItem>
+              <div className="px-2.5 pb-1.5 pt-0.5">
+                <p className="text-[11px] leading-tight text-gray-500">
+                  Tip: pick a <span className="font-semibold text-purple-600">Windows XP</span> or <span className="font-semibold text-purple-600">Windows 2000</span> wallpaper to switch into the retro OS theme.
+                </p>
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center hover:bg-black/10 px-2 py-0.5 rounded transition-colors outline-none font-normal">
               File
@@ -4741,11 +4828,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <User className="w-4 h-4 mr-2 opacity-70" />
                 About
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-black/10" />
-              <DropdownMenuItem onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }} className="cursor-pointer focus:bg-blue-500 focus:text-white">
-                <Folder className="w-4 h-4 mr-2 opacity-70" />
-                Bootcamp Case Studies
-              </DropdownMenuItem>
+
             </DropdownMenuContent>
           </DropdownMenu>
           <DropdownMenu>
@@ -4790,20 +4873,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         icon: <MessageCircle className="w-4 h-4" />
                       })
                     }
-                    if ('teammate'.includes(query) || 'sports'.includes(query) || 'dating'.includes(query)) {
-                      results.push({
-                        label: 'Teammate - Sports Dating App',
-                        action: () => { openCaseStudy('teammate'); setHelpSearchQuery('') },
-                        icon: <Folder className="w-4 h-4" />
-                      })
-                    }
-                    if ('meetly'.includes(query) || 'scheduling'.includes(query) || 'meeting'.includes(query)) {
-                      results.push({
-                        label: 'Meetly - Scheduling Platform',
-                        action: () => { openCaseStudy('meetly'); setHelpSearchQuery('') },
-                        icon: <Folder className="w-4 h-4" />
-                      })
-                    }
                     if ('silas'.includes(query) || 'ai'.includes(query) || 'companion'.includes(query)) {
                       results.push({
                         label: 'Silas - AI Companion',
@@ -4813,8 +4882,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     }
                     if ('case study'.includes(query) || 'case studies'.includes(query) || 'projects'.includes(query) || 'portfolio'.includes(query)) {
                       results.push({
-                        label: 'Open Case Studies Folder',
-                        action: () => { setCaseStudiesFolder({ isOpen: true, isMinimized: false }); setHelpSearchQuery('') },
+                        label: 'Open Silas — Featured Case Study',
+                        action: () => { openCaseStudy('silas'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
@@ -4933,16 +5002,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           {/* Weather Widget - real-time via Open-Meteo */}
           <WeatherWidget />
 
-          {/* Bootcamp Case Studies desktop folder */}
-          <button
-            onClick={() => { setShowLunaSpotlight(false); setCaseStudiesFolder({ isOpen: true, isMinimized: false }); focusWindow('caseStudies'); }}
-            className="flex flex-col items-center gap-1.5 w-28 group"
-          >
-            <div className="w-20 h-16 group-hover:scale-110 transition-transform">
-              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Folder-icon-256%402x-an7f37Atw32XeqJSJQWDMmyYWLYBtX.png" alt="Bootcamp Case Studies folder" className="w-full h-auto drop-shadow-lg" />
-            </div>
-            <span className="text-[12px] text-white font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Bootcamp Case Studies</span>
-          </button>
 
           </div>
 
@@ -5168,7 +5227,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                           : 'hover:bg-black/5'
                         }`}
                     >
-                      <div className="relative w-20 h-14 rounded-md overflow-hidden border border-black/10 shadow-sm">
+                      <div className={`relative w-20 h-14 rounded-md overflow-hidden border shadow-sm ${(bg as { retro?: string }).retro ? 'border-purple-400 ring-1 ring-purple-300' : 'border-black/10'}`}>
                         <img
                           src={bg.preview}
                           alt={bg.name}
@@ -5180,8 +5239,13 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             LIVE
                           </span>
                         )}
+                        {(bg as { retro?: string }).retro && (
+                          <span className="absolute bottom-1 right-1 flex items-center gap-0.5 bg-purple-600 text-white text-[8px] font-semibold px-1 py-0.5 rounded-full">
+                            THEME
+                          </span>
+                        )}
                       </div>
-                      <span className={`text-[11px] text-center leading-tight font-medium ${selectedBackground.id === bg.id ? 'text-blue-600' : 'text-gray-700'
+                      <span className={`text-[11px] text-center leading-tight font-medium ${selectedBackground.id === bg.id ? 'text-blue-600' : (bg as { retro?: string }).retro ? 'text-purple-600' : 'text-gray-700'
                         }`}>{bg.name}</span>
                     </button>
                   ))}
@@ -5192,7 +5256,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
         {/* Case Studies Finder Window */}
-        {caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
+        {false && caseStudiesFolder.isOpen && !caseStudiesFolder.isMinimized && (
           <div
             className={`absolute w-[600px] ${focusedWindow === 'caseStudies' ? 'z-40' : 'z-20'} ${caseStudiesFolder.isMinimizing ? 'animate-minimize' : ''}`}
             onClick={() => focusWindow('caseStudies')}
@@ -5323,7 +5387,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </div>
                   <div className="border-b border-black/10 pb-2">
                     <p className="text-xs font-semibold text-black/50 uppercase tracking-wider">Position</p>
-                    <p className="text-sm text-black/70 mt-0.5">UX Designer</p>
+                    <p className="text-sm text-black/70 mt-0.5">Agentic UX Designer</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-black/50 uppercase tracking-wider">Mail</p>
@@ -5466,7 +5530,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
   {/* AI Assistant Window - Front and Center */}
-  {/* Luna Spotlight - primary call to action on the desktop */}
+  {/* Silas Spotlight - primary case study on the desktop */}
   {showLunaSpotlight && (
   <div
   className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
@@ -5477,23 +5541,23 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   onClick={(e) => e.stopPropagation()}
   >
   <button
-  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
+  onClick={() => { openCaseStudy('silas'); setShowLunaSpotlight(false); }}
   className="relative group"
-  aria-label="Open the Luna case study"
+  aria-label="Open the Silas case study"
   >
   {/* Pulsing highlight rings */}
-  <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
-  <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
-  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-32 w-32 object-contain drop-shadow-[0_0_24px_rgba(139,92,246,0.65)] transition-transform duration-200 group-hover:scale-105" />
+  <span className="absolute -inset-4 rounded-3xl ring-4 ring-white/70 animate-ping" />
+  <span className="absolute -inset-4 rounded-3xl ring-2 ring-white/90" />
+  <img src={SILAS_ICON} alt="Silas" className="h-32 w-32 rounded-3xl object-cover shadow-2xl transition-transform duration-200 group-hover:scale-105" />
   </button>
   
-  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Luna</h2>
-  <p className="text-white/80 text-sm mt-1 drop-shadow">Designing Behavior for Agentic AI</p>
+  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Silas</h2>
+  <p className="text-white/80 text-sm mt-1 drop-shadow">The Integrated AI Companion</p>
   
   {/* Arrow + Click here */}
   <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
   <button
-  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
+  onClick={() => { openCaseStudy('silas'); setShowLunaSpotlight(false); }}
                 className="mt-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold shadow-xl hover:bg-white/90 transition-colors flex items-center gap-2"
               >
                 <MousePointerClick className="w-4 h-4" />
@@ -5508,6 +5572,31 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             </div>
           </div>
         )}
+
+        {/* Coming Soon case studies - persistent desktop cluster (always visible) */}
+        <div className="pointer-events-none absolute top-16 right-5 z-10 flex flex-col items-end gap-2">
+          <span className="text-white/80 text-[10px] font-semibold uppercase tracking-[0.2em] drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)]">Coming Soon</span>
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col items-center gap-1.5 w-20" aria-label="Luna, coming soon">
+              <div className="relative w-14 h-14 rounded-2xl bg-black flex items-center justify-center shadow-lg">
+                <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)]">
+                  <div className="absolute top-1.5 left-2 w-2.5 h-2.5 rounded-full bg-white/60 blur-[2px]" />
+                </div>
+                <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+              </div>
+              <span className="text-white text-[11px] font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Luna</span>
+            </div>
+            <div className="flex flex-col items-center gap-1.5 w-20" aria-label="Bank of Daniel, coming soon">
+              <div className="relative w-14 h-14 shadow-lg rounded-2xl">
+                <div className="w-full h-full rounded-2xl overflow-hidden">
+                  <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="w-full h-full object-contain bg-[#3a1a63]" />
+                </div>
+                <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow z-10">SOON</span>
+              </div>
+              <span className="text-white text-[11px] font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Bank of Daniel</span>
+            </div>
+          </div>
+        </div>
 
         {/* Notes Window */}
         {notesWindow.isOpen && !notesWindow.isMinimized && (
@@ -5534,7 +5623,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${desktopSelectedNote === 'experience' ? 'bg-amber-200' : 'hover:bg-black/5'}`}
                 >
                   <p className="font-semibold text-sm text-black">Experience</p>
-                  <p className="text-xs text-black/50">02/01/2025 <span className="text-amber-600">UX Designer</span></p>
+                  <p className="text-xs text-black/50">02/01/2025 <span className="text-amber-600">Agentic UX Designer</span></p>
                 </button>
                 <button
                   onClick={() => setDesktopSelectedNote('about')}
@@ -5564,7 +5653,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 {desktopSelectedNote === 'experience' ? (
                   <div className="text-black">
                     <h1 className="text-3xl font-bold mb-6">Experience</h1>
-                    <p className="text-lg font-medium mb-4">UX/UI Designer Google LLC, New York Feb 2025 - Present</p>
+                    <p className="text-lg font-medium mb-4">Agentic UX Designer Google LLC, New York Feb 2025 - Present</p>
                     <ul className="list-disc list-outside ml-5 space-y-3 text-black/80">
                       <li>Translating user behavior and psychology into intuitive models, ensuring machine outputs align perfectly with human mental models.</li>
                       <li>Executing high-velocity workflows to bridge the gap between abstract design concepts and functional, testable system logic.</li>
@@ -5692,7 +5781,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
         {/* Projects Folder Window */}
-        {projectsFolder.isOpen && !projectsFolder.isMinimized && (
+        {false && projectsFolder.isOpen && !projectsFolder.isMinimized && (
           <div
             className={`pointer-events-auto absolute w-[420px] bg-white/95 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/50 animate-in zoom-in-95 fade-in duration-200 ${projectsFolder.isMinimizing ? 'animate-minimize' : ''}`}
             style={{ left: projectsPosition.x, top: projectsPosition.y, transformOrigin: 'bottom center' }}
@@ -5858,7 +5947,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       {/* Main Content */}
                       <div className="flex-1 text-sm text-gray-800 leading-relaxed">
                         <p className="mb-4">
-                          <b>Charity Dupont</b> is an American <a href="#" className="text-blue-600 hover:underline">UX/UI designer</a> and <a href="#" className="text-blue-600 hover:underline">AI experience designer</a> currently working at <a href="#" className="text-blue-600 hover:underline">Google</a>. She is known for her work in designing AI-powered user experiences and her focus on creating intuitive, human-centered digital products.
+                          <b>Charity Dupont</b> is an American <a href="#" className="text-blue-600 hover:underline">agentic UX designer</a> and <a href="#" className="text-blue-600 hover:underline">AI experience designer</a> currently working at <a href="#" className="text-blue-600 hover:underline">Google</a>. She is known for her work in designing AI-powered user experiences and her focus on creating intuitive, human-centered digital products.
                         </p>
                         
                         <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Early life and education</h2>
@@ -5871,7 +5960,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         
                         <h2 className="text-xl font-serif text-black border-b border-gray-300 pb-1 mb-3 mt-6">Career</h2>
                         <p className="mb-4">
-                          Through a connection with one of her professors at Columbia, Dupont was introduced to an opportunity at <a href="#" className="text-blue-600 hover:underline">Google</a>, where she currently works as a UX designer. Her work focuses on AI-driven user experiences, requiring her to design for systems with variable and unpredictable outputs.
+                          Through a connection with one of her professors at Columbia, Dupont was introduced to an opportunity at <a href="#" className="text-blue-600 hover:underline">Google</a>, where she currently works as an agentic UX designer. Her work focuses on AI-driven user experiences, requiring her to design for systems with variable and unpredictable outputs.
                         </p>
                         <p className="mb-4">
                           Dupont&apos;s approach to AI UX design emphasizes clarity, transparency, and user control. She has noted that designing for AI differs significantly from traditional UX because &quot;you are not designing a fixed path—you are designing systems that can change based on input.&quot;
@@ -5916,7 +6005,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                               <tbody>
                                 <tr className="border-b border-gray-200">
                                   <td className="py-1 font-semibold text-gray-700">Occupation</td>
-                                  <td className="py-1 text-gray-800">UX Designer</td>
+                                  <td className="py-1 text-gray-800">Agentic UX Designer</td>
                                 </tr>
                                 <tr className="border-b border-gray-200">
                                   <td className="py-1 font-semibold text-gray-700">Employer</td>
@@ -5954,7 +6043,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </div>
                         <div>
                           <h1 className="text-lg font-semibold text-gray-900">Charity DuPont - Resume</h1>
-                          <p className="text-xs text-gray-500">UX Designer at Google DeepMind</p>
+                          <p className="text-xs text-gray-500">Agentic UX Designer at Google DeepMind</p>
                         </div>
                       </div>
                       <a
@@ -5979,9 +6068,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <div className="flex-1">
                           {/* Name and Title */}
                           <div className="mb-6">
-                            <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | UX Designer</h1>
+                            <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | Agentic UX Designer</h1>
                             <p className="text-sm text-gray-700 leading-relaxed">
-                              UX/UI Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
+                              Agentic UX Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
                             </p>
                           </div>
                           
@@ -5991,7 +6080,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             
                             <div className="mb-5">
                               <div className="flex justify-between items-start mb-1">
-                                <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | UX Designer</h3>
+                                <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | Agentic UX Designer</h3>
                               </div>
                               <p className="text-sm text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                               <p className="text-sm text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
@@ -6231,18 +6320,6 @@ label="Brain Games"
           }
           label="Silas"
           onClick={() => openCaseStudy('silas')}
-        />
-
-        <DockIcon
-          icon={
-            <div className="w-12 h-12 flex items-center justify-center">
-              <div className="relative w-10 h-10 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_16px_rgba(168,85,247,0.9)] animate-pulse">
-                <div className="absolute top-1.5 left-2 w-3 h-3 rounded-full bg-white/60 blur-[2px]" />
-              </div>
-            </div>
-          }
-          label="Luna"
-          onClick={() => openCaseStudy('luna')}
         />
 
         {/* Minimized Windows Section */}
@@ -6714,7 +6791,7 @@ function LunaCaseStudy() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
-            <p className="text-black font-medium">UX Designer &amp; Researcher</p>
+            <p className="text-black font-medium">Agentic UX Designer &amp; Researcher</p>
           </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Length</h3>
@@ -6826,19 +6903,12 @@ function LunaCaseStudy() {
         </div>
       </div>
 
-      {/* 04 Prototype to Pivot */}
+      {/* 04 Integrated Experience */}
       <div className="bg-neutral-50 py-16">
         <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Prototype → Pivot</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">From prototype to product</h2>
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white rounded-2xl p-4 border border-red-100 shadow-sm">
-              <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
-                <img src="/images/luna/pivot-beside.png" alt="Prototype: a standalone hub sitting beside Google Meet with a You tile and a separate Luna companion orb." className="w-full h-auto" />
-              </div>
-              <p className="text-red-500 font-semibold mb-2 flex items-center gap-2"><X className="w-4 h-4" /> Prototype (Standalone Hub)</p>
-              <p className="text-black/70 text-sm leading-relaxed">Luna initially lived inside its own dedicated video call interface.</p>
-            </div>
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Integrated Experience</p>
+          <h2 className="text-3xl font-bold mb-4 text-black">Integrated experience</h2>
+          <div className="mb-8">
             <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
               <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
                 <img src="/images/luna/pivot-inside.png" alt="Integrated experience: Luna appears as a purple orb tile directly inside a real Google Meet call alongside the human participants." className="w-full h-auto" />
@@ -7030,7 +7100,7 @@ function SilasCaseStudy() {
         <div className="grid md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
-            <p className="text-black font-medium">Product Designer</p>
+            <p className="text-black font-medium">Agentic UX Designer</p>
           </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Year</h3>
@@ -7454,7 +7524,7 @@ function MeetlyCaseStudy() {
         <div className="grid md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Role</h3>
-            <p className="text-black font-medium">Co-Product Designer</p>
+            <p className="text-black font-medium">Co-Agentic UX Designer</p>
           </div>
           <div>
             <h3 className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-2">Timeline</h3>
@@ -7898,7 +7968,7 @@ function TeammateCaseStudy() {
       <div className="bg-[#1a1413] text-white border-t border-white/10">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-white/10 border-x border-white/10">
           {[
-            { k: "Role", v: "Product Designer" },
+            { k: "Role", v: "Agentic UX Designer" },
             { k: "Year", v: "2024" },
             { k: "Timeline", v: "One month" },
             { k: "Type", v: "UX Case Study" },
