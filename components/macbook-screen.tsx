@@ -1347,7 +1347,7 @@ const messageText = mobileInput.trim()
             {/* Bank of Daniel preview */}
             <div className="mx-4 mt-3">
               <div className="w-full bg-white/85 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg">
-                <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="h-14 w-14 rounded-xl object-cover shadow opacity-90" />
+                <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="h-14 w-14 rounded-xl object-contain shadow opacity-90 bg-[#3a1a63]" />
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-gray-900">Bank of Daniel</h3>
                   <p className="text-gray-500 text-sm">Stewardship and Trust</p>
@@ -1461,7 +1461,7 @@ const messageText = mobileInput.trim()
                 {/* Bank of Daniel — Coming Soon */}
                 <div className="flex flex-col items-center justify-center opacity-80" aria-label="Bank of Daniel, coming soon">
                   <div className="relative w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                    <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
+                    <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="w-full h-full object-contain bg-[#3a1a63]" />
                     <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
                   </div>
                   <span className="text-white text-[11px] mt-1">B. of Daniel</span>
@@ -5589,7 +5589,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
             <div className="flex flex-col items-center gap-1.5 w-20" aria-label="Bank of Daniel, coming soon">
               <div className="relative w-14 h-14 shadow-lg rounded-2xl">
                 <div className="w-full h-full rounded-2xl overflow-hidden">
-                  <img src="/images/bank-of-daniel/logo.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
+                  <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="w-full h-full object-contain bg-[#3a1a63]" />
                 </div>
                 <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow z-10">SOON</span>
               </div>

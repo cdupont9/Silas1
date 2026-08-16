@@ -65,7 +65,7 @@ const SilasIcon = ({ size = 16 }: { size?: number }) => (
   />
 )
 
-const BANK_OF_DANIEL_ICON = "/images/bank-of-daniel/logo.png"
+const BANK_OF_DANIEL_ICON = "/images/bank-of-daniel/logo.jpeg"
 
 const BankOfDanielIcon = ({ size = 16 }: { size?: number }) => (
   <img
@@ -73,7 +73,7 @@ const BankOfDanielIcon = ({ size = 16 }: { size?: number }) => (
     alt=""
     width={size}
     height={size}
-    style={{ width: size, height: size, objectFit: "cover" }}
+    style={{ width: size, height: size, objectFit: "contain", background: "#3a1a63", borderRadius: 4 }}
   />
 )
 
