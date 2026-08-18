@@ -204,8 +204,8 @@ const caseStudies = {
     solution: "The transaction becomes the natural anchor for an attached itemized receipt. Customers can search by merchant or item, save individual purchases with notes, and organize those items into recurring lists by store, project, or occasion.",
     results: ["Less searching across disconnected records", "More useful transaction history", "Reusable lists built from real purchases", "More value from merchant-provided data"],
     color: "from-[#0b3a67] to-[#1769a5]",
-    icon: "/images/bank-of-daniel-icon.png",
-    screenshot: "/images/bank-of-daniel-preview.png",
+    icon: "/images/bank-of-daniel/logo.jpeg",
+    screenshot: "/case-studies/bank-of-daniel/page-20.jpg",
     isFullCaseStudy: true
   },
   silas: {
@@ -1338,7 +1338,7 @@ const messageText = mobileInput.trim()
   {[
   { id: 'silas', title: 'Silas', subtitle: 'Integrated AI Companion', icon: SILAS_ICON },
   { id: 'luna', title: 'Luna', subtitle: 'Behavior for Agentic AI', icon: '/images/luna/hero-orb.png' },
-  { id: 'bankofdaniel', title: 'Bank of Daniel', subtitle: 'Digital Receipt', icon: '/images/bank-of-daniel-icon.png' },
+  { id: 'bankofdaniel', title: 'Bank of Daniel', subtitle: 'Digital Receipt', icon: '/images/bank-of-daniel/logo.jpeg' },
   ].map((project) => (
   <button
   key={project.id}
@@ -1480,7 +1480,7 @@ const messageText = mobileInput.trim()
 
                 <button onClick={() => { setMobileCaseStudy('bankofdaniel'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Bank of Daniel case study">
                   <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                    <img src="/images/bank-of-daniel-icon.png" alt="" className="w-full h-full object-cover" />
+                    <img src="/images/bank-of-daniel/logo.jpeg" alt="" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] mt-1">B. of Daniel</span>
                 </button>
@@ -2066,9 +2066,9 @@ const messageText = mobileInput.trim()
           {/* Case Study Content */}
           <div className="flex-1 overflow-y-auto">
             {mobileCaseStudy === "luna" ? (
-              <LunaCaseStudy />
+              <OriginalCaseStudyGallery project="luna" />
             ) : mobileCaseStudy === "bankofdaniel" ? (
-              <BankOfDanielCaseStudy />
+              <OriginalCaseStudyGallery project="bankofdaniel" />
             ) : (
               <>
             {/* View on Desktop Banner */}
@@ -2199,7 +2199,7 @@ const messageText = mobileInput.trim()
           images: [
             { title: "Silas", icon: SILAS_ICON, key: "silas" },
             { title: "Luna", icon: "/images/luna/hero-orb.png", key: "luna" },
-            { title: "Bank of Daniel", icon: "/images/bank-of-daniel-icon.png", key: "bankofdaniel" }
+            { title: "Bank of Daniel", icon: "/images/bank-of-daniel/logo.jpeg", key: "bankofdaniel" }
           ],
           content: `Explore three complete case studies:
 
@@ -6336,7 +6336,7 @@ label="Brain Games"
         <DockIcon
           icon={
             <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
-              <img src="/images/bank-of-daniel-icon.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
+              <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="w-full h-full object-cover" />
             </div>
           }
           label="Bank of Daniel"
@@ -6675,9 +6675,9 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
         {isSilas ? (
           <SilasCaseStudy />
         ) : isLuna ? (
-          <LunaCaseStudy />
+          <OriginalCaseStudyGallery project="luna" />
         ) : isBankOfDaniel ? (
-          <BankOfDanielCaseStudy />
+          <OriginalCaseStudyGallery project="bankofdaniel" />
         ) : isMeetly ? (
           <MeetlyCaseStudy />
         ) : isTeammate ? (
@@ -6753,6 +6753,38 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
 }
 
 // Full Silas Case Study Component
+function OriginalCaseStudyGallery({ project }: { project: "luna" | "bankofdaniel" }) {
+  const isLuna = project === "luna"
+  const pages = isLuna
+    ? Array.from({ length: 11 }, (_, index) => index + 5)
+    : Array.from({ length: 7 }, (_, index) => index + 17)
+  const folder = isLuna ? "luna" : "bank-of-daniel"
+  const title = isLuna ? "Luna" : "Bank of Daniel"
+  const description = isLuna
+    ? "Designing Behavior for Agentic AI"
+    : "Turning completed transactions into reusable shopping lists"
+
+  return (
+    <article className="min-h-full bg-[#0d0b18] px-3 py-8 text-white sm:px-6 md:px-10">
+      <header className="mx-auto mb-8 flex max-w-6xl flex-col gap-2 border-b border-white/15 pb-6">
+        <h1 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
+        <p className="text-pretty text-sm leading-relaxed text-white/65 sm:text-base">{description}</p>
+      </header>
+      <div className="mx-auto flex max-w-6xl flex-col gap-5">
+        {pages.map((page) => (
+          <img
+            key={page}
+            src={`/case-studies/${folder}/page-${String(page).padStart(2, "0")}.jpg`}
+            alt={`${title} case study presentation page ${page}`}
+            loading={page === pages[0] ? "eager" : "lazy"}
+            className="h-auto w-full rounded-lg border border-white/10 shadow-2xl"
+          />
+        ))}
+      </div>
+    </article>
+  )
+}
+
 function LunaCaseStudy() {
   const states = [
     {
@@ -7118,7 +7150,7 @@ function BankOfDanielCaseStudy() {
             <h1 className="text-balance text-5xl font-bold tracking-tight md:text-7xl">Bank of Daniel</h1>
             <p className="mt-5 max-w-xl text-xl leading-relaxed text-blue-100">Turning completed transactions into reusable shopping lists.</p>
           </div>
-          <img src="/images/bank-of-daniel-icon.png" alt="Bank of Daniel digital receipt app icon" className="h-32 w-32 rounded-3xl object-cover shadow-2xl ring-1 ring-white/20 md:h-40 md:w-40" />
+          <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel digital receipt app icon" className="h-32 w-32 rounded-3xl object-cover shadow-2xl ring-1 ring-white/20 md:h-40 md:w-40" />
         </div>
       </section>
 
