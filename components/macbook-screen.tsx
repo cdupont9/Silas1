@@ -7,6 +7,7 @@
 import { useState, useEffect, useRef } from "react"
 import { User, Folder, Wifi, Battery, Search, Lock, ChevronLeft, ChevronRight, RotateCw, Share, Share2, Plus, Grid3X3, X, MessageCircle, Power, Camera, Flashlight, MoreHorizontal, Heart, Trash2, Home, FileText, Image as ImageIcon, Volume2, VolumeX, BookOpen, Layers, Mail, MapPin, GraduationCap, Briefcase, Play, Pause } from "lucide-react"
 import { BrainGames, BrainGamesState, initialBrainGamesState } from "./brain-games"
+import { BankOfDanielCaseStudy, LunaCaseStudy } from "./split-case-studies"
 import { useIsMobile } from "@/hooks/use-mobile"
 import {
   DropdownMenu,
@@ -222,6 +223,38 @@ const caseStudies = {
     color: "from-blue-500 to-purple-600",
     icon: SILAS_ICON,
     screenshot: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%201-DCyAK5AHlLld0eGIjOCKLL6GQSQLj4.png",
+    isFullCaseStudy: true
+  },
+  luna: {
+    title: "Luna",
+    subtitle: "Behavior Design for Agentic AI",
+    hero: "Presence before words.",
+    overview: "Luna explores how an AI meeting participant can communicate presence, attention, and intent through clear non-verbal behavior and visible system states.",
+    role: "Product Designer",
+    timeline: "Agentic AI Exploration",
+    tools: ["Figma", "Behavior Design", "Prototyping", "Systems Thinking"],
+    challenge: "Live AI agents often feel ambiguous: people cannot tell whether the system is listening, reasoning, waiting, or preparing to speak.",
+    solution: "A behavior system maps listening, reasoning, speaking, interruption, and recovery to distinct visual cues that make Luna's internal state legible in real time.",
+    results: ["Visible meeting presence", "Reduced uncertainty", "Implementation-ready states", "Reusable behavior language"],
+    color: "from-indigo-600 to-violet-500",
+    icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png",
+    screenshot: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%204-Pix0MBsuGsLALSeWEW9f9s8ckyw6zK.png",
+    isFullCaseStudy: true
+  },
+  bankOfDaniel: {
+    title: "Bank of Daniel",
+    subtitle: "Digital Receipt Experience",
+    hero: "Know what every transaction means.",
+    overview: "Bank of Daniel transforms a banking statement from a dead-end ledger into searchable, reusable shopping context by attaching itemized digital receipts to transactions.",
+    role: "Product Designer",
+    timeline: "Fintech Concept",
+    tools: ["Figma", "Information Architecture", "Prototyping", "UX Research"],
+    challenge: "Traditional transaction records show a merchant, date, and total while hiding the item-level context people need to understand and reuse a purchase.",
+    solution: "Itemized receipts, product-level search, saved items, and reusable shopping lists keep transaction evidence and next actions connected inside the bank experience.",
+    results: ["Clear transaction context", "Faster retrieval", "Repeat-shopping support", "Saved-item continuity"],
+    color: "from-emerald-900 to-amber-700",
+    icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png",
+    screenshot: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Group%209-quLGPkO6KNBFyQsxFCNpQSYZPmKIfA.png",
     isFullCaseStudy: true
   }
 }
@@ -1397,48 +1430,22 @@ const messageText = mobileInput.trim()
                 <Folder className="w-5 h-5" />
                 Case Studies
               </h2>
-              <div className="space-y-3">
-                {/* Teammate */}
-                <button
-                  onClick={() => { setMobileCaseStudy('teammate'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={TEAMMATE_ICON} alt="Teammate" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Teammate</h3>
-                    <p className="text-gray-500 text-sm">Sports Dating App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
-
-                {/* Meetly */}
-                <button
-                  onClick={() => { setMobileCaseStudy('meetly'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={MEETLY_ICON} alt="Meetly" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Meetly</h3>
-                    <p className="text-gray-500 text-sm">Social Coordination App</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
-
-                {/* Silas */}
-                <button
-                  onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
-                  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-                >
-                  <img src={SILAS_ICON} alt="Silas" className="w-16 h-16 rounded-xl object-cover shadow" />
-                  <div className="flex-1 text-left">
-                    <h3 className="font-bold text-gray-900">Silas</h3>
-                    <p className="text-gray-500 text-sm">AI Companion</p>
-                    <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                  </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400" />
-                </button>
+              <div className="flex flex-col gap-3">
+                {Object.entries(caseStudies).map(([key, study]) => (
+                  <button
+                    key={key}
+                    onClick={() => { setMobileCaseStudy(key); setMobileScreen('caseStudy'); }}
+                    className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
+                  >
+                    <img src={study.icon} alt="" className="w-16 h-16 rounded-xl object-cover shadow" />
+                    <div className="flex-1 text-left">
+                      <h3 className="font-bold text-gray-900">{study.title}</h3>
+                      <p className="text-gray-500 text-sm">{study.subtitle}</p>
+                      <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -2158,14 +2165,14 @@ Currently focused on mobile app design and AI-powered experiences.`
         {
           id: 2,
           title: "Case Studies",
-          preview: "Teammate - Sports Dating App, Meetly - Group Coordination, Silas - AI Companion",
+          preview: "Teammate, Meetly, Silas, Luna, and Bank of Daniel",
           date: "Yesterday",
           hasImages: true,
-          images: [
-            { title: "Teammate", icon: TEAMMATE_ICON, key: "teammate" },
-            { title: "Meetly", icon: MEETLY_ICON, key: "meetly" },
-            { title: "Silas", icon: SILAS_ICON, key: "silas" }
-          ],
+          images: Object.entries(caseStudies).map(([key, study]) => ({
+            title: study.title,
+            icon: study.icon,
+            key
+          })),
           content: `My Featured Projects:
 
 Tap on any project below to view the full case study.`
@@ -2409,7 +2416,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 <div className="px-4 py-3 border-b border-gray-200">
                   <p className="text-[13px] text-gray-500">PROJECTS</p>
                 </div>
-                {['teammate', 'meetly', 'silas'].map((key) => {
+                {Object.keys(caseStudies).map((key) => {
                   const study = caseStudies[key as keyof typeof caseStudies]
                   return (
                     <button
@@ -6680,6 +6687,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   const isSilas = project === 'silas'
   const isMeetly = project === 'meetly'
   const isTeammate = project === 'teammate'
+  const isLuna = project === 'luna'
+  const isBankOfDaniel = project === 'bankOfDaniel'
 
   return (
     <div
@@ -6736,6 +6745,10 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
           <MeetlyCaseStudy />
         ) : isTeammate ? (
           <TeammateCaseStudy />
+        ) : isLuna ? (
+          <LunaCaseStudy />
+        ) : isBankOfDaniel ? (
+          <BankOfDanielCaseStudy />
         ) : (
           <>
             {/* Hero Section */}
