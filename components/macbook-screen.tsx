@@ -192,6 +192,22 @@ const caseStudies = {
     screenshot: "/images/luna/hero-orb.png",
     isFullCaseStudy: true
   },
+  bankofdaniel: {
+    title: "Bank of Daniel",
+    subtitle: "Digital Receipt",
+    hero: "From payment to purchase context.",
+    overview: "Bank of Daniel connects itemized receipts to completed card transactions, helping customers understand what they bought and turn past purchases into reusable shopping lists.",
+    role: "UX Designer & Researcher",
+    timeline: "1 Week",
+    tools: ["Product Strategy", "Interaction Design", "Prototyping", "UX Research"],
+    challenge: "Banking transactions show the merchant, date, amount, and card number, but not the items purchased. Receipts remain scattered across email, retailer apps, and paper, forcing customers to reconstruct the purchase before they can act on it.",
+    solution: "The transaction becomes the natural anchor for an attached itemized receipt. Customers can search by merchant or item, save individual purchases with notes, and organize those items into recurring lists by store, project, or occasion.",
+    results: ["Less searching across disconnected records", "More useful transaction history", "Reusable lists built from real purchases", "More value from merchant-provided data"],
+    color: "from-[#0b3a67] to-[#1769a5]",
+    icon: "/images/bank-of-daniel-icon.png",
+    screenshot: "/images/bank-of-daniel-preview.png",
+    isFullCaseStudy: true
+  },
   silas: {
     title: "Silas",
     subtitle: "The Integrated AI Companion",
@@ -1312,25 +1328,33 @@ const messageText = mobileInput.trim()
               <WeatherWidget className="w-full" />
             </div>
 
-            {/* Featured Case Study - Silas */}
-            <div className="mx-4 mt-6">
-              <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
-                <Folder className="w-5 h-5" />
-                Featured Case Study
-              </h2>
-              <button
-                onClick={() => { setMobileCaseStudy('silas'); setMobileScreen('caseStudy'); }}
-                className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
-              >
-                <img src={SILAS_ICON} alt="Silas" className="h-16 w-16 rounded-xl object-cover shadow" />
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-gray-900">Silas</h3>
-                  <p className="text-gray-500 text-sm">Integrated AI Companion</p>
-                  <p className="text-gray-400 text-xs mt-1">Tap to view case study</p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-gray-400" />
-              </button>
-            </div>
+  {/* Featured Case Studies */}
+  <div className="mx-4 mt-6">
+  <h2 className="text-white text-lg font-semibold mb-3 flex items-center gap-2">
+  <Folder className="w-5 h-5" />
+  Case Studies
+  </h2>
+  <div className="flex flex-col gap-3">
+  {[
+  { id: 'silas', title: 'Silas', subtitle: 'Integrated AI Companion', icon: SILAS_ICON },
+  { id: 'luna', title: 'Luna', subtitle: 'Behavior for Agentic AI', icon: '/images/luna/hero-orb.png' },
+  { id: 'bankofdaniel', title: 'Bank of Daniel', subtitle: 'Digital Receipt', icon: '/images/bank-of-daniel-icon.png' },
+  ].map((project) => (
+  <button
+  key={project.id}
+  onClick={() => { setMobileCaseStudy(project.id); setMobileScreen('caseStudy'); }}
+  className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
+  >
+  <img src={project.icon} alt={project.title} className="h-14 w-14 rounded-xl object-cover shadow" />
+  <div className="flex-1 text-left">
+  <h3 className="font-bold text-gray-900">{project.title}</h3>
+  <p className="text-gray-500 text-sm">{project.subtitle}</p>
+  </div>
+  <ChevronRight className="w-5 h-5 text-gray-400" />
+  </button>
+  ))}
+  </div>
+  </div>
 
             {/* Luna preview */}
             <div className="mx-4 mt-3">
@@ -1447,25 +1471,19 @@ const messageText = mobileInput.trim()
                   <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
 
-                {/* Luna — Coming Soon */}
-                <div className="flex flex-col items-center justify-center opacity-80" aria-label="Luna, coming soon">
-                  <div className="relative w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center shadow-lg">
-                    <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)]">
-                      <div className="absolute top-1.5 left-2 w-2.5 h-2.5 rounded-full bg-white/60 blur-[2px]" />
-                    </div>
-                    <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+                <button onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Luna case study">
+                  <div className="w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center overflow-hidden shadow-lg">
+                    <img src="/images/luna/hero-orb.png" alt="" className="w-full h-full object-contain" />
                   </div>
                   <span className="text-white text-[11px] mt-1">Luna</span>
-                </div>
+                </button>
 
-                {/* Bank of Daniel — Coming Soon */}
-                <div className="flex flex-col items-center justify-center opacity-80" aria-label="Bank of Daniel, coming soon">
-                  <div className="relative w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
-                    <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="w-full h-full object-contain bg-[#3a1a63]" />
-                    <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
+                <button onClick={() => { setMobileCaseStudy('bankofdaniel'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Bank of Daniel case study">
+                  <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
+                    <img src="/images/bank-of-daniel-icon.png" alt="" className="w-full h-full object-cover" />
                   </div>
                   <span className="text-white text-[11px] mt-1">B. of Daniel</span>
-                </div>
+                </button>
 
                 {/* Wallpaper / Theme */}
                 <button
@@ -2049,6 +2067,8 @@ const messageText = mobileInput.trim()
           <div className="flex-1 overflow-y-auto">
             {mobileCaseStudy === "luna" ? (
               <LunaCaseStudy />
+            ) : mobileCaseStudy === "bankofdaniel" ? (
+              <BankOfDanielCaseStudy />
             ) : (
               <>
             {/* View on Desktop Banner */}
@@ -2173,15 +2193,21 @@ const messageText = mobileInput.trim()
         {
           id: 2,
           title: "Case Studies",
-          preview: "Silas - Integrated AI Companion, Luna & Bank of Daniel - Coming Soon",
+          preview: "Silas, Luna, and Bank of Daniel — three complete case studies",
           date: "Yesterday",
           hasImages: true,
           images: [
-            { title: "Silas", icon: SILAS_ICON, key: "silas" }
+            { title: "Silas", icon: SILAS_ICON, key: "silas" },
+            { title: "Luna", icon: "/images/luna/hero-orb.png", key: "luna" },
+            { title: "Bank of Daniel", icon: "/images/bank-of-daniel-icon.png", key: "bankofdaniel" }
           ],
-          content: `Featured Project: Silas
+          content: `Explore three complete case studies:
 
-Tap below to view the full case study. Luna and Bank of Daniel are coming soon.`
+Silas — Integrated AI Companion
+Luna — Designing Behavior for Agentic AI
+Bank of Daniel — Digital Receipt
+
+Tap a project below to view the full case study.`
         },
         {
           id: 3,
@@ -5573,31 +5599,6 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
           </div>
         )}
 
-        {/* Coming Soon case studies - persistent desktop cluster (always visible) */}
-        <div className="pointer-events-none absolute top-16 right-5 z-10 flex flex-col items-end gap-2">
-          <span className="text-white/80 text-[10px] font-semibold uppercase tracking-[0.2em] drop-shadow-[1px_1px_1px_rgba(0,0,0,0.6)]">Coming Soon</span>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col items-center gap-1.5 w-20" aria-label="Luna, coming soon">
-              <div className="relative w-14 h-14 rounded-2xl bg-black flex items-center justify-center shadow-lg">
-                <div className="relative w-9 h-9 rounded-full bg-gradient-to-br from-purple-300 via-purple-500 to-purple-800 shadow-[0_0_14px_rgba(168,85,247,0.9)]">
-                  <div className="absolute top-1.5 left-2 w-2.5 h-2.5 rounded-full bg-white/60 blur-[2px]" />
-                </div>
-                <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow">SOON</span>
-              </div>
-              <span className="text-white text-[11px] font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Luna</span>
-            </div>
-            <div className="flex flex-col items-center gap-1.5 w-20" aria-label="Bank of Daniel, coming soon">
-              <div className="relative w-14 h-14 shadow-lg rounded-2xl">
-                <div className="w-full h-full rounded-2xl overflow-hidden">
-                  <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="w-full h-full object-contain bg-[#3a1a63]" />
-                </div>
-                <span className="absolute -right-2 -top-2 rounded-full bg-purple-600 px-1.5 py-0.5 text-[8px] font-bold text-white shadow z-10">SOON</span>
-              </div>
-              <span className="text-white text-[11px] font-medium text-center leading-tight px-1.5 py-0.5 rounded bg-black/25 backdrop-blur-sm">Bank of Daniel</span>
-            </div>
-          </div>
-        </div>
-
         {/* Notes Window */}
         {notesWindow.isOpen && !notesWindow.isMinimized && (
           <div
@@ -6322,6 +6323,26 @@ label="Brain Games"
           onClick={() => openCaseStudy('silas')}
         />
 
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#160f2e] shadow-lg">
+              <img src="/images/luna/hero-orb.png" alt="Luna" className="w-full h-full object-contain" />
+            </div>
+          }
+          label="Luna"
+          onClick={() => openCaseStudy('luna')}
+        />
+
+        <DockIcon
+          icon={
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img src="/images/bank-of-daniel-icon.png" alt="Bank of Daniel" className="w-full h-full object-cover" />
+            </div>
+          }
+          label="Bank of Daniel"
+          onClick={() => openCaseStudy('bankofdaniel')}
+        />
+
         {/* Minimized Windows Section */}
         {(photosWindow.isMinimized || caseStudiesFolder.isMinimized || aboutWindow.isMinimized || messagesWindow.isMinimized || notesWindow.isMinimized || projectsFolder.isMinimized || Object.values(openCaseStudies).some(s => s.isMinimized)) && (
           <>
@@ -6598,6 +6619,7 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
   // Check which full case study to render
   const isSilas = project === 'silas'
   const isLuna = project === 'luna'
+  const isBankOfDaniel = project === 'bankofdaniel'
   const isMeetly = project === 'meetly'
   const isTeammate = project === 'teammate'
 
@@ -6654,6 +6676,8 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
           <SilasCaseStudy />
         ) : isLuna ? (
           <LunaCaseStudy />
+        ) : isBankOfDaniel ? (
+          <BankOfDanielCaseStudy />
         ) : isMeetly ? (
           <MeetlyCaseStudy />
         ) : isTeammate ? (
@@ -7073,6 +7097,99 @@ function LunaCaseStudy() {
           </p>
         </div>
       </div>
+    </div>
+  )
+}
+
+function BankOfDanielCaseStudy() {
+  const journey = [
+    { label: "Transaction", detail: "The natural anchor" },
+    { label: "Receipt", detail: "Itemized purchase context" },
+    { label: "Item", detail: "Something worth saving" },
+    { label: "Shopping list", detail: "A useful next action" },
+  ]
+
+  return (
+    <div className="bg-white text-slate-950">
+      <section className="bg-[#0b3a67] px-6 py-20 text-white md:px-10 md:py-24">
+        <div className="mx-auto flex max-w-5xl flex-col gap-10 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-2xl">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">Case Study 02 · Digital Receipt</p>
+            <h1 className="text-balance text-5xl font-bold tracking-tight md:text-7xl">Bank of Daniel</h1>
+            <p className="mt-5 max-w-xl text-xl leading-relaxed text-blue-100">Turning completed transactions into reusable shopping lists.</p>
+          </div>
+          <img src="/images/bank-of-daniel-icon.png" alt="Bank of Daniel digital receipt app icon" className="h-32 w-32 rounded-3xl object-cover shadow-2xl ring-1 ring-white/20 md:h-40 md:w-40" />
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200 px-6 py-10 md:px-10">
+        <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
+          <div><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Role</p><p className="mt-2 font-semibold">UX Designer &amp; Researcher</p></div>
+          <div><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Length</p><p className="mt-2 font-semibold">1 Week</p></div>
+          <div><p className="text-xs font-semibold uppercase tracking-wider text-slate-500">Type</p><p className="mt-2 font-semibold">End-to-End Product</p></div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1769a5]">The opportunity</p>
+        <h2 className="mt-3 max-w-3xl text-balance text-3xl font-bold md:text-4xl">Your bank shows the money — not what you bought.</h2>
+        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-600">A transaction tells customers where, when, and how much they paid, but the item-level details remain scattered across email, retailer apps, and paper receipts. Payment completes the transaction, not the user&apos;s task.</p>
+        <div className="mt-10 grid gap-5 md:grid-cols-2">
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Today · A black box</p>
+            <h3 className="mt-3 text-xl font-bold">The purchase is disconnected</h3>
+            <p className="mt-3 leading-relaxed text-slate-600">Customers see only the amount, date, type, and card number, then leave the banking app to reconstruct what they purchased.</p>
+          </div>
+          <div className="rounded-2xl bg-[#e9f6fb] p-6 ring-1 ring-[#9dd9ea]">
+            <p className="text-xs font-bold uppercase tracking-wider text-[#0b5f7a]">Direction · A glass box</p>
+            <h3 className="mt-3 text-xl font-bold">Payment meets purchase context</h3>
+            <p className="mt-3 leading-relaxed text-slate-700">The amount and itemized receipt live together in one view, aggregated across vendors and ready for the customer&apos;s next action.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-slate-950 px-6 py-16 text-white md:px-10">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">Product model</p>
+          <h2 className="mt-3 text-3xl font-bold">From payment to purchase context</h2>
+          <div className="mt-10 grid gap-3 md:grid-cols-4">
+            {journey.map((step, index) => (
+              <div key={step.label} className="relative rounded-xl border border-white/15 bg-white/5 p-5">
+                <span className="text-xs font-bold text-cyan-300">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="mt-3 font-semibold">{step.label}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">{step.detail}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
+        <img src="/images/bank-of-daniel-preview.png" alt="Bank of Daniel transaction receipt and shopping-list product screens" className="w-full rounded-2xl border border-slate-200 shadow-xl" />
+        <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <div><h3 className="text-lg font-bold">Find the purchase</h3><p className="mt-3 leading-relaxed text-slate-600">Search by merchant or item, or open a familiar transaction and scroll to its attached itemized receipt.</p></div>
+          <div><h3 className="text-lg font-bold">Save useful items</h3><p className="mt-3 leading-relaxed text-slate-600">Keep an item connected to its original transaction while adding size, color, or a personal note.</p></div>
+          <div><h3 className="text-lg font-bold">Build what&apos;s next</h3><p className="mt-3 leading-relaxed text-slate-600">Organize saved purchases into recurring lists by routine, store, project, or occasion.</p></div>
+        </div>
+      </section>
+
+      <section className="bg-[#e9f6fb] px-6 py-16 md:px-10">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1769a5]">Outcome</p>
+          <h2 className="mt-3 text-3xl font-bold">A transaction becomes a starting point.</h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-3">
+            {[
+              ["Less searching", "Purchase information stays connected to the transaction."],
+              ["More useful transactions", "A completed purchase can become a future shopping list."],
+              ["More value from existing data", "Merchant-provided details make history actionable."],
+            ].map(([title, body]) => (
+              <div key={title} className="rounded-xl bg-white p-6 shadow-sm"><h3 className="font-bold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>
+            ))}
+          </div>
+          <p className="mt-10 max-w-3xl text-xl font-medium leading-relaxed text-[#0b3a67]">Bank of Daniel already tells me where my money went. This experience helps me remember what I bought — and turn it into a shopping list for later.</p>
+          <a href="/case-studies/charity-portfolio-luna-bank-of-daniel.pdf" target="_blank" rel="noreferrer" className="mt-8 inline-flex rounded-lg bg-[#0b3a67] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1769a5]">View original portfolio PDF</a>
+        </div>
+      </section>
     </div>
   )
 }

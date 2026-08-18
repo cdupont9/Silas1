@@ -26,7 +26,7 @@ import { Minesweeper } from "./apps/minesweeper"
 import { Paint } from "./apps/paint"
 import { Pinball } from "./apps/pinball"
 
-type AppId = "silas" | "mycomputer" | "about" | "resume" | "aim" | "games" | "paint" | "minesweeper" | "pinball" | "display"
+type AppId = "silas" | "luna" | "bankofdaniel" | "mycomputer" | "about" | "resume" | "aim" | "games" | "paint" | "minesweeper" | "pinball" | "display"
 
 const SILAS_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/make_this_icon_202603301129.png-WEqKbKT0bK2vdV3JIdGyh61HGChPcI.jpeg"
 
@@ -86,6 +86,8 @@ const LunaOrbIcon = ({ size = 16 }: { size?: number }) => (
 
 const APP_META: Record<AppId, { title: string; icon: (p: any) => React.ReactNode; w: number; h: number }> = {
   silas: { title: "Silas — Featured Case Study", icon: (p) => <SilasIcon {...p} />, w: 700, h: 520 },
+  luna: { title: "Luna — Case Study", icon: (p) => <LunaOrbIcon {...p} />, w: 700, h: 520 },
+  bankofdaniel: { title: "Bank of Daniel — Digital Receipt", icon: (p) => <BankOfDanielIcon {...p} />, w: 700, h: 520 },
   mycomputer: { title: "My Computer", icon: (p) => <MyComputerIcon {...p} />, w: 680, h: 480 },
   about: { title: "About Charity - Notepad", icon: (p) => <NotepadIcon {...p} />, w: 460, h: 420 },
   resume: { title: "Resume - Charity Dupont", icon: (p) => <DocIcon {...p} />, w: 620, h: 560 },
@@ -188,6 +190,10 @@ export function WindowsRetroExperience(props: RetroProps) {
     switch (id) {
       case "silas":
         return <MyComputer era={era} caseStudies={caseStudies} initialOpenId="silas" />
+      case "luna":
+        return <MyComputer era={era} caseStudies={caseStudies} initialOpenId="luna" />
+      case "bankofdaniel":
+        return <MyComputer era={era} caseStudies={caseStudies} initialOpenId="bankofdaniel" />
       case "mycomputer":
         return <MyComputer era={era} caseStudies={caseStudies} />
       case "about":
@@ -221,8 +227,8 @@ export function WindowsRetroExperience(props: RetroProps) {
   // Desktop icons
   const desktopIcons: { id: AppId | "recycle" | "luna" | "bankofdaniel"; label: string; icon: React.ReactNode; featured?: boolean; comingSoon?: boolean }[] = [
     { id: "silas", label: "Silas \u2605 Case Study", icon: <SilasIcon size={isMobile ? 44 : 40} />, featured: true },
-    { id: "luna", label: "Luna", icon: <LunaOrbIcon size={isMobile ? 40 : 32} />, comingSoon: true },
-    { id: "bankofdaniel", label: "Bank of Daniel", icon: <BankOfDanielIcon size={isMobile ? 40 : 32} />, comingSoon: true },
+    { id: "luna", label: "Luna Case Study", icon: <LunaOrbIcon size={isMobile ? 40 : 32} /> },
+    { id: "bankofdaniel", label: "Bank of Daniel", icon: <BankOfDanielIcon size={isMobile ? 40 : 32} /> },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={isMobile ? 40 : 32} /> },
     { id: "about", label: "About Me", icon: <NotepadIcon size={isMobile ? 40 : 32} /> },
     { id: "aim", label: "AOL IM", icon: <AimIcon size={isMobile ? 40 : 32} /> },

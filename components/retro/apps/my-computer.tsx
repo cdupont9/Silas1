@@ -25,7 +25,7 @@ interface MyComputerProps {
   initialOpenId?: string | null
 }
 
-const ORDER = ["silas"]
+const ORDER = ["silas", "luna", "bankofdaniel"]
 
 export function MyComputer({ era, caseStudies, initialOpenId = null }: MyComputerProps) {
   const t = RETRO_THEMES[era]
