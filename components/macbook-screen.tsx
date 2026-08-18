@@ -6958,6 +6958,48 @@ function LunaCaseStudy() {
         </div>
       </div>
 
+      {/* Giving Luna a Seat in the Call */}
+      <div className="bg-[#171026] py-16 text-white">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-4">Giving Luna a Seat in the Call</h2>
+          <p className="max-w-3xl text-lg leading-relaxed text-white/75 mb-10">Luna&rsquo;s presence had to be visible to everyone, not because she needed a tile, but because the tile removed a layer of user uncertainty.</p>
+          <div className="grid gap-5 md:grid-cols-2 mb-10">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
+              <p className="text-xs font-semibold uppercase tracking-wider text-white/45 mb-3">Before · AI beside the conversation</p>
+              <p className="leading-relaxed text-white/75">Zoom AI Companion and Microsoft Copilot can assist during a live meeting, but the AI experience remains visually separate from the people in the conversation. The user has to look somewhere else to understand what the AI is doing, what it has captured, or how it is responding. The AI could participate in the meeting, but it didn&apos;t have a visible seat in it.</p>
+            </div>
+            <div className="rounded-2xl border border-purple-300/30 bg-purple-400/10 p-6">
+              <p className="text-xs font-semibold uppercase tracking-wider text-purple-200 mb-3">Decision · Luna inside the meeting</p>
+              <p className="leading-relaxed text-white/80">Her presence and state became part of the shared meeting context. Users could see where she was, what state she was in, and when she was participating without leaving the call.</p>
+            </div>
+          </div>
+          <div className="rounded-2xl bg-white p-6 text-black mb-10"><p className="text-xs font-semibold uppercase tracking-wider text-purple-600 mb-2">What it solved</p><p className="text-lg font-medium">Fewer steps. Less context switching. Less ambiguity.</p><p className="mt-2 text-black/65">Luna&rsquo;s behavioral presence became legible in the same place the work was happening.</p></div>
+          <p className="border-l-2 border-purple-400 pl-5 text-xl leading-relaxed text-purple-100">Product principle: AI presence should reduce cognitive load, not create another place to look.</p>
+        </div>
+      </div>
+
+      <div className="max-w-5xl mx-auto px-8 py-16">
+        <h2 className="text-3xl font-bold mb-4 text-black">From Meeting Tool to Teammate</h2>
+        <p className="text-lg text-black/70 mb-10">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
+        <div className="grid gap-5 md:grid-cols-2 mb-10">
+          <div className="rounded-2xl bg-neutral-100 p-7"><h3 className="font-semibold text-lg mb-3">AI Assists</h3><p className="text-black/65 leading-relaxed">AI sits alongside the conversation, summarizing, answering, and capturing.</p></div>
+          <div className="rounded-2xl bg-purple-50 border border-purple-100 p-7"><h3 className="font-semibold text-lg text-purple-800 mb-3">AI Participates</h3><p className="text-black/70 leading-relaxed">Luna is part of the conversation, listening, understanding the context, and contributing in the moment.</p></div>
+        </div>
+        <p className="text-xl font-medium text-black/85">The shift wasn&apos;t just where AI appeared. It was what AI became.</p>
+        <p className="mt-3 text-xl text-purple-700">Luna didn&apos;t belong beside the meeting — she belonged inside of it.</p>
+      </div>
+
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-5 text-black">A seat in the call changes everything.</h2>
+          <p className="max-w-3xl text-black/70 leading-relaxed mb-10">Presence had to be literal. For Luna to feel like a teammate, she couldn&apos;t live in a side window — she had to appear in the meeting itself, as a participant everyone can see.</p>
+          <div className="grid gap-5 md:grid-cols-3">
+            {[["Guest participant", "Luna appears as her own tile in the call, right alongside the people."], ["Joins like a guest", "She enters the meeting the way any guest does through the browser, no extra hardware."], ["Always in view", "Her state stays visible in the call, so the team never wonders what she’s doing."]].map(([title, body], index) => <div key={title} className="rounded-2xl bg-white p-6 border border-black/5"><span className="text-purple-600 font-bold">{index + 1}</span><h3 className="mt-4 font-semibold text-black">{title}</h3><p className="mt-2 text-sm leading-relaxed text-black/65">{body}</p></div>)}
+          </div>
+          <p className="mt-10 text-lg font-medium text-black/80">Luna became a real participant: visible, present, in the room.</p>
+        </div>
+      </div>
+
       {/* 04 Integrated Experience */}
       <div className="bg-neutral-50 py-16">
         <div className="max-w-4xl mx-auto px-8">
@@ -7110,6 +7152,22 @@ function LunaCaseStudy() {
         </div>
       </div>
 
+      {/* Results & Impact */}
+      <div className="bg-white py-16">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-3 text-black">Results &amp; Impact</h2>
+          <p className="text-black/60 mb-10">What happened after I presented this work.</p>
+          <div className="grid gap-5 md:grid-cols-3">
+            {[
+              ["Validated the gap", "My team agreed the missing behavioral states were a real oversight worth solving."],
+              ["Shaped the product", "The team chose to move Luna directly into Google Meet instead of keeping her in a standalone hub."],
+              ["Expanded the mandate", "The initiative extended my scope to additional projects, including 3D rendering explorations."],
+            ].map(([title, body], index) => <div key={title} className="rounded-2xl border border-black/10 p-6"><span className="text-sm font-bold text-purple-600">{String(index + 1).padStart(2, "0")}</span><h3 className="mt-4 text-lg font-semibold text-black">{title}</h3><p className="mt-3 text-sm leading-relaxed text-black/65">{body}</p></div>)}
+          </div>
+          <p className="mt-10 max-w-3xl text-lg leading-relaxed text-black/75">Impact doesn&apos;t have to be a launch — a validated oversight, a product decision, or new scope all show the difference this work made.</p>
+        </div>
+      </div>
+
       {/* 08 Trust & Reflection */}
       <div className="bg-gradient-to-br from-[#0f0a1f] to-[#1a1030] py-16 text-white">
         <div className="max-w-4xl mx-auto px-8">
@@ -7148,7 +7206,7 @@ function BankOfDanielCaseStudy() {
             <h1 className="text-balance text-5xl font-bold tracking-tight md:text-7xl">Bank of Daniel</h1>
             <p className="mt-5 max-w-xl text-xl leading-relaxed text-blue-100">Turning completed transactions into reusable shopping lists.</p>
           </div>
-          <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel digital receipt app icon" className="h-32 w-32 rounded-3xl object-cover shadow-2xl ring-1 ring-white/20 md:h-40 md:w-40" />
+          <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel logo" className="h-32 w-32 rounded-3xl bg-[#3a1a63] object-contain shadow-2xl ring-1 ring-white/20 md:h-40 md:w-40" />
         </div>
       </section>
 
@@ -7163,7 +7221,7 @@ function BankOfDanielCaseStudy() {
       <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1769a5]">The opportunity</p>
         <h2 className="mt-3 max-w-3xl text-balance text-3xl font-bold md:text-4xl">Your bank shows the money — not what you bought.</h2>
-        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-600">A transaction tells customers where, when, and how much they paid, but the item-level details remain scattered across email, retailer apps, and paper receipts. Payment completes the transaction, not the user&apos;s task.</p>
+        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-slate-600">Turn a completed transaction into a useful, understandable record of what was actually bought.</p>
         <div className="mt-10 grid gap-5 md:grid-cols-2">
           <div className="rounded-2xl border border-slate-200 bg-slate-50 p-6">
             <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Today · A black box</p>
@@ -7176,12 +7234,37 @@ function BankOfDanielCaseStudy() {
             <p className="mt-3 leading-relaxed text-slate-700">The amount and itemized receipt live together in one view, aggregated across vendors and ready for the customer&apos;s next action.</p>
           </div>
         </div>
+        <div className="mt-8 grid gap-8 md:grid-cols-2">
+          <ul className="flex flex-col gap-3 text-sm leading-relaxed text-slate-600">
+            <li>See only the amount, date, type, and card number.</li>
+            <li>Search across email, retailer apps, and paper receipts to reconstruct a purchase.</li>
+            <li>Remember what was bought without the context needed to make the transaction useful.</li>
+          </ul>
+          <ul className="flex flex-col gap-3 text-sm leading-relaxed text-[#0b3a67]">
+            <li>See the items behind the transaction, not just the dollar amount.</li>
+            <li>Find the receipt and purchase context in one place.</li>
+            <li>Reuse completed purchases as a shopping list for the next trip.</li>
+          </ul>
+        </div>
+        <p className="mt-10 text-center text-xl font-semibold text-[#0b3a67]">One view. One purchase history. One place to act.</p>
       </section>
 
       <section className="bg-slate-950 px-6 py-16 text-white md:px-10">
         <div className="mx-auto max-w-5xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">Product model</p>
           <h2 className="mt-3 text-3xl font-bold">From payment to purchase context</h2>
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/70">Connect the receipt to the transaction so I can see what I bought and turn individual items into a shopping list.</p>
+          <div className="mt-10 grid gap-4 md:grid-cols-3">
+            {[
+              ["The transaction isn’t enough", "A transaction tells me where, when, and how much I paid — but not the items I purchased."],
+              ["The receipt is disconnected", "The details I need may live in email, a retailer app, or a paper receipt instead of with the payment."],
+              ["The purchase is hard to use", "Even when I find the receipt, I still have to manually turn individual items into a shopping list."],
+            ].map(([title, body]) => <div key={title} className="rounded-xl border border-white/15 bg-white/5 p-5"><h3 className="font-semibold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-white/60">{body}</p></div>)}
+          </div>
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
+            <div><h3 className="font-semibold text-cyan-300">Payment completes the transaction — not the user&apos;s task.</h3><p className="mt-3 text-sm leading-relaxed text-white/65">After I pay, I may still want to understand what I bought and organize the items I care about. The experience can continue from the payment into the purchase.</p></div>
+            <div><h3 className="font-semibold text-cyan-300">The transaction is already the natural anchor.</h3><p className="mt-3 text-sm leading-relaxed text-white/65">I&apos;m already in my banking app looking at the purchase. Attaching the receipt keeps payment and purchase context together and gives me a path to act on the items.</p></div>
+          </div>
           <div className="mt-10 grid gap-3 md:grid-cols-4">
             {journey.map((step, index) => (
               <div key={step.label} className="relative rounded-xl border border-white/15 bg-white/5 p-5">
@@ -7195,11 +7278,53 @@ function BankOfDanielCaseStudy() {
       </section>
 
       <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
-        <img src="/case-studies/bank-of-daniel/page-20.jpg" alt="Original Bank of Daniel transaction, receipt, item, and shopping-list flow" className="w-full rounded-2xl border border-slate-200 shadow-xl" />
-        <div className="mt-12 grid gap-8 md:grid-cols-3">
-          <div><h3 className="text-lg font-bold">Find the purchase</h3><p className="mt-3 leading-relaxed text-slate-600">Search by merchant or item, or open a familiar transaction and scroll to its attached itemized receipt.</p></div>
-          <div><h3 className="text-lg font-bold">Save useful items</h3><p className="mt-3 leading-relaxed text-slate-600">Keep an item connected to its original transaction while adding size, color, or a personal note.</p></div>
-          <div><h3 className="text-lg font-bold">Build what&apos;s next</h3><p className="mt-3 leading-relaxed text-slate-600">Organize saved purchases into recurring lists by routine, store, project, or occasion.</p></div>
+        <h2 className="text-3xl font-bold">The transaction is only the starting point.</h2>
+        <p className="mt-3 text-lg text-slate-600">It doesn&apos;t tell me what I bought.</p>
+        <div className="mt-10 grid gap-5 md:grid-cols-3">
+          {[
+            ["The purchase is disconnected", "The transaction contains payment information, but not the item-level details behind the purchase."],
+            ["The receipt lives somewhere else", "Customers leave the banking app to find receipts, initiate returns, or check what they purchased."],
+            ["The information has to be reconstructed", "When customers want to buy something again or resolve a purchase, they find the same information across multiple places."],
+          ].map(([title, body]) => <div key={title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6"><h3 className="font-bold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
+        </div>
+        <div className="mt-10 rounded-2xl bg-[#0b3a67] p-7 text-white">
+          <p className="text-xs font-semibold uppercase tracking-wider text-cyan-200">Today, tapping a transaction shows only</p>
+          <div className="mt-5 flex flex-col gap-3 text-lg font-medium md:flex-row md:items-center md:gap-5"><span>Transaction Date</span><span className="text-cyan-300">→</span><span>Transaction Type</span><span className="text-cyan-300">→</span><span>Card Number</span></div>
+        </div>
+      </section>
+
+      <section className="bg-slate-50 px-6 py-16 md:px-10">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-3xl font-bold">Find the purchase behind the transaction.</h2>
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Search by merchant or item, or open a transaction directly. The purchase details are connected to the transaction.</p>
+          <img src="/case-studies/bank-of-daniel/page-20.jpg" alt="Original Bank of Daniel purchase search and itemized receipt screens" className="mt-10 w-full rounded-2xl border border-slate-200 shadow-xl" />
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            <div><h3 className="font-bold">Search by what you remember</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Search by merchant or item instead of remembering when the transaction occurred.</p></div>
+            <div><h3 className="font-bold">Open any transaction</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Tap a transaction as you always have — date, type, and card number are still there.</p></div>
+            <div><h3 className="font-bold">The receipt is attached</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Scroll down on the transaction to see the itemized receipt, pulled in from the merchant.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
+        <h2 className="text-3xl font-bold">Keep shopping lists connected to your purchases.</h2>
+        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Saved items live in one place and remain connected to the transactions they came from.</p>
+        <img src="/case-studies/bank-of-daniel/page-21.jpg" alt="Original Bank of Daniel saved items and list-management screens" className="mt-10 w-full rounded-2xl border border-slate-200 shadow-xl" />
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title}><h3 className="font-bold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
+        </div>
+      </section>
+
+      <section className="bg-[#0b3a67] px-6 py-16 text-white md:px-10">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-3xl font-bold">Build lists for what you&apos;ll buy next.</h2>
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-blue-100">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
+          <img src="/case-studies/bank-of-daniel/page-22.jpg" alt="Original Bank of Daniel create-list and recurring-list screens" className="mt-10 w-full rounded-2xl border border-white/15 shadow-2xl" />
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            <div><h3 className="font-bold">Create a list</h3><p className="mt-3 text-sm leading-relaxed text-blue-100">Start with any saved item and organize it around a need, store, or occasion.</p></div>
+            <div><h3 className="font-bold">Make it recurring</h3><p className="mt-3 text-sm leading-relaxed text-blue-100">Reuse a list for routines like weekly grocery shopping.</p></div>
+            <div><h3 className="font-bold">Organize by purpose</h3><p className="mt-3 text-sm leading-relaxed text-blue-100">Keep lists separate by store, project, or occasion.</p></div>
+          </div>
         </div>
       </section>
 
@@ -7217,7 +7342,6 @@ function BankOfDanielCaseStudy() {
             ))}
           </div>
           <p className="mt-10 max-w-3xl text-xl font-medium leading-relaxed text-[#0b3a67]">Bank of Daniel already tells me where my money went. This experience helps me remember what I bought — and turn it into a shopping list for later.</p>
-          <a href="/case-studies/charity-portfolio-luna-bank-of-daniel.pdf" target="_blank" rel="noreferrer" className="mt-8 inline-flex rounded-lg bg-[#0b3a67] px-5 py-3 text-sm font-semibold text-white hover:bg-[#1769a5]">View original portfolio PDF</a>
         </div>
       </section>
     </div>
