@@ -2065,10 +2065,10 @@ const messageText = mobileInput.trim()
 
           {/* Case Study Content */}
           <div className="flex-1 overflow-y-auto">
-            {mobileCaseStudy === "luna" ? (
-              <OriginalCaseStudyGallery project="luna" />
-            ) : mobileCaseStudy === "bankofdaniel" ? (
-              <OriginalCaseStudyGallery project="bankofdaniel" />
+  {mobileCaseStudy === "luna" ? (
+  <LunaCaseStudy />
+  ) : mobileCaseStudy === "bankofdaniel" ? (
+  <BankOfDanielCaseStudy />
             ) : (
               <>
             {/* View on Desktop Banner */}
@@ -6675,9 +6675,9 @@ function SafariCaseStudy({ project, onClose, onMinimize, isFocused, onFocus }: S
         {isSilas ? (
           <SilasCaseStudy />
         ) : isLuna ? (
-          <OriginalCaseStudyGallery project="luna" />
+          <LunaCaseStudy />
         ) : isBankOfDaniel ? (
-          <OriginalCaseStudyGallery project="bankofdaniel" />
+          <BankOfDanielCaseStudy />
         ) : isMeetly ? (
           <MeetlyCaseStudy />
         ) : isTeammate ? (
@@ -6832,7 +6832,6 @@ function LunaCaseStudy() {
       {/* Hero Section */}
       <div className="relative py-24 px-8 bg-gradient-to-b from-[#0f0a1f] via-[#160f2e] to-[#1a1030] text-white overflow-hidden">
         <div className="relative max-w-4xl mx-auto text-center">
-          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.3em] mb-6">Case Study 01</p>
           <img src="/images/luna/hero-orb.png" alt="Luna's primary listening orb" className="w-36 h-36 mx-auto mb-8 object-contain drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]" />
           <h1 className="text-5xl md:text-6xl font-bold mb-4">Luna</h1>
           <p className="text-xl text-purple-100/90 mb-6">Designing Behavior for Agentic AI</p>
@@ -7146,7 +7145,6 @@ function BankOfDanielCaseStudy() {
       <section className="bg-[#0b3a67] px-6 py-20 text-white md:px-10 md:py-24">
         <div className="mx-auto flex max-w-5xl flex-col gap-10 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">
-            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">Case Study 02 · Digital Receipt</p>
             <h1 className="text-balance text-5xl font-bold tracking-tight md:text-7xl">Bank of Daniel</h1>
             <p className="mt-5 max-w-xl text-xl leading-relaxed text-blue-100">Turning completed transactions into reusable shopping lists.</p>
           </div>
@@ -7197,7 +7195,7 @@ function BankOfDanielCaseStudy() {
       </section>
 
       <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
-        <img src="/images/bank-of-daniel-preview.png" alt="Bank of Daniel transaction receipt and shopping-list product screens" className="w-full rounded-2xl border border-slate-200 shadow-xl" />
+        <img src="/case-studies/bank-of-daniel/page-20.jpg" alt="Original Bank of Daniel transaction, receipt, item, and shopping-list flow" className="w-full rounded-2xl border border-slate-200 shadow-xl" />
         <div className="mt-12 grid gap-8 md:grid-cols-3">
           <div><h3 className="text-lg font-bold">Find the purchase</h3><p className="mt-3 leading-relaxed text-slate-600">Search by merchant or item, or open a familiar transaction and scroll to its attached itemized receipt.</p></div>
           <div><h3 className="text-lg font-bold">Save useful items</h3><p className="mt-3 leading-relaxed text-slate-600">Keep an item connected to its original transaction while adding size, color, or a personal note.</p></div>
