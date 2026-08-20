@@ -6869,13 +6869,13 @@ function LunaCaseStudy() {
           Today&rsquo;s meeting assistants, such as Zoom AI Companion and Microsoft 365 Copilot, can already join meetings, transcribe conversations, answer questions, and take action.
         </p>
         <div className="mb-8 overflow-x-auto rounded-2xl border border-black/5">
-          <table className="w-full min-w-[520px] border-collapse text-sm">
+          <table className="w-full min-w-[520px] border-separate border-spacing-0 text-sm">
             <thead>
               <tr className="bg-neutral-50 text-left">
                 <th className="px-5 py-4 font-semibold text-black/60">Capabilities</th>
                 <th className="px-5 py-4 font-semibold text-black/60">Zoom AI</th>
                 <th className="px-5 py-4 font-semibold text-black/60">Microsoft Copilot</th>
-                <th className="px-5 py-4 font-semibold text-purple-700">Project Luna</th>
+                <th className="rounded-t-xl border-x-2 border-t-2 border-purple-500 bg-purple-50 px-5 py-4 font-semibold text-purple-700">Project Luna</th>
               </tr>
             </thead>
             <tbody>
@@ -6884,12 +6884,12 @@ function LunaCaseStudy() {
                 ["Transcribe", true, true, true],
                 ["Answer Questions & Take Action", true, true, true],
                 ["Communicate Behavioral Presence", false, false, true],
-              ].map(([label, zoom, copilot, luna]) => (
-                <tr key={label as string} className="border-t border-black/5">
-                  <td className="px-5 py-4 font-medium text-black">{label as string}</td>
-                  <td className="px-5 py-4">{zoom ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
-                  <td className="px-5 py-4">{copilot ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
-                  <td className="px-5 py-4">{luna ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
+              ].map(([label, zoom, copilot, luna], index, rows) => (
+                <tr key={label as string}>
+                  <td className="border-t border-black/5 px-5 py-4 font-medium text-black">{label as string}</td>
+                  <td className="border-t border-black/5 px-5 py-4">{zoom ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
+                  <td className="border-t border-black/5 px-5 py-4">{copilot ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
+                  <td className={`border-x-2 border-t border-purple-500 bg-purple-50 px-5 py-4 ${index === rows.length - 1 ? "rounded-b-xl border-b-2" : ""}`}>{luna ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
                 </tr>
               ))}
             </tbody>
