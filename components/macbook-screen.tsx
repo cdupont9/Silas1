@@ -7028,9 +7028,45 @@ function LunaCaseStudy() {
 
       {/* Directing the System */}
       <div className="bg-white py-10 md:py-16">
-        <section className="mx-auto max-w-6xl bg-[#0d0b18]">
-          <h2 className="sr-only">Directing the System</h2>
-          <img src="/images/luna/deck/directing-system.png" alt="The Directing the System artifact composition from the portfolio deck: one large implementation screenshot, two smaller overlaid screenshots, and the live Luna prototype." className="w-full" />
+        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+          <h2 className="text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Directing the System</h2>
+          <div className="mt-8 grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
+            <div className="relative pb-10 pr-5 sm:pb-14 sm:pr-12">
+              <img
+                src="/images/luna/deck/directing-2.jpeg"
+                alt="Large AI-assisted implementation transcript showing Luna latency and deduplication improvements."
+                className="w-full rounded-2xl object-cover shadow-2xl"
+              />
+              <img
+                src="/images/luna/deck/directing-3.jpeg"
+                alt="Implementation transcript describing Luna Hub auto-connection and interface changes."
+                className="absolute -bottom-1 left-0 w-[34%] rounded-2xl border border-white/10 shadow-2xl sm:-left-4"
+              />
+              <img
+                src="/images/luna/deck/directing-4.jpeg"
+                alt="Implementation transcript describing automatic Google Meet detection and guest joining."
+                className="absolute -right-1 -top-7 w-[31%] rounded-2xl border border-white/10 shadow-2xl"
+              />
+            </div>
+            <div>
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
+                <video
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
+                  aria-label="Live recording of Luna being deployed into Google Meet."
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  preload="metadata"
+                  className="aspect-video w-full object-contain"
+                />
+              </div>
+              <p className="mt-5 text-base text-white/85">Natural language became a design medium.</p>
+              <p className="mt-1 text-sm leading-relaxed text-white/55">I directed AI to rapidly prototype, validate, and refine interaction behavior.</p>
+            </div>
+          </div>
+          <p className="mt-8 bg-[#3a2d6b] px-5 py-3 text-center text-sm text-white/85">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat. Hundreds of micro-decisions &mdash; every one was a design call.</p>
         </section>
       </div>
 
