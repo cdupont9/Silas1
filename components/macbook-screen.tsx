@@ -6934,39 +6934,26 @@ function LunaCaseStudy() {
         </div>
       </div>
 
-      {/* 02 Designing Trust */}
-      <div className="max-w-4xl mx-auto px-8 py-16">
-        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">02 · Designing Trust</p>
-        <h2 className="text-3xl font-bold mb-6 text-black">Designing non-verbal communication</h2>
-        <p className="text-lg text-black/80 leading-relaxed mb-6 max-w-3xl">
-          Humans constantly signal intent before speaking. AI should do the same.
-        </p>
-        <div className="flex flex-wrap gap-2 mb-8">
-          {["Eye contact", "Breathing", "Pauses", "Movement"].map((t) => (
-            <span key={t} className="px-4 py-2 bg-neutral-100 text-black/80 text-sm font-medium rounded-full border border-black/5">{t}</span>
-          ))}
-        </div>
-        <p className="text-black/70 leading-relaxed max-w-3xl">
-          I designed behavioral cues that reduce uncertainty. Signaled intent lowers cognitive load. Luna restores the missing nonverbal cues through motion, color, and animation.
-        </p>
-      </div>
-
-      {/* 03 Architectural Principles */}
-      <div className="bg-neutral-50 py-16">
-        <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">03 · The Questions</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">Architectural principles</h2>
-          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">Each question becomes a principle.</p>
-          <div className="grid md:grid-cols-2 gap-4">
-            {principles.map((item, i) => (
-              <div key={item.principle} className="bg-white rounded-xl p-5 border border-black/5">
-                <span className="text-purple-600 font-bold text-sm">{String(i + 1).padStart(2, "0")}</span>
-                <p className="mt-3 text-black/60 text-sm">{item.question}</p>
-                <p className="mt-1 text-black font-semibold">{item.principle}</p>
+      {/* Designing Non-Verbal Communication */}
+      <div className="bg-white py-10 md:py-16">
+        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Designing Non-Verbal Communication</h2>
+          <p className="mt-2 text-lg text-[#55c997]">Humans constantly signal intent before speaking.</p>
+          <div className="mt-8 grid items-center gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-12">
+            <div>
+              <div className="flex flex-col gap-3 text-xl text-white/90 md:text-2xl">
+                <p>Eye contact.</p><p>Breathing.</p><p>Pauses.</p><p>Movement.</p><p>AI should do the same.</p>
               </div>
-            ))}
+              <p className="mt-8 text-lg text-white/85">I designed behavioral cues that reduce uncertainty.</p>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-white/50">Signaled intent lowers cognitive load. Luna restores the missing nonverbal cues through motion, color, and animation.</p>
+            </div>
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-GazXQuLQqaPLwRiD2QkArBBcnQ1npV.jpeg"
+              alt="A woman using subtle nonverbal communication during a meeting."
+              className="aspect-video w-full rounded-[2rem] object-cover"
+            />
           </div>
-        </div>
+        </section>
       </div>
 
       {/* Giving Luna a Seat in the Call */}
@@ -7028,106 +7015,39 @@ function LunaCaseStudy() {
         </section>
       </div>
 
-      <div className="bg-neutral-50 py-16">
-        <div className="max-w-5xl mx-auto px-8">
-          <h2 className="text-3xl font-bold mb-5 text-black">A seat in the call changes everything.</h2>
-          <p className="max-w-3xl text-black/70 leading-relaxed mb-10">Presence had to be literal. For Luna to feel like a teammate, she couldn&apos;t live in a side window — she had to appear in the meeting itself, as a participant everyone can see.</p>
-          <div className="grid gap-5 md:grid-cols-3">
-            {[["Guest participant", "Luna appears as her own tile in the call, right alongside the people."], ["Joins like a guest", "She enters the meeting the way any guest does through the browser, no extra hardware."], ["Always in view", "Her state stays visible in the call, so the team never wonders what she’s doing."]].map(([title, body], index) => <div key={title} className="rounded-2xl bg-white p-6 border border-black/5"><span className="text-purple-600 font-bold">{index + 1}</span><h3 className="mt-4 font-semibold text-black">{title}</h3><p className="mt-2 text-sm leading-relaxed text-black/65">{body}</p></div>)}
+      <div className="bg-white py-10 md:py-16">
+        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Luna&apos;s Build Requirements</h2>
+          <p className="mt-3 max-w-4xl text-lg leading-relaxed text-white/65">For Luna to feel like a teammate, she couldn&apos;t live in a side window. She had to appear in the meeting itself, as a participant everyone can see.</p>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {[["Guest participant", "Luna appears as her own tile in the call, right alongside the people."], ["Joins like a guest", "She enters the meeting the way any guest does through the browser, no extra hardware."], ["Always in view", "Her state stays visible in the call, so the team never wonders what she’s doing."]].map(([title, body], index) => <div key={title} className="border border-purple-400/20 bg-white/5 p-6"><span className="flex h-12 w-12 items-center justify-center rounded-full border border-purple-400 text-purple-300">{index + 1}</span><h3 className="mt-7 text-lg font-medium text-white">{title}</h3><p className="mt-3 text-sm leading-relaxed text-white/55">{body}</p></div>)}
           </div>
-          <p className="mt-10 text-lg font-medium text-black/80">Luna became a real participant: visible, present, in the room.</p>
-        </div>
+          <div className="mt-7 border border-purple-400 bg-[#1a1431] px-6 py-7 text-lg italic leading-relaxed text-white/80"><p>A seat in the call changes everything.</p><p>Luna became a real participant: visible, present, in the room.</p></div>
+        </section>
       </div>
 
-      {/* 05 The Bridge */}
-      <div className="max-w-4xl mx-auto px-8 py-16">
-        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">05 · The Bridge</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">Building the technical bridge</h2>
-        <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
-          Luna runs locally while Google Meet runs inside Chrome. Understanding how those environments communicate was essential to designing a real meeting experience.
-        </p>
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
-            <p className="text-xs font-bold text-purple-600 mb-2">JS</p>
-            <p className="text-black font-medium text-sm mb-1">Chrome + Google Meet</p>
-            <p className="text-black/60 text-xs">JavaScript controls the browser</p>
-          </div>
-          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
-            <p className="text-xs font-bold text-purple-600 mb-2">⇄</p>
-            <p className="text-black font-medium text-sm mb-1">Local bridge</p>
-            <p className="text-black/60 text-xs">relays events both ways</p>
-          </div>
-          <div className="bg-neutral-50 rounded-xl p-6 border border-black/5 text-center">
-            <p className="text-xs font-bold text-purple-600 mb-2">Py</p>
-            <p className="text-black font-medium text-sm mb-1">Python + local AI</p>
-            <p className="text-black/60 text-xs">processing &amp; reasoning</p>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-2 mb-6">
-          {["JavaScript", "Python", "Chrome extensions", "Local servers", "APIs", "Messaging"].map((t) => (
-            <span key={t} className="px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-medium rounded-full border border-purple-100">{t}</span>
-          ))}
-        </div>
-        <p className="text-lg text-black/80 leading-relaxed">
-          To make informed product decisions, I taught myself the fundamentals through documentation, engineering conversations, experimentation, and rapid prototyping. I learned enough engineering to lead the product, not to become an engineer.
-        </p>
+      {/* Directing the System */}
+      <div className="bg-white py-10 md:py-16">
+        <section className="mx-auto max-w-6xl bg-[#0d0b18]">
+          <h2 className="sr-only">Directing the System</h2>
+          <img src="/images/luna/deck/directing-system.png" alt="The Directing the System artifact composition from the portfolio deck: one large implementation screenshot, two smaller overlaid screenshots, and the live Luna prototype." className="w-full" />
+        </section>
       </div>
 
-      {/* 06 Directing the System */}
-      <div className="bg-[#0b0913] py-16">
-        <div className="mx-auto max-w-6xl px-6 md:px-10">
-          <div className="rounded-3xl bg-gradient-to-br from-[#171232] via-[#120f26] to-[#0d0a1c] p-6 sm:p-10 md:p-12">
-            <h2 className="mb-8 text-4xl font-light tracking-tight text-[#b3a7f5] sm:text-5xl">Directing the System</h2>
-
-            <div className="grid gap-8 md:grid-cols-2 md:items-center">
-              {/* Left: layered code + mobile artifacts */}
-              <div className="relative">
-                <div className="overflow-hidden rounded-xl border border-white/10 bg-[#141414] shadow-2xl">
-                  <img
-                    src="/images/luna/code.png"
-                    alt="An AI coding assistant transcript describing the low-latency and deduplication fixes it implemented for Luna inside the Google Meet call."
-                    className="h-full w-full object-cover object-top"
-                  />
-                </div>
-                <div className="absolute -right-2 -top-6 hidden w-40 overflow-hidden rounded-2xl border border-white/10 bg-[#1c1c1e] shadow-2xl sm:block md:w-48 lg:-right-6">
-                  <img
-                    src="/images/luna/portal.png"
-                    alt="A mobile view of the Quick Portal with a field to paste an active Google Meet link and a Deploy Luna button."
-                    className="h-full w-full object-cover object-top"
-                  />
-                </div>
-              </div>
-
-              {/* Right: framed live recording + caption */}
-              <div className="flex flex-col gap-4">
-                <div className="overflow-hidden rounded-2xl border border-purple-400/20 bg-[#090711] shadow-2xl ring-1 ring-white/10">
-                  <video
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
-                    aria-label="Screen recording of the Quick Portal deploying Luna into an active Google Meet call, where her orb appears as a visible participant beside Charity Dupont."
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    controls
-                    preload="metadata"
-                    className="aspect-video w-full bg-[#090711] object-contain"
-                  />
-                </div>
-                <div className="text-white/85">
-                  <p className="text-base font-medium">Natural language became a design medium.</p>
-                  <p className="text-sm leading-relaxed text-white/60">I directed AI to rapidly prototype, validate, and refine interaction behavior.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom process bar */}
-            <div className="mt-10 rounded-xl bg-[#3a2d6b]/60 px-6 py-4 text-center">
-              <p className="text-sm leading-relaxed text-white/85">
-                <span className="font-medium">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat.</span> Hundreds of micro-decisions &mdash; every one was a design call.
-              </p>
-            </div>
+      {/* Bridging Design and Engineering */}
+      <div className="bg-white py-10 md:py-16">
+        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Bridging Design and Engineering</h2>
+          <p className="mt-4 max-w-5xl text-lg leading-relaxed text-white/60">Luna runs locally while Google Meet runs inside Chrome. Understanding how those environments communicate was essential to designing a real meeting experience.</p>
+          <div className="mt-8 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
+            {[["JS", "Chrome + Google Meet", "JavaScript controls the browser"], ["⇄", "Local bridge", "relays events both ways"], ["Py", "Python + local AI", "processing & reasoning"]].map(([symbol, title, body], index) => <div key={title} className="contents"><div className="border border-purple-400/25 bg-white/5 p-7 text-center"><span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-purple-900 text-purple-200">{symbol}</span><h3 className="mt-5 text-lg font-medium">{title}</h3><p className="mt-2 text-sm text-white/50">{body}</p></div>{index < 2 && <span className="hidden text-2xl text-purple-400 md:block">↔</span>}</div>)}
           </div>
-        </div>
+          <div className="mt-8 grid gap-8 md:grid-cols-[1.4fr_1fr]">
+            <div><p className="text-white/55">Technical concepts I needed to understand</p><div className="mt-5 flex flex-wrap gap-3">{["JavaScript", "Chrome extensions", "APIs", "Messaging", "Python", "Local servers"].map((t) => <span key={t} className="rounded-full border border-white/20 px-4 py-2 text-sm text-white/60">{t}</span>)}</div></div>
+            <div><p className="text-purple-300">HOW I LEARNED</p><p className="mt-3 leading-relaxed text-white/70">To make informed product decisions, I taught myself the fundamentals through documentation, engineering conversations, experimentation, and rapid prototyping.</p></div>
+          </div>
+          <p className="mt-8 text-white/85">I learned enough engineering to lead the product, not to become an engineer.</p>
+        </section>
       </div>
 
       {/* 07 States & Color */}
