@@ -6936,7 +6936,7 @@ function LunaCaseStudy() {
 
       {/* Designing Non-Verbal Communication */}
       <div className="bg-white py-10 md:py-16">
-        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Designing Non-Verbal Communication</h2>
           <p className="mt-2 text-lg text-[#55c997]">Humans constantly signal intent before speaking.</p>
           <div className="mt-8 grid items-center gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-12">
@@ -6957,8 +6957,8 @@ function LunaCaseStudy() {
       </div>
 
       {/* Giving Luna a Seat in the Call */}
-      <div className="bg-[#171026] py-16 text-white">
-        <div className="max-w-5xl mx-auto px-8">
+      <div className="bg-white py-16 text-black">
+        <div className="luna-light-slide max-w-5xl mx-auto border border-black/10 px-8 py-12">
           <h2 className="text-3xl font-bold mb-4">Giving Luna a Seat in the Call</h2>
           <p className="max-w-3xl text-lg leading-relaxed text-white/75 mb-10">Luna&rsquo;s presence had to be visible to everyone, not because she needed a tile, but because the tile removed a layer of user uncertainty.</p>
           <div className="grid gap-5 md:grid-cols-2 mb-10">
@@ -6977,7 +6977,7 @@ function LunaCaseStudy() {
       </div>
 
       <div className="bg-white py-10 md:py-16">
-        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">From Meeting Tool to Teammate</h2>
           <p className="mt-2 text-base text-white/60 md:text-lg">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
 
@@ -7016,7 +7016,7 @@ function LunaCaseStudy() {
       </div>
 
       <div className="bg-white py-10 md:py-16">
-        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Luna&apos;s Build Requirements</h2>
           <p className="mt-3 max-w-4xl text-lg leading-relaxed text-white/65">For Luna to feel like a teammate, she couldn&apos;t live in a side window. She had to appear in the meeting itself, as a participant everyone can see.</p>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
@@ -7028,7 +7028,7 @@ function LunaCaseStudy() {
 
       {/* Directing the System */}
       <div className="bg-white py-10 md:py-16">
-        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Directing the System</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
             <div className="relative pb-10 pr-5 sm:pb-14 sm:pr-12">
@@ -7072,7 +7072,7 @@ function LunaCaseStudy() {
 
       {/* Bridging Design and Engineering */}
       <div className="bg-white py-10 md:py-16">
-        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Bridging Design and Engineering</h2>
           <p className="mt-4 max-w-5xl text-lg leading-relaxed text-white/60">Luna runs locally while Google Meet runs inside Chrome. Understanding how those environments communicate was essential to designing a real meeting experience.</p>
           <div className="mt-8 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
@@ -7096,15 +7096,13 @@ function LunaCaseStudy() {
           </p>
   <div className="grid gap-10 md:grid-cols-3 md:gap-8">
   {states.map((s) => (
-  <div key={s.name} className="group flex flex-col items-center text-center">
-  <div className="mb-6 flex h-40 w-full items-center justify-center" role="img" aria-label={`${s.name} state animation`}>
-  <div className={`luna-state luna-state-${s.name.toLowerCase()}`}>
-  <span className="luna-state-core" />
-  <span className="luna-state-ring luna-state-ring-one" />
-  <span className="luna-state-ring luna-state-ring-two" />
-  {s.name === "Reasoning" && <><i className="luna-particle luna-particle-one" /><i className="luna-particle luna-particle-two" /><i className="luna-particle luna-particle-three" /></>}
-  {s.name === "Speaking" && <span className="luna-waveform"><i /><i /><i /><i /><i /></span>}
-  </div>
+  <div key={s.name} className="flex flex-col items-center text-center">
+  <div className="mb-6 flex h-40 w-full items-center justify-center">
+  <img
+  src={`/images/luna/state-${s.name.toLowerCase()}.png`}
+  alt={`${s.name} state orb`}
+  className="h-36 w-36 object-contain"
+  />
   </div>
   <h3 className="mb-1 text-xl font-semibold text-black">{s.name}</h3>
   <p className="mb-3 text-sm font-medium" style={{ color: s.color }}>{s.caption}</p>
@@ -7122,8 +7120,8 @@ function LunaCaseStudy() {
       </div>
 
       {/* Live Demo */}
-      <div className="bg-[#0a0a0a] py-16 border-y border-white/5">
-        <div className="max-w-4xl mx-auto px-8">
+      <div className="bg-white py-16 border-y border-black/10">
+        <div className="luna-light-slide max-w-4xl mx-auto px-8">
           <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
           <h2 className="text-3xl font-bold mb-3 text-white text-center text-balance">Luna, Live</h2>
           <p className="text-white/60 text-center mb-8 max-w-2xl mx-auto leading-relaxed">
