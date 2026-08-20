@@ -7094,22 +7094,24 @@ function LunaCaseStudy() {
           <p className="text-black/60 text-center mb-14 max-w-2xl mx-auto">
             Every AI has invisible states. Most AI hides them. Luna exposes them &mdash; that&rsquo;s the innovation.
           </p>
-          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
-            {states.map((s) => (
-              <div key={s.name} className="flex flex-col items-center text-center">
-                <div className="mb-6 flex h-40 w-full items-center justify-center">
-                  <img
-                    src={`/images/luna/state-${s.name.toLowerCase()}.png`}
-                    alt={`${s.name} state orb`}
-                    className="h-36 w-36 object-contain"
-                  />
-                </div>
-                <h3 className="mb-1 text-xl font-semibold text-black">{s.name}</h3>
-                <p className="mb-3 text-sm font-medium" style={{ color: s.color }}>{s.caption}</p>
-                <p className="text-sm leading-relaxed text-black/60">{s.description}</p>
-              </div>
-            ))}
-          </div>
+  <div className="grid gap-10 md:grid-cols-3 md:gap-8">
+  {states.map((s) => (
+  <div key={s.name} className="group flex flex-col items-center text-center">
+  <div className="mb-6 flex h-40 w-full items-center justify-center" role="img" aria-label={`${s.name} state animation`}>
+  <div className={`luna-state luna-state-${s.name.toLowerCase()}`}>
+  <span className="luna-state-core" />
+  <span className="luna-state-ring luna-state-ring-one" />
+  <span className="luna-state-ring luna-state-ring-two" />
+  {s.name === "Reasoning" && <><i className="luna-particle luna-particle-one" /><i className="luna-particle luna-particle-two" /><i className="luna-particle luna-particle-three" /></>}
+  {s.name === "Speaking" && <span className="luna-waveform"><i /><i /><i /><i /><i /></span>}
+  </div>
+  </div>
+  <h3 className="mb-1 text-xl font-semibold text-black">{s.name}</h3>
+  <p className="mb-3 text-sm font-medium" style={{ color: s.color }}>{s.caption}</p>
+  <p className="text-sm leading-relaxed text-black/60">{s.description}</p>
+  </div>
+  ))}
+  </div>
           <p className="text-lg text-black/80 leading-relaxed text-center mt-12 max-w-2xl mx-auto font-medium">
             Trust grows when internal state becomes externally visible.
           </p>

@@ -130,6 +130,81 @@
   }
 }
 
+/* Luna behavioral state animations */
+@keyframes luna-breathe {
+  0%, 100% { transform: scale(0.94); opacity: 0.72; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes luna-reason {
+  0% { transform: rotate(0deg) scale(0.96); }
+  50% { transform: rotate(180deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(0.96); }
+}
+
+@keyframes luna-speak {
+  0%, 100% { transform: scaleY(0.38); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes luna-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.8); opacity: 0.2; }
+  50% { transform: translate3d(8px, -11px, 0) scale(1.2); opacity: 1; }
+}
+
+.luna-state {
+  position: relative;
+  display: flex;
+  width: 9rem;
+  height: 9rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  isolation: isolate;
+}
+
+.luna-state-core {
+  position: absolute;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+}
+
+.luna-state-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+}
+
+.luna-state-ring-one { inset: 1.25rem; }
+.luna-state-ring-two { inset: 0.35rem; opacity: 0.35; }
+
+.luna-state-listening { color: #a78bfa; background: radial-gradient(circle, rgb(167 139 250 / 0.2), transparent 67%); }
+.luna-state-listening .luna-state-core { background: #a78bfa; box-shadow: 0 0 34px rgb(167 139 250 / 0.85); animation: luna-breathe 2.8s ease-in-out infinite; }
+.luna-state-listening .luna-state-ring-one { animation: luna-breathe 2.8s ease-in-out infinite reverse; }
+.luna-state-listening .luna-state-ring-two { animation: luna-breathe 2.8s 0.35s ease-in-out infinite; }
+
+.luna-state-reasoning { color: #7c3aed; background: radial-gradient(circle, rgb(124 58 237 / 0.28), transparent 68%); animation: luna-reason 7s linear infinite; }
+.luna-state-reasoning .luna-state-core { background: radial-gradient(circle at 35% 30%, #ddd6fe, #7c3aed 45%, #3b0764); box-shadow: 0 0 40px rgb(124 58 237 / 0.9); }
+.luna-state-reasoning .luna-state-ring-one { border-style: dashed; animation: luna-reason 4s linear infinite reverse; }
+.luna-state-reasoning .luna-state-ring-two { border-style: dotted; animation: luna-reason 5.5s linear infinite; }
+.luna-particle { position: absolute; width: 0.35rem; height: 0.35rem; border-radius: 9999px; background: #ddd6fe; box-shadow: 0 0 8px #a78bfa; animation: luna-drift 1.8s ease-in-out infinite; }
+.luna-particle-one { left: 1.4rem; top: 3rem; }
+.luna-particle-two { right: 1.2rem; top: 4rem; animation-delay: 0.5s; }
+.luna-particle-three { bottom: 1.4rem; left: 4.2rem; animation-delay: 1s; }
+
+.luna-state-speaking { color: #22c55e; background: radial-gradient(circle, rgb(34 197 94 / 0.2), transparent 68%); }
+.luna-state-speaking .luna-state-core { background: #22c55e; box-shadow: 0 0 38px rgb(34 197 94 / 0.85); animation: luna-breathe 1.05s ease-in-out infinite; }
+.luna-state-speaking .luna-state-ring-one { animation: luna-breathe 1.05s ease-in-out infinite reverse; }
+.luna-waveform { z-index: 2; display: flex; height: 2rem; align-items: center; gap: 0.18rem; }
+.luna-waveform i { width: 0.18rem; height: 1.5rem; border-radius: 9999px; background: white; transform-origin: center; animation: luna-speak 0.8s ease-in-out infinite; }
+.luna-waveform i:nth-child(2), .luna-waveform i:nth-child(4) { animation-delay: 0.15s; }
+.luna-waveform i:nth-child(3) { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .luna-state, .luna-state *, .luna-state::before, .luna-state::after { animation-play-state: paused !important; }
+}
+
 /* MacBook screen animations */
 @keyframes loading-bar {
   0% { width: 0%; }
