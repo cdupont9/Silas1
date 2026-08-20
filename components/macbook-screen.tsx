@@ -6868,25 +6868,36 @@ function LunaCaseStudy() {
         <p className="text-lg text-black/70 leading-relaxed mb-8 max-w-3xl">
           Today&rsquo;s meeting assistants, such as Zoom AI Companion and Microsoft 365 Copilot, can already join meetings, transcribe conversations, answer questions, and take action.
         </p>
-        <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
-            <X className="w-5 h-5 text-red-500 mb-3" />
-            <h3 className="text-sm font-semibold text-black mb-2">Zoom AI Companion</h3>
-            <p className="text-black/70 text-sm leading-relaxed">Capable, but invisible.</p>
-          </div>
-          <div className="bg-neutral-50 rounded-2xl p-6 border border-black/5">
-            <X className="w-5 h-5 text-red-500 mb-3" />
-            <h3 className="text-sm font-semibold text-black mb-2">Microsoft 365 Copilot</h3>
-            <p className="text-black/70 text-sm leading-relaxed">Capable, but invisible.</p>
-          </div>
-          <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
-            <Check className="w-5 h-5 text-green-600 mb-3" />
-            <h3 className="text-sm font-semibold text-purple-700 mb-2">Luna</h3>
-            <p className="text-black/70 text-sm leading-relaxed">Present, and legible.</p>
-          </div>
+        <div className="mb-8 overflow-x-auto rounded-2xl border border-black/5">
+          <table className="w-full min-w-[520px] border-collapse text-sm">
+            <thead>
+              <tr className="bg-neutral-50 text-left">
+                <th className="px-5 py-4 font-semibold text-black/60">Capabilities</th>
+                <th className="px-5 py-4 font-semibold text-black/60">Zoom AI</th>
+                <th className="px-5 py-4 font-semibold text-black/60">Microsoft Copilot</th>
+                <th className="px-5 py-4 font-semibold text-purple-700">Project Luna</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Join Meetings", true, true, true],
+                ["Transcribe", true, true, true],
+                ["Answer Questions & Take Action", true, true, true],
+                ["Communicate Behavioral Presence", false, false, true],
+              ].map(([label, zoom, copilot, luna]) => (
+                <tr key={label as string} className="border-t border-black/5">
+                  <td className="px-5 py-4 font-medium text-black">{label as string}</td>
+                  <td className="px-5 py-4">{zoom ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
+                  <td className="px-5 py-4">{copilot ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
+                  <td className="px-5 py-4">{luna ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+        <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-4">The core problem</p>
         <p className="text-lg text-black/80 leading-relaxed mb-4">
-          Users cannot tell when the AI is <span className="font-semibold">listening</span>, <span className="font-semibold">reasoning</span>, or <span className="font-semibold">preparing to respond</span>.
+          Everyone can join and transcribe. No one communicates behavior — that is the gap. Users cannot tell when the AI is <span className="font-semibold">listening</span>, <span className="font-semibold">reasoning</span>, or <span className="font-semibold">preparing to respond</span>.
         </p>
         <p className="text-lg text-black/80 leading-relaxed">
           Without visible cues for presence, state, and intent, intelligent systems remain difficult to understand and difficult to trust.
