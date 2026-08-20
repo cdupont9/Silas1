@@ -7086,40 +7086,60 @@ function LunaCaseStudy() {
         </p>
       </div>
 
-      {/* 06 Directing the Agent */}
-      <div className="bg-neutral-50 py-16">
-        <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">06 · Directing the Agent</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">Directing the system</h2>
-          <p className="text-black/70 leading-relaxed mb-8 max-w-2xl">
-            Natural language became a design medium. I directed AI to rapidly prototype, validate, and refine interaction behavior through one-click deployment and live validation.
-          </p>
-          <div className="grid md:grid-cols-3 gap-4 mb-8 items-stretch">
-            <figure className="flex flex-col">
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-[#1a1a1a] aspect-[4/3]">
-                <img src="/images/luna/code.png" alt="An AI coding assistant transcript describing low-latency and deduplication fixes it implemented for Luna inside the Google Meet call." className="w-full h-full object-cover object-top" />
+      {/* 06 Directing the System */}
+      <div className="bg-[#0b0913] py-16">
+        <div className="mx-auto max-w-6xl px-6 md:px-10">
+          <div className="rounded-3xl bg-gradient-to-br from-[#171232] via-[#120f26] to-[#0d0a1c] p-6 sm:p-10 md:p-12">
+            <h2 className="mb-8 text-4xl font-light tracking-tight text-[#b3a7f5] sm:text-5xl">Directing the System</h2>
+
+            <div className="grid gap-8 md:grid-cols-2 md:items-center">
+              {/* Left: layered code + mobile artifacts */}
+              <div className="relative">
+                <div className="overflow-hidden rounded-xl border border-white/10 bg-[#141414] shadow-2xl">
+                  <img
+                    src="/images/luna/code.png"
+                    alt="An AI coding assistant transcript describing the low-latency and deduplication fixes it implemented for Luna inside the Google Meet call."
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
+                <div className="absolute -right-2 -top-6 hidden w-40 overflow-hidden rounded-2xl border border-white/10 bg-[#1c1c1e] shadow-2xl sm:block md:w-48 lg:-right-6">
+                  <img
+                    src="/images/luna/portal.png"
+                    alt="A mobile view of the Quick Portal with a field to paste an active Google Meet link and a Deploy Luna button."
+                    className="h-full w-full object-cover object-top"
+                  />
+                </div>
               </div>
-              <figcaption className="text-black font-medium text-sm mt-3">Voice in, code out</figcaption>
-              <p className="text-black/60 text-xs mt-1">talking beats typing</p>
-            </figure>
-            <figure className="flex flex-col">
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-[#0d0a1a] aspect-[4/3] flex items-center justify-center">
-                <img src="/images/luna/portal.png" alt="The Quick Portal: a dark panel with a Deploy Luna button and a field to paste any active Google Meet link." className="h-full w-auto object-contain" />
+
+              {/* Right: framed live recording + caption */}
+              <div className="flex flex-col gap-4">
+                <div className="overflow-hidden rounded-2xl border border-purple-400/20 bg-[#090711] shadow-2xl ring-1 ring-white/10">
+                  <video
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
+                    aria-label="Screen recording of the Quick Portal deploying Luna into an active Google Meet call, where her orb appears as a visible participant beside Charity Dupont."
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    controls
+                    preload="metadata"
+                    className="aspect-video w-full bg-[#090711] object-contain"
+                  />
+                </div>
+                <div className="text-white/85">
+                  <p className="text-base font-medium">Natural language became a design medium.</p>
+                  <p className="text-sm leading-relaxed text-white/60">I directed AI to rapidly prototype, validate, and refine interaction behavior.</p>
+                </div>
               </div>
-              <figcaption className="text-black font-medium text-sm mt-3">The Quick Portal</figcaption>
-              <p className="text-black/60 text-xs mt-1">one click to deploy</p>
-            </figure>
-            <figure className="flex flex-col">
-              <div className="rounded-xl overflow-hidden border border-black/10 shadow-sm bg-black aspect-[4/3]">
-                <img src="/images/luna/pivot-inside.png" alt="Luna joins a real Google Meet call as an orb tile beside the human participants." className="w-full h-full object-cover" />
-              </div>
-              <figcaption className="text-black font-medium text-sm mt-3">Luna joins the real Meet call</figcaption>
-              <p className="text-black/60 text-xs mt-1">not a simulation</p>
-            </figure>
+            </div>
+
+            {/* Bottom process bar */}
+            <div className="mt-10 rounded-xl bg-[#3a2d6b]/60 px-6 py-4 text-center">
+              <p className="text-sm leading-relaxed text-white/85">
+                <span className="font-medium">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat.</span> Hundreds of micro-decisions &mdash; every one was a design call.
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-black/60 leading-relaxed">
-            <span className="font-semibold text-black/80">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat.</span> Hundreds of micro-decisions &mdash; every one was a design call.
-          </p>
         </div>
       </div>
 
