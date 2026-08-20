@@ -7160,7 +7160,7 @@ function LunaCaseStudy() {
           </p>
           <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black">
             <video
-              src="/videos/luna-demo.mp4"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-07-23%20at%204.59.50%E2%80%AFPM%20%283%29-VI8zMReqqJtebhp9lHAua80Tjsh2Og.mp4"
               poster="/images/luna/demo-poster.png"
               controls
               autoPlay
