@@ -6997,15 +6997,39 @@ function LunaCaseStudy() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-8 py-16">
-        <h2 className="text-3xl font-bold mb-4 text-black">From Meeting Tool to Teammate</h2>
-        <p className="text-lg text-black/70 mb-10">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
-        <div className="grid gap-5 md:grid-cols-2 mb-10">
-          <div className="rounded-2xl bg-neutral-100 p-7"><h3 className="font-semibold text-lg mb-3">AI Assists</h3><p className="text-black/65 leading-relaxed">AI sits alongside the conversation, summarizing, answering, and capturing.</p></div>
-          <div className="rounded-2xl bg-purple-50 border border-purple-100 p-7"><h3 className="font-semibold text-lg text-purple-800 mb-3">AI Participates</h3><p className="text-black/70 leading-relaxed">Luna is part of the conversation, listening, understanding the context, and contributing in the moment.</p></div>
+      <div className="bg-white py-16">
+        <div className="mx-auto max-w-5xl px-6 md:px-10">
+          <h2 className="mb-3 text-3xl font-medium text-purple-700 md:text-4xl">From Meeting Tool to Teammate</h2>
+          <p className="mb-10 text-lg text-black/70">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
+          <div className="grid items-start gap-8 md:grid-cols-2">
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xl font-semibold text-black">AI Assists</h3>
+              <p className="leading-relaxed text-black/65">AI sits along the conversation. Summarizing, answering, and capturing.</p>
+              <img
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-GazXQuLQqaPLwRiD2QkArBBcnQ1npV.jpeg"
+                alt="A participant speaking during a meeting."
+                className="aspect-video w-full border border-black/10 object-cover"
+              />
+            </div>
+            <div className="flex flex-col gap-4">
+              <h3 className="text-xl font-semibold text-purple-700">AI Participates</h3>
+              <p className="leading-relaxed text-black/70">Luna is part of the conversation, listening, understanding the context, and contributing in the moment.</p>
+              <video
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-07-23%20at%204.59.50%E2%80%AFPM%20%283%29-VI8zMReqqJtebhp9lHAua80Tjsh2Og.mp4"
+                aria-label="Luna Live participating in a real Google Meet call."
+                autoPlay
+                loop
+                muted
+                playsInline
+                controls
+                preload="metadata"
+                className="aspect-video w-full border border-purple-200 bg-black object-contain"
+              />
+            </div>
+          </div>
+          <p className="mt-10 text-xl font-medium text-black/85">The shift wasn&apos;t just where AI appeared. It was what AI became.</p>
+          <p className="mt-3 text-xl text-purple-700">Luna didn&apos;t belong beside the meeting — she belonged inside of it.</p>
         </div>
-        <p className="text-xl font-medium text-black/85">The shift wasn&apos;t just where AI appeared. It was what AI became.</p>
-        <p className="mt-3 text-xl text-purple-700">Luna didn&apos;t belong beside the meeting — she belonged inside of it.</p>
       </div>
 
       <div className="bg-neutral-50 py-16">
@@ -7016,39 +7040,6 @@ function LunaCaseStudy() {
             {[["Guest participant", "Luna appears as her own tile in the call, right alongside the people."], ["Joins like a guest", "She enters the meeting the way any guest does through the browser, no extra hardware."], ["Always in view", "Her state stays visible in the call, so the team never wonders what she’s doing."]].map(([title, body], index) => <div key={title} className="rounded-2xl bg-white p-6 border border-black/5"><span className="text-purple-600 font-bold">{index + 1}</span><h3 className="mt-4 font-semibold text-black">{title}</h3><p className="mt-2 text-sm leading-relaxed text-black/65">{body}</p></div>)}
           </div>
           <p className="mt-10 text-lg font-medium text-black/80">Luna became a real participant: visible, present, in the room.</p>
-        </div>
-      </div>
-
-      {/* 04 Integrated Experience */}
-      <div className="bg-[#0b0913] py-16 text-white">
-        <div className="mx-auto max-w-5xl px-6 md:px-10">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-purple-300">04 · Integrated Experience</p>
-          <h2 className="mb-8 text-3xl font-medium text-purple-300">Integrated experience</h2>
-          <div className="mb-8">
-            <div className="rounded-2xl border border-purple-400/20 bg-[#12101d] p-4 shadow-2xl">
-              <div className="mb-4 overflow-hidden rounded-xl border border-purple-400/20 bg-[#090711]">
-                <video
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
-                  aria-label="Screen recording of the Quick Portal deploying Luna into an active Google Meet call, where her orb appears as a visible participant."
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                  preload="metadata"
-                  className="aspect-video w-full bg-[#090711] object-contain"
-                />
-              </div>
-              <p className="mb-2 flex items-center gap-2 font-semibold text-purple-200"><Check className="h-4 w-4 text-emerald-400" /> Integrated Experience</p>
-              <p className="text-sm leading-relaxed text-white/65">The interaction model was moved directly into Google Meet, allowing Luna to become part of the conversation instead of another application.</p>
-            </div>
-          </div>
-          <div className="bg-gradient-to-br from-[#1a1030] to-[#2a1a4a] rounded-2xl p-8 text-white">
-            <h3 className="text-sm font-semibold mb-3 text-purple-200 uppercase tracking-wider">Design Insight</h3>
-            <p className="text-white/80 leading-relaxed">
-              The interaction model was never meant to compete with the meeting. It was meant to become part of it. That insight shifted Luna from a standalone concept into an integrated meeting companion.
-            </p>
-          </div>
         </div>
       </div>
 
