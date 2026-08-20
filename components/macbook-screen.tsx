@@ -6828,7 +6828,7 @@ function LunaCaseStudy() {
 
 
   return (
-    <div className="bg-white text-black">
+    <div className="luna-case-study bg-white text-black">
       {/* Hero Section */}
       <div className="relative py-24 px-8 bg-gradient-to-b from-[#0f0a1f] via-[#160f2e] to-[#1a1030] text-white overflow-hidden">
         <div className="relative max-w-4xl mx-auto text-center">
