@@ -6984,36 +6984,29 @@ function LunaCaseStudy() {
               <p className="leading-relaxed text-white/80">Her presence and state became part of the shared meeting context. Users could see where she was, what state she was in, and when she was participating without leaving the call.</p>
             </div>
           </div>
-          <figure className="mb-10 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
-            <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-GazXQuLQqaPLwRiD2QkArBBcnQ1npV.jpeg"
-              alt="A professional participant speaking in a bright meeting room, representing the human conversation Luna joins."
-              className="aspect-video w-full object-cover"
-            />
-            <figcaption className="px-5 py-4 text-sm leading-relaxed text-white/60">The meeting remains human first. Luna&apos;s role is to make her presence understandable without pulling attention away from the conversation.</figcaption>
-          </figure>
           <div className="rounded-2xl bg-white p-6 text-black mb-10"><p className="text-xs font-semibold uppercase tracking-wider text-purple-600 mb-2">What it solved</p><p className="text-lg font-medium">Fewer steps. Less context switching. Less ambiguity.</p><p className="mt-2 text-black/65">Luna&rsquo;s behavioral presence became legible in the same place the work was happening.</p></div>
           <p className="border-l-2 border-purple-400 pl-5 text-xl leading-relaxed text-purple-100">Product principle: AI presence should reduce cognitive load, not create another place to look.</p>
         </div>
       </div>
 
-      <div className="bg-white py-16">
-        <div className="mx-auto max-w-5xl px-6 md:px-10">
-          <h2 className="mb-3 text-3xl font-medium text-purple-700 md:text-4xl">From Meeting Tool to Teammate</h2>
-          <p className="mb-10 text-lg text-black/70">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
-          <div className="grid items-start gap-8 md:grid-cols-2">
-            <div className="flex flex-col gap-4">
-              <h3 className="text-xl font-semibold text-black">AI Assists</h3>
-              <p className="leading-relaxed text-black/65">AI sits along the conversation. Summarizing, answering, and capturing.</p>
+      <div className="bg-white py-10 md:py-16">
+        <section className="mx-auto max-w-6xl bg-[#0d0b18] px-6 py-10 text-white sm:px-10 md:px-14 md:py-12">
+          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">From Meeting Tool to Teammate</h2>
+          <p className="mt-2 text-base text-white/60 md:text-lg">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
+
+          <div className="mt-7 grid items-start gap-8 md:grid-cols-2 md:gap-12">
+            <figure className="flex flex-col">
+              <p className="mb-3 text-sm font-medium text-[#df7777]">AI Assists</p>
               <img
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-GazXQuLQqaPLwRiD2QkArBBcnQ1npV.jpeg"
-                alt="A participant speaking during a meeting."
-                className="aspect-video w-full border border-black/10 object-cover"
+                src="/images/luna/deck/ai-assists.png"
+                alt="Zoom meeting with four participants and the AI Companion panel, exactly as shown in the Luna portfolio deck."
+                className="aspect-[1.9/1] w-full object-cover"
               />
-            </div>
-            <div className="flex flex-col gap-4">
-              <h3 className="text-xl font-semibold text-purple-700">AI Participates</h3>
-              <p className="leading-relaxed text-black/70">Luna is part of the conversation, listening, understanding the context, and contributing in the moment.</p>
+              <figcaption className="mt-4 text-base leading-relaxed text-white/60">AI sits along the conversation. Summarizing answering and capturing.</figcaption>
+            </figure>
+
+            <figure className="flex flex-col">
+              <p className="mb-3 text-sm font-medium text-[#63c69b]">AI Participates</p>
               <video
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-07-23%20at%204.59.50%E2%80%AFPM%20%283%29-VI8zMReqqJtebhp9lHAua80Tjsh2Og.mp4"
                 aria-label="Luna Live participating in a real Google Meet call."
@@ -7021,15 +7014,18 @@ function LunaCaseStudy() {
                 loop
                 muted
                 playsInline
-                controls
                 preload="metadata"
-                className="aspect-video w-full border border-purple-200 bg-black object-contain"
+                className="aspect-[1.9/1] w-full bg-black object-cover"
               />
-            </div>
+              <figcaption className="mt-4 text-base leading-relaxed text-white/60">Luna is part of the conversation, listening, understanding the context and contributing in the moment.</figcaption>
+            </figure>
           </div>
-          <p className="mt-10 text-xl font-medium text-black/85">The shift wasn&apos;t just where AI appeared. It was what AI became.</p>
-          <p className="mt-3 text-xl text-purple-700">Luna didn&apos;t belong beside the meeting — she belonged inside of it.</p>
-        </div>
+
+          <div className="mt-7 border border-[#9369e8] bg-[#1a1431] px-5 py-6 text-lg italic leading-relaxed text-white/80 md:px-7">
+            <p>The shift wasn&apos;t just where AI appeared. It was what AI became.</p>
+            <p>Luna didn&apos;t belong beside the meeting — she belonged inside of it.</p>
+          </div>
+        </section>
       </div>
 
       <div className="bg-neutral-50 py-16">
