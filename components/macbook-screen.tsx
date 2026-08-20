@@ -6936,7 +6936,7 @@ function LunaCaseStudy() {
 
       {/* Designing Non-Verbal Communication */}
       <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Designing Non-Verbal Communication</h2>
           <p className="mt-2 text-lg text-[#55c997]">Humans constantly signal intent before speaking.</p>
           <div className="mt-8 grid items-center gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-12">
@@ -6977,7 +6977,7 @@ function LunaCaseStudy() {
       </div>
 
       <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">From Meeting Tool to Teammate</h2>
           <p className="mt-2 text-base text-white/60 md:text-lg">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
 
@@ -7016,7 +7016,7 @@ function LunaCaseStudy() {
       </div>
 
       <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Luna&apos;s Build Requirements</h2>
           <p className="mt-3 max-w-4xl text-lg leading-relaxed text-white/65">For Luna to feel like a teammate, she couldn&apos;t live in a side window. She had to appear in the meeting itself, as a participant everyone can see.</p>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
@@ -7028,51 +7028,55 @@ function LunaCaseStudy() {
 
       {/* Directing the System */}
       <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Directing the System</h2>
-          <div className="mt-8 grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
-            <div className="relative pb-10 pr-5 sm:pb-14 sm:pr-12">
+          <div className="mt-10 flex flex-col gap-12">
+            <figure>
               <img
                 src="/images/luna/deck/directing-2.jpeg"
-                alt="Large AI-assisted implementation transcript showing Luna latency and deduplication improvements."
-                className="w-full rounded-2xl object-cover shadow-2xl"
+                alt="AI-assisted implementation transcript showing Luna latency and deduplication improvements."
+                className="h-auto w-full object-contain"
               />
+            </figure>
+            <figure>
               <img
                 src="/images/luna/deck/directing-3.jpeg"
                 alt="Implementation transcript describing Luna Hub auto-connection and interface changes."
-                className="absolute -bottom-1 left-0 w-[34%] rounded-2xl border border-white/10 shadow-2xl sm:-left-4"
+                className="mx-auto h-auto w-full max-w-4xl object-contain"
               />
+            </figure>
+            <figure>
               <img
                 src="/images/luna/deck/directing-4.jpeg"
                 alt="Implementation transcript describing automatic Google Meet detection and guest joining."
-                className="absolute -right-1 -top-7 w-[31%] rounded-2xl border border-white/10 shadow-2xl"
+                className="mx-auto h-auto w-full max-w-4xl object-contain"
               />
-            </div>
-            <div>
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
-                <video
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
-                  aria-label="Live recording of Luna being deployed into Google Meet."
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                  preload="metadata"
-                  className="aspect-video w-full object-contain"
-                />
-              </div>
-              <p className="mt-5 text-base text-white/85">Natural language became a design medium.</p>
-              <p className="mt-1 text-sm leading-relaxed text-white/55">I directed AI to rapidly prototype, validate, and refine interaction behavior.</p>
-            </div>
+            </figure>
+            <figure>
+              <video
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
+                aria-label="Live recording of Luna being deployed into Google Meet."
+                autoPlay
+                loop
+                muted
+                playsInline
+                controls
+                preload="metadata"
+                className="aspect-video w-full bg-black object-contain"
+              />
+              <figcaption className="mt-5">
+                <p className="text-lg font-medium text-black">Natural language became a design medium.</p>
+                <p className="mt-1 text-base leading-relaxed text-black/60">I directed AI to rapidly prototype, validate, and refine interaction behavior.</p>
+              </figcaption>
+            </figure>
           </div>
-          <p className="mt-8 bg-[#3a2d6b] px-5 py-3 text-center text-sm text-white/85">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat. Hundreds of micro-decisions &mdash; every one was a design call.</p>
+          <p className="mt-10 bg-purple-50 px-5 py-4 text-center text-base text-black/75">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat. Hundreds of micro-decisions &mdash; every one was a design call.</p>
         </section>
       </div>
 
       {/* Bridging Design and Engineering */}
       <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
+        <section className="luna-light-slide mx-auto max-w-6xl bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
           <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Bridging Design and Engineering</h2>
           <p className="mt-4 max-w-5xl text-lg leading-relaxed text-white/60">Luna runs locally while Google Meet runs inside Chrome. Understanding how those environments communicate was essential to designing a real meeting experience.</p>
           <div className="mt-8 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
@@ -7127,19 +7131,17 @@ function LunaCaseStudy() {
           <p className="text-white/60 text-center mb-8 max-w-2xl mx-auto leading-relaxed">
             Live capture &mdash; listening, reasoning, and speaking states in motion during a real call.
           </p>
-          <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black">
-            <video
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-07-23%20at%204.59.50%E2%80%AFPM%20%283%29-VI8zMReqqJtebhp9lHAua80Tjsh2Og.mp4"
-              poster="/images/luna/demo-poster.png"
-              controls
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-auto"
-              aria-label="Screen recording of Luna 3.0 running live in a Google Meet call, changing state as she listens and speaks."
-            />
-          </div>
+          <video
+            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-07-23%20at%204.59.50%E2%80%AFPM%20%283%29-VI8zMReqqJtebhp9lHAua80Tjsh2Og.mp4"
+            poster="/images/luna/demo-poster.png"
+            controls
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-auto w-full bg-black"
+            aria-label="Screen recording of Luna 3.0 running live in a Google Meet call, changing state as she listens and speaks."
+          />
           <p className="text-white/40 text-xs text-center mt-3">Unmute to hear the live conversation between Luna and Charity.</p>
         </div>
       </div>
