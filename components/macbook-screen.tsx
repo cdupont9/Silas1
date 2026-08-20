@@ -6984,6 +6984,14 @@ function LunaCaseStudy() {
               <p className="leading-relaxed text-white/80">Her presence and state became part of the shared meeting context. Users could see where she was, what state she was in, and when she was participating without leaving the call.</p>
             </div>
           </div>
+          <figure className="mb-10 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+            <img
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-GazXQuLQqaPLwRiD2QkArBBcnQ1npV.jpeg"
+              alt="A professional participant speaking in a bright meeting room, representing the human conversation Luna joins."
+              className="aspect-video w-full object-cover"
+            />
+            <figcaption className="px-5 py-4 text-sm leading-relaxed text-white/60">The meeting remains human first. Luna&apos;s role is to make her presence understandable without pulling attention away from the conversation.</figcaption>
+          </figure>
           <div className="rounded-2xl bg-white p-6 text-black mb-10"><p className="text-xs font-semibold uppercase tracking-wider text-purple-600 mb-2">What it solved</p><p className="text-lg font-medium">Fewer steps. Less context switching. Less ambiguity.</p><p className="mt-2 text-black/65">Luna&rsquo;s behavioral presence became legible in the same place the work was happening.</p></div>
           <p className="border-l-2 border-purple-400 pl-5 text-xl leading-relaxed text-purple-100">Product principle: AI presence should reduce cognitive load, not create another place to look.</p>
         </div>
@@ -7019,7 +7027,11 @@ function LunaCaseStudy() {
           <div className="mb-8">
             <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
               <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
-                <img src="/images/luna/pivot-inside.png" alt="Integrated experience: Luna appears as a purple orb tile directly inside a real Google Meet call alongside the human participants." className="w-full h-auto" />
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%281%29-euNxjCUct9mdjQj3rnevzW2IPMH77n.gif"
+                  alt="Animated screen recording of the Quick Portal deploying Luna into an active Google Meet call, where her orb appears as a visible participant."
+                  className="w-full h-auto"
+                />
               </div>
               <p className="text-green-600 font-semibold mb-2 flex items-center gap-2"><Check className="w-4 h-4" /> Integrated Experience</p>
               <p className="text-black/70 text-sm leading-relaxed">The interaction model was moved directly into Google Meet, allowing Luna to become part of the conversation instead of another application.</p>
