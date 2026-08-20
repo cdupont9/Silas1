@@ -7020,21 +7020,27 @@ function LunaCaseStudy() {
       </div>
 
       {/* 04 Integrated Experience */}
-      <div className="bg-neutral-50 py-16">
-        <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">04 · Integrated Experience</p>
-          <h2 className="text-3xl font-bold mb-4 text-black">Integrated experience</h2>
+      <div className="bg-[#0b0913] py-16 text-white">
+        <div className="mx-auto max-w-5xl px-6 md:px-10">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-purple-300">04 · Integrated Experience</p>
+          <h2 className="mb-8 text-3xl font-medium text-purple-300">Integrated experience</h2>
           <div className="mb-8">
-            <div className="bg-white rounded-2xl p-4 border border-green-100 shadow-sm">
-              <div className="rounded-xl overflow-hidden border border-black/10 bg-black mb-4">
-                <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%281%29-euNxjCUct9mdjQj3rnevzW2IPMH77n.gif"
-                  alt="Animated screen recording of the Quick Portal deploying Luna into an active Google Meet call, where her orb appears as a visible participant."
-                  className="w-full h-auto"
+            <div className="rounded-2xl border border-purple-400/20 bg-[#12101d] p-4 shadow-2xl">
+              <div className="mb-4 overflow-hidden rounded-xl border border-purple-400/20 bg-[#090711]">
+                <video
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
+                  aria-label="Screen recording of the Quick Portal deploying Luna into an active Google Meet call, where her orb appears as a visible participant."
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  controls
+                  preload="metadata"
+                  className="aspect-video w-full bg-[#090711] object-contain"
                 />
               </div>
-              <p className="text-green-600 font-semibold mb-2 flex items-center gap-2"><Check className="w-4 h-4" /> Integrated Experience</p>
-              <p className="text-black/70 text-sm leading-relaxed">The interaction model was moved directly into Google Meet, allowing Luna to become part of the conversation instead of another application.</p>
+              <p className="mb-2 flex items-center gap-2 font-semibold text-purple-200"><Check className="h-4 w-4 text-emerald-400" /> Integrated Experience</p>
+              <p className="text-sm leading-relaxed text-white/65">The interaction model was moved directly into Google Meet, allowing Luna to become part of the conversation instead of another application.</p>
             </div>
           </div>
           <div className="bg-gradient-to-br from-[#1a1030] to-[#2a1a4a] rounded-2xl p-8 text-white">
