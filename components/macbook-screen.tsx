@@ -7267,71 +7267,77 @@ function BankOfDanielCaseStudy() {
         </div>
       </section>
 
-      <section className="bg-white py-20 md:py-24">
-        <div className="mx-auto max-w-5xl px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The starting point</p>
-          <h2 className="mt-3 max-w-3xl text-balance text-3xl font-bold text-black md:text-4xl">The transaction is only the starting point.</h2>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-black/60">It doesn&apos;t tell me what I bought.</p>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {[
-              ["The purchase is disconnected", "The transaction contains payment information, but not the item-level details behind the purchase."],
-              ["The receipt lives somewhere else", "Customers leave the banking app to find receipts, initiate returns, or check what they purchased."],
-              ["The information has to be reconstructed", "When customers want to buy something again or resolve a purchase, they find the same information across multiple places."],
-            ].map(([title, body]) => <div key={title} className="border-t border-black/10 pt-5"><h3 className="font-semibold text-black">{title}</h3><p className="mt-2 text-sm leading-relaxed text-black/60">{body}</p></div>)}
-          </div>
-          <figure className="mt-12 overflow-hidden rounded-2xl bg-purple-50 px-4 pt-10 md:px-12 md:pt-14">
-            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="mx-auto block w-full max-w-3xl object-contain" />
-          </figure>
-          <p className="mt-5 text-center text-sm font-medium text-[#3a1a63]">Today, tapping a transaction shows only the date, type, and card number.</p>
-        </div>
-      </section>
-
-      <section className="bg-neutral-50 py-20 md:py-24">
-        <div className="mx-auto max-w-5xl px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">Connected purchase history</p>
-          <h2 className="mt-3 max-w-3xl text-balance text-3xl font-bold text-black md:text-4xl">Find the purchase behind the transaction.</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-black/60">Search by merchant or item, or open a transaction directly. The purchase details are connected to the transaction.</p>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="border-t border-black/10 pt-5"><h3 className="font-semibold">Search by what you remember</h3><p className="mt-2 text-sm leading-relaxed text-black/60">Search by merchant or item instead of remembering when the transaction occurred.</p></div>
-            <div className="border-t border-black/10 pt-5"><h3 className="font-semibold">Open any transaction</h3><p className="mt-2 text-sm leading-relaxed text-black/60">Tap a transaction as you always have — date, type, and card number are still there.</p></div>
-            <div className="border-t border-black/10 pt-5"><h3 className="font-semibold">The receipt is attached</h3><p className="mt-2 text-sm leading-relaxed text-black/60">Scroll down on the transaction to see the itemized receipt, pulled in from the merchant.</p></div>
-          </div>
-          <figure className="mt-12 overflow-hidden rounded-2xl bg-white px-4 pt-10 shadow-sm ring-1 ring-black/5 md:px-12 md:pt-14">
-            <img src="/images/bank-of-daniel/direct-search.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="mx-auto block w-full max-w-3xl object-contain" />
-          </figure>
-        </div>
-      </section>
-
-      <section className="bg-white py-20 md:py-24">
-        <div className="mx-auto max-w-5xl px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">From history to action</p>
-          <h2 className="mt-3 max-w-3xl text-balance text-3xl font-bold text-black md:text-4xl">Keep shopping lists connected to your purchases.</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-black/60">Saved items live in one place and remain connected to the transactions they came from.</p>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 md:grid-cols-4">
-            {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title} className="border-t border-black/10 pt-5"><h3 className="font-semibold">{title}</h3><p className="mt-2 text-sm leading-relaxed text-black/60">{body}</p></div>)}
-          </div>
-          <figure className="mt-12 rounded-2xl bg-purple-50 px-4 py-10 md:px-10 md:py-14">
-            <div className="mx-auto flex max-w-4xl items-center justify-center gap-3 md:gap-8" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
-              <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized purchase receipt" className="min-w-0 flex-1 object-contain" />
-              <img src="/images/bank-of-daniel/direct-add-list.png" alt="Add an item to a saved shopping list" className="min-w-0 flex-1 object-contain" />
+      <section className="border-t border-black/5 bg-white px-6 py-14 md:px-10 md:py-16">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[0.86fr_1.14fr] md:gap-14">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The starting point</p>
+            <h2 className="mt-3 text-balance text-3xl font-bold text-black md:text-4xl">The transaction is only the starting point.</h2>
+            <p className="mt-4 text-lg leading-relaxed text-black/60">It doesn&apos;t tell me what I bought.</p>
+            <div className="mt-8 flex flex-col gap-5">
+              {[
+                ["The purchase is disconnected", "The transaction contains payment information, but not the item-level details behind the purchase."],
+                ["The receipt lives somewhere else", "Customers leave the banking app to find receipts, initiate returns, or check what they purchased."],
+                ["The information has to be reconstructed", "When customers want to buy something again or resolve a purchase, they find the same information across multiple places."],
+              ].map(([title, body]) => <div key={title} className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold text-black">{title}</h3><p className="mt-1 text-sm leading-relaxed text-black/55">{body}</p></div>)}
             </div>
+            <p className="mt-7 text-sm font-medium text-[#3a1a63]">Today, tapping a transaction shows only the date, type, and card number.</p>
+          </div>
+          <figure className="relative h-80 overflow-hidden rounded-2xl bg-purple-50 md:h-[430px]">
+            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="absolute left-1/2 top-0 w-[112%] max-w-none -translate-x-1/2 -translate-y-[15%] object-contain" />
           </figure>
         </div>
       </section>
 
-      <section className="bg-neutral-50 py-20 md:py-24">
-        <div className="mx-auto max-w-5xl px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The reusable system</p>
-          <h2 className="mt-3 max-w-3xl text-balance text-3xl font-bold text-black md:text-4xl">Build lists for what you&apos;ll buy next.</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-black/60">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div className="border-t border-black/10 pt-5"><h3 className="font-semibold text-black">Create a list</h3><p className="mt-2 text-sm leading-relaxed text-black/60">Start with any saved item and organize it around a need, store, or occasion.</p></div>
-            <div className="border-t border-black/10 pt-5"><h3 className="font-semibold text-black">Make it recurring</h3><p className="mt-2 text-sm leading-relaxed text-black/60">Reuse a list for routines like weekly grocery shopping.</p></div>
-            <div className="border-t border-black/10 pt-5"><h3 className="font-semibold text-black">Organize by purpose</h3><p className="mt-2 text-sm leading-relaxed text-black/60">Keep lists separate by store, project, or occasion.</p></div>
-          </div>
-          <figure className="mt-12 overflow-hidden rounded-2xl bg-white px-4 pt-10 shadow-sm ring-1 ring-black/5 md:px-12 md:pt-14">
-            <img src="/images/bank-of-daniel/direct-lists-wide.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="mx-auto block w-full max-w-4xl object-contain" />
+      <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[1.14fr_0.86fr] md:gap-14">
+          <figure className="relative h-80 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 md:h-[430px]">
+            <img src="/images/bank-of-daniel/direct-search.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="absolute left-1/2 top-0 w-[112%] max-w-none -translate-x-1/2 -translate-y-[15%] object-contain" />
           </figure>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">Connected purchase history</p>
+            <h2 className="mt-3 text-balance text-3xl font-bold text-black md:text-4xl">Find the purchase behind the transaction.</h2>
+            <p className="mt-4 text-lg leading-relaxed text-black/60">Search by merchant or item, or open a transaction directly. The purchase details are connected to the transaction.</p>
+            <div className="mt-8 flex flex-col gap-5">
+              <div className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold">Search by what you remember</h3><p className="mt-1 text-sm leading-relaxed text-black/55">Search by merchant or item instead of remembering when the transaction occurred.</p></div>
+              <div className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold">Open any transaction</h3><p className="mt-1 text-sm leading-relaxed text-black/55">Tap a transaction as you always have — date, type, and card number are still there.</p></div>
+              <div className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold">The receipt is attached</h3><p className="mt-1 text-sm leading-relaxed text-black/55">Scroll down on the transaction to see the itemized receipt, pulled in from the merchant.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-black/5 bg-white px-6 py-14 md:px-10 md:py-16">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[0.86fr_1.14fr] md:gap-14">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">From history to action</p>
+            <h2 className="mt-3 text-balance text-3xl font-bold text-black md:text-4xl">Keep shopping lists connected to your purchases.</h2>
+            <p className="mt-4 text-lg leading-relaxed text-black/60">Saved items live in one place and remain connected to the transactions they came from.</p>
+            <div className="mt-8 grid gap-x-6 gap-y-5 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2">
+              {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title} className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold">{title}</h3><p className="mt-1 text-sm leading-relaxed text-black/55">{body}</p></div>)}
+            </div>
+          </div>
+          <figure className="relative h-80 overflow-hidden rounded-2xl bg-purple-50 md:h-[430px]" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
+            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized purchase receipt" className="absolute left-0 top-0 w-[70%] max-w-none -translate-x-[8%] -translate-y-[13%] object-contain" />
+            <img src="/images/bank-of-daniel/direct-add-list.png" alt="Add an item to a saved shopping list" className="absolute right-0 top-0 w-[70%] max-w-none translate-x-[8%] -translate-y-[13%] object-contain" />
+          </figure>
+        </div>
+      </section>
+
+      <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
+        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[1.14fr_0.86fr] md:gap-14">
+          <figure className="relative h-80 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 md:h-[430px]">
+            <img src="/images/bank-of-daniel/direct-lists-wide.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="absolute left-1/2 top-1/2 w-[115%] max-w-none -translate-x-1/2 -translate-y-1/2 object-contain" />
+          </figure>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The reusable system</p>
+            <h2 className="mt-3 text-balance text-3xl font-bold text-black md:text-4xl">Build lists for what you&apos;ll buy next.</h2>
+            <p className="mt-4 text-lg leading-relaxed text-black/60">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
+            <div className="mt-8 flex flex-col gap-5">
+              <div className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold text-black">Create a list</h3><p className="mt-1 text-sm leading-relaxed text-black/55">Start with any saved item and organize it around a need, store, or occasion.</p></div>
+              <div className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold text-black">Make it recurring</h3><p className="mt-1 text-sm leading-relaxed text-black/55">Reuse a list for routines like weekly grocery shopping.</p></div>
+              <div className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold text-black">Organize by purpose</h3><p className="mt-1 text-sm leading-relaxed text-black/55">Keep lists separate by store, project, or occasion.</p></div>
+            </div>
+          </div>
         </div>
       </section>
 
