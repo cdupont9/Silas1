@@ -7053,10 +7053,10 @@ function LunaCaseStudy() {
                   aria-label="Live recording of Luna being deployed into Google Meet."
                   autoPlay
                   loop
-                  muted
-                  playsInline
-                  controls
-                  preload="metadata"
+  muted
+  playsInline
+  disablePictureInPicture
+  preload="metadata"
                   className="aspect-video w-full object-contain"
                 />
               </div>
