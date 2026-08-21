@@ -6936,7 +6936,7 @@ function LunaCaseStudy() {
               <p className="mt-5 max-w-xl text-base leading-relaxed text-black/60">Signaled intent lowers cognitive load. Luna restores the missing nonverbal cues through motion, color, and animation.</p>
             </div>
             <img
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-GazXQuLQqaPLwRiD2QkArBBcnQ1npV.jpeg"
+              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-6OxJq8UpQrJWOkfJrwW61e7lfx3kAT.jpeg"
               alt="A woman using subtle nonverbal communication during a meeting."
               className="aspect-video w-full rounded-2xl border border-black/10 object-cover shadow-sm"
             />
