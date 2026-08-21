@@ -6861,9 +6861,9 @@ function LunaCaseStudy() {
             <thead>
               <tr className="bg-neutral-50 text-left">
                 <th className="px-5 py-4 font-semibold text-black/60">Capabilities</th>
-                <th className="px-5 py-4 font-semibold text-black/60">Zoom AI</th>
-                <th className="px-5 py-4 font-semibold text-black/60">Microsoft Copilot</th>
-                <th className="rounded-t-xl border-x-2 border-t-2 border-purple-500 bg-purple-50 px-5 py-4 font-semibold text-purple-700">Project Luna</th>
+                <th className="px-5 py-4 text-center font-semibold text-black/60">Zoom AI</th>
+                <th className="px-5 py-4 text-center font-semibold text-black/60">Microsoft Copilot</th>
+                <th className="rounded-t-xl border-x-2 border-t-2 border-purple-500 bg-purple-50 px-5 py-4 text-center font-semibold text-purple-700">Project Luna</th>
               </tr>
             </thead>
             <tbody>
@@ -6875,9 +6875,9 @@ function LunaCaseStudy() {
               ].map(([label, zoom, copilot, luna], index, rows) => (
                 <tr key={label as string}>
                   <td className="border-t border-black/5 px-5 py-4 font-medium text-black">{label as string}</td>
-                  <td className="border-t border-black/5 px-5 py-4">{zoom ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
-                  <td className="border-t border-black/5 px-5 py-4">{copilot ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
-                  <td className={`border-x-2 border-t border-purple-500 bg-purple-50 px-5 py-4 ${index === rows.length - 1 ? "rounded-b-xl border-b-2" : ""}`}>{luna ? <Check className="h-4 w-4 text-green-600" /> : <X className="h-4 w-4 text-red-500" />}</td>
+                  <td className="border-t border-black/5 px-5 py-4 text-center">{zoom ? <Check className="mx-auto h-4 w-4 text-green-600" /> : <X className="mx-auto h-4 w-4 text-red-500" />}</td>
+                  <td className="border-t border-black/5 px-5 py-4 text-center">{copilot ? <Check className="mx-auto h-4 w-4 text-green-600" /> : <X className="mx-auto h-4 w-4 text-red-500" />}</td>
+                  <td className={`border-x-2 border-t border-purple-500 bg-purple-50 px-5 py-4 text-center ${index === rows.length - 1 ? "rounded-b-xl border-b-2" : ""}`}>{luna ? <Check className="mx-auto h-4 w-4 text-green-600" /> : <X className="mx-auto h-4 w-4 text-red-500" />}</td>
                 </tr>
               ))}
             </tbody>
