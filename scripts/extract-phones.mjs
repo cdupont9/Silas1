@@ -4,10 +4,11 @@ const require = createRequire(import.meta.url)
 const sharp = require(path.resolve("node_modules/.pnpm/sharp@0.34.5/node_modules/sharp"))
 
 // crop boxes read from the grid overlays (pixels, 1920x1080 source)
+// generous on the right — keyed background becomes transparent so extra width is harmless
 const CROPS = {
-  "20": { left: 1045, top: 50, width: 465, height: 790 },
-  "21": { left: 835, top: 218, width: 668, height: 566 },
-  "22": { left: 835, top: 98, width: 672, height: 715 },
+  "20": { left: 1060, top: 40, width: 560, height: 800 },
+  "21": { left: 835, top: 200, width: 770, height: 600 },
+  "22": { left: 820, top: 80, width: 785, height: 740 },
 }
 
 const pages = process.argv.slice(2)
@@ -23,11 +24,11 @@ for (const p of list) {
   for (let i = 0; i < data.length; i += channels) {
     const r = data[i], g = data[i + 1], b = data[i + 2]
     const bright = r + g + b
-    // smooth ramp: fully transparent below 140, opaque above 300
+    // smooth ramp: transparent for near-black background, opaque for phone content
     let a
-    if (bright <= 140) a = 0
-    else if (bright >= 300) a = 255
-    else a = Math.round(((bright - 140) / 160) * 255)
+    if (bright <= 120) a = 0
+    else if (bright >= 210) a = 255
+    else a = Math.round(((bright - 120) / 90) * 255)
     data[i + 3] = a
   }
   const outDir = "public/images/bank-of-daniel"
