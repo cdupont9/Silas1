@@ -1348,7 +1348,7 @@ const messageText = mobileInput.trim()
   <img
     src={project.icon}
     alt={project.title}
-    className={`h-14 w-14 shadow ${project.id === 'luna' ? 'rounded-full object-contain' : 'rounded-xl object-cover'}`}
+    className={`h-14 w-14 ${project.id === 'luna' ? 'object-contain drop-shadow-[0_4px_14px_rgba(139,92,246,0.55)]' : 'rounded-xl object-cover shadow'}`}
   />
   <div className="flex-1 text-left">
   <h3 className="font-bold text-gray-900">{project.title}</h3>
