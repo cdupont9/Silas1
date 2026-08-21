@@ -178,7 +178,7 @@ const caseStudies = {
   },
   luna: {
     title: "Luna",
-    subtitle: "Designing Behavior for Agentic AI",
+    subtitle: "AI Participant",
     hero: "Designing Behavior for Agentic AI",
     overview: "Luna is an interaction model for making AI behavior understandable, predictable, and trustworthy. It translates invisible states into human-readable signals through motion, color, timing, and animation.",
     role: "End-to-End Agentic UX Designer",
@@ -1337,7 +1337,7 @@ const messageText = mobileInput.trim()
   <div className="flex flex-col gap-3">
   {[
   { id: 'silas', title: 'Silas', subtitle: 'Integrated AI Companion', icon: SILAS_ICON },
-  { id: 'luna', title: 'Luna', subtitle: 'Behavior for Agentic AI', icon: '/images/luna/hero-orb.png' },
+  { id: 'luna', title: 'Luna', subtitle: 'AI Participant', icon: '/images/luna/hero-orb.png' },
   { id: 'bankofdaniel', title: 'Bank of Daniel', subtitle: 'Digital Receipt', icon: '/images/bank-of-daniel/logo.jpeg' },
   ].map((project) => (
   <button
@@ -1345,7 +1345,11 @@ const messageText = mobileInput.trim()
   onClick={() => { setMobileCaseStudy(project.id); setMobileScreen('caseStudy'); }}
   className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
   >
-  <img src={project.icon} alt={project.title} className="h-14 w-14 rounded-xl object-cover shadow" />
+  <img
+    src={project.icon}
+    alt={project.title}
+    className={`h-14 w-14 shadow ${project.id === 'luna' ? 'rounded-full object-contain' : 'rounded-xl object-cover'}`}
+  />
   <div className="flex-1 text-left">
   <h3 className="font-bold text-gray-900">{project.title}</h3>
   <p className="text-gray-500 text-sm">{project.subtitle}</p>
@@ -1356,29 +1360,6 @@ const messageText = mobileInput.trim()
   </div>
   </div>
 
-            {/* Luna preview */}
-            <div className="mx-4 mt-3">
-              <div className="w-full bg-white/85 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg">
-                <img src="/images/luna/hero-orb.png" alt="Luna" className="h-14 w-14 object-contain opacity-80" />
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-gray-900">Luna</h3>
-                  <p className="text-gray-500 text-sm">Designing Behavior for Agentic AI</p>
-                </div>
-                <span className="rounded-full bg-purple-100 px-2.5 py-1 text-[11px] font-semibold text-purple-700">Coming Soon</span>
-              </div>
-            </div>
-
-            {/* Bank of Daniel preview */}
-            <div className="mx-4 mt-3">
-              <div className="w-full bg-white/85 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg">
-                <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel" className="h-14 w-14 rounded-xl object-contain shadow opacity-90 bg-[#3a1a63]" />
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-gray-900">Bank of Daniel</h3>
-                  <p className="text-gray-500 text-sm">Stewardship and Trust</p>
-                </div>
-                <span className="rounded-full bg-purple-100 px-2.5 py-1 text-[11px] font-semibold text-purple-700">Coming Soon</span>
-              </div>
-            </div>
 
             {/* Quick Access - Icons Only */}
             <div className="mx-4 mt-6 mb-6">
