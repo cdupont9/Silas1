@@ -133,7 +133,7 @@ const ABOUT_BIO = "Charity Dupont is an American agentic UX designer known for s
 const ABOUT_NOTES_BIO = `${ABOUT_BIO}\n\nBefore moving into UX design, Charity was an educator who taught fourth grade. Her classroom experience shaped how she approaches complex ideas, human behavior, and the design of experiences that feel clear and intuitive.\n\nOriginally from Chicago, Illinois, Charity now lives in New Jersey.`
 
 // Resume PDF URL
-const RESUME_PDF_URL = "https://blobs.vusercontent.net/blob/222ae9bd-abc9-40f6-887f-1215096ab32a-Charity%20DuPont%20-May%202026%20.pdf"
+const RESUME_PDF_URL = "/Charity_Dupont_Resume.pdf"
 
 // Project Icons
 const TEAMMATE_ICON = "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Splash%20%281%29-KqSMOY1x1FPRUHBclJqGixgpztpco8.png"
@@ -2514,7 +2514,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                 </button>
                 <a 
                   href={RESUME_PDF_URL}
-                  download="Charity_DuPont_Resume_May_2026.pdf"
+                  download="Charity_Shanice_Dupont_Resume.pdf"
                   className="px-4 py-3 flex items-center gap-3 active:bg-gray-50 w-full text-left"
                 >
                   <div className="w-8 h-8 bg-[#34c759] rounded-lg flex items-center justify-center">
@@ -2582,7 +2582,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                       <h2 className="text-sm font-bold text-gray-900 border-b-2 border-blue-600 pb-1 mb-3">Experience</h2>
                       
                       <div className="mb-4">
-                        <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | Agentic UX Designer</h3>
+                        <h3 className="font-semibold text-gray-900 text-sm">Google DeepMind | AIUX | UX Designer</h3>
                         <p className="text-xs text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                         <p className="text-xs text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
                         <ul className="text-xs text-gray-700 space-y-1.5 list-disc list-outside ml-4">
@@ -5442,7 +5442,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   </a>
                   <a
                     href={RESUME_PDF_URL}
-                    download="Charity_DuPont_Resume_May_2026.pdf"
+                    download="Charity_Shanice_Dupont_Resume.pdf"
                     className="flex-1 px-3 py-2 bg-black/10 text-black/70 text-xs font-medium rounded-lg hover:bg-black/20 transition-colors flex items-center justify-center gap-2"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -6044,12 +6044,12 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         </div>
                         <div>
                           <h1 className="text-lg font-semibold text-gray-900">Charity DuPont - Resume</h1>
-                          <p className="text-xs text-gray-500">Agentic UX Designer at Google DeepMind</p>
+                          <p className="text-xs text-gray-500">UX Designer at Google DeepMind</p>
                         </div>
                       </div>
                       <a
                         href={RESUME_PDF_URL}
-                        download="Charity_DuPont_Resume_May_2026.pdf"
+                        download="Charity_Shanice_Dupont_Resume.pdf"
                         className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -6069,9 +6069,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                         <div className="flex-1">
                           {/* Name and Title */}
                           <div className="mb-6">
-                            <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | Agentic UX Designer</h1>
+                            <h1 className="text-2xl font-bold text-gray-900 mb-1">Charity DuPont | UX Designer</h1>
                             <p className="text-sm text-gray-700 leading-relaxed">
-                              Agentic UX Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
+                              UX/UI Designer specializing in Artificial Intelligence-First Design for agentic experiences. I bridge complex AI research with intuitive human experiences, driven by a philosophy of agentic coding and high-velocity innovation that respects the user&apos;s mental models.
                             </p>
                           </div>
                           
@@ -6081,7 +6081,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                             
                             <div className="mb-5">
                               <div className="flex justify-between items-start mb-1">
-                                <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | Agentic UX Designer</h3>
+                                <h3 className="font-semibold text-gray-900">Google DeepMind | AIUX | UX Designer</h3>
                               </div>
                               <p className="text-sm text-gray-500 mb-2">Feb 2025 - PRESENT</p>
                               <p className="text-sm text-gray-700 mb-2">Designed a vision for an Artificial Intelligence first assisted experience for collaboration, enabling AI agents to actively participate in human-to-human interactions by translating unstructured human intent into structured system responses, supporting more proactive, real-time collaboration.</p>
