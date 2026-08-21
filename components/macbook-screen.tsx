@@ -7267,54 +7267,67 @@ function BankOfDanielCaseStudy() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
-        <h2 className="text-3xl font-bold">The transaction is only the starting point.</h2>
-        <p className="mt-3 text-lg text-slate-600">It doesn&apos;t tell me what I bought.</p>
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {[
-            ["The purchase is disconnected", "The transaction contains payment information, but not the item-level details behind the purchase."],
-            ["The receipt lives somewhere else", "Customers leave the banking app to find receipts, initiate returns, or check what they purchased."],
-            ["The information has to be reconstructed", "When customers want to buy something again or resolve a purchase, they find the same information across multiple places."],
-          ].map(([title, body]) => <div key={title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6"><h3 className="font-bold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
-        </div>
-        <div className="mt-10 rounded-2xl border border-[#9dd9ea] bg-[#e9f6fb] p-7 text-[#0b3a67]">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#0b5f7a]">Today, tapping a transaction shows only</p>
-          <div className="mt-5 flex flex-col gap-3 text-lg font-medium md:flex-row md:items-center md:gap-5"><span>Transaction Date</span><span className="text-[#1769a5]">→</span><span>Transaction Type</span><span className="text-[#1769a5]">→</span><span>Card Number</span></div>
-        </div>
-      </section>
-
-      <section className="bg-slate-50 px-6 py-16 md:px-10">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="text-3xl font-bold">Find the purchase behind the transaction.</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Search by merchant or item, or open a transaction directly. The purchase details are connected to the transaction.</p>
-          <img src="/images/bank-of-daniel/purchase-search-white.png" alt="Bank of Daniel app showing a purchase search by item name." className="mx-auto mt-12 block w-full max-w-4xl object-contain" />
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <div><h3 className="font-bold">Search by what you remember</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Search by merchant or item instead of remembering when the transaction occurred.</p></div>
-            <div><h3 className="font-bold">Open any transaction</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Tap a transaction as you always have — date, type, and card number are still there.</p></div>
-            <div><h3 className="font-bold">The receipt is attached</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Scroll down on the transaction to see the itemized receipt, pulled in from the merchant.</p></div>
+      <section className="px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+          <div>
+            <h2 className="text-balance text-3xl font-bold md:text-4xl">The transaction is only the starting point.</h2>
+            <p className="mt-3 text-lg text-slate-600">It doesn&apos;t tell me what I bought.</p>
+            <div className="mt-8 flex flex-col gap-6">
+              {[
+                ["The purchase is disconnected", "The transaction contains payment information, but not the item-level details behind the purchase."],
+                ["The receipt lives somewhere else", "Customers leave the banking app to find receipts, initiate returns, or check what they purchased."],
+                ["The information has to be reconstructed", "When customers want to buy something again or resolve a purchase, they find the same information across multiple places."],
+              ].map(([title, body]) => <div key={title}><h3 className="font-bold text-slate-950">{title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
+            </div>
+            <div className="mt-8 border-t border-slate-200 pt-6 text-[#3a1a63]">
+              <p className="text-xs font-semibold uppercase tracking-wider">Today, tapping a transaction shows only</p>
+              <p className="mt-3 text-sm font-medium leading-relaxed">Transaction Date · Transaction Type · Card Number</p>
+            </div>
           </div>
+          <img src="/images/bank-of-daniel/transaction-starting-point-white.png" alt="Bank of Daniel transaction details screen showing the limited information available today." className="block w-full object-contain" />
         </div>
       </section>
 
-      <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
-        <h2 className="text-3xl font-bold">Keep shopping lists connected to your purchases.</h2>
-        <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Saved items live in one place and remain connected to the transactions they came from.</p>
-        <img src="/images/bank-of-daniel/connected-purchase-white.png" alt="Bank of Daniel transaction receipt and add-to-shopping-list screens." className="mx-auto mt-12 block w-full max-w-4xl object-contain" />
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title}><h3 className="font-bold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
-        </div>
-      </section>
-
-      <section className="bg-neutral-50 px-6 py-16 md:px-10">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="text-3xl font-bold text-slate-950">Build lists for what you&apos;ll buy next.</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
-          <img src="/images/bank-of-daniel/shopping-lists-white.png" alt="Bank of Daniel shopping-list management and recurring-list screens." className="mx-auto mt-12 block w-full max-w-4xl object-contain" />
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            <div><h3 className="font-bold text-slate-950">Create a list</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Start with any saved item and organize it around a need, store, or occasion.</p></div>
-            <div><h3 className="font-bold text-slate-950">Make it recurring</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Reuse a list for routines like weekly grocery shopping.</p></div>
-            <div><h3 className="font-bold text-slate-950">Organize by purpose</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Keep lists separate by store, project, or occasion.</p></div>
+      <section className="bg-neutral-50 px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+          <div>
+            <h2 className="text-balance text-3xl font-bold md:text-4xl">Find the purchase behind the transaction.</h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">Search by merchant or item, or open a transaction directly. The purchase details are connected to the transaction.</p>
+            <div className="mt-8 flex flex-col gap-6">
+              <div><h3 className="font-bold">Search by what you remember</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Search by merchant or item instead of remembering when the transaction occurred.</p></div>
+              <div><h3 className="font-bold">Open any transaction</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Tap a transaction as you always have — date, type, and card number are still there.</p></div>
+              <div><h3 className="font-bold">The receipt is attached</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Scroll down on the transaction to see the itemized receipt, pulled in from the merchant.</p></div>
+            </div>
           </div>
+          <img src="/images/bank-of-daniel/find-purchase-white.png" alt="Bank of Daniel screens for searching purchases and opening an itemized transaction receipt." className="block w-full object-contain" />
+        </div>
+      </section>
+
+      <section className="px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+          <div>
+            <h2 className="text-balance text-3xl font-bold md:text-4xl">Keep shopping lists connected to your purchases.</h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">Saved items live in one place and remain connected to the transactions they came from.</p>
+            <div className="mt-8 flex flex-col gap-6">
+              {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title}><h3 className="font-bold">{title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
+            </div>
+          </div>
+          <img src="/images/bank-of-daniel/connected-purchase-white.png" alt="Bank of Daniel transaction receipt and add-to-shopping-list screens." className="block w-full object-contain" />
+        </div>
+      </section>
+
+      <section className="bg-neutral-50 px-6 py-16 md:px-10 md:py-20">
+        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+          <div>
+            <h2 className="text-balance text-3xl font-bold text-slate-950 md:text-4xl">Build lists for what you&apos;ll buy next.</h2>
+            <p className="mt-4 text-lg leading-relaxed text-slate-600">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
+            <div className="mt-8 flex flex-col gap-6">
+              <div><h3 className="font-bold text-slate-950">Create a list</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Start with any saved item and organize it around a need, store, or occasion.</p></div>
+              <div><h3 className="font-bold text-slate-950">Make it recurring</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Reuse a list for routines like weekly grocery shopping.</p></div>
+              <div><h3 className="font-bold text-slate-950">Organize by purpose</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Keep lists separate by store, project, or occasion.</p></div>
+            </div>
+          </div>
+          <img src="/images/bank-of-daniel/build-lists-white.png" alt="Bank of Daniel shopping-list management and recurring-list screens." className="block w-full object-contain" />
         </div>
       </section>
 
