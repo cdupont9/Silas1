@@ -7316,9 +7316,9 @@ function BankOfDanielCaseStudy() {
               {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title} className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold">{title}</h3><p className="mt-1 text-sm leading-relaxed text-black/55">{body}</p></div>)}
             </div>
           </div>
-          <figure className="grid h-[420px] grid-cols-2 items-center gap-0 md:h-[540px]" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
-            <img src="/images/bank-of-daniel/direct-receipt-trimmed.png" alt="Bank of Daniel itemized purchase receipt" className="h-full w-full scale-[1.35] object-contain" />
-            <img src="/images/bank-of-daniel/direct-add-list-trimmed.png" alt="Add an item to a saved shopping list" className="h-full w-full scale-[1.35] object-contain" />
+          <figure className="grid h-[420px] translate-x-3 grid-cols-2 items-center gap-0 md:h-[540px] md:translate-x-10" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
+            <img src="/images/bank-of-daniel/direct-receipt-trimmed.png" alt="Bank of Daniel itemized purchase receipt" className="h-full w-full scale-[1.42] object-contain" />
+            <img src="/images/bank-of-daniel/direct-add-list-trimmed.png" alt="Add an item to a saved shopping list" className="h-full w-full scale-[1.42] object-contain" />
           </figure>
         </div>
       </section>
