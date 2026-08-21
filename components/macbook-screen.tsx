@@ -179,7 +179,7 @@ const caseStudies = {
   luna: {
     title: "Luna",
     subtitle: "AI Participant",
-    hero: "Designing Behavior for Agentic AI",
+    hero: "Luna AI Participant",
     overview: "Luna is an interaction model for making AI behavior understandable, predictable, and trustworthy. It translates invisible states into human-readable signals through motion, color, timing, and animation.",
     role: "End-to-End Agentic UX Designer",
     timeline: "3-Day Sprint",
@@ -653,9 +653,10 @@ export function MacBookScreen() {
       const raw = localStorage.getItem(SESSION_STORAGE_KEY)
       if (raw) {
         const s = JSON.parse(raw)
-        if (s.screenState) setScreenState(s.screenState)
-        if (s.mobileScreen) setMobileScreen(s.mobileScreen)
-        if ('mobileCaseStudy' in s) setMobileCaseStudy(s.mobileCaseStudy)
+        // A full refresh always returns visitors to Charity's welcome screen.
+        setScreenState('login')
+        setMobileScreen('lock')
+        setMobileCaseStudy(null)
         if (s.backgroundId) {
           const bg = BACKGROUND_OPTIONS.find((b) => b.id === s.backgroundId)
           if (bg) setSelectedBackground(bg)
@@ -1348,7 +1349,7 @@ const messageText = mobileInput.trim()
   <img
     src={project.icon}
     alt={project.title}
-    className={`h-14 w-14 ${project.id === 'luna' ? 'object-contain drop-shadow-[0_4px_14px_rgba(139,92,246,0.55)]' : 'rounded-xl object-cover shadow'}`}
+    className={`h-14 w-14 ${project.id === 'luna' ? 'object-contain [clip-path:circle(49%)] drop-shadow-[0_4px_14px_rgba(139,92,246,0.55)]' : 'rounded-xl object-cover shadow'}`}
   />
   <div className="flex-1 text-left">
   <h3 className="font-bold text-gray-900">{project.title}</h3>
@@ -2062,9 +2063,13 @@ const messageText = mobileInput.trim()
 
             {/* Hero with App Icon */}
             <div className={`py-8 bg-gradient-to-br ${study.color} flex flex-col items-center justify-center`}>
-              <div className="w-24 h-24 rounded-[22px] overflow-hidden shadow-2xl mb-4 border-2 border-white/20">
-                <img src={study.icon} alt={study.title} className="w-full h-full object-cover" />
-              </div>
+  <div className={study.title === 'Luna' ? 'mb-4' : 'w-24 h-24 rounded-[22px] overflow-hidden shadow-2xl mb-4 border-2 border-white/20'}>
+  <img
+  src={study.icon}
+  alt={study.title}
+  className={study.title === 'Luna' ? 'w-24 h-24 object-contain [clip-path:circle(49%)] drop-shadow-[0_8px_24px_rgba(139,92,246,0.65)]' : 'w-full h-full object-cover'}
+  />
+  </div>
               <h2 className="text-2xl font-bold text-white">{study.title}</h2>
               <p className="text-white/80 text-sm mt-1">{study.subtitle}</p>
             </div>
@@ -2185,7 +2190,7 @@ const messageText = mobileInput.trim()
           content: `Explore three complete case studies:
 
 Silas — Integrated AI Companion
-Luna — Designing Behavior for Agentic AI
+Luna — Luna AI Participant
 Bank of Daniel — Digital Receipt
 
 Tap a project below to view the full case study.`
@@ -5563,7 +5568,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   </button>
   
   <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Luna</h2>
-  <p className="text-white/80 text-sm mt-1 drop-shadow">Designing Behavior for Agentic AI</p>
+  <p className="text-white/80 text-sm mt-1 drop-shadow">Luna AI Participant</p>
   
   {/* Arrow + Click here */}
   <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
@@ -6744,7 +6749,7 @@ function OriginalCaseStudyGallery({ project }: { project: "luna" | "bankofdaniel
   const folder = isLuna ? "luna" : "bank-of-daniel"
   const title = isLuna ? "Luna" : "Bank of Daniel"
   const description = isLuna
-    ? "Designing Behavior for Agentic AI"
+    ? "Luna AI Participant"
     : "Turning completed transactions into reusable shopping lists"
 
   return (
@@ -6817,7 +6822,7 @@ function LunaCaseStudy() {
         <div className="relative max-w-4xl mx-auto text-center">
           <img src="/images/luna/hero-orb.png" alt="Luna's primary listening orb" className="w-36 h-36 mx-auto mb-8 object-contain drop-shadow-[0_0_32px_rgba(139,92,246,0.55)]" />
           <h1 className="text-5xl md:text-6xl font-bold mb-4">Luna</h1>
-          <p className="text-xl text-purple-100/90 mb-6">Designing Behavior for Agentic AI</p>
+          <p className="text-xl text-purple-100/90 mb-6">Luna AI Participant</p>
           <p className="text-lg text-white/60 leading-relaxed max-w-2xl mx-auto">
             An interaction model for making AI behavior understandable, predictable, and trustworthy.
           </p>
