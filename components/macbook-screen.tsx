@@ -7193,7 +7193,7 @@ function BankOfDanielCaseStudy() {
       <section className="bg-gradient-to-b from-purple-50 to-white px-8 py-20 text-center md:py-24">
         <div className="mx-auto max-w-4xl">
           <div className="mx-auto mb-8 h-24 w-24 overflow-hidden rounded-2xl bg-[#3a1a63] shadow-xl">
-            <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel logo" className="h-full w-full object-contain" />
+            <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel logo" className="h-full w-full scale-125 object-contain md:scale-[1.4]" />
           </div>
           <h1 className="text-balance text-4xl font-bold tracking-tight text-[#3a1a63] md:text-6xl">Bank of Daniel</h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-black/65">Turning completed transactions into reusable shopping lists.</p>
@@ -7283,7 +7283,7 @@ function BankOfDanielCaseStudy() {
             <p className="mt-7 text-sm font-medium text-[#3a1a63]">Today, tapping a transaction shows only the date, type, and card number.</p>
           </div>
           <figure className="flex h-80 items-center justify-center md:h-[430px]">
-            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="h-full w-full object-contain" />
+            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="h-full w-full scale-125 object-contain md:scale-[1.4]" />
           </figure>
         </div>
       </section>
@@ -7291,7 +7291,7 @@ function BankOfDanielCaseStudy() {
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
         <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[1.14fr_0.86fr] md:gap-14">
           <figure className="flex h-80 items-center justify-center md:h-[430px]">
-            <img src="/images/bank-of-daniel/direct-search.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="h-full w-full object-contain" />
+            <img src="/images/bank-of-daniel/direct-search.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="h-full w-full scale-125 object-contain md:scale-[1.4]" />
           </figure>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">Connected purchase history</p>
@@ -7317,8 +7317,8 @@ function BankOfDanielCaseStudy() {
             </div>
           </div>
           <figure className="flex h-80 items-center justify-center gap-3 md:h-[430px] md:gap-5" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
-            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized purchase receipt" className="h-full min-w-0 flex-1 object-contain" />
-            <img src="/images/bank-of-daniel/direct-add-list.png" alt="Add an item to a saved shopping list" className="h-full min-w-0 flex-1 object-contain" />
+            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized purchase receipt" className="h-full min-w-0 flex-1 scale-125 object-contain md:scale-[1.32]" />
+            <img src="/images/bank-of-daniel/direct-add-list.png" alt="Add an item to a saved shopping list" className="h-full min-w-0 flex-1 scale-125 object-contain md:scale-[1.32]" />
           </figure>
         </div>
       </section>
@@ -7326,7 +7326,7 @@ function BankOfDanielCaseStudy() {
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
         <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[1.14fr_0.86fr] md:gap-14">
           <figure className="flex h-80 items-center justify-center md:h-[430px]">
-            <img src="/images/bank-of-daniel/direct-lists-wide.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="h-full w-full object-contain" />
+            <img src="/images/bank-of-daniel/direct-lists-wide.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="h-full w-full scale-125 object-contain md:scale-[1.4]" />
           </figure>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The reusable system</p>
