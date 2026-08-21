@@ -205,7 +205,7 @@ const caseStudies = {
     results: ["Less searching across disconnected records", "More useful transaction history", "Reusable lists built from real purchases", "More value from merchant-provided data"],
     color: "from-[#4c1d95] to-[#7c3aed]",
     icon: "/images/bank-of-daniel/logo.jpeg",
-    screenshot: "/images/bank-of-daniel/direct-receipt-trimmed.png",
+    screenshot: "/images/bank-of-daniel/history-receipt-cropped.png",
     isFullCaseStudy: true
   },
   silas: {
