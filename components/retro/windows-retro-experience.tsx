@@ -85,8 +85,8 @@ const LunaOrbIcon = ({ size = 16 }: { size?: number }) => (
 )
 
 const APP_META: Record<AppId, { title: string; icon: (p: any) => React.ReactNode; w: number; h: number }> = {
-  silas: { title: "Silas — Featured Case Study", icon: (p) => <SilasIcon {...p} />, w: 700, h: 520 },
-  luna: { title: "Luna — Case Study", icon: (p) => <LunaOrbIcon {...p} />, w: 700, h: 520 },
+  silas: { title: "Silas — Case Study", icon: (p) => <SilasIcon {...p} />, w: 700, h: 520 },
+  luna: { title: "Luna — Featured Case Study", icon: (p) => <LunaOrbIcon {...p} />, w: 700, h: 520 },
   bankofdaniel: { title: "Bank of Daniel — Digital Receipt", icon: (p) => <BankOfDanielIcon {...p} />, w: 700, h: 520 },
   mycomputer: { title: "My Computer", icon: (p) => <MyComputerIcon {...p} />, w: 680, h: 480 },
   about: { title: "About Charity - Notepad", icon: (p) => <NotepadIcon {...p} />, w: 460, h: 420 },
@@ -125,10 +125,10 @@ export function WindowsRetroExperience(props: RetroProps) {
   }, [])
 
   useEffect(() => {
-    // Boot, then bring Silas front-and-center as the featured case study.
+    // Boot, then bring Luna front-and-center as the featured case study.
     const id = setTimeout(() => {
       setBooting(false)
-      openApp("silas", { center: true })
+      openApp("luna", { center: true })
     }, 1700)
     return () => clearTimeout(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -226,8 +226,8 @@ export function WindowsRetroExperience(props: RetroProps) {
 
   // Desktop icons
   const desktopIcons: { id: AppId | "recycle" | "luna" | "bankofdaniel"; label: string; icon: React.ReactNode; featured?: boolean; comingSoon?: boolean }[] = [
-    { id: "silas", label: "Silas \u2605 Case Study", icon: <SilasIcon size={isMobile ? 44 : 40} />, featured: true },
-    { id: "luna", label: "Luna Case Study", icon: <LunaOrbIcon size={isMobile ? 40 : 32} /> },
+    { id: "silas", label: "Silas Case Study", icon: <SilasIcon size={isMobile ? 44 : 40} /> },
+    { id: "luna", label: "Luna \u2605 Case Study", icon: <LunaOrbIcon size={isMobile ? 40 : 32} />, featured: true },
     { id: "bankofdaniel", label: "Bank of Daniel", icon: <BankOfDanielIcon size={isMobile ? 40 : 32} /> },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={isMobile ? 40 : 32} /> },
     { id: "about", label: "About Me", icon: <NotepadIcon size={isMobile ? 40 : 32} /> },
@@ -452,7 +452,7 @@ function StartMenu({
 }) {
   const t = RETRO_THEMES[era]
   const items: { id: AppId; label: string; icon: React.ReactNode; featured?: boolean }[] = [
-    { id: "silas", label: "Silas \u2014 Featured Case Study", icon: <SilasIcon size={22} />, featured: true },
+    { id: "luna", label: "Luna \u2014 Featured Case Study", icon: <LunaOrbIcon size={22} />, featured: true },
     { id: "mycomputer", label: "My Computer", icon: <MyComputerIcon size={22} /> },
     { id: "about", label: "About Charity", icon: <NotepadIcon size={22} /> },
     { id: "aim", label: "AOL Instant Messenger", icon: <AimIcon size={22} /> },

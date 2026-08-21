@@ -4908,8 +4908,8 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                     }
                     if ('case study'.includes(query) || 'case studies'.includes(query) || 'projects'.includes(query) || 'portfolio'.includes(query)) {
                       results.push({
-                        label: 'Open Silas — Featured Case Study',
-                        action: () => { openCaseStudy('silas'); setHelpSearchQuery('') },
+  label: 'Open Luna — Featured Case Study',
+  action: () => { openCaseStudy('luna'); setHelpSearchQuery('') },
                         icon: <Folder className="w-4 h-4" />
                       })
                     }
@@ -5556,7 +5556,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
         )}
 
   {/* AI Assistant Window - Front and Center */}
-  {/* Silas Spotlight - primary case study on the desktop */}
+  {/* Luna Spotlight - primary case study on the desktop */}
   {showLunaSpotlight && (
   <div
   className="absolute inset-0 z-30 flex flex-col items-center justify-center pointer-events-auto cursor-default"
@@ -5567,23 +5567,23 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
   onClick={(e) => e.stopPropagation()}
   >
   <button
-  onClick={() => { openCaseStudy('silas'); setShowLunaSpotlight(false); }}
+  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
   className="relative group"
-  aria-label="Open the Silas case study"
+  aria-label="Open the Luna case study"
   >
   {/* Pulsing highlight rings */}
-  <span className="absolute -inset-4 rounded-3xl ring-4 ring-white/70 animate-ping" />
-  <span className="absolute -inset-4 rounded-3xl ring-2 ring-white/90" />
-  <img src={SILAS_ICON} alt="Silas" className="h-32 w-32 rounded-3xl object-cover shadow-2xl transition-transform duration-200 group-hover:scale-105" />
+  <span className="absolute -inset-4 rounded-full ring-4 ring-white/70 animate-ping" />
+  <span className="absolute -inset-4 rounded-full ring-2 ring-white/90" />
+  <img src="/images/luna/hero-orb.png" alt="Luna" className="h-32 w-32 object-contain drop-shadow-[0_12px_32px_rgba(139,92,246,0.65)] transition-transform duration-200 group-hover:scale-105" />
   </button>
   
-  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Silas</h2>
-  <p className="text-white/80 text-sm mt-1 drop-shadow">The Integrated AI Companion</p>
+  <h2 className="mt-8 text-white text-2xl font-bold drop-shadow-lg">Luna</h2>
+  <p className="text-white/80 text-sm mt-1 drop-shadow">Designing Behavior for Agentic AI</p>
   
   {/* Arrow + Click here */}
   <ArrowUp className="w-8 h-8 text-white mt-4 drop-shadow-lg animate-bounce" />
   <button
-  onClick={() => { openCaseStudy('silas'); setShowLunaSpotlight(false); }}
+  onClick={() => { openCaseStudy('luna'); setShowLunaSpotlight(false); }}
                 className="mt-2 px-6 py-2.5 rounded-full bg-white text-black text-sm font-semibold shadow-xl hover:bg-white/90 transition-colors flex items-center gap-2"
               >
                 <MousePointerClick className="w-4 h-4" />
