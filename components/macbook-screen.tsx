@@ -6935,65 +6935,65 @@ function LunaCaseStudy() {
       </div>
 
       {/* Designing Non-Verbal Communication */}
-      <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
-          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Designing Non-Verbal Communication</h2>
-          <p className="mt-2 text-lg text-[#55c997]">Humans constantly signal intent before speaking.</p>
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-balance text-3xl font-bold text-black">Designing Non-Verbal Communication</h2>
+          <p className="mt-2 text-lg font-medium text-purple-600">Humans constantly signal intent before speaking.</p>
           <div className="mt-8 grid items-center gap-8 md:grid-cols-[0.9fr_1.1fr] md:gap-12">
             <div>
-              <div className="flex flex-col gap-3 text-xl text-white/90 md:text-2xl">
+              <div className="flex flex-col gap-3 text-xl font-medium text-black md:text-2xl">
                 <p>Eye contact.</p><p>Breathing.</p><p>Pauses.</p><p>Movement.</p><p>AI should do the same.</p>
               </div>
-              <p className="mt-8 text-lg text-white/85">I designed behavioral cues that reduce uncertainty.</p>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-white/50">Signaled intent lowers cognitive load. Luna restores the missing nonverbal cues through motion, color, and animation.</p>
+              <p className="mt-8 text-lg text-black/80">I designed behavioral cues that reduce uncertainty.</p>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-black/60">Signaled intent lowers cognitive load. Luna restores the missing nonverbal cues through motion, color, and animation.</p>
             </div>
             <img
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Person_speaking_in_meeting_room_202607311657%20%281%29.gif-GazXQuLQqaPLwRiD2QkArBBcnQ1npV.jpeg"
               alt="A woman using subtle nonverbal communication during a meeting."
-              className="aspect-video w-full rounded-[2rem] object-cover"
+              className="aspect-video w-full rounded-2xl border border-black/10 object-cover shadow-sm"
             />
           </div>
-        </section>
+        </div>
       </div>
 
       {/* Giving Luna a Seat in the Call */}
       <div className="bg-white py-16 text-black">
-        <div className="luna-light-slide max-w-5xl mx-auto border border-black/10 px-8 py-12">
-          <h2 className="text-3xl font-bold mb-4">Giving Luna a Seat in the Call</h2>
-          <p className="max-w-3xl text-lg leading-relaxed text-white/75 mb-10">Luna&rsquo;s presence had to be visible to everyone, not because she needed a tile, but because the tile removed a layer of user uncertainty.</p>
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-3xl font-bold mb-4 text-black">Giving Luna a Seat in the Call</h2>
+          <p className="max-w-3xl text-lg leading-relaxed text-black/70 mb-10">Luna&rsquo;s presence had to be visible to everyone, not because she needed a tile, but because the tile removed a layer of user uncertainty.</p>
           <div className="grid gap-5 md:grid-cols-2 mb-10">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-white/45 mb-3">Before · AI beside the conversation</p>
-              <p className="leading-relaxed text-white/75">Zoom AI Companion and Microsoft Copilot can assist during a live meeting, but the AI experience remains visually separate from the people in the conversation. The user has to look somewhere else to understand what the AI is doing, what it has captured, or how it is responding. The AI could participate in the meeting, but it didn&apos;t have a visible seat in it.</p>
+            <div className="rounded-xl border border-black/5 bg-white p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wider text-black/50 mb-3">Before · AI beside the conversation</p>
+              <p className="leading-relaxed text-black/70">Zoom AI Companion and Microsoft Copilot can assist during a live meeting, but the AI experience remains visually separate from the people in the conversation. The user has to look somewhere else to understand what the AI is doing, what it has captured, or how it is responding. The AI could participate in the meeting, but it didn&apos;t have a visible seat in it.</p>
             </div>
-            <div className="rounded-2xl border border-purple-300/30 bg-purple-400/10 p-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-purple-200 mb-3">Decision · Luna inside the meeting</p>
-              <p className="leading-relaxed text-white/80">Her presence and state became part of the shared meeting context. Users could see where she was, what state she was in, and when she was participating without leaving the call.</p>
+            <div className="rounded-xl border border-purple-100 bg-purple-50 p-6">
+              <p className="text-xs font-semibold uppercase tracking-wider text-purple-700 mb-3">Decision · Luna inside the meeting</p>
+              <p className="leading-relaxed text-black/70">Her presence and state became part of the shared meeting context. Users could see where she was, what state she was in, and when she was participating without leaving the call.</p>
             </div>
           </div>
-          <div className="rounded-2xl bg-white p-6 text-black mb-10"><p className="text-xs font-semibold uppercase tracking-wider text-purple-600 mb-2">What it solved</p><p className="text-lg font-medium">Fewer steps. Less context switching. Less ambiguity.</p><p className="mt-2 text-black/65">Luna&rsquo;s behavioral presence became legible in the same place the work was happening.</p></div>
-          <p className="border-l-2 border-purple-400 pl-5 text-xl leading-relaxed text-purple-100">Product principle: AI presence should reduce cognitive load, not create another place to look.</p>
+          <div className="rounded-xl border border-black/5 bg-neutral-50 p-6 text-black mb-10 shadow-sm"><p className="text-xs font-semibold uppercase tracking-wider text-purple-600 mb-2">What it solved</p><p className="text-lg font-medium">Fewer steps. Less context switching. Less ambiguity.</p><p className="mt-2 text-black/65">Luna&rsquo;s behavioral presence became legible in the same place the work was happening.</p></div>
+          <p className="border-l-2 border-purple-400 pl-5 text-xl leading-relaxed text-black/80">Product principle: AI presence should reduce cognitive load, not create another place to look.</p>
         </div>
       </div>
 
-      <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
-          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">From Meeting Tool to Teammate</h2>
-          <p className="mt-2 text-base text-white/60 md:text-lg">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-balance text-3xl font-bold text-black">From Meeting Tool to Teammate</h2>
+          <p className="mt-2 text-base text-black/60 md:text-lg">Today&apos;s meeting AI assist the meeting. Luna participates in it.</p>
 
-          <div className="mt-7 grid items-start gap-8 md:grid-cols-2 md:gap-12">
+          <div className="mt-8 grid items-start gap-8 md:grid-cols-2 md:gap-12">
             <figure className="flex flex-col">
-              <p className="mb-3 text-sm font-medium text-[#df7777]">AI Assists</p>
+              <p className="mb-3 text-sm font-medium text-[#c0554f]">AI Assists</p>
               <img
                 src="/images/luna/deck/ai-assists.png"
                 alt="Zoom meeting with four participants and the AI Companion panel, exactly as shown in the Luna portfolio deck."
-                className="aspect-[1.9/1] w-full object-cover"
+                className="aspect-[1.9/1] w-full rounded-xl border border-black/10 object-cover shadow-sm"
               />
-              <figcaption className="mt-4 text-base leading-relaxed text-white/60">AI sits along the conversation. Summarizing answering and capturing.</figcaption>
+              <figcaption className="mt-4 text-base leading-relaxed text-black/60">AI sits along the conversation. Summarizing answering and capturing.</figcaption>
             </figure>
 
             <figure className="flex flex-col">
-              <p className="mb-3 text-sm font-medium text-[#63c69b]">AI Participates</p>
+              <p className="mb-3 text-sm font-medium text-[#2f9f72]">AI Participates</p>
               <video
                 src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-07-23%20at%204.59.50%E2%80%AFPM%20%283%29-VI8zMReqqJtebhp9lHAua80Tjsh2Og.mp4"
                 aria-label="Luna Live participating in a real Google Meet call."
@@ -7002,54 +7002,54 @@ function LunaCaseStudy() {
                 muted
                 playsInline
                 preload="metadata"
-                className="aspect-[1.9/1] w-full bg-black object-cover"
+                className="aspect-[1.9/1] w-full rounded-xl border border-black/10 bg-black object-cover shadow-sm"
               />
-              <figcaption className="mt-4 text-base leading-relaxed text-white/60">Luna is part of the conversation, listening, understanding the context and contributing in the moment.</figcaption>
+              <figcaption className="mt-4 text-base leading-relaxed text-black/60">Luna is part of the conversation, listening, understanding the context and contributing in the moment.</figcaption>
             </figure>
           </div>
 
-          <div className="mt-7 border border-[#9369e8] bg-[#1a1431] px-5 py-6 text-lg italic leading-relaxed text-white/80 md:px-7">
+          <div className="mt-8 rounded-xl border border-purple-100 bg-purple-50 px-5 py-6 text-lg italic leading-relaxed text-black/80 md:px-7">
             <p>The shift wasn&apos;t just where AI appeared. It was what AI became.</p>
             <p>Luna didn&apos;t belong beside the meeting — she belonged inside of it.</p>
           </div>
-        </section>
+        </div>
       </div>
 
-      <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
-          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Luna&apos;s Build Requirements</h2>
-          <p className="mt-3 max-w-4xl text-lg leading-relaxed text-white/65">For Luna to feel like a teammate, she couldn&apos;t live in a side window. She had to appear in the meeting itself, as a participant everyone can see.</p>
+      <div className="bg-white py-16">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-balance text-3xl font-bold text-black">Luna&apos;s Build Requirements</h2>
+          <p className="mt-3 max-w-4xl text-lg leading-relaxed text-black/70">For Luna to feel like a teammate, she couldn&apos;t live in a side window. She had to appear in the meeting itself, as a participant everyone can see.</p>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
-            {[["Guest participant", "Luna appears as her own tile in the call, right alongside the people."], ["Joins like a guest", "She enters the meeting the way any guest does through the browser, no extra hardware."], ["Always in view", "Her state stays visible in the call, so the team never wonders what she’s doing."]].map(([title, body], index) => <div key={title} className="border border-purple-400/20 bg-white/5 p-6"><span className="flex h-12 w-12 items-center justify-center rounded-full border border-purple-400 text-purple-300">{index + 1}</span><h3 className="mt-7 text-lg font-medium text-white">{title}</h3><p className="mt-3 text-sm leading-relaxed text-white/55">{body}</p></div>)}
+            {[["Guest participant", "Luna appears as her own tile in the call, right alongside the people."], ["Joins like a guest", "She enters the meeting the way any guest does through the browser, no extra hardware."], ["Always in view", "Her state stays visible in the call, so the team never wonders what she’s doing."]].map(([title, body], index) => <div key={title} className="rounded-xl border border-black/5 bg-white p-6 shadow-sm"><span className="flex h-12 w-12 items-center justify-center rounded-full border border-purple-200 bg-purple-50 font-semibold text-purple-700">{index + 1}</span><h3 className="mt-6 text-lg font-semibold text-black">{title}</h3><p className="mt-3 text-sm leading-relaxed text-black/65">{body}</p></div>)}
           </div>
-          <div className="mt-7 border border-purple-400 bg-[#1a1431] px-6 py-7 text-lg italic leading-relaxed text-white/80"><p>A seat in the call changes everything.</p><p>Luna became a real participant: visible, present, in the room.</p></div>
-        </section>
+          <div className="mt-8 rounded-xl border border-purple-100 bg-purple-50 px-6 py-7 text-lg italic leading-relaxed text-black/80"><p>A seat in the call changes everything.</p><p>Luna became a real participant: visible, present, in the room.</p></div>
+        </div>
       </div>
 
       {/* Directing the System */}
-      <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
-          <h2 className="text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Directing the System</h2>
+      <div className="bg-neutral-50 py-16">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-3xl font-bold text-black">Directing the System</h2>
           <div className="mt-8 grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-center">
             <div className="relative pb-10 pr-5 sm:pb-14 sm:pr-12">
               <img
                 src="/images/luna/deck/directing-2.jpeg"
                 alt="Large AI-assisted implementation transcript showing Luna latency and deduplication improvements."
-                className="w-full rounded-2xl object-cover shadow-2xl"
+                className="w-full rounded-xl border border-black/10 object-cover shadow-lg"
               />
               <img
                 src="/images/luna/deck/directing-3.jpeg"
                 alt="Implementation transcript describing Luna Hub auto-connection and interface changes."
-                className="absolute -bottom-1 left-0 w-[34%] rounded-2xl border border-white/10 shadow-2xl sm:-left-4"
+                className="absolute -bottom-1 left-0 w-[34%] rounded-lg border border-black/10 shadow-lg sm:-left-4"
               />
               <img
                 src="/images/luna/deck/directing-4.jpeg"
                 alt="Implementation transcript describing automatic Google Meet detection and guest joining."
-                className="absolute -right-1 -top-7 w-[31%] rounded-2xl border border-white/10 shadow-2xl"
+                className="absolute -right-1 -top-7 w-[31%] rounded-lg border border-black/10 shadow-lg"
               />
             </div>
             <div>
-              <div className="overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
+              <div className="overflow-hidden rounded-xl border border-black/10 bg-black shadow-lg">
                 <video
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-08-12%20at%204.12.10%E2%80%AFPM%20%283%29-x4QUDwkDnrurgpwoxrJqaPo6brayqf.mp4"
                   aria-label="Live recording of Luna being deployed into Google Meet."
@@ -7062,28 +7062,28 @@ function LunaCaseStudy() {
                   className="aspect-video w-full object-contain"
                 />
               </div>
-              <p className="mt-5 text-base text-white/85">Natural language became a design medium.</p>
-              <p className="mt-1 text-sm leading-relaxed text-white/55">I directed AI to rapidly prototype, validate, and refine interaction behavior.</p>
+              <p className="mt-5 text-base text-black/80">Natural language became a design medium.</p>
+              <p className="mt-1 text-sm leading-relaxed text-black/60">I directed AI to rapidly prototype, validate, and refine interaction behavior.</p>
             </div>
           </div>
-          <p className="mt-8 bg-[#3a2d6b] px-5 py-3 text-center text-sm text-white/85">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat. Hundreds of micro-decisions &mdash; every one was a design call.</p>
-        </section>
+          <p className="mt-8 rounded-xl border border-purple-100 bg-purple-50 px-5 py-4 text-center text-sm text-black/75">Idea &rarr; build one &rarr; test &rarr; observe &rarr; refine &rarr; repeat. Hundreds of micro-decisions &mdash; every one was a design call.</p>
+        </div>
       </div>
 
       {/* Bridging Design and Engineering */}
-      <div className="bg-white py-10 md:py-16">
-        <section className="luna-light-slide mx-auto max-w-6xl border border-black/10 bg-white px-6 py-10 text-black sm:px-10 md:px-14 md:py-12">
-          <h2 className="text-balance text-4xl font-light tracking-tight text-[#a78bfa] md:text-5xl">Bridging Design and Engineering</h2>
-          <p className="mt-4 max-w-5xl text-lg leading-relaxed text-white/60">Luna runs locally while Google Meet runs inside Chrome. Understanding how those environments communicate was essential to designing a real meeting experience.</p>
+      <div className="bg-white py-16">
+        <div className="max-w-5xl mx-auto px-8">
+          <h2 className="text-balance text-3xl font-bold text-black">Bridging Design and Engineering</h2>
+          <p className="mt-4 max-w-5xl text-lg leading-relaxed text-black/70">Luna runs locally while Google Meet runs inside Chrome. Understanding how those environments communicate was essential to designing a real meeting experience.</p>
           <div className="mt-8 grid items-center gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr]">
-            {[["JS", "Chrome + Google Meet", "JavaScript controls the browser"], ["⇄", "Local bridge", "relays events both ways"], ["Py", "Python + local AI", "processing & reasoning"]].map(([symbol, title, body], index) => <div key={title} className="contents"><div className="border border-purple-400/25 bg-white/5 p-7 text-center"><span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-purple-900 text-purple-200">{symbol}</span><h3 className="mt-5 text-lg font-medium">{title}</h3><p className="mt-2 text-sm text-white/50">{body}</p></div>{index < 2 && <span className="hidden text-2xl text-purple-400 md:block">↔</span>}</div>)}
+            {[["JS", "Chrome + Google Meet", "JavaScript controls the browser"], ["⇄", "Local bridge", "relays events both ways"], ["Py", "Python + local AI", "processing & reasoning"]].map(([symbol, title, body], index) => <div key={title} className="contents"><div className="rounded-xl border border-black/5 bg-white p-7 text-center shadow-sm"><span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-purple-200 bg-purple-50 font-semibold text-purple-700">{symbol}</span><h3 className="mt-5 text-lg font-semibold text-black">{title}</h3><p className="mt-2 text-sm text-black/60">{body}</p></div>{index < 2 && <span className="hidden text-2xl text-purple-400 md:block">↔</span>}</div>)}
           </div>
           <div className="mt-8 grid gap-8 md:grid-cols-[1.4fr_1fr]">
-            <div><p className="text-white/55">Technical concepts I needed to understand</p><div className="mt-5 flex flex-wrap gap-3">{["JavaScript", "Chrome extensions", "APIs", "Messaging", "Python", "Local servers"].map((t) => <span key={t} className="rounded-full border border-white/20 px-4 py-2 text-sm text-white/60">{t}</span>)}</div></div>
-            <div><p className="text-purple-300">HOW I LEARNED</p><p className="mt-3 leading-relaxed text-white/70">To make informed product decisions, I taught myself the fundamentals through documentation, engineering conversations, experimentation, and rapid prototyping.</p></div>
+            <div><p className="text-black/60">Technical concepts I needed to understand</p><div className="mt-5 flex flex-wrap gap-3">{["JavaScript", "Chrome extensions", "APIs", "Messaging", "Python", "Local servers"].map((t) => <span key={t} className="rounded-full border border-black/15 px-4 py-2 text-sm text-black/70">{t}</span>)}</div></div>
+            <div><p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">HOW I LEARNED</p><p className="mt-3 leading-relaxed text-black/70">To make informed product decisions, I taught myself the fundamentals through documentation, engineering conversations, experimentation, and rapid prototyping.</p></div>
           </div>
-          <p className="mt-8 text-white/85">I learned enough engineering to lead the product, not to become an engineer.</p>
-        </section>
+          <p className="mt-8 font-medium text-black/80">I learned enough engineering to lead the product, not to become an engineer.</p>
+        </div>
       </div>
 
       {/* 07 States & Color */}
@@ -7120,14 +7120,14 @@ function LunaCaseStudy() {
       </div>
 
       {/* Live Demo */}
-      <div className="bg-white py-16 border-y border-black/10">
-        <div className="luna-light-slide max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
-          <h2 className="text-3xl font-bold mb-3 text-white text-center text-balance">Luna, Live</h2>
-          <p className="text-white/60 text-center mb-8 max-w-2xl mx-auto leading-relaxed">
+      <div className="bg-neutral-50 py-16 border-y border-black/10">
+        <div className="max-w-4xl mx-auto px-8">
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
+          <h2 className="text-3xl font-bold mb-3 text-black text-center text-balance">Luna, Live</h2>
+          <p className="text-black/60 text-center mb-8 max-w-2xl mx-auto leading-relaxed">
             Live capture &mdash; listening, reasoning, and speaking states in motion during a real call.
           </p>
-          <div className="rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-black">
+          <div className="rounded-xl overflow-hidden shadow-lg border border-black/10 bg-black">
             <video
               src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screen%20Recording%202026-07-23%20at%204.59.50%E2%80%AFPM%20%283%29-VI8zMReqqJtebhp9lHAua80Tjsh2Og.mp4"
               poster="/images/luna/demo-poster.png"
@@ -7140,7 +7140,7 @@ function LunaCaseStudy() {
               aria-label="Screen recording of Luna 3.0 running live in a Google Meet call, changing state as she listens and speaks."
             />
           </div>
-          <p className="text-white/40 text-xs text-center mt-3">Unmute to hear the live conversation between Luna and Charity.</p>
+          <p className="text-black/50 text-xs text-center mt-3">Unmute to hear the live conversation between Luna and Charity.</p>
         </div>
       </div>
 
