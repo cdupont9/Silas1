@@ -7284,7 +7284,10 @@ function BankOfDanielCaseStudy() {
               <p className="mt-3 text-sm font-medium leading-relaxed">Transaction Date · Transaction Type · Card Number</p>
             </div>
           </div>
-          <img src="/images/bank-of-daniel/transaction-starting-point-white.png" alt="Bank of Daniel transaction details screen showing the limited information available today." className="block w-full object-contain" />
+          <div className="relative mx-auto h-[420px] w-full max-w-[520px] overflow-hidden md:h-[560px]" aria-label="Comparison of a traditional transaction screen with Bank of Daniel purchase details">
+            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Traditional banking transaction details screen" className="absolute left-0 top-8 w-[72%] object-contain drop-shadow-xl" />
+            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized receipt attached to a transaction" className="absolute bottom-0 right-0 w-[58%] object-contain drop-shadow-2xl" />
+          </div>
         </div>
       </section>
 
@@ -7299,7 +7302,10 @@ function BankOfDanielCaseStudy() {
               <div><h3 className="font-bold">The receipt is attached</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Scroll down on the transaction to see the itemized receipt, pulled in from the merchant.</p></div>
             </div>
           </div>
-          <img src="/images/bank-of-daniel/find-purchase-white.png" alt="Bank of Daniel screens for searching purchases and opening an itemized transaction receipt." className="block w-full object-contain" />
+          <div className="relative mx-auto h-[430px] w-full max-w-[540px] overflow-hidden md:h-[580px]" aria-label="Bank of Daniel purchase search flowing into an itemized receipt">
+            <img src="/images/bank-of-daniel/direct-search.png" alt="Bank of Daniel search results for a remembered item" className="absolute left-0 top-4 w-[70%] object-contain drop-shadow-xl" />
+            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Itemized Target receipt connected to the matching transaction" className="absolute bottom-0 right-0 w-[58%] object-contain drop-shadow-2xl" />
+          </div>
         </div>
       </section>
 
@@ -7312,7 +7318,10 @@ function BankOfDanielCaseStudy() {
               {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title}><h3 className="font-bold">{title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
             </div>
           </div>
-          <img src="/images/bank-of-daniel/connected-purchase-white.png" alt="Bank of Daniel transaction receipt and add-to-shopping-list screens." className="block w-full object-contain" />
+          <div className="relative mx-auto h-[430px] w-full max-w-[540px] overflow-hidden md:h-[580px]" aria-label="Bank of Daniel receipt with an add-to-shopping-list pop-out">
+            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized purchase receipt" className="absolute left-0 top-5 w-[70%] object-contain drop-shadow-xl" />
+            <img src="/images/bank-of-daniel/direct-add-list.png" alt="Add an item to a saved shopping list" className="absolute bottom-2 right-0 w-[62%] object-contain drop-shadow-2xl" />
+          </div>
         </div>
       </section>
 
@@ -7327,7 +7336,10 @@ function BankOfDanielCaseStudy() {
               <div><h3 className="font-bold text-slate-950">Organize by purpose</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Keep lists separate by store, project, or occasion.</p></div>
             </div>
           </div>
-          <img src="/images/bank-of-daniel/build-lists-white.png" alt="Bank of Daniel shopping-list management and recurring-list screens." className="block w-full object-contain" />
+          <div className="relative mx-auto h-[440px] w-full max-w-[560px] overflow-hidden md:h-[590px]" aria-label="Bank of Daniel shopping-list overview with list management details">
+            <img src="/images/bank-of-daniel/direct-lists-wide.png" alt="Bank of Daniel shopping-list overview" className="absolute left-0 top-6 w-[74%] object-contain drop-shadow-xl" />
+            <img src="/images/bank-of-daniel/direct-lists-compact.png" alt="Closer view of recurring, archived, and deleted list controls" className="absolute bottom-0 right-0 w-[57%] object-contain drop-shadow-2xl" />
+          </div>
         </div>
       </section>
 
