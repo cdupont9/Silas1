@@ -7290,7 +7290,7 @@ function BankOfDanielCaseStudy() {
 
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
         <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-4">
-          <figure className="flex h-[420px] items-center justify-end md:h-[560px]">
+          <figure className="flex h-[420px] items-center justify-end md:h-[560px] md:-translate-x-6">
             <img src="/images/bank-of-daniel/connected-purchase-history-cropped.png" alt="Bank of Daniel purchase history search for lavender showing a matching Target transaction" className="h-full w-auto max-w-full object-contain" />
           </figure>
           <div>
@@ -7326,7 +7326,7 @@ function BankOfDanielCaseStudy() {
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
         <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-4">
           <figure className="flex h-[420px] items-center justify-end md:h-[560px]">
-            <img src="/images/bank-of-daniel/direct-lists-wide-trimmed.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="h-full w-auto max-w-full scale-125 object-contain" />
+            <img src="/images/bank-of-daniel/shopping-lists-cropped-large.png" alt="Bank of Daniel shopping lists overview with active, archived, and deleted lists" className="h-full w-auto max-w-full object-contain" />
           </figure>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The reusable system</p>
