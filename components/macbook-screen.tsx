@@ -2047,12 +2047,6 @@ const messageText = mobileInput.trim()
 
           {/* Case Study Content */}
           <div className="flex-1 overflow-y-auto">
-  {mobileCaseStudy === "luna" ? (
-  <LunaCaseStudy />
-  ) : mobileCaseStudy === "bankofdaniel" ? (
-  <BankOfDanielCaseStudy />
-            ) : (
-              <>
             {/* View on Desktop Banner */}
             <div className="bg-gray-900 px-4 py-3 flex items-center justify-center gap-2">
               <svg className="w-5 h-5 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
@@ -2153,8 +2147,6 @@ const messageText = mobileInput.trim()
                 </p>
               </div>
             </div>
-              </>
-            )}
           </div>
 
           {/* Home Indicator */}
