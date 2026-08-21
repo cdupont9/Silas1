@@ -6907,7 +6907,7 @@ function LunaCaseStudy() {
       {/* 01 The Spark */}
       <div className="bg-neutral-50 py-16">
         <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">01 · The Spark</p>
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3">The Spark</p>
           <h2 className="text-3xl font-bold mb-8 text-black">From capability to presence</h2>
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <div className="bg-white rounded-2xl p-6 border border-black/5 shadow-sm">
@@ -7089,7 +7089,7 @@ function LunaCaseStudy() {
       {/* 07 States & Color */}
       <div className="py-16 bg-white">
         <div className="max-w-5xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3 text-center">States &amp; Color</p>
           <h2 className="text-3xl font-bold mb-4 text-center text-black">Making invisible states visible</h2>
           <p className="text-black/60 text-center mb-14 max-w-2xl mx-auto">
             Every AI has invisible states. Most AI hides them. Luna exposes them &mdash; that&rsquo;s the innovation.
@@ -7122,7 +7122,7 @@ function LunaCaseStudy() {
       {/* Live Demo */}
       <div className="bg-neutral-50 py-16 border-y border-black/10">
         <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3 text-center">07 · States &amp; Color</p>
+          <p className="text-xs font-semibold text-purple-600 uppercase tracking-[0.2em] mb-3 text-center">States &amp; Color</p>
           <h2 className="text-3xl font-bold mb-3 text-black text-center text-balance">Luna, Live</h2>
           <p className="text-black/60 text-center mb-8 max-w-2xl mx-auto leading-relaxed">
             Live capture &mdash; listening, reasoning, and speaking states in motion during a real call.
@@ -7163,7 +7163,7 @@ function LunaCaseStudy() {
       {/* 08 Trust & Reflection */}
       <div className="bg-gradient-to-br from-[#0f0a1f] to-[#1a1030] py-16 text-white">
         <div className="max-w-4xl mx-auto px-8">
-          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3">08 · Trust &amp; Reflection</p>
+          <p className="text-xs font-semibold text-purple-300 uppercase tracking-[0.2em] mb-3">Trust &amp; Reflection</p>
           <h2 className="text-3xl font-bold mb-8">Design principles I learned</h2>
           <div className="space-y-3 mb-10">
             {takeaways.map((t, i) => (
