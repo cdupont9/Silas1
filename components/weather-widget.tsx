@@ -22,7 +22,7 @@ import {
 
 type WeatherLocation = { name: string; lat: number; lon: number }
 
-const DEFAULT_LOCATION: WeatherLocation = { name: "Plainfield", lat: 40.6337, lon: -74.4074 }
+const DEFAULT_LOCATION: WeatherLocation = { name: "East Hanover", lat: 40.82, lon: -74.3649 }
 
 const fetcher = (url: string) =>
   fetch(url).then((res) => {
@@ -59,8 +59,9 @@ export function WeatherWidget({ className = "w-72" }: { className?: string }) {
 
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${location.lat}&longitude=${location.lon}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=auto&forecast_days=6`
   const { data, error, isLoading } = useSWR(weatherUrl, fetcher, {
-    revalidateOnFocus: false,
-    refreshInterval: 15 * 60 * 1000,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    refreshInterval: 5 * 60 * 1000,
   })
 
   const { data: geoData, isLoading: geoLoading } = useSWR(
