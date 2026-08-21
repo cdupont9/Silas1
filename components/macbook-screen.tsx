@@ -7283,7 +7283,7 @@ function BankOfDanielCaseStudy() {
             <p className="mt-7 text-sm font-medium text-[#3a1a63]">Today, tapping a transaction shows only the date, type, and card number.</p>
           </div>
           <figure className="flex h-[420px] items-center justify-start md:h-[560px]">
-            <img src="/images/bank-of-daniel/direct-legacy-transaction-trimmed.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="h-full w-auto max-w-full scale-125 object-contain" />
+            <img src="/images/bank-of-daniel/transaction-details-cropped.png" alt="Marshalls checking transaction showing merchant details and location" className="h-full w-auto max-w-full object-contain" />
           </figure>
         </div>
       </section>
