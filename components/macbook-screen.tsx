@@ -7190,11 +7190,11 @@ function BankOfDanielCaseStudy() {
 
   return (
     <div className="bg-white text-slate-950">
-      <section className="bg-[#0b3a67] px-6 py-20 text-white md:px-10 md:py-24">
+      <section className="bg-[#3a1a63] px-6 py-20 text-white md:px-10 md:py-24">
         <div className="mx-auto flex max-w-5xl flex-col gap-10 md:flex-row md:items-center md:justify-between">
           <div className="max-w-2xl">
             <h1 className="text-balance text-5xl font-bold tracking-tight md:text-7xl">Bank of Daniel</h1>
-            <p className="mt-5 max-w-xl text-xl leading-relaxed text-blue-100">Turning completed transactions into reusable shopping lists.</p>
+            <p className="mt-5 max-w-xl text-xl leading-relaxed text-purple-100">Turning completed transactions into reusable shopping lists.</p>
           </div>
           <img src="/images/bank-of-daniel/logo.jpeg" alt="Bank of Daniel logo" className="h-32 w-32 rounded-3xl bg-[#3a1a63] object-contain shadow-2xl ring-1 ring-white/20 md:h-40 md:w-40" />
         </div>
