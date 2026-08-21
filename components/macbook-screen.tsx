@@ -7317,8 +7317,8 @@ function BankOfDanielCaseStudy() {
             </div>
           </div>
           <figure className="ml-auto grid h-[420px] w-full grid-cols-2 place-items-center gap-3 md:h-[540px] md:w-[92%]" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
-            <img src="/images/bank-of-daniel/direct-receipt-trimmed.png" alt="Bank of Daniel itemized purchase receipt" className="h-full w-full object-contain" />
-            <img src="/images/bank-of-daniel/direct-add-list-trimmed.png" alt="Add an item to a saved shopping list" className="h-full w-full object-contain" />
+            <img src="/images/bank-of-daniel/history-receipt-cropped.png" alt="Bank of Daniel Nordstrom transaction with an itemized receipt" className="h-full w-full object-contain" />
+            <img src="/images/bank-of-daniel/history-add-list-cropped.png" alt="Add a purchased item to a saved shopping list" className="h-full w-full object-contain" />
           </figure>
         </div>
       </section>
