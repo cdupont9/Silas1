@@ -203,9 +203,9 @@ const caseStudies = {
     challenge: "Banking transactions show the merchant, date, amount, and card number, but not the items purchased. Receipts remain scattered across email, retailer apps, and paper, forcing customers to reconstruct the purchase before they can act on it.",
     solution: "The transaction becomes the natural anchor for an attached itemized receipt. Customers can search by merchant or item, save individual purchases with notes, and organize those items into recurring lists by store, project, or occasion.",
     results: ["Less searching across disconnected records", "More useful transaction history", "Reusable lists built from real purchases", "More value from merchant-provided data"],
-    color: "from-[#0b3a67] to-[#1769a5]",
+    color: "from-[#4c1d95] to-[#7c3aed]",
     icon: "/images/bank-of-daniel/logo.jpeg",
-    screenshot: "/case-studies/bank-of-daniel/page-20.jpg",
+    screenshot: "/images/bank-of-daniel/direct-receipt-trimmed.png",
     isFullCaseStudy: true
   },
   silas: {
@@ -1453,12 +1453,10 @@ const messageText = mobileInput.trim()
                   <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
 
-                <button onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Luna case study">
-                  <div className="w-[60px] h-[60px] rounded-[14px] bg-black flex items-center justify-center overflow-hidden shadow-lg">
-                    <img src="/images/luna/hero-orb.png" alt="" className="w-full h-full object-contain" />
-                  </div>
-                  <span className="text-white text-[11px] mt-1">Luna</span>
-                </button>
+  <button onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Luna case study">
+  <img src="/images/luna/hero-orb.png" alt="" className="h-[60px] w-[60px] object-contain [clip-path:circle(49%)] drop-shadow-[0_4px_16px_rgba(139,92,246,0.75)]" />
+  <span className="text-white text-[11px] mt-1">Luna</span>
+  </button>
 
                 <button onClick={() => { setMobileCaseStudy('bankofdaniel'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Bank of Daniel case study">
                   <div className="w-[60px] h-[60px] rounded-[14px] overflow-hidden shadow-lg">
