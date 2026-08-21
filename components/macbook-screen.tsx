@@ -7284,9 +7284,8 @@ function BankOfDanielCaseStudy() {
               <p className="mt-3 text-sm font-medium leading-relaxed">Transaction Date · Transaction Type · Card Number</p>
             </div>
           </div>
-          <div className="relative mx-auto h-[420px] w-full max-w-[520px] overflow-hidden md:h-[560px]" aria-label="Comparison of a traditional transaction screen with Bank of Daniel purchase details">
-            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Traditional banking transaction details screen" className="absolute left-0 top-8 w-[72%] object-contain drop-shadow-xl" />
-            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized receipt attached to a transaction" className="absolute bottom-0 right-0 w-[58%] object-contain drop-shadow-2xl" />
+          <div className="mx-auto w-full max-w-[520px]" aria-label="Traditional transaction details">
+            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="mx-auto block w-full max-w-[460px] object-contain drop-shadow-xl" />
           </div>
         </div>
       </section>
@@ -7302,9 +7301,8 @@ function BankOfDanielCaseStudy() {
               <div><h3 className="font-bold">The receipt is attached</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Scroll down on the transaction to see the itemized receipt, pulled in from the merchant.</p></div>
             </div>
           </div>
-          <div className="relative mx-auto h-[430px] w-full max-w-[540px] overflow-hidden md:h-[580px]" aria-label="Bank of Daniel purchase search flowing into an itemized receipt">
-            <img src="/images/bank-of-daniel/direct-search.png" alt="Bank of Daniel search results for a remembered item" className="absolute left-0 top-4 w-[70%] object-contain drop-shadow-xl" />
-            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Itemized Target receipt connected to the matching transaction" className="absolute bottom-0 right-0 w-[58%] object-contain drop-shadow-2xl" />
+          <div className="mx-auto w-full max-w-[520px]" aria-label="Bank of Daniel purchase search">
+            <img src="/images/bank-of-daniel/direct-search.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="mx-auto block w-full max-w-[460px] object-contain drop-shadow-xl" />
           </div>
         </div>
       </section>
