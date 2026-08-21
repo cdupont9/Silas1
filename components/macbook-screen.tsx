@@ -7341,22 +7341,6 @@ function BankOfDanielCaseStudy() {
         </div>
       </section>
 
-      <section className="border-t border-black/5 bg-white px-6 py-16 md:px-10 md:py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">Product walkthrough</p>
-            <h2 className="mt-3 text-balance text-3xl font-bold text-black md:text-4xl">See the connected experience in motion.</h2>
-            <p className="mt-4 text-lg leading-relaxed text-black/60">From transaction history to reusable shopping lists, the full flow stays connected.</p>
-          </div>
-          <figure className="mt-10 overflow-hidden rounded-2xl border border-black/10 bg-black shadow-xl">
-            <video className="block h-auto w-full" controls playsInline preload="metadata" aria-label="Bank of Daniel connected purchase experience walkthrough">
-              <source src="/videos/bank-of-daniel-product-demo.mov" type="video/quicktime" />
-              Your browser does not support embedded video.
-            </video>
-          </figure>
-        </div>
-      </section>
-
       <section className="bg-purple-50 px-6 py-16 md:px-10">
         <div className="mx-auto max-w-5xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">Outcome</p>
