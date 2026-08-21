@@ -7358,6 +7358,8 @@ function BankOfDanielCaseStudy() {
 }
 
 function SilasCaseStudy() {
+  const [showDemo, setShowDemo] = useState(false)
+
   return (
     <div className="bg-white text-black">
       {/* Hero Section */}
@@ -7769,6 +7771,35 @@ function SilasCaseStudy() {
           </div>
         </div>
       </div>
+
+      {/* Full product demo */}
+      <section className="bg-white px-5 py-16 md:px-8 md:py-20">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-8">
+          <button
+            type="button"
+            onClick={() => setShowDemo((visible) => !visible)}
+            aria-expanded={showDemo}
+            aria-controls="silas-product-demo"
+            className="rounded-full bg-purple-600 px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-purple-600/20 transition-colors hover:bg-purple-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-600 focus-visible:ring-offset-2"
+          >
+            {showDemo ? "Close Demo" : "Watch Demo"}
+          </button>
+
+          {showDemo && (
+            <div id="silas-product-demo" className="w-full overflow-hidden rounded-2xl bg-black shadow-2xl md:rounded-3xl">
+              <video
+                src="https://d1ulpwtfq85j7t5c.public.blob.vercel-storage.com/silas%20app%20official.mp4"
+                aria-label="Full Silas product demonstration"
+                className="aspect-video w-full object-contain"
+                controls
+                autoPlay
+                playsInline
+                preload="metadata"
+              />
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Footer */}
       <div className="py-12 border-t border-black/10 bg-white">
