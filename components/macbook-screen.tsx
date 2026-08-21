@@ -7268,7 +7268,7 @@ function BankOfDanielCaseStudy() {
       </section>
 
       <section className="border-t border-black/5 bg-white px-6 py-14 md:px-10 md:py-16">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[0.86fr_1.14fr] md:gap-14">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[0.95fr_1.05fr] md:gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The starting point</p>
             <h2 className="mt-3 text-balance text-3xl font-bold text-black md:text-4xl">The transaction is only the starting point.</h2>
@@ -7282,16 +7282,16 @@ function BankOfDanielCaseStudy() {
             </div>
             <p className="mt-7 text-sm font-medium text-[#3a1a63]">Today, tapping a transaction shows only the date, type, and card number.</p>
           </div>
-          <figure className="flex h-[420px] items-center justify-center md:h-[560px]">
-            <img src="/images/bank-of-daniel/direct-legacy-transaction-trimmed.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="h-full w-full scale-125 object-contain" />
+          <figure className="flex h-[420px] items-center justify-start md:h-[560px]">
+            <img src="/images/bank-of-daniel/direct-legacy-transaction-trimmed.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="h-full w-auto max-w-full scale-125 object-contain" />
           </figure>
         </div>
       </section>
 
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[1.14fr_0.86fr] md:gap-14">
-          <figure className="flex h-[420px] items-center justify-center md:h-[560px]">
-            <img src="/images/bank-of-daniel/direct-search-trimmed.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="h-full w-full scale-125 object-contain" />
+        <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-4">
+          <figure className="flex h-[420px] items-center justify-end md:h-[560px]">
+            <img src="/images/bank-of-daniel/direct-search-trimmed.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="h-full w-auto max-w-full scale-125 object-contain" />
           </figure>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">Connected purchase history</p>
@@ -7307,7 +7307,7 @@ function BankOfDanielCaseStudy() {
       </section>
 
       <section className="border-t border-black/5 bg-white px-6 py-14 md:px-10 md:py-16">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[0.86fr_1.14fr] md:gap-14">
+        <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[0.95fr_1.05fr] md:gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">From history to action</p>
             <h2 className="mt-3 text-balance text-3xl font-bold text-black md:text-4xl">Keep shopping lists connected to your purchases.</h2>
@@ -7316,17 +7316,17 @@ function BankOfDanielCaseStudy() {
               {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title} className="border-t border-black/10 pt-4"><h3 className="text-sm font-semibold">{title}</h3><p className="mt-1 text-sm leading-relaxed text-black/55">{body}</p></div>)}
             </div>
           </div>
-          <figure className="flex h-[420px] items-center justify-center gap-1 md:h-[540px] md:gap-3" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
-            <img src="/images/bank-of-daniel/direct-receipt-trimmed.png" alt="Bank of Daniel itemized purchase receipt" className="h-full min-w-0 flex-1 scale-[1.35] object-contain" />
-            <img src="/images/bank-of-daniel/direct-add-list-trimmed.png" alt="Add an item to a saved shopping list" className="h-full min-w-0 flex-1 scale-[1.35] object-contain" />
+          <figure className="grid h-[420px] grid-cols-2 items-center gap-0 md:h-[540px]" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
+            <img src="/images/bank-of-daniel/direct-receipt-trimmed.png" alt="Bank of Daniel itemized purchase receipt" className="h-full w-full scale-[1.35] object-contain" />
+            <img src="/images/bank-of-daniel/direct-add-list-trimmed.png" alt="Add an item to a saved shopping list" className="h-full w-full scale-[1.35] object-contain" />
           </figure>
         </div>
       </section>
 
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
-        <div className="mx-auto grid max-w-5xl items-center gap-10 md:grid-cols-[1.14fr_0.86fr] md:gap-14">
-          <figure className="flex h-[420px] items-center justify-center md:h-[560px]">
-            <img src="/images/bank-of-daniel/direct-lists-wide-trimmed.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="h-full w-full scale-125 object-contain" />
+        <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-4">
+          <figure className="flex h-[420px] items-center justify-end md:h-[560px]">
+            <img src="/images/bank-of-daniel/direct-lists-wide-trimmed.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="h-full w-auto max-w-full scale-125 object-contain" />
           </figure>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-purple-600">The reusable system</p>
