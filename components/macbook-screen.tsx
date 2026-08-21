@@ -7267,8 +7267,8 @@ function BankOfDanielCaseStudy() {
         </div>
       </section>
 
-      <section className="px-6 py-16 md:px-10 md:py-20">
-        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+      <section className="px-6 py-20 md:px-10 md:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[0.82fr_1.18fr] md:gap-12 lg:gap-16">
           <div>
             <h2 className="text-balance text-3xl font-bold md:text-4xl">The transaction is only the starting point.</h2>
             <p className="mt-3 text-lg text-slate-600">It doesn&apos;t tell me what I bought.</p>
@@ -7285,13 +7285,13 @@ function BankOfDanielCaseStudy() {
             </div>
           </div>
           <div className="mx-auto w-full max-w-[520px]" aria-label="Traditional transaction details">
-            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="mx-auto block w-full max-w-[460px] object-contain drop-shadow-xl" />
+            <img src="/images/bank-of-daniel/direct-legacy-transaction.png" alt="Checking transaction for Marshalls showing a $162.01 purchase" className="mx-auto block w-full max-w-[560px] object-contain drop-shadow-xl" />
           </div>
         </div>
       </section>
 
-      <section className="bg-neutral-50 px-6 py-16 md:px-10 md:py-20">
-        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+      <section className="bg-neutral-50 px-6 py-20 md:px-10 md:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[0.82fr_1.18fr] md:gap-12 lg:gap-16">
           <div>
             <h2 className="text-balance text-3xl font-bold md:text-4xl">Find the purchase behind the transaction.</h2>
             <p className="mt-4 text-lg leading-relaxed text-slate-600">Search by merchant or item, or open a transaction directly. The purchase details are connected to the transaction.</p>
@@ -7302,13 +7302,13 @@ function BankOfDanielCaseStudy() {
             </div>
           </div>
           <div className="mx-auto w-full max-w-[520px]" aria-label="Bank of Daniel purchase search">
-            <img src="/images/bank-of-daniel/direct-search.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="mx-auto block w-full max-w-[460px] object-contain drop-shadow-xl" />
+            <img src="/images/bank-of-daniel/direct-search.png" alt="Search for lavender showing a matching Target transaction in Brooklyn, New York" className="mx-auto block w-full max-w-[560px] object-contain drop-shadow-xl" />
           </div>
         </div>
       </section>
 
-      <section className="px-6 py-16 md:px-10 md:py-20">
-        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+      <section className="px-6 py-20 md:px-10 md:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[0.82fr_1.18fr] md:gap-12 lg:gap-16">
           <div>
             <h2 className="text-balance text-3xl font-bold md:text-4xl">Keep shopping lists connected to your purchases.</h2>
             <p className="mt-4 text-lg leading-relaxed text-slate-600">Saved items live in one place and remain connected to the transactions they came from.</p>
@@ -7316,15 +7316,15 @@ function BankOfDanielCaseStudy() {
               {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title}><h3 className="font-bold">{title}</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
             </div>
           </div>
-          <div className="relative mx-auto h-[430px] w-full max-w-[540px] overflow-hidden md:h-[580px]" aria-label="Bank of Daniel receipt with an add-to-shopping-list pop-out">
-            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized purchase receipt" className="absolute left-0 top-5 w-[70%] object-contain drop-shadow-xl" />
-            <img src="/images/bank-of-daniel/direct-add-list.png" alt="Add an item to a saved shopping list" className="absolute bottom-2 right-0 w-[62%] object-contain drop-shadow-2xl" />
+          <div className="mx-auto flex w-full max-w-[680px] items-center justify-center gap-3 md:gap-5" aria-label="Bank of Daniel receipt and add-to-shopping-list flow">
+            <img src="/images/bank-of-daniel/direct-receipt.png" alt="Bank of Daniel itemized purchase receipt" className="min-w-0 flex-1 object-contain drop-shadow-xl" />
+            <img src="/images/bank-of-daniel/direct-add-list.png" alt="Add an item to a saved shopping list" className="min-w-0 flex-1 object-contain drop-shadow-xl" />
           </div>
         </div>
       </section>
 
-      <section className="bg-neutral-50 px-6 py-16 md:px-10 md:py-20">
-        <div className="mx-auto grid max-w-5xl items-center gap-12 md:grid-cols-[0.9fr_1.1fr] md:gap-16">
+      <section className="bg-neutral-50 px-6 py-20 md:px-10 md:py-24">
+        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-[0.82fr_1.18fr] md:gap-12 lg:gap-16">
           <div>
             <h2 className="text-balance text-3xl font-bold text-slate-950 md:text-4xl">Build lists for what you&apos;ll buy next.</h2>
             <p className="mt-4 text-lg leading-relaxed text-slate-600">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
@@ -7334,9 +7334,8 @@ function BankOfDanielCaseStudy() {
               <div><h3 className="font-bold text-slate-950">Organize by purpose</h3><p className="mt-2 text-sm leading-relaxed text-slate-600">Keep lists separate by store, project, or occasion.</p></div>
             </div>
           </div>
-          <div className="relative mx-auto h-[440px] w-full max-w-[560px] overflow-hidden md:h-[590px]" aria-label="Bank of Daniel shopping-list overview with list management details">
-            <img src="/images/bank-of-daniel/direct-lists-wide.png" alt="Bank of Daniel shopping-list overview" className="absolute left-0 top-6 w-[74%] object-contain drop-shadow-xl" />
-            <img src="/images/bank-of-daniel/direct-lists-compact.png" alt="Closer view of recurring, archived, and deleted list controls" className="absolute bottom-0 right-0 w-[57%] object-contain drop-shadow-2xl" />
+          <div className="mx-auto w-full max-w-[680px]" aria-label="Bank of Daniel shopping-list overview">
+            <img src="/images/bank-of-daniel/direct-lists-wide.png" alt="Bank of Daniel shopping-list overview with recurring, archived, and deleted lists" className="mx-auto block w-full object-contain drop-shadow-xl" />
           </div>
         </div>
       </section>
