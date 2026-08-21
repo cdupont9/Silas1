@@ -7000,6 +7000,7 @@ function LunaCaseStudy() {
                 muted
                 playsInline
                 preload="metadata"
+                onLoadedMetadata={(event) => { event.currentTarget.playbackRate = 1.15 }}
                 className="aspect-[1.9/1] w-full rounded-xl border border-black/10 bg-black object-cover shadow-sm"
               />
               <figcaption className="mt-4 text-base leading-relaxed text-black/60">Luna is part of the conversation, listening, understanding the context and contributing in the moment.</figcaption>
