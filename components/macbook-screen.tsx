@@ -6325,9 +6325,7 @@ label="Brain Games"
 
         <DockIcon
           icon={
-            <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#160f2e] shadow-lg">
-              <img src="/images/luna/hero-orb.png" alt="Luna" className="w-full h-full object-contain" />
-            </div>
+            <img src="/images/luna/hero-orb.png" alt="Luna" className="w-12 h-12 object-contain drop-shadow-[0_4px_14px_rgba(139,92,246,0.55)]" />
           }
           label="Luna"
           onClick={() => openCaseStudy('luna')}
@@ -7241,28 +7239,28 @@ function BankOfDanielCaseStudy() {
         <p className="mt-10 text-center text-xl font-semibold text-[#0b3a67]">One view. One purchase history. One place to act.</p>
       </section>
 
-      <section className="bg-slate-950 px-6 py-16 text-white md:px-10">
+      <section className="bg-neutral-50 px-6 py-16 md:px-10">
         <div className="mx-auto max-w-5xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-300">Product model</p>
-          <h2 className="mt-3 text-3xl font-bold">From payment to purchase context</h2>
-          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-white/70">Connect the receipt to the transaction so I can see what I bought and turn individual items into a shopping list.</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#1769a5]">Product model</p>
+          <h2 className="mt-3 text-3xl font-bold text-slate-950">From payment to purchase context</h2>
+          <p className="mt-5 max-w-3xl text-lg leading-relaxed text-slate-600">Connect the receipt to the transaction so I can see what I bought and turn individual items into a shopping list.</p>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {[
               ["The transaction isn’t enough", "A transaction tells me where, when, and how much I paid — but not the items I purchased."],
               ["The receipt is disconnected", "The details I need may live in email, a retailer app, or a paper receipt instead of with the payment."],
               ["The purchase is hard to use", "Even when I find the receipt, I still have to manually turn individual items into a shopping list."],
-            ].map(([title, body]) => <div key={title} className="rounded-xl border border-white/15 bg-white/5 p-5"><h3 className="font-semibold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-white/60">{body}</p></div>)}
+            ].map(([title, body]) => <div key={title} className="rounded-xl border border-black/5 bg-white p-5 shadow-sm"><h3 className="font-semibold text-slate-950">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <div><h3 className="font-semibold text-cyan-300">Payment completes the transaction — not the user&apos;s task.</h3><p className="mt-3 text-sm leading-relaxed text-white/65">After I pay, I may still want to understand what I bought and organize the items I care about. The experience can continue from the payment into the purchase.</p></div>
-            <div><h3 className="font-semibold text-cyan-300">The transaction is already the natural anchor.</h3><p className="mt-3 text-sm leading-relaxed text-white/65">I&apos;m already in my banking app looking at the purchase. Attaching the receipt keeps payment and purchase context together and gives me a path to act on the items.</p></div>
+            <div><h3 className="font-semibold text-[#0b3a67]">Payment completes the transaction — not the user&apos;s task.</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">After I pay, I may still want to understand what I bought and organize the items I care about. The experience can continue from the payment into the purchase.</p></div>
+            <div><h3 className="font-semibold text-[#0b3a67]">The transaction is already the natural anchor.</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">I&apos;m already in my banking app looking at the purchase. Attaching the receipt keeps payment and purchase context together and gives me a path to act on the items.</p></div>
           </div>
           <div className="mt-10 grid gap-3 md:grid-cols-4">
             {journey.map((step, index) => (
-              <div key={step.label} className="relative rounded-xl border border-white/15 bg-white/5 p-5">
-                <span className="text-xs font-bold text-cyan-300">{String(index + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 font-semibold">{step.label}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">{step.detail}</p>
+              <div key={step.label} className="relative rounded-xl border border-black/5 bg-white p-5 shadow-sm">
+                <span className="text-xs font-bold text-[#1769a5]">{String(index + 1).padStart(2, "0")}</span>
+                <h3 className="mt-3 font-semibold text-slate-950">{step.label}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">{step.detail}</p>
               </div>
             ))}
           </div>
@@ -7279,9 +7277,9 @@ function BankOfDanielCaseStudy() {
             ["The information has to be reconstructed", "When customers want to buy something again or resolve a purchase, they find the same information across multiple places."],
           ].map(([title, body]) => <div key={title} className="rounded-2xl border border-slate-200 bg-slate-50 p-6"><h3 className="font-bold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
         </div>
-        <div className="mt-10 rounded-2xl bg-[#0b3a67] p-7 text-white">
-          <p className="text-xs font-semibold uppercase tracking-wider text-cyan-200">Today, tapping a transaction shows only</p>
-          <div className="mt-5 flex flex-col gap-3 text-lg font-medium md:flex-row md:items-center md:gap-5"><span>Transaction Date</span><span className="text-cyan-300">→</span><span>Transaction Type</span><span className="text-cyan-300">→</span><span>Card Number</span></div>
+        <div className="mt-10 rounded-2xl border border-[#9dd9ea] bg-[#e9f6fb] p-7 text-[#0b3a67]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#0b5f7a]">Today, tapping a transaction shows only</p>
+          <div className="mt-5 flex flex-col gap-3 text-lg font-medium md:flex-row md:items-center md:gap-5"><span>Transaction Date</span><span className="text-[#1769a5]">→</span><span>Transaction Type</span><span className="text-[#1769a5]">→</span><span>Card Number</span></div>
         </div>
       </section>
 
@@ -7307,15 +7305,15 @@ function BankOfDanielCaseStudy() {
         </div>
       </section>
 
-      <section className="bg-[#0b3a67] px-6 py-16 text-white md:px-10">
+      <section className="bg-neutral-50 px-6 py-16 md:px-10">
         <div className="mx-auto max-w-5xl">
-          <h2 className="text-3xl font-bold">Build lists for what you&apos;ll buy next.</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-blue-100">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
-          <img src="/case-studies/bank-of-daniel/page-22.jpg" alt="Original Bank of Daniel create-list and recurring-list screens" className="mt-10 w-full rounded-2xl border border-white/15 shadow-2xl" />
+          <h2 className="text-3xl font-bold text-slate-950">Build lists for what you&apos;ll buy next.</h2>
+          <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
+          <img src="/case-studies/bank-of-daniel/page-22.jpg" alt="Original Bank of Daniel create-list and recurring-list screens" className="mt-10 w-full rounded-2xl border border-slate-200 shadow-xl" />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            <div><h3 className="font-bold">Create a list</h3><p className="mt-3 text-sm leading-relaxed text-blue-100">Start with any saved item and organize it around a need, store, or occasion.</p></div>
-            <div><h3 className="font-bold">Make it recurring</h3><p className="mt-3 text-sm leading-relaxed text-blue-100">Reuse a list for routines like weekly grocery shopping.</p></div>
-            <div><h3 className="font-bold">Organize by purpose</h3><p className="mt-3 text-sm leading-relaxed text-blue-100">Keep lists separate by store, project, or occasion.</p></div>
+            <div><h3 className="font-bold text-slate-950">Create a list</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Start with any saved item and organize it around a need, store, or occasion.</p></div>
+            <div><h3 className="font-bold text-slate-950">Make it recurring</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Reuse a list for routines like weekly grocery shopping.</p></div>
+            <div><h3 className="font-bold text-slate-950">Organize by purpose</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Keep lists separate by store, project, or occasion.</p></div>
           </div>
         </div>
       </section>
