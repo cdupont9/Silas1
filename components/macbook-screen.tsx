@@ -7282,7 +7282,7 @@ function BankOfDanielCaseStudy() {
             </div>
             <p className="mt-7 text-sm font-medium text-[#3a1a63]">Today, tapping a transaction shows only the date, type, and card number.</p>
           </div>
-          <figure className="flex h-[420px] items-center justify-start md:h-[560px]">
+          <figure className="flex h-[420px] items-center justify-center md:h-[560px]">
             <img src="/images/bank-of-daniel/transaction-details-cropped.png" alt="Marshalls checking transaction showing merchant details and location" className="h-full w-auto max-w-full object-contain" />
           </figure>
         </div>
@@ -7290,7 +7290,7 @@ function BankOfDanielCaseStudy() {
 
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
         <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-4">
-          <figure className="flex h-[420px] items-center justify-end md:h-[560px] md:-translate-x-6">
+          <figure className="flex h-[420px] items-center justify-center md:h-[560px]">
             <img src="/images/bank-of-daniel/connected-purchase-history-cropped.png" alt="Bank of Daniel purchase history search for lavender showing a matching Target transaction" className="h-full w-auto max-w-full object-contain" />
           </figure>
           <div>
@@ -7325,7 +7325,7 @@ function BankOfDanielCaseStudy() {
 
       <section className="border-t border-black/5 bg-neutral-50 px-6 py-14 md:px-10 md:py-16">
         <div className="mx-auto grid max-w-5xl items-center gap-8 md:grid-cols-[1.05fr_0.95fr] md:gap-4">
-          <figure className="flex h-[420px] items-center justify-end md:h-[560px]">
+          <figure className="flex h-[420px] items-center justify-center md:h-[560px]">
             <img src="/images/bank-of-daniel/shopping-lists-cropped-large.png" alt="Bank of Daniel shopping lists overview with active, archived, and deleted lists" className="h-full w-auto max-w-full object-contain" />
           </figure>
           <div>
