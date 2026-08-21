@@ -7287,7 +7287,6 @@ function BankOfDanielCaseStudy() {
         <div className="mx-auto max-w-5xl">
           <h2 className="text-3xl font-bold">Find the purchase behind the transaction.</h2>
           <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Search by merchant or item, or open a transaction directly. The purchase details are connected to the transaction.</p>
-          <img src="/case-studies/bank-of-daniel/page-20.jpg" alt="Original Bank of Daniel purchase search and itemized receipt screens" className="mt-10 w-full rounded-2xl border border-slate-200 shadow-xl" />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             <div><h3 className="font-bold">Search by what you remember</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Search by merchant or item instead of remembering when the transaction occurred.</p></div>
             <div><h3 className="font-bold">Open any transaction</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Tap a transaction as you always have — date, type, and card number are still there.</p></div>
@@ -7299,7 +7298,6 @@ function BankOfDanielCaseStudy() {
       <section className="mx-auto max-w-5xl px-6 py-16 md:px-10">
         <h2 className="text-3xl font-bold">Keep shopping lists connected to your purchases.</h2>
         <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Saved items live in one place and remain connected to the transactions they came from.</p>
-        <img src="/case-studies/bank-of-daniel/page-21.jpg" alt="Original Bank of Daniel saved items and list-management screens" className="mt-10 w-full rounded-2xl border border-slate-200 shadow-xl" />
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {[["Manage lists", "Open “My Lists” alongside your accounts and manage saved items in one place."], ["Add context", "Add a size, color, or personal note to an item."], ["Keep the purchase connected", "Every saved item links back to the original transaction for purchase details."], ["Remove an item", "Remove items when they are no longer relevant."]].map(([title, body]) => <div key={title}><h3 className="font-bold">{title}</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">{body}</p></div>)}
         </div>
@@ -7309,7 +7307,6 @@ function BankOfDanielCaseStudy() {
         <div className="mx-auto max-w-5xl">
           <h2 className="text-3xl font-bold text-slate-950">Build lists for what you&apos;ll buy next.</h2>
           <p className="mt-4 max-w-3xl text-lg leading-relaxed text-slate-600">Create lists from items you&apos;ve already purchased and organize them for future shopping.</p>
-          <img src="/case-studies/bank-of-daniel/page-22.jpg" alt="Original Bank of Daniel create-list and recurring-list screens" className="mt-10 w-full rounded-2xl border border-slate-200 shadow-xl" />
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             <div><h3 className="font-bold text-slate-950">Create a list</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Start with any saved item and organize it around a need, store, or occasion.</p></div>
             <div><h3 className="font-bold text-slate-950">Make it recurring</h3><p className="mt-3 text-sm leading-relaxed text-slate-600">Reuse a list for routines like weekly grocery shopping.</p></div>
