@@ -234,6 +234,26 @@ export function MacBookScreen() {
   const [screenState, setScreenState] = useState<ScreenState>("login")
   const [mobileScreen, setMobileScreen] = useState<MobileScreenState>("lock")
   const [mobileCaseStudy, setMobileCaseStudy] = useState<string | null>(null)
+  const [isLunaUnlocked, setIsLunaUnlocked] = useState(false)
+
+  const requestLunaPassword = () => {
+    if (isLunaUnlocked) return true
+
+    const password = window.prompt("Luna\n\nEnter password")
+    if (password?.trim().toLowerCase() === "google") {
+      setIsLunaUnlocked(true)
+      return true
+    }
+
+    if (password !== null) window.alert("Incorrect password")
+    return false
+  }
+
+  const openMobileLuna = () => {
+    if (!requestLunaPassword()) return
+    setMobileCaseStudy("luna")
+    setMobileScreen("caseStudy")
+  }
 
   // Entering the portfolio (Enter button) — goes straight to the desktop/home
   const handleWelcomeContinue = () => {
@@ -1012,6 +1032,8 @@ const messageText = mobileInput.trim()
   }
 
   const openCaseStudy = (project: string) => {
+    if (project === "luna" && !requestLunaPassword()) return
+
     // Check if this case study is already open (and not minimized) - just focus it
     if (openCaseStudies[project]?.isOpen && !openCaseStudies[project]?.isMinimized) {
       setFocusedWindow(`safari-${project}`)
@@ -1453,7 +1475,7 @@ const messageText = mobileInput.trim()
                   <span className="text-white text-[11px] mt-1">Brain</span>
                 </button>
 
-  <button onClick={() => { setMobileCaseStudy('luna'); setMobileScreen('caseStudy'); }} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Luna case study">
+  <button onClick={openMobileLuna} className="flex flex-col items-center justify-center active:scale-[0.98] transition-transform" aria-label="Open Luna case study">
   <img src="/images/luna/hero-orb.png" alt="" className="h-[60px] w-[60px] object-contain [clip-path:circle(49%)] drop-shadow-[0_4px_16px_rgba(139,92,246,0.75)]" />
   <span className="text-white text-[11px] mt-1">Luna</span>
   </button>
