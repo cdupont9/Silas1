@@ -252,11 +252,13 @@ export function MacBookScreen() {
     return false
   }
 
-  const openMobileLuna = () => {
-    if (!requestLunaPassword("mobile")) return
-    setMobileCaseStudy("luna")
+  const openMobileCaseStudy = (project: string) => {
+    if (project === "luna" && !requestLunaPassword("mobile")) return
+    setMobileCaseStudy(project)
     setMobileScreen("caseStudy")
   }
+
+  const openMobileLuna = () => openMobileCaseStudy("luna")
 
   // Entering the portfolio (Enter button) — goes straight to the desktop/home
   const handleWelcomeContinue = () => {
@@ -2262,8 +2264,9 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
 
       if (selectedNote && activeNote) {
         return (
-          <div className="h-screen w-full bg-[#1c1c1e] flex flex-col">
-            {/* Status Bar */}
+  <div className="h-screen w-full bg-[#1c1c1e] flex flex-col">
+  {lunaPasswordOverlay}
+  {/* Status Bar */}
             <div className="h-12 flex items-center justify-between px-6 pt-2">
               <span className="text-white text-sm font-medium">{loginTime}</span>
               <div className="flex items-center gap-1.5">
@@ -2304,7 +2307,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
                   {(activeNote as any).images.map((img: { title: string; icon: string; key: string }) => (
                     <button
                       key={img.key}
-                      onClick={() => { setMobileCaseStudy(img.key); setMobileScreen('caseStudy'); }}
+                      onClick={() => openMobileCaseStudy(img.key)}
                       className="flex flex-col items-center gap-2"
                     >
                       <div className="w-20 h-20 rounded-[18px] overflow-hidden shadow-lg border border-white/10">
