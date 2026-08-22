@@ -1419,7 +1419,7 @@ const messageText = mobileInput.trim()
   ].map((project) => (
   <button
   key={project.id}
-  onClick={() => { setMobileCaseStudy(project.id); setMobileScreen('caseStudy'); }}
+  onClick={() => openMobileCaseStudy(project.id)}
   className="w-full bg-white/95 backdrop-blur-xl rounded-xl p-4 flex items-center gap-4 shadow-lg active:scale-[0.98] transition-transform"
   >
   <img
