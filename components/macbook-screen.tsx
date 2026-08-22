@@ -21,6 +21,9 @@ import {
 import { CharityChat, ChatMessage, getCharityResponse, shouldAutoHeart } from "@/components/charity-chat"
 import { WeatherWidget } from "@/components/weather-widget"
 import { WindowsRetroExperience } from "@/components/retro/windows-retro-experience"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
 
 interface WindowState {
   isOpen: boolean
@@ -235,22 +238,22 @@ export function MacBookScreen() {
   const [mobileScreen, setMobileScreen] = useState<MobileScreenState>("lock")
   const [mobileCaseStudy, setMobileCaseStudy] = useState<string | null>(null)
   const [isLunaUnlocked, setIsLunaUnlocked] = useState(false)
+  const [isLunaPasswordOpen, setIsLunaPasswordOpen] = useState(false)
+  const [lunaPassword, setLunaPassword] = useState("")
+  const [lunaPasswordError, setLunaPasswordError] = useState(false)
+  const [lunaUnlockTarget, setLunaUnlockTarget] = useState<"mobile" | "desktop" | null>(null)
 
-  const requestLunaPassword = () => {
+  const requestLunaPassword = (target: "mobile" | "desktop") => {
     if (isLunaUnlocked) return true
-
-    const password = window.prompt("Luna\n\nEnter password")
-    if (password?.trim().toLowerCase() === "google") {
-      setIsLunaUnlocked(true)
-      return true
-    }
-
-    if (password !== null) window.alert("Incorrect password")
+    setLunaUnlockTarget(target)
+    setLunaPassword("")
+    setLunaPasswordError(false)
+    setIsLunaPasswordOpen(true)
     return false
   }
 
   const openMobileLuna = () => {
-    if (!requestLunaPassword()) return
+    if (!requestLunaPassword("mobile")) return
     setMobileCaseStudy("luna")
     setMobileScreen("caseStudy")
   }
@@ -1031,9 +1034,7 @@ const messageText = mobileInput.trim()
     setFocusedWindow('projects')
   }
 
-  const openCaseStudy = (project: string) => {
-    if (project === "luna" && !requestLunaPassword()) return
-
+  const openCaseStudyWindow = (project: string) => {
     // Check if this case study is already open (and not minimized) - just focus it
     if (openCaseStudies[project]?.isOpen && !openCaseStudies[project]?.isMinimized) {
       setFocusedWindow(`safari-${project}`)
@@ -1062,6 +1063,56 @@ const messageText = mobileInput.trim()
     }))
     setFocusedWindow(`safari-${project}`)
   }
+
+  const openCaseStudy = (project: string) => {
+    if (project === "luna" && !requestLunaPassword("desktop")) return
+    openCaseStudyWindow(project)
+  }
+
+  const submitLunaPassword = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (lunaPassword.trim().toLowerCase() !== "google") {
+      setLunaPasswordError(true)
+      return
+    }
+
+    setIsLunaUnlocked(true)
+    setIsLunaPasswordOpen(false)
+    setLunaPasswordError(false)
+
+    if (lunaUnlockTarget === "mobile") {
+      setMobileCaseStudy("luna")
+      setMobileScreen("caseStudy")
+    } else {
+      openCaseStudyWindow("luna")
+    }
+    setLunaUnlockTarget(null)
+  }
+
+  const lunaPasswordOverlay = (
+    <Dialog open={isLunaPasswordOpen} onOpenChange={setIsLunaPasswordOpen}>
+      <DialogContent className="max-w-xs rounded-2xl p-5" showCloseButton={false}>
+        <DialogTitle className="sr-only">Luna password</DialogTitle>
+        <form onSubmit={submitLunaPassword} className="flex flex-col gap-3">
+          <Input
+            autoFocus
+            type="password"
+            value={lunaPassword}
+            onChange={(event) => {
+              setLunaPassword(event.target.value)
+              setLunaPasswordError(false)
+            }}
+            placeholder="Password"
+            aria-label="Password"
+            aria-invalid={lunaPasswordError}
+            className="h-11"
+          />
+          {lunaPasswordError && <p className="text-sm text-destructive">Incorrect password</p>}
+          <Button type="submit" className="h-11">Unlock</Button>
+        </form>
+      </DialogContent>
+    </Dialog>
+  )
 
   const closeCaseStudy = (project: string) => {
     setOpenCaseStudies(prev => {
@@ -1244,8 +1295,9 @@ const messageText = mobileInput.trim()
     // Mobile Home - Desktop-Style Portfolio Layout
     if (mobileScreen === "home") {
       return (
-        <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
-          {/* Background */}
+  <div className="h-[100dvh] w-full relative overflow-hidden bg-[#1e1e1e]">
+  {lunaPasswordOverlay}
+  {/* Background */}
           {selectedBackground.type === 'video' ? (
             <video key={`mobile-lock-${selectedBackground.id}`} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-50">
               <source src={selectedBackground.url} type="video/mp4" />
@@ -4761,6 +4813,7 @@ Open to freelance projects, collaborations, and full-time opportunities in UX/UI
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
     >
+      {lunaPasswordOverlay}
       {selectedBackground.type === 'video' ? (
         <video key={selectedBackground.id} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
           <source src={selectedBackground.url} type="video/mp4" />
